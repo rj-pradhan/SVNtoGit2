@@ -1,0 +1,204 @@
+<!--
+  ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  ~
+  ~ ÓThe contents of this file are subject to the Mozilla Public License
+  ~ Version 1.1 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://www.mozilla.org/MPL/Ê
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations under
+  ~ the License.
+  ~
+  ~ The Original Code is ICEfaces 1.5 open source software code, released
+  ~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+  ~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+  ~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+  ~
+  ~ Contributor(s): _____________________.
+  ~
+  ~ Alternatively, the contents of this file may be used under the terms of
+  ~ the GNU Lesser General Public License Version 2.1 or laterÊ (theÊ ÒLGPLÓ
+  ~ License), in which case the provisions of the LGPL License are
+  ~ applicableÊ instead of those above.Ê If you wish to allow use of your
+  ~ version of this file only under the terms of the LGPL License and not to
+  ~ allow others to use your version of this file under the MPL, indicate
+  ~ your decision by deletingÊ the provisions above and replace them with
+  ~ the notice and other provisions required by the LGPL License.Ê If you do
+  ~ not delete the provisions above, a recipient may use your version of
+  ~ this file under either the MPL or the LGPL License."
+  ~
+  -->
+
+<f:view xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+    <title>ICEfaces Address Demo</title>
+    <link rel='stylesheet' type='text/css' href='./xmlhttp/css/xp/xp.css'/>
+    <link href="./css/address.css" rel="stylesheet" type="text/css" />
+    <link href="./css/readme.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+    
+    <div id="header">
+    <img src="images/address-left.gif" alt="ICEsoft" />
+    <img src="images/address-right.gif" alt="ICEfaces Direct-to-DOM Technology" id="d2dlogo" />
+    </div>
+    
+    <div id="addressLogo">
+    <img src="images/addressform_logo.gif" alt="AddressForm" />
+    </div>
+    
+
+    <div id="addressFormPanel">
+    <h1>Enter Address Details Below</h1>
+    <ice:form>
+
+        <table>
+        <tr><td colspan="4"><ice:outputText value=" " /></td></tr>
+            <tr class="formLabel">
+            
+                <td>Title</td>
+    
+                <!-- Title -->
+                <td class="input"><ice:selectOneMenu id="title" style="width:55px;"
+                    styleClass="textFieldDynamic" tabindex="10"
+                    value="#{address.elementContainer.title.value}"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.selectTitle}">
+                    <f:selectItems value="#{address.elementContainer.titles}" />
+                </ice:selectOneMenu></td>
+                
+                <td>City</td>
+                
+                <!-- City -->
+                <td class="input"><ice:inputText style="width:120px;" id="city"
+                    styleClass="textField" tabindex="40"
+                    value="#{address.elementContainer.city.value}"
+                    valueChangeListener="#{address.addressFormProcessor.cityChanged}"
+                    partialSubmit="true"
+                    rendered="#{address.elementContainer.city.inputRendered}"
+                    binding="#{address.addressFormProcessor.cityText}" />
+                <ice:selectOneMenu id="citySelect" 
+                    style="width:120px;"
+                    rendered="#{address.elementContainer.city.selectRendered}"
+                    styleClass="textFieldDynamic" tabindex="45"
+                    valueChangeListener="#{address.addressFormProcessor.citySelectChanged}"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.selectCity}"
+                    >
+                    <f:selectItems value="#{address.elementContainer.city.select}" />
+                </ice:selectOneMenu>
+                <ice:graphicImage
+                    url="images/#{address.elementContainer.city.image}" width="15" height="15" />
+                </td>
+            </tr>
+
+            <tr class="formLabel">
+                <td>First Name</td>
+                
+                <!-- First Name -->
+                <td class="input"><ice:inputText style="width:120px;" id="firstName"
+                    styleClass="textField" tabindex="20"
+                    value="#{address.elementContainer.firstName.value}" converter="fixCaps"
+                    partialSubmit="true" 
+                    binding="#{address.addressFormProcessor.firstNameText}"
+                    /></td>
+                    
+                <td>State</td>
+                
+                <!-- State -->
+                <td class="input"><ice:inputText style="width:50px;" id="state" maxlength="2"
+                    size="4" styleClass="textField" tabindex="50"
+                    rendered="#{address.elementContainer.state.inputRendered}"
+                    value="#{address.elementContainer.state.value}"
+                    valueChangeListener="#{address.addressFormProcessor.stateChanged}"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.stateText}"/>
+                <ice:selectOneMenu id="stateSelect" 
+                    style="width:50px;" tabindex="55"
+                    rendered="#{address.elementContainer.state.selectRendered}"
+                    styleClass="textFieldDynamic"
+                    valueChangeListener="#{address.addressFormProcessor.stateSelectChanged}"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.selectState}"
+                    >
+                    <f:selectItems value="#{address.elementContainer.state.select}" />
+                </ice:selectOneMenu>
+                 <ice:graphicImage
+                    url="images/#{address.elementContainer.state.image}" width="15" height="15" />
+                </td>           
+            </tr>
+
+            <tr class="formLabel">
+                <td>Last Name</td>
+                
+                <!-- Last Name -->
+                <td class="input"><ice:inputText style="width:120px;"
+                    id="lastName" styleClass="textField" tabindex="30"
+                    value="#{address.elementContainer.lastName.value}" converter="fixCaps"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.lastNameText}"/>
+                </td>
+                 
+                <td>Zip</td>
+                
+                <!-- Zip -->
+                <td class="input"><ice:inputText id="zip" maxlength="5"
+                    size="5" styleClass="textField" tabindex="60"
+                    rendered="#{address.elementContainer.zip.inputRendered}"
+                    value="#{address.elementContainer.zip.value}"
+                    valueChangeListener="#{address.addressFormProcessor.zipChanged}"
+                    partialSubmit="true"
+                    style="width:65px;" 
+                    binding="#{address.addressFormProcessor.zipText}"/>
+                <ice:selectOneMenu id="zipSelect" tabindex="65"
+                    style="width:65px;" styleClass="textFieldDynamic"
+                    rendered="#{address.elementContainer.zip.selectRendered}"
+                    valueChangeListener="#{address.addressFormProcessor.zipSelectChanged}"
+                    partialSubmit="true"
+                    binding="#{address.addressFormProcessor.selectZip}"
+                    >
+                    <f:selectItems value="#{address.elementContainer.zip.select}" />
+                </ice:selectOneMenu>
+                <ice:graphicImage
+                    url="images/#{address.elementContainer.zip.image}" width="15" height="15" />  
+                </td>
+            </tr>             <tr>
+            <!-- Submit & Reset -->
+                <td colspan="4" style="text-align:right;">
+                <ice:commandButton tabindex="70"
+                    type="button"  id="Reset"
+                    image="./images/reset-button.gif" action="#{address.reset}" alt="Reset"
+                    /> 
+                    <ice:commandButton
+                    type="submit"  tabindex="80"
+                    disabled="#{address.elementContainer.submit.disabled}"
+                    image="#{address.elementContainer.submit.imageButton}" id="Submit"
+                    action="submit" value="submit" alt="Submit"
+                    binding="#{address.addressFormProcessor.submitButton}"
+                    />
+                    </td>
+            </tr>
+        </table>
+                <!-- Suggestions and Warnings -->
+        <ice:messages id="messages" />
+           </ice:form>
+        </div>
+
+    <ice:form>
+    
+    <jsp:directive.include file="./footer.jspx" />
+ 
+        <div id="readme"><ice:commandButton image="#{ReadmeBean.imageButton}" alt="View Demo Notes"
+            action="#{ReadmeBean.pressExpandButton}"
+            title="Toggle the notes section open or close" /><br />
+              <ice:outputText value="#{ReadmeBean.readmeText}" escape="false"
+            rendered="#{ReadmeBean.expanded}" />
+                </div>
+    </ice:form>
+    </body>
+    </html>
+</f:view>

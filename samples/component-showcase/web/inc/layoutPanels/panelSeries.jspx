@@ -1,0 +1,196 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this example two lists are used. For each list, each elements markup is
+defined once.
+The content of the list is filled by iterating over a variable.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Example include, also see source code include.
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<!-- Cashier Example -->
+<ice:panelGrid
+        styleClass="componentLayoutRootTable"
+        columns="1">
+
+    <ice:panelGrid styleClass="formBorderHighlight">
+
+        <!-- List Description -->
+        <ice:panelGrid>
+
+            <h3>
+                <ice:outputText
+                        value="#{msgs['component.panelSeries.instructions']}"/>
+            </h3>
+            <h4>
+                <ice:outputText
+                        value="#{msgs['component.panelSeries.subInstructions']}"/>
+            </h4>
+
+        </ice:panelGrid>
+
+        <!-- Container for list items and the shopping list-->
+        <ice:panelGrid columns="2" style="width:550px;">
+
+            <!-- Item list -->
+            <ice:panelGrid styleClass="formBorderHighlight"
+                           style="width:250px;">
+                <h3>
+                    <ice:outputText value="Item List"/>
+                </h3>
+                <ice:panelSeries value="#{cashier.itemTable}" var="item1">
+                    <ice:panelGrid style="border:1px solid silver;"
+                                   styleClass="itemTable"
+                                   columnClasses="listItemIcon, listDescriptor"
+                                   columns="2">
+                        <ice:graphicImage width="100" height="100"
+                                          url="images/panelSeries/#{item1.name}.jpg"/>
+                        <ice:panelGrid columns="1">
+                            <ice:panelGrid columns="2">
+                                <ice:outputText
+                                        value="#{msgs['component.panelSeries.productLabel.name']}"
+                                        styleClass="propertyLabel"/>
+                                <ice:outputText value="#{item1.name}"/>
+
+                                <ice:outputText
+                                        value="#{msgs['component.panelSeries.productLabel.unitPrice']}"
+                                        styleClass="propertyLabel"/>
+                                <ice:outputText value="#{item1.unitPrice}">
+                                    <f:convertNumber type="currency"/>
+                                </ice:outputText>
+
+                            </ice:panelGrid>
+
+                            <ice:outputText
+                                    value="#{msgs['component.panelSeries.productSelection.quantityLabel']}"
+                                    styleClass="propertyLabel"/>
+
+                            <ice:panelGrid columns="3">
+
+                                <div class="quantityLabel">
+
+                                    <ice:outputText value="#{item1.quantity}"/>
+
+                                </div>
+
+                                <ice:commandButton
+                                        image="images/increase_quantity.gif"
+                                        style="height: 25px; width: 15px;"
+                                        actionListener="#{item1.incQuan}"
+                                        title="Buy #{item1.name}"/>
+
+                                <ice:commandButton
+                                        image="images/decrease_quantity.gif"
+                                        style="height: 25px; width: 15px;"
+                                        actionListener="#{item1.decQuan}"
+                                        title="Return #{item1.name}"
+                                        disabled="#{item1.quanMinusDisabled}"/>
+                            </ice:panelGrid>
+                            <ice:outputText style="text-align:center;"
+                                            value="#{item1.subtotal}">
+                                <f:convertNumber type="currency"/>
+                            </ice:outputText>
+
+                        </ice:panelGrid>
+
+                    </ice:panelGrid>
+                    <br/>
+                </ice:panelSeries>
+            </ice:panelGrid>
+
+            <!-- Receipt -->
+            <ice:panelGrid styleClass="formBorderHighlight"
+                           style="width:250px;">
+                <h3>
+                    <ice:outputText
+                            value="#{msgs['component.panelSeries.shoppingListTitle']}"/>
+                </h3>
+                <ice:panelSeries value="#{cashier.shoppingList}" var="item2">
+                    <ice:panelGrid columns="3" styleClass="listReceipt">
+
+                        <ice:outputText value="#{item2.name}"/>
+                        <ice:outputText value="#{item2.quantity}"/>
+                        <ice:outputText value="#{item2.subtotal}">
+                            <f:convertNumber type="currency"/>
+                        </ice:outputText>
+
+                    </ice:panelGrid>
+                </ice:panelSeries>
+                <hr/>
+                <ice:panelGroup>
+                    <ice:outputText
+                            value="#{msgs['component.panelSeries.totalLabel']}"/>
+                    <ice:outputText value="#{cashier.total}">
+                        <f:convertNumber type="currency"/>
+                    </ice:outputText>
+                </ice:panelGroup>
+            </ice:panelGrid>
+        </ice:panelGrid>
+    </ice:panelGrid>
+</ice:panelGrid>
+</ice:panelTab>
+
+<!--
+The bean is responsible for streaming html documentation to
+this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/panelSeriesDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe src="./sourcecodeStream.html?path=./inc/layoutPanels/panelSeries.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

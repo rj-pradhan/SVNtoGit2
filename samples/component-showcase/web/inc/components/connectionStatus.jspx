@@ -1,0 +1,125 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration ice:connectionStatus different icons are displayed.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGrid
+            styleClass="contentLayoutGridStyle"
+            columns="1" border="0">
+
+        <ice:panelTabSet styleClass="componentPanelTabSetLayout">
+            <!--
+            Example include, also see source code include.
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+                <ice:panelGrid
+                        styleClass="componentLayoutRootTable"
+                        columns="1">
+
+                    <ice:panelGrid styleClass="formBorderHighlight">
+                        <h3>
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.title']}"/>
+                        </h3>
+                        <p class="connectionExplanation">
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.explanation']}"/>
+                        </p>
+
+                        <ice:panelGrid columns="5"
+                                       styleClass="connectionStatusGraphics">
+
+                            <ice:outputText value="Theme"/>
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.labels.connectIdle']}"/>
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.labels.connectActive']}"/>
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.labels.connectCaution']}"/>
+                            <ice:outputText
+                                    value="#{msgs['component.connectionStatus.labels.connectDisconnected']}"/>
+
+                            <ice:outputText value="XP"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/xp/css-images/connect_idle.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/xp/css-images/connect_active.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/xp/css-images/connect_caution.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/xp/css-images/connect_disconnected.gif"/>
+
+                            <ice:outputText value="Royale"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/royale/css-images/connect_idle.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/royale/css-images/connect_active.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/royale/css-images/connect_caution.gif"/>
+                            <ice:graphicImage
+                                    url="./xmlhttp/css/royale/css-images/connect_disconnected.gif"/>
+
+                        </ice:panelGrid>
+                    </ice:panelGrid>
+                </ice:panelGrid>
+            </ice:panelTab>
+
+            <!--
+            The bean is responsible for streaming html documentation to
+            this placeholder
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+                <iframe src="./docs/outputConnectionStatusDoc.html"
+                        class="includeIframe" width="100%"></iframe>
+            </ice:panelTab>
+
+            <!--
+              Template for component source code.  This servlet loads
+              the component example jsp include as an xml stream
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+                <iframe
+                        src="./sourcecodeStream.html?path=./inc/components/connectionStatus.jspx"
+                        class="includeIframe" width="100%"></iframe>
+            </ice:panelTab>
+
+        </ice:panelTabSet>
+
+    </ice:panelGrid>
+</ice:form>
