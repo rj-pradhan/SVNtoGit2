@@ -55,6 +55,7 @@ public class AuctionMonitorItemBean extends ItemType {
     private boolean bidExpanded;
     private double oldBid;
     private double tempLocalBid;
+    private boolean bidMessage;
     private String imageUrl;
     private long[] timeLeftBrokenDown;
     private String timeLeftStyleClass;
@@ -74,6 +75,9 @@ public class AuctionMonitorItemBean extends ItemType {
     private static final String SUCCESS = "success";
 
     private static final String STYLE_CLASS_EXPANDED_ROW = "rowClassHilite";
+
+    public static final int MAX_BID_INCREASE = 1000000;
+    public static final long MAX_BID = 1000000000;
 
     private static final int TIME_DAYS = 24 * 60 * 60 * 1000;
     private static final int TIME_HOURS = 60 * 60 * 1000;
@@ -149,8 +153,15 @@ public class AuctionMonitorItemBean extends ItemType {
     }
 
     public void setTempLocalBid(double tempLocalBid) {
-        this.tempLocalBid = tempLocalBid;
-        setLocalBid();
+        if (tempLocalBid <= MAX_BID && 
+            tempLocalBid - localHighBid <= MAX_BID_INCREASE) {
+            this.tempLocalBid = tempLocalBid;
+            setLocalBid();
+            bidMessage = false;
+        }
+        else{
+            bidMessage = true;
+        }
     }
 
     public double getTempLocalBid() {
@@ -158,8 +169,11 @@ public class AuctionMonitorItemBean extends ItemType {
     }
 
     public String setLocalBid() {
-        if (tempLocalBid > localHighBid) {
+        if (tempLocalBid > localHighBid &&
+            tempLocalBid <= MAX_BID && 
+            tempLocalBid - localHighBid <= MAX_BID_INCREASE) {
             localHighBid = tempLocalBid;
+            bidMessage = false;
             AuctionState.getAuctionMap().put(getItemID() + ".price",
                                              new Double(localHighBid));
             AuctionState.getAuctionMap().put(getItemID() + ".bidCount",
@@ -177,7 +191,22 @@ public class AuctionMonitorItemBean extends ItemType {
             }
 
         }
+        else if (tempLocalBid <= localHighBid){
+            bidMessage = false;
+        }
+        else {
+            bidMessage = true;
+        }
         return SUCCESS;
+    }
+
+    public String getBidMessage(){
+        if (!bidMessage){
+            return "";
+        }
+        else{
+            return "<br />Bid declined.";
+        }
     }
 
     public double getLocalBid() {

@@ -176,6 +176,7 @@
                                            image="./images/button_bid_decline.gif"
                                            action="#{item.pressBidButton}"
                                            style="border: 0px;width: 15px;height:15px"/>
+                        <ice:outputText value="#{item.bidMessage}" escape="false" />
                     </ice:panelGroup>
                 </ice:panelGrid>
                 <ice:panelGrid columns="3" width="100%"
@@ -206,6 +207,7 @@
             </ice:column>
         </ice:dataTable>
     </div>
+    <span style="font-size: smaller;">* Item prices cannot be incremented by more then $1,000,000 per bid.</span>     
 </h:form>
 <br/>
 <!-- Item List End -->
