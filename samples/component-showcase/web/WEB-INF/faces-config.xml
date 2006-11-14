@@ -50,7 +50,12 @@
             com.icesoft.icefaces.samples.showcase.components.fileUpload.InputFileBean
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>renderManager</property-name>
+            <value>#{renderManager}</value>
+        </managed-property>
     </managed-bean>
+
 
     <managed-bean>
         <description>
@@ -174,8 +179,8 @@
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
         <managed-property> 
-            <property-name>renderManager</property-name> 
-            <value>#{renderManager}</value> 
+            <property-name>renderManager</property-name>
+            <value>#{renderManager}</value>
         </managed-property>
     </managed-bean>
     
@@ -220,11 +225,11 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteBean
         </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
         <managed-property>
             <property-name>dictionary</property-name>
             <value>#{autoCompleteDictionary.dictionary}</value>
         </managed-property>
-        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
     <!-- Drag and Drop backing bean -->

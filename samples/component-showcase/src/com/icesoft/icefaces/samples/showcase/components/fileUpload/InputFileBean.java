@@ -36,6 +36,8 @@ package com.icesoft.icefaces.samples.showcase.components.fileUpload;
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
+import com.icesoft.faces.async.render.RenderManager;
+import com.icesoft.faces.async.render.Renderable;
 
 import javax.faces.event.ActionEvent;
 import java.io.File;
@@ -47,14 +49,61 @@ import java.util.EventObject;
  *
  * @since 0.3.0
  */
-public class InputFileBean {
+public class InputFileBean  implements Renderable {
 
     private int percent = -1;
-    private PersistentFacesState state = null;
     private File file = null;
+
+    /**
+     * Renderable Interface
+     */
+    private PersistentFacesState state;
+    private RenderManager renderManager;
+
+    private String fileName = "";
+    private String contentType = "";
+
 
     public InputFileBean() {
         state = PersistentFacesState.getInstance();
+    }
+
+    /**
+     * Sets the Render Manager.
+     *
+     * @param renderManager
+     */
+    public void setRenderManager(RenderManager renderManager) {
+
+        this.renderManager = renderManager;
+    }
+
+    /**
+     * Gets RenderManager, just try to satisfy WAS
+     *
+     * @return RenderManager null
+     */
+    public RenderManager getRenderManager() {
+        return null;
+    }
+
+    /**
+     * Get the PersistentFacesState.
+     *
+     * @return state the PersistantFacesState
+     */
+    public PersistentFacesState getState() {
+
+        return state;
+    }
+
+    /**
+     * Handles rendering exceptions for the progress bar.
+     *
+     * @param renderingException the exception that occured
+     */
+    public void renderingException(RenderingException renderingException) {
+        renderingException.printStackTrace();
     }
 
     public void setPercent(int percent) {
@@ -99,21 +148,12 @@ public class InputFileBean {
     public void progress(EventObject event) {
         InputFile file = (InputFile) event.getSource();
         this.percent = file.getFileInfo().getPercent();
-        try {
-            if (state != null) {
-                state.render();
-            } else {
-                System.out.println("state is null");
-            }
 
-        } catch (RenderingException ee) {
-            System.out.println(ee.getMessage());
+        if (renderManager != null) {
+           renderManager.requestRender(this);
         }
+
     }
-
-
-    private String fileName = "";
-    private String contentType = "";
 
 
     public void setFileName(String fileName) {
@@ -132,12 +172,4 @@ public class InputFileBean {
         return contentType;
     }
 
-    private int status;
-
-    public String callAction() {
-        if (status == InputFile.SAVED) {
-            return "saved";
-        }
-        return "";
-    }
 }
