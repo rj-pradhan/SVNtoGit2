@@ -66,6 +66,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p><strong>DOMResponseWriter</strong> is a DOM specific implementation of
@@ -424,6 +426,9 @@ public class DOMResponseWriter extends ResponseWriter {
         script.setAttribute("language", "javascript");
         String calls = JavascriptContext.getJavascriptCalls(facesContext);
         script.appendChild(document.createTextNode(calls));
+
+        Map session = facesContext.getExternalContext().getSessionMap();
+        ElementController.from(session).addInto(body);
     }
 
     private void enhanceHead(Element head) {
