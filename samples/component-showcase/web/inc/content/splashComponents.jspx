@@ -42,7 +42,7 @@
 
         <ul>
             <li>Optimized to fully leverage ICEfaces Direct-to-Dom rendering
-                technology providing seamless seamless incremental
+                technology providing seamless incremental
                 user-interface updates for all components without full-page
                 refreshes (partial-page rendering).
             </li>
