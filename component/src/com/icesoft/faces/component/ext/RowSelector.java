@@ -33,6 +33,8 @@
 
 package com.icesoft.faces.component.ext;
 
+import com.icesoft.faces.context.effects.JavascriptContext;
+
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
@@ -56,6 +58,11 @@ public class RowSelector extends UIComponentBase {
             "com.icesoft.faces.RowSelectorRenderer";
     public static final String COMPONENT_FAMILY =
             "com.icesoft.faces.RowSelectorFamily";
+
+    public RowSelector(){
+       JavascriptContext
+               .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
 
     public String getFamily() {
         return COMPONENT_FAMILY;
