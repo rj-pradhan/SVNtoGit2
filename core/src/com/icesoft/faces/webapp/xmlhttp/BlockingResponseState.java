@@ -72,6 +72,15 @@ public class BlockingResponseState implements ResponseState, Serializable {
     private int unflushed = 0;
     private HttpSession session;
 
+    /*
+    Bug 1010:  Added emptry constructor so that the extending class is not
+    required to call the "real" constructor.  This was agreed upon as the
+    least disruptive solution even though it breaks strict backwards
+    compatibility with 1.5 Open Source version.
+    */
+    protected BlockingResponseState() {
+    }
+
     public BlockingResponseState(HttpSession session, String iceID,
                                  String viewNumber) {
         if (iceID == null || viewNumber == null) {
