@@ -74,7 +74,10 @@
             }
         },
 
-        disconnectAllListenersAndPeers: function() {
+        disconnectAllListenersAndPeers: /MSIE/.test(navigator.userAgent) ?
+            this.disconnectProcess.delayFor(100) : this.disconnectProcess,
+
+        disconnectProcess: function() {
             var elements = this.element.getElementsByTagName('*');
             for (var i = 0; i < elements.length; i++) {
                 var element = elements[i];
