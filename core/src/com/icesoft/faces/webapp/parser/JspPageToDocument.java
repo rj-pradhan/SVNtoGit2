@@ -65,7 +65,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 
 public class JspPageToDocument {
-    static String JSP_TAGLIB_PATTERN = "<%@\\s+taglib\\s+(.*?)%>";
+    static String JSP_TAGLIB_PATTERN = "<%@\\s*taglib\\s+(.*?)%>";
     static String URI_PATTERN = "uri=\"(.*?)\"";
     static String PREFIX_PATTERN = "prefix=\"(.*?)\"";
     static String JSP_DECL_PATTERN = "<%.*?%>";
