@@ -37,13 +37,17 @@ Function.prototype.delayFor = function(milliseconds) {
 		var thisContext = this;
 		var thisArguments = arguments;
 		var call = function() {
-			thisFunction.apply(thisContext, thisArguments);
-			clearInterval(thisArguments.id);
-			thisArguments.id = null;
-		};
+            try {
+                thisFunction.apply(thisContext, thisArguments);
+            } finally {
+                clearInterval(thisArguments.id);
+                thisArguments.id = null;
+            }
+        };
 		var id = thisArguments.id = setInterval(call, milliseconds);
         arguments.callee.cancel = function() {
             clearInterval(id);
+            thisArguments.id = null;
         };
 	};
 };

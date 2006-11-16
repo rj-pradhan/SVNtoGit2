@@ -43,6 +43,23 @@
         return container;
     };
 
+    This.DisconnectAllListenersAndPeers = function(e) {
+        var elements = e.getElementsByTagName('*');
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            var peer = element.peer;
+            if (peer) {
+                //disconnect listeners
+                peer.eachListenerName(function(listenerName) {
+                    element[listenerName.toLowerCase()] = null;
+                });
+                //disconnect peers
+                element.peer = null;
+                peer.element = null;
+            }
+        }
+    };
+
     This.Element = Object.subclass({
         MouseListenerNames: [ 'onClick', 'onDblClick', 'onMouseDown', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp' ],
 
@@ -75,33 +92,22 @@
         },
 
         disconnectAllListenersAndPeers: /MSIE/.test(navigator.userAgent) ?
-            this.disconnectProcess.delayFor(100) : this.disconnectProcess,
-
-        disconnectProcess: function() {
-            var elements = this.element.getElementsByTagName('*');
-            for (var i = 0; i < elements.length; i++) {
-                var element = elements[i];
-                var peer = element.peer;
-                if (peer) {
-                    //disconnect listeners
-                    peer.eachListenerName(function(listenerName) {
-                        element[listenerName.toLowerCase()] = null;
-                    });
-                    //disconnect peers
-                    element.peer = null;
-                    peer.element = null;
-                }
-            }
-        },
+            function() {
+                //cleanup in a different (pseudo) thread
+                This.DisconnectAllListenersAndPeers.delayFor(100)(this.element);
+            } :
+            function() {
+                This.DisconnectAllListenersAndPeers(this.element);
+            },
 
         serializeOn: function(query) {
         },
 
         sendOn: function(connection) {
-            if(connection!=null){
-            Query.create(function(query) {
-                this.serializeOn(query);
-            }.bind(this)).sendOn(connection);
+            if (connection != null) {
+                Query.create(function(query) {
+                    this.serializeOn(query);
+                }.bind(this)).sendOn(connection);
             }
         },
 
@@ -124,7 +130,7 @@
             this.element.peer = this;
         },
 
-        //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
+    //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
         displayOff: /Safari/.test(navigator.userAgent) ? Function.NOOP : function() {
             this.element.style.display = 'none';
         },
@@ -191,8 +197,8 @@
                 this.element.src = newElement.src;
                 this.element.value = newElement.value;
                 this.element.readOnly = newElement.readOnly;
-                if(newElement.style.display)this.element.style.display='none';
-                else this.element.style.display='';
+                if (newElement.style.display)this.element.style.display = 'none';
+                else this.element.style.display = '';
 
 
                 this.element.title = newElement.title;
@@ -348,22 +354,22 @@
             this.element.onfocus = Function.NOOP;
             this.element.focus();
             this.element.onfocus = onFocusListener;
-        },    
-    
+        },
+
         serializeOn: function(query) {
             query.add(this.element.name, this.element.name);
         },
-        
+
         form: function() {
             var parent = this.element.parentNode;
             while (parent) {
                 if (parent.tagName && parent.tagName.toLowerCase() == 'form') return This.Element.adaptToElement(parent);
                 parent = parent.parentNode;
             }
-            
+
             throw 'Cannot find enclosing form.';
         }
-    });    
+    });
 
     This.TableCellElement = This.Element.subclass({
         replaceHtml: function(html) {
