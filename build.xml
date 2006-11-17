@@ -58,6 +58,8 @@
     <propertyref name="version.secondary"/>
     <propertyref name="version.tertiary"/>
     <propertyref name="release.type"/>
+    <propertyref name="build.number"/>
+    <propertyref name="revision"/>
 </propertyset>
 
 <presetdef name="ant" uri="urn:ICEsoft">
