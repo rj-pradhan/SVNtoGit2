@@ -54,7 +54,6 @@ public class RadioRenderer extends SelectManyCheckboxListRenderer {
                                 Element rootTR, int counter,
                                 Object componentValue)
             throws IOException {
-
         UISelectOne uiSelectOne = (UISelectOne) uiComponent;
         DOMContext domContext =
                 DOMContext.attachDOMContext(facesContext, uiSelectOne);
@@ -104,9 +103,9 @@ public class RadioRenderer extends SelectManyCheckboxListRenderer {
             excludes.add("accesskey");
         }
 
-        Object selectItemValue = selectItem.getValue();
-
-        if (selectItemValue != null && selectItemValue.equals(componentValue)) {
+        Object selectItemValue = selectItem.getValue();  
+        
+        if (selectItemValue != null && String.valueOf(selectItemValue).equals(String.valueOf(componentValue))) {
             input.setAttribute("checked", "checked");
         } else {
             input.removeAttribute("checked");
