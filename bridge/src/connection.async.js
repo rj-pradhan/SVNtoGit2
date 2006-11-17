@@ -128,6 +128,7 @@
 
         shutdown: function() {
             this.listener.close();
+            this.onSendListeners.clear();
             this.onReceiveListeners.clear();
             this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();

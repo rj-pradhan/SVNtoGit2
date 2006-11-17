@@ -130,6 +130,7 @@
         },
 
         shutdown: function() {
+            this.onSendListeners.clear();
             this.onReceiveListeners.clear();
             this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();
