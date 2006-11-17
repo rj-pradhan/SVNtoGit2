@@ -53,6 +53,7 @@ import javax.faces.event.FacesEvent;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.EventObject;
 import java.util.Iterator;
@@ -62,7 +63,7 @@ import java.util.Map;
 /**
  * InputFile is a JSF component class representing an ICEfaces inputFile.
  */
-public class InputFile extends UICommand {
+public class InputFile extends UICommand implements Serializable{
 
     public static final String FILE_UPLOAD_COMPONENT_ID =
             "fileUploadComponentId";
