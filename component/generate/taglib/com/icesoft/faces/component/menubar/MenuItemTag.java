@@ -75,6 +75,7 @@ public class MenuItemTag extends UIComponentTag {
         immediate = null;
         link = null;
         value = null;
+        target = null;
     }
 
     /**
@@ -142,6 +143,15 @@ public class MenuItemTag extends UIComponentTag {
                 _component.getAttributes().put("link", link);
             }
         }
+        if (target != null) {
+            if (isValueReference(target)) {
+                ValueBinding _vb = getFacesContext().getApplication()
+                        .createValueBinding(target);
+                _component.setValueBinding("target", _vb);
+            } else {
+                _component.getAttributes().put("target", target);
+            }
+        }
         if (value != null) {
             if (isValueReference(value)) {
                 ValueBinding _vb = getFacesContext().getApplication()
@@ -193,6 +203,13 @@ public class MenuItemTag extends UIComponentTag {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    // target
+    private String target = null;
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     // value
