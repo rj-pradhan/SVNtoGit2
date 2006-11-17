@@ -130,7 +130,10 @@
         },
 
         shutdown: function() {
-            //do nothing.
+            this.onReceiveListeners.clear();
+            this.onRedirectListeners.clear();
+            this.connectionDownListeners.clear();
+            this.sessionExpiredListeners.clear();
         }
     });
 });

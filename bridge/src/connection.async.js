@@ -128,6 +128,10 @@
 
         shutdown: function() {
             this.listener.close();
+            this.onReceiveListeners.clear();
+            this.onRedirectListeners.clear();
+            this.connectionDownListeners.clear();
+            this.sessionExpiredListeners.clear();            
         }
     });
 });
