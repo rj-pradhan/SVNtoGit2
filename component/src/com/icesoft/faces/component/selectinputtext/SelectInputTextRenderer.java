@@ -92,7 +92,7 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
             div.setAttribute(HTML.STYLE_ATTR,
                              "display:none;border:1px solid black;background-color:white;");
             root.appendChild(div);
-            if (component.getStyle() != null && component.getStyle().equals("")) {
+            if (component.getStyle() != null && !component.getStyle().equals("")) {
             	root.setAttribute(HTML.STYLE_ATTR, component.getStyle());
             }
             root.setAttribute(HTML.CLASS_ATTR, component.getStyleClass());
