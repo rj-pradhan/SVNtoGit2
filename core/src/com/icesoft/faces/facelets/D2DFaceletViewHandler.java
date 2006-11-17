@@ -78,7 +78,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     // Log instance for this class
     private static Log log = LogFactory.getLog(D2DFaceletViewHandler.class);
     
-    private FaceletFactory faceletFactory;
+    protected FaceletFactory faceletFactory;
 
     public D2DFaceletViewHandler() {
     }
@@ -101,6 +101,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
             }
         }
     }
+
 
     protected void initializeCompiler(Compiler c) {
         FacesContext ctx = FacesContext.getCurrentInstance();
