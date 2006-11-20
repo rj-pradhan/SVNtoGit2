@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+A single-choice drop-down menu
+	</description>
+
+	<display-name>Select One Menu</display-name>
+	<component-type>com.icesoft.faces.HtmlSelectOneMenu</component-type>
+
+	&ice-selectOneMenu-props;
+	
+	<component-extension>
+		<base-component-type>javax.faces.HtmlSelectOneMenu</base-component-type>
+		<component-family>javax.faces.SelectOne</component-family>
+		<renderer-type>com.icesoft.faces.Menu</renderer-type>
+	</component-extension>
+
+</component>

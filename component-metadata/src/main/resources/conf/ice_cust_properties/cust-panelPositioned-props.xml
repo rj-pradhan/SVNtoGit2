@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+&core-props;
+&uidata-props;
+
+<property>
+	<description>
+		TODO:
+	</description>
+	
+	<property-name>listener</property-name>
+   <property-class>javax.faces.el.MethodBinding</property-class>
+
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&methodBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Displays the progress of a long-running task
+	</description>
+	<display-name>Output Progress</display-name>
+	<component-type>com.icesoft.faces.Progress</component-type>
+
+	&ice-cust-outputprogress-props;
+
+	<component-extension>
+		<base-component-type>
+			com.sun.faces.Component
+		</base-component-type>
+		<component-family>com.icesoft.faces.Progress</component-family>
+		<renderer-type>com.icesoft.faces.Bar</renderer-type>
+	</component-extension>
+</component>

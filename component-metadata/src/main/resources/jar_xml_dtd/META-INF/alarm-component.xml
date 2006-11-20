@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Represents a theme-specific alarm icon specified by it's severity or by the url.
+    ]]></description>
+
+  <display-name>Alarm</display-name>
+
+  <component-type>com.sun.rave.web.ui.Alarm</component-type>
+
+  <property>
+    <description>
+        Specifies the severity of the alarm.
+	Valid values are: critical, major, minor, down, ok.
+	Note, a severity of ok renders no alarm icon. This is the default value.
+      </description>
+    <display-name>Severity</display-name>
+    <property-name>severity</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <named-value>
+        <name>com.sun.rave.propertyeditors.DOMAIN_CLASS</name>
+        <expression>com.sun.rave.propertyeditors.domains.StringTokensDomain.class</expression>
+      </named-value>
+      <named-value>
+        <name>com.sun.rave.propertyeditors.domains.TOKEN_STRING</name>
+        <value>critical,major,minor,down,ok</value>
+      </named-value>
+    </property-extension>
+  </property>
+
+  &alt-props;
+
+  &core-braveheart-props;
+
+  &onClickXXX-props;
+
+  &onKeyXXX-props;
+
+  &onMouseXXX-props;
+
+  &toolTip-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Image</base-component-type>
+    <component-family>com.sun.rave.web.ui.Alarm</component-family>
+    <renderer-type>com.sun.rave.web.ui.Alarm</renderer-type>
+  </component-extension>
+
+</component>

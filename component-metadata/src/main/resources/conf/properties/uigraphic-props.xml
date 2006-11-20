@@ -1,0 +1,19 @@
+<?xml encoding='UTF-8'?>
+
+
+&uicomponent-props;
+&value-props;
+
+<property>
+	<property-name>url</property-name>
+	<property-extension>
+		<tag-attribute>false</tag-attribute>
+		<category>DATA</category>
+		<editor-class>
+			&urlEditor;
+		</editor-class>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+

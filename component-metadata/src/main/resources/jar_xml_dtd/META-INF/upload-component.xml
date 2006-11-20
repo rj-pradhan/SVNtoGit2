@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      An input field for files that will be uploaded when the surrounding form
+      is submitted
+  </description>
+  <display-name>File Upload</display-name>
+  <component-type>com.sun.rave.web.ui.Upload</component-type>
+
+    <property>
+      <description>
+<![CDATA[The value of this attribute must be a JSF EL expression, and
+	     	     it must resolve to an object of type
+<code>com.sun.rave.web.ui.model.UploadedFile</code>. See the JavaDoc for
+this class for details. ]]>
+      </description>
+    <display-name>Uploaded File</display-name>
+    <property-name>uploadedFile</property-name>
+    <property-class>com.sun.rave.web.ui.model.UploadedFile</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <alias-for>value</alias-for>
+      <short-description>
+          EL expression that resolves to an object of type com.sun.rave.web.ui.model.UploadedFile
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Number of character columns used to render this field.
+    </description>
+    <display-name>Columns</display-name>
+    <property-name>columns</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <default-value>40</default-value>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Field</base-component-type>
+    <component-family>com.sun.rave.web.ui.Upload</component-family>
+    <renderer-type>com.sun.rave.web.ui.Upload</renderer-type>
+  </component-extension>
+
+</component>

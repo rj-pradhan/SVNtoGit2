@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Displays the messages for all components on the page
+	</description>
+
+	<display-name>Messages</display-name>
+	<component-type>com.icesoft.faces.HtmlMessages</component-type>
+
+	&ice-messages-props;
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlMessages
+		</base-component-type>
+		<component-family>javax.faces.Messages</component-family>
+		<renderer-type>com.icesoft.faces.Messages</renderer-type>
+	</component-extension>
+
+</component>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+
+<code></code>Use
+the <code>ui:alarm</code>
+tag to display a theme-specific image in the rendered HTML page.
+The <code>severity</code>attribute is used to specify the alarm severity which in turn is used to determine the theme-specific alarm icon to render. 
+The <code>url</code> attribute and (and other attributes related to an image) may be used to override the them-sepcific alarm icon.<br>
+<h3>HTML Elements and Layout</h3>
+The rendered HTML page displays an XHTML compliant <code>&lt;img&gt;</code>
+element with any applicable attributes.
+<h3>Theme Identifiers</h3>
+Alarm icons.
+<h3>Client Side Javascript Functions</h3>
+None.
+<br>
+<h3>Examples</h3>
+<h4>Example 1: Create an alarm with critical severity.</h4>
+<code>&lt;ui:alarm id="alarm1" severity="critical" /&gt;
+<br>
+<br>
+<h4>Example 2: Create a alarm with major severity, but override the alarm image.</h4>
+<code>&lt;ui:alarm id="alarm2" severity="major" 
+url="../images/major.gif" height="10" width="10" 
+alt="Processor Alarm: Major" /&gt;
+</code><br>
+
+	
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Alarm</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Alarm</renderer-type>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>alarm</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

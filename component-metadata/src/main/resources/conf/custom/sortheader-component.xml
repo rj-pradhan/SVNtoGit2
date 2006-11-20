@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Provides a column sorting header facet for a Data Table
+	</description>
+
+	<display-name>Command Sort Header</display-name>
+	<component-type>com.icesoft.faces.SortHeader</component-type>
+
+	&ice-cust-sortheader-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlCommandLink
+		</base-component-type>
+		<component-family>javax.faces.Command</component-family>
+		<renderer-type>com.icesoft.faces.SortHeader</renderer-type>
+	</component-extension>
+
+</component>

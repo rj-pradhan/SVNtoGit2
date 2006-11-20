@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Visually separates Menu Items into groups within a menu
+	</description>
+
+	<display-name>Menu Item Separator</display-name>
+	<component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
+
+	&ice-cust-menunodeSeparator-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>
+			com.icesoft.faces.MenuNodeSeparator
+		</component-family>
+		<renderer-type>com.icesoft.faces.View</renderer-type>
+	</component-extension>
+
+</component>

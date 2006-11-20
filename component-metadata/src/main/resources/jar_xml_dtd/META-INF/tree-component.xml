@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      A tree of zero or more TreeNodes
+  </description>
+
+  <display-name>Tree</display-name>
+
+  <component-type>com.sun.rave.web.ui.Tree</component-type>
+
+  <property>
+    <description>
+      The text displayed at root of the tree
+    </description>
+    <display-name>Text</display-name>
+    <property-name>text</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+  
+  <property>
+    <description>
+	Specifies if this &lt;code&gt;Tree&lt;/code&gt; should run on the client, or if it
+	should interact with the server.  If it runs on the client, then
+	clicking on the tree icon to expand or collapse portions of the tree
+	will happen only on the client (browser).  Otherwise, it will make a
+	request to the server each time the tree is expanded or collapsed.
+      </description>
+    <display-name>ClientSide</display-name>
+    <property-name>clientSide</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>false</default-value>
+      <short-description>
+          Perform expand/collapse operations without sending a server request
+      </short-description>
+    </property-extension>
+  </property>
+  
+  <property>
+    <description>
+        Flag indicating that folder / container nodes will automatically expand
+	when they are selected. This attribute is true by default. If you want a tree's container
+        nodes to expand only when the handle icons are clicked, set expandOnSelect to false.
+      </description>
+    <display-name>Expand On Select</display-name>
+    <property-name>expandOnSelect</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>true</default-value>
+      <short-description>
+          Automatically expand nodes when selected
+      </short-description>
+    </property-extension>
+  </property>
+  
+    <property>
+     <description>
+         Indicate that event handling for this component should be
+         handled immediately (in Apply Request Values phase) rather than
+         waiting until Invoke Application phase.
+     </description>
+     <display-name>Immediate</display-name>
+     <property-name>immediate</property-name>
+     <property-class>boolean</property-class>
+     <property-extension>
+       <is-bindable>true</is-bindable>
+       <default-value>false</default-value>
+     </property-extension>
+    </property>
+
+    <property>
+     <description>
+         Indicates that the user must select a value for this tree.
+     </description>
+     <display-name>Required</display-name>
+     <property-name>required</property-name>
+     <property-class>boolean</property-class>
+     <property-extension>
+       <is-bindable>true</is-bindable>
+       <default-value>false</default-value>
+     </property-extension>
+    </property>
+
+    <property>
+     <description>
+         Specifies the client id of the selected tree node.
+     </description>
+     <display-name>Selected</display-name>
+     <property-name>selected</property-name>
+     <property-class>String</property-class>
+     <property-extension>
+       <is-bindable>true</is-bindable>
+     </property-extension>
+    </property>
+    
+  &core-braveheart-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.TreeNode</base-component-type>
+    <component-family>com.sun.rave.web.ui.Tree</component-family>
+    <renderer-type>com.sun.rave.web.ui.Tree</renderer-type>
+  </component-extension>
+
+</component>

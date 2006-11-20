@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<complibConfiguration version="1.0"
+	resourceBundleBaseName="ComplibBundle">
+	<identifier>
+		<uri>@taglib-uri@</uri>
+		<version>@version@</version>
+	</identifier>
+	<titleKey>iceTitleKey</titleKey>
+
+	<!-- runtime library  -->
+
+	<runtimePath>
+		<pathElement>icefaces-webui.jar</pathElement>
+		<pathElement>icefaces.jar</pathElement>
+		<pathElement>commons-fileupload.jar</pathElement>
+		<pathElement>xercesImpl.jar</pathElement>
+		<pathElement>xml-apis.jar</pathElement>
+		<pathElement>backport-util-concurrent.jar</pathElement>
+		<pathElement>el-api.jar</pathElement>
+		<pathElement>krysalis-jCharts-1.0.0-alpha-1.jar</pathElement>
+	</runtimePath>
+
+	<!-- different library for design todo: fix me  -->
+
+	<designTimePath prependRuntimePath="false">
+		<pathElement>icefaces-webui.jar</pathElement>
+		<pathElement>icefaces-dt.jar</pathElement>
+		<pathElement>icefaces-webui-dt.jar</pathElement>
+		<pathElement>krysalis-jCharts-1.0.0-alpha-1.jar</pathElement>
+		<pathElement>commons-logging-api.jar</pathElement>
+	</designTimePath>
+
+	<javadocPath>
+		<pathElement>icefaces-webui-doc.zip</pathElement>
+	</javadocPath>
+
+	<!--
+		<webResourcePath>
+		<pathElement>style.jar</pathElement>
+		</webResourcePath>
+		
+	
+	<sourcePath>
+		<pathElement>icefaces-src.jar</pathElement>
+		<pathElement>icefaces-comps-src.jar</pathElement>
+	</sourcePath>
+	-->
+
+	<initialPalette>
+		<folder key="MainCategory">
+
+			<!-- ICEfaces Component Suite -->
+
+			<item className="com.icesoft.faces.component.ext.HtmlForm" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlPanelGroup" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlPanelGrid" />
+			<item
+				className="com.icesoft.faces.component.panelstack.PanelStack" />
+			<item
+				className="com.icesoft.faces.component.panelborder.PanelBorder" />
+			<item
+				className="com.icesoft.faces.component.paneltabset.PanelTabSet">
+				<item
+					className="com.icesoft.faces.component.paneltabset.PanelTab" />
+			</item>
+			<item
+				className="com.icesoft.faces.component.panelseries.PanelSeries" />
+			<item
+				className="com.icesoft.faces.component.panelpopup.PanelPopup" />
+		    <item
+				className="com.icesoft.faces.component.panelpositioned.PanelPositioned" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlOutputText" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlOutputLabel" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlOutputLink" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlOutputFormat" />
+			<item
+				className="com.icesoft.faces.component.style.OutputStyle" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlGraphicImage" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlCommandButton" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlCommandLink" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlInputText" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlInputSecret" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlInputHidden" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlInputTextarea" />
+			<item
+				className="com.icesoft.faces.component.selectinputtext.SelectInputText" />
+			<item
+				className="com.icesoft.faces.component.selectinputdate.SelectInputDate" />
+			<item
+				className="com.icesoft.faces.component.inputfile.InputFile" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectOneRadio" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectManyCheckbox" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectOneListbox" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectManyListbox" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectOneMenu" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlSelectManyMenu" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlDataTable">
+				<!-- move to action  item 
+					className="com.icesoft.faces.component.commandsortheader.CommandSortHeader" / -->
+				<item
+					className="com.icesoft.faces.component.datapaginator.DataPaginator" />
+			</item>
+			<item className="com.icesoft.faces.component.tree.Tree">
+			<!-- only one tree node is allowed TODO: binding tree model
+				<item
+					className="com.icesoft.faces.component.tree.TreeNode" /> -->
+			</item>
+			<item
+				className="com.icesoft.faces.component.menubar.MenuBar">
+				<item
+					className="com.icesoft.faces.component.menubar.MenuItem" />
+				<item
+					className="com.icesoft.faces.component.menubar.MenuItems" />
+				<item
+					className="com.icesoft.faces.component.menubar.MenuItemSeparator" />
+			</item>
+			<item
+				className="com.icesoft.faces.component.outputchart.OutputChart" />
+			<item
+				className="com.icesoft.faces.component.outputdeclaration.OutputDeclaration" />
+
+			<item
+				className="com.icesoft.faces.component.outputprogress.OutputProgress" />
+			<item
+				className="com.icesoft.faces.component.outputconnectionstatus.OutputConnectionStatus" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlMessage" />
+			<item
+				className="com.icesoft.faces.component.ext.HtmlMessages" />
+
+
+		</folder>
+		<folder key="MainCategory2">
+
+			<!-- ICEfaces Suport Bean -->
+
+			<item
+				className="com.icesoft.faces.component.jsfcl.data.BorderLayoutBean" />
+			<item
+				className="com.icesoft.faces.component.jsfcl.data.DefaultSelectedData" />
+			<item
+				className="com.icesoft.faces.renderkit.webui.custom.data.CachedRowSetSortableDataModel" />
+			<!-- 
+				<item className="" />
+				<item className="" />
+			-->
+		</folder>
+	</initialPalette>
+</complibConfiguration>

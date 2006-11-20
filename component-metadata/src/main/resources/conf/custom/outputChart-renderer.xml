@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p >
+The outputChart component uses the JCharts open source charting utility
+(http://jcharts.sourceforge.net/) to create charts.
+The two main types of charts that can be created with this component are pie cha rts and axis charts.
+<br/>
+</p>
+
+<div
+ style="margin: 13pt 0pt 6pt; color: rgb(0, 0, 0); font-style: normal; font-weig ht: bold; text-align: left; text-decoration: none; text-indent: 0pt; text-transf orm: none; vertical-align: baseline;">Usability
+<br>]]>
+	</description>
+	<component-family>javax.faces.Command</component-family>
+	<renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
+	<renderer-extension>
+		<instance-name>outputChart</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>outputChart</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

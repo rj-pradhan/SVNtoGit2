@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&core-props;
+&actionsource-props;
+
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>chartTitle</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>type</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>xaxisTitle</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>yaxisTitle</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>xaxisLabels</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>colors</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>colors</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>data</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>data</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>height</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>width</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		TODO
+	</description>
+	<property-name>labels</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

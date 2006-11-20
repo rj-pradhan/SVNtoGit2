@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	         <![CDATA[<p>The panelBorder is a layout container component that arranges and resizes specified child
+            containers to fit in five regions: north, south, east, west, and center. These regions are
+            defined using facets.<br>
+            The panelBorder component can be used to provide a general layout scheme for a page.<br>
+            Note: A panelBorder facet needs a container type component as a child (e.g.,
+            panelGroup, panelGrid or form). panelGroup renders a span tag, which doesn't
+            work properly if using Mozilla. panelGrid can be used to avoid display problems. ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>com.icesoft.faces.BorderLayout</renderer-type>
+ 
+	<renderer-extension>
+		<instance-name>panelBorder</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelBorder</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

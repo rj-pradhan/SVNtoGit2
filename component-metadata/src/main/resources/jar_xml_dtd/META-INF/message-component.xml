@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Renders a message associated with a specific component on the page
+  </description>
+
+  <display-name>Message</display-name>
+
+  <component-type>com.sun.rave.web.ui.Message</component-type>
+
+  <property>
+    <description>
+        Identifier of the component this message is associated with.
+      </description>
+    <display-name>Input Component</display-name>
+    <property-name>for</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <short-description>
+          Identifier of the component that is associated with this message
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Flag to determine whether to show the detail message. 
+      </description>
+    <display-name>Show Detail Message</display-name>
+    <property-name>showDetail</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <default-value>true</default-value>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Flag to determine whether to show the summary message.
+      </description>
+    <display-name>Show Summary Message</display-name>
+    <property-name>showSummary</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <default-value>false</default-value>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &alt-props;
+
+  &core-braveheart-props;
+
+  &tabIndex-props;
+
+  &visible-props;
+
+  <component-extension>
+    <!-- <RAVE> -->
+    <!-- <base-component-type>javax.faces.Output</base-component-type> -->
+    <!-- </RAVE> -->
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Message</component-family>
+    <renderer-type>com.sun.rave.web.ui.Message</renderer-type>
+  </component-extension>
+
+</component>

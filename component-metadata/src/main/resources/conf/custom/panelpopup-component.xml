@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Provides a moveable or modal popup panel that hovers on top of
+		the page
+	</description>
+
+	<display-name>Panel Popup</display-name>
+	<component-type>com.icesoft.faces.PanelPopup</component-type>
+
+	&ice-cust-panelpopup-props;
+
+	<component-extension>
+		<base-component-type>
+			com.icesoft.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.PanelPopup</renderer-type>
+	</component-extension>
+</component>

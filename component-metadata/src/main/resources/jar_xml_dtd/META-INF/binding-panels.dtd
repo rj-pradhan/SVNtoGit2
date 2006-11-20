@@ -1,0 +1,13 @@
+<!-- Property binding panel classes, defined in package com.sun.rave.propertyeditors.binding. 
+     A property's binding panel classes are specified via the property descriptor attribute
+     "bindingPanelClassNames" (vd. ValueBindingPropertyEditor.BINDING_PANEL_CLASS_NAMES).
+  -->
+
+<!ENTITY % panel-package "com.sun.rave.propertyeditors.binding.data">
+<!ENTITY % valueTo0bject-panel "%panel-package;.BindValueToObjectPanel.class">
+<!ENTITY % valueToDataProvider-panel "%panel-package;.BindValueToDataProviderPanel.class">
+<!ENTITY % valueToRowset-panel "%panel-package;.BindValueToRowSetPanel.class">
+<!ENTITY % optionsToDataProvider-panel "%panel-package;.BindOptionsToDataProviderPanel.class">
+
+<!ENTITY bindValueClassesExpr "new Class[] {%valueToDataProvider-panel;, %valueTo0bject-panel;}">
+<!ENTITY bindOptionsClassesExpr "new Class[] {%optionsToDataProvider-panel;, %valueTo0bject-panel;}">

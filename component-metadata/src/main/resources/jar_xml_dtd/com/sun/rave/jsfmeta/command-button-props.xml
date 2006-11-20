@@ -1,0 +1,43 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== Command+Button Properties ================================== -->
+
+
+    <property>
+      <property-name>alt</property-name>
+      <property-extension>
+          <category>APPEARANCE</category>
+      </property-extension>
+    </property>
+
+    <property>
+      <property-name>image</property-name>
+      <property-extension>
+          <category>APPEARANCE</category>
+          <editor-class>            
+            com.sun.rave.propertyeditors.UrlPropertyEditor
+          </editor-class>
+      </property-extension>
+    </property>
+
+    <property>
+      <property-name>type</property-name>
+      <property-extension>
+          <category>ADVANCED</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.COMMAND_BUTTON_TYPES
+            </expression>
+          </named-value>
+      </property-extension>
+    </property>

@@ -1,0 +1,21 @@
+<?xml encoding='UTF-8'?>
+
+
+    <property>
+      <property-name>columns</property-name>
+	  <property-class>int</property-class>
+      <property-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            &integerEditor;
+          </editor-class>
+          <named-value>
+            <name>minValue</name>
+            <expression>new Integer(0)</expression>
+          </named-value>
+          <named-value>
+            <name>unsetValue</name>
+            <expression>new Integer(Integer.MIN_VALUE)</expression>
+         </named-value>         
+    </property-extension>
+    </property>

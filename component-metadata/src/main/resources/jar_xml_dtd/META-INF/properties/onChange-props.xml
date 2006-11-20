@@ -1,0 +1,7 @@
+<property>
+  <property-name>onChange</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>

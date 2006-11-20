@@ -1,0 +1,45 @@
+<component>
+
+  <description><![CDATA[
+    A value expression based sort criteria for a TableDataProvider
+  ]]></description>
+  <display-name>Value Expression Sort Criteria</display-name>
+  <component-type>
+    com.sun.rave.web.ui.faces.ValueExpressionSortCriteria
+  </component-type>
+  <component-class>
+    com.sun.rave.web.ui.faces.ValueExpressionSortCriteria
+  </component-class>
+
+  &sort-criteria-props;
+
+  <property>
+    <description>
+      Value expression to retrieve the value for sorting.
+    </description>
+    <display-name>Value Expression</display-name>
+    <property-name>valueExpression</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Request map attribute key to store a TableRowDataProvider 
+      while iterating the rows
+    </description>
+    <display-name>Request Map Key</display-name>
+    <property-name>requestMapKey</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+</component>

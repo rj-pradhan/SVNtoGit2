@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	   <![CDATA[<p>The commandSortHeader component is used in conjunction with a dataTable.
+            The commandSortHeader renders a clickable column header facet allowing the user to toggle
+            the sort order of data in the table, either ascending or descending based on the values in
+            the column.<br>
+            The commandSortHeader can be used to provide a user-controlled data sorting
+            capability to a dataTable. ]]>
+	</description>
+	<component-family>javax.faces.Command</component-family>
+
+	<renderer-type>com.icesoft.faces.SortHeader</renderer-type>
+
+			<renderer-extension>
+				<instance-name>commandSortHeader</instance-name>
+				<is-container>true</is-container>
+				<renders-children>true</renders-children>
+				<tag-name>commandSortHeader</tag-name>
+				<taglib-prefix>@taglib-prefix@</taglib-prefix>
+				<taglib-uri>@taglib-uri@</taglib-uri>
+			</renderer-extension>
+
+</renderer>

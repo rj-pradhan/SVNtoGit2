@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Component that allows items from one list to be added to, or removed
+      from, a second list
+  </description>
+
+  <display-name>Add Remove List</display-name>
+
+  <component-type>com.sun.rave.web.ui.AddRemove</component-type>
+
+  <facet>
+    <description>Use this facet to replace the standard "Add" button. If
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_addButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+add()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Add Button</display-name>
+    <facet-name>addButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Remove"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_removeButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+remove()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Remove Button</display-name>
+    <facet-name>removeButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Add All" button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_addAllButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+addAll()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Add All Button</display-name>
+    <facet-name>addAllButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Remove All"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_removeAllButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+removeAll()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Remove All Button</display-name>
+    <facet-name>removeAllButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move Up"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveUpButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveUp()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Up Button</display-name>
+    <facet-name>moveUpButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move Down"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveDownButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveDown()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Down Button</display-name>
+    <facet-name>moveDownButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to create a header for the
+component. The facet will replace the component label. 
+</description>
+    <display-name>Header</display-name>
+    <facet-name>header</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to create a footer for the component.
+</description>
+    <display-name>Footer</display-name>
+    <facet-name>footer</facet-name>
+  </facet>
+
+  <property>
+    <description>
+      The label for the available list
+      </description>
+    <display-name>Available Items label</display-name>
+    <property-name>availableItemsLabel</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      The label for the selected list
+      </description>
+    <display-name>Selected Items label</display-name>
+    <property-name>selectedItemsLabel</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Use vertical layout instead of the default horizontal one
+      </description>
+    <display-name>Vertical layout</display-name>
+    <property-name>vertical</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Show the Add All and Remove All buttons
+      </description>
+    <display-name>Select All Buttons</display-name>
+    <property-name>selectAll</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Show the Move Up and Move Down buttons
+      </description>
+    <display-name>Move Buttons</display-name>
+    <property-name>moveButtons</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        If true, the items on the available options list are shown in alphabetical
+        order. The item on the selected options list are also shown in alphabetical order,
+        unless the moveButtons attribute is true, in which case the user is expected to
+        order the elements.
+      </description>
+    <display-name>Sorted</display-name>
+    <property-name>sorted</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Sort the options in alphabetical order</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Set this attribute to true if the component should allow items
+      from the available list to be added more than one to the
+      selected list, that is, if the selected list should allow duplicate entries. 
+      </description>
+    <display-name>Allow Duplicate Selections</display-name>
+    <property-name>duplicateSelections</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Allow duplicate entries in the selected list</short-description>
+    </property-extension>
+  </property>
+
+  &toolTip-props;
+  
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.ListSelector</base-component-type>
+    <component-family>com.sun.rave.web.ui.AddRemove</component-family>
+    <renderer-type>com.sun.rave.web.ui.AddRemove</renderer-type>
+  </component-extension>
+
+</component>

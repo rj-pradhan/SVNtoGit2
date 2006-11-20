@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component>
+	<description>
+		<![CDATA[ a container for a series of repeating child components ]]>
+	</description>
+	<display-name>Positioned Panel</display-name>
+	<component-type>com.icesoft.faces.dragdrop.PanelPositioned</component-type>
+
+	&ice-cust-panelPositioned-props;
+	<component-extension>
+	    <base-component-type>com.icesoft.faces.series</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.dragdrop.PanelPositionedRenderer</renderer-type>
+	</component-extension>
+</component>

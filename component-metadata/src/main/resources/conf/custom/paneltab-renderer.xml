@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	<![CDATA[<p>Renders an individual Panel Tab. Must be contained within a TabbedPane. ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>javax.faces.Group</renderer-type>
+
+	<renderer-extension>
+		<instance-name>panelTab</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelTab</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

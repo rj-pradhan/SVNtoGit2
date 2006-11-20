@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<!--
+  $Id: standard-html-renderkit-fixups.xml,v 1.1 2005/09/22 18:05:02 gjmurphy Exp $
+-->
+
+
+<!--
+    Fixups for metdata defining the standard HTML renderkit.
+-->
+
+
+<!DOCTYPE faces-config PUBLIC 
+ "-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.1//EN"
+ "http://www.sun.com/dtd/web-facesconfig-overlay_1_1.dtd">
+
+<faces-config>
+
+  <!-- Component inheritance fixups -->
+
+  <component>
+    <component-type>javax.faces.Input</component-type>
+    <component-extension>
+      <base-component-type>javax.faces.Output</base-component-type>
+    </component-extension>
+  </component>
+
+  <component>
+    <component-type>javax.faces.SelectBoolean</component-type>
+    <component-extension>
+      <base-component-type>javax.faces.Input</base-component-type>
+    </component-extension>
+  </component>
+
+  <component>
+    <component-type>javax.faces.SelectMany</component-type>
+    <component-extension>
+      <base-component-type>javax.faces.Input</base-component-type>
+    </component-extension>
+  </component>
+
+  <component>
+    <component-type>javax.faces.SelectOne</component-type>
+    <component-extension>
+      <base-component-type>javax.faces.Input</base-component-type>
+    </component-extension>
+  </component>
+
+</faces-config>

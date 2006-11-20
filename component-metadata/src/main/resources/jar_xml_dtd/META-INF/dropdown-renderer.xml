@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+    <h4>About this tag</h4>
+
+    <p>This tag renders a drop-down menu. Use the <code>selected</code>
+    attribute to associate the component with a model object that
+    represents the current choice, by setting the value to an EL
+    expression that corresponds to a property of a
+    managed bean.</p> 
+
+    <h4>Configuring the dropdown tag</h4>
+
+    <p>Use the <code>items</code> attribute to specify the options
+    from which the web application user can choose. The value must be
+    an EL expression that identifies an array, a
+    <code>java.util.Collection</code> or a <code>java.util.Map</code>
+    of <code>com.sun.rave.web.ui.model.Option</code>. </p> 
+
+    <p>The first time the component is rendered, the option which
+    corresponds to the value of the <code>selected</code> model object
+    property is marked as selected, using the <code>equals</code>
+    method on the model object. </p> 
+
+    <p>To optionally specify a label for the component, use the
+    <code>label</code> attribute, or specify a label facet.</p>
+
+
+    <h4>Facets</h4>
+
+    <ul>
+    <li><code>label</code>: use this facet to specify a custom 
+    component for the label.</li>
+    </ul>
+
+    <h4>Client-side JavaScript functions</h4>
+
+    <ul>
+    <li><code>dropDown_setDisabled(&lt;id&gt;, &lt;disabled&gt;)</code>: use
+    this function to enable/disable the drop-down menu. <code>&lt;id&gt;</code>
+    must be the generated id of the component. Set
+    <code>&lt;disabled&gt;</code> to true to disable the component, 
+    false to enable it. </li>
+    <li><code>dropDown_changed(&lt;id&gt;)</code>: this 
+    function is automatically invoked by the drop-down menu's
+    <code>onchange</code> handler. <code>&lt;id&gt;</code>
+    must be the generated id of the component.</li>
+    </ul>
+
+    <h4>Examples</h4>
+
+<pre>
+
+    &lt;ui:dropDown selected="#{flightSearch.leaveAirport}" 
+                 items="#{dataBean.airports}" 
+                 id="leaveAirport" 
+                 tooltip="#{msgs.chooseAirport}"
+                 label="#{msgs.chooseDepartureAirport}" /&gt;
+
+    &lt;ui:dropDown selected="#{flightSearch.leaveAirport}" 
+                 items="#{dataBean.airports}" 
+ 	         id="leaveAirport" 
+                 tooltip="#{msgs.chooseAirport}"
+                 label="#{msgs.chooseDepartureAirport}" &gt;
+        &lt;f:facet name="label"&gt;
+            &lt;facet component goes here&gt;
+        &lt;/f:facet&gt;
+    &lt;/ui:dropDown&gt;
+</pre>
+<p>The dataBean backing bean would include the following definition for the "airports" items:<br>
+<pre>
+    private Option[] airports = null;
+    
+     // Creates a new instance of backing bean //
+    public DataBean() {
+        airports = new Option[11];
+        airports[0] = new Option("SFO", "San Francisco");
+        airports[1] = new Option("OAK", "Oakland");
+        airports[2] = new Option("SAN", "San Diego");
+        airports[3] = new Option("BOS", "Boston");
+        airports[4] = new Option("ARN", "Stockholm");
+        airports[5] = new Option("MNL", "Manila");
+        airports[6] = new Option("CDG", "Paris");
+        airports[7] = new Option("PDX", "Portland");
+        airports[8] = new Option("LAX", "Los Angeles");
+        airports[9] = new Option("NRT", "Tokyo");
+        airports[10] = new Option("TBD", "Future Airport");
+        airports[10].setDisabled(true);
+    }
+    
+    public Option[] getAirports() {
+        return airports;
+    }
+</pre>
+	    
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.DropDown</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.DropDown</renderer-type>
+
+  <attribute>
+    <description>&lt;p&gt;Use this attribute to bind the
+      component to a model object (cf. the binding attribute). 
+      The value of this attribute must be an EL expression, and it
+      must evaluate to a subclass of  &lt;code&gt;java.lang.Object&lt;/code&gt;.
+      Note that the object class must ovverride the equals method as
+      that is used to determine which objects should be marked as
+      selected.&lt;/p&gt;  
+      &lt;p&gt;Use the &lt;code&gt;selected&lt;/code&gt; attribute if the web
+      application relies on objects designed purely to represent model
+      data (cf. the &lt;code&gt;binding&lt;/code&gt;attribute). &lt;/p&gt; 
+	 
+      </description>
+    <attribute-name>selected</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>&lt;p&gt;If you use an OptionGroup to group
+      several options together, the component by default uses
+      separators between the groups. To turn off the automatic
+      separators, set this attribute to false.&lt;/p&gt; 
+	 
+      </description>
+    <attribute-name>separators</attribute-name>
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>onSelect</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>multiple</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>rows</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <description>
+	Set this attribute to true when the web application needs to
+        see what the currently selected value of the component is, but
+        must not be allowed to make any changes to the 
+	model object property associated with the component. 
+        If true, the value of the component is
+        rendered as text (using the &lt;code&gt;statictext&lt;/code&gt;
+        component). If there are multiple selections, the string
+        representation of each selection is separated by a space. 
+        The text is preceded by a label if the &lt;code&gt;label&lt;/code&gt;
+        attribute was set, or if a &lt;code&gt;label&lt;/code&gt;facet was
+        specified. 
+      </description>
+    <attribute-name>readonly</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>
+      Sets the tooltip for the component. This will be
+      renderered as the HTML title attribute. 
+      </description>
+    <attribute-name>toolTip</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>This attribute, if set, causes a label to be
+      rendered with the component (see also the labelLevel
+      attribute). If specified, a HTML &lt;code&gt;label&lt;/code&gt; element is
+      generated  adjacent to the &lt;code&gt;select&lt;/code&gt; element
+      (equivalent to using the label component). This attribute is
+    ignored if a &lt;code&gt;label&lt;/code&gt; facet has been specified.
+    </description>
+    <attribute-name>label</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>
+      Associates this component with a converter. The role of the
+      converter is to convert the values of the
+      &lt;code&gt;Selection&lt;/code&gt;s and the selected Object(s) to and from
+      String representations. The value of this attribute must be an
+      EL expression that is a reference to a
+      &lt;code&gt;javax.faces.converter.Converter&lt;/code&gt;. 
+      </description>
+    <attribute-name>converter</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>
+      The value of this attribute must be a single character. When the
+      corresponding key is pressed, focus is transferred to this
+      component. If the label attribute has been specified, the
+      accesskey is also set on the generated label. 
+      </description>
+    <attribute-name>accesskey</attribute-name>
+  </attribute>
+
+  &binding-attrs;
+
+  <renderer-extension>
+    <tag-name>dropDown</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

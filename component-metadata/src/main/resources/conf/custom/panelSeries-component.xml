@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+Dynamically generates a series of repeating child-components within a panel
+	</description>
+
+	<display-name>Panel Series</display-name>
+	<component-type>com.icesoft.faces.PanelSeries</component-type>
+
+	&ice-cust-panelSeries-props;
+
+<!--  PanelSeries with com.icesoft.faces.HtmlPanelGroup -->
+	<component-extension>
+		<base-component-type>
+			com.icesoft.faces.series
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>
+			com.icesoft.faces.PanelSeriesRenderer
+		</renderer-type>
+	</component-extension>
+
+</component>

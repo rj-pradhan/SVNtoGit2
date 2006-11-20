@@ -1,0 +1,45 @@
+<component>
+
+  <description><![CDATA[
+    A ValueBinding based sort criteria for a TableDataProvider
+  ]]></description>
+  <display-name>Value Binding Sort Criteria</display-name>
+  <component-type>
+    com.sun.rave.web.ui.faces.ValueBindingSortCriteria
+  </component-type>
+  <component-class>
+    com.sun.rave.web.ui.faces.ValueBindingSortCriteria
+  </component-class>
+
+  &sort-criteria-props;
+
+  <property>
+    <description>
+      ValueBinding to be used for this sort criteria.
+    </description>
+    <display-name>Value Binding</display-name>
+    <property-name>valueBinding</property-name>
+    <property-class>javax.faces.el.ValueBinding</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Request map attribute key to store a TableRowDataProvider 
+      while iterating the rows
+    </description>
+    <display-name>Request Map Key</display-name>
+    <property-name>requestMapKey</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+</component>

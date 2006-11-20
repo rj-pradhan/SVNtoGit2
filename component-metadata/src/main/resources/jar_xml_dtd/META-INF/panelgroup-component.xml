@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+    Organizes its child components in a flow with an optional separator between them
+  </description>
+
+  <display-name>Group Panel</display-name>
+
+  <component-type>com.sun.rave.web.ui.PanelGroup</component-type>
+
+  <property>
+    <description>	
+        By default, the panelGroup component is rendered on the same line as the component
+        that comes before it and the component that follows, in a flow layout.  If the block attribute
+        is set to true, the panelGroup component is rendered on its own line. The components
+        before it and after it are on different lines. The block attribute has no effect on the 
+        panelGroup component's children.
+    </description>
+    <display-name>Block</display-name>
+    <property-name>block</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Display the group panel on its own line instead of flowing from the previous component on the page
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      The String of characters that should be inserted between each UIComponent that is 
+      a child of this component. If this attribute is not specified, then a newline will be
+      inserted between each component.
+    </description>
+    <display-name>Separator</display-name>
+    <property-name>separator</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Character or characters to display between each child component
+      </short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.PanelGroup</component-family>
+    <renderer-type>com.sun.rave.web.ui.PanelGroup</renderer-type>
+  </component-extension>
+
+</component>

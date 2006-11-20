@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<renderer>
+         <description>
+             <![CDATA[the output Style tag provides an additional style sheet for Internet Explorer, allowing specific styles to be over ridden. ]]>
+         </description>
+	<component-family>com.icesoft.faces.OutputStyle</component-family>
+	<renderer-type>com.icesoft.faces.style.OutputStyleRenderer</renderer-type>	
+
+	<renderer-extension>
+		<instance-name>outputStyle</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>outputStyle</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

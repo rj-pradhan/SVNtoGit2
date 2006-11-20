@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:grammar-annotations
+    xmlns:p="http://org.eclipse.jst.jsf.contentmodel.annotations/grammarAnnotationSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://org.eclipse.jst.jsf.contentmodel.annotations/grammarAnnotationSchema ../../org.eclipse.jst.jsf.contentmodel.annotations/schema/grammar-annotations.xsd">
+    <cm-element name="popup">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.IntegerType
+                </value>
+            </property>
+
+        <cm-attribute name="displayAtDistanceX">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.IntegerType
+                </value>
+            </property>
+        </cm-attribute>
+        <cm-attribute name="displayAtDistanceY">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.IntegerType
+                </value>
+            </property>
+        </cm-attribute>
+        <cm-attribute name="closePopupOnExitingElement">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.BooleanType
+                </value>
+            </property>
+            <property name="default-value">
+                <value>true</value>
+            </property>
+
+        </cm-attribute>
+        <cm-attribute name="closePopupOnExitingPopup">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.BooleanType
+                </value>
+            </property>
+            <property name="default-value">
+                <value>true</value>
+            </property>
+        </cm-attribute>
+    </cm-element>
+    <cm-element name="*">
+        <cm-attribute name="id">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.ComponentIDType
+                </value>
+            </property>
+        </cm-attribute>
+            <cm-attribute name="binding">
+            <property name="attribute-value-runtime-type">
+                <value>
+                    org.eclipse.jst.jsf.taglibprocessing.attributevalues.ComponentBindingType
+                </value>
+            </property>
+            <property name="runtime-return-type">
+                <value>javax.faces.component.UIComponent</value>
+            </property>               
+        </cm-attribute>           
+    </cm-element>
+</p:grammar-annotations>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<property>
+	<description>
+
+		Flag indicating that this component's value must be converted
+		and validated immediately (that is, during Apply Request Values
+		phase), rather than waiting until Process Validations phase.
+
+	</description>
+	<property-name>immediate</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>

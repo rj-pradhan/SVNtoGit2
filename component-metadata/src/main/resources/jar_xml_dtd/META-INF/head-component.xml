@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+     An implementation of the HTML head tag. 
+  </description>
+
+  <display-name>Head</display-name>
+
+  <component-type>com.sun.rave.web.ui.Head</component-type>
+
+  <property>
+    <description>
+        Flag (true or false) indicating that a default html base tag should be
+        shown or not.  Changing this attribute could cause ui:anchor to not work
+        properly.  The default value is false.
+      </description>
+    <display-name>Default Base</display-name>
+    <property-name>defaultBase</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>false</default-value>
+      <short-description>
+          Render a default HTML base tag on the page--if true, may affect
+          anchors on the page
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Title of the document to be displayed in the browser title bar.
+      </description>
+    <display-name>title</display-name>
+    <property-name>title</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        A space separated list of URL's that contains meta data information 
+        about the page	
+      </description>
+    <display-name>Profile</display-name>
+    <property-name>profile</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Head</component-family>
+    <renderer-type>com.sun.rave.web.ui.Head</renderer-type>
+  </component-extension>
+
+</component>

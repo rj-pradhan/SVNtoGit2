@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+
+<property>
+	<description>
+		The connection status component would show this label, when The
+		connection state is unknown as a heartbeat ping has not been
+		acknowleged. However, connection recovery activities are in
+		progress which will change the state to either "Connected" or
+		"Disconnected" status.
+	</description>
+	<property-name>cautionLabel</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The connection status component would show this label, when The
+		connection has been lost, either due to network error or the
+		application session expiring.
+	</description>
+	<property-name>disconnectedLabel</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The connection status component would show this label, when The
+		connection is alive and there is a request pending.
+	</description>
+	<property-name>activeLabel</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The connection status component would show this label, when the
+		connection is alive and there is no pending activity.
+	</description>
+	<property-name>inactiveLabel</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

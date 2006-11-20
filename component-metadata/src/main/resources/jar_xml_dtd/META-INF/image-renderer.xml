@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+
+<code></code>Use
+the <code>ui:image</code>
+tag to display an inline image in the rendered
+HTML page. The url attribute is used to specify the URL to the image
+file that
+is to be displayed.&nbsp;&nbsp; If you use an image that is a
+PNG type and ends with ".png " this tag will output the correct format
+for an &lt;img&gt; tag to display a PNG correctly in Internet
+Explorer.&nbsp; In order to use this feature you must set the
+height and width properties of this tag..<br>
+<br>
+The <code>ui:image</code>
+tag can be used to display a theme-specific image in the
+rendered HTML page. The icon attribute used in the <code>ui:image
+</code>tag is
+a key value that is mapped to a URL in theme properties file. The key
+is used
+to look up the appropriate image source and related attributes from the
+current
+theme. By specifying a key, you avoid the need to specify predefined
+constants
+such as height and width. The image can also be seamlessly changed when
+a
+different theme is selected.<br>
+<br>
+Note: currently the list of
+icons that you can use is not publicly
+supported, but the icon names are specified in the
+<code>/com/sun/rave/web/ui/suntheme/SunTheme.properties</code>
+file. The names are
+listed as resource keys of the format <code>image.ICON_NAME</code>.
+Use only
+the part of the key that follows image. For example, if the key is
+<code>image.ALARM_CRITICAL_SMALL</code>,
+you should specify
+<code>ALARM_CRITICAL_SMALL</code>
+as the value of the icon attribute of the
+<code>ui:icon</code>
+tag. A list of supported icon values will be published in
+the near future.<br>
+<h3>HTML Elements and Layout</h3>
+The rendered HTML page displays an XHTML compliant <code>&lt;img&gt;</code>
+element with any applicable element attributes. The attributes can be
+specified
+through the <code>&lt;ui:image&gt;</code>
+tag attributes.
+<h3>Client Side Javascript
+Functions</h3>
+None.
+<br>
+<h3>Examples</h3>
+<h4>Example 1: Create an image</h4>
+<code>&lt;ui:image id="image1"
+url="../images/dot.gif" /&gt;
+<br>
+<br>
+</code>This will generate the
+following markup: <br>
+&nbsp;&nbsp; <br>
+<code>&lt;img
+src="../images/dot.gif" alt="" /&gt;
+</code><br>
+<br>
+<h4>Example 2: Create a theme
+specific image<br>
+</h4>
+<code>&lt;ui:image id="image2"
+icon="</code><code>ALARM_CRITICAL_SMALL</code><code>"
+/&gt;
+</code>
+
+
+	
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Image</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Image</renderer-type>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>image</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

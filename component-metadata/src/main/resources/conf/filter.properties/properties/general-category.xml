@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<property>
+	<description>id</description>
+	<property-name>id</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>GENERAL</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>target</description>
+	<property-name>target</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>GENERAL</category>
+	</property-extension>
+</property>

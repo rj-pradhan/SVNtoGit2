@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<body onload="asd();" bgcolor="white">
+<span style="color: rgb(0, 0, 0);">Use the </span><code
+style="color: rgb(0, 0, 0);">ui:head</code><span
+style="color: rgb(0, 0, 0);"> tag to provide information about the
+document, to be used in the <code>&lt;head&gt;</code> element of the
+rendered HTML page.&nbsp; The </span><code style="color: rgb(0, 0, 0);">ui:head</code><span
+style="color: rgb(0, 0, 0);"> tag must be placed immediately after
+the <code>ui:html</code> tag, within the <code>ui:page</code> tag.
+&nbsp; The following tags can be
+used as children of the <code>ui:head</code> tag:</span><br
+style="color: rgb(0, 0, 0);">
+<ul style="color: rgb(0, 0, 0);">
+<li><a href="link.html"><code>ui:link</code></a></li>
+<li><a href="meta.html"><code>ui:meta</code></a></li>
+<li><code><a href="script.html">ui:script</a></code></li>
+</ul>
+<h3 style="color: rgb(0, 0, 0);">HTML Elements and Layout</h3>
+<span style="text-decoration: line-through; color: rgb(0, 0, 0);"></span>
+<p style="color: rgb(0, 0, 0);">The <code>&lt;head&gt;</code>
+element is rendered in the HTML page, and can include information that
+is valid for inclusion in the HTML <code>&lt;head&gt;</code> element.
+For example, if you use the <code>ui:link</code> tag in the <code>ui:head</code>
+tag, you can provide the URL to a style sheet. The style sheet
+link&nbsp; will be rendered as a <code>&lt;link&gt;</code> element in
+the <code>&lt;head&gt;</code> element of the HTML page.&nbsp; In
+addition this tag will output the appropriate stylesheets for the
+included components on the page.<br>
+</p>
+<span style="color: rgb(0, 0, 0);">The
+browser does not display the information in the <code>&lt;head&gt;</code>
+element to the user, with the exception of the title that is used in
+the browser's title bar.&nbsp;&nbsp; </span>
+<h3 style="color: rgb(0, 0, 0);">Client Side Javascript Functions</h3>
+<span style="color: rgb(0, 0, 0);">None. </span>
+<h3 style="color: rgb(0, 0, 0);">Example</h3>
+<b style="color: rgb(0, 0, 0);">Example 1: Create a head tag </b><br
+style="color: rgb(0, 0, 0);">
+<code style="color: rgb(0, 0, 0);"><br>
+&lt;ui:page&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:html&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </code><code
+style="color: rgb(0, 0, 0);">&lt;ui:head
+title="Name of the
+page..title is required"&gt;<br>
+</code><code style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
+&lt;ui:link url="/relativepath/x.css" /&gt;</code><code
+style="color: rgb(0, 0, 0);"><br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;ui:script url="/relativepath/x.js" /&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </code><code
+style="color: rgb(0, 0, 0);">&lt;/ui:head&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </code><code
+style="color: rgb(0, 0, 0);">&lt;ui:body&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </code><code
+style="color: rgb(0, 0, 0);">....your
+page content....<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </code><code
+style="color: rgb(0, 0, 0);">&lt;/ui:body&gt;<br>
+&nbsp;&nbsp;&nbsp; </code><code style="color: rgb(0, 0, 0);">&lt;/ui:html&gt;</code>
+<code style="color: rgb(0, 0, 0);">&lt;/ui:page&gt;</code><span
+style="color: rgb(0, 0, 0);">&nbsp;</span><small><i><br>
+<br>
+</i></small>
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Head</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Head</renderer-type>
+
+  &binding-attrs;
+
+  <renderer-extension>
+    <tag-name>head</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

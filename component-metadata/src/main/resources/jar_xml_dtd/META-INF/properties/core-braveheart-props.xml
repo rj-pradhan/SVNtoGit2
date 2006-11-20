@@ -1,0 +1,21 @@
+    <property>
+        <property-name>style</property-name>
+        <property-extension>
+            <category>APPEARANCE</category>
+            <is-hidden>false</is-hidden>
+            <editor-class>com.sun.jsfcl.std.css.CssStylePropertyEditor</editor-class>
+        </property-extension>
+    </property>
+    
+    <property>
+        <property-name>styleClass</property-name>
+        <property-extension>
+            <category>APPEARANCE</category>
+            <is-hidden>false</is-hidden>
+            <editor-class> com.sun.jsfcl.std.property.ChooseManyReferenceDataPropertyEditor </editor-class>
+            <named-value>
+                <name>referenceDataDefiner</name>
+                <expression>com.sun.jsfcl.std.reference.ReferenceDataManager.STYLE_CLASSES</expression>
+            </named-value>
+        </property-extension>
+    </property>

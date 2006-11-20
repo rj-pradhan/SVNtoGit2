@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      A listbox in which the web application user can make zero or
+      more selections. 
+    ]]></description>
+
+  <display-name>Listbox</display-name>
+
+  <component-type>com.sun.rave.web.ui.Listbox</component-type>
+
+  <property>
+    <description>
+        Flag indicating that the application user may make select
+	more than one option from the listbox . 
+      </description>
+    <display-name>Multiple</display-name>
+    <property-name>multiple</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Enable the user to select more than a single item from the listbox
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      A property which indicates whether monospaced fonts should be
+      used. 
+      </description>
+    <display-name>Use Monospace Fonts</display-name>
+    <property-name>monospace</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+        Display the component with a monospace font like Courier
+      </short-description>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.ListSelector</base-component-type>
+    <component-family>com.sun.rave.web.ui.Listbox</component-family>
+    <renderer-type>com.sun.rave.web.ui.Listbox</renderer-type>
+  </component-extension>
+
+</component>

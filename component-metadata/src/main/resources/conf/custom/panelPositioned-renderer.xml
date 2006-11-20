@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<renderer>
+         <description>
+             <![CDATA[ With the positioned panel component lists can be used to generate a series of repeating child-components within a panel.
+Each one of these child-components is draggable and can exchange positions with other children. In addition a child component can be
+moved between different positioned panels components. When a Child Component is moved the source value (A java.util.List ) for the positioned Panel is modified
+to reflect the new order of the positioned panel.]]>
+         </description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>com.icesoft.faces.dragdrop.PanelPositionedRenderer</renderer-type>	
+
+	<renderer-extension>
+		<instance-name>panelPositioned</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelPositioned</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

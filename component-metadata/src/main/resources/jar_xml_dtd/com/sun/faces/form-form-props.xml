@@ -1,0 +1,130 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ The contents of this file are subject to the terms
+ of the Common Development and Distribution License
+ (the License). You may not use this file except in
+ compliance with the License.
+ 
+ You can obtain a copy of the License at
+ https://javaserverfaces.dev.java.net/CDDL.html or
+ legal/CDDLv1.0.txt. 
+ See the License for the specific language governing
+ permission and limitations under the License.
+ 
+ When distributing Covered Code, include this CDDL
+ Header Notice in each file and include the License file
+ at legal/CDDLv1.0.txt.    
+ If applicable, add the following below the CDDL Header,
+ with the fields enclosed by brackets [] replaced by
+ your own identifying information:
+ "Portions Copyrighted [year] [name of copyright owner]"
+ 
+ [Name of File] [ver.__] [Date]
+ 
+ Copyright 2006 Sun Microsystems Inc. All Rights Reserved
+-->
+
+
+<!-- ========== Form+Form Properties ======================================= -->
+
+
+<!-- template
+
+      <property>
+        <description>
+        </description>
+        <display-name></display-name>
+        <icon></icon>
+        <property-name></property-name>
+        <property-class>java.lang.String</property-class>
+      </property>
+
+-->
+
+    <property>
+      <description>
+        List of content types that a server processing this form
+        will handle correctly 
+      </description>
+      <display-name>Content Type</display-name>
+      <icon></icon>
+      <property-name>accept</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+
+    <property>
+      <description>
+        List of character encodings for input data
+        that are accepted by the server processing
+        this form.
+      </description>
+      <display-name>Character Set</display-name>
+      <icon></icon>
+      <property-name>acceptcharset</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+
+    <property>
+      <description>
+        Content type used to submit the form to the server.  If not
+        specified, the default value is
+        "application/x-www-form-urlencoded".
+      </description>
+      <display-name>Encoding Type</display-name>
+      <icon></icon>
+      <property-name>enctype</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <default-value>"application/x-www-form-urlencoded"</default-value>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+
+    <property>
+      <description>
+        Javascript code executed when this form is reset.
+      </description>
+      <display-name>Form Reset Script</display-name>
+      <icon></icon>
+      <property-name>onreset</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+
+    <property>
+      <description>
+        Javascript code executed when this form is submitted.
+      </description>
+      <display-name>Form Submit Script</display-name>
+      <icon></icon>
+      <property-name>onsubmit</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+
+    <property>
+      <description>
+        Name of a frame where the response
+        retrieved after this form submit is to
+        be displayed.
+      </description>
+      <display-name>Target Frame</display-name>
+      <icon></icon>
+      <property-name>target</property-name>
+      <property-class>java.lang.String</property-class>
+      <property-extension>
+        <pass-through>true</pass-through>
+      </property-extension>
+    </property>
+

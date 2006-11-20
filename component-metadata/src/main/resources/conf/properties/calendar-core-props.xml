@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+
+<property>
+	<description>navigate date from property sheet</description>
+	<display-name>
+		Navigation Date name from property sheet
+	</display-name>
+	<property-name>NavDate</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<is-hidden>true</is-hidden>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&dateEditor;
+		</editor-class>
+	</property-extension>
+</property>
+

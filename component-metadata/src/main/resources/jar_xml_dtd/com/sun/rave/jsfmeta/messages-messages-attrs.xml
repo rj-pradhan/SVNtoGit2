@@ -1,0 +1,137 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== Messages+Messages Attributes =============================== -->
+
+
+      <attribute>
+        <attribute-name>errorClass</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseManyReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.STYLE_CLASSES
+            </expression>
+          </named-value>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>errorStyle</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.css.CssStylePropertyEditor
+          </editor-class>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>fatalClass</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseManyReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.STYLE_CLASSES
+            </expression>
+          </named-value>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>fatalStyle</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.css.CssStylePropertyEditor
+          </editor-class>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>infoClass</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseManyReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.STYLE_CLASSES
+            </expression>
+          </named-value>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>infoStyle</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.css.CssStylePropertyEditor
+          </editor-class>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>layout</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.MESSAGES_LAYOUTS
+            </expression>
+          </named-value>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>tooltip</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>warnClass</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseManyReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.STYLE_CLASSES
+            </expression>
+          </named-value>
+        </attribute-extension>
+      </attribute>
+      
+      <attribute>
+        <attribute-name>warnStyle</attribute-name>
+        <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.css.CssStylePropertyEditor
+          </editor-class>
+        </attribute-extension>
+      </attribute>

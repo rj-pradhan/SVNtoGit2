@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding='UTF-8'?>
+
+<property>
+	<description>Effect invoked on onmouse event</description>
+	<property-name>onmouseouteffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+<description>Effect invoked on onsubmit event</description>
+	<property-name>onsubmiteffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>Effect invoked on onkeyup event</description>
+	<property-name>onkeyupeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>Effect invoked on onkeydown event</description>
+	<property-name>onkeydowneffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>Effect invoked on onmousedown event</description>
+	<property-name>onmousedowneffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+<property>
+	<description>Effect invoked on onchange event</description>
+	<property-name>onchangeeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+<property>
+<description>Effect invoked on onmouseup event</description>
+	<property-name>onmouseupeffect</property-name>	
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+<property>
+	<description>Effect invoked on onreset event</description>
+	<property-name>onreseteffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>Effect invoked on onclick event</description>
+	<property-name>onclickeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+    <description>Effect invoked on onmouseover event</description>		
+	<property-name>onmousemoveeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+    <description>Effect invoked on ondblclick event</description>		
+	<property-name>ondblclickeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>Effect invoked on onkeypress event</description>	
+	<property-name>onkeypresseffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+    <description>Effect invoked on onmouseover event</description>		
+	<property-name>onmouseovereffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
