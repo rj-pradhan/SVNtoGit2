@@ -117,7 +117,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
               height of the chart
           </description>
         </attribute>
-		
+        
         <attribute>
           <name>xaxisTitle</name>
           <required>false</required>
@@ -848,7 +848,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
         </attribute>        
     </tag>
 
-    <!-- treeView -->
+    <!-- tree -->
     <tag>
         <name>tree</name>
         <tag-class>com.icesoft.faces.component.tree.TreeTag</tag-class>
@@ -919,7 +919,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
             <type>java.lang.String</type>
             <description>
                Sets the component's model value, which must be a JSF value
-               binding expression for a "com.icesoft.faces.component.custom.treeView.TreeModel" instance.
+               binding expression to an implementation of the "javax.swing.tree.TreeModel" interface.
             </description>
         </attribute>
         <attribute>
