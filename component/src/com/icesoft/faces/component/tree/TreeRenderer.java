@@ -48,7 +48,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import java.io.IOException;
 import java.util.Map;
@@ -137,7 +136,7 @@ public class TreeRenderer extends DomBasicRenderer {
         validateParameters(facesContext, uiComponent, Tree.class);
 
         Tree treeComponent = (Tree) uiComponent;
-        TreeModel treeModel = (DefaultTreeModel) uiComponent
+        TreeModel treeModel = (TreeModel) uiComponent
                 .getValueBinding("value").getValue(facesContext);
 
         if (treeComponent.getChildCount() != 1) {
@@ -221,7 +220,7 @@ public class TreeRenderer extends DomBasicRenderer {
         DOMContext domContext =
                 DOMContext.getDOMContext(facesContext, uiComponent);
 
-        TreeModel treeModel = (DefaultTreeModel) uiComponent
+        TreeModel treeModel = (TreeModel) uiComponent
                 .getValueBinding("value").getValue(facesContext);
         DefaultMutableTreeNode treeComponentRootNode =
                 (DefaultMutableTreeNode) treeModel.getRoot();

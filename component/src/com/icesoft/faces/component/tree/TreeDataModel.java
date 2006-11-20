@@ -37,7 +37,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.DataModelEvent;
 import javax.faces.model.DataModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ import java.util.Map;
 public class TreeDataModel extends DataModel {
 
     private int rowIndex = -1;
-    private DefaultTreeModel treeModel;
+    private TreeModel treeModel;
     private Map rowIndexMap;
 
     /**
@@ -61,7 +61,7 @@ public class TreeDataModel extends DataModel {
     /**
      * @param treeModel
      */
-    public TreeDataModel(DefaultTreeModel treeModel) {
+    public TreeDataModel(TreeModel treeModel) {
         super();
         setWrappedData(treeModel);
         rowIndexMap = new HashMap();
@@ -199,7 +199,7 @@ public class TreeDataModel extends DataModel {
             treeModel = null;
             setRowIndex(-1);
         } else {
-            treeModel = (DefaultTreeModel) data;
+            treeModel = (TreeModel) data;
             rowIndex = -1;
             setRowIndex(0);
         }

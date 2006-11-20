@@ -55,7 +55,7 @@ import javax.faces.model.ResultDataModel;
 import javax.faces.model.ResultSetDataModel;
 import javax.faces.model.ScalarDataModel;
 import javax.servlet.jsp.jstl.sql.Result;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -315,8 +315,8 @@ public class UISeries extends HtmlDataTable {
             this.dataModel = new ResultSetDataModel((ResultSet) currentValue);
         } else if (currentValue instanceof Result) {
             this.dataModel = new ResultDataModel((Result) currentValue);
-        } else if (currentValue instanceof DefaultTreeModel) {
-            this.dataModel = new TreeDataModel((DefaultTreeModel) currentValue);
+        } else if (currentValue instanceof TreeModel) {
+            this.dataModel = new TreeDataModel((TreeModel) currentValue);
         } else {
             this.dataModel = new ScalarDataModel(currentValue);
         }
