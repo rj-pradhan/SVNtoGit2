@@ -40,10 +40,10 @@
 	</target>
 	<target name="generator" description="code generator" depends="conf-changed" unless="conf-uptodate">
 		<!-- validate meatdata xml file -->
-		<java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true" jvm="${env.JDK150}/bin/java">
+		<java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
 			<classpath refid="build.classpath" />
 		</java>
-		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true" jvm="${env.JDK150}/bin/java">
+		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
 			<arg line="-d ${project.build.directory}/generated-sources/taglib/main/java" />
 			<!-- TODO: using jar:file known issue ant bug -->
 			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
@@ -61,7 +61,7 @@
 		</java>
 
 		<!-- generate tld file -->
-		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true" jvm="${env.JDK150}/bin/java">
+		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
 			<arg line="-d ${project.build.directory}/generated-sources/tld" />
 			<!-- TODO: using jar:file known issue ant bug -->
 			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
@@ -81,7 +81,7 @@
 		</java>
 
 		<!-- generate baseline components source code -->
-		<java classname="com.icesoft.metadata.generators.Main" fork="true" jvm="${env.JDK150}/bin/java">
+		<java classname="com.icesoft.metadata.generators.Main" fork="true">
 			<!--
 				<jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000"/>
 			-->
@@ -107,11 +107,7 @@
 
 		<!--  TODO change component naming to property -->
 
-		<java classname="com.icesoft.jsfmeta.EclipseJsfMetadataGenerator" failonerror="true" fork="true" jvm="${env.JDK150}/bin/java">
-			<classpath refid="build.classpath" />
-		</java>
-
-		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true" jvm="${env.JDK150}/bin/java">
+		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
 			<arg line="-d ${project.build.directory}/generated-sources/beaninfo/main/java" />
 			<!-- TODO: using jar:file known issue ant bug -->
 			<!-- jar:file:${jsf-impl.jar}!/com/sun/faces/standard-html-renderkit.xml" -->
