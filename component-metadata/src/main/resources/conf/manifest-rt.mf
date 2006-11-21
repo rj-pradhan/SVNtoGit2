@@ -1,7 +1,0 @@
-Extension-Name: @package@
-Specification-Title: @project-artifact@
-Specification-Vendor: ICEsoft.
-Specification-Version: @version@
-Implementation-Title: @project-artifact@
-Implementation-Vendor: ICEsoft.
-Implementation-Version: @version@
