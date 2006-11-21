@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 import com.icesoft.jsfmeta.MetadataXmlParser;
 import com.sun.rave.jsfmeta.beans.ComponentBean;
 import com.sun.rave.jsfmeta.beans.ConverterBean;
@@ -20,9 +19,9 @@ import com.sun.rave.jsfmeta.beans.RendererBean;
 import com.sun.rave.jsfmeta.beans.ValidatorBean;
 
 public final class Main {
-	
-	private static Log log = LogFactory.getLog(Main.class); 
-	
+
+	private static Log log = LogFactory.getLog(Main.class);
+
 	private String baseBI;
 
 	private String categoryDescriptors;
@@ -68,9 +67,8 @@ public final class Main {
 	private boolean warning;
 
 	public Main() {
-		
+
 		baseBI = "java.beans.SimpleBeanInfo";
-		//TODO:
 		categoryDescriptors = "com.icesoft.faces.ide.creator2.util.CategoryDescriptors";
 		config = new FacesConfigBean();
 		constantMethodBindingPackage = null;
@@ -95,7 +93,7 @@ public final class Main {
 	}
 
 	public static void main(String args[]) throws Exception {
-		
+
 		Main main = new Main();
 		main.execute(args);
 	}
@@ -137,6 +135,28 @@ public final class Main {
 		generator.generate();
 	}
 
+	private void componentTestBeanInfo(boolean base) throws Exception {
+		ComponentTestBeanInfoGenerator generator = new ComponentTestBeanInfoGenerator();
+		generator.setBase(base);
+		generator.setBaseBI(baseBI);
+		generator.setCategoryDescriptors(categoryDescriptors);
+		generator.setConfig(config);
+		generator.setDefaultMarkupSection(defaultMarkupSection);
+		generator.setDefaultRenderKitId(defaultRenderKitId);
+		generator.setDefaultTaglibPrefix(defaultTaglibPrefix);
+		generator.setDefaultTaglibURI(defaultTaglibURI);
+		generator.setDest(dest);
+		generator.setExcludes((String[]) excludes.toArray(new String[excludes
+				.size()]));
+		generator.setImplBD(implBD);
+		generator.setImplPD(implPD);
+		generator.setIncludes((String[]) includes.toArray(new String[includes
+				.size()]));
+		generator.setUseComponentResourceBundles(!noBundles);
+		generator.setVerbose(verbose);
+		generator.generate();
+	}
+	
 	private void descriptor() throws Exception {
 		DescriptorGenerator generator = new DescriptorGenerator();
 		generator.setConfig(config);
@@ -158,19 +178,26 @@ public final class Main {
 		generator.generate();
 	}
 
-	private void dump() throws Exception {
+	private void debug(){
 		ComponentBean cbs[] = config.getComponents();
 		for (int i = 0; i < cbs.length; i++) {
 			ComponentBean cb = cbs[i];
-			System.out.println("Component(componentType="
-					+ cb.getComponentType() + ",componentFamily="
-					+ cb.getComponentFamily() + ",rendererType="
-					+ cb.getRendererType() + ",baseComponentType="
-					+ cb.getBaseComponentType() + ")");
+			if (log.isDebugEnabled()) {
+				System.out.println("Component(componentType="
+						+ cb.getComponentType() + ",componentFamily="
+						+ cb.getComponentFamily() + ",rendererType="
+						+ cb.getRendererType() + ",baseComponentType="
+						+ cb.getBaseComponentType() + ")");
+			}
 			FacetBean fbs[] = cbs[i].getFacets();
-			for (int j = 0; j < fbs.length; j++)
-				System.out.println("  Facet(facetName=" + fbs[j].getFacetName()
-						+ ",displayName=" + fbs[j].getDisplayName("") + ")");
+			for (int j = 0; j < fbs.length; j++) {
+
+				if (log.isDebugEnabled()) {
+					System.out.println("  Facet(facetName="
+							+ fbs[j].getFacetName() + ",displayName="
+							+ fbs[j].getDisplayName("") + ")");
+				}
+			}
 
 		}
 
@@ -210,16 +237,20 @@ public final class Main {
 			excludes.add(cvb2[i].getConverterClass());
 
 		RendererBean rb[] = config.getRenderKit("HTML_BASIC").getRenderers();
-		for (int i = 0; i < rb.length; i++)
+		for (int i = 0; i < rb.length; i++){
 			excludes.add(rb[i].getRendererClass());
+		}
 
 		ValidatorBean vb[] = config.getValidators();
-		for (int i = 0; i < vb.length; i++)
+		for (int i = 0; i < vb.length; i++){
 			excludes.add(vb[i].getValidatorClass());
+		}
 
 	}
 
 	private void execute(String args[]) throws Exception {
+		
+		debug();
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
 			if (arg.equals("-c")) {
@@ -325,16 +356,16 @@ public final class Main {
 				componentBeanInfo(true);
 				continue;
 			}
+			if (arg.equals("--cpTestBeanInfoBase")) {
+				componentTestBeanInfo(true);
+				continue;
+			}
 			if (arg.equals("--cpClass")) {
 				component(false);
 				continue;
 			}
 			if (arg.equals("--cpClassBase")) {
 				component(true);
-				continue;
-			}
-			if (arg.equals("--dump")) {
-				dump();
 				continue;
 			}
 			if (arg.equals("--implBD")) {
@@ -380,7 +411,7 @@ public final class Main {
 	}
 
 	private void usage() {
-		//TODO: message bundle
+		// TODO: message bundle
 		String info = "TODO";
 		log.info(info);
 	}

@@ -34,8 +34,6 @@ public abstract class AbstractGenerator {
 
 	private static final ResourceBundle bundle;
 
-	private static final MessageFormat format = new MessageFormat("");
-
 	protected static Map defaults;
 
 	protected static Set keywords;

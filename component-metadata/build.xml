@@ -120,14 +120,28 @@
 			<arg line="-p ice" />
 			<arg line="-u http://www.icesoft.com/icefaces/component" />
 			<arg line="-v" />
-			<!-- Specify the names of your own CategoryDescriptors here -->
-			<arg line="-c com.icesoft.faces.ide.creator2.util.CategoryDescriptors" />
 			<arg line="--cpBeanInfoBase" />
+			<classpath refid="build.classpath" />
+		</java>
+		
+		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
+			<arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
+			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
+			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
+			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
+			<arg line="-x" />
+			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
+			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+			<arg line="-p ice" />
+			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-v" />
+			<arg line="--cpTestBeanInfoBase" />
 			<classpath refid="build.classpath" />
 		</java>
 
 		<touch file="${project.build.directory}/generated-sources/created" />
 	</target>
+	
 	<target name="jar" depends="compile,generator,test" description="Clean the JAR">
 		<jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
 	</target>
@@ -137,6 +151,9 @@
 		<javac destdir="${maven.test.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
 			<src>
 				<pathelement location="src/test/java" />
+				<pathelement location="${project.build.directory}/generated-sources/testbeaninfo/main/java"/>
+				<pathelement location="${project.build.directory}/generated-sources/taglib/main/java"/>
+				<pathelement location="${project.build.directory}/generated-sources/component/main/java"/>
 			</src>
 			<classpath>
 				<path refid="build.classpath" />
@@ -145,29 +162,11 @@
 		</javac>
 	</target>
 	
-	<target name="compile-taglib" description="Compile taglib classes">
-
-		<!-- Compile taglib classes -->
-		<javac destdir="${maven.test.output}" failonerror="true" source="1.4" target="1.4">
-			<src path="${project.build.directory}/generated-sources/taglib/main/java" />
-			<classpath refid="build.classpath" />
-		</javac>
-	</target>
-
-	<target name="compile-componentBaseline" description="Compile runtime library classes">
-
-		<!-- component generated baseline compile here -->
-		<javac destdir="${maven.test.output}" failonerror="true" source="1.4" target="1.4">
-			<src path="${project.build.directory}/generated-sources/component/main/java" />
-			<classpath refid="build.classpath" />
-		</javac>
-	</target>
-	<target name="test" depends="junit-present, compile-tests, compile-taglib, compile-componentBaseline" if="junit.present" description="Run the test cases">
+	<target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases">
 		<mkdir dir="${maven.test.reports}" />
 		<junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">
 			<sysproperty key="basedir" value="." />
-			<formatter type="xml" />
-			<formatter type="plain" usefile="false" />
+			<formatter type="plain" />
 			<classpath>
 				<path refid="build.classpath" />
 				<pathelement location="${maven.build.output}" />

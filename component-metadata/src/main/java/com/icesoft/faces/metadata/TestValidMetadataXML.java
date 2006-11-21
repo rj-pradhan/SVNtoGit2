@@ -36,11 +36,10 @@ public class TestValidMetadataXML{
 
 		TestValidMetadataXML test = new TestValidMetadataXML();
 		test.setUp();
-		
+		test.testMetadata();
+		test.testMetadataBeans();
 	}
 
-	public void testFileExist() {
-	}
 
 	private File getConfDir() {
 		ClassLoader classLoader = Thread.currentThread()

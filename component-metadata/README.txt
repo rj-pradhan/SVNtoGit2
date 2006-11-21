@@ -96,5 +96,16 @@ Modify metadata generator:
 metadata/src  ("jsfmeta data generators")
 
 
+Generated Sources Directory:
 
+component-metadata\target\geneated-sources
+
+Component Baseline
+component-metadata\target\geneated-sources\component\main\java
+
+Tag Classes under
+component-metadata\target\geneated-sources\taglib\main\java
+
+Tld under
+component-metadata\target\geneated-sources\tld\icefaces_component.tld
 
