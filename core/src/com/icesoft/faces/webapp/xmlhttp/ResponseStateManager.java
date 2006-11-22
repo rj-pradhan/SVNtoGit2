@@ -66,6 +66,22 @@ public class ResponseStateManager {
 
     private static ResponseStateManager mgr;
 
+    private static boolean hasContinuations = false;
+
+    static {
+        try {
+            Class continuationClass =
+                    Class.forName("org.mortbay.util.ajax.Continuation");
+            if (null != continuationClass)  {
+                hasContinuations = true;
+            }
+        } catch (Throwable t)  {
+            if (log.isDebugEnabled()) {
+                log.debug("continuations not supported " + t.getMessage());
+            }
+        }
+    }
+
     public synchronized static ResponseStateManager getResponseStateManager(
             ServletContext context) {
 
@@ -117,6 +133,9 @@ public class ResponseStateManager {
 
     public ResponseState createState(HttpSession session, String iceID,
                                      String viewNumber) {
+        if (hasContinuations)  {
+            return new ContinuationResponseState( session, iceID, viewNumber );
+        }
         return new BlockingResponseState(session, iceID, viewNumber);
     }
 

@@ -40,6 +40,7 @@ import org.w3c.dom.Element;
 
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
@@ -108,14 +109,17 @@ public class PortletBlockingResponseState
         return focusID;
     }
 
-    public void block() throws Exception {
+    public void block(HttpServletRequest request)  {
         long left = 0;
 
         synchronized (kicker) {
             kicker.notifyAll(); //experimental fix for IE connection limit
             while ((!isCancelled) && (!kicker.isKicked) &&
                    ((left = remainingMillis()) > 0)) {
-                kicker.wait(left);
+                try {
+                    kicker.wait(left);
+                } catch (InterruptedException e) {
+                }
             }
             kicker.isKicked = false;
         }

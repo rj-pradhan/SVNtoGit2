@@ -33,36 +33,43 @@
 
 package com.icesoft.faces.webapp.xmlhttp;
 
-import java.io.IOException;
-import java.io.Writer;
-
-import org.w3c.dom.Element;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * This could likely use some refactoring but the IncrementalNodeWriter is used
- * by the JSF ResponseWriter (which in ICEfaces is the DOMResponseWriter) to
- * write out any updates to the DOM that are triggered by server side events.
- * This interface captures all the functionality required.  The basic
- * implementation is the BlockingResponseState.
+ * <p>The {@link SessionExpiredException} exception is thrown when the Session
+ * is determined to be expired. Tomcat, for instance, throws an 
+ * IllegalStateException when the session is accessed after the active
+ * period, so this exception extends IllegalStateException.</p>
  */
-public interface ResponseState {
-    String STATE = ResponseState.class.getName();
+public class SessionExpiredException extends IllegalStateException {
+    /**
+     * <p>Construct a new exception with the specified detail message and no
+     * root cause.</p>
+     *
+     * @param message The detail message for this exception
+     */
+    public SessionExpiredException(String message) {
+        super(message);
+    }
 
-    void flush();
+    /**
+     * <p>Construct a new exception with the specified detail message and root
+     * cause.</p>
+     *
+     * @param message The detail message for this exception
+     * @param cause   The root cause for this exception
+     */
+    public SessionExpiredException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-    boolean hasHandler();
+    /**
+     * <p>Construct a new exception with the specified root cause.  The detail
+     * message will be set to <code>(cause == null ? null :
+     * cause.toString()</code>
+     *
+     * @param cause The root cause for this exception
+     */
+    public SessionExpiredException(Throwable cause) {
+        super(cause);
+    }
 
-    String getFocusID();
-
-    void setFocusID(String focusID);
-
-    void block(HttpServletRequest request);
-
-    void cancel();
-
-    void serialize(Writer writer) throws IOException;
-
-    void writeElement(Element element);
 }

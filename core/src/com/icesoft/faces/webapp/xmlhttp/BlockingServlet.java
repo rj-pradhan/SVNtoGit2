@@ -111,6 +111,9 @@ public class BlockingServlet extends HttpServlet {
                            HttpServletResponse response)
             throws ServletException, IOException {
 
+        //a session should not be created by the blocking servlet
+        //we should use request.getSession(false) and communicate
+        //the expired session to the browser
         HttpSession session = request.getSession();
         Map sessionMap = new SessionMap(session);
 
@@ -235,7 +238,7 @@ public class BlockingServlet extends HttpServlet {
                     if( log.isTraceEnabled() ) {
                         log.trace("service(-)  receive-updates");
                     }
-                    state.block();
+                    state.block(request);
 
                     applyCookies(bridgeExternalContext, response);
                     //If the state has a handler (as it does for the Async server), then
@@ -289,11 +292,13 @@ public class BlockingServlet extends HttpServlet {
                     }
                 } else {
                     SessionLifetimeManager.touch(session);
-                    throw new Exception(
+                    throw new IllegalAccessException(
                             "Unknown request type: '" + method + "'.");
                 }
             }
-        } catch (RuntimeException e) {
+        } catch (SessionExpiredException e) {
+            //attempt to detect session expiry explicitly.  Add catch blocks
+            //here
             if (log.isTraceEnabled()) log.trace(
                     "User session expired. ViewNumber = [" + viewNumber + "]");
             response.setHeader("X-SESSION-EXPIRED", ".");
@@ -305,15 +310,11 @@ public class BlockingServlet extends HttpServlet {
             if (log.isTraceEnabled()) {
                 log.trace("User session expired. ViewNumber ["+viewNumber+"]");
             }
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) log.debug(
-                    "Exception thrown from BlockingServlet. " + e.getMessage(),
-                    e);
-            response.setHeader("X-REDIRECT", ".");
-            //send some content since Safari will not read the header.
-            response.getOutputStream().write('.');
-            response.getOutputStream().write('\n');
-            response.flushBuffer();
+        } catch (IllegalAccessException e) {
+            if( log.isDebugEnabled() ) {
+                log.debug(e);
+            }
+            throw(new ServletException(e));
         } finally {
             PersistentFacesState.clearLocalInstance();
         }

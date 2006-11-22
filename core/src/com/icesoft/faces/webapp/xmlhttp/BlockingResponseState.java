@@ -39,6 +39,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
@@ -64,13 +65,13 @@ public class BlockingResponseState implements ResponseState, Serializable {
     private Kicker kicker;
     private Collection updates = new ArrayList();
     private String focusID;
-    private boolean isCancelled = false;
+    protected boolean isCancelled = false;
     protected String iceID;
     protected String viewNumber;
 
     private final int maxUnflushed = 10;
-    private int unflushed = 0;
-    private HttpSession session;
+    protected int unflushed = 0;
+    protected HttpSession session;
 
     /*
     Bug 1010:  Added emptry constructor so that the extending class is not
@@ -103,20 +104,23 @@ public class BlockingResponseState implements ResponseState, Serializable {
         return focusID;
     }
 
-    public void block() throws Exception {
+    public void block(HttpServletRequest request)  {
         long left = 0;
 
         synchronized (kicker) {
             kicker.notifyAll(); //experimental fix for IE connection limit
             while ((!isCancelled) && (!kicker.isKicked) &&
                    ((left = remainingMillis()) > 0)) {
-                kicker.wait(left);
+                try {
+                    kicker.wait(left);
+                } catch (InterruptedException e)  {
+                }
             }
             kicker.isKicked = false;
         }
 
         if (remainingMillis() <= 0) {
-            throw new RuntimeException("BlockingResponseState.block() Expired");
+            throw new SessionExpiredException("Session timeout elapsed.");
         }
 
         if (isCancelled) {
@@ -155,7 +159,7 @@ public class BlockingResponseState implements ResponseState, Serializable {
         }
     }
 
-    private long remainingMillis() {
+    protected long remainingMillis() {
         long currentMillis = Calendar.getInstance().getTime().getTime();
         long accessedMillis = session.getLastAccessedTime();
         return (session.getMaxInactiveInterval() * 1000 -
