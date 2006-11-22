@@ -134,6 +134,14 @@ Autocompleter.Base.prototype = {
   },
 
    onKeyPress: function(event) {
+    if(!this.active){
+         Ice.Autocompleter.logger.debug("Key press ignored. Not active.");
+          switch(event.keyCode) {
+            case Event.KEY_TAB:
+                case Event.KEY_RETURN:
+            this.getUpdatedChoices(true,event);
+        }
+    }
     if(this.active)
       switch(event.keyCode) {
        case Event.KEY_TAB:
@@ -143,7 +151,8 @@ Autocompleter.Base.prototype = {
 
           this.hidden = true; // Hack to fix before beta. Was popup up the list after a selection was made
           this.selectEntry();
-          this.getUpdatedChoices();
+                 Ice.Autocompleter.logger.debug("Getting updated choices on enter");
+          this.getUpdatedChoices(true,event);
           this.hide();
           Event.stop(event);
        case Event.KEY_ESC:

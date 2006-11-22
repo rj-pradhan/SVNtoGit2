@@ -126,6 +126,9 @@ Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prot
   },
 
   getUpdatedChoices: function(isEnterKey, event) {
+      if(!event){
+          event = new Object();
+      }
       entry = encodeURIComponent(this.options.paramName) + '=' +
             encodeURIComponent(this.getToken());
 
@@ -137,10 +140,14 @@ Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prot
 
      var form = Ice.util.findForm(this.element);
 //     form.focus_hidden_field.value=this.element.id;
-     if(isEnterKey)
-		iceSubmit(form,this.element,event);
-     else	
-     	iceSubmitPartial(form, this.element, null);
+     if(isEnterKey){
+        Ice.Autocompleter.logger.debug("Sending submit");
+        iceSubmit(form,this.element,event);
+     }
+     else{
+         Ice.Autocompleter.logger.debug("Sending partial submit");
+         iceSubmitPartial(form, this.element, null);
+     }
      	
   },
   
