@@ -50,26 +50,26 @@ public class SessionExpiredException extends IllegalStateException {
         super(message);
     }
 
-    /**
-     * <p>Construct a new exception with the specified detail message and root
-     * cause.</p>
-     *
-     * @param message The detail message for this exception
-     * @param cause   The root cause for this exception
-     */
-    public SessionExpiredException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    /**
-     * <p>Construct a new exception with the specified root cause.  The detail
-     * message will be set to <code>(cause == null ? null :
-     * cause.toString()</code>
-     *
-     * @param cause The root cause for this exception
-     */
-    public SessionExpiredException(Throwable cause) {
-        super(cause);
-    }
+//    /**
+//     * <p>Construct a new exception with the specified detail message and root
+//     * cause.</p>
+//     *
+//     * @param message The detail message for this exception
+//     * @param cause   The root cause for this exception
+//     */
+//    public SessionExpiredException(String message, Throwable cause) {
+//        super(message, cause);
+//    }
+//
+//    /**
+//     * <p>Construct a new exception with the specified root cause.  The detail
+//     * message will be set to <code>(cause == null ? null :
+//     * cause.toString()</code>
+//     *
+//     * @param cause The root cause for this exception
+//     */
+//    public SessionExpiredException(Throwable cause) {
+//        super(cause);
+//    }
 
 }
