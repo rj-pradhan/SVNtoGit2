@@ -82,6 +82,21 @@ Ice.DnD = {
         });
         return found;
     },
+
+    sortableDraggable:function(ele){
+        ele = $(ele)
+        var found = false;
+
+        $A(Draggables.drags).each(function(drag) {
+            if (drag.element && drag.element.id == ele.id) {
+                if(drag.options.sort){
+                    found = true;
+                }
+            }
+        });
+        return found;
+    },
+
     alreadyDrop:function(ele) {
         ele = $(ele)
         var found = false;

@@ -525,6 +525,10 @@ public class TableRenderer
         if (comp instanceof RowSelector) {
             return (RowSelector) comp;
         }
+        if (comp instanceof HtmlDataTable){
+            // Stop looking if we get a nested table
+            return null;
+        }
         Iterator iter = comp.getChildren().iterator();
         while (iter.hasNext()) {
             RowSelector rs = getRowSelector((UIComponent) iter.next());

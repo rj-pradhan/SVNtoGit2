@@ -69,6 +69,18 @@ Droppables.show = function(point, element) {
     DropRegions.init = true;
 };
 
+Droppables.ORIGINAL_isAffected = Droppables.isAffected;
+Droppables.isAffected = function(point, element, drop){
+    var result = false;
+    result = Droppables.ORIGINAL_isAffected(point, element, drop);
+    if(result && drop.sort){
+        if(!Ice.DnD.sortableDraggable(element)){
+            result  = false;
+        }
+    }
+    return result;
+};
+
 Droppables.ORIGINAL_add = Droppables.add;
 Droppables.add = function(ele, options) {
      if(Ice.DnD.alreadyDrop(ele)){
