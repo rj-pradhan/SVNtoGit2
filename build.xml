@@ -76,10 +76,8 @@
 
 <target name="build.all">
     <ice:subant>
-        <buildpathelement location="core"/>
-        <buildpathelement location="component"/>
-        <dirset dir="samples" includes="*" excludes="etc, tutorial"/>
-        <dirset dir="samples/tutorial" includes="*"/>
+        <filelist dir="." files="core, component, component-metadata"/>
+        <fileset dir="samples" includes="**/build.xml"/>
         <propertyset refid="product.info"/>
     </ice:subant>
 
@@ -113,7 +111,7 @@
     </ice:zip>
 </target>
 
-<target name="build.bin.bundle" depends="clean, zip.src, build.all">
+<target name="build.bin.bundle" depends="zip.src, build.all">
     <ice:zip destfile="${bin.bundle.file}" update="true">
         <zipfileset dir="docs" prefix="${bin.bundle.prefix}/docs"/>
 
@@ -134,7 +132,7 @@
     <unzip src="${bin.bundle.file}" dest="${build.dir}"/-->
 </target>
 
-<target name="build.src.bundle" depends="clean">
+<target name="build.src.bundle">
     <touch  file="${src.bundle.file}" mkdirs="true"/>
     <delete file="${src.bundle.file}"/>
 
@@ -150,9 +148,7 @@
     <delete dir="${build.dir}"/>
     <delete dir="${dist.dir}"/>
     <ice:subant target="clean">
-        <dirset dir="${basedir}" includes="bridge, component, core"/>
-        <dirset dir="samples" includes="*" excludes="etc, tutorial"/>
-        <fileset dir="samples/tutorial" includes="*/**/build.xml"/>
+        <fileset dir="." includes="*/**/build.xml"/>
     </ice:subant>
 </target>
 
