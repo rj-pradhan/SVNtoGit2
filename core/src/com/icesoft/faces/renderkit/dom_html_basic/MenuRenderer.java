@@ -293,7 +293,7 @@ public class MenuRenderer extends DomBasicInputRenderer {
         } else {
             Object selectedValues =
                     getCurrentSelectedValues(uiComponent);
-            isSelected = isSelected(selectItem.getValue(), selectedValues);
+                isSelected = isSelected(selectItem.getValue(), selectedValues);
         }
 
         if (isSelected) {
@@ -434,7 +434,7 @@ public class MenuRenderer extends DomBasicInputRenderer {
 
     boolean isSelected(Object sentinel, Object selectedValues) {
         boolean isSelected = false;
-        if (selectedValues == null || sentinel == null) {
+         if (selectedValues == null || sentinel == null) {
             return isSelected;
         }
         int length = Array.getLength(selectedValues);
@@ -446,6 +446,11 @@ public class MenuRenderer extends DomBasicInputRenderer {
             } else if (sentinel.equals(nextSelectedValue)) {
                 isSelected = true;
                 break;
+            }else if (sentinel instanceof String) {
+            	if (isConversionMatched(sentinel.toString(), nextSelectedValue)) {
+	            	isSelected = true;
+	            	break;
+            	}
             }
         }
         return isSelected;
@@ -619,5 +624,39 @@ public class MenuRenderer extends DomBasicInputRenderer {
                                  UIComponent uiComponent, Element root,
                                  String currentValue,
                                  Set excludes) {
+    }
+    
+    private boolean isConversionMatched(String sentinel, Object selectedValue){
+    	boolean match = false;
+    	if (selectedValue instanceof Long){
+    		if (selectedValue.equals(Long.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	} else if (selectedValue instanceof Byte) {
+    		if (selectedValue.equals(Byte.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	} else if (selectedValue instanceof Integer) {
+    		if (selectedValue.equals(Integer.valueOf(sentinel))) {
+    			match = true;
+    		}    		
+    	} else if (selectedValue instanceof Short) {
+    		if (selectedValue.equals(Short.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	} else if (selectedValue instanceof Double) {
+    		if (selectedValue.equals(Double.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	} else if (selectedValue instanceof Float) {
+    		if (selectedValue.equals(Float.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	} else if (selectedValue instanceof Boolean) {
+    		if (selectedValue.equals(Boolean.valueOf(sentinel))) {
+    			match = true;
+    		}
+    	}
+    	return match;
     }
 }
