@@ -138,9 +138,8 @@ public class KeyEvent extends ActionEvent {
 
     private void setType(Object type) {
         if (type != null) {
-            ;
+            this.type = type.toString();
         }
-        this.type = type.toString();
     }
 
     private void setKeyCode(Object keyCode) {
