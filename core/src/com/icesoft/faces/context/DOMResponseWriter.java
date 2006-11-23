@@ -404,7 +404,8 @@ public class DOMResponseWriter extends ResponseWriter {
 
     private void enhanceBody(Element body) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-
+        //id required for forwarded (server-side) redirects
+        body.setAttribute("id", "body");
         Element iframe = document.createElement("iframe");
         body.insertBefore(iframe, body.getFirstChild());
         iframe.setAttribute("id", "history-frame");
