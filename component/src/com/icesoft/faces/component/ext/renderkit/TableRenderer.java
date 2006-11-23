@@ -305,7 +305,7 @@ public class TableRenderer
         int rowStyleIndex = 0;
         int rowStylesMaxIndex = rowStyles.length - 1;
 
-        RowSelector rowSelector = getRowSelector(uiComponent, true);
+        RowSelector rowSelector = getRowSelector(uiComponent);
         boolean rowSelectorFound = rowSelector != null;
 
         if (rowSelectorFound) {
@@ -521,17 +521,20 @@ public class TableRenderer
     }
 
 
-    public static RowSelector getRowSelector(UIComponent comp, boolean first) {
+    public static RowSelector getRowSelector(UIComponent comp) {
         if (comp instanceof RowSelector) {
             return (RowSelector) comp;
         }
-        if (!first && comp instanceof HtmlDataTable){
-            // Stop looking if we get a nested table
-            return null;
-        }
         Iterator iter = comp.getChildren().iterator();
         while (iter.hasNext()) {
-            RowSelector rs = getRowSelector((UIComponent) iter.next(), false);
+            UIComponent kid = (UIComponent) iter.next();
+            if (kid instanceof HtmlDataTable){
+                // Nested HtmlDataTable might be a peer of
+                //  a later, valid RowSelector, so don't
+                //  traverse in, but keep looking
+                continue;
+            }
+            RowSelector rs = getRowSelector(kid);
             if (rs != null) {
                 return rs;
             }
