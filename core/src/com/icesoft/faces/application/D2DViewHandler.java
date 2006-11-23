@@ -231,11 +231,10 @@ public class D2DViewHandler extends ViewHandler {
 
 
 
-        if ((null != root) && (null != viewId)) {
-            if (D2DViewHandler.mungeViewId(viewId)
-                    .equals(D2DViewHandler.mungeViewId(root.getViewId()))) {
-//                return root;
-            }
+        if ( (null != root) && (null != viewId) &&
+             (mungeViewId(viewId).equals(mungeViewId(root.getViewId()))) ) {
+            //existing root is good, could just return but need post-processing
+            //return root;
         } else {
 
             // Todo: Move all this to createView
