@@ -56,9 +56,7 @@
         
         
         <div class="demoWindow">
-            <!-- ice:outputText value="Test out TOP of panelStack bean: #{navigation.selectedPanel.templateName}"/ -->
-            <!-- ui:include src="./content/splashComponents.jspx" / -->
-            <!-- ice:outputText value="Test out BOTTOM of panelGroup and TOP of panelStack"/ -->                                    
+                                   
             <ice:panelStack id="templatePanelStack"
                             styleClass="componentContentPanelStack"
                             selectedPanel="#{navigation.selectedPanel.templateName}">
@@ -271,9 +269,6 @@
                 </ice:panelGroup>
             
             </ice:panelStack>
-            <!-- ice:outputText value="Test out BOTTOM of panelStack"/ -->
-            <!-- ui:include src="./components/tree.jspx" / -->
-            <!-- ui:include src="./layoutPanels/panelStack.jspx" / -->
 
         </div>
         <br />
