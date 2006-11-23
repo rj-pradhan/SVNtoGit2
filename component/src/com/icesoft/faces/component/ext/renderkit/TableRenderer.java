@@ -166,7 +166,7 @@ public class TableRenderer
                                    domContext.getRootNode(), th);
             encodeParentAndChildren(facesContext, headerFacet);
             if (isScrollable(uiComponent)) {
-                tr.appendChild(scrollBarSpacer(domContext));
+                tr.appendChild(scrollBarSpacer(domContext, facesContext));
             }
         }
         StringTokenizer columnWitdths = getColumnWidths(uiData);
@@ -201,7 +201,7 @@ public class TableRenderer
                 }
             }
             if (header && isScrollable(uiComponent)) {
-                tr.appendChild(scrollBarSpacer(domContext));
+                tr.appendChild(scrollBarSpacer(domContext, facesContext));
             }
         }
 
@@ -305,7 +305,7 @@ public class TableRenderer
         int rowStyleIndex = 0;
         int rowStylesMaxIndex = rowStyles.length - 1;
 
-        RowSelector rowSelector = getRowSelector(uiComponent);
+        RowSelector rowSelector = getRowSelector(uiComponent, true);
         boolean rowSelectorFound = rowSelector != null;
 
         if (rowSelectorFound) {
@@ -521,17 +521,17 @@ public class TableRenderer
     }
 
 
-    public static RowSelector getRowSelector(UIComponent comp) {
+    public static RowSelector getRowSelector(UIComponent comp, boolean first) {
         if (comp instanceof RowSelector) {
             return (RowSelector) comp;
         }
-        if (comp instanceof HtmlDataTable){
+        if (!first && comp instanceof HtmlDataTable){
             // Stop looking if we get a nested table
             return null;
         }
         Iterator iter = comp.getChildren().iterator();
         while (iter.hasNext()) {
-            RowSelector rs = getRowSelector((UIComponent) iter.next());
+            RowSelector rs = getRowSelector((UIComponent) iter.next(), false);
             if (rs != null) {
                 return rs;
             }
