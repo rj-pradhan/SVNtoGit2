@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ice="http://www.icesoft.com/icefaces/component" >
+    
+    <f:loadBundle
+        basename="com.icesoft.icefaces.samples.showcase.resources.messages"
+        var="msgs" />
+    <ice:outputDeclaration doctypeRoot="HTML"
+                           doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
+                           doctypeSystem="http://www.w3.org/TR/html4/loose.dtd"/>
+    
+    <head>
+
+        <ui:insert name="faceletHeader">Headers </ui:insert>
+
+    </head>
+    <body>
+        <!--
+            This is the main formating table which represents a layout view for
+            the application components.  The components are pretty straightforward:
+            header, left menu, and body components.  Follow the includes
+            to see each individual components makeup.
+        -->
+
+        <table border="0" cellpadding="0"
+               cellspacing="0" styleClass="mainBorderLayout" width="100%">
+            
+            <tr>
+                <td colspan="3">
+                    <ui:insert name="header">
+                        <ui:include src="./header.jspx"/>
+                    </ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" width="150px">
+                    
+                    
+                    <ui:insert name="navigation">
+                        <ui:include src="./navigation.jspx" />
+                    </ui:insert>
+                </td>
+                <td valign="top">
+                    
+                    <ui:insert name="content">
+                        <ui:include src="./content-facelet.jspx" />
+                    </ui:insert>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="showcaseFooter">&#169; 2006 ICEsoft Technologies
+                                Inc. &#160; &#8226; &#160; Toll Free: 1-877-263-3822 USA and
+                                Canada
+                                
+                                <br />
+                                
+                            </td>
+                        </tr>
+                    </table>                    
+                </td>
+            </tr>
+            
+        </table>       
+        <!--
+  PRELOAD IMAGES need for roleovers and layout in general, javascript is only
+  loaded once per refresh which is good enough.  This improves overall user
+  experience as they shouldn't have to wait for images to show up after the
+  initial load.
+        -->
+        <script language="JavaScript">
+//    <![CDATA[
+    <!--
+    var preloaded = new Array();
+    function preload_images() {
+        for (var i = 0; i < arguments.length; i++){
+            preloaded[i] = document.createElement('img');
+            preloaded[i].setAttribute('src',arguments[i]);
+        };
+    };
+    preload_images(
+            './xmlhttp/css/xp/css-images/spacer.gif',
+            './xmlhttp/css/xp/css-images/on-left-top.gif',
+            './xmlhttp/css/xp/css-images/on-mid-top.gif',
+            './xmlhttp/css/xp/css-images/on-right-top.gif',
+            './xmlhttp/css/xp/css-images/on-left-mid.gif',
+            './xmlhttp/css/xp/css-images/on-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/on-right-mid.gif',
+            './xmlhttp/css/xp/css-images/on-left-bot.gif',
+            './xmlhttp/css/xp/css-images/on-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/on-right-bot.gif',
+            './xmlhttp/css/xp/css-images/off-left-top.gif',
+            './xmlhttp/css/xp/css-images/off-mid-top.gif',
+            './xmlhttp/css/xp/css-images/off-right-top.gif',
+            './xmlhttp/css/xp/css-images/off-left-mid.gif',
+            './xmlhttp/css/xp/css-images/off-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/off-right-mid.gif',
+            './xmlhttp/css/xp/css-images/off-left-bot.gif',
+            './xmlhttp/css/xp/css-images/off-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/off-right-bot.gif',
+            './xmlhttp/css/xp/css-images/over-left-top.gif',
+            './xmlhttp/css/xp/css-images/over-mid-top.gif',
+            './xmlhttp/css/xp/css-images/over-right-top.gif',
+            './xmlhttp/css/xp/css-images/over-left-mid.gif',
+            './xmlhttp/css/xp/css-images/over-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/over-right-mid.gif',
+            './xmlhttp/css/xp/css-images/over-left-bot.gif',
+            './xmlhttp/css/xp/css-images/over-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/over-right-bot.gif',
+            './xmlhttp/css/xp/css-images/connect_active.gif',
+            './xmlhttp/css/xp/css-images/connect_caution.gif',
+            './xmlhttp/css/xp/css-images/connect_disconnected.gif',
+            './xmlhttp/css/xp/css-images/connect_idle.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-left-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-mid-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-right-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-left-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-right-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-left-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-mid-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-right-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-left-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-right-bot.gif'
+    );
+
+    // -->
+//    ]]>
+        </script>
+    </body>
+</html>

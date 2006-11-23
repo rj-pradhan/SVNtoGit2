@@ -38,6 +38,7 @@
 
 <faces-config>
 
+    
     <application>
         <locale-config>
             <default-locale>en_US</default-locale>

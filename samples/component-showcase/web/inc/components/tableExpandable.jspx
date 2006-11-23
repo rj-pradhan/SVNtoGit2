@@ -58,7 +58,7 @@
                             columnClasses="triangleColumn,cartNameColumn,cartQuantityColumn,cartQuantityColumn,cartPriceColumn,cartQuantityColumn">
                         <!-- contract/expand column -->
                         <ice:column >
-                            <ice:panelGroup styleClass="#{salesRecord.indentStyleClass">
+                            <ice:panelGroup styleClass="#{salesRecord.indentStyleClass}">
 			                    <!-- Render the expand/contract if there is an image -->
 			                    <ice:commandLink
 			                            actionListener="#{salesRecord.toggleSubGroupAction}">

@@ -81,8 +81,6 @@ to show how the selected panel can be dynamically changed.
             <!-- Panel Stack declaration - three panels, fruit, color and minerals. -->
             <ice:panelStack
                     selectedPanel="#{panelStack.selectedPanel}"
-                    columnClass=""
-                    rowClass=""
                     styleClass="">
                 <!-- Fruit Panel -->
                 <ice:panelGroup id="fruit" styleClass="panelGroupFruit">

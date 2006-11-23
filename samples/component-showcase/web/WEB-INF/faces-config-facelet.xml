@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
   ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -31,50 +32,17 @@
   ~
   -->
 
-<project name="component-showcase" default="build.war">
+<!DOCTYPE faces-config PUBLIC
+        "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+        "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+
+    <application>
+        <view-handler>com.icesoft.faces.facelets.D2DFaceletViewHandler
+        </view-handler>
+    </application>
     
-    <property file="build.properties"/>
-    <property name="component.docs.dir" location="../../component/doc"/>
-    
-    <import file="../etc/build-common.xml"/>
-    
-    <patternset id="additional.icefaces.lib.jars.to.include"
-                includes="
-                krysalis-jCharts-1.0.0-alpha-1.jar
-                "
-    />
-    <!-- jars needed for form Facelets -->
-    <patternset id="faclets.jars"
-                includes="
-                icefaces-facelets.jar
-                el-api.jar
-                el-ri.jar
-                "
-    />
-    <target name="clean" depends="common.clean">
-        <delete dir="${web.content.dir}/docs"/>
-    </target>
-    
-    <target name="build.war" depends="compile">
-        <copy todir="${web.content.dir}/docs" preservelastmodified="true">
-            <fileset dir="${component.docs.dir}"/>
-        </copy>
-        
-        <build.war web.xml="conf/web.sunri.icefaces.ce.xml"/>
-    </target>
-    
-    <target name="build.facelet.war" depends="compile" 
-    description="create the Facelet version of component-showcase">
-        <copy todir="${web.content.dir}/docs" preservelastmodified="true">
-            <fileset dir="${component.docs.dir}"/>
-        </copy>
-        
-        <copy todir="${app.lib.dir}" preservelastmodified="true">
-            
-            <fileset dir="${icefaces.lib.dir}">
-                <patternset refid="faclets.jars"/>
-            </fileset>
-        </copy>    
-        <build.war web.xml="conf/web.sunri.icefaces.facelet.xml"/>
-    </target>
-</project>
+
+
+</faces-config>

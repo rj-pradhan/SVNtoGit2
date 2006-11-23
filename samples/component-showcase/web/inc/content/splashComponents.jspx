@@ -31,48 +31,54 @@
 ~
 -->
 
-<ice:panelGrid styleClass="contentLayoutGridStyle" border="0">
-    <f:verbatim>
-        <br/>
-
-        <p>The ICEfaces Component Suite provides a complete set of enhanced
-            standard and custom JavaServer Faces (JSF) components. These
-            components provide the following additional benefits over other JSF
-            components:</p>
-
-        <ul>
-            <li>Optimized to fully leverage ICEfaces Direct-to-Dom rendering
-                technology providing seamless incremental
-                user-interface updates for all components without full-page
-                refreshes (partial-page rendering).
-            </li>
-            <li>Support for additional attributes for ICEfaces-specific features
-                such as effects, partialSubmit, renderedOnUserRole, etc.
-            </li>
-            <li>Support for comprehensive component styling via predefined
-                component style sheets that are easily customized.
-            </li>
-        </ul>
-
-        <p>Using the ICEfaces Component Suite complete JSF applications may be
-            rapidly developed that fully leverage the rich application features
-            that ICEfaces provides:</p>
-        <ul>
-            <li>Smooth, incremental page updates without full-page
-                refreshes.
-            </li>
-            <li>Asynchronous server-initiated user-interface updates without
-                polling.
-            </li>
-            <li>Rich AJAX-enabled web applications with no JavaScript
-                development required.
-            </li>
-            <li>User context preservation during page update, including
-                scrollbar positioning and user focus.
-            </li>
-            <li>Fine-grained user interaction during form entry that augments
-                the standard submit/response loop.
-            </li>
-        </ul>
-    </f:verbatim>
-</ice:panelGrid>
+<table
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ice="http://www.icesoft.com/icefaces/component"
+    styleClass="contentLayoutGridStyle" border="0">
+    <tr>
+        <td>
+    <br/>
+    
+    <p>The ICEfaces Component Suite provides a complete set of enhanced
+        standard and custom JavaServer Faces (JSF) components. These
+        components provide the following additional benefits over other JSF
+    components:</p>
+    
+    <ul>
+        <li>Optimized to fully leverage ICEfaces Direct-to-Dom rendering
+            technology providing seamless incremental
+            user-interface updates for all components without full-page
+            refreshes (partial-page rendering).
+        </li>
+        <li>Support for additional attributes for ICEfaces-specific features
+            such as effects, partialSubmit, renderedOnUserRole, etc.
+        </li>
+        <li>Support for comprehensive component styling via predefined
+            component style sheets that are easily customized.
+        </li>
+    </ul>
+    
+    <p>Using the ICEfaces Component Suite complete JSF applications may be
+        rapidly developed that fully leverage the rich application features
+    that ICEfaces provides:</p>
+    <ul>
+        <li>Smooth, incremental page updates without full-page
+            refreshes.
+        </li>
+        <li>Asynchronous server-initiated user-interface updates without
+            polling.
+        </li>
+        <li>Rich AJAX-enabled web applications with no JavaScript
+            development required.
+        </li>
+        <li>User context preservation during page update, including
+            scrollbar positioning and user focus.
+        </li>
+        <li>Fine-grained user interaction during form entry that augments
+            the standard submit/response loop.
+        </li>
+    </ul>
+    </td>
+    </tr>
+</table>

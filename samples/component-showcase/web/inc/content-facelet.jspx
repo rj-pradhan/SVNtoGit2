@@ -1,0 +1,281 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+<div    
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+    
+    <ice:panelGroup>
+        <!--
+                       Main Component content;
+                       controls which content to display for the respective navigation
+                    -->
+
+        <ice:panelGrid styleClass="navConnectionStatus" columnClasses="statusLeft, statusRight" columns="2">
+            <!-- Connection Status -->
+            <ice:outputConnectionStatus />
+        </ice:panelGrid>
+        
+        <!-- Demo Title -->
+        <h2>
+            <ice:outputText
+                value="#{navigation.selectedPanel.menuContentTitle}"/>
+        </h2>
+        
+        
+        <div class="demoWindow">
+            <!-- ice:outputText value="Test out TOP of panelStack bean: #{navigation.selectedPanel.templateName}"/ -->
+            <!-- ui:include src="./content/splashComponents.jspx" / -->
+            <!-- ice:outputText value="Test out BOTTOM of panelGroup and TOP of panelStack"/ -->                                    
+            <ice:panelStack id="templatePanelStack"
+                            styleClass="componentContentPanelStack"
+                            selectedPanel="#{navigation.selectedPanel.templateName}">
+                
+                <!-- Custom Content Pages -->
+
+                <ice:panelGroup id="splashComponentsPanel" styleClass="contentIncludePanelGroup" >
+                   <f:subview id="scSub" >
+                        <!-- Components Splash include -->
+                        <ui:include src="./content/splashComponents.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="splashThemesPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="stSub">
+                        <!-- Themes Splash include -->
+                        <ui:include src="./content/splashThemes.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+
+                <!-- Component suite content -->
+
+                <ice:panelGroup id="listContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="lcSub">
+                        <!-- Panel Series Component include -->
+                        <ui:include src="./layoutPanels/panelSeries.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="treeContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="tcSub">
+                        <!-- Tree Component include -->
+                        <ui:include src="./components/tree.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="effectsContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="ecSub">
+                        <!-- Effects include -->
+                        <ui:include src="./components/effects.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="connectionStatusContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="csSub">
+                        <!-- Connection Status include -->
+                        <ui:include src="./components/connectionStatus.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="panelPopupContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="ppSub">
+                        <!-- Popup Panel Component include -->
+                        <ui:include src="./layoutPanels/panelPopup.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="outputProgressContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="opSub">
+                        <!-- Progress Bar Component include -->
+                        <ui:include src="./components/outputProgress.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="menuBarContentPanel">
+                    <f:subview id="mbSub">
+                        <!-- Menu Bar Component include -->
+                        <ui:include src="./components/menuBar.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="selectInputDateContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="sdSub">
+                        <!-- Calendar Component include -->
+                        <ui:include src="./components/selectInputDate.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="autoCompleteContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="acSub">
+                        <!-- Autocomplete Component include -->
+                        <ui:include src="./components/autoComplete.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="dragDropContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="ddSub">
+                        <!-- DragDrop component include -->
+                        <ui:include src="./components/dragDrop.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="tablePaginatorContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="tpSub">
+                        <!-- Data Paginator component include -->
+                        <ui:include src="./components/dataPaginator.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="commandSortHeaderContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="shSub">
+                        <!-- Data Sort Header component include -->
+                        <ui:include src="./components/commandSortHeader.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="inputFileContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="ifSub">
+                        <!-- File Upload component include -->
+                        <ui:include src="./components/inputFile.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="textFieldsContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="tfSub">
+                        <!-- Text Fields include -->
+                        <ui:include src="./components/textFields.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+
+                <ice:panelGroup id="selectionTagsContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="selSub">
+                        <!-- Selection Tags include -->
+                        <ui:include src="./components/selectionTags.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="buttonsAndLinksContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="blSub">
+                        <!-- Buttons & Links include -->
+                        <ui:include src="./components/buttonsAndLinks.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="tableContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="taSub">
+                        <!-- Table include -->
+                        <ui:include src="./components/table.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="columnsContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="colSub">
+                        <!-- Table Columns include -->
+                        <ui:include src="./components/tableColumns.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="tableExpandableContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="teSub">
+                        <!-- Expandable Table include -->
+                        <ui:include src="./components/tableExpandable.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="tableRowSelectionContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="taRowSelectionSub">
+                        <!-- Table Row Selection include -->
+                        <ui:include src="./components/tableRowSelection.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="tabbedPaneContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="tabSub">
+                        <!-- Tabbed Panel include -->
+                        <ui:include src="./layoutPanels/panelTabSet.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+                <ice:panelGroup id="panelBorderContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="pbSub">
+                        <!-- Panel Border include -->
+                        <ui:include src="./layoutPanels/panelBorder.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="panelStackContentPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="psSub">
+                        <!-- Panel Stack Header component include -->
+                        <ui:include src="./layoutPanels/panelStack.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="positionPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="positionPanelSub">
+                        <!-- Panel Stack Header component include -->
+                        <ui:include src="./layoutPanels/positionedPanel.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="chartPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="chartSub">
+                        <!-- OutputChart include -->
+                        <ui:include src="./components/outputChart/chart.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="combinedChartPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="combinedChartSub">
+                        <!-- OutputChart include -->
+                        <ui:include src="./components/outputChart/combinedChart.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+                
+                <ice:panelGroup id="dynamicChartPanel" styleClass="contentIncludePanelGroup" >
+                    <f:subview id="dynamicChartSub">
+                        <!-- OutputChart include -->
+                        <ui:include src="./components/outputChart/dynamicChart.jspx" />
+                    </f:subview>
+                </ice:panelGroup>
+            
+            </ice:panelStack>
+            <!-- ice:outputText value="Test out BOTTOM of panelStack"/ -->
+            <!-- ui:include src="./components/tree.jspx" / -->
+            <!-- ui:include src="./layoutPanels/panelStack.jspx" / -->
+
+        </div>
+        <br />
+    </ice:panelGroup>
+</div>
