@@ -249,6 +249,18 @@ public class PanelTabSet
     public void setTabChangeListener(MethodBinding tabChangeListener) {
         _tabChangeListener = tabChangeListener;
     }
+    
+    public void setValueBinding(String s, ValueBinding vb) {
+        if (s != null && s.equals("tabChangeListener")) {
+            MethodBinding mb =
+                    getFacesContext().getApplication().createMethodBinding(
+                            vb.getExpressionString(),
+                            new Class[]{TabChangeEvent.class});
+            setTabChangeListener( mb );
+        } else {
+            super.setValueBinding(s, vb);
+        }
+    }
 
     /* (non-Javadoc)
      * @see javax.faces.component.UIComponent#broadcast(javax.faces.event.FacesEvent)
@@ -261,21 +273,25 @@ public class PanelTabSet
                 //getFacesContext().renderResponse();
             }
         }
+        
         super.broadcast(event);
-
-        MethodBinding tabChangeListenerBinding = getTabChangeListener();
-        if (tabChangeListenerBinding != null) {
-            try {
-                tabChangeListenerBinding
-                        .invoke(getFacesContext(), new Object[]{event});
-            }
-            catch (EvaluationException e) {
-                Throwable cause = e.getCause();
-                if (cause != null &&
-                    cause instanceof AbortProcessingException) {
-                    throw(AbortProcessingException) cause;
-                } else {
-                    throw e;
+        
+        if (event instanceof TabChangeEvent) {
+            TabChangeEvent tabChangeEvent = (TabChangeEvent) event;
+            MethodBinding tabChangeListenerBinding = getTabChangeListener();
+            if (tabChangeListenerBinding != null) {
+                try {
+                    tabChangeListenerBinding.invoke(
+                            getFacesContext(), new Object[]{tabChangeEvent});
+                }
+                catch (EvaluationException e) {
+                    Throwable cause = e.getCause();
+                    if (cause != null &&
+                            cause instanceof AbortProcessingException) {
+                        throw(AbortProcessingException) cause;
+                    } else {
+                        throw e;
+                    }
                 }
             }
         }

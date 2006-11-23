@@ -134,6 +134,18 @@ public class RowSelector extends UIComponentBase {
     public void setSelectionListener(MethodBinding selectionListener) {
         this.selectionListener = selectionListener;
     }
+    
+    public void setValueBinding(String s, ValueBinding vb) {
+        if (s != null && s.equals("selectionListener")) {
+            MethodBinding mb =
+                    getFacesContext().getApplication().createMethodBinding(
+                            vb.getExpressionString(),
+                            new Class[]{RowSelectorEvent.class});
+            setSelectionListener( mb );
+        } else {
+            super.setValueBinding(s, vb);
+        }
+    }
 
     public void broadcast(FacesEvent event) {
         super.broadcast(event);
