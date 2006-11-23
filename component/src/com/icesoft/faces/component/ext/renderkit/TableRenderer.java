@@ -166,7 +166,7 @@ public class TableRenderer
                                    domContext.getRootNode(), th);
             encodeParentAndChildren(facesContext, headerFacet);
             if (isScrollable(uiComponent)) {
-                tr.appendChild(scrollBarSpacer(domContext));
+                tr.appendChild(scrollBarSpacer(domContext, facesContext));
             }
         }
         StringTokenizer columnWitdths = getColumnWidths(uiData);
@@ -201,7 +201,7 @@ public class TableRenderer
                 }
             }
             if (header && isScrollable(uiComponent)) {
-                tr.appendChild(scrollBarSpacer(domContext));
+                tr.appendChild(scrollBarSpacer(domContext, facesContext));
             }
         }
 
