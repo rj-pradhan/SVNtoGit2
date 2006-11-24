@@ -43,6 +43,9 @@
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
             });
+            connection.onSend(function() {
+                Ice.Focus.userInterupt = false;
+            });
 
             connection.onReceive(function(request) {
                 $enumerate(request.contentAsDOM().documentElement.getElementsByTagName('update')).each(Ice.Document.Update);
