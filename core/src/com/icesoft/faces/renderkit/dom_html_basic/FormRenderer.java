@@ -120,7 +120,7 @@ public class FormRenderer extends DomBasicRenderer {
             root.setAttribute("action", action);
 
             String styleClass =
-                    (String) uiComponent.getAttributes().get("style");
+                    (String) uiComponent.getAttributes().get("styleClass");
             if (styleClass != null) {
                 root.setAttribute("class", styleClass);
             }
