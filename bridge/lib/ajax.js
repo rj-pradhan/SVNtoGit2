@@ -34,7 +34,7 @@
 [ Ice.Ajax = new Object ].as(function(This) {
     This.Client = Object.subclass({
         initialize: function(logger) {
-            this.logger = logger.child('ajax');
+            this.logger = logger;
             this.cookies = new Object;
             document.cookie.split('; ').each(function(cookieDetails) {
                 var cookie = cookieDetails.split('=');
@@ -101,6 +101,9 @@
             this.logger = logger;
             this.callbacks = [];
             this.responseCallback = function() {
+                if (this.isComplete()) {
+                    this.logger.debug('[' + this.identifier + '] : receive [' + this.request.status + '] ' + this.request.statusText);
+                }
                 this.callbacks.each(function(callback) {
                     try {
                         callback.execute(this);

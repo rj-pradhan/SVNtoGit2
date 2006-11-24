@@ -38,10 +38,9 @@ window.connection = {send:function(){}};
         initialize: function() {
             var logger = window.logger = this.logger = new Ice.Log.Logger([ 'window' ]);
             this.logHandler = new Ice.Log.WindowLogHandler(logger, window);
-            var ajax = new Ice.Ajax.Client(logger);
-            var documentSynchronizer = new Ice.Document.Synchronizer(ajax, logger);
+            var documentSynchronizer = new Ice.Document.Synchronizer(logger);
             var statusManager = new Ice.Status.StatusManager();
-            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(ajax, logger, configuration.connection) : new This.Connection.AsyncConnection(ajax, logger, configuration.connection, defaultParameters);
+            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
             });

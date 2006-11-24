@@ -31,7 +31,7 @@
  *
  */
 
-[ Ice.Connection = new Object, Ice.Connection ].as(function(This, Connection) {
+[ Ice.Connection = new Object, Ice.Connection, Ice.Ajax ].as(function(This, Connection, Ajax) {
     This.Redirect = function(request) {
         return request.isOkAndComplete() && request.containsResponseHeader('X-REDIRECT');
     }
@@ -57,9 +57,9 @@
     }
 
     This.SyncConnection = Object.subclass({
-        initialize: function(ajax, logger, configuration) {
-            this.ajax = ajax;
+        initialize: function(logger, configuration) {
             this.logger = logger.child('sync-connection');
+            this.channel = new Ajax.Client(this.logger);
             this.onSendListeners = [];
             this.onReceiveListeners = [];
             this.onRedirectListeners = [];
@@ -86,7 +86,7 @@
 
         send: function(query) {
             this.logger.debug('send > ' + query.asString());
-            this.ajax.postAsynchronously(this.sendURI, query.asURIEncodedString(), function(request) {
+            this.channel.postAsynchronously(this.sendURI, query.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
                 request.on(Connection.Receive, function() {

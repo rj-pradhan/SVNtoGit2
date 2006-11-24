@@ -31,12 +31,13 @@
  *
  */
 
-[ Ice.Community.Connection = new Object, Ice.Connection ].as(function(This, Connection) {
+[ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax ].as(function(This, Connection, Ajax) {
 
     This.AsyncConnection = Object.subclass({
-        initialize: function(ajax, logger, configuration, defaultQuery) {
-            this.ajax = ajax;
+        initialize: function(logger, configuration, defaultQuery) {
             this.logger = logger.child('async-connection');
+            this.sendChannel = new Ajax.Client(this.logger.child('ui'));
+            this.receiveChannel = new Ajax.Client(this.logger.child('blocking'));
             this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
@@ -67,7 +68,7 @@
             this.listener.close();
             this.logger.debug("connect...");
             this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
-            this.listener = this.ajax.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
+            this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
                 request.on(Connection.BadResponse, function() {
                     this.connectionDownBroadcaster();
                 }.bind(this));
@@ -93,7 +94,7 @@
             var compoundQuery = query.addQuery(this.defaultQuery());
             this.logger.debug('send > ' + compoundQuery.asString());
 
-            this.ajax.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
+            this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 request.on(Connection.SessionExpired, this.sessionExpiredListeners.broadcaster());
                 request.on(Connection.Redirect, function() {

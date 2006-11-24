@@ -31,11 +31,11 @@
  *
  */
 
-[ Ice.Document = new Object, Ice.ElementModel.Element, Ice.Connection ].as(function(This, Element, Connection) {
+[ Ice.Document = new Object, Ice.ElementModel.Element, Ice.Connection, Ice.Ajax ].as(function(This, Element, Connection, Ajax) {
     This.Synchronizer = Object.subclass({
-        initialize: function(ajax, logger) {
-            this.ajax = ajax;
+        initialize: function(logger) {
             this.logger = logger.child('synchronizer');
+            this.ajax = new Ajax.Client(this.logger);
             if (window.frames[0].location.hash.length > 0) this.reload();
         },
 
