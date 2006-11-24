@@ -80,6 +80,10 @@ input {
     padding: 2px;
 }
 
+.iceCheckbox {
+    white-space: nowrap;
+}
+
 .iceCheckbox input, .iceRadioBtn input, .iceBooleanCheckbox {
     margin: 2px;
     padding: 2px;
