@@ -74,9 +74,9 @@ window.onScroll(function() {
     window.focus();
 });
 
-window.onLoad(function() {
+window.onLoad((function() {
     connection.onSend(function() {
         Ice.Focus.userInterupt = false;
     });
-}.delayFor(250));
+}).delayFor(250));
 
