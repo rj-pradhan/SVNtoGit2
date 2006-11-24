@@ -121,6 +121,7 @@ public class PersistentFacesServlet extends HttpServlet {
         this.config = config;
         this.commonlet = new PersistentFacesCommonlet();
         this.commonlet.init(this.commonlet.getInitParams(this.config));
+        System.setProperty("java.awt.headless", "true");
         ServletContext servletContext = config.getServletContext();
         try {
             commonlet.concurrentDOMViews = Boolean
