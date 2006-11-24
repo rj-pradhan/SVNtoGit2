@@ -73,10 +73,3 @@ window.onScroll(function() {
     currentFocus = null;
     window.focus();
 });
-
-window.onLoad((function() {
-    connection.onSend(function() {
-        Ice.Focus.userInterupt = false;
-    });
-}).delayFor(250));
-

@@ -82,29 +82,31 @@
             this.whenDown(function() {
                 this.timeoutBomb.cancel();
             }.bind(this));
+
+            this.receiveCallback = function(response) {
+                try {
+                    this.onReceiveListeners.broadcast(response);
+                } catch (e) {
+                    this.logger.error('receive broadcast failed', e)
+                }
+            }.bind(this);
+            
+            this.redirectCallback = function(response) {
+                this.onRedirectListeners.broadcast(response.getResponseHeader('X-REDIRECT'));
+            }.bind(this);
+
+            this.badResponseCallback = this.connectionDownListeners.broadcaster();
+            this.sessionExpiredCallback = this.sessionExpiredListeners.broadcaster();
         },
 
         send: function(query) {
             this.logger.debug('send > ' + query.asString());
             this.channel.postAsynchronously(this.sendURI, query.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-                request.on(Connection.Receive, function() {
-                    try {
-                        this.onReceiveListeners.broadcast(request);
-                    } catch (e) {
-                        this.logger.error('receive broadcast failed', e)
-                    }
-                }.bind(this));
-
-                request.on(Connection.Redirect, function() {
-                    this.onRedirectListeners.broadcast(request.getResponseHeader('X-REDIRECT'));
-                }.bind(this));
-
-                request.on(Connection.BadResponse, this.connectionDownListeners.broadcaster());
-
-                request.on(Connection.SessionExpired, this.sessionExpiredListeners.broadcaster());
-
+                request.on(Connection.Receive, this.receiveCallback);
+                request.on(Connection.Redirect, this.redirectCallback);
+                request.on(Connection.BadResponse, this.badResponseCallback);
+                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },

@@ -59,6 +59,27 @@
                 this.timeoutBomb.cancel();
             }.bind(this));
 
+            this.badResponseCallback = function() {
+                this.connectionDownBroadcaster();
+            }.bind(this);
+
+            this.redirectCallback = function(response) {
+                this.connectionDownBroadcaster = Function.NOOP;
+                this.onRedirectListeners.broadcast(response.getResponseHeader('X-REDIRECT'));
+            }.bind(this);
+
+            this.receiveCallback = function(response) {
+                try {
+                    this.onReceiveListeners.broadcast(response);
+                } catch (e) {
+                    this.logger.error('receive broadcast failed', e);
+                } finally {
+                    this.connect();
+                }
+            }.bind(this);
+
+            this.sessionExpiredCallback = this.sessionExpiredListeners.broadcaster();
+
             this.connect();
             this.logger.info('asynchronous mode');
         },
@@ -69,23 +90,10 @@
             this.logger.debug("connect...");
             this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                request.on(Connection.BadResponse, function() {
-                    this.connectionDownBroadcaster();
-                }.bind(this));
-                request.on(Connection.Redirect, function() {
-                    this.connectionDownBroadcaster = Function.NOOP;
-                    this.onRedirectListeners.broadcast(request.getResponseHeader('X-REDIRECT'));
-                }.bind(this));
-                request.on(Connection.SessionExpired, this.sessionExpiredListeners.broadcaster());
-                request.on(Connection.Receive, function() {
-                    try {
-                        this.onReceiveListeners.broadcast(request);
-                    } catch (e) {
-                        this.logger.error('receive broadcast failed', e);
-                    } finally {
-                        this.connect();
-                    }
-                }.bind(this));
+                request.on(Connection.BadResponse, this.badResponseCallback);
+                request.on(Connection.Redirect, this.redirectCallback);
+                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
+                request.on(Connection.Receive, this.receiveCallback);
             }.bind(this));
         },
 
@@ -96,11 +104,8 @@
 
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                request.on(Connection.SessionExpired, this.sessionExpiredListeners.broadcaster());
-                request.on(Connection.Redirect, function() {
-                    this.connectionDownBroadcaster = Function.NOOP;
-                    this.onRedirectListeners.broadcast(request.getResponseHeader('X-REDIRECT'));
-                }.bind(this));
+                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
+                request.on(Connection.Redirect, this.redirectCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },

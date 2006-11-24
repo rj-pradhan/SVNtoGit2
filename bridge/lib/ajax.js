@@ -82,18 +82,6 @@
         }
     });
 
-
-    This.ResponseCallback = Object.subclass({
-        initialize: function(testFunction, handlerFunction) {
-            this.testFunction = testFunction;
-            this.handlerFunction = handlerFunction;
-        },
-
-        execute: function(request) {
-            if (this.testFunction(request)) this.handlerFunction(request);
-        }
-    });
-
     This.RequestProxy = Object.subclass({
         initialize: function(request, logger) {
             this.identifier =  + Math.random().toString().substr(2, 7);
@@ -106,7 +94,7 @@
                 }
                 this.callbacks.each(function(callback) {
                     try {
-                        callback.execute(this);
+                        callback(this);
                     } catch (e) {
                         this.logger.error('failed to respond', e);
                     }
@@ -115,7 +103,9 @@
         },
 
         on: function(test, handler) {
-            this.callbacks.push(new This.ResponseCallback(test, handler));
+            this.callbacks.push(function(request) {
+                if (test(request)) handler(request);
+            });
         },
 
         isComplete: function() {
