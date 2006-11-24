@@ -71,7 +71,7 @@
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
 			<arg line="-p ice" />
-			<arg line="-u com.icesoft.faces.component.ext.taglib" />
+			<arg line="-u http://www.icesoft.com/icefaces/component" />
 			<arg line="-T com.icesoft.faces.ext.taglib" />
 			<arg line="-v" />
 			<!-- -t name of output TLD file relative to -d directory -->
