@@ -36,28 +36,28 @@ var currentFocus;
 Ice.Focus = new Object();
 Ice.Focus.userInterupt = false;
 
-if (window.Event){
+if (window.Event) {
     document.captureEvents(Event.KEYDOWN);
     document.captureEvents(Event.MOUSEDOWN);
 }
 
-Ice.Focus.userInterupt = function (e){
-    if(Ice.Focus.userInterupt == false){
+Ice.Focus.userInterupt = function (e) {
+    if (Ice.Focus.userInterupt == false) {
         window.logger.debug('User action. Set focus will be ignored.');
         Ice.Focus.userInterupt = true;
     }
 
 }
 
-Ice.Focus.setFocus = function(id){
-    if((Ice.Focus.userInterupt==false) && (id != '') && (id != 'undefined')){
-        try{
+Ice.Focus.setFocus = function(id) {
+    if ((Ice.Focus.userInterupt == false) && (id != '') && (id != 'undefined')) {
+        try {
             id.asExtendedElement().focus();
             window.logger.debug('Focus Set on [' + id + "]");
-        }catch(e){
-            window.logger.error('Failed to set focus on [' + id +']',e);               
+        } catch(e) {
+            window.logger.error('Failed to set focus on [' + id + ']', e);
         }
-    }else{
+    } else {
         window.logger.debug('Focus interupted. Not Set on [' + id + ']');
     }
 };
@@ -73,4 +73,10 @@ window.onScroll(function() {
     currentFocus = null;
     window.focus();
 });
+
+window.onLoad(function() {
+    connection.onSend(function() {
+        Ice.Focus.userInterupt = false;
+    });
+}.delayFor(250));
 

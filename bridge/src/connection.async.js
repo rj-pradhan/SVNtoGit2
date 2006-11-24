@@ -101,14 +101,12 @@
                     this.connectionDownBroadcaster = Function.NOOP;
                     this.onRedirectListeners.broadcast(request.getResponseHeader('X-REDIRECT'));
                 }.bind(this));
-                Ice.Focus.userInterupt = false;
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },
 
         onSend: function(callback) {
             this.onSendListeners.push(callback);
-            Ice.Focus.userInterupt = false;
         },
 
         onReceive: function(callback) {

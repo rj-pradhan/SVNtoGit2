@@ -31,7 +31,6 @@
  *
  */
 
-window.connection = {send:function(){}};
 [ Ice.Community ].as(function(This) {
 
     This.Application = Object.subclass({
@@ -78,11 +77,11 @@ window.connection = {send:function(){}};
 
             this.connection.onSend(function(request) {
                 statusManager.busy.on();
-            }.delayFor(100));
+            });
 
             this.connection.onReceive(function(request) {
                 statusManager.busy.off();
-            }.delayFor(100));
+            });
 
             this.logger.info('page loaded!');
         },

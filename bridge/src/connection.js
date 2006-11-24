@@ -139,3 +139,8 @@
     });
 });
 
+//noop connection
+window.connection = {
+    send: Function.NOOP
+};
+

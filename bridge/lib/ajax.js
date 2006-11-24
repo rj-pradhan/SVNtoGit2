@@ -168,7 +168,6 @@
             this.request.open('POST', path, true);
             if (requestConfigurator) requestConfigurator(this);
             this.request.onreadystatechange = this.responseCallback;
-            Ice.Focus.userInterupt = false;
             //the 'rand' parameter is used to force Firefox to commit the response to the server.
             this.logger.debug('[' + this.identifier + '] : send asynchronous POST');
             this.request.send(query + '&rand=' + Math.random() + '\n\n');
@@ -190,7 +189,6 @@
             if (requestConfigurator) requestConfigurator(this);
             //the 'rand' parameter is used to force Firefox to commit the response to the server.
             this.logger.debug('[' + this.identifier + '] : send synchronous POST');
-            Ice.Focus.userInterupt = false;
             this.request.send(query + '&rand=' + Math.random() + '\n\n');
             this.responseCallback();
             return this;
