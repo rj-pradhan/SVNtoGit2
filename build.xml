@@ -76,7 +76,7 @@
 
 <target name="build.all">
     <ice:subant>
-        <filelist dir="." files="core, component-metadata, component"/>
+        <filelist dir="." files="core, component, component-metadata"/>
         <fileset dir="samples" includes="**/build.xml"/>
         <propertyset refid="product.info"/>
     </ice:subant>
