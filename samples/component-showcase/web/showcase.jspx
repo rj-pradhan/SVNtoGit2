@@ -333,7 +333,7 @@
   experience as they shouldn't have to wait for images to show up after the
   initial load.
   -->
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript" >
     <![CDATA[
     <!--
     var preloaded = new Array();
