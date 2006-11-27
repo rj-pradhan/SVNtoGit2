@@ -7,6 +7,17 @@
 	<property name="maven.test.reports" value="${maven.build.directory}/test-reports" />
 	<property name="maven.test.output" value="target/test-classes" />
 	<property name="lib.dir" location="../lib" />
+	<property name="project.title" value="ICEfaces components" />
+	<property name="project.version" value="1.5" />
+	<property name="project.package" value="com.icesoft" />
+	<property name="project.artifact" value="component" />
+	<property name="project.artifact.version" value="icefaces-webui" />
+
+	<!-- todo: change package name later -->
+	<property name="project.taglib.package" value="${project.package}.faces.component" />
+	<property name="project.taglib.prefix" value="ice" />
+	<property name="project.taglib.uri" value="http://www.icesoft.com/icefaces/component" />
+	<property name="project.tld.fileName" value="icefaces_component" />
 	<path id="build.classpath">
 		<pathelement location="${maven.build.output}" />
 		<fileset dir="${lib.dir}" includes="*.jar">
@@ -23,10 +34,17 @@
 			<srcfiles dir="${maven.build.directory}/../../component/conf/META-INF">
 				<include name="faces-config.xml" />
 			</srcfiles>
-		</uptodate>
+		</uptodate>		
 	</target>
 	
 	<target name="compile" description="Compile the code">
+		<echo message="---------- ${project.title} ----------" />
+		<filter token="title" value="${project.title}" />
+		<filter token="package" value="${project.package}" />
+		<filter token="version" value="${project.version}" />
+		<filter token="project-artifact" value="${project.artifact}" />
+		<filter token="taglib-prefix" value="${project.taglib.prefix}" />
+		<filter token="taglib-uri" value="${project.taglib.uri}" />
 		<mkdir dir="${maven.build.output}" />
 		<javac destdir="${maven.build.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
 			<src>
@@ -34,7 +52,7 @@
 			</src>
 			<classpath refid="build.classpath" />
 		</javac>
-		<copy todir="${maven.build.output}">
+		<copy todir="${maven.build.output}" filtering="on">
 			<fileset dir="src/main/resources" />
 		</copy>
 	</target>
@@ -52,8 +70,8 @@
 			<arg line="-x" />
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
-			<arg line="-p ice" />
-			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-p ${project.taglib.prefix}" />
+			<arg line="-u ${project.taglib.uri}" />
 			<arg line="-T com.icesoft.faces.component.ext.taglib" />
 			<arg line="-v" />
 			<arg line="--tlClass" />
@@ -70,8 +88,8 @@
 			<arg line="-x" />
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
-			<arg line="-p ice" />
-			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-p ${project.taglib.prefix}" />
+			<arg line="-u ${project.taglib.uri}" />
 			<arg line="-T com.icesoft.faces.ext.taglib" />
 			<arg line="-v" />
 			<!-- -t name of output TLD file relative to -d directory -->
@@ -81,7 +99,7 @@
 		</java>
 
 		<!-- generate baseline components source code -->
-		<java classname="com.icesoft.metadata.generators.Main" fork="true">
+		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
 			<!--
 				<jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000"/>
 			-->
@@ -92,8 +110,8 @@
 			<arg line="-x" />
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config.xml" />
-			<arg line="-p ice" />
-			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-p ${project.taglib.prefix}" />
+			<arg line="-u ${project.taglib.uri}" />
 			<!-- The following line causes component and property descriptions  -->
 			<!-- to be overridden from the renderer and attribute descriptions. -->
 			<!-- If you wish to have component and property descriptions used   -->
@@ -117,8 +135,8 @@
 			<arg line="-x" />
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
-			<arg line="-p ice" />
-			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-p ${project.taglib.prefix}" />
+			<arg line="-u ${project.taglib.uri}" />
 			<arg line="-v" />
 			<arg line="--cpBeanInfoBase" />
 			<classpath refid="build.classpath" />
@@ -132,8 +150,8 @@
 			<arg line="-x" />
 			<arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
-			<arg line="-p ice" />
-			<arg line="-u http://www.icesoft.com/icefaces/component" />
+			<arg line="-p ${project.taglib.prefix}" />
+			<arg line="-u ${project.taglib.uri}" />
 			<arg line="-v" />
 			<arg line="--cpTestBeanInfoBase" />
 			<classpath refid="build.classpath" />
