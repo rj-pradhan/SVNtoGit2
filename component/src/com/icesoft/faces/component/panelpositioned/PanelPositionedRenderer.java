@@ -386,6 +386,9 @@ public class PanelPositionedRenderer extends DomBasicRenderer {
                     uiComponent, String
                     name) {
         UIComponent form = findForm(uiComponent);
+        if(form == null){
+            throw new NullPointerException("PanelPositioned must be contained withing an <ice:form>");
+        }
         String formId = form.getClientId(facesContext);
         String clientId = uiComponent.getClientId(facesContext);
         return formId
