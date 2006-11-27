@@ -148,7 +148,7 @@
     <clean/>
 </target>
 
-<target name="compile" depends="clean">
+<target name="compile">
     <compile/>
 </target>
 
