@@ -801,7 +801,9 @@ public class InputFile extends UICommand implements Serializable{
     private void setCssFile(UIComponent component) {
         if (component instanceof OutputStyle) {
             cssFile += (cssFile != null) ? ", " : "";
-            cssFile += component.getAttributes().get("href").toString();
+            if (component.getAttributes().containsKey("href")) {
+            	cssFile += component.getAttributes().get("href").toString();
+            }
         }
         Iterator children = component.getChildren().iterator();
         while (children.hasNext()) {
