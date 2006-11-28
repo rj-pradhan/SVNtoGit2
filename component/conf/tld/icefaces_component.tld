@@ -805,15 +805,6 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
                 ]]>
             </description>
         </attribute>
-        <!--<attribute>
-          <name>inputTextClass</name>
-          <required>false</required>
-          <rtexprvalue>false</rtexprvalue>
-          <description>
-              Space-separated list of CSS style class(es) to be applied when
-              this element is rendered.
-          </description>
-        </attribute>
         <attribute>
           <name>buttonClass</name>
           <required>false</required>
@@ -822,7 +813,52 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
               Space-separated list of CSS style class(es) to be applied when
               this element is rendered.
           </description>
-        </attribute>-->
+        </attribute>
+        <attribute>
+          <name>uniqueFolder</name>
+          <required>false</required>
+          <rtexprvalue>false</rtexprvalue>
+          <description>
+          <![CDATA[
+				<p>This parameter works in conjunction with the ice:inputFile component 
+				attribute "uniqueFolder" with four possible combinations as illustrated 
+				in the table below:
+				</p>
+				<table border="1">
+					<tr>
+					   <td rowspan='2'>
+					   		<b>uniqueFolder</b>
+					   </td>
+					   <td colspan='2' align='center'>
+					   		<b>com.icesoft.faces.uploadDirectory</b>
+					   </td>
+					</tr>
+					<tr>
+					   <td>Set
+					   </td>
+					   <td>Not Set
+					   </td>
+					</tr>
+					<tr>
+					   <td>True
+					   </td>
+					   <td>/application-context/uploadDirectory/sessionid/
+					   </td>
+					   <td>/application-context/sessionid/
+					   </td>
+					</tr>
+					<tr>
+					   <td>False
+					   </td>
+					   <td>/application-context/uploadDirectory/
+					   </td>
+					   <td>/application-context/
+					   </td>
+					</tr>
+				</table>
+			]]>
+         </description>
+        </attribute>        
         <attribute>
           <name>renderedOnUserRole</name>
           <required>false</required>
