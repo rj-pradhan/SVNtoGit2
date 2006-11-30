@@ -53,6 +53,7 @@ Ice.Focus.setFocus = function(id) {
     if ((Ice.Focus.userInterupt == false) && (id != '') && (id != 'undefined')) {
         try {
             id.asExtendedElement().focus();
+            setFocus(id);
             window.logger.debug('Focus Set on [' + id + "]");
         } catch(e) {
             window.logger.error('Failed to set focus on [' + id + ']', e);
@@ -66,6 +67,7 @@ document.onkeydown = Ice.Focus.userInterupt;
 document.onmousedown = Ice.Focus.userInterupt;
 
 function setFocus(id) {
+     window.logger.debug('setFocus called for ID [' + id + ']');
     currentFocus = id;
 }
 
