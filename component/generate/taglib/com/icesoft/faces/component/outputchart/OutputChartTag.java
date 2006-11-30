@@ -111,6 +111,8 @@ public class OutputChartTag extends UIComponentTag {
         legendLabel = null;
         action = null;
         actionListener = null;
+        legendPlacement = null;
+        legendColumns = null;        
     }
 
     /**
@@ -523,8 +525,25 @@ public class OutputChartTag extends UIComponentTag {
             } else {
                 _component.getAttributes().put("legendLabel", legendLabel);
             }
+        }   
+        if (legendPlacement != null) {
+            if (isValueReference(legendPlacement)) {
+                ValueBinding _vb = getFacesContext().getApplication()
+                        .createValueBinding(legendPlacement);
+                _component.setValueBinding("legendPlacement", _vb);
+            } else {
+                _component.getAttributes().put("legendPlacement", legendPlacement);
+            }
         }
-
+        if (legendColumns != null) {
+            if (isValueReference(legendColumns)) {
+                ValueBinding _vb = getFacesContext().getApplication()
+                        .createValueBinding(legendColumns);
+                _component.setValueBinding("legendColumns", _vb);
+            } else {
+                _component.getAttributes().put("legendColumns", legendColumns);
+            }
+        }
     }
 
     // labels
@@ -891,7 +910,20 @@ public class OutputChartTag extends UIComponentTag {
         this.type = type;
     }
 
+    
+    private String legendPlacement = null;
 
+    public void setLegendPlacement(String legendPlacement) {
+        this.legendPlacement = legendPlacement;
+    }
+
+    private String legendColumns = null;
+
+    public void setLegendColumns(String legendColumns) {
+        this.legendColumns = legendColumns;
+    }
+
+    
     private static Class actionArgs[] = new Class[0];
     private static Class actionListenerArgs[] = {ActionEvent.class};
     private static Class validatorArgs[] =

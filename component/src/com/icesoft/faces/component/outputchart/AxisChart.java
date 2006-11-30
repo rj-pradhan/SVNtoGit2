@@ -150,7 +150,7 @@ public class AxisChart extends AbstractChart {
         chart = new org.krysalis.jcharts.axisChart.AxisChart(dataSeries,
                                                              new ChartProperties(),
                                                              new AxisProperties(),
-                                                             new LegendProperties(),
+                                                             getLegendProperties(),
                                                              new Integer(
                                                                      outputChart.getWidth()).intValue(),
                                                              new Integer(

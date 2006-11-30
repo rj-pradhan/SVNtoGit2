@@ -51,6 +51,7 @@ import org.krysalis.jcharts.Chart;
 import org.krysalis.jcharts.encoders.JPEGEncoder;
 import org.krysalis.jcharts.imageMap.ImageMap;
 import org.krysalis.jcharts.imageMap.ImageMapArea;
+import org.krysalis.jcharts.properties.LegendProperties;
 import org.krysalis.jcharts.properties.PointChartProperties;
 import org.krysalis.jcharts.test.TestDataGenerator;
 
@@ -61,6 +62,7 @@ public abstract class AbstractChart {
     private Chart userDefinedChart = null;
     private static ColorMap colorMap = new ColorMap();
     private static ShapeMap shapeMap = new ShapeMap();
+    private static LegendPlacementMap legendPlacementMap = new LegendPlacementMap();
     private ImageMapArea clickedImageMapArea;
     String type = null;
 
@@ -274,6 +276,18 @@ public abstract class AbstractChart {
         return colorMap.getColor(color);
     }
 
+    public LegendProperties getLegendProperties() {
+    	LegendProperties legendProperties = new LegendProperties();
+   		legendProperties.setPlacement(legendPlacementMap.getLegendPlacement(
+				String.valueOf(outputChart.getLegendPlacement())));
+   		Object legendColumns = outputChart.getLegendColumns();
+   		if (legendColumns instanceof Integer) {
+   			legendProperties.setNumColumns(((Integer)outputChart.getLegendColumns()).intValue());
+   		}else if (legendColumns instanceof String) {
+   			legendProperties.setNumColumns(Integer.parseInt(outputChart.getLegendColumns().toString()));
+   		}
+   		return legendProperties;
+    }
 }
 
 class ColorMap extends HashMap {
@@ -314,4 +328,20 @@ class ShapeMap extends HashMap {
     public Shape getShape(String key) {
         return (Shape) super.get(key);
     }
+}
+
+class LegendPlacementMap extends HashMap {
+	public LegendPlacementMap() {
+		this.put("top", new Integer(LegendProperties.TOP));
+		this.put("bottom", new Integer(LegendProperties.BOTTOM));
+		this.put("left", new Integer(LegendProperties.LEFT));
+		this.put("right", new Integer(LegendProperties.RIGHT));
+	}
+	
+	public int getLegendPlacement(String key) {
+		if (!super.containsKey(key)) {
+			return 0;
+		}
+		return Integer.parseInt(super.get(key).toString());
+	}
 }

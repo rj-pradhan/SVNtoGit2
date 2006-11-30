@@ -108,7 +108,9 @@ public class OutputChart extends HtmlCommandButton {
     private String yaxisTitle;
     private String style = null;
     private String styleClass = null;
-
+    private Object legendPlacement;
+    private Object legendColumns;
+    
     File folder = null;
 
     public OutputChart() {
@@ -636,6 +638,42 @@ public class OutputChart extends HtmlCommandButton {
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    /**
+     *<p>Return the value of the <code>legendLabel</code> property.</p> 
+     */
+    public Object getLegendPlacement() {
+        if (legendPlacement != null) {
+            return legendPlacement;
+        }
+        ValueBinding vb = getValueBinding("legendPlacement");
+        return vb != null ? vb.getValue(getFacesContext()) : "bottom";
+    }
+
+    /**
+     * <p>Set the value of the <code>legendPlacement</code> property. </p>
+     */
+    public void setLegendPlacement(Object legendPlacement) {
+        this.legendPlacement = legendPlacement;
+    }
+    
+    /**
+     *<p>Return the value of the <code>legendColumns</code> property.</p> 
+     */
+    public Object getLegendColumns() {
+        if (legendColumns != null) {
+            return legendColumns;
+        }
+        ValueBinding vb = getValueBinding("legendColumns");
+        return vb != null ? vb.getValue(getFacesContext()) : "0";
+    }
+
+    /**
+     * <p>Set the value of the <code>legendColumns</code> property. </p>
+     */
+    public void setLegendColumns(Object legendColumns) {
+        this.legendColumns = legendColumns;
     }
 }
 

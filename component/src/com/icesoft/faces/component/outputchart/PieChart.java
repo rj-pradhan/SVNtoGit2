@@ -102,7 +102,7 @@ public class PieChart extends AbstractChart {
                                               pieChart2DProperties);
 
         return new PieChart2D(pieChartDataSet,
-                              new LegendProperties(),
+        					  getLegendProperties(),
                               new ChartProperties(),
                               new Integer(outputChart.getWidth()).intValue(),
                               new Integer(outputChart.getHeight()).intValue());
