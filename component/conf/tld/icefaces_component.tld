@@ -200,7 +200,26 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
               <br/> The default class would be rendered as <b>iceOutputChart</b>
             </p>]]>  
           </description>
-        </attribute>        
+        </attribute>
+        <attribute>
+          <name>legendPlacement</name>
+          <required>false</required>
+          <rtexprvalue>false</rtexprvalue>
+          <description>
+              This attribute sets the legend position, the supported values 
+              are "top, bottom, left, right".
+          </description>
+        </attribute>  
+        <attribute>
+          <name>legendColumns</name>
+          <required>false</required>
+          <rtexprvalue>false</rtexprvalue>
+          <description>
+			This attribute defines the number of columns to be displayed for 
+			the legend, (e.g.) the value "1" will demonstrate vertical legend 
+			view.
+          </description>
+        </attribute>                         
    </tag>
   
      <!-- PanelSeries component -->
