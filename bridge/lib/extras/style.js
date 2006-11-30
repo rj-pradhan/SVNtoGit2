@@ -94,6 +94,7 @@ Ice.modal = {
     running:false,
     target:null,
     oldListener:null,
+    id:null,
     start:function(target) {
         Ice.modal.oldListener = window.document.documentElement.onkeypress;
         window.document.documentElement.onkeypress = function(e){return Ice.modal.keypress(e);}
@@ -121,16 +122,20 @@ Ice.modal = {
             modal.style.zIndex = iframe.style.zIndex + 1;
             modal.style.position = 'absolute';
             Ice.modal.target = modal;
+            Ice.modal.id = target;
         }
         Ice.modal.running = true;
     },
     stop:function(target) {
-        window.document.documentElement.onkeypress = Ice.modal.oldListener;
-        var iframe = document.getElementById('iceModalFrame');
-        if (iframe) {
-            iframe.parentNode.removeChild(iframe);
+        if (Ice.modal.id == target) {
+            window.document.documentElement.onkeypress = Ice.modal.oldListener;
+            var iframe = document.getElementById('iceModalFrame');
+            if (iframe) {                
+                iframe.parentNode.removeChild(iframe);
+                logger.debug('removed iframe for : ' + target);
+            }
+            Ice.modal.running = false;
         }
-        Ice.modal.running = false;
     },
     keypress:function(event){
         if(!Ice.modal.running){return true;}
