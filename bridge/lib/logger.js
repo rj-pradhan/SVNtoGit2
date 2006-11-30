@@ -268,15 +268,15 @@
         },
 
         info: function(category, message, exception) {
-            this.handle('green', 'debug', category, message, exception)
+            this.handle('green', 'info', category, message, exception)
         },
 
         warn: function(category, message, exception) {
-            this.handle('orange', 'debug', category, message, exception)
+            this.handle('orange', 'warn', category, message, exception)
         },
 
         error: function(category, message, exception) {
-            this.handle('red', 'debug', category, message, exception)
+            this.handle('red', 'error', category, message, exception)
         },
 
         //private
