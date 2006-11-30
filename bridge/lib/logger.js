@@ -317,6 +317,52 @@
             }.bind(this));
         }
     });
+
+    This.NOOPConsole = {
+        debug: Function.NOOP, info: Function.NOOP, warn: Function.NOOP, error: Function.NOOP   
+    };
+
+    This.FirebugLogHandler = Object.subclass({
+        initialize: function(logger) {
+            logger.handleWith(this);
+            logger.threshold(This.Priority.DEBUG);
+            this.console = This.NOOPConsole;
+            window.onLoad(function() {
+                this.enable();
+            }.bind(this));
+        },
+
+        enable: function() {
+            this.console = window.console;
+        },
+
+        disable: function() {
+            this.console = This.NOOPConsole;
+        },
+
+        toggle: Function.NOOP,
+
+        debug: function(category, message, exception) {
+            exception ? this.console.debug(this.format(category, message), exception) : this.console.debug(this.format(category, message));
+        },
+
+        info: function(category, message, exception) {
+            exception ? this.console.info(this.format(category, message), exception) : this.console.info(this.format(category, message));
+        },
+
+        warn: function(category, message, exception) {
+            exception ? this.console.warn(this.format(category, message), exception) : this.console.warn(this.format(category, message));
+        },
+
+        error: function(category, message, exception) {
+            exception ? this.console.error(this.format(category, message), exception) : this.console.error(this.format(category, message));
+        },
+
+        //private
+        format: function(category, message) {
+            return '[' + category.join('.') + '] ' + message;
+        }
+    });
 });
 
 
