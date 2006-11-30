@@ -174,13 +174,11 @@ public class BlockingServlet extends HttpServlet {
 
             ResponseState state = null;
             PersistentFacesState PFstate = null;
-            synchronized (this) {
-                state = stateManager.getState(session, viewNumber);
+            state = stateManager.getState(session, viewNumber);
 
-                PFstate = PersistentFacesState
-                        .getInstance(sessionMap, viewNumber);
-                PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
-            }
+            PFstate = PersistentFacesState
+                    .getInstance(sessionMap, viewNumber);
+            PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
 
             if (PFstate.facesContext instanceof BridgeFacesContext) {
                 BridgeFacesContext facesContext =

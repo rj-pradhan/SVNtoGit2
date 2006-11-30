@@ -147,29 +147,35 @@ public class ResponseStateManager {
     synchronized ResponseState getState(HttpSession session,
                                         String viewNumber) {
 
-        ResponseState state =
-                (ResponseState) session.getAttribute(getStateKey(viewNumber));
-        if (null == state) {
-            String iceID = (String) session
-                    .getAttribute(ResponseStateManager.ICEFACES_ID_KEY);
-            state = createState(session, iceID, viewNumber);
-            session.setAttribute(getStateKey(viewNumber), state);
+        String iceID = (String) session
+                .getAttribute(ResponseStateManager.ICEFACES_ID_KEY);
+        ResponseState state = null;
+        synchronized(iceID)  {
+            state =
+                    (ResponseState) session.getAttribute(getStateKey(viewNumber));
+            if (null == state) {
+                state = createState(session, iceID, viewNumber);
+                session.setAttribute(getStateKey(viewNumber), state);
+            }
         }
         return state;
     }
 
-    synchronized ResponseState getState(PortletSession session,
+    ResponseState getState(PortletSession session,
                                         String viewNumber) {
 
-        ResponseState state = (ResponseState) session.getAttribute(
-                getStateKey(viewNumber), PortletSession.APPLICATION_SCOPE);
-        if (null == state) {
-            String iceID = (String) session.getAttribute(
-                    ResponseStateManager.ICEFACES_ID_KEY,
-                    PortletSession.APPLICATION_SCOPE);
-            state = createState(session, iceID, viewNumber);
-            session.setAttribute(getStateKey(viewNumber), state,
-                                 PortletSession.APPLICATION_SCOPE);
+        String iceID = (String) session.getAttribute(
+                ResponseStateManager.ICEFACES_ID_KEY,
+                PortletSession.APPLICATION_SCOPE);
+        ResponseState state = null;
+        synchronized(iceID) {
+            state = (ResponseState) session.getAttribute(
+                    getStateKey(viewNumber), PortletSession.APPLICATION_SCOPE);
+            if (null == state) {
+                state = createState(session, iceID, viewNumber);
+                session.setAttribute(getStateKey(viewNumber), state,
+                                     PortletSession.APPLICATION_SCOPE);
+            }
         }
         return state;
     }
