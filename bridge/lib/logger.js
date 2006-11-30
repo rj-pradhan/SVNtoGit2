@@ -325,7 +325,7 @@
     This.FirebugLogHandler = Object.subclass({
         initialize: function(logger) {
             logger.handleWith(this);
-            logger.threshold(This.Priority.DEBUG);
+            this.logger = logger;
             this.console = This.NOOPConsole;
             window.onLoad(function() {
                 this.enable();
@@ -334,10 +334,12 @@
 
         enable: function() {
             this.console = window.console;
+            this.logger.threshold(This.Priority.DEBUG);            
         },
 
         disable: function() {
             this.console = This.NOOPConsole;
+            this.logger.threshold(This.Priority.ERROR);            
         },
 
         toggle: Function.NOOP,
