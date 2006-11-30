@@ -49,10 +49,7 @@ import javax.faces.component.UIColumn;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 public class TableRenderer
@@ -307,6 +304,7 @@ public class TableRenderer
 
         RowSelector rowSelector = getRowSelector(uiComponent);
         boolean rowSelectorFound = rowSelector != null;
+        String rowSelectionFunctionName = null;
 
         if (rowSelectorFound) {
             Element rowSelectedField =
@@ -317,7 +315,8 @@ public class TableRenderer
             rowSelectedField.setAttribute(HTML.NAME_ATTR, id);
             rowSelectedField.setAttribute(HTML.TYPE_ATTR, "hidden");
             root.appendChild(rowSelectedField);
-            String scriptSrc = "this['ice_tableRowClicked'] = function (id){\n";
+            rowSelectionFunctionName = "ice_tableRowClicked" + rowSelectorNumber(facesContext); 
+            String scriptSrc = "this['" + rowSelectionFunctionName + "'] = function (id){\n";
             scriptSrc += " var fld = $('" + id +
                          "');fld.value = id;var nothingEvent = new Object();\n";
             scriptSrc +=
@@ -342,7 +341,7 @@ public class TableRenderer
             Iterator childs = uiData.getChildren().iterator();
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
             if (rowSelectorFound) {
-                tr.setAttribute("onclick", "ice_tableRowClicked('" +
+                tr.setAttribute("onclick", rowSelectionFunctionName + "('" +
                                            uiData.getRowIndex() + "');");
             }
             String id = uiComponent.getClientId(facesContext);
@@ -540,5 +539,20 @@ public class TableRenderer
             }
         }
         return null;
+    }
+
+    private int rowSelectorNumber(FacesContext context){
+        Map m = context.getExternalContext().getRequestMap();
+        String key = RowSelector.class.getName() + "-Selector";
+        Integer I = (Integer)m.get(key);
+        int i = 0;
+        if(I != null){
+            i = I.intValue();
+            i++;
+        }
+
+        I = new Integer(i);
+        m.put(key, I);
+        return i;
     }
 }
