@@ -378,6 +378,18 @@ public class PersistentFacesServlet extends HttpServlet {
                     log.trace("service()  FacesContext: " + ctxt);
                 }
 
+                // Set the correct ResponseState as the IncrementalNodeWriter for this
+                // combination of session and view number, then store the state so that is
+                // accessible from the async server.
+                String viewNumberString = String.valueOf(viewNumber);
+                ResponseState state =
+                        stateManager.getState(session, viewNumberString);
+                state.setFocusID(request.getParameter("focus"));
+
+                //Bug 256:  We need to include the view number as part of the key
+                session.setAttribute(viewNumberString + "/" +
+                                     ResponseState.STATE, state);
+
                 // Bug 350: If the FacesContext is not available (likely the very first request)
                 // then there is no need to synchronize the lifecycle calls.  If there is a
                 // available FacesContext, it should be used to synchronize on to ensure thread-
@@ -396,17 +408,6 @@ public class PersistentFacesServlet extends HttpServlet {
                 setupPersistentContext(
                         config.getServletContext(), request, viewNumber );
 
-                // Set the correct ResponseState as the IncrementalNodeWriter for this
-                // combination of session and view number, then store the state so that is
-                // accessible from the async server.
-                String viewNumberString = String.valueOf(viewNumber);
-                ResponseState state =
-                        stateManager.getState(session, viewNumberString);
-                state.setFocusID(request.getParameter("focus"));
-
-                //Bug 256:  We need to include the view number as part of the key
-                session.setAttribute(viewNumberString + "/" +
-                                     ResponseState.STATE, state);
             } catch (Exception e) {
 
                 if (log.isErrorEnabled()) {
