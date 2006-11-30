@@ -33,59 +33,51 @@
 
 [ Ice.Log = new Object ].as(function(This) {
     This.Priority = Object.subclass({
-        debug: function(logger, message, exception) {
-            logger.log(This.Priority.DEBUG, message, exception);
+        debug: function(handler, category, message, exception) {
+            handler.debug(category, message, exception);
         },
 
-        info: function(logger, message, exception) {
-            logger.log(This.Priority.INFO, message, exception);
+        info: function(handler, category, message, exception) {
+            handler.info(category, message, exception);
         },
 
-        warn: function(logger, message, exception) {
-            logger.log(This.Priority.WARN, message, exception);
+        warn: function(handler, category, message, exception) {
+            handler.warn(category, message, exception);
         },
 
-        error: function(logger, message, exception) {
-            logger.log(This.Priority.ERROR, message, exception);
-        },
-
-        asString: function() {
-            return this.name;
+        error: function(handler, category, message, exception) {
+            handler.error(category, message, exception);
         }
     });
 
     This.Debug = This.Priority.subclass({
-        initialize: function() {
-            this.name = 'debug';
-            this.color = '#333';
+        asString: function() {
+            return 'Debug';
         }
     });
 
     This.Info = This.Debug.subclass({
-        initialize: function() {
-            this.name = 'info';
-            this.color = 'green';
-        },
+        debug: Function.NOOP,
 
-        debug: Function.NOOP
+        asString: function() {
+            return 'Info';
+        }
     });
 
     This.Warn = This.Info.subclass({
-        initialize: function() {
-            this.name = 'warn';
-            this.color = 'orange';
-        },
+        info: Function.NOOP,
 
-        info: Function.NOOP
+        asString: function() {
+            return 'Warn';
+        }
     });
 
     This.Error = This.Warn.subclass({
-        initialize: function() {
-            this.name = 'error';
-            this.color = 'red';
-        },
+        warn: Function.NOOP,
 
-        warn: Function.NOOP
+        asString: function() {
+            return 'Error';
+        }
     });
 
     This.Priority.DEBUG = new This.Debug;
@@ -94,65 +86,28 @@
     This.Priority.ERROR = new This.Error;
     This.Priority.Levels = [ This.Priority.DEBUG, This.Priority.INFO, This.Priority.WARN, This.Priority.ERROR ];
 
-    This.Event = Object.subclass({
-        initialize: function(category, priority, message, exception) {
-            this.timestamp = new Date();
-            this.category = category;
-            this.priority = priority;
-            this.message = message;
-            this.exception = exception;
-        },
-
-        asString: function() {
-            return this.timestamp.toTimestamp() + ' ' +
-                   this.priority.asString() + ' \t[' +
-                   this.category.join('.') + '] : ' +
-                   this.message +
-                   (this.exception ? ('\n' + this.exception) : '');
-        },
-
-        asNodeIn: function(element) {
-            var elementDocument = element.ownerDocument;
-            this.asString().split('\n').each(function(line) {
-                if (line.containsWords()) {
-                    var eventNode = elementDocument.createElement('div');
-                    eventNode.style.padding = '3px';
-                    eventNode.style.color = this.priority.color;
-                    element.appendChild(eventNode).appendChild(elementDocument.createTextNode(line));
-                }
-            }.bind(this));
-        }
-    });
-
-    //alias for IE
-    This.Event.prototype.toString = This.Event.prototype.asString;
-
     This.Logger = Object.subclass({
         initialize: function(category, handler, priority) {
-            this.handler = handler || { handle: Function.NOOP };
+            this.handler = handler || { debug: Function.NOOP, info: Function.NOOP, warn: Function.NOOP, error: Function.NOOP };
             this.category = category;
             this.children = [];
             this.priority = priority || This.Priority.ERROR;
         },
 
-        log: function(priority, message, exception) {
-            this.handler.handle(new This.Event(this.category, priority, message, exception));
-        },
-
         debug: function(message, exception) {
-            this.priority.debug(this, message, exception);
+            this.priority.debug(this.handler, this.category, message, exception);
         },
 
         info: function(message, exception) {
-            this.priority.info(this, message, exception);
+            this.priority.info(this.handler, this.category, message, exception);
         },
 
         warn: function(message, exception) {
-            this.priority.warn(this,  message, exception);
+            this.priority.warn(this.handler, this.category, message, exception);
         },
 
         error: function(message, exception) {
-            this.priority.error(this, message, exception);
+            this.priority.error(this.handler, this.category, message, exception);
         },
 
         child: function(category) {
@@ -185,15 +140,6 @@
             this.thresholdPriority = thresholdPriority || This.Priority.DEBUG;
             this.categoryMatcher = /.*/;
             this.closeOnExit = true;
-            this.noopHandle = Function.NOOP;
-            this.opHandle = function(event) {
-                if (this.categoryMatcher.test(event.category.join('.'))) {
-                    event.asNodeIn(this.log);
-                    this.log.scrollTop = this.log.scrollHeight;
-                }
-                this.clearPreviousEvents();
-            };
-            this.handle = this.noopHandle;
 
             this.parentWindow.onKeyPress(function(e) {
                 var key = e.keyCode();
@@ -203,24 +149,11 @@
             }.bind(this));
         },
 
-        clearPreviousEvents: function() {
-            var nodes = $A(this.log.childNodes);
-            nodes.copyFrom(0, nodes.length - this.lines).each(function(node) {
-                this.log.removeChild(node)
-            }.bind(this));
-        },
-
-        clearAllEvents: function() {
-            $A(this.log.childNodes).each(function(node) {
-                this.log.removeChild(node)
-            }.bind(this));
-        },
-
         enable: function() {
             try {
                 this.window = this.parentWindow.open('', 'log', 'scrollbars=1,width=800,height=680');
                 var windowDocument = this.window.document;
-                //todo: create container for the controlls
+
                 this.log = this.window.document.getElementById('log-window');
                 if (this.log) return;
 
@@ -309,8 +242,6 @@
                 this.window.onunload = function() {
                     this.disable();
                 }.bind(this);
-
-                this.handle = this.opHandle;
             } catch (e) {
                 this.disable();
             }
@@ -318,18 +249,72 @@
 
         disable: function() {
             this.logger.threshold(This.Priority.ERROR);
-            this.handle = this.noopHandle;
+            this.handle = Function.NOOP;
             if (this.closeOnExit && this.window) this.window.close();
         },
 
         toggle: function() {
-            if (this.handle == this.noopHandle) {
-                this.handle = this.opHandle;
+            if (this.handle) {
+                delete this.handle;
                 return true;
             } else {
-                this.handle = this.noopHandle;
+                this.handle = Function.NOOP;
                 return false;
             }
+        },
+
+        debug: function(category, message, exception) {
+            this.handle('#333', 'debug', category, message, exception)
+        },
+
+        info: function(category, message, exception) {
+            this.handle('green', 'debug', category, message, exception)
+        },
+
+        warn: function(category, message, exception) {
+            this.handle('orange', 'debug', category, message, exception)
+        },
+
+        error: function(category, message, exception) {
+            this.handle('red', 'debug', category, message, exception)
+        },
+
+        //private
+        handle: function(colorName, priorityName, category, message, exception) {
+            if (this.categoryMatcher.test(category.join('.'))) {
+                var elementDocument = this.log.ownerDocument;
+                var timestamp = (new Date()).toTimestamp();
+                var categoryName = category.join('.');
+                (timestamp + ' ' +
+                 priorityName + ' \t[' +
+                 categoryName + '] : ' +
+                 message +
+                 (exception ? ('\n' + exception) : '')).split('\n').each(function(line) {
+                    if (line.containsWords()) {
+                        var eventNode = elementDocument.createElement('div');
+                        eventNode.style.padding = '3px';
+                        eventNode.style.color = colorName;
+                        this.log.appendChild(eventNode).appendChild(elementDocument.createTextNode(line));
+                    }
+                }.bind(this));
+                this.log.scrollTop = this.log.scrollHeight;
+            }
+            this.clearPreviousEvents();
+        },
+
+        //private
+        clearPreviousEvents: function() {
+            var nodes = $A(this.log.childNodes);
+            nodes.copyFrom(0, nodes.length - this.lines).each(function(node) {
+                this.log.removeChild(node)
+            }.bind(this));
+        },
+
+        //private
+        clearAllEvents: function() {
+            $A(this.log.childNodes).each(function(node) {
+                this.log.removeChild(node)
+            }.bind(this));
         }
     });
 });
