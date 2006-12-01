@@ -36,7 +36,7 @@
     This.Application = Object.subclass({
         initialize: function() {
             var logger = window.logger = this.logger = new Ice.Log.Logger([ 'window' ]);
-            this.logHandler = window.console ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
+            this.logHandler = window.console && window.console.firebug ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
             var documentSynchronizer = new Ice.Document.Synchronizer(logger);
             var statusManager = new Ice.Status.StatusManager();
             window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
