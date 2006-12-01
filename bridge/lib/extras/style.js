@@ -132,7 +132,7 @@ Ice.modal = {
             var iframe = document.getElementById('iceModalFrame');
             if (iframe) {                
                 iframe.parentNode.removeChild(iframe);
-                logger.debug('removed iframe for : ' + target);
+                logger.debug('removed modal iframe for : ' + target);
             }
             Ice.modal.running = false;
         }
