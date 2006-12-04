@@ -33,11 +33,17 @@ public class SeamUtilities {
 
     private static Method seamConversationIdMethodInstance;
     private static Method seamLongRunningMethodInstance;
-    private static Method seamEncodeMethodInstance;
+    private static Method seamAppendConversationMethodInstance;
     private static Method seamInstanceMethod;
     private static Method seamPageContextGetPrefixInstance;
+    private static Method seamConversationIdParameterMethod;
+    private static Method seamBeforeRedirectMethodInstance;
 
     private static Object pageContextInstance;
+
+    // This is just convenience, to avoid rebuilding the String
+    private static String versionedUrlParam;
+    private static String conversationIdParameter;
 
     static {
         loadSeamEnvironment();
@@ -68,15 +74,22 @@ public class SeamUtilities {
     public static String encodeSeamConversationId(String uri) {
 
         // If Seam's not loaded, no changes necessary
-        if (seamManagerClass == null) {
+        if (! isSeamEnvironment() ) {
             return uri;
         }
 
         String cleanedUrl = uri;
 
+        if (versionedUrlParam == null) {
+            getConversationIdParameterName();
+        } 
+
         // IF the URI already contains a conversationId, strip it out,
         // and start again.
-        int spos = uri.indexOf("?conversationId");
+        if (log.isTraceEnabled()) {
+            log.trace("SeamConversationURLParam: " + versionedUrlParam);
+        }
+        int spos = uri.indexOf( versionedUrlParam );
         if (spos > 0) {
             // extract anything up to the conversationId field
             cleanedUrl = uri.substring(0, spos);
@@ -96,11 +109,17 @@ public class SeamUtilities {
             Object seamManagerInstance =
                     seamInstanceMethod.invoke(null, seamInstanceArgs);
 
-            if (seamEncodeMethodInstance != null) {
+            if (seamAppendConversationMethodInstance != null) {
                 seamEncodeMethodArgs[0] = cleanedUrl;
 
-                cleanedUrl = (String) seamEncodeMethodInstance
+               // This has to do what the Manager.redirect method does.
+                cleanedUrl = (String) seamAppendConversationMethodInstance
                         .invoke(seamManagerInstance, seamEncodeMethodArgs);
+
+                seamBeforeRedirectMethodInstance.invoke(
+                        seamManagerInstance, seamMethodNoArgs);
+
+
                 if (log.isDebugEnabled()) {
                     log.debug("Enabled redirect from: " +
                             uri + ", to: " + cleanedUrl);
@@ -128,10 +147,11 @@ public class SeamUtilities {
      */
     public static String getSeamConversationId() {
 
-        String returnVal = null;
-        if (seamManagerClass == null) {
-            return returnVal;
+        if ( !isSeamEnvironment()) {
+            return null;
         }
+        
+        String returnVal = null;
 
         try {
             // The manager instance is a singleton, but it's continuously
@@ -165,20 +185,22 @@ public class SeamUtilities {
 
     /**
      * Retrieve the PageContext key. Equivalent to
-     * <code>ScopeType.PAGE.getPrefix()</code>
+     * <code>ScopeType.PAGE.getPrefix()</code>. Can be used to
+     * manipulate the PageContext, without loading the class. 
      *
      * This String is used as the key to store the PageContext in the
      * ViewRoot attribute map, and does not equal the string
      *  "org.jboss.seam.PAGE" 
      *
-     * @return
+     * @return The String Key that can be used to find the Seam PageContext
      */
     public static String getPageContextKey() {
 
         String returnVal = "";
-        if (seamManagerClass == null) {
+        if (!isSeamEnvironment()) {
             return returnVal;
         }
+
         try {
 
             if (seamConversationIdMethodInstance != null) {
@@ -196,10 +218,16 @@ public class SeamUtilities {
 
 
     /**
-     * Attempt to load the classes from the Seam jars
+     * Attempt to load the classes from the Seam jars. The methods I
+     * can locate and load here, but the values (for example, the
+     * conversationIdParameter name which is not mutable) have to be
+     * retrieved from a Manager instance when the Manager object is
+     * available, and that is only during a valid EventContext. 
      */
     private static void loadSeamEnvironment() {
 
+
+        String versionId = "1.0.1";
         try {
 
             // load classes
@@ -219,7 +247,7 @@ public class SeamUtilities {
                     "getPrefix", seamClassArgs);
 
 
-            seamEncodeMethodInstance =
+            seamAppendConversationMethodInstance =
                     seamManagerClass.getMethod("encodeConversationId",
                                                seamGetEncodeMethodArgs);
 
@@ -230,7 +258,20 @@ public class SeamUtilities {
                     seamManagerClass.getMethod("isLongRunningConversation",
                                                seamClassArgs);
 
-            log.info("Seam environment detected");
+
+            seamConversationIdParameterMethod =
+                    seamManagerClass.getMethod("getConversationIdParameter",
+                                               seamClassArgs);
+
+            seamBeforeRedirectMethodInstance =
+                    seamManagerClass.getMethod("beforeRedirect",
+                                               seamClassArgs);
+                    
+
+
+            Class.forName("org.jboss.seam.util.Parameters");
+            versionId = "1.1";
+            
 
         } catch (ClassNotFoundException cnf) {
 //            log.info ("Seam environment not detected ");
@@ -239,5 +280,57 @@ public class SeamUtilities {
             seamManagerClass = null;
             log.error("Exception loading seam environment: ", e);
         }
-    }        
+        
+        if (seamManagerClass != null) {
+            log.debug("Seam environment detected v" + versionId );
+        }
+    }
+
+
+    /**
+     * Seam 1.0.1 uses an element <code>'conversationId'</code> as the
+     * parameter name, whereas Seam 1.1 has it as a configurable item. This method
+     * will call the Manager instance to retrieve the current parameter name
+     * defining containing the conversation ID. This method must only be called
+     *  when the EventContext is valid (and thus the Manager
+     * instance is retrievable). The parameter is configurable on a
+     * per application basis, so it wont change at runtime.
+     * 
+     * <p>
+     * Calling this method also fills in the versionedUrlParam instance
+     * variable, used in other methods in this class.  
+     *
+     * 
+     * @return the appropriate parameter name for the application
+     */
+    public static String getConversationIdParameterName() {
+
+        if (!isSeamEnvironment()) {
+            return null;
+        }
+        if (conversationIdParameter != null ) {
+            return conversationIdParameter;
+        } 
+
+        String returnVal = null;
+        try {
+
+            Object seamManagerInstance =
+                    seamInstanceMethod.invoke(null, seamMethodNoArgs);
+
+            // The method may not be available on all versions of Manager
+            if (seamConversationIdParameterMethod != null) {
+
+                returnVal = (String) seamConversationIdParameterMethod.invoke(
+                        seamManagerInstance, seamMethodNoArgs);
+                conversationIdParameter = returnVal;
+                versionedUrlParam = "?" + conversationIdParameter;
+            }
+
+        } catch (Exception e) {
+            log.error("Exception fetching conversationId Parameter name: ", e);
+
+        }
+        return returnVal;
+    }
 }
