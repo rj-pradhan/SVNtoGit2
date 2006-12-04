@@ -44,6 +44,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.faces.context.FacesContext;
+import javax.faces.context.ExternalContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -255,6 +256,7 @@ public class PersistentFacesServlet extends HttpServlet {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             String requestURI = (String) httpRequest.getAttribute(
                     BridgeExternalContext.INCLUDE_REQUEST_URI);
+
             if( log.isTraceEnabled() ) {
                 log.trace("service()  requestURI: " + requestURI);
             }
@@ -312,13 +314,17 @@ public class PersistentFacesServlet extends HttpServlet {
                     request,
                     response);
 
-            // Copy the Seam request parameters to the external context.
-            // If the author puts in <f:param> tags for the purposes of passing args in
-            // a get request, how else would they be copied?? 
+            Map map = request.getParameterMap();
 
-            copyRequestParameters(request.getParameterMap(),
-                                  facesContext
-                                          .getExternalContext().getRequestParameterMap());
+            ExternalContext ec = facesContext.getExternalContext();
+            if (ec instanceof BridgeExternalContext) {
+                ((BridgeExternalContext)ec).populateRequestParameters(
+                        BlockingServlet.convertParametersMap(map));
+            }
+
+            // Check if lifecycle shortcuts required
+            checkSeamRequestParameters(request.getParameterMap(),
+                                       facesContext.getExternalContext().getRequestParameterMap());
 
 
             facesContext.getExternalContext().getRequestMap()
@@ -397,11 +403,26 @@ public class PersistentFacesServlet extends HttpServlet {
                 // renders) do not get the DOM into a nasty state.
                 if (ctxt == null) {
                     lifecycle.execute(facesContext);
-                    lifecycle.render(facesContext);
+                    lifecycle.render(facesContext);                        
                 } else {
                     synchronized (ctxt) {
                         lifecycle.execute(facesContext);
                         lifecycle.render(facesContext);
+                    }
+                }
+
+                // If the GET request handled by this servlet results in a
+                // redirect (not likely under icefaces demo apps, but happens
+                // all the time in Seam) then, we're stuck. We don't use the
+                // X-REDIRECT mechanism in this servlet, so resort to some
+                // good old fashioned manual redirect code.
+                if (ec != null) {
+                    if (ec instanceof BridgeExternalContext) {
+                        if ( ((BridgeExternalContext) ec).redirectRequested() ){
+                            String url = ((BridgeExternalContext)ec).redirectTo();
+                            log.debug("Response.redirect() to: " + url);
+                            response.sendRedirect( url );
+                        }
                     }
                 }
 
@@ -455,50 +476,49 @@ public class PersistentFacesServlet extends HttpServlet {
     }
 
     /**
-     * Copy all the parameters from the request map to the externalContext Map
-     *
-     * @param requestParameters  From this map
-     * @param externalContextMap Into this map
+     * Check to see if Seam specific keywords are in the request. If so,
+     * then flag that a new ViewRoot is to be constructed.
+     *  
+     * @param requestParameters  Map to check for keywords
+     * @param externalContextMap Map to insert Flag
      */
-    private void copyRequestParameters(Map requestParameters,
+        private void checkSeamRequestParameters(Map requestParameters,
                                        Map externalContextMap) {
 
 
+
+
         boolean seamEnabled = SeamUtilities.isSeamEnvironment();
-        Iterator i = requestParameters.keySet().iterator();
-        Object key;
-        Object value;
-        while (i.hasNext()) {
-            key = i.next();
-            value = requestParameters.get(key);
-
-            // Check for certain Seam keywords that need a certain
-            // environment to work properly. Set a flag indicating to
-            // the D2DViewHandler to do the right thing.
-            if (seamEnabled) {
-                for (int idx = 0; idx < seamShortcutKeywords.length; idx++) {
-
-                    if (seamShortcutKeywords[idx].equalsIgnoreCase(key.toString())) {
-                        externalContextMap.put(
-                                PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
-                                Boolean.TRUE);
-                        log.debug("Seam shortcut keyword found: " + key.toString() );
-                    }
-                }
-            }
+//        Iterator i = requestParameters.keySet().iterator();
+//        Object key;
 
 
-            if (key instanceof String && value instanceof String) {
-                externalContextMap.put(key, value);
-            } else if (key instanceof String && value instanceof String[]) {
-//                log.debug("PFS copying key: " + key + ", value: " +
-//                          ((String[]) value)[0]);
-                externalContextMap.put(key, ((String[]) value)[0]);
-            } else {
-                log.warn("Not copying key-class: " + key.getClass().getName() +
-                         ", value-class: " + value.getClass().getName());
-            }
+        // Always on a GET request, create a new ViewRoot. New theory.
+        // This works now that the ViewHandler only calls restoreView once,
+        // as opposed to calling it again from createView
+        if (seamEnabled) {
+             externalContextMap.put(
+                     PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
+                     Boolean.TRUE );
         }
+
+//            while (i.hasNext()) {
+//                key = i.next();
+//
+//                // Check for certain Seam keywords that need a certain
+//                // environment to work properly. Set a flag indicating to
+//                // the D2DViewHandler to do the right thing.
+//                for (int idx = 0; idx < seamShortcutKeywords.length; idx++) {
+//
+//                    if (seamShortcutKeywords[idx].equalsIgnoreCase(key.toString())) {
+//                        externalContextMap.put(
+//                                PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
+//                                Boolean.TRUE );
+//                        log.debug("Seam shortcut keyword found: " + key.toString() );
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**
