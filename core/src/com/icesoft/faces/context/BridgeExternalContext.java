@@ -398,16 +398,27 @@ public class BridgeExternalContext extends ExternalContext {
 
     public void resetRequestMap() {
 
-        Map map = getRequestMap();
-        Iterator keys = map.keySet().iterator();
-        while (keys.hasNext()) {
-            Object key = keys.next();
-            Object value = map.get(key);
-            if (value instanceof Boolean) {
-                keys.remove();
+        try {
+            Map map = getRequestMap();
+            Iterator keys = map.keySet().iterator();
+            while (keys.hasNext()) {
+                Object key = keys.next();
+                Object value = map.get(key);
+                if (value instanceof Boolean) {
+                    keys.remove();
+                }
+            }
+        } catch (IllegalStateException ise) {
+
+            // Can be thrown in Seam example applications as a result of
+            // eg. logout, which has already invalidated the session.
+            if (SeamUtilities.isSeamEnvironment()){
+                if (redirect) {
+                    throw new RedirectException ( redirectTo );
+                }
             }
         }
-    }
+    } 
 
     public void clearRequestMap() {
         Map map = getRequestMap();
@@ -466,7 +477,7 @@ public class BridgeExternalContext extends ExternalContext {
     private RequestParameterValuesMap requestParameterValuesMap;
 
     /**
-     * returns null if you didn't first call populateRequestParameters
+     * returns null if you didn't first call populateRequestParameters.
      */
     public Map getRequestParameterValuesMap() {
         return requestParameterValuesMap;
