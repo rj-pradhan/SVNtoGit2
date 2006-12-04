@@ -38,6 +38,7 @@ import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.context.SessionMap;
+import com.icesoft.faces.context.RedirectException;
 import com.icesoft.faces.context.effects.CurrentStyle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -164,6 +165,8 @@ public class BlockingServlet extends HttpServlet {
         // TODO- If a session has expired, then the call to this servlet will have an issue
         // as the session does not contain an icefacesID.  Should we reroute back to the
         // PersistentFacesServlet?
+
+        BridgeExternalContext bridgeExternalContext = null;
         try {
             // The implemented state we get here depends on whether the Async server is configured
             // running.  If not, then the BlockingResponseState is used and the scalability is
@@ -183,7 +186,7 @@ public class BlockingServlet extends HttpServlet {
             if (PFstate.facesContext instanceof BridgeFacesContext) {
                 BridgeFacesContext facesContext =
                         (BridgeFacesContext) PFstate.facesContext;
-                BridgeExternalContext bridgeExternalContext =
+                bridgeExternalContext =
                         (BridgeExternalContext) facesContext
                                 .getExternalContext();
                 if (standardRequestScope) {
@@ -292,6 +295,21 @@ public class BlockingServlet extends HttpServlet {
                     SessionLifetimeManager.touch(session);
                     throw new IllegalAccessException(
                             "Unknown request type: '" + method + "'.");
+                }
+            }
+        } catch (RedirectException re ) {
+
+            // This exception occurs if some action method has logged out and
+            // invalidated the session. The IllegalStateException is caught
+            // elsewhere and rebroadcast as this
+            if (bridgeExternalContext != null) {
+                String url = bridgeExternalContext.redirectTo();
+                response.setHeader("X-REDIRECT", url);
+                response.getOutputStream().write('.');
+                response.getOutputStream().write('\n');          
+                response.flushBuffer();
+                if (log.isTraceEnabled()) {
+                    log.trace("Redirect SENT -> RedirectException: " + url);
                 }
             }
         } catch (SessionExpiredException e) {
