@@ -15,7 +15,7 @@ public class D2DSeamFaceletViewHandler extends D2DFaceletViewHandler {
     private static final String SEAM_EXPRESSION_FACTORY = "org.jboss.seam.ui.facelet.SeamExpressionFactory";
 
      // Log instance for this class
-    private static Log log = LogFactory.getLog(D2DFaceletViewHandler.class);
+    private static Log log = LogFactory.getLog(D2DSeamFaceletViewHandler.class);
 
     protected void faceletInitialize() {
 
