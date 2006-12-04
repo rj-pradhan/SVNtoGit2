@@ -378,7 +378,7 @@ public class BlockingServlet extends HttpServlet {
     }
 
 
-    private Map convertParametersMap(Map parameters) {
+    public static Map convertParametersMap(Map parameters) {
         Map convertedParameters = new HashMap(parameters);
         Iterator iterator = convertedParameters.entrySet().iterator();
         while (iterator.hasNext()) {
