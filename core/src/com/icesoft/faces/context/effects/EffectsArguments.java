@@ -35,11 +35,7 @@ package com.icesoft.faces.context.effects;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Utility class to set arguments for effects
@@ -48,7 +44,12 @@ public class EffectsArguments {
 
     private Map map = new HashMap();
     private List parameter = new ArrayList();
-    private static NumberFormat floatFormat = new DecimalFormat("0.0");
+    private NumberFormat floatFormat = NumberFormat.getNumberInstance(Locale.US);
+
+    public EffectsArguments(){
+
+    }
+
 
     public void setParameter(int i, float f) {
         addParameter(i, floatFormat.format(f));
@@ -69,7 +70,7 @@ public class EffectsArguments {
         map.put(argument, "'" + value + "'");
     }
 
-    public void add(String argument, float value) {
+    public void add(String argument, float value) {       
         map.put(argument, floatFormat.format(value));
     }
 
