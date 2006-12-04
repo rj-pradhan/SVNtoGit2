@@ -62,7 +62,6 @@ public class FormRenderer extends DomBasicRenderer {
     public static final String FOCUS_HIDDEN_FIELD = "focus_hidden_field";
     public static final String ICE_FACES_ID_HIDDEN_FIELD = "icefacesID";
     public static final String VIEWNUMBER_HIDDEN_FIELD = "viewNumber";
-    public static final String CONVERSATIONID_HIDDEN_FIELD = "conversationId";   
 
 
     private static final Log log = LogFactory.getLog(FormRenderer.class);
@@ -170,15 +169,22 @@ public class FormRenderer extends DomBasicRenderer {
         // all the time, even if the form otherwise has not changed.
         Element root = (Element) domContext.getRootNode();
 
-        String conversationId = SeamUtilities.getSeamConversationId();        
+        String conversationId = SeamUtilities.getSeamConversationId();
         if (conversationId != null) {
+            String conversationParamName =
+                    SeamUtilities.getConversationIdParameterName();
+
             Element conversationIDElement =
                     domContext.createElement(HTML.INPUT_ELEM);
-            log.debug("Embedding conversationID: " + conversationId);
+            if (log.isDebugEnabled()) {
+                log.debug("Embedding Seam Param - name: " + conversationParamName +
+                          ", value: " + conversationId);
+            }
             conversationIDElement
                     .setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN);
             conversationIDElement
-                    .setAttribute(HTML.NAME_ATTR, CONVERSATIONID_HIDDEN_FIELD);
+                    .setAttribute(HTML.NAME_ATTR, conversationParamName);
+
             conversationIDElement.setAttribute(HTML.VALUE_ATTR, conversationId);
             root.appendChild(conversationIDElement);
 
