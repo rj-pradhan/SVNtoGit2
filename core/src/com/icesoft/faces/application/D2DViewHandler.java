@@ -166,25 +166,60 @@ public class D2DViewHandler extends ViewHandler {
 
         if (jsfStateManagement) {
             StateManager stateMgr = context.getApplication().getStateManager();
-
-            if (!stateMgr.isSavingStateInClient(context)) {
-                stateMgr.saveSerializedView(context);
-            }
+            stateMgr.saveSerializedView(context);
         }
     }
 
+
+    /**
+     * Create a new ViewRoot
+     * @param context FacesContext
+     * @param viewId ViewId identifying the root
+     * @return A new viewRoot 
+     */
+    public UIViewRoot createView(FacesContext context, String viewId) {
+        initializeParameters(context);
+
+        if (delegateView(viewId)) {
+            return delegate.createView(context, viewId);
+        }
+
+        UIViewRoot root = new UIViewRoot();
+        root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+
+         Map contextServletTable =
+                D2DViewHandler.getContextServletTable(context);
+        if (null == viewId) {
+            root.setViewId("default");
+            context.setViewRoot(root);
+            contextServletTable
+                    .put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
+            Locale locale = calculateLocale(context);
+            root.setLocale(locale);
+            return root;
+        }
+
+        root.setViewId(viewId);
+        context.setViewRoot(root);
+        contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
+
+        return root;
+//        return restoreView(context, viewId);
+    }
+
+    /**
+     * Restore the view if possible. This method can return null if
+     * no ViewRoot is available. The <code>LifeCycle</code> will call
+     * createView in this case.
+     *
+     * @param context FacesContext
+     * @param viewId ViewId identifying the view to restore
+     * @return UIViewRoot instance if found, null if none yet created,
+     * or if trying to model Seam JSF behaviour.
+     */
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         this.initializeParameters(context);
 
-        // We need to refactor this method.
-        // It is valid to return null if no viewRoot is found,
-        // at which time the client of this class is responsible for
-        // calling createView. Seam depends on this behaviour quite strongly
-        if (SeamUtilities.isSeamEnvironment() &&
-         ( context.getExternalContext().getRequestParameterMap().remove(
-                PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT) != null)) {
-            return null;
-        }
 
         if (delegateView(viewId)) {
             return delegate.restoreView(context, viewId);
@@ -194,13 +229,29 @@ public class D2DViewHandler extends ViewHandler {
         //MyFaces expects path to match current view
         ExternalContext externalContext = context.getExternalContext();
         if (externalContext instanceof BridgeExternalContext) {
+
             BridgeExternalContext bridgeExternalContext =
                     (BridgeExternalContext) externalContext;
+
             bridgeExternalContext.setRequestServletPath(viewId);
-            bridgeExternalContext.setRequestServletPath(viewId);
+
             if (null != externalContext.getRequestPathInfo()) {
                 //it's not null, so must be valid to keep in synch for MyFaces
                 bridgeExternalContext.setRequestPathInfo(viewId);
+            }
+
+            if (SeamUtilities.isSeamEnvironment() ) {
+                if (bridgeExternalContext.getRequestParameterMap().remove(
+                        PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT) != null) {
+                     if (log.isTraceEnabled() ) {
+                        log.trace("Seam Keyword shortcut found, new ViewRoot");
+                    }
+                    return null;
+                } else {
+                    if (log.isTraceEnabled() ) {
+                        log.trace("No Seam Keyword shortcut found");
+                    } 
+                }
             }
         }
 
@@ -226,10 +277,9 @@ public class D2DViewHandler extends ViewHandler {
         }
 
         UIViewRoot root = null;
+
         root = (UIViewRoot) contextServletTable
                 .get(DOMResponseWriter.RESPONSE_VIEWROOT);
-
-
 
         if ( (null != root) && (null != viewId) &&
              (mungeViewId(viewId).equals(mungeViewId(root.getViewId()))) ) {
@@ -237,23 +287,24 @@ public class D2DViewHandler extends ViewHandler {
             //return root;
         } else {
 
-            // Todo: Move all this to createView
-            root = new UIViewRoot();
-            root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+            // Moved this to createView
 
-            if (null == viewId) {
-                root.setViewId("default");
-                context.setViewRoot(root);
-                contextServletTable
-                        .put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
-                Locale locale = calculateLocale(context);
-                root.setLocale(locale);
-                return root;
-            }
-
-            root.setViewId(viewId);
-            context.setViewRoot(root);
-            contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
+//            root = new UIViewRoot();
+//            root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+//
+//            if (null == viewId) {
+//                root.setViewId("default");
+//                context.setViewRoot(root);
+//                contextServletTable
+//                        .put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
+//                Locale locale = calculateLocale(context);
+//                root.setLocale(locale);
+//                return root;
+//            }
+//
+//            root.setViewId(viewId);
+//            context.setViewRoot(root);
+//            contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
 
         }
 
@@ -351,16 +402,6 @@ public class D2DViewHandler extends ViewHandler {
             throw new IllegalStateException("ExternalContext is null");
         }
         return externalContext.getRequestContextPath() + viewId;
-    }
-
-    public UIViewRoot createView(FacesContext context, String viewId) {
-        initializeParameters(context);
-
-        if (delegateView(viewId)) {
-            return delegate.createView(context, viewId);
-        }
-
-        return restoreView(context, viewId);
     }
 
     public String getActionURL(FacesContext context, String viewId) {
