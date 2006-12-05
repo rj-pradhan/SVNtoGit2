@@ -54,10 +54,6 @@ public interface ResponseState {
 
     boolean hasHandler();
 
-    String getFocusID();
-
-    void setFocusID(String focusID);
-
     void block(HttpServletRequest request);
 
     void cancel();

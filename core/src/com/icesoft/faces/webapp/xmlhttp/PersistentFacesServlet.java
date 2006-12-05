@@ -386,7 +386,6 @@ public class PersistentFacesServlet extends HttpServlet {
                 String viewNumberString = String.valueOf(viewNumber);
                 ResponseState state =
                         stateManager.getState(session, viewNumberString);
-                state.setFocusID(request.getParameter("focus"));
 
                 //Bug 256:  We need to include the view number as part of the key
                 session.setAttribute(viewNumberString + "/" +

@@ -227,9 +227,6 @@ public class BlockingServlet extends HttpServlet {
                         }
                     }
                 }
-
-
-                state.setFocusID(request.getParameter("focus"));
                 
                 //Bug 264:  The IncrementalNodeWriter instance has already been set
                 //in the PersistentFacesServlet and does not need to be set again here.
@@ -408,8 +405,9 @@ public class BlockingServlet extends HttpServlet {
         Lifecycle lifecycle =
                 factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
         if ("true".equals(request.getParameter("partial"))) {
+            String focusID = request.getParameter("focus");
             UIComponent component = D2DViewHandler
-                    .findComponent(state.getFocusID(), context.getViewRoot());            
+                    .findComponent(focusID, context.getViewRoot());            
             renderCyclePartial(context, lifecycle, component);
         } else {
             renderCycle(context, lifecycle);

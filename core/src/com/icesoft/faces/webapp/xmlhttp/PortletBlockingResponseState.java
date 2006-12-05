@@ -76,7 +76,6 @@ public class PortletBlockingResponseState
 
     protected PortletKicker kicker;
     protected Collection updates = new ArrayList();
-    protected String focusID;
     protected boolean isCancelled = false;
 
     protected String iceID;
@@ -103,10 +102,6 @@ public class PortletBlockingResponseState
             }
         }
         this.viewNumber = viewNumber;
-    }
-
-    public String getFocusID() {
-        return focusID;
     }
 
     public void block(HttpServletRequest request)  {
@@ -185,10 +180,6 @@ public class PortletBlockingResponseState
                 (currentMillis - accessedMillis));
     }
 
-    public void setFocusID(String focusID) {
-        this.focusID = focusID;
-    }
-
     public boolean hasHandler() {
         return false;
     }
@@ -215,13 +206,6 @@ public class PortletBlockingResponseState
     public void flush(HttpSession session) {
         //TODO fix interface and calls in DOMResponseWriter
         flush();
-    }
-
-    /**
-     * @deprecated Replaced by {@link #getFocusID()}
-     */
-    public String getFocusID(HttpSession session) {
-        return getFocusID();
     }
 
     /**

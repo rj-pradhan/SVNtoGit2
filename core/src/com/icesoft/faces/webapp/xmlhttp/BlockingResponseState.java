@@ -64,7 +64,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
 
     private Kicker kicker;
     private Collection updates = new ArrayList();
-    private String focusID;
     protected boolean isCancelled = false;
     protected String iceID;
     protected String viewNumber;
@@ -98,10 +97,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
             }
         }
         this.viewNumber = viewNumber;
-    }
-
-    public String getFocusID() {
-        return focusID;
     }
 
     public void block(HttpServletRequest request)  {
@@ -164,10 +159,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
         long accessedMillis = session.getLastAccessedTime();
         return (session.getMaxInactiveInterval() * 1000 -
                 (currentMillis - accessedMillis));
-    }
-
-    public void setFocusID(String focusID) {
-        this.focusID = focusID;
     }
 
     public boolean hasHandler() {
