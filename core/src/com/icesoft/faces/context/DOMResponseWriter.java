@@ -332,11 +332,6 @@ public class DOMResponseWriter extends ResponseWriter {
         ResponseState nodeWriter =
                 (ResponseState) sessionMap.get(
                         viewNumber + "/" + ResponseState.STATE);
-
-        //HttpSession session = (HttpSession) externalContext.getSession(true);
-        //HttpSession no longer used; rework API
-        HttpSession session = null;
-
         //We've changed IncrementalNodeWriter implementation from BlockingServlet
         //to the more generic and direct ResponseState.  This helps to support
         //running in basic mode (BlockingResponseState) or enterprise (AsyncResponseState)
