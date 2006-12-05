@@ -341,10 +341,7 @@ public class DOMResponseWriter extends ResponseWriter {
         //to the more generic and direct ResponseState.  This helps to support
         //running in basic mode (BlockingResponseState) or enterprise (AsyncResponseState)
         //configurations.
-
-        boolean requiresJavaScript =
-                "true".equals(sessionMap.get("requiresJavaScript"));
-        if (requiresJavaScript && (null != nodeWriter)) {
+        if (null != nodeWriter) {
             oldDocument = (Document) sessionMap.get(getOldDOMKey());
 
             if (null != oldDocument) {

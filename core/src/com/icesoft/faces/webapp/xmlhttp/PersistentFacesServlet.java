@@ -360,10 +360,6 @@ public class PersistentFacesServlet extends HttpServlet {
                         BridgeExternalContext.INCLUDE_SERVLET_PATH,
                         requestAttribute);
             }
-
-            session.setAttribute("isJavaBrowser", "false");
-            session.setAttribute("requiresJavaScript", "true");
-
             // If we don't have our persistent state yet, initialize one
             PersistentFacesState.setLocalInstance(
                     facesContext.getExternalContext().getSessionMap(),
