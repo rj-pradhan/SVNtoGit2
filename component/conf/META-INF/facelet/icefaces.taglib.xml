@@ -6,105 +6,22 @@
 <facelet-taglib>
 	<namespace>http://www.icesoft.com/icefaces/component</namespace>
 	<tag>
-		<tag-name>outputChart</tag-name>
+		<tag-name>panelBorder</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.OutputChart</component-type>
-			<renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
+			<component-type>com.icesoft.faces.BorderLayout</component-type>
+			<renderer-type>com.icesoft.faces.BorderLayout</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>panelSeries</tag-name>
+		<tag-name>column</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.PanelSeries</component-type>
-			<renderer-type>com.icesoft.faces.PanelSeriesRenderer</renderer-type>
+			<component-type>com.icesoft.faces.Column</component-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>outputConnectionStatus</tag-name>
+		<tag-name>columns</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.OutputConnectionStatus</component-type>
-			<renderer-type>com.icesoft.faces.OutputConnectionStatusRenderer</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>outputProgress</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.Progress</component-type>
-			<renderer-type>com.icesoft.faces.Bar</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>inputFile</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.File</component-type>
-			<renderer-type>com.icesoft.faces.Upload</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>tree</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.TreeView</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>treeNode</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.TreeNode</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>menuBar</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.Menu</component-type>
-			<renderer-type>com.icesoft.faces.Menu</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>menuItem</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.MenuNode</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>menuItems</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.MenuNodes</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>menuItemSeparator</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>panelTab</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.PanelTab</component-type>
-			<renderer-type>javax.faces.Group</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>panelTabSet</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.PanelTabSet</component-type>
-			<renderer-type>com.icesoft.faces.TabbedPane</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>tabChangeListener</tag-name>
-		<handler-class>com.icesoft.faces.facelets.TabChangeListenerHandler</handler-class>
-	</tag>
-	<tag>
-		<tag-name>selectInputDate</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.SelectInputDate</component-type>
-			<renderer-type>com.icesoft.faces.Calendar</renderer-type>
+			<component-type>com.icesoft.faces.Columns</component-type>
 		</component>
 	</tag>
 	<tag>
@@ -115,38 +32,10 @@
 		</component>
 	</tag>
 	<tag>
-		<tag-name>commandSortHeader</tag-name>
+		<tag-name>inputFile</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.SortHeader</component-type>
-			<renderer-type>com.icesoft.faces.SortHeader</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>panelBorder</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.BorderLayout</component-type>
-			<renderer-type>com.icesoft.faces.BorderLayout</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>panelStack</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.PanelStack</component-type>
-			<renderer-type>com.icesoft.faces.PanelStack</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>panelPopup</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.PanelPopup</component-type>
-			<renderer-type>com.icesoft.faces.PanelPopup</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>selectInputText</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.SelectInputText</component-type>
-			<renderer-type>com.icesoft.faces.SelectInputText</renderer-type>
+			<component-type>com.icesoft.faces.File</component-type>
+			<renderer-type>com.icesoft.faces.Upload</renderer-type>
 		</component>
 	</tag>
 	<tag>
@@ -178,6 +67,27 @@
 		</component>
 	</tag>
 	<tag>
+		<tag-name>graphicImage</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlGraphicImage</component-type>
+			<renderer-type>com.icesoft.faces.Image</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>inputHidden</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlInputHidden</component-type>
+			<renderer-type>javax.faces.Hidden</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>inputSecret</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlInputSecret</component-type>
+			<renderer-type>com.icesoft.faces.Secret</renderer-type>
+		</component>
+	</tag>
+	<tag>
 		<tag-name>inputText</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.HtmlInputText</component-type>
@@ -189,6 +99,48 @@
 		<component>
 			<component-type>com.icesoft.faces.HtmlInputTextarea</component-type>
 			<renderer-type>com.icesoft.faces.Textarea</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>message</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlMessage</component-type>
+			<renderer-type>com.icesoft.faces.Message</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>messages</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlMessages</component-type>
+			<renderer-type>com.icesoft.faces.Messages</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>outputFormat</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlOutputFormat</component-type>
+			<renderer-type>javax.faces.Format</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>outputLabel</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlOutputLabel</component-type>
+			<renderer-type>com.icesoft.faces.Label</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>outputLink</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlOutputLink</component-type>
+			<renderer-type>com.icesoft.faces.Link</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>outputText</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.HtmlOutputText</component-type>
+			<renderer-type>com.icesoft.faces.Text</renderer-type>
 		</component>
 	</tag>
 	<tag>
@@ -255,72 +207,59 @@
 		</component>
 	</tag>
 	<tag>
-		<tag-name>column</tag-name>
+		<tag-name>menuBar</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.Column</component-type>
+			<component-type>com.icesoft.faces.Menu</component-type>
+			<renderer-type>com.icesoft.faces.Menu</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>graphicImage</tag-name>
+		<tag-name>menuItem</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlGraphicImage</component-type>
-			<renderer-type>com.icesoft.faces.Image</renderer-type>
+			<component-type>com.icesoft.faces.MenuNode</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>inputHidden</tag-name>
+		<tag-name>menuItemCheckbox</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlInputHidden</component-type>
-			<renderer-type>javax.faces.Hidden</renderer-type>
+			<component-type>com.icesoft.faces.MenuNodeCheckbox</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>inputSecret</tag-name>
+		<tag-name>menuItemRadio</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlInputSecret</component-type>
-			<renderer-type>com.icesoft.faces.Secret</renderer-type>
+			<component-type>com.icesoft.faces.MenuNodeRadio</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>message</tag-name>
+		<tag-name>menuItemSeparator</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlMessage</component-type>
-			<renderer-type>com.icesoft.faces.Message</renderer-type>
+			<component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>messages</tag-name>
+		<tag-name>menuItems</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlMessages</component-type>
-			<renderer-type>com.icesoft.faces.Messages</renderer-type>
+			<component-type>com.icesoft.faces.MenuNodes</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>outputFormat</tag-name>
+		<tag-name>outputChart</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlOutputFormat</component-type>
-			<renderer-type>javax.faces.Format</renderer-type>
+			<component-type>com.icesoft.faces.OutputChart</component-type>
+			<renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
 		</component>
 	</tag>
 	<tag>
-		<tag-name>outputLabel</tag-name>
+		<tag-name>outputConnectionStatus</tag-name>
 		<component>
-			<component-type>com.icesoft.faces.HtmlOutputLabel</component-type>
-			<renderer-type>com.icesoft.faces.Label</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>outputLink</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.HtmlOutputLink</component-type>
-			<renderer-type>com.icesoft.faces.Link</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>outputText</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.HtmlOutputText</component-type>
-			<renderer-type>com.icesoft.faces.Text</renderer-type>
+			<component-type>com.icesoft.faces.OutputConnectionStatus</component-type>
+			<renderer-type>com.icesoft.faces.OutputConnectionStatusRenderer</renderer-type>
 		</component>
 	</tag>
 	<tag>
@@ -338,6 +277,90 @@
 		</component>
 	</tag>
 	<tag>
+		<tag-name>panelPopup</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelPopup</component-type>
+			<renderer-type>com.icesoft.faces.PanelPopup</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>panelSeries</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelSeries</component-type>
+			<renderer-type>com.icesoft.faces.PanelSeriesRenderer</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>panelStack</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelStack</component-type>
+			<renderer-type>com.icesoft.faces.PanelStack</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>panelTab</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelTab</component-type>
+			<renderer-type>javax.faces.Group</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>panelTabSet</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelTabSet</component-type>
+			<renderer-type>com.icesoft.faces.TabbedPane</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>outputProgress</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.Progress</component-type>
+			<renderer-type>com.icesoft.faces.Bar</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>rowSelector</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.RowSelector</component-type>
+			<renderer-type>com.icesoft.faces.component.ext.renderkit.RowSelectorRenderer</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>selectInputDate</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.SelectInputDate</component-type>
+			<renderer-type>com.icesoft.faces.Calendar</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>selectInputText</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.SelectInputText</component-type>
+			<renderer-type>com.icesoft.faces.SelectInputText</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>commandSortHeader</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.SortHeader</component-type>
+			<renderer-type>com.icesoft.faces.SortHeader</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>treeNode</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.TreeNode</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>tree</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.TreeView</component-type>
+			<renderer-type>com.icesoft.faces.View</renderer-type>
+		</component>
+	</tag>
+	<tag>
 		<tag-name>panelPositioned</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.dragdrop.PanelPositioned</component-type>
@@ -345,16 +368,7 @@
 		</component>
 	</tag>
 	<tag>
-		<tag-name>rowSelector</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.RowSelector</component-type>
-			<renderer-type>com.icesoft.faces.RowSelectorRenderer</renderer-type>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>columns</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.Columns</component-type>
-		</component>
+		<tag-name>tabChangeListener</tag-name>
+		<handler-class>com.icesoft.faces.facelets.TabChangeListenerHandler</handler-class>
 	</tag>
 </facelet-taglib>

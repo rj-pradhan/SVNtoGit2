@@ -36,6 +36,7 @@ package com.icesoft.faces.component.ext;
 import javax.faces.component.UIComponent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.event.PhaseId;
 
 /**
  * Created by IntelliJ IDEA. User: rmayhew Date: Sep 5, 2006 Time: 2:29:29 PM To
@@ -51,6 +52,8 @@ public class RowSelectorEvent extends FacesEvent {
         super(uiComponent);
         this.row = row;
         this.selected = selected;
+        //setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
+        setPhaseId(PhaseId.PROCESS_VALIDATIONS);
     }
 
     public boolean isAppropriateListener(FacesListener facesListener) {
