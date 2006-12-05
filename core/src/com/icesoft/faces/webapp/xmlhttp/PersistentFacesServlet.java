@@ -525,10 +525,10 @@ public class PersistentFacesServlet extends HttpServlet {
      */
     private void setCacheControls(ServletResponse response) {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
-        httpResponse.setHeader("Cache-Control", "no-store"); //HTTP 1.1
-        httpResponse.setHeader("Cache-Control", "must-revalidate"); //HTTP 1.1
-        httpResponse.setHeader("Pragma", "no-cache"); //HTTP 1.0
+        httpResponse.addHeader("Cache-Control", "no-cache"); //HTTP 1.1
+        httpResponse.addHeader("Cache-Control", "no-store"); //HTTP 1.1
+        httpResponse.addHeader("Cache-Control", "must-revalidate"); //HTTP 1.1
+        httpResponse.addHeader("Pragma", "no-cache"); //HTTP 1.0
         httpResponse.setDateHeader("Expires", 0); //prevents proxy caching
     }
 
