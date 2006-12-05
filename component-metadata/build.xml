@@ -57,11 +57,12 @@
 		</copy>
 	</target>
 	<target name="generator" description="code generator" depends="conf-changed" unless="conf-uptodate">
-		<!-- validate meatdata xml file -->
+		<!-- validate meatdata xml file Creates sun-faces-config-verified.xml from  sun-faces-config.xml and  translate-conf.xsl -->
 		<java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
 			<classpath refid="build.classpath" />
 		</java>
-		<java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
+        <!-- Create Tag Libs -->
+        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
 			<arg line="-d ${project.build.directory}/generated-sources/taglib/main/java" />
 			<!-- TODO: using jar:file known issue ant bug -->
 			<arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
@@ -90,7 +91,7 @@
 			<arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
 			<arg line="-p ${project.taglib.prefix}" />
 			<arg line="-u ${project.taglib.uri}" />
-			<arg line="-T com.icesoft.faces.ext.taglib" />
+			<arg line="-T com.icesoft.faces.component.ext.taglib" />
 			<arg line="-v" />
 			<!-- -t name of output TLD file relative to -d directory -->
 			<arg line="-t icefaces_component.tld" />

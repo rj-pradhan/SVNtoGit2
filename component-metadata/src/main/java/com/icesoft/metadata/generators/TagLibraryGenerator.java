@@ -220,8 +220,10 @@ public class TagLibraryGenerator extends AbstractGenerator {
 		writer.emitImport("javax.faces.event.ActionEvent");
 		writer.emitImport("javax.faces.event.ValueChangeEvent");
 		writer.emitImport("javax.faces.webapp.UIComponentTag");
+        writer.emitImport("com.icesoft.faces.component.dragdrop.DragEvent");
+        writer.emitImport("com.icesoft.faces.component.dragdrop.DropEvent");
 
-		if (constantMethodBindingPackage != null)
+        if (constantMethodBindingPackage != null)
 			writer.emitImport(constantMethodBindingPackage
 					+ ".MethodBindingString");
 		writer.emitNewline();
@@ -252,9 +254,13 @@ public class TagLibraryGenerator extends AbstractGenerator {
 		writer.startMethod("setProperties", "void",
 				new String[] { "UIComponent" }, new String[] { "_component" },
 				"protected");
+	    writer.emitExpression("try{", true);
 		writer.emitExpression("super.setProperties(_component);", true);
-		properties(cb, rb, ((Set) (new HashSet())));
-		writer.endMethod();
+
+
+        properties(cb, rb, ((Set) (new HashSet())));
+        writer.emitExpression("}catch(Exception e1){e1.printStackTrace();throw new RuntimeException(e1);}", true);
+        writer.endMethod();
 		writer.emitNewline();
 	}
 
@@ -496,7 +502,63 @@ public class TagLibraryGenerator extends AbstractGenerator {
 					writer.outdent();
 					writer.emitExpression("}", true);
 					
-				}else {
+
+                } else if("dragListener".equalsIgnoreCase(name)){
+                    System.err.println("Generating Method Binding for drag Listener");
+//	                Class[] ca = ca = new Class[]{PanelPositionedEvent.class};
+//	                MethodBinding mb = getFacesContext().getApplication()
+//	                        .createMethodBinding(listener, ca);
+//	                series.setListener(mb);
+					writer.emitExpression("if (isValueReference(" + var
+							+ ")) {", true);
+					writer.indent();
+					writer
+							.emitExpression(
+									"Class[] dragListenerArgs = new Class[]{DragEvent.class};",
+									true);
+					writer.emitExpression(
+							"MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+									+ var + ", dragListenerArgs);", true);
+					writer.emitExpression("_component.getAttributes().put(\""
+							+ name + "\", _mb);", true);
+					writer.outdent();
+					writer.emitExpression("} else {", true);
+					writer.indent();
+					writer.emitExpression("throw new IllegalArgumentException("
+							+ var + ");", true);
+					writer.outdent();
+					writer.emitExpression("}", true);
+
+				}
+
+                else if("dropListener".equalsIgnoreCase(name)){
+//	                Class[] ca = ca = new Class[]{PanelPositionedEvent.class};
+//	                MethodBinding mb = getFacesContext().getApplication()
+//	                        .createMethodBinding(listener, ca);
+//	                series.setListener(mb);
+					writer.emitExpression("if (isValueReference(" + var
+							+ ")) {", true);
+					writer.indent();
+					writer
+							.emitExpression(
+									"Class[] dropListenerArgs= new Class[]{DropEvent.class};",
+									true);
+					writer.emitExpression(
+							"MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+									+ var + ", dropListenerArgs );", true);
+					writer.emitExpression("_component.getAttributes().put(\""
+							+ name + "\", _mb);", true);
+					writer.outdent();
+					writer.emitExpression("} else {", true);
+					writer.indent();
+					writer.emitExpression("throw new IllegalArgumentException("
+							+ var + ");", true);
+					writer.outdent();
+					writer.emitExpression("}", true);
+
+				}
+
+                else {
 				
 					throw new IllegalArgumentException(name);
 				}

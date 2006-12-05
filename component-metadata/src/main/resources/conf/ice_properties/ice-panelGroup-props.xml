@@ -89,13 +89,13 @@
 	</description>
 	
 	<property-name>dragListener</property-name>
-	<property-class>java.lang.String</property-class>
+	<property-class>javax.faces.el.MethodBinding</property-class>
 		<property-extension>
-		<category>ICE_COMPONENT</category>
+		<category>DRAGANDDROP</category>
 		<editor-class>
-			&stringEditor;
+			&methodBindingEditor;
 		</editor-class>
-		<is-bindable>false</is-bindable>
+		<is-bindable>true</is-bindable>
 	</property-extension>
 </property>
 
@@ -107,7 +107,7 @@
 	<property-name>dropValue</property-name>
 	<property-class>java.lang.Object</property-class>
 	<property-extension>
-		<category>ICE_COMPONENT</category>
+		<category>DRAGANDDROP</category>
 		<editor-class>
 			&valueBindingEditor;
 		</editor-class>
@@ -122,13 +122,13 @@
 		dropped or hovered on this panel unless masked.
 	</description>
 	<property-name>dropListener</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_COMPONENT</category>
+	<property-class>javax.faces.el.MethodBinding</property-class>
+		<property-extension>
+		<category>DRAGANDDROP</category>
 		<editor-class>
-			&stringEditor;
+			&methodBindingEditor;
 		</editor-class>
-		<is-bindable>false</is-bindable>
+		<is-bindable>true</is-bindable>
 	</property-extension>
 </property>
 
@@ -144,7 +144,7 @@
 	<property-name>dragOptions</property-name>
 	<property-class>java.lang.String</property-class>
 	<property-extension>
-		<category>ICE_COMPONENT</category>
+		<category>DRAGANDDROP</category>
 		<editor-class>
 			&stringEditor;
 		</editor-class>
@@ -164,7 +164,7 @@
 	<property-name>dragMask</property-name>
 	<property-class>java.lang.String</property-class>
 	<property-extension>
-		<category>ICE_COMPONENT</category>
+		<category>DRAGANDDROP</category>
 		<editor-class>
 			&stringEditor;
 		</editor-class>
@@ -204,6 +204,18 @@
 	<description>
 	</description>
 	<property-name>renderedStyle</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+        <is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+    Hover class
+	</description>
+	<property-name>hoverclass</property-name>
 	<property-class>java.lang.String</property-class>
 	<property-extension>
 		<category>ICE_COMPONENT</category>
