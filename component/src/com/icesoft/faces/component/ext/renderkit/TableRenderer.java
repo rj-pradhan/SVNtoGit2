@@ -375,12 +375,16 @@ public class TableRenderer
 
             if (selectedClass != null) {
                 tr.setAttribute(HTML.CLASS_ATTR, selectedClass);
+
             } else if (rowStylesMaxIndex >= 0) {
                 // if row styles exist, then render the appropriate one
                 tr.setAttribute(HTML.CLASS_ATTR, rowStyles[rowStyleIndex]);
-                if (++rowStyleIndex > rowStylesMaxIndex) {
+            }
+
+            if(rowStylesMaxIndex >= 0){ // Thanks denis tsyplakov
+               if (++rowStyleIndex > rowStylesMaxIndex) {
                     rowStyleIndex = 0;
-                }
+               }
             }
             int colNumber = 1;
             StringTokenizer columnWitdths =
