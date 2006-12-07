@@ -65,7 +65,11 @@
         <pathelement location="${build.classes.dir}"/>
         <fileset dir="${lib.dir}" includes="*.jar" excludes="${ant.project.name}.jar"/>
     </path>
-
+    <path id="compile.test.classpath">
+        <pathelement location="${build.classes.dir}"/>
+        <fileset dir="../component-metadata/target" includes="*.jar"/>
+    </path>
+	
     <macrodef name="build.jar">
         <element name="add.metainfs" optional="true"/>
         <sequential>
@@ -193,7 +197,7 @@
         <delete dir="${dist.dir}"/>
     </target>
     
-    <target  name="generate.metadata">
+    <target name="generate.metadata">
     <ant antfile="../component-metadata/build.xml"
      target="clean" inheritAll="false"/>
         <ant antfile="../component-metadata/build.xml"
@@ -206,5 +210,45 @@
     <fileset dir="../component-metadata/target/generated-sources/tld" includes="**/*.tld"/>
   </copy>
     </target>
+	
+	<target name="compile-tests" depends="junit-present, compile" description="Compile the test code" if="junit.present">
 
+		<javac destdir="${build.classes.dir}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
+			<src>
+				<pathelement location="test/java" />
+				<pathelement location="../component-metadata/target/generated-sources/testbeaninfo/main/java"/>
+				<pathelement location="../component-metadata/target/generated-sources/component/main/java"/>
+			</src>
+			<classpath>
+				<path refid="compile.run.classpath" />
+				<path refid="compile.test.classpath"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases">
+		<mkdir dir="${build.classes.dir}/test-reports" />
+		<junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">
+			<sysproperty key="basedir" value="." />
+			<formatter type="plain" />
+			<classpath>
+				<path refid="compile.run.classpath" />		
+				<path refid="compile.test.classpath"/>
+			</classpath>
+			<batchtest todir="${build.classes.dir}/test-reports">
+				<fileset dir="test/java">
+					<include name="**/*Test.java" />
+					<exclude name="**/*Abstract*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="test-junit-present">
+		<available classname="junit.framework.Test" property="junit.present" />
+	</target>
+	<target name="junit-present" depends="test-junit-present" unless="junit.present">
+		<echo>================================= WARNING ================================</echo>
+		<echo> Junit isn&apos;t present in your $ANT_HOME/lib directory. Tests not executed. </echo>
+		<echo>==========================================================================</echo>
+	</target>
 </project>
