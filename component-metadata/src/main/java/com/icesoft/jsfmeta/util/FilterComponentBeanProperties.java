@@ -2,6 +2,7 @@ package com.icesoft.jsfmeta.util;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.TreeMap;
 
 import org.xml.sax.SAXException;
 
@@ -27,6 +28,48 @@ public class FilterComponentBeanProperties {
 		status.getFilterComponentProperty();
 	}
 
+	public static TreeMap getCategoriesMapping(){
+		
+		TreeMap treeMap = new TreeMap();
+		PropertyBean[] pb = null;
+		MetadataXmlParser metadataParser = new MetadataXmlParser();
+		metadataParser.setDesign(true);
+		
+
+		try {
+			ClassLoader classLoader = Thread.currentThread()
+					.getContextClassLoader();
+			URL localUrl = classLoader.getResource(".");
+			String newPath = "file:" + localUrl.getPath()
+					+ "conf/filter.properties/filter-faces-config.xml";
+			URL url = new URL(newPath);
+
+			FacesConfigBean facesConfigBean = metadataParser.parse(url);
+			ComponentBean[] componentbeans = facesConfigBean.getComponents();
+
+			for (int i = 0; i < componentbeans.length; i++) {
+				
+				PropertyBean[] descriptions = componentbeans[i].getProperties();
+				String one = "";
+				pb = descriptions;
+				for (int j = 0; j < pb.length; j++) {
+
+					one = one + "\n property name=" + pb[j].getPropertyName()+ " property category="+ pb[j].getCategory();
+					treeMap.put(pb[j].getPropertyName().trim(), pb[j].getCategory().trim());
+				}
+				//System.out.println("" + one);
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+
+		
+		return treeMap;
+	}
+	
 	/*
 	 * return Javascript attribute property for example: onclick
 	 */
@@ -36,13 +79,15 @@ public class FilterComponentBeanProperties {
 		String[] cb = null;
 		MetadataXmlParser metadataParser = new MetadataXmlParser();
 		metadataParser.setDesign(true);
+		
+		TreeMap treeMap = new TreeMap();
 
 		try {
 			ClassLoader classLoader = Thread.currentThread()
 					.getContextClassLoader();
 			URL localUrl = classLoader.getResource(".");
 			String newPath = "file:" + localUrl.getPath()
-					+ "./../conf/filter.properties/filter-faces-config.xml";
+					+ "conf/filter.properties/filter-faces-config.xml";
 			URL url = new URL(newPath);
 
 			FacesConfigBean facesConfigBean = metadataParser.parse(url);
@@ -58,8 +103,9 @@ public class FilterComponentBeanProperties {
 				for (int j = 0; j < pb.length; j++) {
 
 					one = one + "\n property name=" + pb[j].getPropertyName()+ " property category="+ pb[j].getCategory();
+					treeMap.put(pb[j].getPropertyName().trim().toLowerCase(), pb[j].getCategory().trim());
 				}
-				//System.out.println("" + one);
+				System.out.println("" + one);
 
 			}
 		} catch (IOException e) {
@@ -71,20 +117,7 @@ public class FilterComponentBeanProperties {
 		return pb;
 	}
 
-	
-	private void filterCategory(PropertyBean propertyBean){
 		
-		PropertyBean[] filterPropertyBeans = getFilterComponentProperty();
-		
-		for(int i=0 ; i< filterPropertyBeans.length; i++){
-			
-			boolean condition = filterPropertyBeans[i].getPropertyName().equalsIgnoreCase(propertyBean.getPropertyName());
-			if(condition){
-				propertyBean.setCategory(filterPropertyBeans[i].getCategory());
-			}
-		}		
-	}
-	
 	
 	/*
 	 * filter with category name (hiding JAVASCRIPT category related properties)getEffect
@@ -136,8 +169,8 @@ public class FilterComponentBeanProperties {
 				String propertyName = propertyBeans[j].getPropertyName();
 				String categoryName = propertyBeans[j].getCategory();
 
-				System.out.println("propertyName=" + propertyName
-						+ " categoryName=" + categoryName);
+//				System.out.println("propertyName=" + propertyName
+//						+ " categoryName=" + categoryName);
 			}
 		}
 	}

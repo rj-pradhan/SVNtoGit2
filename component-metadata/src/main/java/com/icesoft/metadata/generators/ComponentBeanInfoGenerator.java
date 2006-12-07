@@ -350,15 +350,9 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		defaultPropertyIndex(cb, rb);
 		facetDescriptors(cb, rb);
 		icon(cb, rb);
-		loadClass(cb);
+		loadClass(cb);		
 		
-		FilterComponentBeanProperties filter = new FilterComponentBeanProperties();
 		
-		String baseComponentType = cb.getBaseComponentType();
-		if (baseComponentType != null) {
-			ComponentBean bcb = getConfig().getComponent(baseComponentType);
-			filter.filter(bcb);
-		}
 		propertyDescriptors(cb, rb);
 		writer.endClass();
 	}
@@ -968,6 +962,8 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		else
 			return "";
 	}
+	
+	private final static TreeMap treeMap4categories = FilterComponentBeanProperties.getCategoriesMapping();
 
 	private void propertyDescriptor(ComponentBean cb, RendererBean rb,
 			PropertyBean pb, ComponentBean componentBeanBeingGenerated)
@@ -1029,6 +1025,7 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 					true);
 		writer.emitExpression("prop_" + name + ".setExpert(" + pb.isExpert()
 				+ ");", true);
+			
 		writer.emitExpression("prop_" + name + ".setHidden(" + pb.isHidden()
 				+ ");", true);
 		writer.emitExpression("prop_" + name + ".setPreferred("
@@ -1055,9 +1052,18 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 					+ "Constants.PropertyDescriptor.ATTRIBUTE_DESCRIPTOR,"
 					+ "attrib);", true);
 		}
-		String category = pb.getCategory();
-		if (category == null)
+		
+		//override the category property
+		String category = (String)treeMap4categories.get(pb.getPropertyName().trim().toLowerCase());
+
+		if(category == null){
+			//System.out.println("category ="+ pb.getCategory());
+			category = pb.getCategory();
+		}		
+		
+		if (category == null){
 			category = "GENERAL";
+		}
 		writer.emitExpression("prop_" + name + ".setValue("
 				+ "Constants.PropertyDescriptor.CATEGORY,"
 				+ getCategoryDescriptors() + "."
@@ -1109,8 +1115,9 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		writer.indent();
 		String prop;
 		for (Iterator props = map.keySet().iterator(); props.hasNext(); writer
-				.emitExpression("prop_" + prop + ",", true))
+				.emitExpression("prop_" + prop + ",", true)){
 			prop = (String) props.next();
+		}
 
 		writer.outdent();
 		writer.emitExpression("};", true);

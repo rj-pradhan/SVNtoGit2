@@ -109,3 +109,5 @@ component-metadata\target\geneated-sources\taglib\main\java
 Tld under
 component-metadata\target\geneated-sources\tld\icefaces_component.tld
 
+base category under
+component-metadata/src/main/resources/conf/filter.properties/filter-faces-config.xml 
