@@ -586,7 +586,7 @@ public class PanelTabSetRenderer
             renderLinkText(label, domContext, link, tab, tabSet);
 
             Map parameterMap = getParameterMap(facesContext, tab);
-            renderOnClick(facesContext, tabSet, link, parameterMap);
+            renderOnClick(facesContext, tabSet, tab, link, parameterMap);
 
             Iterator parameterKeys = parameterMap.keySet().iterator();
             String nextKey;
@@ -770,15 +770,20 @@ public class PanelTabSetRenderer
      * @param parameters
      */
     private void renderOnClick(FacesContext facesContext,
-                               UIComponent uiComponent,
+                               UIComponent tabSet,
+                               PanelTab tab,
                                Element root, Map parameters) {
-        UIComponent uiForm = findForm(uiComponent);
+        UIComponent uiForm = findForm(tabSet);
         if (uiForm == null) {
             throw new FacesException("CommandLink must be contained in a form");
         }
         String uiFormClientId = uiForm.getClientId(facesContext);
-        root.setAttribute("onclick", getJavaScriptOnClickString(facesContext,
-                                                                uiComponent,
+        String onclick = "";
+        if (tab.getOnclick()!= null){
+            onclick = tab.getOnclick();
+        }
+        root.setAttribute("onclick", onclick + getJavaScriptOnClickString(facesContext,
+                                                                tabSet,
                                                                 uiFormClientId,
                                                                 parameters)); // replaced command w/component
     }
