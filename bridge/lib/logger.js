@@ -151,7 +151,7 @@
 
         enable: function() {
             try {
-                this.window = this.parentWindow.open('', 'log' + window.identifier, 'scrollbars=1,width=800,height=680');
+                this.window = this.parentWindow.open('', 'log', 'scrollbars=1,width=800,height=680');
                 var windowDocument = this.window.document;
 
                 this.log = this.window.document.getElementById('log-window');
