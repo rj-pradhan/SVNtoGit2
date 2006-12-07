@@ -52,16 +52,20 @@ public class TextRenderer
         excludes.add("onkeypress");
         excludes.add("onfocus");
         excludes.add("onblur");
-
+        
+        String onkeypress = ((HtmlInputText)uiComponent).getOnkeypress() != null ? ((HtmlInputText)uiComponent).getOnkeypress() : "";
+        String onfocus = ((HtmlInputText)uiComponent).getOnfocus() != null ? ((HtmlInputText)uiComponent).getOnfocus() : "";
+        String onblur = ((HtmlInputText)uiComponent).getOnblur() != null ? ((HtmlInputText)uiComponent).getOnblur() : "";
+                
         //Add the enter key behavior by default
-        root.setAttribute("onkeypress", this.ICESUBMIT);
-        //set the focus
-        root.setAttribute("onfocus", "setFocus(this.id);");
-        String onblur = "setFocus('');";
-        root.setAttribute("onblur", onblur);
-
+        root.setAttribute("onkeypress", onkeypress + this.ICESUBMIT);
+        // set the focus id
+        root.setAttribute("onfocus", onfocus + "setFocus(this.id);");
+        // clear focus id
+        root.setAttribute("onblur", "setFocus('');");
+        
         if (((IceExtended) uiComponent).getPartialSubmit()) {
-            root.setAttribute("onblur", onblur +
+            root.setAttribute("onblur", "setFocus('');" + onblur +
                                         "iceSubmitPartial(form,this,event); return false;");
         }
 
