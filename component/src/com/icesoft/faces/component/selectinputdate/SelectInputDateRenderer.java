@@ -110,6 +110,15 @@ public class SelectInputDateRenderer
 
     // constant for selectinputdate links
     private final String CALENDAR = "_calendar";
+    
+    // arrays of week days and month names
+    String[] weekdays = new String[7];
+    String[] weekdaysLong = new String[7];
+    String[] months = new String[12];
+    
+    // store the current locale
+    Locale currentLocale = null;
+    
 
     /* (non-Javadoc)
     * @see javax.faces.render.Renderer#getRendersChildren()
@@ -201,6 +210,8 @@ public class SelectInputDateRenderer
                 calendarButton.setAttribute(HTML.TYPE_ATTR, "image");
                 calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
                         .getImageDir() + selectInputDate.getOpenPopupImage());
+                calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar");
+                calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
                 calendarButton.setAttribute(HTML.ONFOCUS_ATTR, "setFocus('');");
                 // render onclick to set value of hidden field to true
                 String onClick = "document.forms['" +
@@ -228,6 +239,7 @@ public class SelectInputDateRenderer
                                          clientId + CALENDAR_POPUP);
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:none;position:absolute; ");
+                calendarDiv.setAttribute(HTML.TITLE_ATTR, "A Popup Calendar where a date can be selected.");
                 Element table = domContext.createElement(HTML.TABLE_ELEM);
                 table.setAttribute(HTML.ID_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.NAME_ATTR, clientId + CALENDAR_TABLE);
@@ -242,6 +254,7 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.ONMOUSEOUT_ATTR, mouseOut);
                 String mouseMove = selectInputDate.getOnmousemove();
                 table.setAttribute(HTML.ONMOUSEMOVE_ATTR, mouseMove);
+                table.setAttribute(HTML.SUMMARY_ATTR,"This table contains a Calendar where a date can be selected.");
                 calendarDiv.appendChild(table);
                 root.appendChild(calendarDiv);
                 // render a hidden field to manage the popup state; visible || hidden
@@ -265,11 +278,12 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.ONMOUSEOUT_ATTR, mouseOut);
                 String mouseMove = selectInputDate.getOnmousemove();
                 table.setAttribute(HTML.ONMOUSEMOVE_ATTR, mouseMove);
+                table.setAttribute(HTML.SUMMARY_ATTR,"This table contains a Calendar where a date can be selected.");
                 root.appendChild(table);
             }
         }
         clientId = uiComponent.getClientId(facesContext);
-        Locale currentLocale = facesContext.getViewRoot().getLocale();
+        currentLocale = facesContext.getViewRoot().getLocale();
 
         Date value;
 
@@ -300,8 +314,9 @@ public class SelectInputDateRenderer
 
         DateFormatSymbols symbols = new DateFormatSymbols(currentLocale);
 
-        String[] weekdays = mapWeekdays(symbols);
-        String[] months = mapMonths(symbols);
+        weekdays = mapWeekdays(symbols);
+        weekdaysLong = mapWeekdaysLong(symbols);
+        months = mapMonths(symbols);
 
         // use the currentDay to set focus - do not set
         int lastDayInMonth = timeKeeper.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -355,11 +370,15 @@ public class SelectInputDateRenderer
                                          "display:block;position:absolute;");
                 calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
                         .getImageDir() + selectInputDate.getClosePopupImage());
+                calendarButton.setAttribute(HTML.ALT_ATTR, "Close Popup Calendar");
+                calendarButton.setAttribute(HTML.TITLE_ATTR , "Close Popup Calendar");                
             } else {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:none;position:absolute;");
                 calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
                         .getImageDir() + selectInputDate.getOpenPopupImage());
+                calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar"); 
+                calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
             }
 
             // get tables , our table is the first and only one
@@ -447,6 +466,7 @@ public class SelectInputDateRenderer
         table.setAttribute(HTML.CELLPADDING_ATTR, "0");
         table.setAttribute(HTML.CELLSPACING_ATTR, "0");
         table.setAttribute(HTML.WIDTH_ATTR, "100%");
+        table.setAttribute(HTML.SUMMARY_ATTR,"Month Year navigation header");
 
         Element tr = domContext.createElement(HTML.TR_ELEM);
 
@@ -463,7 +483,7 @@ public class SelectInputDateRenderer
         writeCell(domContext, facesContext, writer, inputComponent,
                   "<", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
-                  ((SelectInputDate) inputComponent).getMovePreviousImage());
+                  ((SelectInputDate) inputComponent).getMovePreviousImage(), -1);
 
         Element td = domContext.createElement(HTML.TD_ELEM);
         td.setAttribute(HTML.CLASS_ATTR, styleClass);
@@ -479,7 +499,7 @@ public class SelectInputDateRenderer
         writeCell(domContext, facesContext, writer, inputComponent,
                   ">", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
-                  ((SelectInputDate) inputComponent).getMoveNextImage());
+                  ((SelectInputDate) inputComponent).getMoveNextImage(), -1);
 
         // second add an empty td
         Element emptytd = domContext.createElement(HTML.TD_ELEM);
@@ -495,7 +515,7 @@ public class SelectInputDateRenderer
         writeCell(domContext, facesContext, writer, inputComponent,
                   "<<", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
-                  ((SelectInputDate) inputComponent).getMovePreviousImage());
+                  ((SelectInputDate) inputComponent).getMovePreviousImage(), -1);
 
         Element yeartd = domContext.createElement(HTML.TD_ELEM);
         yeartd.setAttribute(HTML.CLASS_ATTR, styleClass);
@@ -510,7 +530,7 @@ public class SelectInputDateRenderer
         writeCell(domContext, facesContext, writer, inputComponent,
                   ">>", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
-                  ((SelectInputDate) inputComponent).getMoveNextImage());
+                  ((SelectInputDate) inputComponent).getMoveNextImage(), -1);
 
     }
 
@@ -563,14 +583,14 @@ public class SelectInputDateRenderer
         for (int i = weekStartsAtDayIndex; i < weekdays.length; i++) {
             writeCell(domContext, facesContext,
                       writer, inputComponent, weekdays[i], null, styleClass, tr,
-                      null);
+                      null, i);
         }
 
         // if week start on Sunday this block is not executed
         // if week start on Monday this block will run once adding Sunday to End of week.
         for (int i = 0; i < weekStartsAtDayIndex; i++) {
             writeCell(domContext, facesContext, writer,
-                      inputComponent, weekdays[i], null, styleClass, tr, null);
+                      inputComponent, weekdays[i], null, styleClass, tr, null, i);
         }
     }
 
@@ -602,7 +622,7 @@ public class SelectInputDateRenderer
             }
 
             writeCell(domContext, facesContext, writer, inputComponent, "",
-                      null, inputComponent.getDayCellClass(), tr1, null);
+                      null, inputComponent.getDayCellClass(), tr1, null, i);
             columnIndexCounter++;
         }
 
@@ -648,12 +668,12 @@ public class SelectInputDateRenderer
                 // finish the first row
                 writeCell(domContext, facesContext, writer,
                           inputComponent, String.valueOf(i + 1), cal.getTime(),
-                          cellStyle, tr1, null);
+                          cellStyle, tr1, null, i);
             } else {
                 // write to new row
                 writeCell(domContext, facesContext, writer,
                           inputComponent, String.valueOf(i + 1), cal.getTime(),
-                          cellStyle, tr2, null);
+                          cellStyle, tr2, null, i);
             }
 
             columnIndexCounter++;
@@ -667,7 +687,7 @@ public class SelectInputDateRenderer
             for (int i = columnIndexCounter; i < weekdays.length; i++) {
                 writeCell(domContext, facesContext, writer,
                           inputComponent, "", null,
-                          inputComponent.getDayCellClass(), tr2, null);
+                          inputComponent.getDayCellClass(), tr2, null, i);
             }
         }
     }
@@ -676,7 +696,7 @@ public class SelectInputDateRenderer
                            ResponseWriter writer, UIInput component,
                            String content,
                            Date valueForLink, String styleClass, Element tr,
-                           String imgSrc)
+                           String imgSrc, int weekDayIndex)
             throws IOException {
         Element td = domContext.createElement(HTML.TD_ELEM);
         tr.appendChild(td);
@@ -687,6 +707,7 @@ public class SelectInputDateRenderer
 
         if (valueForLink == null) {
             Text text = domContext.createTextNode(content);
+            td.setAttribute(HTML.TITLE_ATTR,weekdaysLong[weekDayIndex]);
             td.appendChild(text);
         } else {
             // set cursor to render into the td
@@ -712,15 +733,27 @@ public class SelectInputDateRenderer
 
         Converter converter = getConverter(component);
         HtmlCommandLink link = new HtmlCommandLink();
+        Calendar cal = Calendar.getInstance(currentLocale);
+        cal.setTime(valueForLink);
+        String month = months[cal.get(Calendar.MONTH)];
+        String year = String.valueOf(cal.get(Calendar.YEAR));
+        int dayInt = cal.get(Calendar.DAY_OF_WEEK);
+        dayInt = mapCalendarDayToCommonDay(dayInt);
+        String day = weekdaysLong[dayInt];
+        String altText = "";
         // assign special ids for navigation links
         if (content.equals("<")) {
             link.setId(component.getId() + this.PREV_MONTH);
+            altText = "Move to previous month " + month;
         } else if (content.equals(">")) {
             link.setId(component.getId() + this.NEXT_MONTH);
+            altText = "Move to next month " + month;
         } else if (content.equals(">>")) {
             link.setId(component.getId() + this.NEXT_YEAR);
+            altText = "Move to next year " + year;
         } else if (content.equals("<<")) {
             link.setId(component.getId() + this.PREV_YEAR);
+            altText = "Move to previous year " + year;
         } else {
             link.setId(component.getId() + "_" + content.hashCode() + this
                     .CALENDAR);
@@ -740,14 +773,16 @@ public class SelectInputDateRenderer
             img.setHeight("16");
             img.setWidth("17");
             img.setStyle("border:none;");
+            img.setAlt(altText);
             img.setId(component.getId() + "_" + content.hashCode() + "_img");
             img.setTransient(true);
             link.getChildren().add(img);
-        } else {
+        } else {            
             HtmlOutputText text = new HtmlOutputText();
             text.setValue(content);
             text.setId(component.getId() + "_" + content.hashCode() + "_text");
             text.setTransient(true);
+            text.setTitle(day);
             link.getChildren().add(text);
         }
         // links are focus aware       
@@ -825,6 +860,22 @@ public class SelectInputDateRenderer
         String[] weekdays = new String[7];
 
         String[] localeWeekdays = symbols.getShortWeekdays();
+
+        weekdays[0] = localeWeekdays[Calendar.MONDAY];
+        weekdays[1] = localeWeekdays[Calendar.TUESDAY];
+        weekdays[2] = localeWeekdays[Calendar.WEDNESDAY];
+        weekdays[3] = localeWeekdays[Calendar.THURSDAY];
+        weekdays[4] = localeWeekdays[Calendar.FRIDAY];
+        weekdays[5] = localeWeekdays[Calendar.SATURDAY];
+        weekdays[6] = localeWeekdays[Calendar.SUNDAY];
+
+        return weekdays;
+    }
+
+    private static String[] mapWeekdaysLong(DateFormatSymbols symbols) {
+        String[] weekdays = new String[7];
+
+        String[] localeWeekdays = symbols.getWeekdays();
 
         weekdays[0] = localeWeekdays[Calendar.MONDAY];
         weekdays[1] = localeWeekdays[Calendar.TUESDAY];
