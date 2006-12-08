@@ -32,6 +32,15 @@
  */
 
 Object.extend(Array.prototype, {
+
+    isEmpty: function() {
+        return this.length == 0;
+    },
+
+    isNotEmpty: function() {
+        return this.length > 0;
+    },
+
     as: function(context) {
         context.apply(context, this);
     },
