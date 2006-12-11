@@ -104,11 +104,9 @@
         },
 
         sendOn: function(connection) {
-            if (connection != null) {
-                Query.create(function(query) {
-                    this.serializeOn(query);
-                }.bind(this)).sendOn(connection);
-            }
+            Query.create(function(query) {
+                this.serializeOn(query);
+            }.bind(this)).sendOn(connection);
         },
 
         send: function() {

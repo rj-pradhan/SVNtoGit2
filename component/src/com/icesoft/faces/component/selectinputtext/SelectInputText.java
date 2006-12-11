@@ -473,15 +473,10 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      * @param facesContext
      */
     private void queueEventIfEnterKeyPressed(FacesContext facesContext) {
-        Object clientSideEventModel = facesContext.getExternalContext()
-                .getRequestParameterMap()
-                .get(FormRenderer.getEventModelId(facesContext, this));
-        if (clientSideEventModel == null || clientSideEventModel.equals("")) {
-            return;
-        }
         try {
             KeyEvent keyEvent =
-                    new KeyEvent(this, clientSideEventModel.toString());
+                    new KeyEvent(this, facesContext.getExternalContext()
+                .getRequestParameterMap());
             if (keyEvent.getKeyCode() == KeyEvent.CARRIAGE_RETURN) {
                 queueEvent(new ActionEvent(this));
             }

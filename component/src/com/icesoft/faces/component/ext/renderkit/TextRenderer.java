@@ -97,15 +97,10 @@ public class TextRenderer
 
     public void queueEventIfEnterKeyPressed(FacesContext facesContext,
                                             UIComponent uiComponent) {
-        Object clientSideEventModel = facesContext.getExternalContext()
-                .getRequestParameterMap()
-                .get(FormRenderer.getEventModelId(facesContext, uiComponent));
-        if (clientSideEventModel == null) {
-            return;
-        }
         try {
             KeyEvent keyEvent =
-                    new KeyEvent(uiComponent, clientSideEventModel.toString());
+                    new KeyEvent(uiComponent, facesContext.getExternalContext()
+                .getRequestParameterMap());
             if (keyEvent.getKeyCode() == KeyEvent.CARRIAGE_RETURN) {
                 uiComponent.queueEvent(new ActionEvent(uiComponent));
             }

@@ -33,23 +33,19 @@
 
 function iceSubmitPartial(form, component, evt) {
     form = (form ? form : component.form);
-    populateEvent(form, component, evt);
     Ice.Parameter.Query.create(function(query) {
-        'focus'.associateWith(currentFocus).serializeOn(query);
-        'partial'.associateWith('true').serializeOn(query);
-        'ice.event.captured'.associateWith(component.id).serializeOn(query);
+        'partial'.associateWith(true).serializeOn(query);
 
+        $event(evt, component).serializeOn(query);
         if (form && form.id) $element(form).serializeOn(query);
         if (component && component.id) $element(component).serializeOn(query);
-    }).sendOn(connection);
+    }).send();
     resetHiddenFieldsFor(form);
 }
 
 function iceSubmit(aForm, aComponent, anEvent) {
     aForm = (aForm ? aForm : aComponent.form);
-    populateEvent(aForm, aComponent, anEvent);
-
-    var event = $event(anEvent);
+    var event = $event(anEvent, aComponent);
     var form = $element(aForm);
     //all key events are discarded except when 'enter' is pressed...not good!
     if (event.isKeyEvent()) {
@@ -62,19 +58,21 @@ function iceSubmit(aForm, aComponent, anEvent) {
             //cancel the default action to block 'onclick' event on the submit element
             event.cancelDefaultAction();
             Ice.Parameter.Query.create(function(query) {
-                'focus'.associateWith(currentFocus).serializeOn(query);
+                'partial'.associateWith(false).serializeOn(query);
+                event.serializeOn(query);
                 if (submit) submit.serializeOn(query);
                 if (form) form.serializeOn(query);
-            }).sendOn(connection);
+            }).send();
         }
     } else {
         var component = aComponent && aComponent.id ? $element(aComponent) : null;
 
         Ice.Parameter.Query.create(function(query) {
-            'focus'.associateWith(currentFocus).serializeOn(query);
+            'partial'.associateWith(false).serializeOn(query);
+            event.serializeOn(query);
             if (component) component.serializeOn(query);
             if (form) form.serializeOn(query);
-        }).sendOn(connection);
+        }).send();
     }
 
     resetHiddenFieldsFor(aForm);
@@ -85,17 +83,4 @@ function resetHiddenFieldsFor(aForm) {
     $enumerate(aForm.elements).each(function(formElement) {
         if (formElement.type == 'hidden' && formElement.name != 'icefacesID' && formElement.name != 'viewNumber') formElement.value = '';
     });
-}
-
-//todo: replace with event serialization
-function populateEvent(form, component, event) {
-    if(event){
-        try {
-            //builds the javascript event as raw string, would sent to the server as hidden field. Available only if ice:form element is used.
-            if (form && form.elements[form.id + ":_ideventModel"] && form.elements[form.id + ":_ideventModel"] != 'undefined')
-                form.elements[form.id + ":_ideventModel"].value = "type:" + event.type + ";keyCode:" + event.keyCode + ";ctrlKey:" + event.ctrlKey + ";shiftKey:" + event.shiftKey + ";altKey:" + event.altKey + ";componentId:" + component.id + ";";
-        } catch (ee) {
-            logger.error('populateEvent failed ', ee);
-        }
-    }
 }

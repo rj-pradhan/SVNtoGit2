@@ -42,15 +42,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class KeyEvent extends ActionEvent {
-    private String clientSideEventModel;
-
-    private final String TYPE = "type";
-    private final String KEYCODE = "keyCode";
-    private final String CTRLKEY = "ctrlKey";
-    private final String SHIFTKEY = "shiftKey";
-    private final String ALTKEY = "altKey";
-    private final String COMPONENTID = "componentId";
-
     public static final int ESC = 27;
     public static final int TAB = 9;
     public static final int CAPSLOCK = 20;
@@ -96,122 +87,41 @@ public class KeyEvent extends ActionEvent {
     public static final int F10 = 121;
     public static final int F11 = 122;
     public static final int F12 = 123;
+    private Map requestMap;
 
-
-    private String type;
-    private int keyCode;
-    private boolean ctrlKey;
-    private boolean shiftKey;
-    private boolean altKey;
-    private String componentId;
-
-
-    public KeyEvent(UIComponent uiComponent, String clientSideEventModel) {
+    public KeyEvent(UIComponent uiComponent, Map requestMap) {
         super(uiComponent);
-        this.clientSideEventModel = clientSideEventModel;
-        populateEvent();
+        this.requestMap = requestMap;
     }
 
     public boolean isAltKey() {
-        return altKey;
-    }
-
-    public String getComponentId() {
-        return componentId;
+        return Boolean.valueOf((String) this.requestMap.get("ice.event.alt")).booleanValue();
     }
 
     public boolean isCtrlKey() {
-        return ctrlKey;
-    }
-
-    public int getKeyCode() {
-        return keyCode;
+        return Boolean.valueOf((String) this.requestMap.get("ice.event.ctrl")).booleanValue();
     }
 
     public boolean isShiftKey() {
-        return shiftKey;
+        return Boolean.valueOf((String) this.requestMap.get("ice.event.shift")).booleanValue();
+    }
+
+    public int getKeyCode() {
+        return Integer.parseInt((String) this.requestMap.get("ice.event.keycode"));
     }
 
     public String getType() {
-        return type;
+        return (String) this.requestMap.get("ice.event.type");
     }
 
-    private void setType(Object type) {
-        if (type != null) {
-            this.type = type.toString();
-        }
+    public String getComponentId() {
+        return (String) this.requestMap.get("ice.event.captured");
     }
 
-    private void setKeyCode(Object keyCode) {
-        try {
-            if (keyCode != null) {
-                this.keyCode = Integer.parseInt(keyCode.toString());
-            }
-        } catch (Exception e) {
-            //invalid keycode
-        }
-    }
-
-    private void setComponentId(Object componentId) {
-        if (componentId != null) {
-            this.componentId = componentId.toString();
-        }
-    }
-
-    private void setCtrlKey(Object ctrlKey) {
-        try {
-            this.ctrlKey = new Boolean(ctrlKey.toString()).booleanValue();
-        } catch (Exception e) {
-            this.ctrlKey = false;
-        }
-    }
-
-    private void setShiftKey(Object shiftKey) {
-        try {
-            this.shiftKey = new Boolean(shiftKey.toString()).booleanValue();
-        } catch (Exception e) {
-            this.shiftKey = false;
-        }
-    }
-
-    private void setAltKey(Object altKey) {
-        try {
-            this.altKey = new Boolean(altKey.toString()).booleanValue();
-        } catch (Exception e) {
-            this.altKey = false;
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see javax.faces.event.FacesEvent#isAppropriateListener(javax.faces.event.FacesListener)
-     */
     public boolean isAppropriateListener(FacesListener arg0) {
-        // TODO Auto-generated method stub
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see javax.faces.event.FacesEvent#processListener(javax.faces.event.FacesListener)
-     */
     public void processListener(FacesListener arg0) {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void populateEvent() {
-        Map eventMap = new HashMap();
-        StringTokenizer event = new StringTokenizer(clientSideEventModel, ";");
-        while (event.hasMoreTokens()) {
-            String eventInfo = event.nextToken();
-            int colon = eventInfo.indexOf(":");
-            eventMap.put(eventInfo.substring(0, colon),
-                         eventInfo.substring(colon + 1));
-        }
-        setType(eventMap.get(TYPE));
-        setKeyCode(eventMap.get(KEYCODE));
-        setCtrlKey(eventMap.get(CTRLKEY));
-        setShiftKey(eventMap.get(SHIFTKEY));
-        setAltKey(eventMap.get(ALTKEY));
-        setComponentId(eventMap.get(COMPONENTID));
     }
 }

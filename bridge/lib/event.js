@@ -36,12 +36,9 @@
     This.Netscape = new Object;
 
     This.Event = Object.subclass({
-        initialize: function(event) {
+        initialize: function(event, currentElement) {
             this.event = event;
-        },
-
-        on: function(modifier) {
-            modifier.apply(this);
+            this.currentElement = currentElement;
         },
 
         cancel: function() {
@@ -57,8 +54,14 @@
             return false;
         },
 
+        //todo: rename to 'capturingElement'
+        captured: function() {
+            return this.currentElement ? Element.adaptToElement(this.currentElement) : null;
+        },
+
         serializeEventOn: function(query) {
-            query.add('ice.event.target', this.target().id());
+            query.add('ice.event.target', this.target() && this.target().id());
+            query.add('ice.event.captured', this.captured() && this.captured().id());
             query.add('ice.event.type', 'on' + this.event.type);
         },
 
@@ -68,32 +71,26 @@
 
         sendOn: function(connection) {
             Query.create(function(query) {
-                this.serializeOn(query);
-                //todo: when ICEFaces will not require enclosing forms sendOn should serialize just the element.  
-                try {
-                    //try to serialize the entire form.
-                    this.target().form().serializeOn(query);
-                } catch (e) {
-                    //no enclosing form. serialize just the element.
-                    this.target().serializeOn(query);
-                }
                 "partial".associateWith('true').serializeOn(query);
-                "focus".associateWith(this.target().id()).serializeOn(query);
+                try {
+                    this.captured().serializeOn(query);
+                    this.serializeOn(query);
+                } catch (e) {
+                    this.serializeOn(query);
+                }
             }.bind(this)).sendOn(connection);
         },
 
         sendFullOn: function(connection) {
             Query.create(function(query) {
-                this.serializeOn(query);
-                try {
-                    //try to serialize the entire form.
-                    this.target().form().serializeOn(query);
-                } catch (e) {
-                    //no enclosing form. serialize just the element.
-                    this.target().serializeOn(query);
-                }
                 "partial".associateWith('false').serializeOn(query);
-                "focus".associateWith(this.target().id()).serializeOn(query);
+                try {
+                    this.captured().serializeOn(query);
+                    this.captured().form().serializeOn(query);
+                    this.serializeOn(query);
+                } catch (e) {
+                    this.serializeOn(query);
+                }
             }.bind(this)).sendOn(connection);
         },
 
@@ -113,8 +110,9 @@
     });
 
     This.IE.Event = This.Event.subclass({
+        //todo: rename to 'triggeringElement'
         target: function() {
-            return Element.adaptToElement(this.event.srcElement);
+            return this.event.srcElement ? Element.adaptToElement(this.event.srcElement) : null;
         },
 
         cancelBubbling: function() {
@@ -127,8 +125,9 @@
     });
 
     This.Netscape.Event = This.Event.subclass({
+        //todo: rename to 'triggeringElement'
         target: function() {
-            return Element.adaptToElement(this.event.target);
+            return this.event.target? Element.adaptToElement(this.event.target) : null;
         },
 
         cancelBubbling: function() {
@@ -299,29 +298,54 @@
     This.Netscape.KeyEvent.methods(KeyAndMouseEventMethods);
     This.Netscape.KeyEvent.methods(KeyEventMethods);
 
-    This.Event.adaptToPlainEvent = function(e) {
-        return window.event ? new This.IE.Event(event) : new This.Netscape.Event(e);
+    This.UnknownEvent = This.Event.subclass({
+        initialize: function(currentElement) {
+            this.currentElement = currentElement;
+        },
+
+        target: function() {
+            return Element.adaptToElement(this.currentElement);
+        },
+
+        serializeEventOn: function(query) {
+            query.add('ice.event.target', this.target() && this.target().id());
+            query.add('ice.event.captured', this.captured() && this.captured().id());
+            query.add('ice.event.type', 'unknown');
+        },
+
+        cancelBubbling: Function.NOOP,
+
+        cancelDefaultAction: Function.NOOP
+    });
+
+    This.Event.adaptToPlainEvent = function(e, currentElement) {
+        return window.event ? new This.IE.Event(event, currentElement) : new This.Netscape.Event(e, currentElement);
     };
 
-    This.Event.adaptToMouseEvent = function(e) {
-        return window.event ? new This.IE.MouseEvent(event) : new This.Netscape.MouseEvent(e);
+    This.Event.adaptToMouseEvent = function(e, currentElement) {
+        return window.event ? new This.IE.MouseEvent(event, currentElement) : new This.Netscape.MouseEvent(e, currentElement);
     };
 
-    This.Event.adaptToKeyEvent = function(e) {
-        return window.event ? new This.IE.KeyEvent(event) : new This.Netscape.KeyEvent(e);
+    This.Event.adaptToKeyEvent = function(e, currentElement) {
+        return window.event ? new This.IE.KeyEvent(event, currentElement) : new This.Netscape.KeyEvent(e, currentElement);
     };
 
-    This.Event.adaptToEvent = function(e) {
-        var eventType = (window.event || e).type;
-        var detector = function (name) {
-            return name.toLowerCase() == 'on' + eventType;
-        };
-        if (Element.prototype.KeyListenerNames.detect(detector)) {
-            return This.Event.adaptToKeyEvent(e);
-        } else if (Element.prototype.MouseListenerNames.detect(detector)) {
-            return This.Event.adaptToMouseEvent(e);
+    This.Event.adaptToEvent = function(e, currentElement) {
+        var capturedEvent = window.event || e;
+        if (capturedEvent) {
+            var eventType = 'on' + capturedEvent.type;
+            var detector = function (name) {
+                return name.toLowerCase() == eventType;
+            };
+            if (Element.prototype.KeyListenerNames.detect(detector)) {
+                return This.Event.adaptToKeyEvent(e, currentElement);
+            } else if (Element.prototype.MouseListenerNames.detect(detector)) {
+                return This.Event.adaptToMouseEvent(e, currentElement);
+            } else {
+                return This.Event.adaptToPlainEvent(e, currentElement);
+            }
         } else {
-            return This.Event.adaptToPlainEvent(e);
+            return new This.UnknownEvent(currentElement);            
         }
     };
 

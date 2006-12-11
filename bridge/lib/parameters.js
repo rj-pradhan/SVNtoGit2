@@ -62,9 +62,7 @@
         },
 
         sendOn: function(connection) {
-            if(connection != null){
-                connection.send(this);
-            }
+            connection.send(this);
         },
 
         send: function() {
