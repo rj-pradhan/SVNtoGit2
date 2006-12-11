@@ -33,13 +33,11 @@
 
 package com.icesoft.faces.component.ext;
 
-import com.icesoft.faces.component.CSS_DEFAULT;
-import com.icesoft.faces.component.IceExtended;
-import com.icesoft.faces.component.ext.taglib.Util;
-import com.icesoft.faces.context.BridgeFacesContext;
-import com.icesoft.faces.context.effects.CurrentStyle;
-import com.icesoft.faces.context.effects.Effect;
-import com.icesoft.faces.context.effects.JavascriptContext;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
@@ -47,11 +45,14 @@ import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.model.SelectItem;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
+import com.icesoft.faces.component.CSS_DEFAULT;
+import com.icesoft.faces.component.IceExtended;
+import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.context.effects.CurrentStyle;
+import com.icesoft.faces.context.effects.Effect;
+import com.icesoft.faces.context.effects.JavascriptContext;
 
 
 /**
@@ -171,11 +172,13 @@ public class HtmlSelectOneMenu
     static void assignDataIfNull(Object selectItem) {
         UISelectItem uiSelectItem = (UISelectItem) selectItem;
         if (uiSelectItem.getItemValue() == null) {
+            System.out.println("assignDataIfNull::null Value");
             if (uiSelectItem.getItemLabel() != null) {
                 uiSelectItem.setItemValue(uiSelectItem.getItemLabel());
             }
         }
         if (uiSelectItem.getItemLabel() == null) {
+            System.out.println("assignDataIfNull::null Label");            
             if (uiSelectItem.getItemValue() != null) {
                 uiSelectItem
                         .setItemLabel(uiSelectItem.getItemValue().toString());
@@ -398,7 +401,23 @@ public class HtmlSelectOneMenu
         currentStyle = (CurrentStyle) values[19];
         visible = (Boolean) values[20];
     }
+        
+    // overriding validate method in order to handle empty String "" selectItem value
+    public void validate(FacesContext facesContext) {
 
+        // Submitted value == null means "the component was not submitted
+        // at all";  validation should not continue
+        // also if the submitted value is "" and the previous value is null
+        // validation should not continue.
+        Object submittedValue = getSubmittedValue();
+        if ((submittedValue == null) ||
+           (("".equals(submittedValue)) && (null == getValue()))) {
+            return;
+        }
+
+        super.validate(facesContext);
+    }
+    
 }
    
 
