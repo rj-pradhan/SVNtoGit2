@@ -34,15 +34,14 @@
 function iceSubmitPartial(form, component, evt) {
     form = (form ? form : component.form);
     populateEvent(form, component, evt);
-    if(connection != null){
-        Ice.Parameter.Query.create(function(query) {
-            'focus'.associateWith(currentFocus).serializeOn(query);
-            'partial'.associateWith('true').serializeOn(query);
+    Ice.Parameter.Query.create(function(query) {
+        'focus'.associateWith(currentFocus).serializeOn(query);
+        'partial'.associateWith('true').serializeOn(query);
+        'ice.event.captured'.associateWith(component.id).serializeOn(query);
 
-            if (form && form.id) $element(form).serializeOn(query);
-            if (component && component.id) $element(component).serializeOn(query);
-        }).sendOn(connection);
-    }
+        if (form && form.id) $element(form).serializeOn(query);
+        if (component && component.id) $element(component).serializeOn(query);
+    }).sendOn(connection);
     resetHiddenFieldsFor(form);
 }
 
@@ -62,15 +61,11 @@ function iceSubmit(aForm, aComponent, anEvent) {
 
             //cancel the default action to block 'onclick' event on the submit element
             event.cancelDefaultAction();
-            // In some applications you can click a link before connection is initialized
-            // TODO: Fix this!
-            if(connection != null){
-                Ice.Parameter.Query.create(function(query) {
-                    'focus'.associateWith(currentFocus).serializeOn(query);
-                    if (submit) submit.serializeOn(query);
-                    if (form) form.serializeOn(query);
-                }).sendOn(connection);
-            }
+            Ice.Parameter.Query.create(function(query) {
+                'focus'.associateWith(currentFocus).serializeOn(query);
+                if (submit) submit.serializeOn(query);
+                if (form) form.serializeOn(query);
+            }).sendOn(connection);
         }
     } else {
         var component = aComponent && aComponent.id ? $element(aComponent) : null;

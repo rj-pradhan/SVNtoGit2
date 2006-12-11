@@ -405,7 +405,7 @@ public class BlockingServlet extends HttpServlet {
         Lifecycle lifecycle =
                 factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
         if ("true".equals(request.getParameter("partial"))) {
-            String focusID = request.getParameter("focus");
+            String focusID = request.getParameter("ice.event.captured");
             UIComponent component = D2DViewHandler
                     .findComponent(focusID, context.getViewRoot());            
             renderCyclePartial(context, lifecycle, component);
