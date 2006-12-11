@@ -285,6 +285,29 @@ public class TreeRenderer extends DomBasicRenderer {
                        domContext, treeComponentRootNode, treeNode,
                        parentDOMNode);
 
+        } else {
+            // root node is hidden 
+            // put the next node on the request map
+            Map requestMap = facesContext.getExternalContext().getRequestMap();
+            String varAttribute = treeComponent.getVar();
+            requestMap.put(varAttribute, current);
+            domContext.setCursorParent(parentDOMNode);
+
+            treeNodeDiv.setAttribute(HTML.NAME_ATTR, "treeNodeDiv");
+            treeNodeDiv
+                    .setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.STYLE_TREEROW);
+            // treeNodeDiv id is assigned here when roo node is hidden
+            treeNodeDiv.setAttribute(HTML.ID_ATTR, treeComponent
+                    .getClientId(facesContext) + "-div-root");
+            parentDOMNode.appendChild(treeNodeDiv);
+            domContext.setCursorParent(treeNodeDiv);
+            // startNode is used in conjunction with endNode as an alternative to streamWrite method
+            try {
+                domContext.startNode(facesContext, treeComponent, treeNodeDiv);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+                       
         }
         // iterate child nodes
         int childCount = current.getChildCount();
