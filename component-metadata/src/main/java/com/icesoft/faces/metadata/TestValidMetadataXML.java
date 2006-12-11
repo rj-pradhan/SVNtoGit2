@@ -46,10 +46,10 @@ public class TestValidMetadataXML{
 				.getContextClassLoader();
 		URL url = classLoader.getResource(".");
 
-		File buildDir = new File(url.getPath());
-		
+		File buildDir = new File( convertFileUrlToPath(url) );
+
 		if(!buildDir.isDirectory()){
-			System.out.println("test build directory does not exist"+url);
+			System.out.println("test build directory does not exist: "+buildDir);
 		}
 
 		File confFile = new File(buildDir.getParent() + File.separatorChar
@@ -64,7 +64,9 @@ public class TestValidMetadataXML{
 
 		boolean isConfFile = confFile.isDirectory();
 		if(!isConfFile){
-			System.out.println("no conf directory in the build directory"+ confFile);
+			System.out.println("no conf directory in the build directory: "+ confFile);
+			if( !confFile.mkdirs() )
+				System.out.println("conf directory could not be created");
 		}
 
 		String xsltStreamSourceString = confFile.getPath() + File.separatorChar
@@ -211,4 +213,47 @@ public class TestValidMetadataXML{
 		return rb;
 	}
 
+    /**
+     * Kind of hack-ish attempt at solving problem that if the directory,
+     *  where we're building the component-metadata in,  has special
+     *  characters in its path, like spaces, then the URL to it will be
+     *  escaped, which will be interpretted as a different directory,
+     *  unless we unescape it.
+     */
+    private static String convertFileUrlToPath(URL url) {
+        String path = url.getPath();
+        if( url.toExternalForm().startsWith("file:") ) {
+            StringBuffer sb = new StringBuffer( path.length() );
+            int pathLength = path.length();
+            for(int i = 0; i < pathLength;) {
+                char c = path.charAt(i);
+                if( c == '%' ) {
+                    if( (i+1) < pathLength && isHexDigit(path.charAt(i+1)) ) {
+                        int increment = 2;
+                        if( (i+2) < pathLength && isHexDigit(path.charAt(i+2)) )
+                            increment++;
+                        try {
+                            char unescaped = (char) Integer.parseInt(
+                                path.substring(i+1, i+increment), 16);
+                            
+                            sb.append( unescaped );
+                            i += increment;
+                            continue;
+                        } catch(NumberFormatException nfe) {
+                            // Not a valid hex escape, so just fall through,
+                            //  and append it to the path
+                        }
+                    }
+                }
+                sb.append( c );
+                i++;
+            }
+            path = sb.toString();
+        }
+        return path;
+    }
+    
+    private static boolean isHexDigit(char c) {
+        return ( (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') );
+    }
 }
