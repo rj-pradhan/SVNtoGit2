@@ -144,7 +144,7 @@ public class ResponseStateManager {
         return new PortletBlockingResponseState(session, iceID, viewNumber);
     }
 
-    synchronized ResponseState getState(HttpSession session,
+    ResponseState getState(HttpSession session,
                                         String viewNumber) {
 
         String iceID = (String) session
