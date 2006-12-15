@@ -33,6 +33,18 @@
 
 Object.extend(Array.prototype, {
 
+    intersect: function(other) {
+        return this.select(function(item) {
+            return other.include(item);
+        });
+    },
+
+    complement: function(other) {
+        return this.reject(function(item) {
+            return other.include(item); 
+        });
+    },
+
     isEmpty: function() {
         return this.length == 0;
     },
