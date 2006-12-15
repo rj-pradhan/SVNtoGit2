@@ -98,6 +98,7 @@
                 <file name="geometry.js"/>
                 <file name="element.js"/>
                 <file name="event.js"/>
+                <file name="cookie.js"/>
             </filelist>
         </concat>
     </target>
