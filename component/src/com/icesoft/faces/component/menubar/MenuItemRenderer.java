@@ -149,11 +149,19 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         topLevelDiv.setAttribute(HTML.NAME_ATTR, "TOP_LEVEL");
 
         if (vertical) {
-            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
+            if (((MenuItem)uiComponent).isDisabled()) {
+                
+            } else {
+                topLevelDiv.setAttribute(HTML.CLASS_ATTR,
                                      CSS_DEFAULT.MENU_VERTICAL_ITEM_STYLE);
+            }
         } else {
-            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
+            if (((MenuItem)uiComponent).isDisabled()) {
+                
+            } else {
+                topLevelDiv.setAttribute(HTML.CLASS_ATTR,
                                      CSS_DEFAULT.MENU_HORIZONTAL_STYLE);
+            }
         }
 
         if (uiComponent.getChildCount() > 0) {
@@ -180,8 +188,8 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         renderAnchor(facesContext, domContext, 0, (MenuItem) uiComponent,
                      topLevelDiv, menuComponent, vertical);
 
-        if (uiComponent.getChildCount() > 0 &&
-            ((MenuItem) uiComponent).isChildrenMenuItem()) {
+        if ((uiComponent.getChildCount() > 0) &&
+            (((MenuItem) uiComponent).isChildrenMenuItem())) {
             renderChildrenRecursive(facesContext, menuComponent, uiComponent,
                                     vertical, masterDiv);
 
@@ -231,11 +239,12 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         DOMContext domContext =
                 DOMContext.getDOMContext(facesContext, menuItem);
         Element anchor = domContext.createElement(HTML.ANCHOR_ELEM);
-        anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
-        if (menuItem.getTarget() != null) {
-            anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+        if (!menuItem.isDisabled()) {
+            anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
+            if (menuItem.getTarget() != null) {
+                anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+            }
         }
-
         // create div
         Element div = domContext.createElement(HTML.DIV_ELEM);
 
@@ -274,12 +283,12 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         DOMContext domContext =
                 DOMContext.getDOMContext(facesContext, menuItem);
         Element anchor = domContext.createElement(HTML.ANCHOR_ELEM);
-        anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
-
-        if (menuItem.getTarget() != null) {
-            anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+        if (!menuItem.isDisabled()){
+            anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
+            if (menuItem.getTarget() != null) {
+                anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+            }
         }
-
         // create div
         Element div = domContext.createElement(HTML.DIV_ELEM);
 
@@ -319,12 +328,12 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                                MenuItem menuItem, MenuBar menuBar) {
 
         Element anchor = domContext.createElement(HTML.ANCHOR_ELEM);
-        anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
-
-        if (menuItem.getTarget() != null) {
-            anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+        if (!menuItem.isDisabled()) {            
+            anchor.setAttribute(HTML.HREF_ATTR, menuItem.getLink());
+            if (menuItem.getTarget() != null) {
+                anchor.setAttribute(HTML.TARGET_ATTR, menuItem.getTarget());
+            }
         }
-
         // create div
         Element div = domContext.createElement(HTML.DIV_ELEM);
 
@@ -379,9 +388,10 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             submenuDiv.setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.SUBMENU_STYLE);
         }
         submenuDiv.setAttribute(HTML.STYLE_ATTR, "display:none");
-        masterDiv.appendChild(submenuDiv);
+        masterDiv.appendChild(submenuDiv);        
+        // check if this menuItem is disabled, if it is lets disable the  children
         // render each menuItem in this submenu
-
+        boolean disabled =((MenuItem)uiComponent).isDisabled();
         for (int childIndex = 0; childIndex < uiComponent.getChildCount();
              childIndex++) {
             UIComponent nextSubMenuItem =
@@ -430,7 +440,10 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                 subMenuItemDiv.setAttribute(HTML.ID_ATTR,
                                             nextSubMenuItem.getClientId(
                                                     facesContext));
-
+                // if parent is disabled apply the disabled attribute value of the parent menuItem to this submenuItem
+                if (disabled) {
+                    ((MenuItem) nextSubMenuItem).setDisabled(disabled);
+                }
                 // add a command link if we need one
                 if (nextSubMenuItem instanceof MenuItem) {
                     renderAnchor(facesContext, domContext, childIndex,
@@ -441,11 +454,14 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         }
 
         // recurse
+        // check if parent is disabled , if it is the child items should also be disabled.
+        // we should not render child MenuItems of a disabled menuItem
+        
         for (int childIndex = 0; childIndex < uiComponent.getChildCount();
              childIndex++) {
             UIComponent nextSubMenuItem =
                     (UIComponent) uiComponent.getChildren().get(childIndex);
-            if (nextSubMenuItem.getChildCount() > 0) {
+            if (nextSubMenuItem.getChildCount() > 0){
                 renderChildrenRecursive(facesContext, menuComponent,
                                         nextSubMenuItem, vertical, masterDiv);
             }
@@ -477,18 +493,19 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             if (nextSubMenuItem.getAction() != null ||
                 nextSubMenuItem.getActionListener() != null) {
                 HtmlCommandLink link = new HtmlCommandLink();
-                if (nextSubMenuItem.getAction() != null) {
-                    link.setAction(nextSubMenuItem.getAction());
-                }
-                if (nextSubMenuItem.getActionListener() != null) {
-                    link.setActionListener(nextSubMenuItem.getActionListener());
+                if (nextSubMenuItem.isDisabled()) {
+                    link.setDisabled(true);
+                } else { // only add action and actionlisteners on enabled menuItems
+                    if (nextSubMenuItem.getAction() != null) {
+                        link.setAction(nextSubMenuItem.getAction());
+                    }
+                    if (nextSubMenuItem.getActionListener() != null) {
+                        link.setActionListener(nextSubMenuItem.getActionListener());
+                    }
                 }
                 link.setValue(nextSubMenuItem.getValue());
                 link.setParent(nextSubMenuItem);
                 link.setId(LINK_SUFFIX);
-                if (nextSubMenuItem.isDisabled()) {
-                    link.setDisabled(nextSubMenuItem.isDisabled());
-                }
                 link.setStyleClass("");
                 Node lastCursorParent = domContext.getCursorParent();
                 domContext.setCursorParent(subMenuItemDiv);
@@ -525,18 +542,19 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         } else if (nextSubMenuItem.getAction() != null ||
                    nextSubMenuItem.getActionListener() != null) {
             HtmlCommandLink link = new HtmlCommandLink();
-            if (nextSubMenuItem.getAction() != null) {
-                link.setAction(nextSubMenuItem.getAction());
-            }
-            if (nextSubMenuItem.getActionListener() != null) {
-                link.setActionListener(nextSubMenuItem.getActionListener());
+            if (nextSubMenuItem.isDisabled()){
+                link.setDisabled(true);
+            } else { // only set action and actionListeners on enabled menuItems
+                if (nextSubMenuItem.getAction() != null) {
+                    link.setAction(nextSubMenuItem.getAction());
+                }
+                if (nextSubMenuItem.getActionListener() != null) {
+                    link.setActionListener(nextSubMenuItem.getActionListener());
+                }
             }
             link.setValue(nextSubMenuItem.getValue());
             link.setParent(nextSubMenuItem);
             link.setId(LINK_SUFFIX);
-            if (nextSubMenuItem.isDisabled()) {
-                link.setDisabled(nextSubMenuItem.isDisabled());
-            }
 
             Node lastCursorParent = domContext.getCursorParent();
             domContext.setCursorParent(subMenuItemDiv);
