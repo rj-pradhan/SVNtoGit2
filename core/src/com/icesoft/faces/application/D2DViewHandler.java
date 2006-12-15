@@ -158,7 +158,7 @@ public class D2DViewHandler extends ViewHandler {
                 log.trace("renderView(FC,UIVR)  BEFORE  domWriter");
             }
             DOMResponseWriter domWriter = (DOMResponseWriter) responseWriter;
-            domWriter.writeDOM();
+            domWriter.writeDOM(context);
             if( log.isTraceEnabled() ) {
                 log.trace("renderView(FC,UIVR)  AFTER   domWriter");
             }

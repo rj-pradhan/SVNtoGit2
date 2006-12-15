@@ -31,30 +31,19 @@
  *
  */
 
-function viewNumber() {
+function viewIdentifiers() {
     return $enumerate(document.forms).select(function(form) {
         return form['viewNumber'];
     }).collect(function(form) {
         return form['viewNumber'].value;
-    }).asSet().inject('', function(result, viewNumber) {
-        return viewNumber + ',' + result;
-    });
-}
-
-function icefacesID() {
-    return $enumerate(document.forms).select(function(form) {
-        return form['icefacesID'];
-    }).collect(function(form) {
-        return form['icefacesID'].value;
-    }).asSet().inject('', function(result, ids) {
-        return ids + ',' + result;
-    });
+    }).asSet();
 }
 
 function defaultParameters() {
     return Ice.Parameter.Query.create(function(query) {
         query.add('focus', currentFocus);
-        query.add('icefacesID', icefacesID());
-        query.add('viewNumber', viewNumber());
+        query.add('window', window.identifier);
+        query.add('icefacesID', window.session);
+        query.add('viewNumber', viewIdentifiers().join(' '));
     });
 }

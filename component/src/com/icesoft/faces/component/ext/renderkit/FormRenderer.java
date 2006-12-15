@@ -41,36 +41,9 @@ import java.io.IOException;
 
 public class FormRenderer
         extends com.icesoft.faces.renderkit.dom_html_basic.FormRenderer {
-    static private final String EVENT_MODEL = "eventModel";
     static private final String FOCUS_HIDDEN_FIELD = "focus";
-
-    public void encodeBegin(FacesContext facesContext, UIComponent uiComponent)
-            throws IOException {
-        FormRenderer.addHiddenField(facesContext, getEventModelHiddenFieldName(
-                facesContext, uiComponent));
-        super.encodeBegin(facesContext, uiComponent);
-    }
-
-    static public String getEventModelId(FacesContext facesContext,
-                                         UIComponent uiComponent) {
-        UIComponent form = findForm(uiComponent);
-        if (form == null) {
-            return null;
-        }
-        return FormRenderer.getEventModelHiddenFieldName(facesContext, form);
-    }
 
     static public String getFocusElementId() {
         return FOCUS_HIDDEN_FIELD;
-    }
-
-    static private String getEventModelHiddenFieldName(
-            FacesContext facesContext, UIComponent uiComponent) {
-        String formId = uiComponent.getClientId(facesContext);
-        String hiddenFieldName = formId
-                                 + NamingContainer.SEPARATOR_CHAR
-                                 + UIViewRoot.UNIQUE_ID_PREFIX
-                                 + EVENT_MODEL;
-        return hiddenFieldName;
     }
 }

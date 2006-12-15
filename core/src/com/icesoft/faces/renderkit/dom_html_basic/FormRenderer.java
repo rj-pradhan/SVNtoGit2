@@ -60,7 +60,6 @@ public class FormRenderer extends DomBasicRenderer {
     private static final String COMMAND_LINK_HIDDEN_FIELDS_KEY =
             "com.icesoft.faces.FormRequiredHidden";
     public static final String FOCUS_HIDDEN_FIELD = "focus_hidden_field";
-    public static final String ICE_FACES_ID_HIDDEN_FIELD = "icefacesID";
     public static final String VIEWNUMBER_HIDDEN_FIELD = "viewNumber";
 
 
@@ -154,14 +153,6 @@ public class FormRenderer extends DomBasicRenderer {
                 viewNumberElement.setAttribute("value",
                                                ((BridgeFacesContext) facesContext).getViewNumber());
                 root.appendChild(viewNumberElement);
-
-                Element icefacesIDElement = domContext.createElement("input");
-                icefacesIDElement.setAttribute("type", "hidden");
-                icefacesIDElement
-                        .setAttribute("name", ICE_FACES_ID_HIDDEN_FIELD);
-                icefacesIDElement.setAttribute("value",
-                                               ((BridgeFacesContext) facesContext).getIceFacesId());
-                root.appendChild(icefacesIDElement);
             }
         }
 
@@ -212,22 +203,6 @@ public class FormRenderer extends DomBasicRenderer {
         domContext.stepInto(uiComponent);
     }
 
-
-
-    static final String jsfSetFunction =
-            " function jsfSet(id,value) { " +
-            " Packages.com.icesoft.faces.webapp.dombrowser.JavaScriptBridge.decodeSubmittedValue(id,value); " +
-            " } ";
-
-    /**
-     * @return Text node containing the jsfset method to be appended to this
-     *         form
-     */
-    private Text createJsfSetFunction(DOMContext domContext) {
-        Text jsfSet = domContext.getDocument().createTextNode(jsfSetFunction);
-        return jsfSet;
-    }
-
     public void encodeChildren(FacesContext facesContext,
                                UIComponent uiComponent) {
         validateParameters(facesContext, uiComponent, UIForm.class);
@@ -272,7 +247,6 @@ public class FormRenderer extends DomBasicRenderer {
                                                       UIComponent uiComponent) {
         Map commandLinkHiddenFields = getCommandLinkFields(facesContext);
         if (commandLinkHiddenFields != null) {
-            removePreviousCommandLinkHiddenFields(uiComponent, facesContext);
             renderRequiredCommandLinkHiddenFields(uiComponent, facesContext,
                                                   commandLinkHiddenFields);
             resetCommandLinkFieldsInRequestMap(facesContext);
@@ -306,38 +280,8 @@ public class FormRenderer extends DomBasicRenderer {
                 Element next = domContext.createElement("input");
                 next.setAttribute("type", "hidden");
                 next.setAttribute("name", nextField.getKey().toString());
-                next.setAttribute(COMMAND_LINK_HIDDEN_FIELD,
-                                  COMMAND_LINK_HIDDEN_FIELD);
                 root.appendChild(next);
             }
-        }
-    }
-
-    /**
-     * @param uiComponent
-     * @param facesContext
-     */
-    private static void removePreviousCommandLinkHiddenFields(
-            UIComponent uiComponent,
-            FacesContext facesContext) {
-        DOMContext domContext =
-                DOMContext.getDOMContext(facesContext, uiComponent);
-        Element root = (Element) domContext.getRootNode();
-
-        Node lastChild = root.getLastChild();
-        while (lastChild != null) {
-            Node previous = lastChild.getPreviousSibling();
-            if (lastChild instanceof Element) {
-                if ((((Element) lastChild)
-                        .getAttribute(COMMAND_LINK_HIDDEN_FIELD) != null
-                     && ((Element) lastChild)
-                        .getAttribute(COMMAND_LINK_HIDDEN_FIELD)
-                        .equalsIgnoreCase(COMMAND_LINK_HIDDEN_FIELD))
-                        ) {
-                    root.removeChild(lastChild);
-                }
-            }
-            lastChild = previous;
         }
     }
 

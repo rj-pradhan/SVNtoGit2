@@ -257,7 +257,7 @@ public class DOMResponseWriter extends ResponseWriter {
         //just as the components are complete
         if (null != document) {
             try {
-                writeDOM();
+                writeDOM(FacesContext.getCurrentInstance());
             } catch (IOException e) {
                 throw new IllegalStateException(e.toString());
             }
@@ -307,13 +307,9 @@ public class DOMResponseWriter extends ResponseWriter {
     /**
      * This method writes the complete DOM to the current writer
      */
-    public void writeDOM() throws IOException {
+    public void writeDOM(FacesContext facesContext) throws IOException {
         if (isStreamWriting())
             return;//The DOM has already been written via the Renderer streamWrite calls
-
-        enhanceAndFixDocument();
-
-        FacesContext facesContext = FacesContext.getCurrentInstance();
 
         if (! (facesContext instanceof BridgeFacesContext)) {
             if (log.isErrorEnabled()) {
@@ -324,11 +320,13 @@ public class DOMResponseWriter extends ResponseWriter {
                     "ICEfaces requires the PersistentFacesServlet. " +
                     "Please check your web.xml servlet mappings");
         }
+        BridgeFacesContext context = (BridgeFacesContext) facesContext;
+        enhanceAndFixDocument(context);
         BridgeExternalContext externalContext =
                 (BridgeExternalContext) facesContext.getExternalContext();
         Map sessionMap = externalContext.getApplicationSessionMap();
 
-        String viewNumber = ((BridgeFacesContext) facesContext).getViewNumber();
+        String viewNumber = context.getViewNumber();
         ResponseState nodeWriter =
                 (ResponseState) sessionMap.get(
                         viewNumber + "/" + ResponseState.STATE);
@@ -378,24 +376,23 @@ public class DOMResponseWriter extends ResponseWriter {
         sessionMap.put(getOldDOMKey(), document);
 
         if (null != writer) {
-            writeDOM(writer);
+            writeDOM(writer, context);
         }
 
     }
 
-    private void enhanceAndFixDocument() {
+    private void enhanceAndFixDocument(BridgeFacesContext context) {
         Element html = (Element) document.getDocumentElement();
         html = "html".equals(html.getTagName()) ? html : fixHtml();
 
         Element head = (Element) document.getElementsByTagName("head").item(0);
-        enhanceHead(head == null ? fixHead(html) : head);
+        enhanceHead(head == null ? fixHead(html) : head, context);
 
         Element body = (Element) document.getElementsByTagName("body").item(0);
-        enhanceBody(body == null ? fixBody(html) : body);
+        enhanceBody(body == null ? fixBody(html) : body, context);
     }
 
-    private void enhanceBody(Element body) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+    private void enhanceBody(Element body, BridgeFacesContext context) {
         //id required for forwarded (server-side) redirects
         body.setAttribute("id", "body");
         Element iframe = document.createElement("iframe");
@@ -406,25 +403,23 @@ public class DOMResponseWriter extends ResponseWriter {
                             "z-index: 10000; visibility: hidden; width: 0; height: 0; opacity: 0.22; filter: alpha(opacity=22);");
 
         // TODO This is only meant to be a transitional focus retention(management) solution.
-        if (facesContext instanceof BridgeFacesContext) {
-            String focusId = ((BridgeFacesContext) facesContext).getFocusId();
-            if (focusId != null && !focusId.equals("null")) {
-                JavascriptContext.focus(facesContext, focusId);
-            }
+        String focusId = context.getFocusId();
+        if (focusId != null && !focusId.equals("null")) {
+            JavascriptContext.focus(context, focusId);
         }
 
         Element script =
                 (Element) body.appendChild(document.createElement("script"));
         script.setAttribute("id", JavascriptContext.DYNAMIC_CODE_ID);
         script.setAttribute("language", "javascript");
-        String calls = JavascriptContext.getJavascriptCalls(facesContext);
+        String calls = JavascriptContext.getJavascriptCalls(context);
         script.appendChild(document.createTextNode(calls));
 
-        Map session = facesContext.getExternalContext().getSessionMap();
+        Map session = context.getExternalContext().getSessionMap();
         ElementController.from(session).addInto(body);
     }
 
-    private void enhanceHead(Element head) {
+    private void enhanceHead(Element head, BridgeFacesContext context) {
         Element meta =
                 (Element) head.appendChild(document.createElement("meta"));
         meta.setAttribute("name", "icefaces");
@@ -439,14 +434,13 @@ public class DOMResponseWriter extends ResponseWriter {
                 .setAttribute("content", "0;url=./xmlhttp/javascript-blocked");
 
         //load libraries
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        String base = ApplicationBaseLocator.locate(facesContext);
+        String base = ApplicationBaseLocator.locate(context);
         List libs = new ArrayList();
         libs.add("xmlhttp/icefaces-d2d.js");
-        if (facesContext.getExternalContext().getRequestMap()
+        if (context.getExternalContext().getRequestMap()
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
             libs.addAll(Arrays.asList(
-                    JavascriptContext.getIncludedLibs(facesContext)));
+                    JavascriptContext.getIncludedLibs(context)));
         }
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
@@ -456,6 +450,13 @@ public class DOMResponseWriter extends ResponseWriter {
             script.setAttribute("language", "javascript");
             script.setAttribute("src", base + lib);
         }
+
+        String sessionIdentifier = context.iceFacesId;
+        Element viewAndSessionScript = (Element) head.appendChild(document.createElement("script"));
+        viewAndSessionScript.setAttribute("language", "javascript");
+        viewAndSessionScript.appendChild(document.createTextNode(
+            "window.session = '" + sessionIdentifier + "';"
+        ));
     }
 
     private Element fixHtml() {
@@ -497,8 +498,7 @@ public class DOMResponseWriter extends ResponseWriter {
      *
      * @param writer destination of the DOM output
      */
-    private void writeDOM(Writer writer) throws IOException {
-        FacesContext context = FacesContext.getCurrentInstance();
+    private void writeDOM(Writer writer, BridgeFacesContext context) throws IOException {
         Map requestMap = context.getExternalContext().getRequestMap();
         String includeServletPath = (String) requestMap
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH);

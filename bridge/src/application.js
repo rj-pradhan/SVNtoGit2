@@ -39,6 +39,8 @@
             this.logHandler = window.console && window.console.firebug ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
             var documentSynchronizer = new Ice.Document.Synchronizer(logger);
             var statusManager = new Ice.Status.StatusManager();
+            
+            window.identifier = Math.round(Math.random() * 10000).toString();
             window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
@@ -56,7 +58,7 @@
             });
 
             this.connection.onRedirect(function(url) {
-                document.cookie = 'redirectViewNumber=' + viewNumber();
+                document.cookie = 'redirectViewNumber=' + viewIdentifiers().join(' ');
                 if (url == '.') {
                     window.location.reload();
                     logger.info('Reloading...');
