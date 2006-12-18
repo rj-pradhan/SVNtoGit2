@@ -37,36 +37,63 @@ import javax.faces.component.UIComponent;
 import javax.faces.el.MethodBinding;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
+import javax.faces.event.PhaseId;
+import java.util.List;
 
 /**
  * Event fired by positioned panel events
  */
-public class PanelPositionedEvent extends FacesEvent {
+public class PanelPositionedEvent extends FacesEvent{
 
     private MethodBinding listener;
     private int index;
     private int oldIndex = -1;
     private int type;
+    private List oldList;
+    private List newList;
+
 
     public static int TYPE_ADD = 1;
     public static int TYPE_REMOVE = 2;
     public static int TYPE_MOVE = 3;
+    private PhaseId phaseId = PhaseId.UPDATE_MODEL_VALUES;
 
     public PanelPositionedEvent(UIComponent uiComponent, MethodBinding listener,
-                                int eventType, int index, int oldIndex) {
+                                int eventType, int index, int oldIndex, List oldList, List newList) {
         super(uiComponent);
         this.listener = listener;
         this.type = eventType;
         this.index = index;
         this.oldIndex = oldIndex;
+        this.oldList = oldList;
+        this.newList = newList;
+
+        
     }
+
+
+    public PhaseId getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(PhaseId phaseId) {
+        this.phaseId = phaseId;
+    }
+
+
 
     public boolean isAppropriateListener(FacesListener facesListener) {
         return false;
     }
 
     public void processListener(FacesListener facesListener) {
+       
+    }
 
+    public void process(){
+
+        oldList.clear();
+        oldList.addAll(newList);
     }
 
     public MethodBinding getListener() {

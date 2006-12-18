@@ -204,13 +204,13 @@ public class PanelPositioned extends UISeries {
 
     public void broadcast(FacesEvent event)
             throws AbortProcessingException {
-        super.broadcast(event);
+
 
         if (event instanceof PanelPositionedEvent) {
             try {
 
                 PanelPositionedEvent de = (PanelPositionedEvent) event;
-
+                de.process(); // Copy over the list values now
                 MethodBinding mb = de.getListener();
                 Object[] oa = {de};
                 mb.invoke(FacesContext.getCurrentInstance(), oa);
@@ -218,6 +218,7 @@ public class PanelPositioned extends UISeries {
                 e.printStackTrace();
             }
         }
+        super.broadcast(event);
     }
 
     /* (non-Javadoc)

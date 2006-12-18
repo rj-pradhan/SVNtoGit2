@@ -334,8 +334,7 @@ public class PanelPositionedRenderer extends DomBasicRenderer {
                                 }
                             }
                           
-                            oldList.clear();
-                            oldList.addAll(newList);
+                          
 
 
                             if (log.isTraceEnabled()) {
@@ -352,7 +351,7 @@ public class PanelPositionedRenderer extends DomBasicRenderer {
                             if (uiSeries.getListener() != null) {
                                 uiSeries.queueEvent(new PanelPositionedEvent(
                                         component, uiSeries.getListener(),
-                                        event_type, newIndex, oldIndex));
+                                        event_type, newIndex, oldIndex, oldList, newList));
                             }
 
                         }
