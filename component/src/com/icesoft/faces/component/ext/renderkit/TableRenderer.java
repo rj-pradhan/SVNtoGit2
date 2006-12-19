@@ -361,13 +361,18 @@ public class TableRenderer
                         c,
                         CSS_DEFAULT.ROW_SELECTION_MOUSE_OVER
                         );
-                String omov = "Element.addClassName($('" + id + "'), '" +
-                        c + "');";
-
-                String omot = "Element.removeClassName($('" + id + "'), '" +
-                        c + "');";
-                tr.setAttribute(HTML.ONMOUSEOVER_ATTR, omov);
-                tr.setAttribute(HTML.ONMOUSEOUT_ATTR, omot);
+                StringTokenizer st = new StringTokenizer(c);
+                StringBuffer omov = new StringBuffer();
+                StringBuffer omot = new StringBuffer();
+                while(st.hasMoreTokens()){
+                    String t = st.nextToken();
+                    omov.append("Element.addClassName($('" + id + "'), '" +
+                        t + "');");
+                    omot.append("Element.removeClassName($('" + id + "'), '" +
+                        t + "');");
+                }
+                tr.setAttribute(HTML.ONMOUSEOVER_ATTR, omov.toString());
+                tr.setAttribute(HTML.ONMOUSEOUT_ATTR, omot.toString());
 
             }
             domContext.setCursorParent(tBody);
@@ -416,8 +421,14 @@ public class TableRenderer
                         domContext.setCursorParent(td);
                         domContext.streamWrite(facesContext, uiComponent,
                                                domContext.getRootNode(), td);
+                        try{
+                        
                         encodeParentAndChildren(facesContext, nextChild);
                         domContext.setCursorParent(oldCursorParent);
+                        }catch(Exception e){
+                            System.err.println("ERRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR");
+                            e.printStackTrace();
+                        }
                     } else if (nextChild instanceof UIColumns) {
                         String width = null;
                         if (isScrollable(uiComponent) &&
