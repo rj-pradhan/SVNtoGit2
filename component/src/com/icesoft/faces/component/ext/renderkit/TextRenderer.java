@@ -62,10 +62,10 @@ public class TextRenderer
         // set the focus id
         root.setAttribute("onfocus", onfocus + "setFocus(this.id);");
         // clear focus id
-        root.setAttribute("onblur", "setFocus('');");
+        root.setAttribute("onblur", onblur + "setFocus('');");
         
         if (((IceExtended) uiComponent).getPartialSubmit()) {
-            root.setAttribute("onblur", "setFocus('');" + onblur +
+            root.setAttribute("onblur", onblur + "setFocus('');" + 
                                         "iceSubmitPartial(form,this,event); return false;");
         }
 

@@ -34,39 +34,74 @@
 package com.icesoft.faces.component.ext.renderkit;
 
 import com.icesoft.faces.component.IceExtended;
-import com.icesoft.faces.component.ext.HtmlInputText;
+import com.icesoft.faces.component.ext.HtmlInputSecret;
 import com.icesoft.faces.component.ext.KeyEvent;
+import com.icesoft.faces.component.menubar.MenuItem;
+import com.icesoft.faces.context.DOMContext;
+import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
+
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 
 public class SecretRenderer
         extends com.icesoft.faces.renderkit.dom_html_basic.SecretRenderer {
+    
+    
     protected void addJavaScript(FacesContext facesContext,
                                  UIComponent uiComponent, Element root,
                                  HashSet excludes) {
+        
+        //exclude following events
+        excludes.add("onkeypress");
+        excludes.add("onfocus");
+        excludes.add("onblur");
+        
+        String onkeypress = ((HtmlInputSecret)uiComponent).getOnkeypress() != null ? ((HtmlInputSecret)uiComponent).getOnkeypress() : "";
+        String onfocus = ((HtmlInputSecret)uiComponent).getOnfocus() != null ? ((HtmlInputSecret)uiComponent).getOnfocus() : "";
+        String onblur = ((HtmlInputSecret)uiComponent).getOnblur() != null ? ((HtmlInputSecret)uiComponent).getOnblur() : "";
+                
         //Add the enter key behavior by default
-        root.setAttribute("onkeypress", this.ICESUBMIT);
-
-        //set the focus
-        root.setAttribute("onfocus", "setFocus(this.id);");
-        String onblur = "setFocus('');";
-        root.setAttribute("onblur", onblur);
-
+        root.setAttribute("onkeypress", onkeypress + this.ICESUBMIT);
+        // set the focus id
+        root.setAttribute("onfocus", onfocus + "setFocus(this.id);");
+        // clear focus id
+        root.setAttribute("onblur", onblur + "setFocus('');");
+        
         if (((IceExtended) uiComponent).getPartialSubmit()) {
-            root.setAttribute("onblur", onblur +
+            root.setAttribute("onblur", onblur + "setFocus('');" + 
                                         "iceSubmitPartial(form,this,event); return false;");
         }
+        
     }
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
-        super.decode(facesContext, uiComponent);
+        HtmlInputSecret inputSecret = (HtmlInputSecret)uiComponent;
+        // check if we are processing a partial submit
+        Map requestParameterMap =
+            facesContext.getExternalContext().getRequestParameterMap();
+        String partial = "partial";
+        boolean test = Boolean.valueOf( 
+            (String) requestParameterMap.get(partial)).booleanValue();
+        if (test) {
+            // force the redisplay for partialSubmit enabled inputSecret components
+            if (!inputSecret.isRedisplay()) {
+                inputSecret.setRedisplay(true);
+            }
+        } 
+        
+        super.decode(facesContext, uiComponent);        
         if (hadFocus(facesContext, uiComponent)) {
             queueEventIfEnterKeyPressed(facesContext, uiComponent);
         }
+        
     }
 
     public boolean hadFocus(FacesContext facesContext,
@@ -76,10 +111,10 @@ public class SecretRenderer
         if (focusId != null) {
             if (focusId.toString()
                     .equals(uiComponent.getClientId(facesContext))) {
-                ((HtmlInputText) uiComponent).setFocus(true);
+                ((HtmlInputSecret) uiComponent).setFocus(true);
                 return true;
             } else {
-                ((HtmlInputText) uiComponent).setFocus(false);
+                ((HtmlInputSecret) uiComponent).setFocus(false);
                 return false;
             }
         }
@@ -98,4 +133,19 @@ public class SecretRenderer
             e.printStackTrace();
         }
     }
+    
+    /**
+     * @param uiComponent
+     * @return boolean
+     */
+    private boolean redisplayAttributeIsTrue(UIComponent uiComponent, FacesContext facesContext) {
+        if (hadFocus(facesContext,uiComponent)) {
+            return true;
+        }
+        Object redisplayAttribute =
+                uiComponent.getAttributes().get("redisplay");
+        return redisplayAttribute != null
+               && redisplayAttribute.toString().toLowerCase().equals("true");
+    }
+    
 }
