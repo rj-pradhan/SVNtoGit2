@@ -337,7 +337,7 @@ public class TableRenderer
                 (countOfRowsDisplayed >= numberOfRowsToDisplay)) {
                 break;
             }
-           String selectedClass = null;
+           String selectedClass =null;
             Iterator childs = uiData.getChildren().iterator();
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
             if (rowSelectorFound) {
@@ -349,19 +349,17 @@ public class TableRenderer
             if (rowSelectorFound) {
                 if (Boolean.TRUE.equals(rowSelector.getValue())){
 
-                    selectedClass = Util.appendNewStyleClass(CSS_DEFAULT.ROW_SELECTION_BASE,
-                            rowSelector.getSelectedClass(),
-                            CSS_DEFAULT.ROW_SELECTION_SELECTED
-                            );
-
+                    if(rowSelector.getSelectedClass() != null){
+                        selectedClass  = rowSelector.getSelectedClass();
+                    }else{
+                        selectedClass = "iceRowSelSelected";    
+                    }
                 }
+                String mouseOverClass = "iceRowSelMouseOver";
+                if(rowSelector.getMouseOverClass() != null)
+                    mouseOverClass = rowSelector.getMouseOverClass();
 
-                String c = rowSelector.getMouseOverClass();
-                c = Util.appendNewStyleClass(CSS_DEFAULT.ROW_SELECTION_BASE,
-                        c,
-                        CSS_DEFAULT.ROW_SELECTION_MOUSE_OVER
-                        );
-                StringTokenizer st = new StringTokenizer(c);
+                StringTokenizer st = new StringTokenizer(mouseOverClass);
                 StringBuffer omov = new StringBuffer();
                 StringBuffer omot = new StringBuffer();
                 while(st.hasMoreTokens()){
