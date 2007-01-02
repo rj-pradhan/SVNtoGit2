@@ -24,10 +24,6 @@ public class ContextBoundServer extends HttpServlet implements HttpSessionListen
     private final static Map SessionBoundServers = new HashMap();
     private Configuration configuration;
 
-    public void init(ServletConfig servletConfig) throws ServletException {
-        super.init(servletConfig);
-    }
-
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Server server = (Server) SessionBoundServers.get(request.getSession());
@@ -36,10 +32,6 @@ public class ContextBoundServer extends HttpServlet implements HttpSessionListen
         } catch (Exception e) {
             throw new ServletException(e);
         }
-    }
-    
-    public void destroy() {
-        super.destroy();
     }
 
     public void contextInitialized(ServletContextEvent event) {
