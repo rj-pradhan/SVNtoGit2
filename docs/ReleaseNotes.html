@@ -696,6 +696,16 @@ with horizontal spacing between the tabs.</li>
 selected.</li>
   </ul>
 </ul>
+<ul>
+  <li>Row Selector</li>
+  <ul>
+    <li>SelectOneMenu tags don't work in Tables using Row Selector unless the following code is added.
+     <pre id="comment_text_2"><span
+ style="font-weight: bold;">&lt;ice:selectOneMenu onclick="Event.stop(event);"&gt; </span>  </pre>       
+    </li>
+  </ul>
+</ul>
+
 <h3>Facelets</h3>
 <ul>
   <li>When using an ice:outputDeclaration component in a Facelets

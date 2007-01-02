@@ -60,6 +60,9 @@ public class FileUploadServlet
             "com.icesoft.faces.uploadDirectory";
     public static final String UPLOAD_MAX_FILE_SIZE =
             "com.icesoft.faces.uploadMaxFileSize";
+    public static final String UPLOAD_DIRECTORY_ABSOLUTE  =
+            "com.icesoft.faces.uploadDirectoryAbsolute";
+
     static long uploadMaxFileSize;
 
     public void init(ServletConfig config) throws ServletException {
@@ -249,17 +252,26 @@ public class FileUploadServlet
     private String getPath(HttpServletRequest request) {
         String relativeDir =
                 config.getServletContext().getInitParameter(UPLOAD_DIRECTORY);
+
         if (null == relativeDir) {
             relativeDir = "";
         }
+
+        boolean absolute = false;
+        String param = config.getServletContext().getInitParameter(UPLOAD_DIRECTORY_ABSOLUTE);
+        if(param!=null){
+            absolute = Boolean.valueOf(param).booleanValue();
+        }
+                     
         String sessionId = request.getRequestedSessionId();
         String FILE_SEPARATOR = System.getProperty("file.separator");
-        String absoluteDir =
-                config.getServletContext().getRealPath(relativeDir);
+        String dir = relativeDir;
+        if(!absolute)
+                dir = config.getServletContext().getRealPath(relativeDir);
         if (isUniqueFolder(request)) {
-            absoluteDir += FILE_SEPARATOR + sessionId;
+            dir += FILE_SEPARATOR + sessionId;
         }
-        return (absoluteDir);
+        return (dir);
     }
 
     private void sendOutput(HttpServletResponse response, String output) {
