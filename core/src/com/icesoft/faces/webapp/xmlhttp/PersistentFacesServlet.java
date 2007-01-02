@@ -658,6 +658,7 @@ public class PersistentFacesServlet extends HttpServlet {
                     .substring(0, requestURI.indexOf(request.getServletPath()));
             InputStream configurationStream =
                     createConfigurationStream(sessionID, contextName);
+            response.setContentType("text/javascript");
             writeResource(
                     new SequenceInputStream(configurationStream, resource),
                     request, response, compressed);
