@@ -29,7 +29,7 @@ public class ServeBridgeJSCode implements Server {
         //create bridge configuration
         final InputStream bridgeConfiguration = new ByteArrayInputStream((
             "configuration = {" +
-            "   synchronous: " + configuration.getAttribute("synchronousUpdate", "true") + "," +
+            "   synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
             "   redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
             "   connection: {" +
             "       context: '" + contextName + "'," +
