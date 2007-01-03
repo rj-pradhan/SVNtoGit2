@@ -30,7 +30,7 @@
         },
 
         remove: function() {
-            document.cookie = this.name + '=; expires=' + (new Date).toGMTString();
+            document.cookie = this.name + '=0; expires=' + (new Date).toGMTString();
         }
     });
 
