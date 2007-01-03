@@ -122,6 +122,7 @@ public class BlockingServlet extends ContextBoundServer {
             if (PFstate.facesContext instanceof BridgeFacesContext) {
                 BridgeFacesContext facesContext =
                         (BridgeFacesContext) PFstate.facesContext;
+                facesContext.setCurrentInstance();
                 bridgeExternalContext =
                         (BridgeExternalContext) facesContext
                                 .getExternalContext();
