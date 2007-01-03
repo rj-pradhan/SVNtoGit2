@@ -2,7 +2,7 @@ package com.icesoft.faces.webapp.http;
 
 import com.icesoft.faces.webapp.http.core.RedirectOnJSBlocked;
 import com.icesoft.faces.webapp.http.core.ServeBridgeJSCode;
-import com.icesoft.faces.webapp.http.core.ServeResources;
+import com.icesoft.faces.webapp.http.core.ServeCSSResource;
 import com.icesoft.faces.webapp.http.core.ServeBlankPage;
 import com.icesoft.faces.webapp.http.core.ServeExtraJSCode;
 import com.icesoft.faces.webapp.http.core.SendUpdates;
@@ -24,7 +24,7 @@ public class SessionBoundServer implements Server {
         pathDispatcher.dispatchOn(".*javascript-blocked$", new RedirectOnJSBlocked(configuration));
         pathDispatcher.dispatchOn(".*xmlhttp\\/icefaces\\-d2d\\.js$", new CacheControlledServer(new ServeBridgeJSCode(configuration)));
         pathDispatcher.dispatchOn(".*xmlhttp\\/.*\\.js$", new CacheControlledServer(new ServeExtraJSCode()));
-        pathDispatcher.dispatchOn(".*xmlhttp\\/css\\/.*", new CacheControlledServer(new ServeResources()));
+        pathDispatcher.dispatchOn(".*xmlhttp\\/css\\/.*", new CacheControlledServer(new ServeCSSResource()));
         pathDispatcher.dispatchOn(".*blank\\.iface$", new ServeBlankPage());
         pathDispatcher.dispatchOn(".*block\\/send\\-updates$", new ReceiveSendUpdates(updateManager));
         pathDispatcher.dispatchOn(".*block\\/get\\-updates$", new SendUpdates(updateManager));
