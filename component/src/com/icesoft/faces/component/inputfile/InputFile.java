@@ -339,7 +339,7 @@ public class InputFile extends UICommand implements Serializable{
 
         if (status == InputFile.UPLOADING) {
             if (getFileInfo().getPercent() > 0 &&
-                getFileInfo().getPercent() < 90) {                
+                getFileInfo().getPercent() < 90) {
                 try {
                     if (!isHeartbeatStopped()) {
                         String call =
@@ -457,7 +457,7 @@ public class InputFile extends UICommand implements Serializable{
     }
 
     void clearFormState() {
-        if (parentForm.getAttributes().containsKey("fileUpload")) {
+        if (parentForm != null && parentForm.getAttributes().containsKey("fileUpload")) {
             parentForm.getAttributes().remove("fileUpload");
         }
     }
@@ -493,7 +493,7 @@ public class InputFile extends UICommand implements Serializable{
             context.addMessage(getClientId(context), message);
         }
 
-        
+
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
@@ -784,7 +784,7 @@ public class InputFile extends UICommand implements Serializable{
     }
 
     public long getSizeMax() {
-        return FileUploadServlet.uploadMaxFileSize; 
+        return FileUploadServlet.uploadMaxFileSize;
     }
 
     private String cssFile = null;
@@ -801,9 +801,7 @@ public class InputFile extends UICommand implements Serializable{
     private void setCssFile(UIComponent component) {
         if (component instanceof OutputStyle) {
             cssFile += (cssFile != null) ? ", " : "";
-            if (component.getAttributes().containsKey("href")) {
-            	cssFile += component.getAttributes().get("href").toString();
-            }
+            cssFile += component.getAttributes().get("href").toString();
         }
         Iterator children = component.getChildren().iterator();
         while (children.hasNext()) {
