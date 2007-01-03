@@ -65,7 +65,7 @@ public class ReceiveSendUpdates implements Server {
                 byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
                 response.setHeader("Content-Type", "text/xml;charset=UTF-8");
                 response.setHeader("Content-Length", content.length);
-                response.writeBodyFrom(new ByteArrayInputStream(content));
+                response.writeBody().write(content);
             }
         });
     }
