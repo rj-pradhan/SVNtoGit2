@@ -38,6 +38,7 @@ import com.icesoft.faces.context.effects.JavascriptContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+import org.apache.commons.logging.LogFactory;
 
 import javax.faces.component.*;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
@@ -50,8 +51,12 @@ import javax.faces.model.SelectItemGroup;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class MenuRenderer extends DomBasicInputRenderer {
+
+    private static Logger log =  Logger.getLogger(MenuRenderer.class.getName());
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         validateParameters(facesContext, uiComponent, null);
@@ -79,9 +84,18 @@ public class MenuRenderer extends DomBasicInputRenderer {
                         ((String[]) requestParameterValuesMap.get(clientId))[0]
                                 .trim();
             } else {
-                decodedValue = "";
+                decodedValue = null;
             }
-            ((UISelectOne) uiComponent).setSubmittedValue(decodedValue);
+
+            if(decodedValue != null)
+                ((UISelectOne) uiComponent).setSubmittedValue(decodedValue);
+            else{
+                // Don't set null values
+                if(log.isLoggable(Level.FINE)){
+                    log.fine("Not setting blank value for menu renderer");
+                }
+            }
+
         }
         return;
     }
