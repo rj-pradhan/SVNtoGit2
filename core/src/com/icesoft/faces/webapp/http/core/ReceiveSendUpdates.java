@@ -3,6 +3,7 @@ package com.icesoft.faces.webapp.http.core;
 import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
+import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.webapp.http.Request;
 import com.icesoft.faces.webapp.http.Server;
 import com.icesoft.faces.webapp.http.ResponseHandler;
@@ -56,18 +57,12 @@ public class ReceiveSendUpdates implements Server {
             renderCycle(context);
         }
 
-        request.respondWith(new ResponseHandler() {
-            public void respond(Response response) throws Exception {
-                String[] views = request.getParameterAsStrings("viewNumber");
-                StringWriter writer = new StringWriter();
-                updateManager.serialize(views, writer);
-
-                byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
-                response.setHeader("Content-Type", "text/xml;charset=UTF-8");
-                response.setHeader("Content-Length", content.length);
-                response.writeBody().write(content);
-            }
-        });
+        final BridgeExternalContext externalContext = (BridgeExternalContext) context.getExternalContext();
+        if (externalContext.redirectRequested()) {
+            request.respondWith(new SendRedirectHandler(externalContext));
+        } else {
+            request.respondWith(new SendUpdatesHandler(request));
+        }
     }
 
     private void renderCycle(BridgeFacesContext context) {
@@ -149,5 +144,39 @@ public class ReceiveSendUpdates implements Server {
             parent = parent.getParent();
         }
         return (UIForm) parent;
+    }
+
+    private class SendUpdatesHandler implements ResponseHandler {
+        private final Request request;
+
+        public SendUpdatesHandler(Request request) {
+            this.request = request;
+        }
+
+        public void respond(Response response) throws Exception {
+            String[] views = request.getParameterAsStrings("viewNumber");
+            StringWriter writer = new StringWriter();
+            updateManager.serialize(views, writer);
+
+            byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
+            response.setHeader("Content-Type", "text/xml;charset=UTF-8");
+            response.setHeader("Content-Length", content.length);
+            response.writeBody().write(content);
+        }
+    }
+
+    private static class SendRedirectHandler implements ResponseHandler {
+        private final BridgeExternalContext externalContext;
+
+        public SendRedirectHandler(BridgeExternalContext externalContext) {
+            this.externalContext = externalContext;
+        }
+
+        public void respond(Response response) throws Exception {
+            response.setHeader("X-REDIRECT", externalContext.redirectTo());
+            //send some content since Safari will not read the header.
+            response.writeBody().write('.');
+            externalContext.redirectComplete();
+        }
     }
 }
