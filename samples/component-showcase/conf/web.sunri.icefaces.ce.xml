@@ -113,8 +113,11 @@
         <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
         <load-on-startup> 1 </load-on-startup>
     </servlet>
-
-    <!-- extension mapping -->
+    <listener>
+        <listener-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</listener-class>
+    </listener>
+    
+   <!-- extension mapping -->
     
 	<servlet-mapping>
          <servlet-name>uploadServlet</servlet-name>

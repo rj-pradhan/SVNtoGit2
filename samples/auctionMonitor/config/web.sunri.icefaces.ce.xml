@@ -61,7 +61,13 @@
         <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
         <param-value>true</param-value>
     </context-param>
-	
+
+	    <!-- Asynchronous Updates -->
+    <context-param>
+        <param-name>com.icesoft.faces.synchronousUpdate</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
 	<listener>
 		<listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
 	</listener>
@@ -84,6 +90,9 @@
         <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
         <load-on-startup> 1 </load-on-startup>
     </servlet>
+    <listener>
+        <listener-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</listener-class>
+    </listener>
 
     <!-- Faces Servlet Mapping -->
     <servlet-mapping>
