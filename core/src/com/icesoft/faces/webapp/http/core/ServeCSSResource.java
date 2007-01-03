@@ -8,11 +8,11 @@ import com.icesoft.faces.webapp.http.standard.NotFoundHandler;
 
 import java.io.InputStream;
 
-public class ServeResources implements Server {
+public class ServeCSSResource implements Server {
     private static final String Package = "com/icesoft/faces/resources/css/";
     private ClassLoader loader;
 
-    public ServeResources() {
+    public ServeCSSResource() {
         loader = this.getClass().getClassLoader();
     }
 
