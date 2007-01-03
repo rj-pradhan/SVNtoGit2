@@ -9,6 +9,7 @@ import com.icesoft.faces.webapp.http.core.SendUpdates;
 import com.icesoft.faces.webapp.http.core.UpdateManager;
 import com.icesoft.faces.webapp.http.core.ReceiveSendUpdates;
 import com.icesoft.faces.webapp.http.core.SendUpdatedViews;
+import com.icesoft.faces.webapp.http.core.SendSessionExpired;
 import com.icesoft.faces.webapp.http.standard.CompressingServer;
 import com.icesoft.faces.webapp.http.standard.CacheControlledServer;
 
@@ -34,6 +35,8 @@ public class SessionBoundServer implements Server {
         } else {
             dispatcher = pathDispatcher;
         }
+        
+        dispatcher = new SendSessionExpired(session, dispatcher);
     }
 
     public void service(final Request request) throws Exception {
