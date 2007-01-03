@@ -36,9 +36,9 @@ public class UpdateManager {
             ArrayList views = new ArrayList();
             for (int i = 0; i < states.length; i++) {
                 ResponseState state = states[i];
-                if (state.hasUpdates()) {
-                    views.add(state.getViewNumber());
-                }
+//                if (state.hasUpdates()) {
+//                    views.add(state.getViewNumber());
+//                }
             }
             if (!views.isEmpty()) {
                 return (String[]) views.toArray(new String[views.size()]);
