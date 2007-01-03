@@ -46,6 +46,7 @@ public class ServeBridgeJSCode implements Server {
 
         request.respondWith(new ResponseHandler() {
             public void respond(Response response) throws Exception {
+                response.setHeader("Content-Type", "text/javascript");
                 response.writeBodyFrom(new SequenceInputStream(bridgeConfiguration, bridgeCode));
             }
         });
