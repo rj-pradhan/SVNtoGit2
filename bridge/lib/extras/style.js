@@ -98,12 +98,15 @@ Ice.modal = {
     start:function(target) {
         Ice.modal.oldListener = window.document.documentElement.onkeypress;
         window.document.documentElement.onkeypress = function(e){return Ice.modal.keypress(e);}
+
         var iframe = document.getElementById('iceModalFrame');
         if (!iframe) {
             iframe = document.createElement('iframe');
             iframe.frameborder = "0";
             iframe.id = 'iceModalFrame';
-            iframe.src = 'blank.iface';
+            var context = configuration.connection.context;
+            var dest =    context + '/xmlhttp/blank.iface';
+            iframe.src = dest;
             iframe.style.zIndex = 25000;
             iframe.style.opacity = 0.5;
             iframe.style.filter = 'alpha(opacity=50)';
