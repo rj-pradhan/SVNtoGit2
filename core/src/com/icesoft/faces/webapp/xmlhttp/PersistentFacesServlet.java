@@ -51,79 +51,47 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.SequenceInputStream;
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
+import java.net.MalformedURLException;
 
 public class PersistentFacesServlet extends HttpServlet {
-    private static final String COMPRESS_RESOURCES =
-            "com.icesoft.faces.compressResources";
-    private static final String SYNCHRONOUS_UPDATE =
-            "com.icesoft.faces.synchronousUpdate";
-    private static final String HEARTBEAT_INTERVAL =
-            "com.icesoft.faces.heartbeatInterval";
-    private static final String HEARTBEAT_TIMEOUT =
-            "com.icesoft.faces.heartbeatTimeout";
-    private static final String HEARTBEAT_RETRIES =
-            "com.icesoft.faces.heartbeatRetries";
-    private static final String CONNECTION_TIMEOUT =
-            "com.icesoft.faces.connectionTimeout";
-    private static final String CONNECTION_LOST_REDIRECT_URI =
-            "com.icesoft.faces.connectionLostRedirectURI";
-    private static final String JAVASCRIPT_BLOCKED_REDIRECT_URI =
-            "com.icesoft.faces.javascriptBlockedRedirectURI";
-    public static final String UPLOAD_MAX_FILE_SIZE =
-            "com.icesoft.faces.uploadMaxFileSize";
-    public static final String UPLOAD_NOTHING_KEY =
-            "com.icesoft.faces.uploadNothing";
     public static final String CURRENT_VIEW_NUMBER =
             "com.icesoft.faces.currentViewNumber";
-    public static final String FILENAME_KEY = "_filename";
-    public static final String MIMETYPE_KEY = "_mimetype";
-    private static final long STARTUP_TIME = System.currentTimeMillis();
-    private static final long EXPIRATION_TIME = STARTUP_TIME + 2629743830l;//startup time + one month
-
-    private ServletConfig config;
     private PersistentFacesCommonlet commonlet;
     private int globalViewNumber = 1000;
-    private long uploadMaxFileSize;
 
     private ResponseStateManager stateManager;
 
     private static final Log log =
             LogFactory.getLog(PersistentFacesServlet.class);
-    private long connectionTimeout;
-    private long heartbeatRetries;
-    private long heartbeatTimeout;
-    private long heartbeatInterval;
-    private boolean synchronousUpdate;
-    private URI connectionLostRedirectURI;
-    private URI javascriptBlockedRedirectURI;
-    private boolean compressResources;
-
-    private final String seamShortcutKeywords[] = {
-            "actionMethod", "dataModelSelection"
-    };
+    private RequestDispatcher dispatcher;
+    private String seed;
 
     public void init(ServletConfig config) throws ServletException {
-        this.config = config;
         this.commonlet = new PersistentFacesCommonlet();
-        this.commonlet.init(this.commonlet.getInitParams(this.config));
+        this.commonlet.init(this.commonlet.getInitParams(config));
         System.setProperty("java.awt.headless", "true");
         ServletContext servletContext = config.getServletContext();
+
+        stateManager = ResponseStateManager.getResponseStateManager(servletContext);
+        try {
+            seed = servletContext.getResource("/").getPath();
+        } catch (MalformedURLException e) {
+            throw new ServletException(e);
+        }
         try {
             commonlet.concurrentDOMViews = Boolean
                     .valueOf(servletContext.getInitParameter(
@@ -132,88 +100,12 @@ public class PersistentFacesServlet extends HttpServlet {
         } catch (NullPointerException e) {
             commonlet.concurrentDOMViews = false;
         }
-        try {
-            compressResources = Boolean.valueOf(
-                    servletContext.getInitParameter(COMPRESS_RESOURCES))
-                    .booleanValue();
-        } catch (NullPointerException e) {
-            compressResources = false;
-        }
-        try {
-            synchronousUpdate = Boolean.valueOf(
-                    servletContext.getInitParameter(SYNCHRONOUS_UPDATE))
-                    .booleanValue();
-        } catch (NullPointerException e) {
-            synchronousUpdate = false;
-        }
-        try {
-            heartbeatInterval = Long.parseLong(
-                    servletContext.getInitParameter(HEARTBEAT_INTERVAL));
-        } catch (NumberFormatException e) {
-            heartbeatInterval = 20000;
-        }
-        try {
-            heartbeatTimeout = Long.parseLong(
-                    servletContext.getInitParameter(HEARTBEAT_TIMEOUT));
-        } catch (NumberFormatException e) {
-            heartbeatTimeout = 3000;
-        }
-        try {
-            heartbeatRetries = Long.parseLong(
-                    servletContext.getInitParameter(HEARTBEAT_RETRIES));
-        } catch (NumberFormatException e) {
-            heartbeatRetries = 3;
-        }
-        try {
-            connectionTimeout = Long.parseLong(
-                    servletContext.getInitParameter(CONNECTION_TIMEOUT));
-        } catch (NumberFormatException e) {
-            connectionTimeout = 30000;
-        }
-        try {
-            connectionLostRedirectURI = URI.create(
-                    servletContext.getInitParameter(
-                            CONNECTION_LOST_REDIRECT_URI));
-        } catch (IllegalArgumentException e) {
-            connectionLostRedirectURI = null;
-        } catch (NullPointerException e) {
-            connectionLostRedirectURI = null;
-        }
-        try {
-            javascriptBlockedRedirectURI = URI.create(
-                    servletContext.getInitParameter(
-                            JAVASCRIPT_BLOCKED_REDIRECT_URI));
-        } catch (IllegalArgumentException e) {
-            javascriptBlockedRedirectURI = null;
-        } catch (NullPointerException e) {
-            javascriptBlockedRedirectURI = null;
-        }
-        try {
-            uploadMaxFileSize = Long.parseLong(
-                    servletContext.getInitParameter(UPLOAD_MAX_FILE_SIZE));
-        } catch (NumberFormatException e) {
-            uploadMaxFileSize = 2 * 1048576;
-        }
-
-        stateManager = ResponseStateManager
-                .getResponseStateManager(servletContext);
-
-        if (log.isTraceEnabled()) {
-            log.trace("SYNCHRONOUS_UPDATE = " + synchronousUpdate);
-            log.trace("HEARTBEAT_INTERVAL=" + heartbeatInterval
-                      + "; HEARTBEAT_TIMEOUT=" + heartbeatTimeout
-                      + "; HEARTBEAT_RETRIES=" + heartbeatRetries
-                      + "; CONNECTION_TIMEOUT=" + connectionTimeout
-                      + "; UPLOAD_MAX_FILE_SIZE=" + uploadMaxFileSize);
-        }
+        dispatcher = servletContext.getNamedDispatcher("Blocking Servlet");
     }
 
     protected void service(HttpServletRequest request,
                            HttpServletResponse response)
             throws IOException, ServletException {
-        if( log.isTraceEnabled() ) {
-            log.trace("service()");
-        }
         if (this.redirectOnJavascriptBlocked(request, response)) return;
         // Set up some information in the session including attributes required
         // by the DOM renderers.
@@ -224,10 +116,6 @@ public class PersistentFacesServlet extends HttpServlet {
         String iceID =
                 (String) session
                         .getAttribute(ResponseStateManager.ICEFACES_ID_KEY);
-        if( log.isTraceEnabled() ) {
-            log.trace("service()  session id: " + session.getId() +
-                      "  iceID: " + iceID);
-        }
         if (iceID == null) {
             /*
              * For certain tasks, we cannot rely on the application server not
@@ -240,10 +128,7 @@ public class PersistentFacesServlet extends HttpServlet {
              * in certain ways that caused us some grief when trying to use it
              * as a key.
              */
-            iceID =
-                    IdGenerator.create(
-                            config.getServletContext()
-                                    .getResource("/").getPath());
+            iceID = IdGenerator.create(seed);
             session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, iceID);
         }
 
@@ -257,23 +142,13 @@ public class PersistentFacesServlet extends HttpServlet {
             String requestURI = (String) httpRequest.getAttribute(
                     BridgeExternalContext.INCLUDE_REQUEST_URI);
 
-            if( log.isTraceEnabled() ) {
-                log.trace("service()  requestURI: " + requestURI);
-            }
             if (null == requestURI) {
                 requestURI = httpRequest.getRequestURI();
-                if( log.isTraceEnabled() ) {
-                    log.trace("service()  requestURI2: " + requestURI);
-                }
             }
 
-            boolean compress = compressResources &&
-                               (request.getHeader("Accept-Encoding")
-                                       .indexOf("gzip") > -1);
-            if (this.writeJSResource(requestURI, request, response, iceID,
-                                     compress)) return;
-            if (this.writeCSSResource(requestURI, request, response, compress)) return;
-            if (this.writeIFrame(requestURI, response)) return;
+            if (this.writeJSResource(requestURI, request, response)) return;
+            if (this.writeCSSResource(requestURI, request, response)) return;
+            if (this.writeIFrame(requestURI, request, response)) return;
 
             // Set up the cache control headers on the response
             setCacheControls(response);
@@ -294,9 +169,6 @@ public class PersistentFacesServlet extends HttpServlet {
             } else {
                 viewNumber = 1;
             }
-            if( log.isTraceEnabled() ) {
-                log.trace("service()  viewNumber: " + viewNumber);
-            }
             ContextEventRepeater.viewNumberRetrieved(session, viewNumber);
             // Set up and configure our own FacesContext and ExternalContext
             // implementations. Our implementations should take care to ensure
@@ -310,7 +182,7 @@ public class PersistentFacesServlet extends HttpServlet {
                                  PersistentFacesCommonlet.PERSISTENT);
 
             FacesContext facesContext = commonlet.getFacesContext(
-                    config.getServletContext(),
+                    session.getServletContext(),
                     request,
                     response);
 
@@ -318,13 +190,12 @@ public class PersistentFacesServlet extends HttpServlet {
 
             ExternalContext ec = facesContext.getExternalContext();
             if (ec instanceof BridgeExternalContext) {
-                ((BridgeExternalContext)ec).populateRequestParameters(
-                        BlockingServlet.convertParametersMap(map));
+                ((BridgeExternalContext)ec).populateRequestParameters(map);
             }
 
             // Check if lifecycle shortcuts required
-            checkSeamRequestParameters(request.getParameterMap(),
-                                       facesContext.getExternalContext().getRequestParameterMap());
+            checkSeamRequestParameters(
+                    facesContext.getExternalContext().getRequestParameterMap());
 
 
             facesContext.getExternalContext().getRequestMap()
@@ -376,21 +247,12 @@ public class PersistentFacesServlet extends HttpServlet {
                 Lifecycle lifecycle = commonlet.getLifecycle();
                 FacesContext ctxt =
                         PersistentFacesState.getInstance().facesContext;
-                if( log.isTraceEnabled() ) {
-                    log.trace("service()  FacesContext: " + ctxt);
-                }
 
                 // Set the correct ResponseState as the IncrementalNodeWriter for this
                 // combination of session and view number, then store the state so that is
                 // accessible from the async server.
                 String viewNumberString = String.valueOf(viewNumber);
-                ResponseState state =
-                        stateManager.getState(session, viewNumberString);
-
-                //Bug 256:  We need to include the view number as part of the key
-                session.setAttribute(viewNumberString + "/" +
-                                     ResponseState.STATE, state);
-
+                stateManager.getState(session, viewNumberString);
                 // Bug 350: If the FacesContext is not available (likely the very first request)
                 // then there is no need to synchronize the lifecycle calls.  If there is a
                 // available FacesContext, it should be used to synchronize on to ensure thread-
@@ -398,7 +260,7 @@ public class PersistentFacesServlet extends HttpServlet {
                 // renders) do not get the DOM into a nasty state.
                 if (ctxt == null) {
                     lifecycle.execute(facesContext);
-                    lifecycle.render(facesContext);                        
+                    lifecycle.render(facesContext);
                 } else {
                     synchronized (ctxt) {
                         lifecycle.execute(facesContext);
@@ -422,7 +284,7 @@ public class PersistentFacesServlet extends HttpServlet {
                 }
 
                 setupPersistentContext(
-                        config.getServletContext(), request, viewNumber );
+                        session.getServletContext(), request, viewNumber );
 
             } catch (Exception e) {
 
@@ -445,7 +307,7 @@ public class PersistentFacesServlet extends HttpServlet {
      * Any request handled by the PersistentFacesServlet should have the Seam
      * PageContext removed from our internal context complex. But we cannot do
      * it here, since the machinery is not yet in place, so put a flag into
-     * the external context, allowing someone else to do it later.  
+     * the external context, allowing someone else to do it later.
      */
     private void doClearSeamContexts() {
 
@@ -456,14 +318,10 @@ public class PersistentFacesServlet extends HttpServlet {
 
     private boolean redirectOnJavascriptBlocked(HttpServletRequest request,
                                                 HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         String uri = request.getRequestURI();
         if (uri.endsWith("/javascript-blocked")) {
-            if (javascriptBlockedRedirectURI == null) {
-                response.sendError(403, "Javascript not enabled.");
-            } else {
-                response.sendRedirect(javascriptBlockedRedirectURI.toString());
-            }
+            dispatcher.forward(request, response);
             return true;
         } else {
             return false;
@@ -473,21 +331,16 @@ public class PersistentFacesServlet extends HttpServlet {
     /**
      * Check to see if Seam specific keywords are in the request. If so,
      * then flag that a new ViewRoot is to be constructed.
-     *  
-     * @param requestParameters  Map to check for keywords
+     *
      * @param externalContextMap Map to insert Flag
      */
-        private void checkSeamRequestParameters(Map requestParameters,
-                                       Map externalContextMap) {
+        private void checkSeamRequestParameters(
+            Map externalContextMap) {
 
 
 
 
         boolean seamEnabled = SeamUtilities.isSeamEnvironment();
-//        Iterator i = requestParameters.keySet().iterator();
-//        Object key;
-
-
         // Always on a GET request, create a new ViewRoot. New theory.
         // This works now that the ViewHandler only calls restoreView once,
         // as opposed to calling it again from createView
@@ -496,24 +349,6 @@ public class PersistentFacesServlet extends HttpServlet {
                      PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
                      Boolean.TRUE );
         }
-
-//            while (i.hasNext()) {
-//                key = i.next();
-//
-//                // Check for certain Seam keywords that need a certain
-//                // environment to work properly. Set a flag indicating to
-//                // the D2DViewHandler to do the right thing.
-//                for (int idx = 0; idx < seamShortcutKeywords.length; idx++) {
-//
-//                    if (seamShortcutKeywords[idx].equalsIgnoreCase(key.toString())) {
-//                        externalContextMap.put(
-//                                PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
-//                                Boolean.TRUE );
-//                        log.debug("Seam shortcut keyword found: " + key.toString() );
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**
@@ -563,10 +398,6 @@ public class PersistentFacesServlet extends HttpServlet {
                                            persistentContext);
     }
 
-    private synchronized int getViewNumber()  {
-        return globalViewNumber;
-    }
-    
     private synchronized int getNextViewNumber()  {
         globalViewNumber++;
         return globalViewNumber;
@@ -612,56 +443,13 @@ public class PersistentFacesServlet extends HttpServlet {
         }
     }
 
-    private InputStream createConfigurationStream(String sessionID,
-                                                  String contextName) {
-        return new ByteArrayInputStream((
-                "configuration = {" +
-                "   sessionID: '" + sessionID + "'," +
-                "   synchronous: " + synchronousUpdate + "," +
-                "   redirectURI: " +
-                (connectionLostRedirectURI == null ? "null," :
-                 ("'" + connectionLostRedirectURI.toString()) +
-                 "',") +
-                       "   connection: {" +
-                       "       context: '" + contextName + "'," +
-                       "       timeout: " + connectionTimeout + "," +
-                       "       heartbeat: {" +
-                       "           interval: " + heartbeatInterval + "," +
-                       "           timeout: " + heartbeatTimeout + "," +
-                       "           retries: " + heartbeatRetries +
-                       "       }" +
-                       "   }" +
-                       "};"
-        ).getBytes());
-    }
-
     private boolean writeJSResource(String requestURI,
                                     HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    String sessionID, boolean compressed)
-            throws IOException {
+                                    HttpServletResponse response
+    )
+            throws IOException, ServletException {
         if (requestURI.endsWith(".js")) {
-            String prefix = "xmlhttp/";
-            int position = requestURI.indexOf(prefix);
-            String postfix = requestURI.substring(position + prefix.length());
-            String enterpriseJS = "com/icesoft/faces/async/server/" + postfix;
-            InputStream resource = this.getClass().getClassLoader()
-                    .getResourceAsStream(enterpriseJS);
-            if (resource == null) {
-                String communityJS =
-                        "com/icesoft/faces/webapp/xmlhttp/" + postfix;
-                resource = this.getClass().getClassLoader()
-                        .getResourceAsStream(communityJS);
-            }
-
-            String contextName = requestURI
-                    .substring(0, requestURI.indexOf(request.getServletPath()));
-            InputStream configurationStream =
-                    createConfigurationStream(sessionID, contextName);
-            response.setContentType("text/javascript");
-            writeResource(
-                    new SequenceInputStream(configurationStream, resource),
-                    request, response, compressed);
+            dispatcher.forward(request, response);
             return true;
         } else {
             return false;
@@ -670,78 +458,26 @@ public class PersistentFacesServlet extends HttpServlet {
 
     private boolean writeCSSResource(String requestURI,
                                      HttpServletRequest request,
-                                     HttpServletResponse response,
-                                     boolean compressed)
-            throws IOException {
+                                     HttpServletResponse response)
+            throws IOException, ServletException {
         String prefix = "xmlhttp/css/";
         int position = requestURI.indexOf(prefix);
         if (position > -1) {
-            String path = "com/icesoft/faces/resources/css/" +
-                          requestURI.substring(position + prefix.length());
-            InputStream resource =
-                    this.getClass().getClassLoader().getResourceAsStream(path);
-            if (resource == null) {
-                log.debug(" restricted access or following path not exists " +
-                          path);
-            } else {
-                writeResource(resource, request, response, compressed);
-            }
+            dispatcher.forward(request, response);
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean writeIFrame(String requestURI, HttpServletResponse response)
-            throws IOException {
+    private boolean writeIFrame(String requestURI, HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         if (requestURI.endsWith("blank.iface")) {
-            response.getWriter().println("<html><body></body></html>");
+            dispatcher.forward(request, response);
             return true;
         } else {
             return false;
         }
-    }
-
-    private static void writeResource(InputStream resource,
-                                      HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      boolean compressed) throws IOException {
-        //tell to IE to cache these resources
-        //see: http://mir.aculo.us/articles/2005/08/28/internet-explorer-and-ajax-image-caching-woes
-        //see: http://www.bazon.net/mishoo/articles.epl?art_id=958
-        //see: http://support.microsoft.com/default.aspx?scid=kb;en-us;319546
-        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
-        if (ifModifiedSince == -1 || STARTUP_TIME - ifModifiedSince > 1000) {
-            response.setHeader("Cache-Control", "private, max-age=86400");
-            response.setDateHeader("Expires", EXPIRATION_TIME);
-            response.setDateHeader("Last-Modified", STARTUP_TIME);
-
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            if (compressed) {
-                response.setHeader("Content-Encoding", "gzip");
-                GZIPOutputStream gzip = new GZIPOutputStream(output);
-                copy(resource, gzip);
-                gzip.finish();
-            } else {
-                copy(resource, output);
-            }
-            byte[] resourceBytes = output.toByteArray();
-            //set the length to enable the browser caching
-            response.setContentLength(resourceBytes.length);
-            response.getOutputStream().write(resourceBytes);
-        } else {
-            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-            response.setDateHeader("Expires", EXPIRATION_TIME);
-        }
-
-        response.flushBuffer();
-    }
-
-    private static void copy(InputStream input, OutputStream output)
-            throws IOException {
-        byte[] buf = new byte[2000];
-        int len = 0;
-        while ((len = input.read(buf)) > -1) output.write(buf, 0, len);
     }
 
     /**
@@ -749,8 +485,5 @@ public class PersistentFacesServlet extends HttpServlet {
      */
     public void destroy() {
         commonlet.destroy();
-        config = null;
     }
-
-
 }
