@@ -26,9 +26,9 @@ public class SessionBoundServer implements Server {
         pathDispatcher.dispatchOn(".*xmlhttp\\/.*\\.js$", new CacheControlledServer(new ServeExtraJSCode()));
         pathDispatcher.dispatchOn(".*xmlhttp\\/css\\/.*", new CacheControlledServer(new ServeCSSResource()));
         pathDispatcher.dispatchOn(".*blank\\.iface$", new ServeBlankPage());
-        pathDispatcher.dispatchOn(".*block\\/send\\-updates$", new ReceiveSendUpdates(updateManager));
-        pathDispatcher.dispatchOn(".*block\\/get\\-updates$", new SendUpdates(updateManager));
-        pathDispatcher.dispatchOn(".*block\\/receive\\-updates$", new SendUpdatedViews(updateManager));
+        pathDispatcher.dispatchOn(".*block\\/send\\-receive\\-updates$", new ReceiveSendUpdates(updateManager));
+        pathDispatcher.dispatchOn(".*block\\/receive\\-updates$", new SendUpdates(updateManager));
+        pathDispatcher.dispatchOn(".*block\\/receive\\-updated\\-views$", new SendUpdatedViews(updateManager));
 
         if (configuration.getAttributeAsBoolean("compressResources", true)) {
             dispatcher = new CompressingServer(pathDispatcher);

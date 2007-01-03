@@ -69,7 +69,7 @@ public class PersistentFacesState implements Serializable {
     static String
             PERSISTENT_FACES_STATE = "com.icesoft.faces.PersistentFacesState";
 
-    FacesContext facesContext;
+    public FacesContext facesContext;
     transient Lifecycle lifecycle;
     private boolean isBridgeFacesContext = false;
 
@@ -98,7 +98,7 @@ public class PersistentFacesState implements Serializable {
     private static InheritableThreadLocal localInstance =
             new InheritableThreadLocal();
 
-    static void setLocalInstance(Map sessionMap, String viewNumber) {
+    public static void setLocalInstance(Map sessionMap, String viewNumber) {
         localInstance.set(new Key(sessionMap, viewNumber));
     }
 
@@ -128,7 +128,7 @@ public class PersistentFacesState implements Serializable {
      * @param viewNumber unique number identifying particular browser frame
      * @return the PersistentFacesState
      */
-    static synchronized PersistentFacesState getInstance(
+    public static synchronized PersistentFacesState getInstance(
             Map sessionMap, String viewNumber) {
         PersistentFacesState persistentFacesState = (PersistentFacesState)
                 sessionMap.get(viewNumber + "/" + PERSISTENT_FACES_STATE);

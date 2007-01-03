@@ -46,8 +46,9 @@
             this.sessionExpiredListeners = [];
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
-            this.sendURI = configuration.context + '/block/send-updates';
-            this.receiveURI = configuration.context + '/block/receive-updates';
+            this.getURI = configuration.context + '/block/receive-updates';
+            this.sendURI = configuration.context + '/block/send-receive-updates';
+            this.receiveURI = configuration.context + '/block/receive-updated-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {
@@ -73,14 +74,38 @@
                     this.onReceiveListeners.broadcast(response);
                 } catch (e) {
                     this.logger.error('receive broadcast failed', e);
-                } finally {
-                    this.connect();
                 }
             }.bind(this);
 
             this.sessionExpiredCallback = this.sessionExpiredListeners.broadcaster();
 
-            this.connect();
+            this.listenerInitializerProcess = function() {
+                try {
+                    this.listening = Ice.Cookie.lookup('bconn');
+                    this.updatedViews = Ice.Cookie.lookup('updates');
+                } catch (e) {
+                    //start blocking connection since no other window has started it.
+                    this.listening = new Ice.Cookie('bconn', 'started');
+                    this.updatedViews = new Ice.Cookie('updates', '');
+                    this.connect();
+                }
+            }.bind(this).repeatExecutionEvery(1000);
+
+            this.updatesListenerProcess = function() {
+                try {
+                    var views = this.updatedViews.loadValue().split(' ');
+                    if (views.intersect(viewIdentifiers()).isNotEmpty()) {
+                        this.sendChannel.postAsynchronously(this.getURI, this.defaultQuery().asURIEncodedString(), function(request) {
+                            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                            request.on(Connection.Receive, this.receiveCallback);
+                        }.bind(this));
+                        this.updatedViews.saveValue(views.complement(viewIdentifiers()).join(' '));
+                    }
+                } catch (e) {
+                    this.logger.warn('failed to listen for updates', e);
+                }
+            }.bind(this).repeatExecutionEvery(300);
+
             this.logger.info('asynchronous mode');
         },
 
@@ -93,12 +118,17 @@
                 request.on(Connection.BadResponse, this.badResponseCallback);
                 request.on(Connection.Redirect, this.redirectCallback);
                 request.on(Connection.SessionExpired, this.sessionExpiredCallback);
-                request.on(Connection.Receive, this.receiveCallback);
+                request.on(Connection.Receive, function() {
+                    try {
+                        this.updatedViews.saveValue(request.content());
+                    } finally {
+                        this.connect();
+                    }
+                }.bind(this));
             }.bind(this));
         },
 
         send: function(query) {
-
             var compoundQuery = query.addQuery(this.defaultQuery());
             this.logger.debug('send > ' + compoundQuery.asString());
 
@@ -106,6 +136,7 @@
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 request.on(Connection.SessionExpired, this.sessionExpiredCallback);
                 request.on(Connection.Redirect, this.redirectCallback);
+                request.on(Connection.Receive, this.receiveCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },
@@ -136,7 +167,11 @@
             this.onReceiveListeners.clear();
             this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();
-            this.sessionExpiredListeners.clear();            
+            this.sessionExpiredListeners.clear();
+            this.listening.remove();
+            this.updatedViews.remove();
+            this.updatesListenerProcess.cancel();
+            this.listenerInitializerProcess.cancel();
         }
     });
 });

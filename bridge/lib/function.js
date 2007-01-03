@@ -75,7 +75,7 @@ Function.prototype.repeatEvery = function(milliseconds) {
 
 Function.prototype.repeatExecutionEvery = function(milliseconds) {
     var call = this.repeatEvery(milliseconds);
-    call.apply();
+    call.apply(this);
     return call;
 };
 

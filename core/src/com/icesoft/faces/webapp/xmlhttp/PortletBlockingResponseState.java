@@ -104,6 +104,15 @@ public class PortletBlockingResponseState
         this.viewNumber = viewNumber;
     }
 
+
+    public boolean hasUpdates() {
+        return !updates.isEmpty();
+    }
+
+    public String getViewNumber() {
+        return viewNumber;
+    }
+
     public void block(HttpServletRequest request)  {
         long left = 0;
 

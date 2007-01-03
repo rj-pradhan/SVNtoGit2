@@ -50,7 +50,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -65,9 +64,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p><strong>DOMResponseWriter</strong> is a DOM specific implementation of
@@ -417,6 +413,12 @@ public class DOMResponseWriter extends ResponseWriter {
 
         Map session = context.getExternalContext().getSessionMap();
         ElementController.from(session).addInto(body);
+
+        Element sessionID =
+                (Element) body.appendChild(document.createElement("script"));
+        sessionID.setAttribute("language", "javascript");
+        sessionID.appendChild(document.createTextNode("window.session='" + context.iceFacesId + "';"));
+        body.appendChild(sessionID);
     }
 
     private void enhanceHead(Element head, BridgeFacesContext context) {
@@ -451,7 +453,7 @@ public class DOMResponseWriter extends ResponseWriter {
             script.setAttribute("src", base + lib);
         }
 
-        String sessionIdentifier = context.iceFacesId;
+        String sessionIdentifier = context.getIceFacesId();
         Element viewAndSessionScript = (Element) head.appendChild(document.createElement("script"));
         viewAndSessionScript.setAttribute("language", "javascript");
         viewAndSessionScript.appendChild(document.createTextNode(

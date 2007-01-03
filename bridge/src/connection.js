@@ -67,7 +67,7 @@
             this.sessionExpiredListeners = [];
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
-            this.sendURI = configuration.context + '/block/receive-send-updates';
+            this.sendURI = configuration.context + '/block/send-receive-updates';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {

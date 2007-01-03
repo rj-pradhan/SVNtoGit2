@@ -34,6 +34,7 @@
 package com.icesoft.faces.webapp.xmlhttp;
 
 import com.icesoft.faces.util.DOMUtils;
+import com.icesoft.faces.webapp.http.core.UpdateManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -44,10 +45,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Pattern;
+
+import edu.emory.mathcs.backport.java.util.concurrent.Semaphore;
 
 /**
  * Originally this class was named BlockingServletState and was an inner class
@@ -62,15 +64,13 @@ public class BlockingResponseState implements ResponseState, Serializable {
     protected static Log log = LogFactory.getLog(BlockingResponseState.class);
     protected int maxNumberOfUpdates = 50;
 
-    private Kicker kicker;
     private Collection updates = new ArrayList();
-    protected boolean isCancelled = false;
     protected String iceID;
     protected String viewNumber;
+    private Semaphore semaphore;
 
     private final int maxUnflushed = 10;
     protected int unflushed = 0;
-    protected HttpSession session;
 
     /*
     Bug 1010:  Added emptry constructor so that the extending class is not
@@ -87,78 +87,26 @@ public class BlockingResponseState implements ResponseState, Serializable {
             throw new IllegalArgumentException(
                     "iceID and viewNumber must be set");
         }
-        this.session = session;
+        this.semaphore = (Semaphore) session.getAttribute(UpdateManager.class.toString());
         this.iceID = iceID;
-        synchronized (iceID) {
-            kicker = (Kicker) session.getAttribute(iceID + "/kicker");
-            if (null == kicker) {
-                kicker = new Kicker();
-                session.setAttribute(iceID + "/kicker", kicker);
-            }
-        }
         this.viewNumber = viewNumber;
     }
 
     public void block(HttpServletRequest request)  {
-        long left = 0;
-
-        synchronized (kicker) {
-            kicker.notifyAll(); //experimental fix for IE connection limit
-            while ((!isCancelled) && (!kicker.isKicked) &&
-                   ((left = remainingMillis()) > 0)) {
-                try {
-                    kicker.wait(left);
-                } catch (InterruptedException e)  {
-                }
-            }
-            kicker.isKicked = false;
-        }
-
-        if (remainingMillis() <= 0) {
-            throw new SessionExpiredException("Session timeout elapsed.");
-        }
-
-        if (isCancelled) {
-            try {
-                //sleeping here to give the browser req.abort a chance to
-                //work.  By sleeping, the browser should never actually
-                //process the canceled response
-                Thread.sleep(500);
-                log.debug("Cancelled block slept for browser abort");
-            } catch (InterruptedException e) {
-            }
-        }
-        isCancelled = false;
+        //do nothing
     }
 
     public void flush() {
-        if (log.isTraceEnabled()) {
-            log.trace("DOMUpdate flushed");
-        }
-        synchronized (kicker) {
-            unflushed++;
-            kicker.isKicked = true;
-            kicker.notifyAll();
-        }
+        semaphore.release();
     }
 
-    //implemented so that cancel only cancels the current
-    //block operation.  Possibly cancel should remain in effect
-    //until cleared.  Possibly the block operation should throw
-    //an exception when cancelled (like InterruptedException)
-    public void cancel() {
-        synchronized (kicker) {
-            kicker.isKicked = true;
-            isCancelled = true;
-            kicker.notifyAll();
-        }
+
+    public boolean hasUpdates() {
+        return !updates.isEmpty();
     }
 
-    protected long remainingMillis() {
-        long currentMillis = Calendar.getInstance().getTime().getTime();
-        long accessedMillis = session.getLastAccessedTime();
-        return (session.getMaxInactiveInterval() * 1000 -
-                (currentMillis - accessedMillis));
+    public String getViewNumber() {
+        return viewNumber;
     }
 
     public boolean hasHandler() {
@@ -218,8 +166,4 @@ public class BlockingResponseState implements ResponseState, Serializable {
                          this.content + "]]></update>");
         }
     }
-}
-
-class Kicker implements Serializable {
-    boolean isKicked = false;
 }

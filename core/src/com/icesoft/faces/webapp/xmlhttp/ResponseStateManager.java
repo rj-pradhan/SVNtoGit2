@@ -40,6 +40,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.Enumeration;
+import java.util.ArrayList;
+
 /**
  * The ResponseStateManager is responsible for creating and maintaining the
  * collection of response states. This implementation provides the basic
@@ -144,7 +147,7 @@ public class ResponseStateManager {
         return new PortletBlockingResponseState(session, iceID, viewNumber);
     }
 
-    ResponseState getState(HttpSession session,
+    public ResponseState getState(HttpSession session,
                                         String viewNumber) {
 
         String iceID = (String) session
@@ -182,6 +185,6 @@ public class ResponseStateManager {
 
     String getStateKey(String viewNumber) {
         //TODO - might be better to reverse these for searching purposes
-        return (viewNumber + "/" + RESPONSE_STATE);
+        return (viewNumber + "/" + ResponseState.STATE);
     }
 }

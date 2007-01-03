@@ -76,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.Arrays;
 
 /**
  * This class is supposed to provide a nice, generic interface to the
@@ -443,7 +444,7 @@ public class BridgeExternalContext extends ExternalContext {
                     new RequestParameterValuesMap();
         }
         valuesMap.clear();
-        valuesMap.putAll(requestParameters);
+        valuesMap.putAll(convertParametersMap(requestParameters));
         filterRequestParameterMap();
     }
 
@@ -989,6 +990,24 @@ public class BridgeExternalContext extends ExternalContext {
                 break;
         }
         return inRole;
+    }
+
+    private static Map convertParametersMap(Map parameters) {
+        Map convertedParameters = new HashMap(parameters);
+        Iterator iterator = convertedParameters.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            String[] values = (String[]) entry.getValue();
+            if (values.length > 1) {
+                // convert the String[] to a List
+                entry.setValue(Arrays.asList(values));
+            } else if (values.length == 1) {
+                // convert the String[] to a String
+                entry.setValue(values[0]);
+            }
+        }
+
+        return convertedParameters;
     }
 
 }

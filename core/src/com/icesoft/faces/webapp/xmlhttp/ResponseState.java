@@ -56,9 +56,11 @@ public interface ResponseState {
 
     void block(HttpServletRequest request);
 
-    void cancel();
-
     void serialize(Writer writer) throws IOException;
 
     void writeElement(Element element);
+
+    boolean hasUpdates();
+
+    String getViewNumber();
 }

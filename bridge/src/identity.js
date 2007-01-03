@@ -44,6 +44,8 @@ function defaultParameters() {
         query.add('focus', currentFocus);
         query.add('window', window.identifier);
         query.add('icefacesID', window.session);
-        query.add('viewNumber', viewIdentifiers().join(' '));
+        viewIdentifiers().each(function(view) {
+            query.add('viewNumber', view);   
+        });
     });
 }

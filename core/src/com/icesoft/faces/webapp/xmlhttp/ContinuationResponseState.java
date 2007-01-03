@@ -59,6 +59,7 @@ public class ContinuationResponseState extends BlockingResponseState {
     protected static Log log = LogFactory.getLog(ContinuationResponseState.class);
 
     private Continuation continuation;
+    private HttpSession session;
 
     protected ContinuationResponseState() {
     }
@@ -70,7 +71,7 @@ public class ContinuationResponseState extends BlockingResponseState {
         this.viewNumber = viewNumber;
         //A null iceID is an indication that the session has expired and
         //a new one has been created, but BlockingServlet needs to address this
-        if ((null == iceID) || (remainingMillis() <= 0)) {
+        if (null == iceID) {
             throw new SessionExpiredException("Session timeout elapsed.");
         }
     }
@@ -78,7 +79,8 @@ public class ContinuationResponseState extends BlockingResponseState {
     public void block(HttpServletRequest request)  {
         continuation = ContinuationSupport
                 .getContinuation(request,request);
-        continuation.suspend(remainingMillis());
+        //todo: verify if this is true!
+        continuation.suspend(session.getMaxInactiveInterval());
     }
 
     public void flush() {
@@ -91,14 +93,6 @@ public class ContinuationResponseState extends BlockingResponseState {
         }
     }
 
-    //implemented so that cancel only cancels the current
-    //block operation.  Possibly cancel should remain in effect
-    //until cleared.  Possibly the block operation should throw
-    //an exception when cancelled (like InterruptedException)
-    public void cancel() {
-        isCancelled = true;
-        continuation.resume();
-    }
 
 }
 
