@@ -168,10 +168,10 @@
             this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();
             this.sessionExpiredListeners.clear();
-            this.listening.remove();
-            this.updatedViews.remove();
             this.updatesListenerProcess.cancel();
             this.listenerInitializerProcess.cancel();
+            this.listening.remove();
+            this.updatedViews.remove();
         }
     });
 });
