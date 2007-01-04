@@ -130,7 +130,11 @@ public abstract class CommonEnvironmentRequest {
     }
 
     public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
+        if (null == value) {
+            attributes.remove(name);
+        } else {
+            attributes.put(name, value);
+        }
     }
 
     public void removeAttribute(String name) {

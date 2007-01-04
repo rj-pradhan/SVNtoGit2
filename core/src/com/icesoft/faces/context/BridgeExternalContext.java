@@ -39,6 +39,7 @@ package com.icesoft.faces.context;
 
 import com.icesoft.faces.context.portlet.PortletApplicationMap;
 import com.icesoft.faces.context.portlet.PortletSessionMap;
+import com.icesoft.faces.context.RequestMapWrapper;
 import com.icesoft.faces.env.PortletEnvironmentResponse;
 import com.icesoft.faces.env.ServletEnvironmentResponse;
 import com.icesoft.faces.util.EnumerationIterator;
@@ -360,40 +361,28 @@ public class BridgeExternalContext extends ExternalContext {
         return null;
     }
 
-    private Map requestMap;
+
+    private RequestMapWrapper requestMap;
 
     public Map getRequestMap() {
+
         BridgeFacesContext facesContext = ((BridgeFacesContext)
                 FacesContext.getCurrentInstance());
-        requestMap =
-                (Map) facesContext.getContextServletTable().get(REQUEST_MAP);
+        requestMap = (RequestMapWrapper)
+                facesContext.getContextServletTable().get(REQUEST_MAP);
+
         if (null != requestMap) {
+            requestMap.setExternalContext(this);
             return requestMap;
         }
-        //This map should really be a wrapper for the actual
-        //request getAttribute/setAttribute.  For now just
-        //preload our map with the request values
-        requestMap = new HashMap();
-        if (null != servletRequest) {
-            Enumeration names = servletRequest.getAttributeNames();
-            while (names.hasMoreElements()) {
-                String name = (String) names.nextElement();
-                requestMap.put(name, servletRequest.getAttribute(name));
-            }
-        } else if (null != portletRequest) {
-            Enumeration names = portletRequest.getAttributeNames();
-            while (names.hasMoreElements()) {
-                String name = (String) names.nextElement();
-                requestMap.put(name, portletRequest.getAttribute(name));
-            }
-        }
+
+        requestMap = new RequestMapWrapper(this);
+
         facesContext.getContextServletTable()
                 .put(REQUEST_MAP, requestMap);
-        return (requestMap);
-    }
 
-    public void setRequestMap(Map requestMap) {
-        this.requestMap = requestMap;
+        return (requestMap);
+
     }
 
 
