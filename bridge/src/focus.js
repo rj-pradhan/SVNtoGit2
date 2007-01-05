@@ -36,38 +36,54 @@ var currentFocus;
 Ice.Focus = new Object();
 Ice.Focus.userInterupt = false;
 
-if (window.Event) {
-    document.captureEvents(Event.KEYDOWN);
-    document.captureEvents(Event.MOUSEDOWN);
-}
-
-Ice.Focus.userInterupt = function (e) {
-    if (Ice.Focus.userInterupt == false) {
+Ice.Focus.userInterupt = function (e){
+    window.logger.debug('Interup pressed');
+    if(Ice.Focus.userInterupt == false){
         window.logger.debug('User action. Set focus will be ignored.');
         Ice.Focus.userInterupt = true;
     }
 
 }
 
-Ice.Focus.setFocus = function(id) {
-    if ((Ice.Focus.userInterupt == false) && (id != '') && (id != 'undefined')) {
-        try {
+Ice.Focus.setFocus = function(id){
+    if((Ice.Focus.userInterupt==false) && (id != '') && (id != 'undefined')){
+        try{
             id.asExtendedElement().focus();
             setFocus(id);
             window.logger.debug('Focus Set on [' + id + "]");
-        } catch(e) {
-            window.logger.error('Failed to set focus on [' + id + ']', e);
+        }catch(e){
+            window.logger.error('Failed to set focus on [' + id +']',e);               
         }
-    } else {
+    }else{
         window.logger.debug('Focus interupted. Not Set on [' + id + ']');
     }
 };
 
-document.onkeydown = Ice.Focus.userInterupt;
-document.onmousedown = Ice.Focus.userInterupt;
+
+document.onKeyDown = function(listener){
+    var previousListener = document.onkeydown;
+    document.onkeydown = previousListener!=null ? function(e){
+        listener(Ice.EventModel.Event.adaptToKeyEvent(e));
+        previousListener(e);
+    } : function(e){
+        listener(Ice.EventModel.Event.adaptToKeyEvent(e));
+    };
+};
+
+document.onMouseDown = function(listener){
+    var previousListener = document.onmousedown;
+    document.onmousedown = previousListener!=null ? function(e){
+        listener(e);
+        previousListener(e);
+    } : function(e){
+        listener(e);
+    };
+};
+
+document.onKeyDown(Ice.Focus.userInterupt);
+document.onMouseDown(Ice.Focus.userInterupt);
 
 function setFocus(id) {
-     window.logger.debug('setFocus called for ID [' + id + ']');
     currentFocus = id;
 }
 
@@ -75,3 +91,4 @@ window.onScroll(function() {
     currentFocus = null;
     window.focus();
 });
+
