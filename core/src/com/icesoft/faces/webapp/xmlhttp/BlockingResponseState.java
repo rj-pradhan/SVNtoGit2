@@ -88,6 +88,14 @@ public class BlockingResponseState implements ResponseState, Serializable {
                     "iceID and viewNumber must be set");
         }
         this.semaphore = (Semaphore) session.getAttribute(UpdateManager.class.toString());
+        if (semaphore == null) {
+            System.out.println("BlockingServlet needs to be registered as a listener class.");
+            System.out.println("Add this lines to your web.xml:");
+            System.out.println();
+            System.out.println("<listener>");
+            System.out.println("\t<listener-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</listener-class>");
+            System.out.println("</listener>");
+        }
         this.iceID = iceID;
         this.viewNumber = viewNumber;
     }
