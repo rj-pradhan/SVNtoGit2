@@ -545,8 +545,10 @@ public class DOMResponseWriter extends ResponseWriter {
 
             //todo: replace this with a complete new implementation that doesn't rely on xslt but can serialize xml, xhtml, and html. 
             if (output == null || ("html".equals(output) && !prettyPrinting)) {
-                writer.write(DOMUtils.DocumentTypetoString(publicID, systemID,
+                if (publicID != null && systemID != null && root != null) {
+                    writer.write(DOMUtils.DocumentTypetoString(publicID, systemID,
                                                            root));
+                }
                 writer.write(DOMUtils.DOMtoString(document));
             } else {
                 //use a serializer. not as performant.
