@@ -348,6 +348,11 @@ public class Util extends Object {
                 if (log.isTraceEnabled()) {
                     log.trace("Context [" + context + "] URI [" + uri + "]");
                 }
+                if (null == uri)  {
+                    //must be a portlet request
+                    //TODO implement this for portlets with subfolder pages
+                    return "/";
+                }
                 int i = uri.indexOf(context);
                 i += context.length() + 1;
                 // Get Path as relitive so that images will cache in IE.
@@ -365,8 +370,9 @@ public class Util extends Object {
                     }
                 }
             } else {
-                log.error(
-                        "Can't get application base. Not a HttpServletRequest");
+                //must be a portlet request
+                //TODO implement this for portlets with subfolder pages
+                base = "/";
             }
         }
         if (log.isTraceEnabled()) {
