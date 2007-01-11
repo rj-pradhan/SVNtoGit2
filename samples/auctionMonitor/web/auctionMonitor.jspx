@@ -318,7 +318,7 @@
                         <ice:outputText value="#{UserBean.nickFormatted}"
                                         style="background-color: transparent;"
                                         escape="false"/>
-                        <ice:inputText immediate="true" id="messageIn" size="50"
+                        <ice:inputText immediate="false" id="messageIn" size="50"
                                        value="#{UserBean.message}"
                                        title="Enter your message text"
                                        styleClass="textField"/>
