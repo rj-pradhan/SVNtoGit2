@@ -41,7 +41,7 @@
             var statusManager = new Ice.Status.StatusManager();
             
             window.identifier = Math.round(Math.random() * 10000).toString();
-            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
+            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection, defaultParameters) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
             });

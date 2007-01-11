@@ -57,9 +57,10 @@
     }
 
     This.SyncConnection = Object.subclass({
-        initialize: function(logger, configuration) {
+        initialize: function(logger, configuration, defaultQuery) {
             this.logger = logger.child('sync-connection');
             this.channel = new Ajax.Client(this.logger);
+            this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
             this.onRedirectListeners = [];
@@ -101,7 +102,8 @@
 
         send: function(query) {
             this.logger.debug('send > ' + query.asString());
-            this.channel.postAsynchronously(this.sendURI, query.asURIEncodedString(), function(request) {
+            var compoundQuery = query.addQuery(this.defaultQuery());
+            this.channel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.Redirect, this.redirectCallback);
