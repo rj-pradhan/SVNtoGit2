@@ -4,6 +4,7 @@
         <property-name>onclick</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -14,6 +15,7 @@
         <property-name>ondblclick</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -24,6 +26,7 @@
         <property-name>onmousedown</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -34,6 +37,7 @@
         <property-name>onmouseup</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -44,6 +48,7 @@
         <property-name>onmouseover</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -54,6 +59,7 @@
         <property-name>onmousemove</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -64,6 +70,7 @@
         <property-name>onmouseout</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -74,6 +81,7 @@
         <property-name>onkeypress</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -84,6 +92,7 @@
         <property-name>onkeydown</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>
@@ -94,6 +103,7 @@
         <property-name>onkeyup</property-name>
         <property-extension>
           <category>JAVASCRIPT</category>
+          <is-hidden>true</is-hidden>
           <editor-class>
             &javascriptEditor;
           </editor-class>

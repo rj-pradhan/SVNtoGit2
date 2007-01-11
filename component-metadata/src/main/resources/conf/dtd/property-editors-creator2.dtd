@@ -31,7 +31,7 @@ com.sun.jsfcl.std.property.NumberPropertyEditor
 <!ENTITY methodBindingEditor "com.sun.jsfcl.std.MethodBindingPropertyEditor">
 <!ENTITY imageUrlEditor "com.sun.rave.propertyeditors.ImageUrlPropertyEditor">
 <!ENTITY javascriptEditor "com.sun.jsfcl.std.JavaScriptPropertyEditor">
-<!ENTITY valueBindingEditor "com.sun.rave.faces.dt.std.ValueBindingPropertyEditor">
+<!ENTITY valueBindingEditor "com.sun.jsfcl.std.ValueBindingPropertyEditor">
 <!ENTITY valueBindingOnlyEditor "com.sun.jsfcl.std.ValueBindingOnlyPropertyEditor">
 
 <!ENTITY sunWebUrlEditor "com.sun.rave.propertyeditors.UrlPropertyEditor">
