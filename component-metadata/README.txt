@@ -2,7 +2,6 @@
 
 directory of metadata (src/main/resources):
 -- conf
--- -- attributes (override default ones, should avoid if possible)
 -- -- component (extended standard component)
 -- -- custom (custom component)
 -- -- ice_cust_properties (custom component properties)
@@ -76,16 +75,20 @@ cust-style-props.xml
     </component>
 
 
-#5 complie and generated tag, baseline component and new tld file
+#5 run generator target in build.xml. The following class will be generated: tag, baseline component, beaninfo and new tld file
 
-#6 extends com/icesoft/faces/component/style/OutputStyleBeanInfoBase.java
+#6 IDE design time related 
+
+extends com/icesoft/faces/component/style/OutputStyleBeanInfoBase.java
 in designtime directory:
 com/icesoft/faces/component/style/OutputStyleBeanInfo.java
 
-#7 implement OutputStyle and design time related class ...
+#7 run time related
+
+implement OutputStyle and design time related class ...
 
 
-Running code generation:
+Running code generator:
 
 build.xml file related target
 
@@ -98,16 +101,22 @@ metadata/src  ("jsfmeta data generators")
 
 Generated Sources Directory:
 
-component-metadata\target\geneated-sources
+component-metadata/target/geneated-sources
 
 Component Baseline
-component-metadata\target\geneated-sources\component\main\java
+component-metadata/target/geneated-sources/component/main/java
 
 Tag Classes under
-component-metadata\target\geneated-sources\taglib\main\java
+component-metadata/target/geneated-sources/taglib/main/java
 
 Tld under
-component-metadata\target\geneated-sources\tld\icefaces_component.tld
+component-metadata/target/geneated-sources/tld/icefaces_component.tld
 
-base category under
-component-metadata/src/main/resources/conf/filter.properties/filter-faces-config.xml 
+beaninfo
+component-metadata/target/generated-sources/beaninfo/main/java
+
+testbeaninfo
+component-metadata/target/generated-sources/testbeaninfo/main/java
+
+(testbeaninfo is generated without dependencies on IDE realted classes)
+
