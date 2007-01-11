@@ -49,7 +49,7 @@
         <navigation-case>
 
             <from-outcome>reload</from-outcome>
-            <to-view-id>/index.jsp</to-view-id>
+            <to-view-id>/index-facelet.jsp</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
