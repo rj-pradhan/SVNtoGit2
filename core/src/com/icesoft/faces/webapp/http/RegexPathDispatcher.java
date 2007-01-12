@@ -16,13 +16,14 @@ public class RegexPathDispatcher implements Server {
         boolean matched = false;
         try {
             while (!matched && i.hasNext()) {
-                matched = ((Matcher) i.next()).match(path, request);
+                matched = ((Matcher) i.next()).serviceOnMatch(path, request);
             }
 
             if (!matched) {
                 request.respondWith(NotFoundHandler.HANDLER);
             }
         } catch (Throwable t) {
+            t.printStackTrace();
             request.respondWith(new ServerErrorHandler(t));
         }
     }
@@ -40,7 +41,7 @@ public class RegexPathDispatcher implements Server {
             this.server = server;
         }
 
-        boolean match(String path, Request request) throws Exception {
+        boolean serviceOnMatch(String path, Request request) throws Exception {
             if (pattern.matcher(path).find()) {
                 server.service(request);
                 return true;
