@@ -32,25 +32,53 @@ import com.sun.rave.jsfmeta.beans.RendererBean;
 
 public class FacesConfigGenerator {
 	
-	public static final String WORKING_FOLDER;
+	private static final String WORKING_FOLDER;
+	private String inputXmlFile;
+	private String outputXmlFile;
+	private String addonXmlFile;
 	
 	public FacesConfigGenerator() {
 
+		inputXmlFile = WORKING_FOLDER+"/build/conf/faces-config.xml";	
+		outputXmlFile = WORKING_FOLDER+"/build/component/META-INF/faces-config.xml";	
+		addonXmlFile = "./src/main/resources/conf/webui-faces-config.xml";
 	}
 	
 	public static void main(String[] args){
-					
-		String xmlFile = WORKING_FOLDER+"/build/conf/faces-config.xml";
-		
-		FacesConfigGenerator parser = new FacesConfigGenerator();
-		Document document = parser.parse(xmlFile);
-		parser.visitDocument(document);
-		String outputFile = WORKING_FOLDER+"/build/component/META-INF/faces-config.xml";
-		
-		parser.transform(document, outputFile);
+
+		FacesConfigGenerator facesConfigGenerator = new FacesConfigGenerator();
+		facesConfigGenerator.generate(args);
 	}
 	
-	static {
+	private void generate(String[] args){
+
+		for (int i = 0; i < args.length; i++) {
+			String arg = args[i];
+			if (arg.equals("-input")){
+				inputXmlFile = args[++i];
+				continue;
+			}
+			if(arg.equals("-output")){
+				outputXmlFile = args[++i];
+				continue;
+			}		
+			if(arg.equals("-addon")){
+				addonXmlFile = args[++i];
+				continue;
+			}
+		}
+		
+		System.out.println("input faces-config file ="+  inputXmlFile);
+		System.out.println("output faces-config file ="+ outputXmlFile);
+		System.out.println("addon faces-config file =" + addonXmlFile);
+			
+		Document document = parse(inputXmlFile);
+		visitDocument(document);	
+		transform(document, outputXmlFile);
+	}
+	
+	
+	static{
 		String result = ".";
 		try {
 			ClassLoader classLoader = Thread.currentThread()
@@ -78,7 +106,7 @@ public class FacesConfigGenerator {
 			FacesConfigParserHelper.validate(outputXmlFile);
 			
 //			transformer.transform(new DOMSource(document), new StreamResult(
-//					System.out));
+//					System.out));execute
 //			System.out.println();
 
 		} catch (TransformerException e) {
@@ -2437,7 +2465,7 @@ public class FacesConfigGenerator {
 			return;
 		}
 		
-		FacesConfigParserHelper facesConfigParserHelper = new FacesConfigParserHelper();		
+		FacesConfigParserHelper facesConfigParserHelper = new FacesConfigParserHelper(addonXmlFile);		
 		RendererBean[] rendererBeans = facesConfigParserHelper.getRendererBeans();
 
 		Document document = render_kit_element.getOwnerDocument();

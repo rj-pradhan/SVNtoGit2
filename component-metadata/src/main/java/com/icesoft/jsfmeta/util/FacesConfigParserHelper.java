@@ -25,14 +25,15 @@ import com.sun.rave.jsfmeta.beans.RendererBean;
 
 public class FacesConfigParserHelper {
 	
+	private String fileName;
 	
-	public FacesConfigParserHelper(){
-		
+	public FacesConfigParserHelper(String file){
+		fileName = file;
 	}
 	
 	public static void main(String[] args){
-		
-		FacesConfigParserHelper helper = new FacesConfigParserHelper();
+		String tmp = "./src/main/resources/conf/webui-faces-config.xml";
+		FacesConfigParserHelper helper = new FacesConfigParserHelper(tmp);
 		helper.getRendererBeans();
 		
 	}
@@ -86,16 +87,13 @@ public class FacesConfigParserHelper {
 		MetadataXmlParser metadataParser = new MetadataXmlParser();
 		metadataParser.setDesign(false);
 
-		try {
-			ClassLoader classLoader = Thread.currentThread()
-					.getContextClassLoader();
-			URL localUrl = classLoader.getResource(".");			
+		try {	
 		
-			String newPath = localUrl+"./../../component/conf/webui-faces-config.xml";
-			System.out.println("local url ="+ newPath);
-			URL url = new URL(newPath);
+			
+			System.out.println("parse file ="+ fileName);
+			File file = new File(fileName);
 
-			FacesConfigBean facesConfigBean = metadataParser.parse(url);
+			FacesConfigBean facesConfigBean = metadataParser.parse(file);
 			RenderKitBean renderKitBean = facesConfigBean.getRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT);
 			RendererBean[] rendererBeans = renderKitBean.getRenderers();
 			
