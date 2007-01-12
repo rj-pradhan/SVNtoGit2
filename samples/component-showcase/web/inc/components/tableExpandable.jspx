@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
 ~
 ~ "The contents of this file are subject to the Mozilla Public License
@@ -134,20 +134,9 @@ The bean is responsible for streaming html documentation to
 this placeholder
 -->
 <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
-    <ice:panelGroup>
-        <f:verbatim>
-            <br/>
-            <br/>
-
-            <p>The Expandable Table example illustrates the flexibility of the
-                ice:dataTable component when bound to a backing-bean via the
-                component &lt;binding&gt; attribute. </p>
-
-            <p>Source code to this example is available in the package
-                com.icesoft.samples.showcase.components.expandableTable.* in
-                both the Community and Enterprise editions of ICEfaces. </p>
-        </f:verbatim>
-    </ice:panelGroup>
+    <iframe src="./docs/expandableDoc.html"
+            class="includeIframe"
+            width="100%"></iframe>
 </ice:panelTab>
 
 <!--
