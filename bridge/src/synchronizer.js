@@ -40,9 +40,13 @@
         },
 
         synchronize: function() {
-            window.frames[0].location.hash = '#reload';
-            this.logger.debug('mark document as modified');
-            this.synchronize = Function.NOOP;
+           try{
+                window.frames[0].location.hash = '#reload';
+                this.logger.debug('mark document as modified');
+                this.synchronize = Function.NOOP;
+            } catch(e){
+                this.logger.warn('could not mark document as modified', e);
+            }
         },
 
         reload: function() {
