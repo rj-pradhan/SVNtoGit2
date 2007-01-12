@@ -39,6 +39,7 @@ import javax.faces.context.ExternalContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.portlet.PortletRequest;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.HashMap;
 
 import com.icesoft.faces.util.ArrayEnumeration;
@@ -59,7 +60,14 @@ public class RequestMapWrapper
         setExternalContext(externalContext);
     }
 
+
     public void setExternalContext(ExternalContext externalContext)  {
+        this.externalContext = externalContext;
+        primeMap();
+    }
+
+
+    public void primeMap()  {
         HttpServletRequest servletRequest = null;
         PortletRequest portletRequest = null;
 
@@ -88,6 +96,31 @@ public class RequestMapWrapper
         }
 
     }
+
+
+    public void clearMostly()  {
+        //instead of requestMap.clear() we must remove everything
+        //except for the stuff that loadBundle puts in the requestMap
+        //because the loadBundle tag only gets to run once
+
+        Iterator keys = hashMap.keySet().iterator();
+        while (keys.hasNext()) {
+            Object key = keys.next();
+            Object value = hashMap.get(key);
+            if (null != value) {
+                String className = value.getClass().getName();
+                if ((className.indexOf("LoadBundleTag") > 0) ||  //Sun RI
+                    (className.indexOf("BundleMap") > 0)) {     //MyFaces
+                    //leave it in the map
+                } else {
+                    keys.remove();
+                }
+            } else {
+                keys.remove();
+            }
+        }
+    }
+
 
     /*
       * @see com.icesoft.faces.context.AbstractAttributeMap#getAttribute(java.lang.String)

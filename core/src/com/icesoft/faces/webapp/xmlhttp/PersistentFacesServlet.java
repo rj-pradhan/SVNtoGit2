@@ -36,6 +36,7 @@ package com.icesoft.faces.webapp.xmlhttp;
 import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
+import com.icesoft.faces.context.RequestMapWrapper;
 import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
 import com.icesoft.util.IdGenerator;
@@ -417,29 +418,10 @@ public class PersistentFacesServlet extends HttpServlet {
     }
 
     void primeRequestMap(ServletRequest request, Map requestMap) {
-        //instead of requestMap.clear() we must remove everything
-        //except for the stuff that loadBundle puts in the requestMap
-        //because the loadBundle tag only gets to run once
-        Iterator keys = requestMap.keySet().iterator();
-        while (keys.hasNext()) {
-            Object key = keys.next();
-            Object value = requestMap.get(key);
-            if (null != value) {
-                String className = value.getClass().getName();
-                if ((className.indexOf("LoadBundleTag") > 0) ||  //Sun RI
-                    (className.indexOf("BundleMap") > 0)) {     //MyFaces
-                    //leave it in the map
-                } else {
-                    keys.remove();
-                }
-            } else {
-                keys.remove();
-            }
-        }
-        Enumeration names = request.getAttributeNames();
-        while (names.hasMoreElements()) {
-            String name = (String) names.nextElement();
-            requestMap.put(name, request.getAttribute(name));
+        if (requestMap instanceof RequestMapWrapper)  {
+            RequestMapWrapper wrapperMap = (RequestMapWrapper) requestMap;
+            wrapperMap.clearMostly();
+            wrapperMap.primeMap();
         }
     }
 
