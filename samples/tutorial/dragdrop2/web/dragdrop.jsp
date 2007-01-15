@@ -5,7 +5,7 @@
     <head>
     </head>
     <body>
-    <ice:outputText value="See the Drag and Drop Turorial in the Advanced topics section of the Developers guide."/>
+    <ice:outputText value="See the Drag and Drop Tutorial in the Advanced topics section of the Developers guide."/>
 <ice:form>
   <ice:panelGroup style="z-index:10;width:200px;height:60px;background:#ddd;border:2px solid black; cursor:move;" 
     draggable="true" dragListener="#{dragDropBean.dragPanelListener}" dragMask="dragging,drag_cancel,hover_start,hover_end">

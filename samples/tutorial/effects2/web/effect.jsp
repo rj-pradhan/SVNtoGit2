@@ -7,7 +7,7 @@
     <body>
     
 <ice:form>
-<ice:outputText value="See the Effects Turorial in the Advanced topics section of the Developers guide."/>
+<ice:outputText value="See the Effects Tutorial in the Advanced topics section of the Developers guide."/>
   <ice:commandButton value="Invoke" action="#{effectBean.invokeEffect}"/>
   <ice:outputText value="Effect Test" onmouseovereffect="#{effectBean.textEffect}"/>
 </ice:form>
