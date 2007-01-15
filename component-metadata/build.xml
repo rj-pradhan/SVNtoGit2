@@ -269,7 +269,7 @@
         <touch file="${project.build.directory}/generated-sources/created" />
     </target>
 
-    <target name="jar" depends="compile,generator,test" description="Clean the JAR">
+    <target name="jar" depends="compile,generator" description="Clean the JAR">
         <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
     </target>
 
