@@ -54,6 +54,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.servlet.http.HttpServletRequest;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -394,6 +395,21 @@ public class DOMResponseWriter extends ResponseWriter {
         Element iframe = document.createElement("iframe");
         body.insertBefore(iframe, body.getFirstChild());
         iframe.setAttribute("id", "history-frame");
+        Object request = context.getExternalContext().getRequest();
+
+        final String frameURI;
+        //another "workaround" to resolve the iframe URI
+        if (request instanceof HttpServletRequest) {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            if (httpRequest.getRequestURI() == null) {
+                frameURI = "about:blank";
+            } else {
+                frameURI = httpRequest.getContextPath() + "/xmlhttp/blank.iface";
+            }
+        } else {
+            frameURI = "about:blank";
+        }
+        iframe.setAttribute("src", frameURI);
         iframe.setAttribute("frameborder", "0");
         iframe.setAttribute("style",
                             "z-index: 10000; visibility: hidden; width: 0; height: 0; opacity: 0.22; filter: alpha(opacity=22);");
