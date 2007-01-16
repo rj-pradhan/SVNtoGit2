@@ -92,7 +92,7 @@
             <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.ext.taglib" />
+            <arg line="-T com.icesoft.faces.component.ext.taglib" />
             <arg line="-v" />
             <!-- -t name of output TLD file relative to -d directory -->
             <arg line="-t icefaces_component.tld" />
@@ -199,7 +199,7 @@
             <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.ext.taglib" />
+            <arg line="-T com.icesoft.faces.component.ext.taglib" />
             <arg line="-v" />
             <!-- -t name of output TLD file relative to -d directory -->
             <arg line="-t icefaces_component.tld" />
