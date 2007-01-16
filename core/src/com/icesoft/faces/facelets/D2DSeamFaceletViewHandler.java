@@ -1,5 +1,6 @@
 package com.icesoft.faces.facelets;
 
+import javax.faces.application.ViewHandler;
 
 import com.sun.facelets.compiler.Compiler;
 import com.sun.facelets.compiler.SAXCompiler;
@@ -16,6 +17,10 @@ public class D2DSeamFaceletViewHandler extends D2DFaceletViewHandler {
 
      // Log instance for this class
     private static Log log = LogFactory.getLog(D2DSeamFaceletViewHandler.class);
+
+    public D2DSeamFaceletViewHandler(ViewHandler delegate) {
+        super(delegate);
+    }
 
     protected void faceletInitialize() {
 
