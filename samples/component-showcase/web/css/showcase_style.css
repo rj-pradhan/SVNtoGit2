@@ -744,10 +744,12 @@ em {
 
 .panelBorderDemoLayoutMain td {
     vertical-align: middle;
+    text-align: center;
+    font-weight: normal;
 }
 
 .panelBorderDemoLayoutMain .icePageCenter {
-    background-color: #EAEDE6
+    background-color: #EAEDE6;
 }
 
 .panelBorderDemoLayoutMain .icePageNorth {
@@ -763,7 +765,7 @@ em {
 .panelBorderDemoLayoutMain .icePageSouth {
     height: 40px;
     background-color: #DEE7D5;
-    border-top-width:0px;
+    border-top-width: 0;
 }
 
 .panelBorderDemoLayoutMain .icePageWest {
