@@ -1,4 +1,4 @@
-package com.icesoft.faces.webapp.http;
+package com.icesoft.faces.webapp.http.common;
 
 import java.util.Date;
 import java.io.OutputStream;

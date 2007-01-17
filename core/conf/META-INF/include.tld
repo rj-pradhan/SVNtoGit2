@@ -15,6 +15,9 @@
     with JSF components. 
   </description>
 
+    <listener>
+        <listener-class>com.icesoft.faces.webapp.http.servlet.SessionDispatcher$Listener</listener-class>
+    </listener>
 
   <tag>
 

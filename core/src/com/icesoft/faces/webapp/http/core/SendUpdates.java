@@ -1,9 +1,9 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.Response;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Server;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
 
 import java.io.OutputStreamWriter;
 
@@ -24,5 +24,8 @@ public class SendUpdates implements Server {
                 writer.flush();
             }
         });
+    }
+    
+    public void shutdown() {
     }
 }

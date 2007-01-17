@@ -4,10 +4,10 @@ import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.context.BridgeExternalContext;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIComponent;
@@ -21,7 +21,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
 public class ReceiveSendUpdates implements Server {
@@ -65,9 +64,11 @@ public class ReceiveSendUpdates implements Server {
         }
     }
 
+    public void shutdown() {
+    }
+
     private void renderCycle(BridgeFacesContext context) {
         synchronized (context) {
-            context.setCurrentInstance();
             DOMResponseWriter.applyBrowserDOMChanges(context);
             if (null != postBackKey) {
                 context.getExternalContext().getRequestParameterMap()
@@ -75,14 +76,12 @@ public class ReceiveSendUpdates implements Server {
             }
             lifecycle.execute(context);
             lifecycle.render(context);
-            context.release();
         }
     }
 
     private void renderCyclePartial(BridgeFacesContext context,
                             UIComponent component) {
         synchronized (context) {
-            context.setCurrentInstance();
             DOMResponseWriter.applyBrowserDOMChanges(context);
             List alteredRequiredComponents =
                     setRequiredFalseInFormContaining(component);
@@ -92,7 +91,6 @@ public class ReceiveSendUpdates implements Server {
             }
             lifecycle.execute(context);
             lifecycle.render(context);
-            context.release();
             setRequiredTrue(alteredRequiredComponents);
         }
     }

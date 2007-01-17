@@ -1,10 +1,10 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.Response;
-import com.icesoft.faces.webapp.http.Configuration;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.Configuration;
 
 import java.io.PrintStream;
 
@@ -33,5 +33,8 @@ public class RedirectOnJSBlocked implements Server {
 
     public void service(final Request request) throws Exception {
         request.respondWith(handler);
+    }
+
+    public void shutdown() {
     }
 }

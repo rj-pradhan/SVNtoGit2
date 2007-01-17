@@ -1,4 +1,4 @@
-package com.icesoft.faces.webapp.http;
+package com.icesoft.faces.webapp.http.common;
 
 public interface ResponseHandler {
 

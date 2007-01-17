@@ -1,12 +1,11 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
 
 import java.io.StringWriter;
-import java.io.ByteArrayInputStream;
 
 public class SendUpdatedViews implements Server {
     private ResponseHandler responseHandler;
@@ -31,5 +30,8 @@ public class SendUpdatedViews implements Server {
 
     public void service(Request request) throws Exception {
         request.respondWith(responseHandler);
+    }
+
+    public void shutdown() {
     }
 }

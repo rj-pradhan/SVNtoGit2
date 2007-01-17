@@ -1,7 +1,7 @@
-package com.icesoft.faces.webapp.http.standard;
+package com.icesoft.faces.webapp.http.common.standard;
 
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
 
 public class OKHandler implements ResponseHandler {
     public static final ResponseHandler HANDLER = new OKHandler(); 

@@ -1,14 +1,13 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
 import com.icesoft.faces.webapp.xmlhttp.SessionExpiredException;
 import com.icesoft.faces.webapp.xmlhttp.SessionLifetimeManager;
 
 import javax.servlet.http.HttpSession;
-import java.io.StringWriter;
 import java.io.ByteArrayInputStream;
 
 public class SendSessionExpired implements Server {
@@ -38,5 +37,9 @@ public class SendSessionExpired implements Server {
         } catch (SessionExpiredException e) {
             request.respondWith(Handler);
         }
+    }
+
+    public void shutdown() {
+        server.shutdown();
     }
 }

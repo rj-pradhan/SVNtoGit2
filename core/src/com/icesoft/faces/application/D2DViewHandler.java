@@ -553,11 +553,7 @@ public class D2DViewHandler extends ViewHandler {
                 if (externalContext instanceof BridgeExternalContext) {
                     BridgeExternalContext bridgeExternalContext =
                             (BridgeExternalContext) externalContext;
-                    if (BlockingServlet.standardRequestScope) {
-                        bridgeExternalContext.clearRequestMap();
-                    } else {
                         bridgeExternalContext.resetRequestMap();
-                    }
                 }
             } catch (Throwable e) {
                 throw new FacesException("Can't parse stream for " + viewId +

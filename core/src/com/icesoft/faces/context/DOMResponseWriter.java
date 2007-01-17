@@ -433,7 +433,7 @@ public class DOMResponseWriter extends ResponseWriter {
         Element sessionID =
                 (Element) body.appendChild(document.createElement("script"));
         sessionID.setAttribute("language", "javascript");
-        sessionID.appendChild(document.createTextNode("window.session='" + context.iceFacesId + "';"));
+        sessionID.appendChild(document.createTextNode("window.session='" + context.getIceFacesId() + "';"));
         body.appendChild(sessionID);
     }
 

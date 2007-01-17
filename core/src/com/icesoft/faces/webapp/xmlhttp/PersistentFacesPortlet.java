@@ -53,6 +53,7 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 /**
  * The primary differenct between the servlet and portlet environments are: -
@@ -85,6 +86,7 @@ public class PersistentFacesPortlet implements Portlet {
 
     private static final Log log =
             LogFactory.getLog(PersistentFacesPortlet.class);
+    private IdGenerator idGenerator;
 
     public void init(PortletConfig config) throws PortletException {
 
@@ -92,6 +94,12 @@ public class PersistentFacesPortlet implements Portlet {
         commonlet = new PersistentFacesCommonlet();
         commonlet.init(commonlet.getInitParams(portletConfig));
         stateManager = new ResponseStateManager();
+        try {
+            idGenerator = new IdGenerator(portletConfig.getPortletContext()
+                                        .getResource("/").getPath());
+        } catch (MalformedURLException e) {
+            throw new PortletException(e);
+        }
     }
 
     public void processAction(ActionRequest request, ActionResponse response)
@@ -169,9 +177,7 @@ public class PersistentFacesPortlet implements Portlet {
                         PortletSession.APPLICATION_SCOPE);
         if (iceID == null) {
             iceID =
-                    IdGenerator.create(
-                            portletConfig.getPortletContext()
-                                    .getResource("/").getPath());
+                    idGenerator.newIdentifier();
             session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, iceID,
                                  PortletSession.APPLICATION_SCOPE);
         }
@@ -269,27 +275,29 @@ public class PersistentFacesPortlet implements Portlet {
         // We have our own copy of the request because when a request has completed, we need to
         // ensure access to some of its information.  So we keep relevant information
         // in a environment-friendly (servlet,portlet) container for future use.
-        PortletEnvironmentRequest envReq =
-                new PortletEnvironmentRequest(request);
 
-        // Create instances of the appropriate contexts and state and stuff it in the session.
-        BridgeExternalContext perExtContext =
-                new BridgeExternalContext(extContext.getContext(), envReq,
-                                          null);
-        perExtContext.setRequestServletPath(extContext.getRequestServletPath());
-        BridgeFacesContext persistentContext =
-                new BridgeFacesContext(perExtContext);
-        PersistentFacesState state =
-                new PersistentFacesState(persistentContext);
-        //not yet clear how to apply viewNumber to portlets
-        perExtContext.getRequestParameterMap()
-                .put("viewNumber", String.valueOf(viewNumber));
-        PersistentFacesState.setInstance(
-                perExtContext.getApplicationSessionMap(),
-                String.valueOf(viewNumber), state);
-        PersistentFacesState.setLocalInstance(
-                perExtContext.getApplicationSessionMap(),
-                String.valueOf(viewNumber));
+        //todo: create PortletExternalContext and PortletFacesContext classes
+//        PortletEnvironmentRequest envReq =
+//                new PortletEnvironmentRequest(request);
+//
+//        // Create instances of the appropriate contexts and state and stuff it in the session.
+//        BridgeExternalContext perExtContext =
+//                new BridgeExternalContext(extContext.getContext(), envReq,
+//                                          null);
+//        perExtContext.setRequestServletPath(extContext.getRequestServletPath());
+//        BridgeFacesContext persistentContext =
+//                new BridgeFacesContext(perExtContext);
+//        PersistentFacesState state =
+//                new PersistentFacesState(persistentContext);
+//        //not yet clear how to apply viewNumber to portlets
+//        perExtContext.getRequestParameterMap()
+//                .put("viewNumber", String.valueOf(viewNumber));
+//        PersistentFacesState.setInstance(
+//                perExtContext.getApplicationSessionMap(),
+//                String.valueOf(viewNumber), state);
+//        PersistentFacesState.setLocalInstance(
+//                perExtContext.getApplicationSessionMap(),
+//                String.valueOf(viewNumber));
 
     }
 

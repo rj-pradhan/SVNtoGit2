@@ -1,7 +1,7 @@
-package com.icesoft.faces.webapp.http;
+package com.icesoft.faces.webapp.http.common;
 
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
 
 import java.net.URI;
 import java.util.Date;

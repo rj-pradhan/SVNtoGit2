@@ -49,54 +49,37 @@ import org.apache.commons.logging.LogFactory;
  * address of the localhost, and a random number. </p>
  */
 public class IdGenerator {
-    private static Log log = LogFactory.getLog(IdGenerator.class);
-
-    private static long counter;
-    private static String ipAddress;
-
-    static {
-        try {
-            ipAddress = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException exception) {
-            if (log.isFatalEnabled()) {
-                log.fatal(
-                        "Failed to get IP address for localhost!", exception);
-            }
-        }
-    }
-
+    private String seed;
+    private long counter;
+    private String ipAddress;
     private static MessageDigest md5;
 
-    static {
+    public IdGenerator(String seed) {
+        this.seed = seed.trim();
+        this.counter = 0;
         try {
-            md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException exception) {
-            if (log.isFatalEnabled()) {
-                log.fatal("The MD5 algorithm is not available!", exception);
-            }
+            ipAddress = InetAddress.getLocalHost().getHostAddress();
+            md5 = MessageDigest.getInstance("MD5");            
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
         }
     }
 
     /**
      * Creates a unique ID based on the specified <code>string</code>. </p>
-     *
-     * @param string the arbitrary string on which the unique ID to be created
-     *               is based.
      * @return a unique ID.
      */
-    public static synchronized String create(String string) {
-        if (string == null || string.trim().length() == 0) {
-            return null;
-        }
-        StringBuffer _input = new StringBuffer();
-        _input.append(++counter);
-        _input.append(System.currentTimeMillis());
-        _input.append(string);
-        _input.append(ipAddress);
-        _input.append(Math.random());
-        return
-                new String(
-                        Base64.encodeForURL(
-                                md5.digest(_input.toString().getBytes())));
+    public synchronized String newIdentifier() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(++counter);
+        buffer.append(System.currentTimeMillis());
+        buffer.append(seed);
+        buffer.append(ipAddress);
+        buffer.append(Math.random());
+        byte[] digest = md5.digest(buffer.toString().getBytes());
+        byte[] encodedDigest = Base64.encodeForURL(digest);
+        return new String(encodedDigest);
     }
 }

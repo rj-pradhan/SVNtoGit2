@@ -1,10 +1,10 @@
-package com.icesoft.faces.webapp.http.standard;
+package com.icesoft.faces.webapp.http.common.standard;
 
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.RequestProxy;
-import com.icesoft.faces.webapp.http.Response;
-import com.icesoft.faces.webapp.http.Request;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.RequestProxy;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.Request;
 
 import java.util.Date;
 import java.util.Collection;
@@ -46,6 +46,11 @@ public class CacheControlledServer implements Server {
             server.service(new EnhancedRequest(request));
             served = true;
         }
+    }
+
+    public void shutdown() {
+        cache.clear();
+        served = false;
     }
 
     private class EnhancedRequest extends RequestProxy {

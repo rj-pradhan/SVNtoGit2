@@ -41,7 +41,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletContext;
 import java.lang.reflect.Method;
+
+import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
+import com.icesoft.faces.webapp.http.servlet.ServletFacesContext;
 
 /**
  * This is the ICEfaces implementation of the FacesContextFactory.  We take
@@ -93,9 +97,13 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
         // we're currently running in as well as the request and response objects.  The
         // BridgeExternalContext is responsible for differentiating the type of environment
         // and delegating the calls appropriately.
-        BridgeExternalContext externalContext =
-                new BridgeExternalContext(context, request, response);
-        return new BridgeFacesContext(externalContext);
+        if (context instanceof ServletContext) {
+            BridgeExternalContext externalContext =
+                new ServletExternalContext(context, request, response);
+            return new ServletFacesContext(externalContext, null);
+        } else {
+            throw new IllegalStateException("Unknown environment");
+        }
     }
 
     private boolean shouldDelegate(Object request) {

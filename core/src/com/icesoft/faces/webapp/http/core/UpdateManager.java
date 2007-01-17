@@ -68,4 +68,8 @@ public class UpdateManager {
         return (ResponseState[]) states.toArray(new ResponseState[states.size()]);
     }
 
+    public void shutdown() {
+        semaphore.release();
+    }
+
 }

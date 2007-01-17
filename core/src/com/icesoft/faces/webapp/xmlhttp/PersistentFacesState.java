@@ -84,7 +84,7 @@ public class PersistentFacesState implements Serializable {
         setFacesContext(facesContext);
     }
 
-    void setFacesContext(FacesContext facesContext) {
+    public void setFacesContext(FacesContext facesContext) {
         this.facesContext = facesContext;
         if (facesContext instanceof BridgeFacesContext) {
             isBridgeFacesContext = true;
@@ -146,7 +146,7 @@ public class PersistentFacesState implements Serializable {
                        persistentFacesState);
     }
 
-    static void resetInstance(Map sessionMap, String viewNumber,
+    public static void resetInstance(Map sessionMap, String viewNumber,
                               FacesContext facesContext) {
         PersistentFacesState state = getInstance(sessionMap, viewNumber);
         state.setFacesContext(facesContext);
@@ -284,7 +284,7 @@ public class PersistentFacesState implements Serializable {
      * ensure that they are not hanging on to any session references, otherwise
      * the session and their resources are not released.
      */
-    static void clearLocalInstance() {
+    public static void clearLocalInstance() {
         if (localInstance != null) {
             localInstance.set(null);
         }

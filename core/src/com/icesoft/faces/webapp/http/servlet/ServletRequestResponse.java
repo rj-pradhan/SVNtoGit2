@@ -1,8 +1,8 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.Response;
-import com.icesoft.faces.webapp.http.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
-public class RequestResponse implements Request, Response {
+public class ServletRequestResponse implements Request, Response {
     private final static DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
     static {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -26,7 +26,7 @@ public class RequestResponse implements Request, Response {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public RequestResponse(HttpServletRequest request, HttpServletResponse response) {
+    public ServletRequestResponse(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }

@@ -1,11 +1,11 @@
-package com.icesoft.faces.webapp.http.standard;
+package com.icesoft.faces.webapp.http.common.standard;
 
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.RequestProxy;
-import com.icesoft.faces.webapp.http.ResponseProxy;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.RequestProxy;
+import com.icesoft.faces.webapp.http.common.ResponseProxy;
 
 import java.util.zip.GZIPOutputStream;
 import java.io.OutputStream;
@@ -27,6 +27,9 @@ public class CompressingServer implements Server {
         } else {
             server.service(request);
         }
+    }
+
+    public void shutdown() {
     }
 
     private class CompressingRequest extends RequestProxy {

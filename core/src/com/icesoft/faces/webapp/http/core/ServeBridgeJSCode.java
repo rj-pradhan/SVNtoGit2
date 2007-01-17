@@ -1,10 +1,10 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.Server;
-import com.icesoft.faces.webapp.http.Request;
-import com.icesoft.faces.webapp.http.Configuration;
-import com.icesoft.faces.webapp.http.ResponseHandler;
-import com.icesoft.faces.webapp.http.Response;
+import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Configuration;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Response;
 
 import java.io.InputStream;
 import java.io.SequenceInputStream;
@@ -50,5 +50,8 @@ public class ServeBridgeJSCode implements Server {
                 response.writeBodyFrom(new SequenceInputStream(bridgeConfiguration, bridgeCode));
             }
         });
+    }
+    
+    public void shutdown() {
     }
 }

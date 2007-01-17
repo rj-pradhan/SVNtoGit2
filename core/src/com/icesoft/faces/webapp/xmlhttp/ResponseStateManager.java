@@ -134,7 +134,7 @@ public class ResponseStateManager {
         return mgr;
     }
 
-    public ResponseState createState(HttpSession session, String iceID,
+    public static ResponseState createState(HttpSession session, String iceID,
                                      String viewNumber) {
         if (hasContinuations)  {
             return new ContinuationResponseState( session, iceID, viewNumber );
@@ -147,7 +147,7 @@ public class ResponseStateManager {
         return new PortletBlockingResponseState(session, iceID, viewNumber);
     }
 
-    public ResponseState getState(HttpSession session,
+    public static ResponseState getState(HttpSession session,
                                         String viewNumber) {
 
         String iceID = (String) session
@@ -183,7 +183,7 @@ public class ResponseStateManager {
         return state;
     }
 
-    String getStateKey(String viewNumber) {
+    static String getStateKey(String viewNumber) {
         //TODO - might be better to reverse these for searching purposes
         return (viewNumber + "/" + ResponseState.STATE);
     }

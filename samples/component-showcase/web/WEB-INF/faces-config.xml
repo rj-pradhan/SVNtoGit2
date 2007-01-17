@@ -50,7 +50,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.fileUpload.InputFileBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>renderManager</property-name>
             <value>#{renderManager}</value>
@@ -68,7 +68,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.navigation.NavigationBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
@@ -79,7 +79,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.navigation.TreeNavigation
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Managed Bean for dynamic style examples -->
@@ -88,7 +88,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.util.StyleBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!--
@@ -106,7 +106,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.PanelTabSetBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>tabbedPane1Visible</property-name>
             <value>true</value>
@@ -129,7 +129,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.seriesPanel.Cashier
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <!-- Tree Table example bean-->
@@ -141,7 +141,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.tree.TreeBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <!-- Calendar example bean  -->
@@ -153,7 +153,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.calendar.SelectInputDateBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Tree Menu backing bean-->
@@ -170,7 +170,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressPropertyBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
@@ -178,7 +178,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressRenderBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property> 
             <property-name>renderManager</property-name>
             <value>#{renderManager}</value>
@@ -191,7 +191,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressIndeterminateBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property> 
             <property-name>renderManager</property-name> 
             <value>#{renderManager}</value> 
@@ -226,7 +226,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>dictionary</property-name>
             <value>#{autoCompleteDictionary.dictionary}</value>
@@ -239,7 +239,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.dragDrop.CartBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
      <!-- Popup Panel backing bean -->
@@ -248,7 +248,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.popupPanel.PopupBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <!-- Menu Bar backing bean -->
@@ -266,14 +266,14 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.DataTablePaginatorBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>salesRecordsManager</managed-bean-name>
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.expandableTable.SalesRecordsManager</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Data Sort Header example -->
@@ -282,7 +282,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.DataTablePaginatorBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Panel stack example backing bean -->
@@ -291,7 +291,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.stackingPanel.PanelStackBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
         <managed-property>
             <property-name>selectedPanel</property-name>
             <value>mineral</value>
@@ -318,7 +318,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.borderPanel.BorderLayoutBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Text fields and text areas backing bean -->
@@ -327,7 +327,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.textEntry.TextFieldsBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Selection components backing bean -->
@@ -336,7 +336,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.selection.SelectionTagsBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Buttons And Links components backing bean -->
@@ -345,7 +345,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.buttonsLinks.ButtonsAndLinksBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Panel Grid backing bean -->
@@ -354,7 +354,7 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.TableBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Columns backing bean -->
@@ -363,28 +363,28 @@
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.ColumnsBean
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
      <!-- Effects Beans -->
      <managed-bean>
         <managed-bean-name>effects</managed-bean-name>
       <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.effects.Effects</managed-bean-class>
-      <managed-bean-scope>session</managed-bean-scope>
+      <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Positioned Panel -->
     <managed-bean>
         <managed-bean-name>panelPositioned</managed-bean-name>
       <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
-      <managed-bean-scope>session</managed-bean-scope>
+      <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
     <!-- Managed Beans for outputChart examples -->
     <managed-bean>
         <managed-bean-name>combinedChart</managed-bean-name>
         <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.CombinedChartBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean> 
     
     <managed-bean>

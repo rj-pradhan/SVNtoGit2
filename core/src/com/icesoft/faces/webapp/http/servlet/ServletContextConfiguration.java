@@ -1,15 +1,15 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import com.icesoft.faces.webapp.http.Configuration;
-import com.icesoft.faces.webapp.http.ConfigurationException;
+import com.icesoft.faces.webapp.http.common.Configuration;
+import com.icesoft.faces.webapp.http.common.ConfigurationException;
 
 import javax.servlet.ServletContext;
 
-public class ContextConfiguration extends Configuration {
+public class ServletContextConfiguration extends Configuration {
     private final String name;
     private ServletContext context;
 
-    public ContextConfiguration(String prefix, ServletContext context) {
+    public ServletContextConfiguration(String prefix, ServletContext context) {
         this.name = prefix;
         this.context = context;
     }
@@ -24,7 +24,7 @@ public class ContextConfiguration extends Configuration {
         if (value == null) {
             throw new ConfigurationException("Cannot find parameter: " + childName);
         } else {
-            return new ContextConfiguration(childName, context);
+            return new ServletContextConfiguration(childName, context);
         }
     }
 
