@@ -33,41 +33,7 @@
 
 package com.icesoft.faces.webapp.xmlhttp;
 
-import com.icesoft.faces.context.BridgeExternalContext;
-import com.icesoft.faces.context.BridgeFacesContext;
-import com.icesoft.faces.context.DOMResponseWriter;
-import com.icesoft.faces.context.RequestMapWrapper;
-import com.icesoft.faces.env.ServletEnvironmentRequest;
-import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
 import com.icesoft.faces.webapp.http.servlet.MainServlet;
-import com.icesoft.util.IdGenerator;
-import com.icesoft.util.SeamUtilities;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
-import javax.faces.lifecycle.Lifecycle;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.zip.GZIPOutputStream;
-import java.net.MalformedURLException;
 
 //todo: deprecate this class
 public class PersistentFacesServlet extends MainServlet {
