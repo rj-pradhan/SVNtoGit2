@@ -1,7 +1,6 @@
 package com.icesoft.metadata.generators;
 
 import java.io.File;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,8 +13,6 @@ import java.util.Set;
 
 import javax.faces.render.RenderKitFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.sun.rave.jsfmeta.beans.AttributeBean;
 import com.sun.rave.jsfmeta.beans.ComponentBean;
@@ -28,6 +25,8 @@ import com.sun.rave.jsfmeta.beans.NamedValueBean;
 import com.sun.rave.jsfmeta.beans.PropertyBean;
 import com.sun.rave.jsfmeta.beans.RenderKitBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AbstractGenerator {
 
@@ -56,7 +55,7 @@ public abstract class AbstractGenerator {
 
 	private JavaSourceWriter writer;
 
-	protected static Log log = LogFactory.getLog(AbstractGenerator.class);
+        protected static final Logger logger = Logger.getLogger("com.icesoft.metadata.generators");
 	
 	static {
 		
@@ -227,7 +226,7 @@ public abstract class AbstractGenerator {
 		ComponentBean bcb = getConfig().getComponent(baseComponentType);
 		if (bcb == null) {
 			
-			log.debug(" invalid base component");
+			logger.log(Level.SEVERE, " invalid base component");
 			
 			throw new IllegalArgumentException(" invalid base component");
 		} else {
@@ -368,7 +367,7 @@ public abstract class AbstractGenerator {
 		String componentFamily = componentFamily(cb);
 		if (componentFamily == null) {
 			
-			log.debug("NoComponentFamily");
+			logger.log(Level.SEVERE, "NoComponentFamily");
 			throw new IllegalArgumentException("NoComponentFamily");
 		}
 
@@ -388,7 +387,7 @@ public abstract class AbstractGenerator {
 		// rb.getInstanceName());
 		if (rb == null) {
 			
-			log.debug("InvalidRendererType");			
+			logger.log(Level.SEVERE, "InvalidRendererType");			
 			throw new IllegalArgumentException("InvalidRendererType");
 		} else {
 			return rb;

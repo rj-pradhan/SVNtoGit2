@@ -5,10 +5,6 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.icesoft.jsfmeta.MetadataXmlParser;
 import com.sun.rave.jsfmeta.beans.ComponentBean;
 import com.sun.rave.jsfmeta.beans.ConverterBean;
@@ -17,10 +13,12 @@ import com.sun.rave.jsfmeta.beans.FacetBean;
 import com.sun.rave.jsfmeta.beans.RenderKitBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 import com.sun.rave.jsfmeta.beans.ValidatorBean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class Main {
 
-	private static Log log = LogFactory.getLog(Main.class);
+	private static Logger logger = Logger.getLogger("com.icesoft.metadata.generators.Main");
 
 	private String baseBI;
 
@@ -182,7 +180,7 @@ public final class Main {
 		ComponentBean cbs[] = config.getComponents();
 		for (int i = 0; i < cbs.length; i++) {
 			ComponentBean cb = cbs[i];
-			if (log.isDebugEnabled()) {
+			if (logger.isLoggable(Level.FINE)) {
 				System.out.println("Component(componentType="
 						+ cb.getComponentType() + ",componentFamily="
 						+ cb.getComponentFamily() + ",rendererType="
@@ -192,7 +190,7 @@ public final class Main {
 			FacetBean fbs[] = cbs[i].getFacets();
 			for (int j = 0; j < fbs.length; j++) {
 
-				if (log.isDebugEnabled()) {
+				if (logger.isLoggable(Level.FINE)) {
 					System.out.println("  Facet(facetName="
 							+ fbs[j].getFacetName() + ",displayName="
 							+ fbs[j].getDisplayName("") + ")");
@@ -413,7 +411,7 @@ public final class Main {
 	private void usage() {
 		// TODO: message bundle
 		String info = "TODO";
-		log.info(info);
+		logger.info(info);
 	}
 
 }
