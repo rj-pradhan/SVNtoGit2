@@ -58,31 +58,31 @@ public class MetadataXmlParser {
 		digester.setValidating(false);
 		URL url = null;
 		url = getClass().getClassLoader().getResource(
-				"com/sun/faces/resources/web-facesconfig_1_0.dtd");
+				"conf/dtd/web-facesconfig_1_0.dtd");
 		if (url != null)
 			register(
 					"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN",
 					url);
 		url = getClass().getClassLoader().getResource(
-				"com/sun/faces/resources/web-facesconfig_1_1.dtd");
+				"conf/dtd/web-facesconfig_1_1.dtd");
 		if (url != null)
 			register(
 					"-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN",
 					url);
 		url = getClass().getClassLoader().getResource(
-				"com/sun/rave/jsfmeta/resources/web-facesconfig-overlay_1_0.dtd");
+				"conf/dtd/web-facesconfig-overlay_1_0.dtd");
 		if (url != null)
 			register(
 					"-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.0//EN",
 					url);
 		url = getClass().getClassLoader().getResource(
-				"com/sun/rave/jsfmeta/resources/web-facesconfig-overlay_1_1.dtd");
+				"conf/dtd/web-facesconfig-overlay_1_1.dtd");
 		if (url != null)
 			register(
 					"-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.1//EN",
 					url);
 		url = getClass().getClassLoader().getResource(
-				"com/sun/rave/jsfmeta/resources/web-facesconfig-overlay_1_2.dtd");
+				"conf/dtd/web-facesconfig-overlay_1_2.dtd");
 		if (url != null)
 			register(
 					"-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.2//EN",
