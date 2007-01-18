@@ -55,7 +55,7 @@ public class RowSelectorRenderer extends DomBasicRenderer {
 
     // Decode Method
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
-        super.decode(facesContext, uiComponent);
+        //super.decode(facesContext, uiComponent);
 
         // Check for row selection in its parent table hidden field
         HtmlDataTable dataTable = getParentDataTable(uiComponent);
@@ -109,27 +109,22 @@ public class RowSelectorRenderer extends DomBasicRenderer {
         }
     }
 
+
+
     public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
 
-        super.encodeEnd(facesContext, uiComponent);
+        //super.encodeEnd(facesContext, uiComponent);
 
         // Nothing is rendered
     }
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
-        super.encodeBegin(facesContext, uiComponent);
-        DOMContext domContext =
-                DOMContext.attachDOMContext(facesContext, uiComponent);
-        if (!domContext.isInitialized()) {
-            Element root = domContext.createRootElement(HTML.DIV_ELEM);
-
-
-        }
-        uiComponent.setRendered(true);
+        //super.encodeBegin(facesContext, uiComponent);
+         //uiComponent.setRendered(true);
         // Mothing is rendered
-    }
+    }         
 
     private static HtmlDataTable getParentDataTable(UIComponent uiComponenent) {
         UIComponent parentComp = uiComponenent.getParent();

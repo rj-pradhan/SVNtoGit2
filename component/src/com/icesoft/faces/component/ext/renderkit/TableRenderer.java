@@ -419,14 +419,11 @@ public class TableRenderer
                         domContext.setCursorParent(td);
                         domContext.streamWrite(facesContext, uiComponent,
                                                domContext.getRootNode(), td);
-                        try{
+                        
                         
                         encodeParentAndChildren(facesContext, nextChild);
                         domContext.setCursorParent(oldCursorParent);
-                        }catch(Exception e){
-                            System.err.println("ERRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR");
-                            e.printStackTrace();
-                        }
+
                     } else if (nextChild instanceof UIColumns) {
                         String width = null;
                         if (isScrollable(uiComponent) &&

@@ -34,12 +34,17 @@
 package com.icesoft.faces.component.ext;
 
 import com.icesoft.faces.context.effects.JavascriptContext;
+import com.icesoft.faces.component.ext.renderkit.TableRenderer;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 /**
  * Created by IntelliJ IDEA. User: rmayhew Date: Aug 28, 2006 Time: 12:45:26 PM
@@ -150,9 +155,94 @@ public class RowSelector extends UIComponentBase {
         } else {
             super.setValueBinding(s, vb);
         }
+
+    }
+
+    public void processDecodes(FacesContext facesContext){
+        // Check for row selection in its parent table hidden field
+        HtmlDataTable dataTable = getParentDataTable(this);
+
+        String dataTableId = dataTable.getClientId(facesContext);
+        String selectedRowsParameter =
+                TableRenderer.getSelectedRowParameterName(dataTableId);
+        String selectedRows = (String) facesContext.getExternalContext()
+                .getRequestParameterMap().get(selectedRowsParameter);
+
+        if (selectedRows == null || selectedRows.trim().length() == 0) {
+            return;
+        }
+
+        // What row number am I, was I clicked?
+        int rowIndex = dataTable.getRowIndex();
+        StringTokenizer st = new StringTokenizer(selectedRows, ",");
+        boolean rowClicked = false;
+        while (st.hasMoreTokens()) {
+            int row = Integer.parseInt(st.nextToken());
+            if (row == rowIndex) {
+                rowClicked = true;
+                break;
+            }
+        }
+        RowSelector rowSelector = (RowSelector) this;
+
+        try {
+            if (rowClicked) {
+                // Toggle the row selection if multiple
+                boolean b = rowSelector.getValue().booleanValue();
+                b = !b;
+                rowSelector.setValue(new Boolean(b));
+
+                if (rowSelector.getSelectionListener() != null) {
+                    RowSelectorEvent evt =
+                            new RowSelectorEvent(rowSelector, rowIndex, b);
+                    evt.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
+
+                    rowSelector.queueEvent(evt);
+                }
+
+            } else {
+                if (Boolean.FALSE.equals(rowSelector.getMultiple())) {
+                    // Clear all other selections
+                    rowSelector.setValue(Boolean.FALSE);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+     private static HtmlDataTable getParentDataTable(UIComponent uiComponenent) {
+        UIComponent parentComp = uiComponenent.getParent();
+        if (parentComp == null) {
+            throw new RuntimeException(
+                    "RowSelectorRenderer: decode. Could not find an Ice:dataTable as a parent componenent");
+        }
+        if (parentComp instanceof com.icesoft.faces.component.ext.HtmlDataTable) {
+            return (HtmlDataTable) parentComp;
+        }
+        return getParentDataTable(parentComp);
+    }
+
+    public void encodeEnd(FacesContext facesContext)
+            throws IOException {
+               
+        //super.encodeEnd(facesContext, uiComponent);
+
+        // Nothing is rendered
+    }
+
+    public void encodeBegin(FacesContext facesContext)
+            throws IOException {
+    
+        //super.encodeBegin(facesContext, uiComponent);
+         //uiComponent.setRendered(true);
+        // Mothing is rendered
     }
 
     public void broadcast(FacesEvent event) {
+
         super.broadcast(event);
         if (event instanceof RowSelectorEvent && selectionListener != null) {
 
