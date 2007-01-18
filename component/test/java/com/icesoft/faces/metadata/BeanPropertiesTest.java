@@ -1,5 +1,6 @@
 package com.icesoft.faces.metadata;
 
+import com.icesoft.jsfmeta.MetadataXmlParser;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.xml.sax.SAXException;
-import com.sun.rave.jsfmeta.JsfMetaParser;
 import com.sun.rave.jsfmeta.beans.ComponentBean;
 import com.sun.rave.jsfmeta.beans.FacesConfigBean;
 
@@ -65,7 +65,7 @@ public class BeanPropertiesTest extends TestCase {
 	public String[] getComponentBeanInfo() {
 
 		String[] cb = null;
-		JsfMetaParser jsfMetaParser = new JsfMetaParser();
+		MetadataXmlParser jsfMetaParser = new MetadataXmlParser();
 
 		try {
 			ClassLoader classLoader = Thread.currentThread()

@@ -134,7 +134,7 @@
         </java>
     </target>
 
-    <target name="jar.components" depends="gen.facelets.file">
+    <target name="jar.components" depends="gen.facelets.file, test">
         <build.jar>
             <add.metainfs>
                 <metainf dir="conf/META-INF" excludes="myfaces/"/>
@@ -198,8 +198,6 @@
     </target>
 
     <target name="generate.metadata">
-    <ant antfile="../component-metadata/build.xml"
-     target="clean" inheritAll="false"/>
         <ant antfile="../component-metadata/build.xml"
      target="jar" inheritAll="false"/>
 
