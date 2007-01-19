@@ -10,23 +10,24 @@ import java.util.Iterator;
 import java.util.Map;
 
 public abstract class SessionDispatcher implements ServletServer {
+    //having a static field here is ok because web applications are started in separate classloaders 
     private static Map SessionBoundServers = new HashMap();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(true);
-        final ServletServer sessionBoundServer;
+        final ServletServer server;
         if (session.isNew()) {
-            sessionBoundServer = newServlet(session);
-            SessionBoundServers.put(session, sessionBoundServer);
+            server = newServlet(session);
+            SessionBoundServers.put(session, server);
         } else {
-            sessionBoundServer = (ServletServer) SessionBoundServers.get(session);
+            server = (ServletServer) SessionBoundServers.get(session);
         }
 
         try {
-            sessionBoundServer.service(request, response);
+            server.service(request, response);
         } catch (IllegalStateException e) {
             //session has expired
-            ServletServer server = (ServletServer) SessionBoundServers.remove(session);
+            SessionBoundServers.remove(session);
             server.shutdown();            
         }
     }
