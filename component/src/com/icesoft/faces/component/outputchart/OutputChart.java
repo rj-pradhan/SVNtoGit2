@@ -179,7 +179,10 @@ public class OutputChart extends HtmlCommandButton {
         if (vb != null) {
             return vb.getValue(getFacesContext());
         } else {
-            setChartTitle(getChartTitle() + " with default data");
+            
+            if(!Beans.isDesignTime()){
+                setChartTitle(getChartTitle() + " with default data");
+            }
             return DEFAULT_DATA;
         }
     }
@@ -534,6 +537,12 @@ public class OutputChart extends HtmlCommandButton {
     }
 
     File getFolder() {
+        
+        if(Beans.isDesignTime()){
+            folder = new File(getPath());
+            return folder;
+        }
+        
         if (folder == null) {
             folder = new File(getPath());
             if (folder != null) {
