@@ -56,6 +56,9 @@ public class UpdateManager {
     }
 
     ResponseState[] getAll() {
+        //This method is called when the semaphore is released.
+        //getAttributeNames() will throw IllegalStateException if the the session is expired
+        //todo: find a better mechanism to asynchronously send a 'session expired' command to the bridge 
         Enumeration e = session.getAttributeNames();
         ArrayList states = new ArrayList();
         while (e.hasMoreElements()) {

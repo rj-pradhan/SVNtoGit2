@@ -97,6 +97,7 @@
                     if (views.intersect(viewIdentifiers()).isNotEmpty()) {
                         this.sendChannel.postAsynchronously(this.getURI, this.defaultQuery().asURIEncodedString(), function(request) {
                             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                            request.on(Connection.SessionExpired, this.sessionExpiredCallback);
                             request.on(Connection.Receive, this.receiveCallback);
                         }.bind(this));
                         this.updatedViews.saveValue(views.complement(viewIdentifiers()).join(' '));

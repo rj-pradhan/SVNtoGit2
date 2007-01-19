@@ -14,10 +14,17 @@ public abstract class SessionDispatcher implements ServletServer {
     private static Map SessionBoundServers = new HashMap();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
+
+        //the servlet container expired the session
+        if (session == null) {
+            SessionExpired.Server.service(request, response);
+            return;
+        }
+        
         final ServletServer server;
         if (session.isNew()) {
-            server = newServlet(session);
+            server = this.newServlet(session);
             SessionBoundServers.put(session, server);
         } else {
             server = (ServletServer) SessionBoundServers.get(session);
@@ -28,7 +35,8 @@ public abstract class SessionDispatcher implements ServletServer {
         } catch (IllegalStateException e) {
             //session has expired
             SessionBoundServers.remove(session);
-            server.shutdown();            
+            server.shutdown();
+            SessionExpired.Server.service(request, response);            
         }
     }
 
@@ -47,8 +55,22 @@ public abstract class SessionDispatcher implements ServletServer {
         }
 
         public void sessionDestroyed(HttpSessionEvent event) {
-            ServletServer server = (ServletServer) SessionBoundServers.remove(event.getSession());
+            HttpSession session = event.getSession();
+            ServletServer server = (ServletServer) SessionBoundServers.remove(session);
             server.shutdown();
+            SessionBoundServers.put(session, SessionExpired.Server);
+        }
+    }
+
+    private static class SessionExpired implements ServletServer {
+        public static final ServletServer Server = new SessionExpired();
+
+        public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+            response.setHeader("X-SESSION-EXPIRED", ".");
+            response.getOutputStream().write(".\n".getBytes());
+        }
+
+        public void shutdown() {
         }
     }
 }
