@@ -516,7 +516,7 @@ public class DOMResponseWriter extends ResponseWriter {
      *
      * @param writer destination of the DOM output
      */
-    private void writeDOM(Writer writer, BridgeFacesContext context) throws IOException {
+    private synchronized void writeDOM(Writer writer, BridgeFacesContext context) throws IOException {
         Map requestMap = context.getExternalContext().getRequestMap();
         String includeServletPath = (String) requestMap
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH);
