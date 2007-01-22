@@ -14,17 +14,12 @@ public class PathDispatchingServlet implements ServletServer {
         String path = request.getRequestURI();
         Iterator i = matchers.iterator();
         boolean matched = false;
-        try {
-            while (!matched && i.hasNext()) {
-                matched = ((Matcher) i.next()).serviceOnMatch(path, request, response);
-            }
+        while (!matched && i.hasNext()) {
+            matched = ((Matcher) i.next()).serviceOnMatch(path, request, response);
+        }
 
-            if (!matched) {
-                response.sendError(404, "Resource at '" + path + "' not found.");
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-            response.sendError(500, t.toString());
+        if (!matched) {
+            response.sendError(404, "Resource at '" + path + "' not found.");
         }
     }
 

@@ -17,17 +17,12 @@ public class PathDispatcherServer implements Server {
         String path = request.getURI().getPath();
         Iterator i = matchers.iterator();
         boolean matched = false;
-        try {
-            while (!matched && i.hasNext()) {
-                matched = ((Matcher) i.next()).serviceOnMatch(path, request);
-            }
+        while (!matched && i.hasNext()) {
+            matched = ((Matcher) i.next()).serviceOnMatch(path, request);
+        }
 
-            if (!matched) {
-                request.respondWith(NotFoundHandler.HANDLER);
-            }
-        } catch (Throwable t) {
-            t.printStackTrace();
-            request.respondWith(new ServerErrorHandler(t));
+        if (!matched) {
+            request.respondWith(NotFoundHandler.HANDLER);
         }
     }
 

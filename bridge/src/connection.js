@@ -37,7 +37,7 @@
     }
 
     This.SessionExpired = function(request) {
-        return request.isOkAndComplete() && request.containsResponseHeader('X-SESSION-EXPIRED');
+        return request.isComplete() && request.containsResponseHeader('X-SESSION-EXPIRED');
     }
 
     This.BadResponse = function(request) {

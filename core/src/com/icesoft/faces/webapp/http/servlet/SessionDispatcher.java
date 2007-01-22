@@ -5,38 +5,43 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public abstract class SessionDispatcher implements ServletServer {
     //having a static field here is ok because web applications are started in separate classloaders 
-    private static Map SessionBoundServers = new HashMap();
+    private final static Map SessionBoundServers = new HashMap();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         //the servlet container expired the session
         if (session == null) {
-            SessionExpired.Server.service(request, response);
-            return;
-        }
-        
-        final ServletServer server;
-        if (session.isNew()) {
-            server = this.newServlet(session);
-            SessionBoundServers.put(session, server);
+            sendSessionExpired(response);
         } else {
-            server = (ServletServer) SessionBoundServers.get(session);
-        }
+            final ServletServer server;
+            if (session.isNew()) {
+                server = this.newServlet(session);
+                SessionBoundServers.put(session, server);
+            } else {
+                server = (ServletServer) SessionBoundServers.get(session);
+            }
 
-        try {
-            server.service(request, response);
-        } catch (IllegalStateException e) {
-            //session has expired
-            SessionBoundServers.remove(session);
-            server.shutdown();
-            SessionExpired.Server.service(request, response);            
+            if (server == null) {
+                //session has expired in the mean time, server removed by the session listener
+                sendSessionExpired(response);
+            } else {
+                try {
+                    server.service(request, response);
+                } catch (IllegalStateException e) {
+                    //session has expired
+                    SessionBoundServers.remove(session);
+                    server.shutdown();
+                    sendSessionExpired(response);
+                }
+            }
         }
     }
 
@@ -58,19 +63,12 @@ public abstract class SessionDispatcher implements ServletServer {
             HttpSession session = event.getSession();
             ServletServer server = (ServletServer) SessionBoundServers.remove(session);
             server.shutdown();
-            SessionBoundServers.put(session, SessionExpired.Server);
         }
     }
 
-    private static class SessionExpired implements ServletServer {
-        public static final ServletServer Server = new SessionExpired();
-
-        public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-            response.setHeader("X-SESSION-EXPIRED", ".");
-            response.getOutputStream().write(".\n".getBytes());
-        }
-
-        public void shutdown() {
-        }
+    private static void sendSessionExpired(HttpServletResponse response) throws IOException {
+        response.setStatus(500);
+        response.setHeader("X-SESSION-EXPIRED", ".");
+        response.getOutputStream().write(".\n".getBytes());
     }
 }
