@@ -47,14 +47,19 @@ public class SingleViewServlet implements ServletServer {
 
         if (view == null) {
             view = new View(viewNumber, request, response);
-
             PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
             ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
             view.externalContext.setupSeamEnvironment();
             //collect bundles put by Tag components when the page is parsed
             bundles = view.externalContext.collectBundles();
+        }
+
+        if (request.getParameter("viewNumber") == null) {
             //run lifecycle
+            view.externalContext.updateRequest(request);
+            view.externalContext.updateResponse(response);
+            view.facesContext.setCurrentInstance();
             server.service(request, response);
             // If the GET request handled by this servlet results in a
             // redirect (not likely under icefaces demo apps, but happens
@@ -73,16 +78,8 @@ public class SingleViewServlet implements ServletServer {
             PersistentFacesState.getInstance(sessionMap, viewNumber).setFacesContext(view.facesContext);
             PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
 
-            view.externalContext.updateRequest(request);
-
-            if (request.getParameter("viewNumber") == null) {
-                view.externalContext.updateResponse(response);
-            } else {
-                //by making the request null DOMResponseWriter will redirect its output to the coresponding ResponseState
-                //todo: find better (less subversive) solution -- like creating two different implementions for DOMResponseWriter
-                view.externalContext.updateResponse(null);
-            }
             view.externalContext.getRequestMap().putAll(bundles);
+            view.externalContext.updateRequest(request);
             view.facesContext.setCurrentInstance();
 
             server.service(request, response);
