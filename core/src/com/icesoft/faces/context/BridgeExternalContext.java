@@ -41,6 +41,8 @@ import com.icesoft.util.SeamUtilities;
 
 import javax.faces.context.ExternalContext;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * This class is supposed to provide a nice, generic interface to the
@@ -96,4 +98,9 @@ public abstract class BridgeExternalContext extends ExternalContext {
     public abstract void setRequestServletPath(String viewId);
 
     public abstract void setRequestPathInfo(String viewId);
+
+    public abstract Map collectBundles();
+
+    //todo: create a SeamExternalEnvironment instead
+    public abstract void setupSeamEnvironment();
 }

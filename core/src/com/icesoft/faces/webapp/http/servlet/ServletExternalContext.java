@@ -1,6 +1,7 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.webapp.http.servlet.ServletRequestMap;
+import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.faces.context.ApplicationMap;
 import com.icesoft.faces.context.SessionMap;
 import com.icesoft.faces.context.BridgeExternalContext;
@@ -251,5 +252,58 @@ public class ServletExternalContext extends BridgeExternalContext {
 
     public void setRequestPathInfo(String viewId) {
         //do nothing
+    }
+
+    //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)
+    //todo: this way the bundles are put into the request map every time, so we don't have to carry
+    //todo: them between requests
+    public Map collectBundles() {
+        Map result = new HashMap();
+        Iterator entries = requestMap.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            Object value = entry.getValue();
+            if (value != null) {
+                String className = value.getClass().getName();
+                if ((className.indexOf("LoadBundleTag") > 0) ||  //Sun RI
+                        (className.indexOf("BundleMap") > 0)) {     //MyFaces
+                    result.put(entry.getKey(), value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public void setupSeamEnvironment() {
+        doClearSeamContexts();
+        checkSeamRequestParameters();
+    }
+
+    /**
+     * Any request handled by the PersistentFacesServlet should have the Seam
+     * PageContext removed from our internal context complex. But we cannot do
+     * it here, since the machinery is not yet in place, so put a flag into
+     * the external context, allowing someone else to do it later.
+     */
+    private void doClearSeamContexts() {
+        requestMap.put(PersistentFacesCommonlet.REMOVE_SEAM_CONTEXTS, Boolean.TRUE);
+    }
+
+    /**
+     * Check to see if Seam specific keywords are in the request. If so,
+     * then flag that a new ViewRoot is to be constructed.
+     *
+     * @param externalContextMap Map to insert Flag
+     */
+    private void checkSeamRequestParameters() {
+        // Always on a GET request, create a new ViewRoot. New theory.
+        // This works now that the ViewHandler only calls restoreView once,
+        // as opposed to calling it again from createView
+        if (SeamUtilities.isSeamEnvironment()) {
+            requestParameterMap.put(
+                    PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
+                    Boolean.TRUE);
+        }
     }
 }

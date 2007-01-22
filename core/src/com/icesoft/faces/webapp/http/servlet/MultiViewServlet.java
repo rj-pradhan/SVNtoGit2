@@ -22,30 +22,29 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EnvironmentWrappingServlet implements ServletServer {
+public class MultiViewServlet implements ServletServer {
     private int viewCount = 0;
     private HttpSession session;
     private Map sessionMap;
     private String sessionID;
 
-    private Server server;
+    private ServletServer server;
     private UpdateManager updateManager;
     private Map views = new HashMap();
     private Map bundles = new HashMap();
 
-    public EnvironmentWrappingServlet(HttpSession session, Configuration configuration, IdGenerator idGenerator) {
+    public MultiViewServlet(HttpSession session, IdGenerator idGenerator) {
         this.sessionID = idGenerator.newIdentifier();
         //ContextEventRepeater needs this
         session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
-
         this.session = session;
         this.sessionMap = new SessionMap(session);
         this.updateManager = new UpdateManager(session);
-        this.server = new PushServer(updateManager);
+        this.server = new ServerAdapterServlet(new PushServer(updateManager));
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String viewNumber = session.isNew() ? null : request.getParameter("viewNumber");
+        String viewNumber = request.getParameter("viewNumber");
         //FileUploadServlet needs this
         session.setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
 
@@ -58,13 +57,11 @@ public class EnvironmentWrappingServlet implements ServletServer {
             PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
             ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
-            checkSeamRequestParameters(view.externalContext.getRequestParameterMap());
-            // Allow for downstream removal of Seam PageContext objects
-            doClearSeamContexts(view.externalContext.getRequestMap());
+            view.externalContext.setupSeamEnvironment();
             //collect bundles put by Tag components when the page is parsed
-            bundles = collectBundles(view.externalContext.getRequestMap());
+            bundles = view.externalContext.collectBundles();
             //run lifecycle
-            server.service(new ServletRequestResponse(request, response));
+            server.service(request, response);
             // If the GET request handled by this servlet results in a
             // redirect (not likely under icefaces demo apps, but happens
             // all the time in Seam) then, we're stuck. We don't use the
@@ -87,7 +84,7 @@ public class EnvironmentWrappingServlet implements ServletServer {
             view.externalContext.getRequestMap().putAll(bundles);
             view.facesContext.setCurrentInstance();
 
-            server.service(new ServletRequestResponse(request, response));
+            server.service(request, response);
         }
 
         view.facesContext.release();
@@ -96,6 +93,7 @@ public class EnvironmentWrappingServlet implements ServletServer {
 
     public void shutdown() {
         updateManager.shutdown();
+        server.shutdown();
     }
 
     //todo: refactor this structure into an object with behavior 
@@ -110,54 +108,6 @@ public class EnvironmentWrappingServlet implements ServletServer {
             //the call has the side effect of creating and setting up the state
             //todo: make this concept more visible and less subversive
             responseState = (BlockingResponseState) ResponseStateManager.getState(session, viewIdentifier);
-        }
-    }
-
-    //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)
-    //todo: this way the bundles are put into the request map every time, so we don't have to carry
-    //todo: them between requests
-    static Map collectBundles(Map requestMap) {
-        Map result = new HashMap();
-        Iterator entries = requestMap.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry entry = (Map.Entry) entries.next();
-            Object value = entry.getValue();
-            if (value != null) {
-                String className = value.getClass().getName();
-                if ((className.indexOf("LoadBundleTag") > 0) ||  //Sun RI
-                        (className.indexOf("BundleMap") > 0)) {     //MyFaces
-                    result.put(entry.getKey(), value);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Any request handled by the PersistentFacesServlet should have the Seam
-     * PageContext removed from our internal context complex. But we cannot do
-     * it here, since the machinery is not yet in place, so put a flag into
-     * the external context, allowing someone else to do it later.
-     */
-    private void doClearSeamContexts(Map requestMap) {
-        requestMap.put(PersistentFacesCommonlet.REMOVE_SEAM_CONTEXTS, Boolean.TRUE);
-    }
-
-    /**
-     * Check to see if Seam specific keywords are in the request. If so,
-     * then flag that a new ViewRoot is to be constructed.
-     *
-     * @param externalContextMap Map to insert Flag
-     */
-    private void checkSeamRequestParameters(Map externalContextMap) {
-        // Always on a GET request, create a new ViewRoot. New theory.
-        // This works now that the ViewHandler only calls restoreView once,
-        // as opposed to calling it again from createView
-        if (SeamUtilities.isSeamEnvironment()) {
-            externalContextMap.put(
-                    PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
-                    Boolean.TRUE);
         }
     }
 }
