@@ -78,6 +78,8 @@ public class SingleViewServlet implements ServletServer {
             if (request.getParameter("viewNumber") == null) {
                 view.externalContext.updateResponse(response);
             } else {
+                //by making the request null DOMResponseWriter will redirect its output to the coresponding ResponseState
+                //todo: find better (less subversive) solution -- like creating two different implementions for DOMResponseWriter
                 view.externalContext.updateResponse(null);
             }
             view.externalContext.getRequestMap().putAll(bundles);
