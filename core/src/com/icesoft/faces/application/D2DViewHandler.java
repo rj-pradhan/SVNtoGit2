@@ -444,7 +444,7 @@ public class D2DViewHandler extends ViewHandler {
         return time;
     }
 
-    protected void renderResponse(FacesContext context) throws IOException {
+    protected synchronized void renderResponse(FacesContext context) throws IOException {
         UIComponent root = context.getViewRoot();
         String viewId = ((UIViewRoot) root).getViewId();
 
