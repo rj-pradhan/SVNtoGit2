@@ -29,7 +29,7 @@ public abstract class Configuration {
     }
 
     public boolean getAttributeAsBoolean(String name) throws ConfigurationException {
-        return Boolean.valueOf(name).booleanValue();
+        return Boolean.valueOf(getAttribute(name)).booleanValue();
     }
 
     public String getAttribute(String name, String defaultValue) {
