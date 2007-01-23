@@ -167,3 +167,42 @@
 		</editor-class>
 	</property-extension>
 </property>
+<property>
+	<description>
+		style class for the inputText.
+	</description>
+    <property-name>inputTextClass</property-name>
+    <property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		width of the component.
+	</description>
+    <property-name>width</property-name>
+    <property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		height of the component.
+	</description>
+    <property-name>height</property-name>
+    <property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+	</property-extension>
+</property>

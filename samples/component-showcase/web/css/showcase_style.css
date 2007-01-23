@@ -728,14 +728,6 @@ em {
     margin-bottom: 5px; /*font-size:1.2em;*/
 }
 
-/*
-  File Upload example
-*/
-/* File Upload iframe */
-.iceFileUpload {
-	padding:10px;
-	height:55px;
-}
 
 /*
   Panel Border example
@@ -996,7 +988,7 @@ em {
 }
 
 .columns1{
-	white-space: nowrap;
+    white-space: nowrap;
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;
@@ -1010,7 +1002,7 @@ em {
 }
 
 .columnsColumn, .columnsNestedColumn, .columnsNestedBoldColumn{
-	white-space: nowrap;
+    white-space: nowrap;
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;
@@ -1020,7 +1012,7 @@ em {
 }
 
 .columnsColumn{
-	border-left: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
     width: 55px;
@@ -1033,7 +1025,7 @@ em {
 }
 
 .columnsNestedBoldColumn{
-	width: 15px;
+    width: 15px;
     font-weight: bold;
 }
 
@@ -1046,21 +1038,21 @@ em {
 
 /* positioned Panel demo */
 .startcell{
-	z-index:1000;
+    z-index:1000;
 
-	background:#fff;
+    background:#fff;
     padding:5px;
 }
 .starttitle{
-	cursor: move;
-	overflow: hidden;
-	height: 1.5em;
-	line-height: 1.5em;
-	background-color: #f1f8ff;
-	color: #0066cc;
-	font-size: 120%;
-	font-weight: bold;
-	text-decoration: none;
+    cursor: move;
+    overflow: hidden;
+    height: 1.5em;
+    line-height: 1.5em;
+    background-color: #f1f8ff;
+    color: #0066cc;
+    font-size: 120%;
+    font-weight: bold;
+    text-decoration: none;
 }
 .startcolumn
 {

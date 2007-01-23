@@ -101,7 +101,10 @@ public class InputFile extends UICommand implements Serializable{
     private String enabledOnUserRole = null;
     private String renderedOnUserRole = null;
     private String alt = null;
-
+    private int height = 30;
+    private boolean heightSet;
+    private int width = 600;
+    private boolean widthSet;
     /**
      * <p>Return the value of the <code>COMPONENT_TYPE</code> of this
      * component.</p>
@@ -526,7 +529,7 @@ public class InputFile extends UICommand implements Serializable{
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) :
-               "border:none; width:400px; height:50px; padding-top:0px;";
+               "padding:0px;";
     }
 
     /**
@@ -544,14 +547,31 @@ public class InputFile extends UICommand implements Serializable{
                                              "styleClass",
                                              CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS);
     }
+    
+    private String inputTextClass = null;
 
-    String getInputTextClass() {
+    public void setInputTextClass(String inputTextClass) {
+        this.inputTextClass = inputTextClass;
+    }
+    
+
+    public String getInputTextClass() {
         String result = CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS;
+        if (inputTextClass != null) {
+            result = inputTextClass;
+        }
         if (isDisabled()) {
             result += "-dis";
         }
-        return Util.appendNewStyleClass(CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS,
-                                        styleClass, result);
+
+        // Append the style if it is still the default
+        if (result.equals(CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS)) {
+            return Util.appendNewStyleClass(
+                    CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS, styleClass, result);
+        }
+        
+        // Otherwise return the user specified override class
+        return result;
     }
 
     private String buttonClass = null;
@@ -770,7 +790,11 @@ public class InputFile extends UICommand implements Serializable{
                 "&buttonClass=" + buttonClass +
                 "&label=" + label +
                 "&uniqueFolder=" + uniqueFolder +
-                "&cssFile=" + getCssFile();
+                "&cssFile=" + getCssFile()+
+                "&width=" + getWidth()+  
+                "&height=" + getHeight()+                  
+                "&style=" + getStyle()+                
+                "&styleClass="+ getStyleClass();
         return queryString;
     }
 
@@ -808,5 +832,47 @@ public class InputFile extends UICommand implements Serializable{
             setCssFile((UIComponent) children.next());
         }
     }
+
+	public int getHeight() {
+		if (this.heightSet) {
+		    return (this.height);
+		}
+		ValueBinding vb = getValueBinding("height");
+		if (vb != null) {
+		    Integer value = (Integer) vb.getValue(getFacesContext());
+		    if (null == value) {
+			return height;
+		    }
+		    return (value.intValue());
+		} else {
+		    return (this.height);
+		}
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+		this.heightSet = true;
+	}
+
+	public int getWidth() {
+		if (this.widthSet) {
+		    return (this.width);
+		}
+		ValueBinding vb = getValueBinding("width");
+		if (vb != null) {
+		    Integer value = (Integer) vb.getValue(getFacesContext());
+		    if (null == value) {
+			return width;
+		    }
+		    return (value.intValue());
+		} else {
+		    return (this.width);
+		}
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+		this.widthSet = true;
+	}
 
 }

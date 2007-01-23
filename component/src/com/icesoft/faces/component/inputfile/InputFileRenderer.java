@@ -57,43 +57,8 @@ public class InputFileRenderer extends DomBasicInputRenderer {
             return;
         }
 
-        if (!domContext.isInitialized()) {
-            Element table = domContext.createRootElement(HTML.TABLE_ELEM);
-            //temp attribute
-            table.setAttribute("style", "border:1px; width:400px");
-            setRootElementId(facesContext, table, uiComponent);
-            Element tbody = domContext.createElement(HTML.TBODY_ELEM);
-            table.appendChild(tbody);
-            inputFile.setFirstTd(
-                    createRowColumn(domContext, "uploadTd", "height:60px;"));
-            inputFile.setSecondTd(createRowColumn(domContext, "detailTd", ""));
-            inputFile.getFirstTd().appendChild(
-                    getIframe(facesContext, uiComponent, domContext));
-        }
-        DOMContext.removeChildren(inputFile.getFirstTd());
-        inputFile.getFirstTd()
-                .appendChild(getIframe(facesContext, uiComponent, domContext));
-
-        PassThruAttributeRenderer
-                .renderAttributes(facesContext, uiComponent, null);
-        domContext.stepOver();
-    }
-
-    private Element createRowColumn(DOMContext domContext, String id,
-                                    String style) {
-        Element tr = domContext.createElement(HTML.TR_ELEM);
-        Element td = domContext.createElement(HTML.TD_ELEM);
-        td.setAttribute(HTML.ID_ATTR, id);
-        td.setAttribute(HTML.STYLE_ATTR, style);
-        tr.appendChild(td);
-        domContext.getRootNode().getFirstChild().appendChild(tr);
-        return td;
-    }
-
-    private Element getIframe(FacesContext facesContext,
-                              UIComponent uiComponent, DOMContext domContext) {
-        InputFile inputFile = (InputFile) uiComponent;
-        Element iframe = domContext.createElement(HTML.IFRAME_ELEM);
+        Element iframe = domContext.createRootElement(HTML.IFRAME_ELEM);
+        setRootElementId(facesContext, iframe, uiComponent);
         iframe.setAttribute(HTML.SRC_ATTR, ApplicationBaseLocator
                 .locate(facesContext) + InputFile.ICE_UPLOAD_FILE +
                                       inputFile.getQueryString(facesContext));
@@ -101,25 +66,21 @@ public class InputFileRenderer extends DomBasicInputRenderer {
                                             uiComponent
                                                     .getClientId(facesContext));
         iframe.setAttribute(HTML.FRAMEBORDER_ATTR, "0");
-        if (((InputFile) uiComponent).getStyle() != null) {
-            iframe.setAttribute(HTML.STYLE_ATTR,
-                                ((InputFile) uiComponent).getStyle());
-        }
-        iframe.setAttribute(HTML.CLASS_ATTR,
-                            ((InputFile) uiComponent).getStyleClass());
-        iframe.setAttribute(HTML.WIDTH_ATTR, "400");
-        iframe.setAttribute(HTML.HEIGHT_ATTR, "60");
-        return iframe;
+        iframe.setAttribute(HTML.STYLE_ATTR, "overflow:hidden;");
+        iframe.setAttribute(HTML.WIDTH_ATTR, String.valueOf(inputFile.getWidth()+10)); //600
+        iframe.setAttribute(HTML.HEIGHT_ATTR, String.valueOf(inputFile.getHeight()+10)); //60
+        domContext.stepOver();
     }
 
+  
     void writeStream(FacesContext facesContext, UIComponent uiComponent)
             throws IOException {
         DOMContext domContext =
                 DOMContext.attachDOMContext(facesContext, uiComponent);
         InputFile inputFile = ((InputFile) uiComponent);
         Element root = domContext.createRootElement(HTML.DIV_ELEM);
-        root.setAttribute(HTML.STYLE_ATTR, inputFile.getStyle());
-        root.setAttribute(HTML.CLASS_ATTR, inputFile.getStyleClass());
+//        root.setAttribute(HTML.STYLE_ATTR, inputFile.getStyle());
+//        root.setAttribute(HTML.CLASS_ATTR, inputFile.getStyleClass());
         Element upload = domContext.createElement(HTML.INPUT_ELEM);
         upload.setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_FILE);
         upload.setAttribute(HTML.CLASS_ATTR, inputFile.getInputTextClass());

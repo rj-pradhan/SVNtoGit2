@@ -56,7 +56,6 @@ Once the file is uploaded, information about the file is displayed.
                     <ice:panelGroup styleClass="formBorderHighlight"
                                     style="text-align:left">
                         <ice:inputFile
-                                style="border:none; width:400px; height:70px;"
                                 progressListener="#{inputFile.progress}"
                                 actionListener="#{inputFile.action}"/>
                         <ice:outputProgress id="pro"

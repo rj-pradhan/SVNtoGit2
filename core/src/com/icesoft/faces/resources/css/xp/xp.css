@@ -1217,6 +1217,7 @@ input {
 /*
 ----------- FileUpload Component classes
 */
+.iceFileUpload {}
 .iceFileUploadText {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;

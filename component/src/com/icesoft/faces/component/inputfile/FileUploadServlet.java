@@ -97,13 +97,37 @@ public class FileUploadServlet
     }
 
     private String getCSSFile(HttpServletRequest request) {
-        Object cssFile = request.getParameter("cssFile");
-        if (cssFile != null) {
-            return cssFile.toString();
-        }
-        return null;
+        return String.valueOf(request.getParameter("cssFile"));
+    }
+    
+    private String getWidth(HttpServletRequest request) {
+    	return String.valueOf(request.getParameter("width"));
+    }
+    
+    private String getHeight(HttpServletRequest request) {
+        return String.valueOf(request.getParameter("height"));
     }
 
+    private String getStyleClass(HttpServletRequest request) {
+    	if (request.getParameter("styleClass") != null) {
+    		return " class='" + String.valueOf(request.getParameter("styleClass"))+"' ";
+    	} else {
+    		return "";
+    	}
+    }
+    
+    private String getStyle(HttpServletRequest request) {
+    	String style = " style='width:" + getWidth(request)+";height:" + getHeight(request)+ ";";
+    	if (request.getParameter("style") != null) {
+    		return style += String.valueOf(request.getParameter("style"))+"' ";
+    	} else {
+    		return style += "' ";
+    	}
+    }
+    
+    private String getStyleInfo(HttpServletRequest request) {
+    	return getStyle(request) + getStyleClass(request);
+    }
     private String getInputTextClass(HttpServletRequest request) {
         if (request.getParameter("inputTextClass") != null) {
             return "class='" +
@@ -124,11 +148,9 @@ public class FileUploadServlet
     }
 
     private String getLabel(HttpServletRequest request) {
-        if (request.getParameter("label") != null) {
-            return request.getParameter("label").toString();
-        } else {
-            return "Upload";
-        }
+    	return null!= String.valueOf(request.getParameter("label"))? 
+    			String.valueOf(request.getParameter("label")):
+    				"Upload";
     }
 
     private boolean isUniqueFolder(HttpServletRequest request) {
@@ -298,11 +320,12 @@ public class FileUploadServlet
         }
         String html = "<HTML><HEAD>" + link +
                       "<SCRIPT LANGUAGE='javascript'>function mySubmit(frm) {frm.fileName.value = frm.inputFileField.value ; return true;} </SCRIPT>" +
-                      "</HEAD><BODY>" +
-                      "<FORM action='" + InputFile.ICE_UPLOAD_FILE + "?" +
+                      "</HEAD><BODY style='margin: 0px;padding: 0px;'> " +
+                      "<TABLE CELLSPACING='0' CELLPADDING='0'><TR><FORM action='" + InputFile.ICE_UPLOAD_FILE + "?" +
                       request.getQueryString() +
                       "' enctype='multipart/form-data' id='fileUploadForm' method='post' onsubmit='return mySubmit(this)'>" +
-                      "<DIV id='submit' style='position:absolute;'>" +
+                      "<TD>" +
+                      "<DIV id='submit' "+ getStyleInfo(request) +">" +
                       "<INPUT name='fileName' type='hidden' value='test'/>" +
                       "<INPUT name='" + InputFile.FILE_UPLOAD_COMPONENT_ID +
                       "' type='hidden' value='" + getComponentId(request) +
@@ -314,7 +337,8 @@ public class FileUploadServlet
                       " value='" + getLabel(request) + "' " +
                       getDisabled(request) + "/>" +
                       "</DIV>" +
-                      "</FORM></BODY></HTML>";
+                      "</TD></FORM></TR>" +
+                      "</TABLE></BODY></HTML>";
         return html;
     }
 }
