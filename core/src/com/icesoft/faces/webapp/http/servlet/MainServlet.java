@@ -2,6 +2,7 @@ package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.ResourceServer;
+import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
 import com.icesoft.util.IdGenerator;
 
 import javax.servlet.ServletConfig;
@@ -23,17 +24,18 @@ public class MainServlet extends HttpServlet {
             ServletContext servletContext = servletConfig.getServletContext();
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);
             final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
+            final ResponseStateManager responseStateManager = ResponseStateManager.getResponseStateManager(servletContext);
             final ServletServer sessionDispatcher;
             if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
                 sessionDispatcher = new SessionDispatcher() {
                     protected ServletServer newServlet(HttpSession session) {
-                        return new MultiViewServlet(session, idGenerator);
+                        return new MultiViewServlet(session, idGenerator, responseStateManager);
                     }
                 };
             } else {
                 sessionDispatcher = new SessionDispatcher() {
                     protected ServletServer newServlet(HttpSession session) {
-                        return new SingleViewServlet(session, idGenerator);
+                        return new SingleViewServlet(session, idGenerator, responseStateManager);
                     }
                 };
             }

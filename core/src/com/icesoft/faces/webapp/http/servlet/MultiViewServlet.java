@@ -31,14 +31,16 @@ public class MultiViewServlet implements ServletServer {
 
     private ServletServer server;
     private UpdateManager updateManager;
+    private ResponseStateManager responseStateManager;
     private Map views = new HashMap();
     private Map bundles = new HashMap();
 
-    public MultiViewServlet(HttpSession session, IdGenerator idGenerator) {
+    public MultiViewServlet(HttpSession session, IdGenerator idGenerator, ResponseStateManager responseStateManager) {
         this.sessionID = idGenerator.newIdentifier();
         //ContextEventRepeater needs this
         session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
         this.session = session;
+        this.responseStateManager = responseStateManager;
         this.sessionMap = new SessionMap(session);
         this.updateManager = new UpdateManager(session);
         this.server = new ServerAdapterServlet(new PushServer(updateManager));
@@ -113,7 +115,7 @@ public class MultiViewServlet implements ServletServer {
             facesContext = new ServletFacesContext(externalContext, viewIdentifier);
             //the call has the side effect of creating and setting up the state
             //todo: make this concept more visible and less subversive
-            responseState = (BlockingResponseState) ResponseStateManager.getState(session, viewIdentifier);
+            responseState = (BlockingResponseState) responseStateManager.getState(session, viewIdentifier);
         }
     }
 }
