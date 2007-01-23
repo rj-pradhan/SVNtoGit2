@@ -149,19 +149,11 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         topLevelDiv.setAttribute(HTML.NAME_ATTR, "TOP_LEVEL");
 
         if (vertical) {
-            if (((MenuItem)uiComponent).isDisabled()) {
-                
-            } else {
-                topLevelDiv.setAttribute(HTML.CLASS_ATTR,
+            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
                                      CSS_DEFAULT.MENU_VERTICAL_ITEM_STYLE);
-            }
         } else {
-            if (((MenuItem)uiComponent).isDisabled()) {
-                
-            } else {
-                topLevelDiv.setAttribute(HTML.CLASS_ATTR,
+            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
                                      CSS_DEFAULT.MENU_HORIZONTAL_STYLE);
-            }
         }
 
         if (uiComponent.getChildCount() > 0) {
@@ -266,7 +258,13 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
-        span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+        if (!menuItem.isDisabled()) {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR, "iceLink");
+        } else {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR, "iceLink-dis");
+        }
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -315,7 +313,13 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
-        span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+        if (!menuItem.isDisabled()) {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink");
+        } else {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink-dis");
+        }
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -360,7 +364,13 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
-        span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+        if (!menuItem.isDisabled()) {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink");
+        } else {
+            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
+            anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink-dis");
+        }
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -506,7 +516,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                 link.setValue(nextSubMenuItem.getValue());
                 link.setParent(nextSubMenuItem);
                 link.setId(LINK_SUFFIX);
-                link.setStyleClass("");
+                //link.setStyleClass("");
                 Node lastCursorParent = domContext.getCursorParent();
                 domContext.setCursorParent(subMenuItemDiv);
                 if (vertical) {
@@ -596,7 +606,11 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         HtmlOutputText outputText = new HtmlOutputText();
         outputText.setValue(link.getValue());
-        outputText.setStyleClass("iceSubMenuRowLabel");
+        if (!nextSubMenuItem.isDisabled()) {
+            outputText.setStyleClass("iceSubMenuRowLabel");
+        } else {
+            outputText.setStyleClass("iceSubMenuRowLabel-dis");                        
+        }
         link.setValue("");
         div.getChildren().add(outputText);
 
@@ -628,7 +642,11 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         HtmlOutputText outputText = new HtmlOutputText();
         outputText.setValue(link.getValue());
-        outputText.setStyleClass("iceSubMenuRowLabel");
+        if (!nextSubMenuItem.isDisabled()) {
+            outputText.setStyleClass("iceSubMenuRowLabel");
+        } else {
+            outputText.setStyleClass("iceSubMenuRowLabel-dis");
+        }
         link.setValue("");
         div.getChildren().add(outputText);
 

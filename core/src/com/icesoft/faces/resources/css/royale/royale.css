@@ -1634,6 +1634,42 @@ input {
     cursor: default;
 }
 
+/* submenu disabled style classes */
+.iceSubMenuRowLabel-dis {
+    color: #ABABAB;
+    text-decoration: none;
+    cursor: default;
+}
+
+.iceSubMenuRow-dis {
+    color: #ABABAB;
+    text-decoration: none;
+    cursor: default;
+    padding: 0px;
+    display: block;
+    height: auto;    
+}
+
+.iceSubMenuRow-dis a {
+    color: #333333;
+    text-decoration: none;
+    cursor: default;
+    display: block;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;    
+    
+}
+
+.iceSubMenuRow-dis a:hover {
+    color: #ABABAB;
+    text-decoration: none;
+    border-bottom: 1px dotted #CCCCCC;
+    cursor: default;
+}
+
+
 /* panel tabs disabled style classes */
 
 .iceTabSetTabOff {
