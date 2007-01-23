@@ -72,6 +72,14 @@ public class SelectionTagsBean {
             new SelectItem("Command"),
             new SelectItem("Selection"),
     };
+    private static final SelectItem[] carListItems = new SelectItem[]{
+            new SelectItem("Batmobile"),
+            new SelectItem("A-Team Van"),
+            new SelectItem("BMW Z4"),
+            new SelectItem("General Lee"),
+            new SelectItem("El Chamino"),
+    };
+    
 
     /**
      * Converts string arrays for displays.
@@ -99,6 +107,7 @@ public class SelectionTagsBean {
     private String country;
     private String[] cities;
     private String componentType = "I/O";
+    private String[] cars;
 
     /**
      * Gets the option items for drinks.
@@ -143,6 +152,17 @@ public class SelectionTagsBean {
      */
     public SelectItem[] getComponentTypeItems() {
         return componentTypeItems;
+    }
+    
+    
+    /**
+     *returns the list of available cars to select
+     *
+     *@return carlist
+     */
+    public SelectItem[] getCarListItems()
+    {
+        return carListItems;
     }
 
     /**
@@ -247,6 +267,19 @@ public class SelectionTagsBean {
             return;
         cities = newValue;
     }
+   
+    /**
+     *sets the selected cars
+     *
+     *@param newValue array of newly selected cars
+     */
+    public void setCars(String[] newValue) {
+        if (FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestMap().get("CITY_HACK") !=
+                                                  null)//Country changed. Don't set cities
+            return;
+        cars = newValue;
+    }
 
     /**
      * Converts array of cities to a string.
@@ -276,6 +309,37 @@ public class SelectionTagsBean {
     public String getComponentType() {
         return componentType;
     }
+    
+   /**
+    *returns the String array of selected cars
+    *
+    *@return String[] of selected cars
+    */
+    public String[] getCars(){
+        return cars;
+    }
+   
+    
+    
+    /**
+     *returns the car list as a String
+     *
+     *@return String the selected car list 
+     */
+    public String getCarListString() {
+        if (cars == null) return "";
+        StringBuffer b = new StringBuffer();
+        try {
+            for (int i = 0; i < cars.length; i++) {
+                b.append(cars[i]);
+                if (i < cars.length - 1) b.append(',');
+            }
+            return b.toString();
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
+    }
 
     /**
      * Sets the selected component type.
@@ -285,9 +349,13 @@ public class SelectionTagsBean {
     public void setComponentType(String newValue) {
         componentType = newValue;
     }
+    
 
     public void cityChanged(ValueChangeEvent event) {
 
+    }
+    public void carChanged(ValueChangeEvent event){
+        
     }
 
     /**

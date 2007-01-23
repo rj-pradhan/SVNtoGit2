@@ -369,6 +369,10 @@ em {
     width: 115px;
     font-size:12px;
 }
+.selectManyMenu{
+  width :115px ;
+  height :90px ;
+}
 
 /* IE bugfix - white background on radio and checkboxes */
 .selectionRadioGroup input {

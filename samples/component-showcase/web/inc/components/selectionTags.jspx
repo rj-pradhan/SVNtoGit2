@@ -87,13 +87,26 @@ clicks a selection or tabs out of a field.
                                    partialSubmit="true">
                     <f:selectItems value="#{selectionTags.componentTypeItems}"/>
                 </ice:selectOneMenu>
+                
+                <!---Select many menu - select cars-->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.carsLabel']}"/>
+                <ice:selectManyMenu styleClass="selectManyMenu"
+                                value="#{selectionTags.cars}"
+                                partialSubmit="true"
+                                valueChangeListener="#{selectionTags.carChanged}">
+                      <f:selectItems value="#{selectionTags.carListItems}"/>
+                
+                </ice:selectManyMenu>
+                               
 
                 <!-- Radio buttons - select drink -->
                 <ice:outputText styleClass="propertyLabel"
                                 value="#{msgs['component.selectionTags.popButtonLabel']}"/>
                 <ice:panelGroup styleClass="selectionRadioGroup">
                     <ice:selectOneRadio value="#{selectionTags.drink}"
-                                        partialSubmit="true">
+                                        partialSubmit="true"
+                                        >
                         <f:selectItems value="#{selectionTags.drinkItems}"/>
                     </ice:selectOneRadio>
                 </ice:panelGroup>
@@ -148,6 +161,10 @@ clicks a selection or tabs out of a field.
                         value="#{msgs['component.selectionTags.componentTypeLabel']}"
                         styleClass="valueHeader"/>
                 <ice:outputText value="#{selectionTags.componentType}"
+                                styleClass="valueText"/>
+                <ice:outputText value="#{msgs['component.selectionTags.carsLabel']}"
+                                styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.carListString}"
                                 styleClass="valueText"/>
                 <ice:outputText
                         value="#{msgs['component.selectionTags.resultDrinkLabel']}"
