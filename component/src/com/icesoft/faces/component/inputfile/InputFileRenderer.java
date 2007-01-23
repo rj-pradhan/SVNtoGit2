@@ -79,8 +79,8 @@ public class InputFileRenderer extends DomBasicInputRenderer {
                 DOMContext.attachDOMContext(facesContext, uiComponent);
         InputFile inputFile = ((InputFile) uiComponent);
         Element root = domContext.createRootElement(HTML.DIV_ELEM);
-//        root.setAttribute(HTML.STYLE_ATTR, inputFile.getStyle());
-//        root.setAttribute(HTML.CLASS_ATTR, inputFile.getStyleClass());
+        root.setAttribute(HTML.STYLE_ATTR, inputFile.getStyle());
+        root.setAttribute(HTML.CLASS_ATTR, inputFile.getStyleClass());
         Element upload = domContext.createElement(HTML.INPUT_ELEM);
         upload.setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_FILE);
         upload.setAttribute(HTML.CLASS_ATTR, inputFile.getInputTextClass());

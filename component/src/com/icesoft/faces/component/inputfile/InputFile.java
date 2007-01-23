@@ -103,8 +103,10 @@ public class InputFile extends UICommand implements Serializable{
     private String alt = null;
     private int height = 30;
     private boolean heightSet;
-    private int width = 600;
+    private int width = 500;
     private boolean widthSet;
+    private int inputTextSize = 35;
+    private boolean inputTextSizeSet;    
     /**
      * <p>Return the value of the <code>COMPONENT_TYPE</code> of this
      * component.</p>
@@ -792,7 +794,8 @@ public class InputFile extends UICommand implements Serializable{
                 "&uniqueFolder=" + uniqueFolder +
                 "&cssFile=" + getCssFile()+
                 "&width=" + getWidth()+  
-                "&height=" + getHeight()+                  
+                "&height=" + getHeight()+ 
+                "&inputTextSize=" + getInputTextSize()+
                 "&style=" + getStyle()+                
                 "&styleClass="+ getStyleClass();
         return queryString;
@@ -873,6 +876,27 @@ public class InputFile extends UICommand implements Serializable{
 	public void setWidth(int width) {
 		this.width = width;
 		this.widthSet = true;
+	}
+
+	public int getInputTextSize() {
+		if (this.inputTextSizeSet) {
+		    return (this.inputTextSize);
+		}
+		ValueBinding vb = getValueBinding("inputTextSize");
+		if (vb != null) {
+		    Integer value = (Integer) vb.getValue(getFacesContext());
+		    if (null == value) {
+			return inputTextSize;
+		    }
+		    return (value.intValue());
+		} else {
+		    return (this.inputTextSize);
+		}
+	}
+
+	public void setInputTextSize(int inputTextSize) {
+		this.inputTextSize = inputTextSize;
+		this.inputTextSizeSet =  true;
 	}
 
 }

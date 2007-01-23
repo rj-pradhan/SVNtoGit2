@@ -107,12 +107,20 @@ public class FileUploadServlet
     private String getHeight(HttpServletRequest request) {
         return String.valueOf(request.getParameter("height"));
     }
-
+    
+    private String getInputTextSize(HttpServletRequest request) {
+    	if (request.getParameter("inputTextSize")!= null) {
+    		return " size='" + String.valueOf(request.getParameter("inputTextSize"))+"' ";
+    	} else {
+    		return new String();
+    	}
+    }
+    
     private String getStyleClass(HttpServletRequest request) {
     	if (request.getParameter("styleClass") != null) {
     		return " class='" + String.valueOf(request.getParameter("styleClass"))+"' ";
     	} else {
-    		return "";
+    		return new String();
     	}
     }
     
@@ -130,8 +138,8 @@ public class FileUploadServlet
     }
     private String getInputTextClass(HttpServletRequest request) {
         if (request.getParameter("inputTextClass") != null) {
-            return "class='" +
-                   request.getParameter("inputTextClass").toString() + "'";
+            return " class='" +
+                   request.getParameter("inputTextClass").toString() + "' ";
         } else {
             return null;
         }
@@ -331,6 +339,7 @@ public class FileUploadServlet
                       "' type='hidden' value='" + getComponentId(request) +
                       "'/>" +
                       "<INPUT name='inputFileField' " +
+                      getInputTextSize(request) + 
                       getInputTextClass(request) + " type='file'" +
                       getDisabled(request) + " />" +
                       "<INPUT type='submit' " + getButtonClass(request) +

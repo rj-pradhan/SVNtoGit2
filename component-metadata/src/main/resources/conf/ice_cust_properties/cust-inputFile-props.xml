@@ -206,3 +206,16 @@
 		</editor-class>
 	</property-extension>
 </property>
+<property>
+	<description>
+		size of the input text.
+	</description>
+    <property-name>inputTextSize</property-name>
+    <property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+	</property-extension>
+</property>
