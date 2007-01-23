@@ -54,6 +54,10 @@ Object.extend(String.prototype, {
         return new RegExp(this);
     },
 
+    contains: function(substring) {
+        return this.indexOf(substring) >= 0;
+    },
+
     containsWords: function() {
         return /(\w+)/.test(this);
     }

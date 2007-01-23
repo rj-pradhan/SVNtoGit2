@@ -58,14 +58,9 @@
             });
 
             this.connection.onRedirect(function(url) {
-                document.cookie = 'redirectViewNumber=' + viewIdentifiers().join(' ');
-                if (url == '.') {
-                    window.location.reload();
-                    logger.info('Reloading...');
-                } else {
-                    window.location.href = url;
-                    logger.info('Redirecting to ' + url);
-                }
+                logger.info('Redirecting to ' + url);
+                var redirectViewNumber = url.contains('?') ? '&rvn=' : '?rvn=';
+                window.location.href = url + redirectViewNumber + viewIdentifiers().first();
             });
 
             this.connection.whenDown(function() {

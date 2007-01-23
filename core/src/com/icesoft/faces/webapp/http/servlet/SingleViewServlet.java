@@ -45,7 +45,8 @@ public class SingleViewServlet implements ServletServer {
         //FileUploadServlet needs this
         session.setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
 
-        if (view == null) {
+        //create single view or re-create view if the request is the result of a redirect 
+        if (view == null || request.getParameter("rvn") != null) {
             view = new View(viewNumber, request, response);
             PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
             ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);

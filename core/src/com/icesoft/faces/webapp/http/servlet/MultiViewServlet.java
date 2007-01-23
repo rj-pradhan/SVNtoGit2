@@ -18,6 +18,7 @@ import com.icesoft.util.SeamUtilities;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,10 +51,15 @@ public class MultiViewServlet implements ServletServer {
 
         final View view;
         if (viewNumber == null) {
-            viewNumber = String.valueOf(++viewCount);
+            //extract viewNumber if this request is from a redirect
+            String redirectViewNumber = request.getParameter("rvn");
+            if (redirectViewNumber == null) {
+                viewNumber = String.valueOf(++viewCount);
+            } else {
+                viewNumber = redirectViewNumber;
+            }
             view = new View(viewNumber, request, response);
             views.put(viewNumber, view);
-
             PersistentFacesState.setLocalInstance(sessionMap, viewNumber);
             ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
