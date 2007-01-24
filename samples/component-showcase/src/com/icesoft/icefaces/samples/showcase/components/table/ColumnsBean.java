@@ -44,7 +44,6 @@ import java.util.ArrayList;
  * @since 1.5
  */
 public class ColumnsBean {
-
     // row columna data map
     private DataModel columnDataModel;
     private DataModel rowDataModel;
@@ -60,8 +59,13 @@ public class ColumnsBean {
 
     // default column and row values 
     private int columns = 5;
-    private int rows = 0;  // ASCII_RANGE / 5 columsn.
-
+    private int rows = 0;  // ASCII_RANGE / 5 columns.
+    
+    //2D array to save the table values to.
+    private String table[][];
+    
+    private static final int ROW_CONSTANT = 13;
+    
     public ColumnsBean() {
 
         // calulate rows
@@ -129,10 +133,9 @@ public class ColumnsBean {
             // called for
             int row = rowDataModel.getRowIndex();
             int col = columnDataModel.getRowIndex();
-
-            // calculate the offset in the asciiData
-            int offset = (col * rows) + row;
-            return getChar(offset % 26);
+           
+            //return the element at the specified column and row
+            return table[col][row];
         }
         // empty field.
         return "-";
@@ -157,46 +160,38 @@ public class ColumnsBean {
      *              column count has changed.
      */
     public void updateTableColumns(ValueChangeEvent event) {
-       if (event != null && event.getNewValue() != null &&
+        if (event != null && event.getNewValue() != null &&
             event.getNewValue() instanceof Integer) {
             // get the new column count
             columns = ((Integer) event.getNewValue()).intValue();
         }
-        int numberOfRows = columns * 20;
+        int numberOfRows = columns * ROW_CONSTANT;
+              
         ArrayList columnList = new ArrayList();
         ArrayList rowList = new ArrayList();
-        for(int i = 0; i < columns; i++){
-            columnList.add(getChar(i));
+        
+        table = new String[columns][numberOfRows];
+        String s;
+        Integer index;
+        
+        for(int i=0;i<columns;i++)
+        {
+            for(int j=0;j<numberOfRows;j++)
+            {
+                s = getChar(j);
+                table[i][j] = s;
+                rowList.add(s);
+             }
+            index = new Integer(i);
+            columnList.add(index);
         }
-        int ci = 0;
-        for(int i = 0; i < numberOfRows; i++){
-            rowList.add(getChar(ci));
-            ci++;
-            if(ci > 26){
-                ci = 0;
-            }
-        }
-        rowDataModel = new ListDataModel(rowList);        
+        
+        rowDataModel = new ListDataModel(rowList);
         columnDataModel = new ListDataModel(columnList);
-
-
+       
     }
 
-    private String getChar(int i){
-        StringBuffer sb = new StringBuffer();
-        if(i > 25){
-            while(i > 25){
-                int ii = i / 25;
-                int ir = ii * 25;
-                i = i - ir;
-                sb.append(_getChar(ii));
-            }
-        }
-        sb.append(_getChar(i));
-        return sb.toString();
-    }
-
-    private String _getChar(int i){
+   private String getChar(int i){
         i += 65;
         String r = "" + (char)i;
         return r;
