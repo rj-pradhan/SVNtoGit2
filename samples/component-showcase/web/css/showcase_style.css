@@ -816,6 +816,15 @@ em {
 }
 
 /* Data Table sytles*/
+.iceCmdSrtHdr, .iceCmdSrtHdr:hover {
+   text-decoration: underline;
+}
+
+.iceCmdSrtHdr:hover {
+   color : #999999;
+   
+}
+
 .dataScrollerTable {
 }
 
@@ -894,11 +903,6 @@ em {
 
 .panelGroupMineral {
     background-color: lavender;
-}
-
-/* Expandable table example */
-.triangleColumn {
-    width:20px;
 }
 
 /* emphasize child row */
