@@ -41,11 +41,8 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.faces.FactoryFinder;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -63,43 +60,29 @@ import java.util.Map;
  * obtained for any {@link #render} requests.
  */
 public class PersistentFacesState implements Serializable {
-    private static final Log log =
-            LogFactory.getLog(PersistentFacesState.class);
+    private static final Log log = LogFactory.getLog(PersistentFacesState.class);
+    private static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static InheritableThreadLocal localInstance = new InheritableThreadLocal();
+    private BridgeFacesContext facesContext;
+    private Lifecycle lifecycle;
+    private ResponseState responseState;
 
-    static String
-            PERSISTENT_FACES_STATE = "com.icesoft.faces.PersistentFacesState";
-
-    public FacesContext facesContext;
-    transient Lifecycle lifecycle;
-    private boolean isBridgeFacesContext = false;
-
-    static ExecutorService executorService;
-
-    PersistentFacesState() {
-    }
-
-    PersistentFacesState(FacesContext facesContext) {
-        //remove this once we round out the API to include execute
-        //and render
-        setFacesContext(facesContext);
-    }
-
-    public void setFacesContext(FacesContext facesContext) {
+    public PersistentFacesState(BridgeFacesContext facesContext, ResponseState responseState) {
         this.facesContext = facesContext;
-        if (facesContext instanceof BridgeFacesContext) {
-            isBridgeFacesContext = true;
-        }
-        LifecycleFactory factory =
-                (LifecycleFactory) FactoryFinder.
-                        getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-        lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+        this.responseState = responseState;
+
+        //put this state in the session -- mainly for the fileupload
+        //todo: try to pass this state using object references
+        Map sessionMap = facesContext.getExternalContext().getSessionMap();
+        sessionMap.put(facesContext.getViewNumber() + "/" + PersistentFacesState.class, this);
+
+        LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
+        this.lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
+        this.setCurrentInstance();
     }
 
-    private static InheritableThreadLocal localInstance =
-            new InheritableThreadLocal();
-
-    public static void setLocalInstance(Map sessionMap, String viewNumber) {
-        localInstance.set(new Key(sessionMap, viewNumber));
+    public void setCurrentInstance() {
+        localInstance.set(this);
     }
 
     /**
@@ -112,93 +95,52 @@ public class PersistentFacesState implements Serializable {
      * @return the PersistentFacesState appropriate for the calling Thread
      */
     public static PersistentFacesState getInstance() {
-        Key key = (Key) localInstance.get();
-        if (null == key) {
-            return null;
-        }
-        return (getInstance(key.sessionMap, key.viewNumber));
+        return (PersistentFacesState) localInstance.get();
     }
 
-
+    //todo: remove this method when possible
     /**
      * Obtain the {@link PersistentFacesState} instance keyed by viewNumber from
      * the specified sessionMap. This API is not intended for application use.
      *
      * @param sessionMap session-scope parameters
-     * @param viewNumber unique number identifying particular browser frame
      * @return the PersistentFacesState
      */
-    public static synchronized PersistentFacesState getInstance(
-            Map sessionMap, String viewNumber) {
-        PersistentFacesState persistentFacesState = (PersistentFacesState)
-                sessionMap.get(viewNumber + "/" + PERSISTENT_FACES_STATE);
-        if (null == persistentFacesState) {
-            persistentFacesState = new PersistentFacesState();
-            sessionMap.put(viewNumber + "/" + PERSISTENT_FACES_STATE,
-                           persistentFacesState);
-        }
-        return persistentFacesState;
+    public static synchronized PersistentFacesState getInstance(Map sessionMap) {
+        Object viewNumber = sessionMap.get(PersistentFacesServlet.CURRENT_VIEW_NUMBER);
+        PersistentFacesState facesState = (PersistentFacesState) sessionMap.get(viewNumber + "/" + PersistentFacesState.class);
+        return facesState;
     }
 
-    static void setInstance(Map sessionMap, String viewNumber,
-                            PersistentFacesState persistentFacesState) {
-        sessionMap.put(viewNumber + "/" + PERSISTENT_FACES_STATE,
-                       persistentFacesState);
-    }
-
-    public static void resetInstance(Map sessionMap, String viewNumber,
-                              FacesContext facesContext) {
-        PersistentFacesState state = getInstance(sessionMap, viewNumber);
-        state.setFacesContext(facesContext);
-    }
-
-    /**
-     * Return the FacesContext associated with this instance.
-     *
-     * @return the FacesContext for this instance
-     */
-    public FacesContext getFacesContext() {
-        return facesContext;
-    }
-
-    /**
+     /**
      * Render the view associated with this <code>PersistentFacesState</code>.
      * The user's browser will be immediately updated with any changes.
      */
     public void render() throws RenderingException {
-        if (isBridgeFacesContext) {
-            ((BridgeFacesContext) facesContext).setCurrentInstance();
-            // Clear focus on forced Renders
-            ((BridgeFacesContext) facesContext).getExternalContext()
-                    .getRequestParameterMap().remove("focus");
-            ((BridgeFacesContext) facesContext).setFocusId("");
-
-            String viewNumber = ((BridgeFacesContext) facesContext)
-                    .getViewNumber();
-            synchronized (facesContext) {
-                try {
-                    lifecycle.render(facesContext);
-                } catch (IllegalStateException e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("fatal render failure for viewNumber "
-                                  + viewNumber, e);
-                    }
-                    throw new FatalRenderingException(
-                            "fatal render failure for viewNumber "
-                            + viewNumber, e);
-                } catch (Exception e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("transient render failure for viewNumber "
-                                  + viewNumber, e);
-                    }
-                    throw new TransientRenderingException(
-                            "transient render failure for viewNumber "
-                            + viewNumber, e);
+        facesContext.setCurrentInstance();
+        facesContext.setFocusId("");
+        synchronized (facesContext) {
+            try {
+                lifecycle.render(facesContext);
+            } catch (IllegalStateException e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("fatal render failure for viewNumber "
+                            + facesContext.getViewNumber(), e);
                 }
+                throw new FatalRenderingException(
+                        "fatal render failure for viewNumber "
+                                + facesContext.getViewNumber(), e);
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("transient render failure for viewNumber "
+                            + facesContext.getViewNumber(), e);
+                }
+                throw new TransientRenderingException(
+                        "transient render failure for viewNumber "
+                                + facesContext.getViewNumber(), e);
             }
         }
     }
-
 
     /**
      * Render the view associated with this <code>PersistentFacesState</code>.
@@ -206,9 +148,6 @@ public class PersistentFacesState implements Serializable {
      * from calling {@link #render} during view rendering.
      */
     public void renderLater() {
-        if (executorService == null) {
-            executorService = Executors.newSingleThreadExecutor();
-        }
         executorService.execute(new RenderRunner());
     }
 
@@ -220,17 +159,10 @@ public class PersistentFacesState implements Serializable {
      */
     public void redirectTo(String uri) {
         try {
-            if (isBridgeFacesContext)
-                ((BridgeFacesContext) facesContext).setCurrentInstance();
+            facesContext.setCurrentInstance();
             ExternalContext externalContext = facesContext.getExternalContext();
             externalContext.redirect(uri);
-            ResponseStateManager manager =
-                    ResponseStateManager.getResponseStateManager(
-                            (ServletContext) externalContext.getContext());
-            ResponseState state = manager.getState(
-                    (HttpSession) externalContext.getSession(true),
-                    ((BridgeFacesContext) facesContext).getViewNumber());
-            state.flush();
+            responseState.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -245,20 +177,12 @@ public class PersistentFacesState implements Serializable {
      */
     public void navigateTo(String outcome) {
         try {
-            if (isBridgeFacesContext)
-                ((BridgeFacesContext) facesContext).setCurrentInstance();
-            ExternalContext externalContext = facesContext.getExternalContext();
+            facesContext.setCurrentInstance();
             facesContext.getApplication().getNavigationHandler()
                     .handleNavigation(facesContext,
-                                      facesContext.getViewRoot().getViewId(),
-                                      outcome);
-            ResponseStateManager manager =
-                    ResponseStateManager.getResponseStateManager(
-                            (ServletContext) externalContext.getContext());
-            ResponseState state = manager.getState(
-                    (HttpSession) externalContext.getSession(true),
-                    ((BridgeFacesContext) facesContext).getViewNumber());
-            state.flush();
+                            facesContext.getViewRoot().getViewId(),
+                            outcome);
+            responseState.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -269,12 +193,8 @@ public class PersistentFacesState implements Serializable {
      * instance.</p>
      */
     public String toString() {
-        String facesContextString = "(null facesContext)";
-        if (null != facesContext) {
-            facesContextString = facesContext.toString();
-        }
-        return ("com.icesoft.faces.webapp.xmlhttp.PersistentFacesState@" +
-                hashCode() + "[" + facesContextString + "]");
+        return "com.icesoft.faces.webapp.xmlhttp.PersistentFacesState@" +
+                hashCode() + "[" + facesContext + "]";
     }
 
     /**
@@ -284,10 +204,8 @@ public class PersistentFacesState implements Serializable {
      * ensure that they are not hanging on to any session references, otherwise
      * the session and their resources are not released.
      */
-    public static void clearLocalInstance() {
-        if (localInstance != null) {
-            localInstance.set(null);
-        }
+    public void release() {
+        localInstance.set(null);
     }
 
     /**
@@ -295,57 +213,40 @@ public class PersistentFacesState implements Serializable {
      * The user's browser will be immediately updated with any changes.
      */
     void execute() throws RenderingException {
-        if (isBridgeFacesContext) {
-            ((BridgeFacesContext) facesContext).setCurrentInstance();
-            String viewNumber = ((BridgeFacesContext) facesContext)
-                    .getViewNumber();
-            BridgeFacesContext bContext = ((BridgeFacesContext) facesContext);
-            synchronized (bContext) {
-                try {
-                    lifecycle.execute(facesContext);
-                    lifecycle.render(facesContext);
-                    bContext.release();
-                } catch (IllegalStateException e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("fatal render failure for viewNumber "
-                                  + viewNumber, e);
-                    }
-                    throw new FatalRenderingException(
-                            "fatal render failure for viewNumber "
-                            + viewNumber, e);
-                } catch (Exception e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("transient render failure for viewNumber "
-                                  + viewNumber, e);
-                    }
-                    throw new TransientRenderingException(
-                            "transient render failure for viewNumber "
-                            + viewNumber, e);
+        facesContext.setCurrentInstance();
+        synchronized (facesContext) {
+            try {
+                lifecycle.execute(facesContext);
+                lifecycle.render(facesContext);
+                facesContext.release();
+            } catch (IllegalStateException e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("fatal render failure for viewNumber "
+                            + facesContext.getViewNumber(), e);
                 }
+                throw new FatalRenderingException(
+                        "fatal render failure for viewNumber "
+                                + facesContext.getViewNumber(), e);
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("transient render failure for viewNumber "
+                            + facesContext.getViewNumber(), e);
+                }
+                throw new TransientRenderingException(
+                        "transient render failure for viewNumber "
+                                + facesContext.getViewNumber(), e);
             }
         }
     }
 
-    private static class Key {
-        Key(Map sessionMap, String viewNumber) {
-            this.sessionMap = sessionMap;
-            this.viewNumber = viewNumber;
-        }
-
-        String viewNumber;
-        Map sessionMap;
-    }
-
     private class RenderRunner implements Runnable {
-        private final Log log = LogFactory.getLog(RenderRunner.class);
-
         /**
          * <p>Not for application use. Entry point for {@link
          * PersistentFacesState#renderLater}.</p>
          */
         public void run() {
             try {
-                PersistentFacesState.this.render();
+                render();
             } catch (RenderingException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("renderLater failed ", e);
@@ -354,6 +255,9 @@ public class PersistentFacesState implements Serializable {
         }
     }
 }
+
+
+
 
 
 

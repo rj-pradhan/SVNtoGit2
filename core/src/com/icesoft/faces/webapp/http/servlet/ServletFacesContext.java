@@ -292,7 +292,6 @@ public class ServletFacesContext extends BridgeFacesContext {
         faceMessages.clear();
         renderResponse = false;
         responseComplete = false;
-//        ((BridgeExternalContext) externalContext).resetRequestMap();
         setCurrentInstance(null);
     }
 

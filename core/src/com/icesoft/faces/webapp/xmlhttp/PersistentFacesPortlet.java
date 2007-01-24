@@ -126,7 +126,7 @@ public class PersistentFacesPortlet implements Portlet {
         PortletSession session = request.getPortletSession();
 
         //a placeholder PersistentFacesState on processAction()?
-        PersistentFacesState.setLocalInstance(null, null);
+        //PersistentFacesState.setLocalInstance(null, null);
 
         // Execute the normal lifecycle then set up a persistent environment
         try {
@@ -208,9 +208,9 @@ public class PersistentFacesPortlet implements Portlet {
                 .put(PersistentFacesServlet.CURRENT_VIEW_NUMBER,
                      String.valueOf(viewNumber));
 
-        PersistentFacesState.setLocalInstance(
-                externalContext.getApplicationSessionMap(),
-                String.valueOf(viewNumber));
+//        PersistentFacesState.setLocalInstance(
+//                externalContext.getApplicationSessionMap(),
+//                String.valueOf(viewNumber));
 
         //try to find viewId on either JetSpeed or JBoss portal
         String viewId = null;

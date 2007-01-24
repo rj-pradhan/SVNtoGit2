@@ -183,7 +183,6 @@ public class FileUploadServlet
 
     private void processMultipartContent(HttpServletRequest request,
                                          HttpServletResponse response) {
-        PersistentFacesState state = PersistentFacesState.getInstance();
         HttpSession session = request.getSession(true);
         DiskFileUpload upload = new DiskFileUpload(session);
         upload.setSizeMax(uploadMaxFileSize);
@@ -196,20 +195,19 @@ public class FileUploadServlet
             if (log.isDebugEnabled()) {
                 log.debug(limitExcep.getMessage());
             }
-            execute(session, state);
+            execute(session);
 
         } catch (FileUploadException e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            execute(session, state);
+            execute(session);
         }
     }
 
     private void SaveFile(List itemList, HttpServletRequest request,
                           ServletConfig config, HttpSession session) {
         Iterator files = itemList.iterator();
-        PersistentFacesState state = PersistentFacesState.getInstance();
         String componentId = null;
         InputFile inputFile = null;
 
@@ -263,7 +261,7 @@ public class FileUploadServlet
                         item.write(file);
                         inputFile.setFile(file);
                         inputFile.setStatus(InputFile.SAVED);
-                        execute(session, state);
+                        execute(session);
                     } catch (Exception e) {
                         if (log.isErrorEnabled()) {
                             log.error(e);
@@ -274,8 +272,6 @@ public class FileUploadServlet
                 }
             }
         }
-        persistentStateClearInstance();
-
     }
 
 
