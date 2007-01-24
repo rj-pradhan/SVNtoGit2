@@ -815,8 +815,6 @@ public class D2DViewHandler extends ViewHandler {
             if (result instanceof NamingContainer) {
                 result = D2DViewHandler.findComponent(clientId, result);
                 break;
-            } else {
-                throw new IllegalArgumentException(id);
             }
         }
 
