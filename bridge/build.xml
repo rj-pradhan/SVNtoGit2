@@ -108,7 +108,7 @@
             <filelist dir="${src.dir}">
                 <file name="submit.js"/>
                 <file name="synchronizer.js"/>
-                <file name="update.js"/>
+                <file name="command.js"/>
                 <file name="identity.js"/>
                 <file name="focus.js"/>
                 <file name="status.js"/>

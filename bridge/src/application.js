@@ -38,7 +38,7 @@
             var logger = window.logger = this.logger = new Ice.Log.Logger([ 'window' ]);
             this.logHandler = window.console && window.console.firebug ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
             var documentSynchronizer = new Ice.Document.Synchronizer(logger);
-            var statusManager = new Ice.Status.StatusManager();
+            window.statusManager = new Ice.Status.StatusManager();
 
             window.identifier = Math.round(Math.random() * 10000).toString();
             window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection, defaultParameters) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
@@ -53,33 +53,9 @@
             this.connection.onReceive(function(request) {
                 var element = request.contentAsDOM().documentElement;
                 switch (element.tagName) {
-                    case 'updates':
-                        //apply the updates
-                        $enumerate(element.getElementsByTagName('update')).each(function(updateElement) {
-                            try {
-                                var address = updateElement.getAttribute('address');
-                                var html = updateElement.firstChild.data.replace(/<\!\#cdata\#/g, '<![CDATA[').replace(/\#\#>/g, ']]>');
-                                address.asExtendedElement().replaceHtml(html);
-                                logger.debug('applied update : ' + html);
-                            } catch (e) {
-                                logger.error('failed to insert element: ' + html, e);
-                            }
-                        });
-                        break;
-
-                    case 'session-expired':
-                        logger.warn('session has expired');
-                        statusManager.sessionExpired.on();
-                        this.dispose();
-                        break;
-
-                    case 'redirect':
-                        var url = element.getAttribute("url");
-                        logger.info('Redirecting to ' + url);
-                        var redirectViewNumber = url.contains('?') ? '&rvn=' : '?rvn=';
-                        window.location.href = url + redirectViewNumber + viewIdentifiers().first();
-                        break;
-
+                    case 'updates': Ice.Command.Updates(element); break;
+                    case 'redirect': Ice.Command.Redirect(element); break;
+                    case 'session-expired': Ice.Command.SessionExpired(); break;                
                     default: throw 'Unknown message received: ' + element.tagName;
                 }
             }.bind(this));
