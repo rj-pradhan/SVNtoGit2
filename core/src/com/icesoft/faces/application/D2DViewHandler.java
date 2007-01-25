@@ -567,6 +567,9 @@ public class D2DViewHandler extends ViewHandler {
 
     protected void renderResponse(FacesContext context, UIComponent component)
             throws IOException {
+        if( !component.isRendered() )
+            return;
+        
         component.encodeBegin(context);
 
         if (component.getRendersChildren()) {
