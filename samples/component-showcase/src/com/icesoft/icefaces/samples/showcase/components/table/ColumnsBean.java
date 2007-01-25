@@ -140,7 +140,8 @@ public class ColumnsBean {
         // empty field.
         return "-";
     }
-
+    
+    
 
     private void  calculateRows(){
         // calculate the number of columns.
@@ -171,24 +172,24 @@ public class ColumnsBean {
         ArrayList rowList = new ArrayList();
         
         table = new String[columns][numberOfRows];
-        String s;
-        Integer index;
-        
+        String r;
+        String c;
         for(int i=0;i<columns;i++)
         {
             for(int j=0;j<numberOfRows;j++)
             {
-                s = getChar(j);
-                table[i][j] = s;
-                rowList.add(s);
+                r = getChar(j);
+                table[i][j] = r;
+                rowList.add(r);
              }
-            index = new Integer(i);
-            columnList.add(index);
+            c = getChar(i);
+            columnList.add(c);
+            
         }
         
         rowDataModel = new ListDataModel(rowList);
         columnDataModel = new ListDataModel(columnList);
-       
+        
     }
 
    private String getChar(int i){

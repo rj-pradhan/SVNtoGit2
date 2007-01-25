@@ -65,7 +65,7 @@
                                            valueChangeListener="#{columnsBean.updateTableColumns}"
                                            value="#{columnsBean.columns}"
                                            partialSubmit="true">
-                                <f:validateLongRange minimum="1" maximum="255"/>
+                                <f:validateLongRange minimum="1" maximum="26"/>
                             </ice:inputText>
                             <ice:message id="columnsInputMessage"
                                          for="columnsInput"/>
@@ -82,7 +82,7 @@
                                          var="column">
                                 <f:facet name="header">
                                     <ice:panelGroup >
-                                        <ice:outputText value="#{column}"/>
+                                        <ice:outputText value="#{columnsBean.columnDataModel.rowData}"/>
                                     </ice:panelGroup>
                                 </f:facet>
                                 <!-- display the table cell values-->
