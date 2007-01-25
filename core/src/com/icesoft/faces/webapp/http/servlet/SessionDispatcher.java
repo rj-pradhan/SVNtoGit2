@@ -67,8 +67,7 @@ public abstract class SessionDispatcher implements ServletServer {
     }
 
     private static void sendSessionExpired(HttpServletResponse response) throws IOException {
-        response.setStatus(500);
-        response.setHeader("X-SESSION-EXPIRED", ".");
-        response.getOutputStream().write(".\n".getBytes());
+        response.setHeader("Content-Type", "text/xml;charset=UTF-8");
+        response.getOutputStream().write("<session-expired/>".getBytes("UTF-8"));
     }
 }

@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.io.StringWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.io.PrintStream;
 
 public class ReceiveSendUpdates implements Server {
     private static final LifecycleFactory LifecycleFactory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
@@ -171,9 +174,9 @@ public class ReceiveSendUpdates implements Server {
         }
 
         public void respond(Response response) throws Exception {
-            response.setHeader("X-REDIRECT", externalContext.redirectTo());
-            //send some content since Safari will not read the header.
-            response.writeBody().write('.');
+            response.setHeader("Content-Type", "text/xml;charset=UTF-8");
+            String body = "<redirect url=\"" + externalContext.redirectTo() + "\"/>";
+            response.writeBody().write(body.getBytes("UTF-8"));
             externalContext.redirectComplete();
         }
     }
