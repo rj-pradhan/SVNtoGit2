@@ -41,8 +41,9 @@ public class MainServlet extends HttpServlet {
             }
             ServerAdapterServlet resourceServer = new ServerAdapterServlet(new ResourceServer(configuration));
 
+            
             dispatcher.dispatchOn(".*xmlhttp\\/.*", resourceServer);
-            dispatcher.dispatchOn(".*block\\/.*|.*\\.iface$", sessionDispatcher);
+            dispatcher.dispatchOn(".*", sessionDispatcher);
         } catch (Exception e) {
             throw new ServletException(e);
         }

@@ -15,33 +15,25 @@ public abstract class SessionDispatcher implements ServletServer {
     private final static Map SessionBoundServers = new HashMap();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
-        //the servlet container expired the session
-        if (session == null) {
-            sendSessionExpired(response);
-        } else {
-            final ServletServer server;
-            if (session.isNew()) {
-                server = this.newServlet(session);
-                SessionBoundServers.put(session, server);
-            } else {
-                server = (ServletServer) SessionBoundServers.get(session);
-            }
-
-            if (server == null) {
-                //session has expired in the mean time, server removed by the session listener
+        HttpSession session = request.getSession(true);
+        //track new session
+        if (session.isNew()) {
+            SessionBoundServers.put(session, this.newServlet(session));
+        }
+        //test if session is still around
+        if (SessionBoundServers.containsKey(session)) {
+            ServletServer server = (ServletServer) SessionBoundServers.get(session);
+            try {
+                server.service(request, response);
+            } catch (IllegalStateException e) {
+                //session has expired
+                SessionBoundServers.remove(session);
+                server.shutdown();
                 sendSessionExpired(response);
-            } else {
-                try {
-                    server.service(request, response);
-                } catch (IllegalStateException e) {
-                    //session has expired
-                    SessionBoundServers.remove(session);
-                    server.shutdown();
-                    sendSessionExpired(response);
-                }
             }
+        } else {
+            //session has expired in the mean time, server removed by the session listener
+            sendSessionExpired(response);
         }
     }
 

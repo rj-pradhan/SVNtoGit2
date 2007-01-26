@@ -39,6 +39,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,6 +54,11 @@ public class IdGenerator {
     private long counter;
     private String ipAddress;
     private static MessageDigest md5;
+
+
+    public IdGenerator() {
+        this(String.valueOf(new Random().nextInt()));
+    }
 
     public IdGenerator(String seed) {
         this.seed = seed.trim();
