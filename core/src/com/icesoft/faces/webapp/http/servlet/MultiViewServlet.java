@@ -23,15 +23,15 @@ public class MultiViewServlet implements ServletServer {
     private Map views = new HashMap();
 
     public MultiViewServlet(HttpSession session, IdGenerator idGenerator, ResponseStateManager responseStateManager) {
+        String sessionID = idGenerator.newIdentifier();
+        //ContextEventRepeater needs this
+        session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
+        ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
+
         this.session = session;
         this.responseStateManager = responseStateManager;
         this.updateManager = new UpdateManager(session);
         this.server = new ServerAdapterServlet(new PushServer(updateManager));
-
-        String sessionID = idGenerator.newIdentifier();
-        //ContextEventRepeater needs this
-        session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
-        ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);        
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
