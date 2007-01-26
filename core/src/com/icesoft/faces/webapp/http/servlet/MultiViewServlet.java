@@ -45,12 +45,12 @@ public class MultiViewServlet implements ServletServer {
             String redirectViewNumber = request.getParameter("rvn");
             if (redirectViewNumber == null) {
                 viewNumber = String.valueOf(++viewCount);
+                ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
             } else {
                 viewNumber = redirectViewNumber;
             }
             view = new ServletView(viewNumber, request, response, responseStateManager);
             views.put(viewNumber, view);
-            ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
             server.service(request, response);
             view.redirectIfRequired();
             view.switchToPushMode();
