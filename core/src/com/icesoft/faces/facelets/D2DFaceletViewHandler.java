@@ -57,6 +57,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.HashMap;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces Facelet ViewHandler implementation
@@ -266,6 +267,8 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
 
                 context.setViewRoot( viewToRender );
                 
+                verifyUniqueComponentIds( viewToRender, new HashMap() );
+                
                 // Uses D2DViewHandler logging
                 tracePrintComponentTree(context);
             }
@@ -313,6 +316,28 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                     D2DFaceletViewHandler.removeTransient(d);
                 }
             }
+        }
+    }
+    
+    protected static void verifyUniqueComponentIds(UIComponent comp, HashMap ids) {
+        if( !log.isErrorEnabled() )
+            return;
+        String id = comp.getId();
+        if( id == null ) {
+            log.error("UIComponent has null id: " + comp);
+        }
+        else {
+            if( ids.containsKey(id) ) {
+                log.error("Multiple UIComponents found, which are wrongfully using the same id: " + id + ".  Most recent UIComponent: " + comp);
+            }
+            else {
+                ids.put( id, id );
+            }
+        }
+        Iterator children = comp.getFacetsAndChildren();
+        while( children.hasNext() ) {
+            UIComponent child = (UIComponent) children.next();
+            verifyUniqueComponentIds( child, ids );
         }
     }
 }
