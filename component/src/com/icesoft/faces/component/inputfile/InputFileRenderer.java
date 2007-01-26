@@ -61,7 +61,7 @@ public class InputFileRenderer extends DomBasicInputRenderer {
         setRootElementId(facesContext, iframe, uiComponent);
         iframe.setAttribute(HTML.SRC_ATTR, ApplicationBaseLocator
                 .locate(facesContext) + InputFile.ICE_UPLOAD_FILE +
-                                      inputFile.getQueryString(facesContext));
+                                      inputFile.getQueryString());
         iframe.setAttribute(HTML.NAME_ATTR, InputFile.FILE_UPLOAD_PREFIX +
                                             uiComponent
                                                     .getClientId(facesContext));

@@ -84,6 +84,7 @@ public class DiskFileUpload
         if(inputFile != null){
             inputFile.setStatus(InputFile.DEFAULT);
         }
+ 
         ArrayList items = new ArrayList();
         String contentType = req.getHeader(CONTENT_TYPE);
 
@@ -153,6 +154,17 @@ public class DiskFileUpload
                     } else {
                         if (getFileName(headers) != null) {
                             // A single file.
+                        	
+                            if (!inputFile.patternMatched(getFileName())) {
+                                inputFile.setStatus(InputFile.INVALID);
+                                inputFile.getFileInfo()
+                                        .setFileName(getFileName());
+                                FileUploadException exception =
+                                        new FileUploadException(
+                                                "The file name ["+ getFileName() +"] does not match with the file name pattern ["+ inputFile.getFileNamePattern() +"]");
+                                inputFile.getFileInfo().setException(exception);
+                                throw exception;
+                            }
                             FileItem item = createItem(headers, false);
 
                             OutputStream os = item.getOutputStream();

@@ -45,21 +45,6 @@
 		</editor-class>
 	</property-extension>
 </property>
-
-<property>
-	<description>
-		Mimetype of the file being uploaded.
-	</description>	
-	<property-name>mimeType</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
 <property>
 	<description>
 		Bean property that will be a reference to the uploaded file.
@@ -70,63 +55,11 @@
 		<category>ICE_LAYOUT</category>
 	</property-extension>
 </property>
-
-<property>
-	<description>
-		File name of the file being uploaded.
-	</description>
-	<property-name>filename</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
-<property>
-	<description>Size of the input text box.</description>
-	<property-name>size</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
-<property>
-  <description>Flag indicating that this component will prohibit
-      changes by the user.  The element may receive focus
-      unless it has also been disabled.
-  </description>
-  <property-name>readonly</property-name>
-  <property-class>boolean</property-class>
-  <property-extension>
-    <category>APPEARANCE</category>
-  </property-extension>  
-</property>
-
 <property>
 	<description>
 		Passed through to root element.
 	</description>	
-	<property-name>alt</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-</property>
-<property>
-	<description>
-		Passed through to root element.
-	</description>
-	<property-name>maxlength</property-name>
+	<property-name>title</property-name>
 	<property-class>java.lang.String</property-class>
 	<property-extension>
 		<category>ICE_LAYOUT</category>
@@ -216,6 +149,39 @@
 		<category>ICE_LAYOUT</category>
 		<editor-class>
 			&integerEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+	   <![CDATA[
+		The name of the file being uploaded must conform with this pattern. The regular 
+		expression can be use to define the valid file name to be uploaded.<br>
+		
+		If the file name does not match with the pattern, the file will not be 
+		uploaded and an actionEvent and an exception would be fired and thrown
+		respectively.
+		<pre>
+		public void action(ActionEvent event) {
+             InputFile inputFile = (InputFile) event.getSource();
+		     if (inputFile.getStatus() == InputFile.INVALID) {
+                inputFile.getFileInfo().getException().printStackTrace();
+             }
+        }
+        </pre>
+        
+        The default pattern is set to <b>".+"</b> for any name lenght > 0. Let say
+        to allow only .pdf files to be uploaded the pattern would be <b>".+\.pdf"</b><br/>
+        
+        
+        ]]>
+	</description>
+    <property-name>fileNamePattern</property-name>
+    <property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
 		</editor-class>
 	</property-extension>
 </property>

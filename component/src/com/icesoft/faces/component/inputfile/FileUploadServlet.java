@@ -78,111 +78,22 @@ public class FileUploadServlet
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        sendOutput(response, getHtml(request));
+        sendOutput(request, response);
     }
 
-    private String getComponentId(HttpServletRequest request) {
-        return request.getParameter(InputFile.FILE_UPLOAD_COMPONENT_ID)
-                .toString();
-    }
-
-    private String getDisabled(HttpServletRequest request) {
-        Object disabledParam = request.getParameter("disabled");
-        if (disabledParam != null &&
-            disabledParam.toString().equalsIgnoreCase("true")) {
-            return "disabled";
-        } else {
-            return "";
-        }
-    }
-
-    private String getCSSFile(HttpServletRequest request) {
-        return String.valueOf(request.getParameter("cssFile"));
-    }
-    
-    private String getWidth(HttpServletRequest request) {
-    	return String.valueOf(request.getParameter("width"));
-    }
-    
-    private String getHeight(HttpServletRequest request) {
-        return String.valueOf(request.getParameter("height"));
-    }
-    
-    private String getInputTextSize(HttpServletRequest request) {
-    	if (request.getParameter("inputTextSize")!= null) {
-    		return " size='" + String.valueOf(request.getParameter("inputTextSize"))+"' ";
-    	} else {
-    		return new String();
-    	}
-    }
-    
-    private String getStyleClass(HttpServletRequest request) {
-    	if (request.getParameter("styleClass") != null) {
-    		return " class='" + String.valueOf(request.getParameter("styleClass"))+"' ";
-    	} else {
-    		return new String();
-    	}
-    }
-    
-    private String getStyle(HttpServletRequest request) {
-    	String style = " style='width:" + getWidth(request)+";height:" + getHeight(request)+ ";";
-    	if (request.getParameter("style") != null) {
-    		return style += String.valueOf(request.getParameter("style"))+"' ";
-    	} else {
-    		return style += "' ";
-    	}
-    }
-    
-    private String getStyleInfo(HttpServletRequest request) {
-    	return getStyle(request) + getStyleClass(request);
-    }
-    private String getInputTextClass(HttpServletRequest request) {
-        if (request.getParameter("inputTextClass") != null) {
-            return " class='" +
-                   request.getParameter("inputTextClass").toString() + "' ";
-        } else {
-            return null;
-        }
-
-    }
-
-    private String getButtonClass(HttpServletRequest request) {
-        if (request.getParameter("buttonClass") != null) {
-            return "class='" + request.getParameter("buttonClass").toString() +
-                   "'";
-        } else {
-            return null;
-        }
-    }
-
-    private String getLabel(HttpServletRequest request) {
-    	return null!= String.valueOf(request.getParameter("label"))? 
-    			String.valueOf(request.getParameter("label")):
-    				"Upload";
-    }
-
-    private boolean isUniqueFolder(HttpServletRequest request) {
-        if (request.getParameter("uniqueFolder") != null && request
-                .getParameter("uniqueFolder").trim().equalsIgnoreCase("true")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Test if request if for file upload
-
         boolean isMultipart = FileUpload.isMultipartContent(request);
         if (isMultipart) {
             processMultipartContent(request, response);
         }
-        sendOutput(response, getHtml(request));
+        sendOutput(request, response);
     }
 
     private void processMultipartContent(HttpServletRequest request,
-                                         HttpServletResponse response) {
+                                         HttpServletResponse response) throws ServletException{
         HttpSession session = request.getSession(true);
         DiskFileUpload upload = new DiskFileUpload(session);
         upload.setSizeMax(uploadMaxFileSize);
@@ -206,10 +117,9 @@ public class FileUploadServlet
     }
 
     private void SaveFile(List itemList, HttpServletRequest request,
-                          ServletConfig config, HttpSession session) {
+                          ServletConfig config, HttpSession session) throws ServletException{
         Iterator files = itemList.iterator();
-        String componentId = null;
-        InputFile inputFile = null;
+        InputFile inputFile = getInputFile(request);
 
 
         while (files.hasNext()) {
@@ -219,11 +129,7 @@ public class FileUploadServlet
             //and get the inputFile component from the session keyed as componentId. 
 
             if (item.isFormField()) {
-                componentId = item.getString();
-                if (session.getAttribute(componentId) != null) {
-                    inputFile = (InputFile) session.getAttribute(componentId);
-                    inputFile.fireEvent();
-                }
+            	inputFile.fireEvent();
             }
 
             //this is the actual file object.
@@ -250,10 +156,10 @@ public class FileUploadServlet
                     inputFile.getFileInfo().setFileName(fileName);
                     inputFile.getFileInfo()
                             .setContentType(item.getContentType());
-                    inputFile.getFileInfo().setPhysicalPath(getPath(request));
+                    inputFile.getFileInfo().setPhysicalPath(getPath(request, inputFile.isUniqueFolder()));
 
                     try {
-                        File uploadFolder = new File(getPath(request));
+                        File uploadFolder = new File(getPath(request, inputFile.isUniqueFolder()));
                         if (!uploadFolder.exists()) {
                             uploadFolder.mkdirs();
                         }
@@ -275,7 +181,7 @@ public class FileUploadServlet
     }
 
 
-    private String getPath(HttpServletRequest request) {
+    private String getPath(HttpServletRequest request, boolean isUniqueFolder) {
         String relativeDir =
                 config.getServletContext().getInitParameter(UPLOAD_DIRECTORY);
 
@@ -294,17 +200,18 @@ public class FileUploadServlet
         String dir = relativeDir;
         if(!absolute)
                 dir = config.getServletContext().getRealPath(relativeDir);
-        if (isUniqueFolder(request)) {
+        if (isUniqueFolder) {
             dir += FILE_SEPARATOR + sessionId;
         }
         return (dir);
     }
 
-    private void sendOutput(HttpServletResponse response, String output) {
+    private void sendOutput(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+    	InputFile inputFile = getInputFile(request);
         try {
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
-            out.println(output);
+            out.println(inputFile.getHtml());
         } catch (IOException e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -313,37 +220,16 @@ public class FileUploadServlet
         }
     }
 
-    private String getHtml(HttpServletRequest request) {
-        String link = "";
-        if (getCSSFile(request) != null) {
-            String[] links = getCSSFile(request).split(",");
-            for (int i = 0; i < links.length; i++) {
-                link += "<link rel='stylesheet' type='text/css' href='" +
-                        links[i] + "'/>";
-            }
+    private InputFile getInputFile(HttpServletRequest request) throws ServletException{
+    	String componentId = request.getParameter(InputFile.FILE_UPLOAD_COMPONENT_ID);
+        HttpSession session = request.getSession(true);
+        InputFile inputFile = null;
+        if (session.getAttribute(componentId) != null) {
+            inputFile = (InputFile) session.getAttribute(componentId);
         }
-        String html = "<HTML><HEAD>" + link +
-                      "<SCRIPT LANGUAGE='javascript'>function mySubmit(frm) {frm.fileName.value = frm.inputFileField.value ; return true;} </SCRIPT>" +
-                      "</HEAD><BODY style='margin: 0px;padding: 0px;'> " +
-                      "<TABLE CELLSPACING='0' CELLPADDING='0'><TR><FORM action='" + InputFile.ICE_UPLOAD_FILE + "?" +
-                      request.getQueryString() +
-                      "' enctype='multipart/form-data' id='fileUploadForm' method='post' onsubmit='return mySubmit(this)'>" +
-                      "<TD>" +
-                      "<DIV id='submit' "+ getStyleInfo(request) +">" +
-                      "<INPUT name='fileName' type='hidden' value='test'/>" +
-                      "<INPUT name='" + InputFile.FILE_UPLOAD_COMPONENT_ID +
-                      "' type='hidden' value='" + getComponentId(request) +
-                      "'/>" +
-                      "<INPUT name='inputFileField' " +
-                      getInputTextSize(request) + 
-                      getInputTextClass(request) + " type='file'" +
-                      getDisabled(request) + " />" +
-                      "<INPUT type='submit' " + getButtonClass(request) +
-                      " value='" + getLabel(request) + "' " +
-                      getDisabled(request) + "/>" +
-                      "</DIV>" +
-                      "</TD></FORM></TR>" +
-                      "</TABLE></BODY></HTML>";
-        return html;
+        if (inputFile == null) {
+        	throw new ServletException("The inputFile component with the id ["+ componentId + "] was not registered.");
+        }
+    	return inputFile;
     }
 }

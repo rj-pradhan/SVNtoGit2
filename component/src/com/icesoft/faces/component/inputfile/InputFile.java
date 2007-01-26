@@ -38,7 +38,6 @@ import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.style.OutputStyle;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
-import org.w3c.dom.Element;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UICommand;
@@ -58,6 +57,7 @@ import java.lang.reflect.Method;
 import java.util.EventObject;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 /**
@@ -65,7 +65,8 @@ import java.util.Map;
  */
 public class InputFile extends UICommand implements Serializable{
 
-    public static final String FILE_UPLOAD_COMPONENT_ID =
+	private static final long serialVersionUID = 1L;
+	public static final String FILE_UPLOAD_COMPONENT_ID =
             "fileUploadComponentId";
     public static final String COMPONENT_TYPE = "com.icesoft.faces.File";
     public static final String RENDERER_TYPE = "com.icesoft.faces.Upload";
@@ -87,8 +88,6 @@ public class InputFile extends UICommand implements Serializable{
     private int status = DEFAULT;
     private FileInfo fileInfo = null;
     private File file = null;
-    private Element firstTd = null;
-    private Element secondTd = null;
     private Object baseClass = null;
     private String methodName = null;
     private Boolean disabled = null;
@@ -97,16 +96,16 @@ public class InputFile extends UICommand implements Serializable{
     private String styleClass = null;
     private String label = null;
     FacesContext facesContext = FacesContext.getCurrentInstance();
-    private Boolean readonly = null;
     private String enabledOnUserRole = null;
     private String renderedOnUserRole = null;
-    private String alt = null;
+    private String title = null;
     private int height = 30;
     private boolean heightSet;
     private int width = 500;
     private boolean widthSet;
     private int inputTextSize = 35;
-    private boolean inputTextSizeSet;    
+    private boolean inputTextSizeSet; 
+    private String fileNamePattern = null;
     /**
      * <p>Return the value of the <code>COMPONENT_TYPE</code> of this
      * component.</p>
@@ -282,21 +281,6 @@ public class InputFile extends UICommand implements Serializable{
         super.setValueBinding(name, vb);
     }
 
-    Element getFirstTd() {
-        return firstTd;
-    }
-
-    void setFirstTd(Element firstTd) {
-        this.firstTd = firstTd;
-    }
-
-    Element getSecondTd() {
-        return secondTd;
-    }
-
-    void setSecondTd(Element secondTd) {
-        this.secondTd = secondTd;
-    }
 
     boolean fireEvent() {
         if (baseClass != null && methodName != null) {
@@ -348,7 +332,8 @@ public class InputFile extends UICommand implements Serializable{
                 try {
                     if (!isHeartbeatStopped()) {
                         String call =
-                                "var h = window.connection.heartbeat; if(h != null)h.stop();";
+                                "var h = window.connection.heartbeat;"+ 
+                                "if(h != null)h.stop();";
                         JavascriptContext.addJavascriptCall(facesContext, call);
                         ((HttpSession) facesContext.getExternalContext()
                                 .getSession(true)).setMaxInactiveInterval(600);
@@ -385,26 +370,6 @@ public class InputFile extends UICommand implements Serializable{
      */
     public void setDisabled(boolean disabled) {
         this.disabled = Boolean.valueOf(disabled);
-    }
-
-    /**
-     * <p>Return the value of the <code>readonly</code> property.</p>
-     */
-    public boolean isReadonly() {
-        if (readonly != null) {
-            return readonly.booleanValue();
-        }
-        ValueBinding vb = getValueBinding("readonly");
-        Boolean boolVal =
-                vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
-        return boolVal != null ? boolVal.booleanValue() : false;
-    }
-
-    /**
-     * <p>Set the value of the <code>readonly</code> property.</p>
-     */
-    public void setReadonly(boolean readonly) {
-        this.readonly = Boolean.valueOf(readonly);
     }
 
     /**
@@ -462,7 +427,8 @@ public class InputFile extends UICommand implements Serializable{
     }
 
     void clearFormState() {
-        if (parentForm != null && parentForm.getAttributes().containsKey("fileUpload")) {
+        if (parentForm != null && 
+        		parentForm.getAttributes().containsKey("fileUpload")) {
             parentForm.getAttributes().remove("fileUpload");
         }
     }
@@ -509,7 +475,7 @@ public class InputFile extends UICommand implements Serializable{
         setStatus(DEFAULT);
         if (isHeartbeatStopped()) {
             String call =
-                    "var h = window.connection.heartbeat; if(h != null) {h.start();}";
+             "var h = window.connection.heartbeat; if(h != null) {h.start();}";
             JavascriptContext.addJavascriptCall(facesContext, call);
             heartbeatStopped = false;
         }
@@ -665,8 +631,6 @@ public class InputFile extends UICommand implements Serializable{
         Object values[] = new Object[26];
         values[0] = super.saveState(context);
         values[1] = fileInfo;
-        values[2] = firstTd;
-        values[3] = secondTd;
         values[4] = baseClass;
         values[5] = methodName;
         values[6] = disabled;
@@ -675,7 +639,6 @@ public class InputFile extends UICommand implements Serializable{
         values[9] = styleClass;
         values[10] = label;
         values[11] = facesContext;
-        values[12] = readonly;
         values[13] = enabledOnUserRole;
         values[14] = renderedOnUserRole;
         return ((Object) (values));
@@ -689,8 +652,6 @@ public class InputFile extends UICommand implements Serializable{
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
         fileInfo = (FileInfo) values[1];
-        firstTd = (Element) values[2];
-        secondTd = (Element) values[3];
         baseClass = (Object) values[4];
         methodName = (String) values[5];
         disabled = (Boolean) values[6];
@@ -699,7 +660,6 @@ public class InputFile extends UICommand implements Serializable{
         styleClass = (String) values[9];
         label = (String) values[10];
         facesContext = (FacesContext) values[11];
-        readonly = (Boolean) values[12];
         enabledOnUserRole = (String) values[13];
         renderedOnUserRole = (String) values[14];
     }
@@ -711,44 +671,23 @@ public class InputFile extends UICommand implements Serializable{
     }
 
     /**
-     * <p>Set the value of the <code>alt</code> property.</p>
+     * <p>Set the value of the <code>title</code> property.</p>
      */
-    public void setAlt(String alt) {
-        this.alt = alt;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * <p>Return the value of the <code>alt</code> property.</p>
+     * <p>Return the value of the <code>title</code> property.</p>
      */
-    public String getAlt() {
-        if (alt != null) {
-            return alt;
+    public String getTitle() {
+        if (title != null) {
+            return title;
         }
-        ValueBinding vb = getValueBinding("alt");
+        ValueBinding vb = getValueBinding("title");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
-
-    // maxlength
-    private String maxlength = null;
-
-    /**
-     * <p>Set the value of the <code>maxlength</code> property.</p>
-     */
-    public void setMaxlength(String maxlength) {
-        this.maxlength = maxlength;
-    }
-
-    /**
-     * <p>Return the value of the <code>maxlength</code> property.</p>
-     */
-    public String getMaxlength() {
-        if (maxlength != null) {
-            return maxlength;
-        }
-        ValueBinding vb = getValueBinding("maxlength");
-        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
-    }
-
+    
     // size
     private String size = null;
 
@@ -780,24 +719,9 @@ public class InputFile extends UICommand implements Serializable{
         return registrationId;
     }
 
-    String getQueryString(FacesContext facesContext) {
-        String inputTextClass = getInputTextClass();
-        String buttonClass = getButtonClass();
-        String label = getLabel();
-        boolean uniqueFolder = isUniqueFolder();
+    String getQueryString() {
         String queryString =
-                "?" + FILE_UPLOAD_COMPONENT_ID + "=" + getRegistrationId() +
-                "&disabled=" + isDisabled() +
-                "&inputTextClass=" + inputTextClass +
-                "&buttonClass=" + buttonClass +
-                "&label=" + label +
-                "&uniqueFolder=" + uniqueFolder +
-                "&cssFile=" + getCssFile()+
-                "&width=" + getWidth()+  
-                "&height=" + getHeight()+ 
-                "&inputTextSize=" + getInputTextSize()+
-                "&style=" + getStyle()+                
-                "&styleClass="+ getStyleClass();
+                "?" + FILE_UPLOAD_COMPONENT_ID + "=" + getRegistrationId() ;
         return queryString;
     }
 
@@ -899,4 +823,86 @@ public class InputFile extends UICommand implements Serializable{
 		this.inputTextSizeSet =  true;
 	}
 
+	public String getFileNamePattern() {
+        if (fileNamePattern != null) {
+            return fileNamePattern;
+        }
+        ValueBinding vb = getValueBinding("fileNamePattern");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : ".+";
+	}
+
+	public void setFileNamePattern(String fileNamePattern) {
+		this.fileNamePattern = fileNamePattern;
+	}
+
+	boolean patternMatched(String fileName) {
+		String  pattren = getFileNamePattern().trim();
+		return Pattern.matches(pattren, fileName.trim());
+	}
+    String getHtml() {
+        String link = "";
+        String cssFile = getCssFile();
+        if (cssFile != null) {
+            String[] links = cssFile.split(",");
+            for (int i = 0; i < links.length; i++) {
+                link += "<link rel='stylesheet' type='text/css' href='" +
+                        links[i] + "'/>";
+            }
+        }
+        String html = "<HTML><HEAD>" + link +
+                      "<SCRIPT LANGUAGE='javascript'>function mySubmit(frm)"+ 
+                      "{frm.fileName.value = frm.inputFileField.value ; return true;}" +
+                      " </SCRIPT>" +
+                      "</HEAD><BODY style='margin: 0px;padding: 0px;'> " +
+                      "<TABLE CELLSPACING='0' CELLPADDING='0'><TR><FORM action='" +
+                      InputFile.ICE_UPLOAD_FILE + getQueryString()+
+                      "' enctype='multipart/form-data' id='fileUploadForm' " +
+                      "method='post' onsubmit='return mySubmit(this)'>" +
+                      "<TD>" +
+                      "<DIV id='submit' "+ getStyleInfo() + ">" +
+                      "<INPUT name='fileName' type='hidden' value='test'/>" +
+                      "<INPUT name='" + InputFile.FILE_UPLOAD_COMPONENT_ID +
+                      "' type='hidden' value='" + getRegistrationId() +
+                      "'/>" +
+                      "<INPUT name='inputFileField' size='" + getInputTextSize() + 
+                      "' "+ getInputTextClassString() + " type='file'" +
+                      getDisabled() +  " "+ getTitleAsString() +" />" +
+                      "<INPUT type='submit' " + getButtonClassString() +
+                      " value='" + getLabel() + "' " +
+                      getDisabled() +"/>" +
+                      "</DIV>" +
+                      "</TD></FORM></TR>" +
+                      "</TABLE></BODY></HTML>";
+        return html;
+    }
+    
+
+    private String getDisabled() {
+        return isDisabled() ? "disabled": "";
+    }
+  
+    private String getStyleClassString() {
+    	return getStyleClass() != null ?  " class='" + getStyleClass()+"' " : "";
+    }
+    
+    private String getStyleString() {
+    	String style = " style='width:" + getWidth() +";height:" + getHeight()+ ";";
+    	return style +=(getStyle() != null ?  getStyle()+"' ": "' ");
+    }
+    
+    private String getStyleInfo() {
+    	return getStyleString() + getStyleClassString();
+    }
+    private String getInputTextClassString() {
+        return (getInputTextClass() != null)? "class='" + getInputTextClass() 
+        		+ "' ": "";
+    }
+
+    private String getButtonClassString() {
+    	return (getButtonClass() != null) ?"class='" + getButtonClass() + "'" : "";
+    }
+    
+    private String getTitleAsString(){
+    	return getTitle() != null ? "title='" + getTitle() +"'": "";
+    }
 }
