@@ -33,7 +33,6 @@
 
 package com.icesoft.icefaces.samples.showcase.components.selection;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -47,67 +46,143 @@ public class SelectionTagsBean {
     /**
      * Available options for the various selection components.
      */
-    private static final SelectItem[] drinkItems = new SelectItem[]{
+    private static final SelectItem[] DRINK_ITEMS = new SelectItem[]{
             new SelectItem("Coke"),
             new SelectItem("Pepsi"),
             new SelectItem("Sprite"),
             new SelectItem("7Up"),
     };
-    private static final SelectItem[] languageItems = new SelectItem[]{
+    private static final SelectItem[] LANGUAGE_ITEMS = new SelectItem[]{
             new SelectItem("Java"),
             new SelectItem("C#"),
             new SelectItem("C++"),
             new SelectItem("C"),
             new SelectItem("COBOL"),
     };
-    private static final SelectItem[] countryItems = new SelectItem[]{
-            new SelectItem("Canada"),
-            new SelectItem("United States"),
-            new SelectItem("China"),
-            new SelectItem("United Kingdom"),
-            new SelectItem("Russia"),
-    };
-    private static final SelectItem[] componentTypeItems = new SelectItem[]{
+    private static final SelectItem[] COMPONENT_ITEMS = new SelectItem[]{
             new SelectItem("I/O"),
             new SelectItem("Command"),
             new SelectItem("Selection"),
     };
-    private static final SelectItem[] carListItems = new SelectItem[]{
+    private static final SelectItem[] CARS_ITEMS = new SelectItem[]{
             new SelectItem("Batmobile"),
             new SelectItem("A-Team Van"),
             new SelectItem("BMW Z4"),
             new SelectItem("General Lee"),
             new SelectItem("El Chamino"),
     };
-    
 
     /**
-     * Converts string arrays for displays.
-     *
-     * @param stringArray string array to convert
-     * @return a string concatenating the elements of the string array
+     * Countries and Cities declorations
      */
-    private static String convertToString(String[] stringArray) {
-        if (stringArray == null) return "";
-        StringBuffer b = new StringBuffer();
-        for (int i = 0; i < stringArray.length; i++) {
-            if (i > 0) b.append(" , ");
-            b.append(stringArray[i]);
+
+    private SelectItem[] cityItems;
+
+    private static final String COUNTRY_CANADA = "Canada";
+    private static final String COUNTRY_USA = "United States";
+    private static final String COUNTRY_CHINA = "China";
+    private static final String COUNTRY_UK = "United Kingdom";
+    private static final String COUNTRY_RUSSIA = "Russia";
+
+    private static final SelectItem[] COUNTRY_ITEMS = new SelectItem[]{
+            new SelectItem(COUNTRY_CANADA),
+            new SelectItem(COUNTRY_USA),
+            new SelectItem(COUNTRY_CHINA),
+            new SelectItem(COUNTRY_UK),
+            new SelectItem(COUNTRY_RUSSIA),
+    };
+
+    private static final SelectItem[] CITIES_CANADA = new SelectItem[]{
+            new SelectItem("Calgary"),
+            new SelectItem("Vancouver"),
+            new SelectItem("Toronto"),
+            new SelectItem("Montreal"),
+            new SelectItem("Ottawa"),
+            new SelectItem("Sudbury")};
+
+    private static final SelectItem[] CITIES_USA = new SelectItem[]{
+            new SelectItem("Seattle"),
+            new SelectItem("San Francisco"),
+            new SelectItem("Los Angeles"),
+            new SelectItem("New York"),
+            new SelectItem("Chicago")};
+
+    private static final SelectItem[] CITIES_CHINA = new SelectItem[]{
+            new SelectItem("Beijing"),
+            new SelectItem("Shanghai"),
+            new SelectItem("Canton"),
+            new SelectItem("Shenzhen"),
+            new SelectItem("Hong Kong")};
+
+    private static final SelectItem[] CITIES_UK = new SelectItem[]{
+            new SelectItem("London"),
+            new SelectItem("Birmingham"),
+            new SelectItem("Edinburgh"),
+            new SelectItem("Liverpool"),
+            new SelectItem("Cardiff")};
+
+    private static final SelectItem[] CITIES_RUSSIA = new SelectItem[]{
+            new SelectItem("Moscow"),
+            new SelectItem("St. Petersburgh"),
+            new SelectItem("Kaliningrad"),
+            new SelectItem("Vladivostok"),
+            new SelectItem("Volgograd")};
+
+    // selectOneListbox example value
+    private String selectedCountry;
+    private boolean countryChange;
+    // selectManyListbox example value
+    private String[] selectedCities;
+    // check box example value
+    private boolean newUser;
+    // radio button example
+    private String selectedDrink;
+    // checkbox multiselect languanges example
+    private String[] selectedLanguages;
+    // selectManyMenu cars values
+    private String[] selectedCars;
+    // selectOneMenu for components
+    private String selectedComponent;
+
+
+    /**
+     * Value change listener for the country change event. Sets up the cities
+     * listbox according to the country.
+     *
+     * @param event value change event
+     */
+    public void countryChanged(ValueChangeEvent event) {
+
+        // get new city value and assign it. 
+        String newCountry = (String) event.getNewValue();
+
+        if (newCountry.equals(COUNTRY_CANADA)) {
+            cityItems = CITIES_CANADA;
+        } else if (newCountry.equals(COUNTRY_USA)) {
+            cityItems = CITIES_USA;
+        } else if (newCountry.equals(COUNTRY_CHINA)) {
+            cityItems = CITIES_CHINA;
+        } else if (newCountry.equals(COUNTRY_UK)) {
+            cityItems = CITIES_UK;
+        } else if (newCountry.equals(COUNTRY_RUSSIA)) {
+            cityItems = CITIES_RUSSIA;
+        } else {
+            cityItems = null;
         }
-        return b.toString();
+        
+        // check to see if the country has changed if clear the selected cities
+        selectedCities = new String[]{};
+        countryChange = true;
+        
     }
 
-    /**
-     * Variables for storing the selected options.
-     */
-    private SelectItem[] cityItems;
-    private boolean isNewUser;
-    private String drink;
-    private String[] languages;
-    private String country;
-    private String[] cities;
-    private String componentType = "I/O";
-    private String[] cars;
+    public void cityChanged(ValueChangeEvent event) {
+
+    }
+
+    public void carChanged(ValueChangeEvent event) {
+
+    }
 
     /**
      * Gets the option items for drinks.
@@ -115,7 +190,7 @@ public class SelectionTagsBean {
      * @return array of drink items
      */
     public SelectItem[] getDrinkItems() {
-        return drinkItems;
+        return DRINK_ITEMS;
     }
 
     /**
@@ -124,7 +199,7 @@ public class SelectionTagsBean {
      * @return array of language items
      */
     public SelectItem[] getLanguageItems() {
-        return languageItems;
+        return LANGUAGE_ITEMS;
     }
 
     /**
@@ -133,7 +208,7 @@ public class SelectionTagsBean {
      * @return array of country items
      */
     public SelectItem[] getCountryItems() {
-        return countryItems;
+        return COUNTRY_ITEMS;
     }
 
     /**
@@ -150,19 +225,18 @@ public class SelectionTagsBean {
      *
      * @return array of component type items
      */
-    public SelectItem[] getComponentTypeItems() {
-        return componentTypeItems;
+    public SelectItem[] getComponentItems() {
+        return COMPONENT_ITEMS;
     }
-    
-    
+
+
     /**
-     *returns the list of available cars to select
+     * returns the list of available cars to select
      *
-     *@return carlist
+     * @return carlist
      */
-    public SelectItem[] getCarListItems()
-    {
-        return carListItems;
+    public SelectItem[] getCarListItems() {
+        return CARS_ITEMS;
     }
 
     /**
@@ -171,7 +245,7 @@ public class SelectionTagsBean {
      * @return true or false
      */
     public boolean isNewUser() {
-        return isNewUser;
+        return newUser;
     }
 
     /**
@@ -180,7 +254,7 @@ public class SelectionTagsBean {
      * @param newValue true of false
      */
     public void setNewUser(boolean newValue) {
-        isNewUser = newValue;
+        newUser = newValue;
     }
 
     /**
@@ -188,17 +262,8 @@ public class SelectionTagsBean {
      *
      * @return the selected drink
      */
-    public String getDrink() {
-        return drink;
-    }
-
-    /**
-     * Sets the selected drink.
-     *
-     * @param newValue the new selected drink
-     */
-    public void setDrink(String newValue) {
-        drink = newValue;
+    public String getSelectedDrink() {
+        return selectedDrink;
     }
 
     /**
@@ -206,44 +271,50 @@ public class SelectionTagsBean {
      *
      * @return the array of selected languages
      */
-    public String[] getLanguages() {
-        return languages;
+    public String[] getSelectedLanguages() {
+        return selectedLanguages;
     }
 
     /**
-     * Sets the selected languages.
-     *
-     * @param newValue the array of newly selected languages
+     * Gets the array of selected cars.
+     * @return the array of selected cars
      */
-    public void setLanguages(String[] newValue) {
-        languages = newValue;
+    public String[] getSelectedCars() {
+        return selectedCars;
     }
 
     /**
-     * Converts array of languages to a string.
-     *
-     * @return string of languages
+     * Returns the selectedCities array a comma seperated list
+     * @return comma seperated list of selected cities.
      */
-    public String getLanguagesString() {
-        return convertToString(languages);
+    public String getSelectedCarsStrings() {
+        return convertToString(selectedCars);
     }
 
+    /**
+     * Returns the selectedLangues array a comma seperated list
+     * @return comma seperated list of selected languages.
+     */
+    public String getSelectedLanguagesStrings() {
+        return convertToString(selectedLanguages);
+    }
+    
     /**
      * Gets the selected country.
      *
      * @return the selected country
      */
-    public String getCountry() {
-        return country;
+    public String getSelectedCountry() {
+        return selectedCountry;
     }
 
     /**
-     * Sets the selected country.
+     * Gets the selected component.
      *
-     * @param newValue the new selected country
+     * @return the selected component
      */
-    public void setCountry(String newValue) {
-        country = newValue;
+    public String getSelectedComponent() {
+        return selectedComponent;
     }
 
     /**
@@ -251,170 +322,68 @@ public class SelectionTagsBean {
      *
      * @return array of selected cities
      */
-    public String[] getCities() {
-        return cities;
+    public String[] getSelectedCities() {
+        return selectedCities;
     }
 
     /**
-     * Sets the selected cities.
-     *
-     * @param newValue array of newly selected cities
+     * Returns the selectedCities array a comma seperated list
+     * @return comma seperated list of selected cities.
      */
-    public void setCities(String[] newValue) {
-        if (FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestMap().get("CITY_HACK") !=
-                                                  null)//Country changed. Don't set cities
-            return;
-        cities = newValue;
-    }
-   
-    /**
-     *sets the selected cars
-     *
-     *@param newValue array of newly selected cars
-     */
-    public void setCars(String[] newValue) {
-        if (FacesContext.getCurrentInstance().getExternalContext()
-                .getRequestMap().get("CITY_HACK") !=
-                                                  null)//Country changed. Don't set cities
-            return;
-        cars = newValue;
-    }
-
-    /**
-     * Converts array of cities to a string.
-     *
-     * @return string of cities
-     */
-    public String getCitiesString() {
-        if (cities == null) return "";
-        StringBuffer b = new StringBuffer();
-        try {
-            for (int i = 0; i < cities.length; i++) {
-                b.append(cities[i]);
-                if (i < cities.length - 1) b.append(',');
-            }
-            return b.toString();
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
+    public String getSelectedCitiesStrings() {
+        // if the changeEventListener fired then we want to clear the cities list
+        if (countryChange){
+            countryChange = false;
             return "";
         }
+        return convertToString(selectedCities);
+    }
+
+    public void setCityItems(SelectItem[] cityItems) {
+        this.cityItems = cityItems;
+    }
+
+    public void setSelectedCountry(String selectedCountry) {
+        this.selectedCountry = selectedCountry;
+    }
+
+    public void setSelectedCities(String[] selectedCities) {
+        this.selectedCities = selectedCities;
+    }
+
+    public void setSelectedDrink(String selectedDrink) {
+        this.selectedDrink = selectedDrink;
+    }
+
+    public void setSelectedLanguages(String[] selectedLanguages) {
+        this.selectedLanguages = selectedLanguages;
+    }
+
+    public void setSelectedCars(String[] selectedCars) {
+        this.selectedCars = selectedCars;
+    }
+
+    public void setSelectedComponent(String selectedComponent) {
+        this.selectedComponent = selectedComponent;
     }
 
     /**
-     * Gets the selected component type.
+     * Converts string arrays for displays.
      *
-     * @return the selected component type
+     * @param stringArray string array to convert
+     * @return a string concatenating the elements of the string array
      */
-    public String getComponentType() {
-        return componentType;
-    }
-    
-   /**
-    *returns the String array of selected cars
-    *
-    *@return String[] of selected cars
-    */
-    public String[] getCars(){
-        return cars;
-    }
-   
-    
-    
-    /**
-     *returns the car list as a String
-     *
-     *@return String the selected car list 
-     */
-    public String getCarListString() {
-        if (cars == null) return "";
-        StringBuffer b = new StringBuffer();
-        try {
-            for (int i = 0; i < cars.length; i++) {
-                b.append(cars[i]);
-                if (i < cars.length - 1) b.append(',');
-            }
-            return b.toString();
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
+    private static String convertToString(String[] stringArray) {
+        if (stringArray == null) {
             return "";
         }
-    }
-
-    /**
-     * Sets the selected component type.
-     *
-     * @param newValue the new selected component type
-     */
-    public void setComponentType(String newValue) {
-        componentType = newValue;
-    }
-    
-
-    public void cityChanged(ValueChangeEvent event) {
-
-    }
-    public void carChanged(ValueChangeEvent event){
-        
-    }
-
-    /**
-     * Value change listener for the country change event. Sets up the cities
-     * listbox according to the country.
-     *
-     * @param event value change event
-     */
-    public void countryChanged(ValueChangeEvent event) {
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
-                .put("CITY_HACK", new Boolean(
-                        true));//Citys can still be set. DON'T Let this happen
-
-        cities = null;
-
-
-        String newCountry = (String) event.getNewValue();
-        if (newCountry.equals("Canada")) {
-            cityItems = new SelectItem[]{
-                    new SelectItem("Calgary"),
-                    new SelectItem("Vancouver"),
-                    new SelectItem("Toronto"),
-                    new SelectItem("Montreal"),
-                    new SelectItem("Ottawa"),
-            };
-        } else if (newCountry.equals("United States")) {
-            cityItems = new SelectItem[]{
-                    new SelectItem("Seattle"),
-                    new SelectItem("San Francisco"),
-                    new SelectItem("Los Angeles"),
-                    new SelectItem("New York"),
-                    new SelectItem("Chicago"),
-            };
-        } else if (newCountry.equals("China")) {
-            cityItems = new SelectItem[]{
-                    new SelectItem("Beijing"),
-                    new SelectItem("Shanghai"),
-                    new SelectItem("Canton"),
-                    new SelectItem("Shenzhen"),
-                    new SelectItem("Hong Kong"),
-            };
-        } else if (newCountry.equals("United Kingdom")) {
-            cityItems = new SelectItem[]{
-                    new SelectItem("London"),
-                    new SelectItem("Birmingham"),
-                    new SelectItem("Edinburgh"),
-                    new SelectItem("Liverpool"),
-                    new SelectItem("Cardiff"),
-            };
-        } else if (newCountry.equals("Russia")) {
-            cityItems = new SelectItem[]{
-                    new SelectItem("Moscow"),
-                    new SelectItem("St. Petersburgh"),
-                    new SelectItem("Kaliningrad"),
-                    new SelectItem("Vladivostok"),
-                    new SelectItem("Volgograd"),
-            };
-        } else {
-            cityItems = null;
+        StringBuffer itemBuffer = new StringBuffer();
+        for (int i = 0, max = stringArray.length; i < max; i++) {
+            if (i > 0) {
+                itemBuffer.append(" , ");
+            }
+            itemBuffer.append(stringArray[i]);
         }
+        return itemBuffer.toString();
     }
 }
