@@ -41,9 +41,7 @@
             this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
-            this.onRedirectListeners = [];
             this.connectionDownListeners = [];
-            this.sessionExpiredListeners = [];
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
             this.getURI = configuration.context + '/block/receive-updates';
@@ -64,11 +62,6 @@
                 this.connectionDownBroadcaster();
             }.bind(this);
 
-            this.redirectCallback = function(response) {
-                this.connectionDownBroadcaster = Function.NOOP;
-                this.onRedirectListeners.broadcast(response.getResponseHeader('X-REDIRECT'));
-            }.bind(this);
-
             this.receiveCallback = function(response) {
                 try {
                     this.onReceiveListeners.broadcast(response);
@@ -76,8 +69,6 @@
                     this.logger.error('receive broadcast failed', e);
                 }
             }.bind(this);
-
-            this.sessionExpiredCallback = this.sessionExpiredListeners.broadcaster();
 
             this.listenerInitializerProcess = function() {
                 try {
@@ -97,7 +88,6 @@
                     if (views.intersect(viewIdentifiers()).isNotEmpty()) {
                         this.sendChannel.postAsynchronously(this.getURI, this.defaultQuery().asURIEncodedString(), function(request) {
                             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                            request.on(Connection.SessionExpired, this.sessionExpiredCallback);
                             request.on(Connection.Receive, this.receiveCallback);
                         }.bind(this));
                         this.updatedViews.saveValue(views.complement(viewIdentifiers()).join(' '));
@@ -117,11 +107,10 @@
             this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
                 request.on(Connection.BadResponse, this.badResponseCallback);
-                request.on(Connection.Redirect, this.redirectCallback);
-                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
-                request.on(Connection.Receive, function() {
+                request.on(Connection.Receive, function(response) {
                     try {
-                        this.updatedViews.saveValue(request.content());
+                        this.updatedViews.saveValue(response.content());
+                        this.receiveCallback(response);
                     } finally {
                         this.connect();
                     }
@@ -135,8 +124,6 @@
 
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
-                request.on(Connection.Redirect, this.redirectCallback);
                 request.on(Connection.Receive, this.receiveCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
@@ -150,25 +137,17 @@
             this.onReceiveListeners.push(callback);
         },
 
-        onRedirect: function(callback) {
-            this.onRedirectListeners.push(callback);
-        },
-
         whenDown: function(callback) {
             this.connectionDownListeners.push(callback);
         },
 
-        whenExpired: function(callback) {
-            this.sessionExpiredListeners.push(callback);
-        },
-
         shutdown: function() {
+            //avoid sending XMLHTTP requests that might create new sessions on the server
+            this.send = Function.NOOP;
             this.listener.close();
             this.onSendListeners.clear();
             this.onReceiveListeners.clear();
-            this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();
-            this.sessionExpiredListeners.clear();
             this.updatesListenerProcess.cancel();
             this.listenerInitializerProcess.cancel();
             this.listening.remove();

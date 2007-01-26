@@ -32,20 +32,12 @@
  */
 
 [ Ice.Connection = new Object, Ice.Connection, Ice.Ajax ].as(function(This, Connection, Ajax) {
-    This.Redirect = function(request) {
-        return request.isOkAndComplete() && request.containsResponseHeader('X-REDIRECT');
-    }
-
-    This.SessionExpired = function(request) {
-        return request.isComplete() && request.containsResponseHeader('X-SESSION-EXPIRED');
-    }
-
     This.BadResponse = function(request) {
         return request.isComplete() && !request.isResponseValid();
     }
 
     This.Receive = function(request) {
-        return request.isOkAndComplete() && !(This.Redirect(request) || This.SessionExpired(request));
+        return request.isOkAndComplete();
     }
 
     This.Ok = function(request) {
@@ -63,9 +55,7 @@
             this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
-            this.onRedirectListeners = [];
             this.connectionDownListeners = [];
-            this.sessionExpiredListeners = [];
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
             this.sendURI = configuration.context + '/block/send-receive-updates';
@@ -91,13 +81,8 @@
                     this.logger.error('receive broadcast failed', e)
                 }
             }.bind(this);
-            
-            this.redirectCallback = function(response) {
-                this.onRedirectListeners.broadcast(response.getResponseHeader('X-REDIRECT'));
-            }.bind(this);
 
             this.badResponseCallback = this.connectionDownListeners.broadcaster();
-            this.sessionExpiredCallback = this.sessionExpiredListeners.broadcaster();
         },
 
         send: function(query) {
@@ -106,9 +91,7 @@
             this.channel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 request.on(Connection.Receive, this.receiveCallback);
-                request.on(Connection.Redirect, this.redirectCallback);
                 request.on(Connection.BadResponse, this.badResponseCallback);
-                request.on(Connection.SessionExpired, this.sessionExpiredCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },
@@ -121,24 +104,16 @@
             this.onReceiveListeners.push(callback);
         },
 
-        onRedirect: function(callback) {
-            this.onRedirectListeners.push(callback);
-        },
-
         whenDown: function(callback) {
             this.connectionDownListeners.push(callback);
         },
 
-        whenExpired: function(callback) {
-            this.sessionExpiredListeners.push(callback);
-        },
-
         shutdown: function() {
+            this.send = Function.NOOP;
             this.onSendListeners.clear();
             this.onReceiveListeners.clear();
             this.onRedirectListeners.clear();
             this.connectionDownListeners.clear();
-            this.sessionExpiredListeners.clear();
         }
     });
 });
