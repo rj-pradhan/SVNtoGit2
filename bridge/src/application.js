@@ -51,12 +51,15 @@
             });
 
             this.connection.onReceive(function(request) {
-                var element = request.contentAsDOM().documentElement;
-                switch (element.tagName) {
-                    case 'updates': Ice.Command.Updates(element); break;
-                    case 'redirect': Ice.Command.Redirect(element); break;
-                    case 'session-expired': Ice.Command.SessionExpired(); break;                
-                    default: throw 'Unknown message received: ' + element.tagName;
+                var content = request.contentAsDOM();
+                if (content) {
+                    var element = content.documentElement;
+                    switch (element.tagName) {
+                        case 'updates': Ice.Command.Updates(element); break;
+                        case 'redirect': Ice.Command.Redirect(element); break;
+                        case 'session-expired': Ice.Command.SessionExpired(); break;
+                        default: throw 'Unknown message received: ' + element.tagName;
+                    }
                 }
             }.bind(this));
 
