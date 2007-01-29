@@ -193,7 +193,7 @@ public class TreeBean {
 
     public void addSelectedNode(ActionEvent event) {
 
-        // new object to add
+        // new object to add 
         DefaultMutableTreeNode treeNode;
         NodeUserObject node;
 

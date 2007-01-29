@@ -210,7 +210,7 @@ public class NodeUserObject extends IceUserObject {
     public void setComponentType(Integer componentType) {
         this.componentType = componentType;
     }
-    
+     
     public String getValue()
     {
         return value;

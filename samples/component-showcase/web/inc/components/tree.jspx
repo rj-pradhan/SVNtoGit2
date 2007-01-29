@@ -123,7 +123,7 @@ selects a node, the respective tree node name is displayed in an output field.
                 <ice:outputText
                         value="#{treeExample.selectedNode}"/>
             </h3>
-        </ice:panelGroup>
+        </ice:panelGroup> 
         <ice:selectOneMenu
                 value="#{treeExample.componentToAdd}"
                 valueChangeListener="#{treeExample.componentTypeChanged}"
