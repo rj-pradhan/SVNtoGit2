@@ -176,7 +176,11 @@ public class NodeUserObject extends IceUserObject {
         return clonedUserObject;
     }
 
-
+    /**
+     * Returns the label associated with the node.
+     *
+     * @return the label of the node
+     */
     public String getLabel() {
         return label;
     }
@@ -211,23 +215,39 @@ public class NodeUserObject extends IceUserObject {
         this.componentType = componentType;
     }
      
+    /**
+     * gets the information that is stored in each node.
+     *
+     * @return the string value 
+     */
     public String getValue()
     {
         return value;
     }
     
+    /**
+     * sets the value which is the information stored in the node.
+     *
+     * @param value to be stored
+     */
     public void setValue(String value)
     {
         this.value = value;
     }
     
+    /**
+     * generates default names for the value attribute depending on the 
+     * component type
+     *
+     * @return the string value
+     */
     public String generateValues()
     {
         Integer comp = this.getComponentType();
-        if(comp.equals(Integer.valueOf(1))){
+        if(comp.equals(new Integer(1))){
             return "OutputText";
         }
-        else if(comp.equals(Integer.valueOf(2))){
+        else if(comp.equals(new Integer(2))){
             return "InputText";
         }
         else {

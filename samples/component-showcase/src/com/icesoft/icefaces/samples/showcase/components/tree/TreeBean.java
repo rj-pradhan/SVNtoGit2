@@ -162,6 +162,14 @@ public class TreeBean {
 
 
     }
+    
+    /**
+     * changes the value for the selected node, this method is activated
+     * when the user changed the information for a input text box.
+     *
+     *@param the ValueChangeEvent which holds the value
+     *
+     */
     public void changedValue(ValueChangeEvent vce) {
         if(selectedNodeObject != null) {
             Object nvalue = vce.getNewValue();
@@ -171,7 +179,12 @@ public class TreeBean {
             }
         }
     }
-
+    
+    /**
+     * changes the component type that is defined by the users selection
+     *
+     *@param the ValueChangeEvent which holds the desired component
+     */
     public void componentTypeChanged(ValueChangeEvent vce) {
         if (selectedNodeObject != null) {
             Object nvalue = vce.getNewValue();
@@ -190,7 +203,13 @@ public class TreeBean {
         if (selectedNodeObject != null)
             selectedNodeObject.copyNode();
     }
-
+    
+    /**
+     * Adds a new node to the tree in determined position, either below a non 
+     * root node or under the root node.
+     *
+     *@param event that fired this method
+     */
     public void addSelectedNode(ActionEvent event) {
 
         // new object to add 
@@ -225,7 +244,12 @@ public class TreeBean {
         // update the icons for the newly changes state.
         updateNodeIcon(node);
     }
-
+    
+    /**
+     * Updates the node icon in the UI to reflect changes to the node
+     *
+     *@param the node object to change
+     */
     private void updateNodeIcon(NodeUserObject node){
 
         Enumeration children = rootTreeNode.depthFirstEnumeration();
