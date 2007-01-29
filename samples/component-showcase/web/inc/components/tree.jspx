@@ -96,13 +96,15 @@ selects a node, the respective tree node name is displayed in an output field.
                 </f:facet>
                 <f:facet name="content">
                     <ice:panelGroup style="display: inline">
-                        <ice:outputText value="#{msgs['components.tree.node.outputText.label']}"
+                        <ice:outputText value="#{item.userObject.value}"
                                         style="font-style: italic"
                                         rendered="#{item.userObject.componentType == 1}"/>
                         <ice:inputText
+                                value ="#{item.userObject.value}"
+                                valueChangeListener ="#{treeExample.changedValue}"
                                 rendered="#{item.userObject.componentType == 2}"/>
                         <ice:commandButton
-                                value="#{msgs['components.tree.node.outputText.label']}"
+                                value="#{item.userObject.value}"
                                 rendered="#{item.userObject.componentType == 3}"/>                    
                     </ice:panelGroup>
                 </f:facet>

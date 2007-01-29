@@ -68,7 +68,11 @@ public class NodeUserObject extends IceUserObject {
 
     // actual node label
     private String label;
-
+    
+    // value of the component
+    private String value;
+    
+    
     /**
      * Load resource bundle for displaying proper node labels.
      */
@@ -107,7 +111,8 @@ public class NodeUserObject extends IceUserObject {
 
         treeBean = treeBeanPointer;
         label = generateLabel();
-
+        value = generateValues();
+        
         setLeafIcon("xmlhttp/css/xp/css-images/tree_document.gif");
         setBranchContractedIcon(
                 "xmlhttp/css/xp/css-images/tree_folder_close.gif");
@@ -185,6 +190,7 @@ public class NodeUserObject extends IceUserObject {
     public void nodeClicked(ActionEvent event) {
         treeBean.setSelectedNode(this.label);
         treeBean.setSelectedNodeObject(this);
+        
     }
 
     /**
@@ -204,4 +210,31 @@ public class NodeUserObject extends IceUserObject {
     public void setComponentType(Integer componentType) {
         this.componentType = componentType;
     }
+    
+    public String getValue()
+    {
+        return value;
+    }
+    
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+    
+    public String generateValues()
+    {
+        Integer comp = this.getComponentType();
+        if(comp.equals(Integer.valueOf(1))){
+            return "OutputText";
+        }
+        else if(comp.equals(Integer.valueOf(2))){
+            return "InputText";
+        }
+        else {
+            return "Button";
+        }
+                   
+    }
+    
+    
 }

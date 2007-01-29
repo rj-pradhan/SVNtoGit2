@@ -139,7 +139,7 @@ public class TreeBean {
         // the delete method is somehow activated despite the button being disabled
         if (selectedNodeObject != null && !selectedNode.equals("Node 1")) {
 
-            // get the node we wont to delete
+            // get the node we want to delete
             NodeUserObject nodeToDelete = selectedNodeObject;
 
             // update the selected state, try to set it to parent of deleted
@@ -161,6 +161,15 @@ public class TreeBean {
         }
 
 
+    }
+    public void changedValue(ValueChangeEvent vce) {
+        if(selectedNodeObject != null) {
+            Object nvalue = vce.getNewValue();
+            if(nvalue instanceof String) {
+                selectedNodeObject.setValue((String)nvalue);
+                
+            }
+        }
     }
 
     public void componentTypeChanged(ValueChangeEvent vce) {
@@ -197,6 +206,7 @@ public class TreeBean {
             // set selected to newly added node.
             selectedNodeObject = node;
             selectedNode = node.getLabel();
+            selectedNodeObject.setValue(node.generateValues());
         }
         // otherwise create a new node below the root node.
         else{
@@ -207,7 +217,7 @@ public class TreeBean {
 
             selectedNodeObject = node;
             selectedNode = node.getLabel();
-
+            selectedNodeObject.setValue(node.generateValues());
             // add the new node to the end of the tree
             rootTreeNode.add(treeNode);
         }
