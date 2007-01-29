@@ -122,6 +122,12 @@ h6 {
 .valueText {
     font-size: x-small;
 }
+.commentText{
+   font-family: Arial,Helvetica,sans-serif;
+  font-size :1em ;
+ 
+  font-weight : normal;
+}
 
 em {
 /*font-size:14px;*/

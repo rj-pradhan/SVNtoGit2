@@ -82,7 +82,9 @@ when the user presses the Enter key or tabs out of a field.
                             <ice:inputTextarea value="#{textFields.comments}"
                                                cols="20" rows="4"
                                                partialSubmit="true"
-                                               style="width:280px;height:80px;overflow: auto;"/>
+                                               style="width:280px;height:80px;overflow: auto;"
+                                               styleClass="commentText"
+                                               />
 
                         </ice:panelGrid>
 
