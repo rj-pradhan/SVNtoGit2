@@ -398,6 +398,12 @@
         <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.PieChartBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>chartFactory</managed-bean-name>
+        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.ChartFactory</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 
     <navigation-rule>
         <description>Theme Reload</description>

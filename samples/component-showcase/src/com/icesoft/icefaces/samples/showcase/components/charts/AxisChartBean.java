@@ -46,14 +46,12 @@ import java.util.List;
 
 public class AxisChartBean {
 
-    private List areaXaxisLabels = new ArrayList();
-    private List legendLabels = new ArrayList();
-    private List areaData = new ArrayList();
-    private List areaPaints = new ArrayList();
-    private boolean axis = true;
-    private boolean pie3D = false;
-    private static final String DEFAULT_STRING =
-            "Click on the image map below to display a chart value: ";
+    private static List areaXaxisLabels = new ArrayList();
+    private static List legendLabels = new ArrayList();
+    private static List areaData = new ArrayList();
+    private static List areaPaints = new ArrayList();
+
+    
 
     public List getAreaXaxisLabels() {
         areaXaxisLabels.clear();
@@ -113,118 +111,7 @@ public class AxisChartBean {
         this.areaPaints = areaPaints;
     }
 
-    String clickedValue = DEFAULT_STRING;
-
-    public void imageClicked(ActionEvent event) {
-        if (event.getSource() instanceof OutputChart) {
-            OutputChart chart = (OutputChart) event.getSource();
-            if (chart.getClickedImageMapArea().getXAxisLabel() != null) {
-                setClickedValue(DEFAULT_STRING +
-                                chart.getClickedImageMapArea().getXAxisLabel() +
-                                "  :  " +
-                                chart.getClickedImageMapArea().getValue());
-                effectOutputText = new Highlight("#ffff99");
-            }
-        }
-    }
-
-    public String getClickedValue() {
-        return clickedValue;
-    }
-
-    public void setClickedValue(String clickedValue) {
-        this.clickedValue = clickedValue;
-    }
-
-    private Effect effectOutputText;
-
-    public Effect getEffectOutputText() {
-        return effectOutputText;
-    }
-
-    public void setEffectOutputText(Effect effectOutputText) {
-        this.effectOutputText = effectOutputText;
-    }
 
 
-    private SelectItem[] chartList = null;
 
-    public SelectItem[] getChartList() {
-        if (chartList == null) {
-            chartList = new SelectItem[9];
-            chartList[0] = new SelectItem(OutputChart.AREA_CHART_TYPE);
-            chartList[1] = new SelectItem(OutputChart.AREA_STACKED_CHART_TYPE);
-            chartList[2] = new SelectItem(OutputChart.BAR_CHART_TYPE);
-            chartList[3] = new SelectItem(OutputChart.BAR_CLUSTERED_CHART_TYPE);
-            chartList[4] = new SelectItem(OutputChart.BAR_STACKED_CHART_TYPE);
-            chartList[5] = new SelectItem(OutputChart.LINE_CHART_TYPE);
-            chartList[6] = new SelectItem(OutputChart.POINT_CHART_TYPE);
-            chartList[7] = new SelectItem(OutputChart.PIE2D_CHART_TYPE);
-            chartList[8] = new SelectItem(OutputChart.PIE3D_CHART_TYPE);
-        }
-        return chartList;
-    }
-
-    public void setChartList(SelectItem[] chartList) {
-        this.chartList = chartList;
-    }
-
-    private String chart = OutputChart.BAR_CHART_TYPE;
-
-    public String getChart() {
-        return chart;
-    }
-
-    public void setChart(String chart) {
-        this.chart = chart;
-        if (!chart.equals("pie3D")) {
-            pie3D = false;
-        }
-        if (chart.equals("pie2D") || chart.equals("pie3D")) {
-            axis = false;
-            if (chart.equals("pie3D")) {
-                pie3D = true;
-            }
-        } else {
-            axis = true;
-        }
-    }
-
-    public boolean allCharts(OutputChart component) {
-        if (chartChangedFlag) {
-            chartChangedFlag = false;
-            return true;
-        } else {
-            return chartChangedFlag;
-        }
-    }
-
-    private boolean chartChangedFlag = true;
-
-    public void chartChanged(ValueChangeEvent event) {
-        chartChangedFlag = true;
-        if (event.getNewValue().equals("area") ||
-            event.getNewValue().equals("areastacked")) {
-            setClickedValue(
-                    "A client side image map is not supported for Area charts (clicking on the chart will not display any values)");
-        } else {
-            setClickedValue(DEFAULT_STRING);
-        }
-    }
-
-    public boolean isAxis() {
-        return axis;
-    }
-
-    public void setAxis(boolean axis) {
-        this.axis = axis;
-    }
-
-    public boolean isPie3D() {
-        return pie3D;
-    }
-
-    public void setPie3D(boolean pie3D) {
-        this.pie3D = pie3D;
-    }
 }

@@ -60,6 +60,8 @@ public class PieChartBean {
 
     private List sales;
     private Map salesMap;
+    
+    public static boolean is3D = false;
 
     private static final String DEFAULT_STRING =
             "Click on the image map below to display a chart value: ";
@@ -115,6 +117,17 @@ public class PieChartBean {
             return false;
         }
     }
+    
+    public static void setIs3D(boolean i3D)
+    {
+        is3D = i3D;
+    }
+    
+    public static boolean is3D()
+    {
+        return is3D;
+    }
+    
 
     private SelectItem[] availablePaints = new SelectItem[14];
 
@@ -223,7 +236,7 @@ public class PieChartBean {
             OutputChart chart = (OutputChart) event.getSource();
             if (chart.getClickedImageMapArea().getLengendLabel() != null) {
                 setClickedAreaValue(DEFAULT_STRING + chart
-                        .getClickedImageMapArea().getLengendLabel() + " " +
+                        .getClickedImageMapArea().getLengendLabel() + " : " +
                                                                     chart.getClickedImageMapArea()
                                                                             .getValue());
                 setSalesForYear(
