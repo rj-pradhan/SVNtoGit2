@@ -1,7 +1,5 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import sun.tools.hprof.Tracker;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,8 +8,8 @@ import javax.servlet.http.HttpSessionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.LinkedList;
+import java.util.Map;
 
 public abstract class SessionDispatcher implements ServletServer {
     //having a static field here is ok because web applications are started in separate classloaders 
