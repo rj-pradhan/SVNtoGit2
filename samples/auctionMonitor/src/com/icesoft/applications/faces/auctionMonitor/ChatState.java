@@ -37,8 +37,10 @@ import com.icesoft.applications.faces.auctionMonitor.beans.UserBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.Random;
 
 /**
  * Class used to contain application wide state information Holds a list of all
@@ -47,6 +49,15 @@ import java.util.Vector;
  * continue normally
  */
 public class ChatState {
+    public static final String DEFAULT_COLOR = "#000000";
+    private static final String[] ALL_COLORS = {"33CC33", "660033", "FF0033",
+                                                "FF6633", "FFCC33", "FFFF33",
+                                                "3333CC", "33CCCC", "6600CC",
+                                                "FF00CC", "CC00CC", "00FF99",
+                                                "99FF33", "996633", "990033",
+                                                "999999", "CCCCCC", "000000"};
+    private Vector colorList = new Vector(Arrays.asList(ALL_COLORS));
+    private Random generator = new Random(System.currentTimeMillis());
     private static Log log = LogFactory.getLog(ChatState.class);
     private static ChatState singleton = null;
     private Vector userList = new Vector(0);
@@ -91,6 +102,8 @@ public class ChatState {
      * @param child UserBean to add
      */
     public void addUserChild(UserBean child) {
+        // Give the user a color, then add them to the list
+        child.setColor(generateColorCode());
         userList.add(child);
     }
 
@@ -101,25 +114,32 @@ public class ChatState {
      * @return boolean true if the removal succeeded
      */
     public boolean removeUserChild(UserBean child) {
-        int index = 0;
-        Iterator users = userList.iterator();
-        UserBean current;
-        while (users.hasNext()) {
-            current = (UserBean) users.next();
-
-            // Ensure the current object is not null
-            // Otherwise casting it will cause an exception
-            if (current != null) {
-                // Check if the current object equals the child to remove
-                if (current.equals(child)) {
+        try{
+            // Make the user's color available again
+            colorList.add(child.getColor());
+            
+            int index = 0;
+            Iterator users = userList.iterator();
+            UserBean current;
+            while (users.hasNext()) {
+                current = (UserBean) users.next();
+    
+                // Ensure the current object is not null
+                // Otherwise casting it will cause an exception
+                if (current != null) {
+                    // Check if the current object equals the child to remove
+                    if (current.equals(child)) {
+                        userList.remove(index);
+                        return (true);
+                    }
+                } else {
                     userList.remove(index);
-                    return (true);
                 }
-            } else {
-                userList.remove(index);
+    
+                index++;
             }
-
-            index++;
+        }catch (Exception failedRemove) {
+            failedRemove.printStackTrace();
         }
 
         return (false);
@@ -163,5 +183,15 @@ public class ChatState {
         updater.start();
 
         return (true);
+    }
+    
+    /**
+     * Method to randomly select an HTML color code from a preset list
+     * eg: #C62FD5
+     *
+     * @return String hex value (to be used directly in HTML tags)
+     */
+    private String generateColorCode() {
+        return "#" + colorList.remove(generator.nextInt(colorList.size())).toString();
     }
 }

@@ -49,15 +49,12 @@ import javax.faces.context.FacesContext;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Bean class used to store user information, as well as local information for
  * messages and viewing information
  */
 public class UserBean implements Renderable {
-    private static final String[] COLOR_ARRAY =
-            {"Red", "Black", "Green", "Blue", "Yellow", "Orange", "Brown"};
     private static final String DEFAULT_NICK = "Anonymous";
     private static final String MINIMIZE_IMAGE =
             "./images/button_triangle_close.gif";
@@ -73,7 +70,6 @@ public class UserBean implements Renderable {
     private static final ChatState chatState = ChatState.getInstance();
     private static Log log = LogFactory.getLog(UserBean.class);
 
-    private Random generator = new Random(System.currentTimeMillis());
     private OnDemandRenderer renderer = null;
     private PersistentFacesState persistentState =
             PersistentFacesState.getInstance();
@@ -81,7 +77,7 @@ public class UserBean implements Renderable {
             FacesContext.getCurrentInstance().getExternalContext();
     private String autoLoad = " ";
     private String message = "";
-    private String color = generateColorCode(false); // color for username
+    private String color = ChatState.DEFAULT_COLOR;
     private String nick = DEFAULT_NICK;
     private String buttonImage = MINIMIZE_IMAGE; // path to button image
     private MessageLog messageLog = getMessageLog();
@@ -102,6 +98,10 @@ public class UserBean implements Renderable {
 
     public boolean getConversationStatus() {
         return (inConversation);
+    }
+    
+    public String getColor() {
+        return (color);
     }
 
     public String getMessage() {
@@ -188,6 +188,10 @@ public class UserBean implements Renderable {
         // Assign the nick and enter the conversation
         this.nick = nick;
         enterConversation();
+    }
+    
+    public void setColor(String color) {
+        this.color = color;
     }
 
     /**
@@ -414,27 +418,6 @@ public class UserBean implements Renderable {
     private void updateMessageLog() {
         chatState.updateAll();
         position = bottom();
-    }
-
-    /**
-     * Method to randomly generate an HTML color or choose from a preset list
-     * eg: #C62FD5 or Red
-     *
-     * @param random true if hex should be generated
-     * @return String hex or color value (to be used directly in HTML tags)
-     */
-    private String generateColorCode(boolean random) {
-        String toReturn = "#";
-        if (random) {
-            for (int i = 0; i < 3; i++) {
-                toReturn += Integer.toHexString(1 + generator.nextInt(255));
-            }
-            toReturn = toReturn.toUpperCase();
-        } else {
-            toReturn = COLOR_ARRAY[generator.nextInt(COLOR_ARRAY.length)];
-        }
-
-        return (toReturn);
     }
 
     /**

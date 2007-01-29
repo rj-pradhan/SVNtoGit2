@@ -580,7 +580,7 @@ b.rtop b.r4, b.rbottom b.r4{
 
 .chatName{
 	width:70%;
-	font-weight:normal;
+	font-weight: bold;
 	font-size:10.5px;
 	color:#666666;
 	text-align:left;

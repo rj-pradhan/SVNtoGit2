@@ -316,7 +316,6 @@
                 <ice:panelGroup rendered="#{not UserBean.minimized}">
                     <ice:column>
                         <ice:outputText value="#{UserBean.nickFormatted}"
-                                        style="background-color: transparent;"
                                         escape="false"/>
                         <ice:inputText immediate="false" id="messageIn" size="50"
                                        value="#{UserBean.message}"
