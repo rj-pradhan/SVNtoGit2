@@ -56,13 +56,12 @@ public class ChatState {
                                                 "FF00CC", "CC00CC", "00FF99",
                                                 "99FF33", "996633", "990033",
                                                 "999999", "CCCCCC", "000000"};
-    private Vector colorList = new Vector(Arrays.asList(ALL_COLORS));
-    private Random generator = new Random(System.currentTimeMillis());
     private static Log log = LogFactory.getLog(ChatState.class);
     private static ChatState singleton = null;
+    private Random generator = new Random(System.currentTimeMillis());
     private Vector userList = new Vector(0);
-    private boolean stamp =
-            true; // timestamps enabled on chat message log, default = true
+    private Vector colorList = new Vector(Arrays.asList(ALL_COLORS));
+    private boolean stamp = true; // timestamps enabled on chat message log, default = true
 
     /**
      * Default constructor with no parameters, is private to fufill the
