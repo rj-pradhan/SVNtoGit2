@@ -66,10 +66,15 @@ public class RowSelectorRenderer extends DomBasicRenderer {
         String selectedRows = (String) facesContext.getExternalContext()
                 .getRequestParameterMap().get(selectedRowsParameter);
 
-        if (selectedRows == null || selectedRows.trim().length() == 0) {
-            return;
-        }
 
+        if (selectedRows == null || selectedRows.trim().length() == 0) {
+            selectedRows = (String)facesContext.getExternalContext().getRequestMap().get(RowSelectorRenderer.class.getName());
+            if(selectedRows == null || selectedRows.trim().length() == 0)
+                return;
+        }else{
+            //Myfaces 1.1.0 Work around
+            facesContext.getExternalContext().getRequestMap().put(RowSelectorRenderer.class.getName(), selectedRows);
+        }
         // What row number am I, was I clicked?
         int rowIndex = dataTable.getRowIndex();
         StringTokenizer st = new StringTokenizer(selectedRows, ",");
