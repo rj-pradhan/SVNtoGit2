@@ -1,5 +1,7 @@
 package com.icesoft.faces.webapp.http.servlet;
 
+import sun.tools.hprof.Tracker;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,10 +11,39 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.LinkedList;
 
 public abstract class SessionDispatcher implements ServletServer {
     //having a static field here is ok because web applications are started in separate classloaders 
     private final static Map SessionBoundServers = new HashMap();
+    private boolean run;
+
+    protected SessionDispatcher() {
+        Thread monitor = new Thread() {
+            public void run() {
+                while (run) {
+                    //iterate over the session using a copying iterator
+                    Iterator iterator = new LinkedList(SessionBoundServers.keySet()).iterator();
+                    while (iterator.hasNext()) {
+                        HttpSession session = (HttpSession) iterator.next();
+                        long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
+                        long maxInterval = session.getMaxInactiveInterval() * 1000;
+                        if (elapsedInterval > maxInterval) {
+                            session.invalidate();
+                        }
+                    }
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        //ignore interrupts
+                    }
+                }
+            }
+        };
+        run = true;
+        monitor.start();
+
+    }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(true);
@@ -38,6 +69,7 @@ public abstract class SessionDispatcher implements ServletServer {
     }
 
     public void shutdown() {
+        run = false;
         Iterator i = SessionBoundServers.values().iterator();
         while (i.hasNext()) {
             ServletServer server = (ServletServer) i.next();
