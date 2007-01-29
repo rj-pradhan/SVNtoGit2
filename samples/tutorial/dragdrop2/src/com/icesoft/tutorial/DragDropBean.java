@@ -48,9 +48,17 @@ public class DragDropBean {
     }
 
     public void dragPanelListener(DragEvent dragEvent) {
-        dragPanelMessage =
+        
+        if(dragEvent.getEventType() == DragEvent.DRAG_CANCEL) {
+            dragPanelMessage = "Test";
+        }
+        else {
+            dragPanelMessage =
                 "DragEvent = " +
                 DragEvent.getEventName(dragEvent.getEventType())
                 + " DropValue:" + dragEvent.getTargetDropValue();
+        }
+           
+            
     }
 }
