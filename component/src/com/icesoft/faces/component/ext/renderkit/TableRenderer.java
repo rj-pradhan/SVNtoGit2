@@ -37,7 +37,6 @@ import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.HtmlDataTable;
 import com.icesoft.faces.component.ext.RowSelector;
 import com.icesoft.faces.component.ext.UIColumns;
-import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.panelseries.UISeries;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
@@ -564,5 +563,17 @@ public class TableRenderer
         I = new Integer(i);
         m.put(key, I);
         return i;
+    }
+
+    protected int getNumberOfChildColumns(UIComponent component) {
+        int size = getRenderedChildColumnsList(component).size();
+        Iterator it = getRenderedChildColumnsList(component).iterator();
+        while (it.hasNext()) {
+        	UIComponent uiComponent = (UIComponent)it.next(); 
+        	if (uiComponent instanceof UIColumns) {
+        		size +=((UIColumns)uiComponent).getRowCount();
+        	}
+        }
+        return size;
     }
 }
