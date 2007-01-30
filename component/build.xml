@@ -36,6 +36,7 @@
     <property name="src.dir"           location="src"/>
     <property name="build.dir"         location="build"/>
     <property name="build.classes.dir" location="${build.dir}/classes"/>
+    <property name="test.classes.dir"  location="${build.dir}/test-classes"/>
     <property name="build.doc.dir"     location="${build.dir}/doc"/>
     <property name="build.api.doc.dir" location="${build.doc.dir}/api"/>
     <property name="build.tld.doc.dir" location="${build.doc.dir}/tld"/>
@@ -210,8 +211,9 @@
     </target>
 
     <target name="compile-tests" depends="junit-present, compile" description="Compile the test code" if="junit.present">
-
-        <javac destdir="${build.classes.dir}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
+        
+        <mkdir dir="${test.classes.dir}"/>
+        <javac destdir="${test.classes.dir}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
             <src>
                 <pathelement location="test/java" />
                 <pathelement location="../component-metadata/target/generated-sources/testbeaninfo/main/java"/>
@@ -220,21 +222,22 @@
             <classpath>
                 <path refid="compile.run.classpath" />
                 <path refid="compile.test.classpath"/>
-                <pathelement location="${ant.home}/lib/junit.jar"/>
+                <pathelement location="${ant.home}/lib/junit.jar"/>                
             </classpath>
         </javac>
     </target>
 
     <target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases">
-        <mkdir dir="${build.classes.dir}/test-reports" />
+        <mkdir dir="${test.classes.dir}/test-reports" />
         <junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">
             <sysproperty key="basedir" value="." />
             <formatter type="plain" />
             <classpath>
+                <pathelement path="${test.classes.dir}"/>
                 <path refid="compile.run.classpath" />
                 <path refid="compile.test.classpath"/>
             </classpath>
-            <batchtest todir="${build.classes.dir}/test-reports">
+            <batchtest todir="${test.classes.dir}/test-reports">
                 <fileset dir="test/java">
                     <include name="**/*Test.java" />
                     <exclude name="**/*Abstract*Test.java" />
