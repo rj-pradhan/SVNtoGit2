@@ -84,11 +84,27 @@ import org.krysalis.jcharts.types.ChartType;
 import javax.faces.event.ActionEvent;
 import java.awt.*;
 
+/**
+ * CombinedChartBean class. this class holds the backing information for the 
+ * combined chart component of the showcase. 
+ */
 public class CombinedChartBean {
+    
+    //flag to determine if initialized
     private boolean initialzed = false;
-
-    public boolean renderOnSubmit(OutputChart component) {
-        try {
+    
+    //the text value returned after clicking on the chart
+    private String clickedValue;
+    
+    //highlight effect when text is changed
+    private Effect effectOutputText;
+    
+    //local variable for the axis chart component of the combined chart
+    private static AxisChart  axisChart;
+     
+     public CombinedChartBean()
+     {
+           try {
             String[] xAxisLabels =
                     {"1998", "1999", "2000", "2001", "2002", "2003", "2004"};
             String xAxisTitle = "Years";
@@ -131,13 +147,25 @@ public class CombinedChartBean {
             AxisProperties axisProperties = new AxisProperties();
             LegendProperties legendProperties = new LegendProperties();
 
-            AxisChart axisChart = new AxisChart(dataSeries, chartProperties,
+            axisChart = new AxisChart(dataSeries, chartProperties,
                                                 axisProperties,
                                                 legendProperties, 500, 500);
-            component.setChart(axisChart);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
+     }
+
+
+    /**
+     * Method to tell the page to render or not based on the initialized flag
+     *@param OutputChart component
+     */
+     public boolean renderOnSubmit(OutputChart component) {
+      
+        
+        component.setChart(axisChart);
+        
         if (!initialzed) {
             return initialzed = true;
         } else {
@@ -146,6 +174,12 @@ public class CombinedChartBean {
 
     }
 
+    
+    /**
+     * Method to change the output text to the valuse selected by the user
+     * when they click on the chart
+     *@param ActionEvent event
+     */
     public void action(ActionEvent event) {
         if (event.getSource() instanceof OutputChart) {
             OutputChart chart = (OutputChart) event.getSource();
@@ -159,8 +193,7 @@ public class CombinedChartBean {
         }
     }
 
-    private String clickedValue;
-
+   
     public String getClickedValue() {
         return clickedValue;
     }
@@ -169,7 +202,7 @@ public class CombinedChartBean {
         this.clickedValue = clickedValue;
     }
 
-    private Effect effectOutputText;
+    
 
     public Effect getEffectOutputText() {
         return effectOutputText;

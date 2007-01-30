@@ -33,83 +33,77 @@
 
 package com.icesoft.icefaces.samples.showcase.components.charts;
 
-import com.icesoft.faces.component.outputchart.OutputChart;
-import com.icesoft.faces.context.effects.Effect;
-import com.icesoft.faces.context.effects.Highlight;
 
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Axis Chart Bean
+ * The backend bean that supplies all the data for the axis chart
+ *
+ */
 public class AxisChartBean {
 
-    private static List areaXaxisLabels = new ArrayList();
-    private static List legendLabels = new ArrayList();
-    private static List areaData = new ArrayList();
-    private static List areaPaints = new ArrayList();
+   //list of the Labels for the x axis of the chart
+    private static final List areaXaxisLabels = new ArrayList(Arrays.asList(
+            "2000", 
+            "2001",
+            "2002",
+            "2003",
+            "2004",
+            "2005",
+            "2006"));
+    
+    //The list of the legend label for the chart
+    private static final List legendLabels = new ArrayList(Arrays.asList("Bugs","Enhancements","Fixed"));
+   
+    //The list of the data used by the chart
+    private static final List areaData = new ArrayList(Arrays.asList(new double[]{350, 50, 400},
+                                                                new double[]{45, 145, 50},
+                                                                new double[]{-36, 6, 98},
+                                                                new double[]{66, 166, 74},
+                                                                new double[]{145, 105, 55},
+                                                                new double[]{80, 110, 4},
+                                                                new double[]{10, 90, 70}));
+    
+   //The list of the colors used by the chart
+    private static final List areaPaints = new ArrayList(Arrays.asList(new Color(153, 0, 255, 100),
+                                                                new Color(204, 0, 255, 150),
+                                                                new Color(204, 0, 1, 150)));
 
     
 
     public List getAreaXaxisLabels() {
-        areaXaxisLabels.clear();
-        areaXaxisLabels.add("2000");
-        areaXaxisLabels.add("2001");
-        areaXaxisLabels.add("2002");
-        areaXaxisLabels.add("2003");
-        areaXaxisLabels.add("2004");
-        areaXaxisLabels.add("2005");
-        areaXaxisLabels.add("2006");
+       
         return areaXaxisLabels;
     }
 
-    public void setAreaXaxisLabels(List areaXaxisLabels) {
-        this.areaXaxisLabels = areaXaxisLabels;
-    }
+  
 
     public List getLegendLabels() {
-        legendLabels.clear();
-        legendLabels.add("Bugs");
-        legendLabels.add("Enhancements");
-        legendLabels.add("Fixed");
+       
         return legendLabels;
     }
 
-    public void setLegendLabels(List legendLabels) {
-        this.legendLabels = legendLabels;
-    }
+   
 
     public List getAreaData() {
-        areaData.clear();
-        areaData.add(new double[]{350, 50, 400});
-        areaData.add(new double[]{45, 145, 50});
-        areaData.add(new double[]{-36, 6, 98});
-        areaData.add(new double[]{66, 166, 74});
-        areaData.add(new double[]{145, 105, 55});
-        areaData.add(new double[]{80, 110, 4});
-        areaData.add(new double[]{10, 90, 70});
+       
         return areaData;
     }
 
 
-    public void setAreaData(List areaData) {
-        this.areaData = areaData;
-    }
+   
 
     public List getAreaPaints() {
-        areaPaints.clear();
-        areaPaints.add(new Color(153, 0, 255, 100));
-        areaPaints.add(new Color(204, 0, 255, 150));
-        areaPaints.add(new Color(204, 0, 1, 150));
+       
         return areaPaints;
     }
 
 
-    public void setAreaPaints(List areaPaints) {
-        this.areaPaints = areaPaints;
-    }
+   
 
 
 

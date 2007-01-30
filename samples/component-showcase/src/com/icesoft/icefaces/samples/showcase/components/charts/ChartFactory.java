@@ -1,3 +1,37 @@
+
+/*
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * "The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations under
+ * the License.
+ *
+ * The Original Code is ICEfaces 1.5 open source software code, released
+ * November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+ * Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+ * 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+ *
+ * Contributor(s): _____________________.
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+ * License), in which case the provisions of the LGPL License are
+ * applicable instead of those above. If you wish to allow use of your
+ * version of this file only under the terms of the LGPL License and not to
+ * allow others to use your version of this file under the MPL, indicate
+ * your decision by deleting the provisions above and replace them with
+ * the notice and other provisions required by the LGPL License. If you do
+ * not delete the provisions above, a recipient may use your version of
+ * this file under either the MPL or the LGPL License."
+ *
+ */
+
 /*
  * ChartFactory.java
  *
@@ -10,7 +44,7 @@
 
 package com.icesoft.icefaces.samples.showcase.components.charts;
 
-import com.icesoft.faces.component.outputchart.AxisChart;
+
 import com.icesoft.faces.component.outputchart.OutputChart;
 import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.Highlight;
@@ -25,52 +59,65 @@ import javax.faces.model.SelectItem;
  */
 public class ChartFactory {
     
-    private SelectItem[] chartList = null;
+    //List of charts that the user can seleect from the drop down menu
+    private static SelectItem[] chartList = new SelectItem[]{
+            new SelectItem(OutputChart.AREA_CHART_TYPE),
+            new SelectItem(OutputChart.AREA_STACKED_CHART_TYPE),
+            new SelectItem(OutputChart.BAR_CHART_TYPE),
+            new SelectItem(OutputChart.BAR_CLUSTERED_CHART_TYPE),
+            new SelectItem(OutputChart.BAR_STACKED_CHART_TYPE),
+            new SelectItem(OutputChart.LINE_CHART_TYPE),
+            new SelectItem(OutputChart.POINT_CHART_TYPE),
+            new SelectItem(OutputChart.PIE2D_CHART_TYPE),
+            new SelectItem(OutputChart.PIE3D_CHART_TYPE),};
+            
+            
+   //boolean to determine if the chart is a 2D pie chart
     private boolean pie = false;
+   
+    //boolean to determine if the chart is an axis chart
     private boolean axis = true;
+   
+    //boolean to determine if the chart is a 3D pie chart
     public boolean pie3D = false;
+   
+    //Flag to determine whether the type of chart was changed
     private boolean chartChangedFlag = true;
     
+    //Temporary holding string when the type of chart has been changed
     private String wasChanged;
     
-    private static final String DEFAULT_STRING =
+    public static final String DEFAULT_STRING =
             "Click on the image map below to display a chart value: ";
     
-    private Highlight effectOutputText;
+   //Highlight effect on the text when the image is clicked
+    private Highlight effectOutputText  = new Highlight("#ffff99");
     
+    //sets the chart type to bar for default
     private String chart = OutputChart.BAR_CHART_TYPE;
    
+    //sets the string returned when the chart is clicked to the default value
     private String clickedValue = DEFAULT_STRING;
     
     /*
-     *Sets the list of charts to choose from
+     * Returns the list of charts to choose from
     */
     
     public SelectItem[] getChartList() {
-        if (chartList == null) {
-            chartList = new SelectItem[9];
-            chartList[0] = new SelectItem(OutputChart.AREA_CHART_TYPE);
-            chartList[1] = new SelectItem(OutputChart.AREA_STACKED_CHART_TYPE);
-            chartList[2] = new SelectItem(OutputChart.BAR_CHART_TYPE);
-            chartList[3] = new SelectItem(OutputChart.BAR_CLUSTERED_CHART_TYPE);
-            chartList[4] = new SelectItem(OutputChart.BAR_STACKED_CHART_TYPE);
-            chartList[5] = new SelectItem(OutputChart.LINE_CHART_TYPE);
-            chartList[6] = new SelectItem(OutputChart.POINT_CHART_TYPE);
-            chartList[7] = new SelectItem(OutputChart.PIE2D_CHART_TYPE);
-            chartList[8] = new SelectItem(OutputChart.PIE3D_CHART_TYPE);
-        }
+        
         return chartList;
     }
     
     /*
-     *sets the chartList
+     * Sets the chartList
+     *@param SelectItem[] items
      */
     public void setChartList(SelectItem[] items) {
         this.chartList = items;
     }
     
     /*
-     *sets the isAxis Boolean
+     * Sets the isAxis Boolean
      *@param boolean isAxis
      */
     public boolean isAxis() {
@@ -78,7 +125,7 @@ public class ChartFactory {
     }
     
     /*
-     *returns whether the grap is a 3D Pie
+     * Returns whether the graph is a 3D PieChart
      *@return boolean
      */
     public boolean isPie3D() {
@@ -86,7 +133,7 @@ public class ChartFactory {
     }
     
     /*
-     *sets the graph to a 3D pie
+     * Sets the graph to a 3D pie
      *@param boolean pie3D
      */
     public void setPie3D(boolean pie3D) {
@@ -94,7 +141,7 @@ public class ChartFactory {
     }
     
     /*
-     *returns whether the graph is a pie chart(2d)
+     * Returns whether the graph is a pie chart(2d)
      *@return boolean
      */
     public boolean isPie() {
@@ -102,7 +149,7 @@ public class ChartFactory {
     }
     
     /*
-     *sets the graph to an axis type
+     * Sets the graph to an axis type
      *@param boolean axis
      */
     public void setAxis(boolean axis) {
@@ -110,7 +157,7 @@ public class ChartFactory {
     }
     
     /*
-     *sets the graph to a 2dPie type
+     * Sets the graph to a 2dPie type
      *@param boolean pie
      */
     public void setPie(boolean pie) {
@@ -120,7 +167,7 @@ public class ChartFactory {
     
     
     /*
-     *returns the chart String
+     * Returns the chart String
      *@return String chart
      */
     public String getChart() {
@@ -129,26 +176,26 @@ public class ChartFactory {
     }
     
     /*
-     *sets the chart String
-     *determines what type of graph it is based on the parameter passed in
+     * Sets the chart String
+     * Determines what type of graph it is based on the parameter passed in
      *@param String chart
      */
     public void setChart(String chart) {
         
        
-        if(!wasChanged.equals(null)) {
+        if(wasChanged != null) {
             this.chart = wasChanged;
             wasChanged = null;
         } else {
             this.chart = chart;
         }
         
-        if (!chart.equals("pie3D")) {
+        if (!chart.equals(OutputChart.PIE3D_CHART_TYPE)) {
             pie3D = false;
         }
-        if (chart.equals("pie2D") || chart.equals("pie3D")) {
+        if (chart.equals(OutputChart.PIE3D_CHART_TYPE) || chart.equals(OutputChart.PIE2D_CHART_TYPE)) {
             axis = false;
-            if (chart.equals("pie3D")) {
+            if (chart.equals(OutputChart.PIE3D_CHART_TYPE)) {
                 pie3D = true;
             }
         } else {
@@ -157,7 +204,7 @@ public class ChartFactory {
     }
     
     /*
-     * determines whether or not the application should render based on status change
+     * Determines whether or not the application should render based on status change
      *@return boolean
      */
     public boolean allCharts(OutputChart component) {
@@ -175,8 +222,8 @@ public class ChartFactory {
     
     
     /*
-     *determines whether the chart was changed or not
-     *sets the default_string if the area type charts are selected
+     * Determines whether the chart was changed
+     * Sets the default_string if the area type charts are selected
      *@param ValueChangeEvent event
      */
     public void chartChanged(ValueChangeEvent event) {
@@ -184,8 +231,8 @@ public class ChartFactory {
         chartChangedFlag = true;
         wasChanged = (String)event.getNewValue();
         
-        if (event.getNewValue().equals("area") ||
-                event.getNewValue().equals("areastacked")) {
+        if (event.getNewValue().equals(OutputChart.AREA_CHART_TYPE) ||
+                event.getNewValue().equals(OutputChart.AREA_STACKED_CHART_TYPE)) {
             setClickedValue(
                     "A client side image map is not supported for Area charts (clicking on the chart will not display any values)");
         } else {
@@ -196,7 +243,7 @@ public class ChartFactory {
    
     
     /*
-     *returnsd the clickedValue
+     * Returns the clickedValue
      *@return String clickedValue
      */
     public String getClickedValue() {
@@ -206,7 +253,7 @@ public class ChartFactory {
     
     
     /*
-     *returns the text effect
+     * Returns the text effect
      *@return Effect EffectOutputText
      */
     public Effect getEffectOutputText() {
@@ -214,7 +261,7 @@ public class ChartFactory {
     }
     
     /*
-     *sets the output text effect
+     * Sets the output text effect
      *@param Effect effectOutputText
      */
     public void setEffectOutputText(Effect effectOutputText) {
@@ -222,7 +269,7 @@ public class ChartFactory {
     }
     
     /*
-     *sets the clicked value
+     * Sets the clicked value
      *@param String clickedValue
      */
     public void setClickedValue(String clickedValue) {
@@ -231,7 +278,7 @@ public class ChartFactory {
     }
     
     /*
-     *when the image map has been clicked this method returns the value
+     * When the image map has been clicked this method returns the axis label plus the value
      *@param ActionEvent event
      */
     public void imageClicked(ActionEvent event) {
@@ -245,11 +292,11 @@ public class ChartFactory {
                         "  :  " +
                         charte.getClickedImageMapArea().getValue());
                 
-                effectOutputText = new Highlight("#ffff99");
+                effectOutputText.setFired(false);
             }
-            else{System.out.println("in imageClicked - mapArea.getXAxisLabel=null");}
+            
         }
-        else{System.out.println("get source !instance of outputchart");}
+      
     }
     
 }
