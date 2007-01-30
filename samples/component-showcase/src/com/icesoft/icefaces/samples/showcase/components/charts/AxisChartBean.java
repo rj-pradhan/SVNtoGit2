@@ -40,72 +40,62 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Axis Chart Bean
- * The backend bean that supplies all the data for the axis chart
+ * Axis Chart Bean The backend bean that supplies all the data for the axis
+ * chart.
  *
+ * @since 1.5
  */
 public class AxisChartBean {
 
-   //list of the Labels for the x axis of the chart
+    //list of the Labels for the x axis of the chart
     private static final List areaXaxisLabels = new ArrayList(Arrays.asList(
-            "2000", 
-            "2001",
-            "2002",
-            "2003",
-            "2004",
-            "2005",
-            "2006"));
-    
-    //The list of the legend label for the chart
-    private static final List legendLabels = new ArrayList(Arrays.asList("Bugs","Enhancements","Fixed"));
-   
-    //The list of the data used by the chart
-    private static final List areaData = new ArrayList(Arrays.asList(new double[]{350, 50, 400},
-                                                                new double[]{45, 145, 50},
-                                                                new double[]{-36, 6, 98},
-                                                                new double[]{66, 166, 74},
-                                                                new double[]{145, 105, 55},
-                                                                new double[]{80, 110, 4},
-                                                                new double[]{10, 90, 70}));
-    
-   //The list of the colors used by the chart
-    private static final List areaPaints = new ArrayList(Arrays.asList(new Color(153, 0, 255, 100),
-                                                                new Color(204, 0, 255, 150),
-                                                                new Color(204, 0, 1, 150)));
+            new String[]{"2000", "2001", "2002", "2003", "2004", "2005",
+                         "2006"}));
 
-    
+    //The list of the legend label for the chart
+    private static final List legendLabels = new ArrayList(Arrays.asList(
+            new String[]{"Bugs", "Enhancements", "Fixed"}));
+
+    //The list of the data used by the chart
+    private static final List areaData = new ArrayList(
+            Arrays.asList(new double[][]{new double[]{350, 50, 400},
+                                         new double[]{45, 145, 50},
+                                         new double[]{-36, 6, 98},
+                                         new double[]{66, 166, 74},
+                                         new double[]{145, 105, 55},
+                                         new double[]{80, 110, 4},
+                                         new double[]{10, 90, 70}}));
+
+    //The list of the colors used by the chart
+    private static final List areaPaints =
+            new ArrayList(Arrays.asList(new Color[]{new Color(153, 0, 255, 100),
+                                                    new Color(204, 0, 255, 150),
+                                                    new Color(204, 0, 1,
+                                                              150)}));
+
 
     public List getAreaXaxisLabels() {
-       
+
         return areaXaxisLabels;
     }
 
-  
 
     public List getLegendLabels() {
-       
+
         return legendLabels;
     }
 
-   
 
     public List getAreaData() {
-       
+
         return areaData;
     }
 
 
-   
-
     public List getAreaPaints() {
-       
+
         return areaPaints;
     }
-
-
-   
-
-
 
 
 }

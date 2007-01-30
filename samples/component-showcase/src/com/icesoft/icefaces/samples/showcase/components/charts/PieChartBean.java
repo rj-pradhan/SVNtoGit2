@@ -37,7 +37,6 @@ import com.icesoft.faces.component.outputchart.AbstractChart;
 import com.icesoft.faces.component.outputchart.OutputChart;
 import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.Highlight;
-import java.util.Arrays;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -49,8 +48,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The PieChartBean is responsible for holding all the backing information and data
- * for the pie chart
+ * The PieChartBean is responsible for holding all the backing information and
+ * data for the pie chart
  *
  * @since 1.5
  */
@@ -58,74 +57,73 @@ public class PieChartBean {
 
     //list of labels for the chart
     private static List labels = new ArrayList();
-    
-   //list of the data used by the chart
+
+    //list of the data used by the chart
     private static List data = new ArrayList();
-   
+
     //list of the colors used in the pie chart
-    private List paints = new ArrayList(Arrays.asList(Color.YELLOW,Color.RED, Color.BLUE, Color.PINK));
-    
+    private List paints;
+
     //list of the saled data from the sales class
-    private static final List sales = buildSales();;
-   
+    private static final List sales = buildSales();
+
     //a map of the sales data
     private static Map salesMap;
-   
+
     //
     private String clickedAreaValue = ChartFactory.DEFAULT_STRING;
-   
+
     //a temporary string for the current label
     private String label;
-   
+
     private float value;
-   
+
     //flag to determine if the chart is a 3D pie
     public static boolean is3D = false;
-   
+
     //flag to determine if the graph needs rendering
     private boolean pieNeedsRendering = false;
-    
+
     //the temporary value for the selected color
     private Color selectedColor;
-   
+
     //the highlight effect for when the value selected is changed
     private Effect effectOutputText = new Highlight("#ffff99");
-    
+
     //index to delete from
     int deletInex = 0;
-    
+
     //list of items to delete
     private List deleteList = new ArrayList();
 
-  
-    
+
     //array of the available paints used in the chart
     public static final SelectItem[] availablePaints = new SelectItem[]{
-        
-        new SelectItem("black", "Black"),
-        new SelectItem("blue", "Blue"),
-        new SelectItem("cyan", "Cyan"),
-        new SelectItem("darkGray", "Dark Gray"),
-        new SelectItem("gray", "Gray"),
-        new SelectItem("green", "Green"),
-        new SelectItem("red", "Red"),
-        new SelectItem("lightGray", "Light Gray"),
-        new SelectItem("magenta", "Magenta"),
-        new SelectItem("orange", "Orange"),
-        new SelectItem("pink", "Pink"),
-        new SelectItem("red", "Red"),
-        new SelectItem("white", "White"),
-        new SelectItem("yellow", "Yellow") };
-    
-    
-    
+
+            new SelectItem("black", "Black"),
+            new SelectItem("blue", "Blue"),
+            new SelectItem("cyan", "Cyan"),
+            new SelectItem("darkGray", "Dark Gray"),
+            new SelectItem("gray", "Gray"),
+            new SelectItem("green", "Green"),
+            new SelectItem("red", "Red"),
+            new SelectItem("lightGray", "Light Gray"),
+            new SelectItem("magenta", "Magenta"),
+            new SelectItem("orange", "Orange"),
+            new SelectItem("pink", "Pink"),
+            new SelectItem("red", "Red"),
+            new SelectItem("white", "White"),
+            new SelectItem("yellow", "Yellow")};
+
+
     /**
-     * Method to build the sales list and create the chart using the data
-     * from the sales class
+     * Method to build the sales list and create the chart using the data from
+     * the sales class
+     *
+     * @return list of sales items for charting. 
      */
-    public static final ArrayList buildSales()
-    {
-         ArrayList salesTemp = new ArrayList();
+    public static ArrayList buildSales() {
+        ArrayList salesTemp = new ArrayList();
         salesMap = Sales.getSales();
         Iterator it = salesMap.values().iterator();
         double price;
@@ -145,12 +143,14 @@ public class PieChartBean {
         return salesTemp;
     }
 
-  
 
     /**
      * Method to call the rendering of the chart based on the pieNeedsRendering
-     *flag
-     *@return boolean
+     * flag
+     *
+     * @param component chart component which will be rendered. 
+     *
+     * @return boolean true if OutputChart should be re-rendered; otherwise, false.
      */
     public boolean renderOnSubmit(OutputChart component) {
         if (pieNeedsRendering) {
@@ -160,35 +160,30 @@ public class PieChartBean {
             return false;
         }
     }
-    
-    public static void setIs3D(boolean i3D)
-    {
+
+    public static void setIs3D(boolean i3D) {
         is3D = i3D;
     }
-    
+
     /**
      * Method to return whether chart is 3D or not
-     *@return boolean
+     *
+     * @return boolean
      */
-    public static boolean is3D()
-    {
+    public static boolean is3D() {
         return is3D;
     }
-    
 
-    
 
     public SelectItem[] getAvailablePaints() {
         return availablePaints;
     }
 
-   
-
-    
 
     /**
      * Mehtod to listen for the change in color in the graph
-     *@param ValueChangeEvent event
+     *
+     * @param event JSF value changed event
      */
     public void paintChangeListener(ValueChangeEvent event) {
         if (event.getNewValue() != null) {
@@ -197,7 +192,6 @@ public class PieChartBean {
         }
     }
 
-  
 
     public String getLabel() {
         return label;
@@ -220,7 +214,8 @@ public class PieChartBean {
 
     /**
      * Method to add a value and a color to the chart
-     *@param ActionEvent event
+     *
+     * @param event JSF action event.
      */
     public void addChart(ActionEvent event) {
         paints.add(selectedColor);
@@ -231,7 +226,6 @@ public class PieChartBean {
         pieNeedsRendering = true;
     }
 
-  
 
     public List getDeleteList() {
         deleteList.clear();
@@ -249,7 +243,8 @@ public class PieChartBean {
 
     /**
      * Method to listen for an action to delete from the chart
-     *@param ValueChangeEvent event
+     *
+     * @param event JSF value changed event
      */
     public void deleteListValueChangeListener(ValueChangeEvent event) {
         if (event.getNewValue() != null) {
@@ -259,7 +254,8 @@ public class PieChartBean {
 
     /**
      * Method to delete an item from the chart
-     *@param ActionEvent event
+     *
+     * @param event JSF action event
      */
     public void deleteChart(ActionEvent event) {
         if (deletInex >= 0 && labels.size() > 1) {
@@ -270,7 +266,6 @@ public class PieChartBean {
         }
     }
 
-    
 
     public String getClickedAreaValue() {
         return clickedAreaValue;
@@ -280,7 +275,6 @@ public class PieChartBean {
         this.clickedAreaValue = clickedAreaValue;
     }
 
-    
 
     public Effect getEffectOutputText() {
         return effectOutputText;
@@ -293,20 +287,22 @@ public class PieChartBean {
     /**
      * Method to listen for the event of a user clicking on the chart and
      * returning the value selected
-     *@param ActionEvent event
+     *
+     * @param event JSF action event
      */
     public void action(ActionEvent event) {
         if (event.getSource() instanceof OutputChart) {
             OutputChart chart = (OutputChart) event.getSource();
             if (chart.getClickedImageMapArea().getLengendLabel() != null) {
                 setClickedAreaValue(ChartFactory.DEFAULT_STRING + chart
-                        .getClickedImageMapArea().getLengendLabel() 
-                        + " : " +  chart.getClickedImageMapArea().getValue());
+                        .getClickedImageMapArea().getLengendLabel()
+                                    + " : " +
+                                    chart.getClickedImageMapArea().getValue());
                 setSalesForYear(
                         chart.getClickedImageMapArea().getLengendLabel());
-                effectOutputText.setFired(false) ;
-                
-               
+                effectOutputText.setFired(false);
+
+
             }
         }
     }
@@ -324,21 +320,12 @@ public class PieChartBean {
     }
 
 
-  
     public List getData() {
         return data;
     }
 
-    public void setData(List data) {
-        this.data = data;
-    }
-
     public List getLabels() {
         return labels;
-    }
-
-    public void setLabels(List labels) {
-        this.labels = labels;
     }
 
     public List getPaints() {

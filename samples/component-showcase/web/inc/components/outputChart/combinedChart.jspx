@@ -56,7 +56,7 @@
                     <br/>
                     <ice:outputText
                             value="This demonstration combines a bar chart with a line chart."/>
-                    <ice:outputText effect="#{axisChart.effectOutputText}"
+                    <ice:outputText effect="#{combinedChart.effectOutputText}"
                                     value="Click image map for chart value: #{combinedChart.clickedValue}"/>
                 </ice:panelGrid>
 

@@ -85,26 +85,25 @@ import javax.faces.event.ActionEvent;
 import java.awt.*;
 
 /**
- * CombinedChartBean class. this class holds the backing information for the 
- * combined chart component of the showcase. 
+ * CombinedChartBean class. this class holds the backing information for the
+ * combined chart component of the showcase.
  */
 public class CombinedChartBean {
-    
+
     //flag to determine if initialized
     private boolean initialzed = false;
-    
+
     //the text value returned after clicking on the chart
     private String clickedValue;
-    
+
     //highlight effect when text is changed
     private Effect effectOutputText;
-    
+
     //local variable for the axis chart component of the combined chart
-    private static AxisChart  axisChart;
-     
-     public CombinedChartBean()
-     {
-           try {
+    private static AxisChart axisChart;
+
+    public CombinedChartBean() {
+        try {
             String[] xAxisLabels =
                     {"1998", "1999", "2000", "2001", "2002", "2003", "2004"};
             String xAxisTitle = "Years";
@@ -148,37 +147,37 @@ public class CombinedChartBean {
             LegendProperties legendProperties = new LegendProperties();
 
             axisChart = new AxisChart(dataSeries, chartProperties,
-                                                axisProperties,
-                                                legendProperties, 500, 500);
-            
+                                      axisProperties,
+                                      legendProperties, 500, 500);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-     }
+    }
 
 
     /**
      * Method to tell the page to render or not based on the initialized flag
-     *@param OutputChart component
+     *
+     * @param component chart component which will be rendered.
+     *
+     * @return boolean true if OutputChart should be re-rendered; otherwise, false.
      */
-     public boolean renderOnSubmit(OutputChart component) {
-      
-        
+    public boolean renderOnSubmit(OutputChart component) {
+
+
         component.setChart(axisChart);
-        
-        if (!initialzed) {
-            return initialzed = true;
-        } else {
-            return false;
-        }
+
+        return !initialzed && (initialzed = true);
 
     }
 
-    
+
     /**
-     * Method to change the output text to the valuse selected by the user
-     * when they click on the chart
-     *@param ActionEvent event
+     * Method to change the output text to the valuse selected by the user when
+     * they click on the chart
+     *
+     * @param event JSF action event
      */
     public void action(ActionEvent event) {
         if (event.getSource() instanceof OutputChart) {
@@ -193,7 +192,7 @@ public class CombinedChartBean {
         }
     }
 
-   
+
     public String getClickedValue() {
         return clickedValue;
     }
@@ -202,7 +201,6 @@ public class CombinedChartBean {
         this.clickedValue = clickedValue;
     }
 
-    
 
     public Effect getEffectOutputText() {
         return effectOutputText;
