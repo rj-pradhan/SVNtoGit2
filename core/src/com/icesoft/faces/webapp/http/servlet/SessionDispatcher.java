@@ -14,33 +14,33 @@ import java.util.Map;
 public abstract class SessionDispatcher implements ServletServer {
     //having a static field here is ok because web applications are started in separate classloaders 
     private final static Map SessionBoundServers = new HashMap();
-    private boolean run;
+    private boolean run = true;
 
     protected SessionDispatcher() {
-        Thread monitor = new Thread() {
+        (new Thread() {
             public void run() {
                 while (run) {
-                    //iterate over the session using a copying iterator
-                    Iterator iterator = new LinkedList(SessionBoundServers.keySet()).iterator();
-                    while (iterator.hasNext()) {
-                        HttpSession session = (HttpSession) iterator.next();
-                        long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
-                        long maxInterval = session.getMaxInactiveInterval() * 1000;
-                        if (elapsedInterval > maxInterval) {
-                            session.invalidate();
-                        }
-                    }
                     try {
+                        //iterate over the sessions using a copying iterator
+                        Iterator iterator = new LinkedList(SessionBoundServers.keySet()).iterator();
+                        while (iterator.hasNext()) {
+                            HttpSession session = (HttpSession) iterator.next();
+                            long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
+                            long maxInterval = session.getMaxInactiveInterval() * 1000;
+                            if (elapsedInterval > maxInterval) {
+                                session.invalidate();
+                            }
+                        }
+
                         Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         //ignore interrupts
+                    } catch (Throwable t) {
+                        t.printStackTrace();
                     }
                 }
             }
-        };
-        run = true;
-        monitor.start();
-
+        }).start();
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -56,8 +56,6 @@ public abstract class SessionDispatcher implements ServletServer {
                 server.service(request, response);
             } catch (IllegalStateException e) {
                 //session has expired
-                SessionBoundServers.remove(session);
-                server.shutdown();
                 sendSessionExpired(response);
             }
         } else {
@@ -82,8 +80,7 @@ public abstract class SessionDispatcher implements ServletServer {
         }
 
         public void sessionDestroyed(HttpSessionEvent event) {
-            HttpSession session = event.getSession();
-            ServletServer server = (ServletServer) SessionBoundServers.remove(session);
+            ServletServer server = (ServletServer) SessionBoundServers.remove(event.getSession());
             server.shutdown();
         }
     }
