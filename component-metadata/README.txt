@@ -55,6 +55,18 @@ style-renderer.xml
 
 cust-style-props.xml
 
+<property>
+        <property-name>actionListener</property-name>
+        <property-extension>
+                <category>ADVANCED</category>
+                <editor-class>
+                        &methodBindingEditor;
+                </editor-class>
+                <is-hidden>true</is-hidden>
+                <tag-attribute>false</tag-attribute> //hide property from tag attribute, no tag class and tld generated.
+        </property-extension>
+</property>
+
 #3 create entity in sun-faces-config.xml
 
   <!ENTITY ice-cust-style-props SYSTEM "ice_cust_properties/cust-style-props.xml">
@@ -118,5 +130,5 @@ component-metadata/target/generated-sources/beaninfo/main/java
 testbeaninfo
 component-metadata/target/generated-sources/testbeaninfo/main/java
 
-(testbeaninfo is generated without dependencies on IDE realted classes)
+(testbeaninfo is generated without dependencies on IDE related classes)
 
