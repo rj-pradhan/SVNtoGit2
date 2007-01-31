@@ -60,7 +60,10 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -87,6 +90,7 @@ public class PanelTabSet
      * @see javax.faces.component.UIComponent#decode(javax.faces.context.FacesContext)
      */
     public void decode(FacesContext context) {
+    	reconcileListeners();
         super.decode(context);
     }
 
@@ -225,7 +229,9 @@ public class PanelTabSet
     /**
      * @param listener
      */
+    private List listenerList = new ArrayList();
     public void addTabChangeListener(TabChangeListener listener) {
+    	listenerList.add(listener);
         addFacesListener(listener);
     }
 
@@ -233,7 +239,22 @@ public class PanelTabSet
      * @param listener
      */
     public void removeTabChangeListener(TabChangeListener listener) {
+    	listenerList.remove(listener);
         removeFacesListener(listener);
+    }
+
+    /**
+     * reconcile TabChangeListeners
+     */
+    private void reconcileListeners(){
+    	FacesListener[] listener = getFacesListeners(TabChangeListener.class);
+    	for (int i=0; i< listener.length; i++) {
+    		super.removeFacesListener(listener[i]);
+    	}
+    	Iterator it = listenerList.iterator();
+    	while(it.hasNext()) {
+    		super.addFacesListener((TabChangeListener)it.next());
+    	}
     }
 
     /**
