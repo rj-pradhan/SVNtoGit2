@@ -1,15 +1,13 @@
 package com.icesoft.faces.webapp.http.core;
 
+import com.icesoft.faces.webapp.xmlhttp.ResponseState;
 import edu.emory.mathcs.backport.java.util.concurrent.Semaphore;
 
 import javax.servlet.http.HttpSession;
-
-import com.icesoft.faces.webapp.xmlhttp.ResponseState;
-
-import java.util.Enumeration;
-import java.util.ArrayList;
-import java.io.Writer;
 import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class UpdateManager {
     private Semaphore semaphore = new Semaphore(1);
@@ -30,7 +28,7 @@ public class UpdateManager {
             try {
                 semaphore.acquire();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //ignore interrupts
             }
             ResponseState[] states = getAll();
             ArrayList views = new ArrayList();

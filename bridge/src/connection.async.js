@@ -70,6 +70,22 @@
                 }
             }.bind(this);
 
+            this.updatedViewsCallback = function(response) {
+                try {
+                    var message = response.contentAsDOM().documentElement;
+                    switch (message.tagName) {
+                        case "updated-views":
+                            this.updatedViews.saveValue(message.firstChild.data);
+                            break;
+                        default:
+                        //commands sent asyncronously
+                            this.receiveCallback(response);
+                    }
+                } finally {
+                    this.connect();
+                }
+            }.bind(this);
+
             this.listenerInitializerProcess = function() {
                 try {
                     this.listening = Ice.Cookie.lookup('bconn');
@@ -107,14 +123,7 @@
             this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
                 request.on(Connection.BadResponse, this.badResponseCallback);
-                request.on(Connection.Receive, function(response) {
-                    try {
-                        this.updatedViews.saveValue(response.content());
-                        this.receiveCallback(response);
-                    } finally {
-                        this.connect();
-                    }
-                }.bind(this));
+                request.on(Connection.Receive, this.updatedViewsCallback);
             }.bind(this));
         },
 

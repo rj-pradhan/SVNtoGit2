@@ -37,10 +37,5 @@ Number.prototype.asZeroPrefixedString = function() {
 };
 
 Date.prototype.toTimestamp = function() {
-    return this.getDate().asZeroPrefixedString() + '/' +
-           this.getMonth().asZeroPrefixedString() + '/' +
-           this.getFullYear() + ' ' +
-           this.getHours().asZeroPrefixedString() + ':' +
-           this.getMinutes().asZeroPrefixedString() + ':' +
-           this.getSeconds().asZeroPrefixedString();
+    return this.toLocaleTimeString().substr(0, 8);
 };

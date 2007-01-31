@@ -21,8 +21,14 @@
     };
 
     This.SessionExpired = function() {
-        logger.warn('session has expired');
+        logger.warn('Session has expired');
         statusManager.sessionExpired.on();
+        application.dispose();
+    };
+
+    This.ServerError = function(message) {
+        logger.error('Server side error');
+        logger.error(message.firstChild.data);
         application.dispose();
     };
 });

@@ -5,10 +5,10 @@ import com.icesoft.faces.webapp.http.common.Server;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ServerAdapterServlet implements ServletServer {
+public class ServerAdapter implements ServletServer {
     private Server server;
 
-    public ServerAdapterServlet(Server server) {
+    public ServerAdapter(Server server) {
         this.server = server;
     }
 
