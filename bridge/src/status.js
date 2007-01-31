@@ -162,11 +162,13 @@
                 this.busy = new This.ToggleIndicator(connectionWorking, connectionIdle);
                 this.connectionLost = new This.ElementIndicator('connection-lost', this.indicators);
                 this.sessionExpired = this.connectionLost;
+                this.serverError = this.connectionLost;
             } else {
                 this.busy = new This.PointerIndicator(document.body);
                 var description = 'To reconnect click the Reload button on the browser or click the button below';
                 this.sessionExpired = new This.OverlayIndicator('User Session Expired', description, this);
                 this.connectionLost = new This.OverlayIndicator('Network Connection Interrupted', description, this);
+                this.serverError = new This.OverlayIndicator('Server Internal Error', description, this);
             }
         },
 

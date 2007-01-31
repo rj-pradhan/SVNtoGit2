@@ -56,8 +56,8 @@ import javax.faces.context.FacesContext;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces Facelet ViewHandler implementation
@@ -69,16 +69,16 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     //Facelets parameter constants
     public final static long DEFAULT_REFRESH_PERIOD = 2;
     public final static String PARAM_REFRESH_PERIOD = "facelets.REFRESH_PERIOD";
-    public final static String PARAM_SKIP_COMMENTS  = "facelets.SKIP_COMMENTS";
-    public final static String PARAM_VIEW_MAPPINGS  = "facelets.VIEW_MAPPINGS";
-    public final static String PARAM_LIBRARIES      = "facelets.LIBRARIES";
-    public final static String PARAM_DECORATORS     = "facelets.DECORATORS";
+    public final static String PARAM_SKIP_COMMENTS = "facelets.SKIP_COMMENTS";
+    public final static String PARAM_VIEW_MAPPINGS = "facelets.VIEW_MAPPINGS";
+    public final static String PARAM_LIBRARIES = "facelets.LIBRARIES";
+    public final static String PARAM_DECORATORS = "facelets.DECORATORS";
     public final static String PARAM_RESOURCE_RESOLVER =
             "facelets.RESOURCE_RESOLVER";
 
     // Log instance for this class
     private static Log log = LogFactory.getLog(D2DFaceletViewHandler.class);
-    
+
     protected FaceletFactory faceletFactory;
 
     public D2DFaceletViewHandler() {
@@ -90,14 +90,14 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
 
     protected void faceletInitialize() {
         try {
-            if( faceletFactory == null ) {
+            if (faceletFactory == null) {
                 com.sun.facelets.compiler.Compiler c = new SAXCompiler();
-                initializeCompiler( c );
-                faceletFactory = createFaceletFactory( c );
+                initializeCompiler(c);
+                faceletFactory = createFaceletFactory(c);
             }
         }
         catch (Throwable t) {
-            if( log.isErrorEnabled() ) {
+            if (log.isErrorEnabled()) {
                 log.error("Failed initializing facelet instance", t);
             }
         }
@@ -109,24 +109,24 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         ExternalContext ext = ctx.getExternalContext();
 
         // Load libraries
-        String paramLibraries = ext.getInitParameter( PARAM_LIBRARIES );
-        if( paramLibraries != null ) {
+        String paramLibraries = ext.getInitParameter(PARAM_LIBRARIES);
+        if (paramLibraries != null) {
             paramLibraries = paramLibraries.trim();
             String[] paramLibrariesArray = paramLibraries.split(";");
-            for(int i = 0; i < paramLibrariesArray.length; i++) {
+            for (int i = 0; i < paramLibrariesArray.length; i++) {
                 try {
-                    URL url = ext.getResource( paramLibrariesArray[i] );
-                    if( url == null ) {
-                        throw new FileNotFoundException( paramLibrariesArray[i] );
+                    URL url = ext.getResource(paramLibrariesArray[i]);
+                    if (url == null) {
+                        throw new FileNotFoundException(paramLibrariesArray[i]);
                     }
-                    TagLibrary tagLibrary = TagLibraryConfig.create( url );
-                    c.addTagLibrary( tagLibrary );
-                    if( log.isDebugEnabled() ) {
+                    TagLibrary tagLibrary = TagLibraryConfig.create(url);
+                    c.addTagLibrary(tagLibrary);
+                    if (log.isDebugEnabled()) {
                         log.debug("Loaded library: " + paramLibrariesArray[i]);
                     }
                 }
-                catch(IOException e) {
-                    if( log.isWarnEnabled() ) {
+                catch (IOException e) {
+                    if (log.isWarnEnabled()) {
                         log.warn("Problem loading library: " + paramLibrariesArray[i], e);
                     }
                 }
@@ -134,25 +134,25 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         }
 
         // Load decorators
-        String paramDecorators = ext.getInitParameter( PARAM_DECORATORS );
-        if( paramDecorators != null ) {
+        String paramDecorators = ext.getInitParameter(PARAM_DECORATORS);
+        if (paramDecorators != null) {
             paramDecorators = paramDecorators.trim();
             String[] paramDecoratorsArray = paramDecorators.split(";");
-            for(int i = 0; i < paramDecoratorsArray.length; i++) {
+            for (int i = 0; i < paramDecoratorsArray.length; i++) {
                 try {
-                    Class tagDecoratorClass = Class.forName( paramDecoratorsArray[i] ); 
+                    Class tagDecoratorClass = Class.forName(paramDecoratorsArray[i]);
                     TagDecorator tagDecorator = (TagDecorator)
-                        tagDecoratorClass.newInstance();
-                    c.addTagDecorator( tagDecorator );
-                    if( log.isDebugEnabled() ) {
+                            tagDecoratorClass.newInstance();
+                    c.addTagDecorator(tagDecorator);
+                    if (log.isDebugEnabled()) {
                         log.debug("Loaded decorator: " +
-                                  paramDecoratorsArray[i]);
+                                paramDecoratorsArray[i]);
                     }
                 }
-                catch(Exception e) {
-                    if( log.isWarnEnabled() ) {
+                catch (Exception e) {
+                    if (log.isWarnEnabled()) {
                         log.warn("Problem loading decorator: " +
-                                 paramDecoratorsArray[i], e);
+                                paramDecoratorsArray[i], e);
                     }
                 }
             }
@@ -163,46 +163,46 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         //  so this is a bit redundant getting the parameter. But who knows,
         //  things might change later, so best to preserve this code.
         String paramSkipComments =
-                ext.getInitParameter( PARAM_SKIP_COMMENTS );
+                ext.getInitParameter(PARAM_SKIP_COMMENTS);
         // Default is true.  I think this behaviour has changed over time
         //  is stock Facelets builds from 1.0.x to 1.1.x
-        if( paramSkipComments != null && paramSkipComments.equals("false") ) {
-            c.setTrimmingComments( false );
+        if (paramSkipComments != null && paramSkipComments.equals("false")) {
+            c.setTrimmingComments(false);
         }
 
         // This has to be true, otherwise table or other container
         //   UIComponents will have text children, when they're
         //   expecting only real UIComponents
-        c.setTrimmingWhitespace( true );
-        c.setTrimmingComments( true );
-        
+        c.setTrimmingWhitespace(true);
+        c.setTrimmingComments(true);
+
         // Use our special hierarchial subclasses of the stock Facelets classes
-        c.setTextUnitFactory( new D2DTextUnitFactory() );
+        c.setTextUnitFactory(new D2DTextUnitFactory());
         c.setFallbackTagCompilationUnitFactory(
-                new D2DTagCompilationUnitFactory() );
+                new D2DTagCompilationUnitFactory());
     }
 
     protected FaceletFactory createFaceletFactory(Compiler c) {
         long refreshPeriod = DEFAULT_REFRESH_PERIOD;
         FacesContext ctx = FacesContext.getCurrentInstance();
         String paramRefreshPeriod = ctx.getExternalContext().getInitParameter(
-                PARAM_REFRESH_PERIOD );
-        if( paramRefreshPeriod != null && paramRefreshPeriod.length() > 0 ) {
+                PARAM_REFRESH_PERIOD);
+        if (paramRefreshPeriod != null && paramRefreshPeriod.length() > 0) {
             try {
-                refreshPeriod = Long.parseLong( paramRefreshPeriod );
+                refreshPeriod = Long.parseLong(paramRefreshPeriod);
             }
-            catch(NumberFormatException nfe) {
-                if( log.isWarnEnabled() ) {
+            catch (NumberFormatException nfe) {
+                if (log.isWarnEnabled()) {
                     log.warn("Problem parsing refresh period: " +
-                             paramRefreshPeriod, nfe);
+                            paramRefreshPeriod, nfe);
                 }
             }
         }
-        
+
         ResourceResolver resourceResolver = null;
         String paramResourceResolver = ctx.getExternalContext().getInitParameter(
-                PARAM_RESOURCE_RESOLVER );
-        if( paramResourceResolver != null && paramResourceResolver.length() > 0 ) {
+                PARAM_RESOURCE_RESOLVER);
+        if (paramResourceResolver != null && paramResourceResolver.length() > 0) {
             try {
                 Class resourceResolverClass = Class.forName(
                         paramResourceResolver,
@@ -211,14 +211,14 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                 resourceResolver = (ResourceResolver)
                         resourceResolverClass.newInstance();
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 throw new FacesException("Problem initializing ResourceResolver: " +
                         paramResourceResolver, e);
             }
         }
-        if( resourceResolver == null )
+        if (resourceResolver == null)
             resourceResolver = new DefaultResourceResolver();
-        
+
         return new DefaultFaceletFactory(c, resourceResolver, refreshPeriod);
     }
 
@@ -226,18 +226,18 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     protected String getRenderedViewId(FacesContext context, String actionId) {
         ExternalContext extCtx = context.getExternalContext();
         String viewId = actionId;
-        if( extCtx.getRequestPathInfo() == null ) {
-            String facesSuffix = actionId.substring( actionId.lastIndexOf('.') );
+        if (extCtx.getRequestPathInfo() == null) {
+            String facesSuffix = actionId.substring(actionId.lastIndexOf('.'));
             String viewSuffix = context.getExternalContext()
                     .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
-            viewId = actionId.replaceFirst( facesSuffix, viewSuffix );
+            viewId = actionId.replaceFirst(facesSuffix, viewSuffix);
         }
         return viewId;
     }
 
 
     protected void renderResponse(FacesContext context) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("renderResponse(FC)");
         }
         try {
@@ -245,39 +245,38 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
 
             UIViewRoot viewToRender = context.getViewRoot();
             String renderedViewId =
-                    getRenderedViewId( context, viewToRender.getViewId() );
-            viewToRender.setViewId( renderedViewId );
-            if( viewToRender.getId() == null ) {
+                    getRenderedViewId(context, viewToRender.getViewId());
+            viewToRender.setViewId(renderedViewId);
+            if (viewToRender.getId() == null) {
                 viewToRender.setId(viewToRender.createUniqueId());
             }
 
-            if( viewToRender.getChildCount() == 0 ) {
+            if (viewToRender.getChildCount() == 0) {
                 // grab our FaceletFactory and create a Facelet
                 faceletInitialize();
                 Facelet f = null;
-                FaceletFactory.setInstance( faceletFactory );
+                FaceletFactory.setInstance(faceletFactory);
                 try {
-                    f = faceletFactory.getFacelet( viewToRender.getViewId() );
+                    f = faceletFactory.getFacelet(viewToRender.getViewId());
                 } finally {
                     FaceletFactory.setInstance(null);
                 }
-                
-                // Populate UIViewRoot
-                f.apply( context, viewToRender );
 
-                context.setViewRoot( viewToRender );
-                
-                verifyUniqueComponentIds( viewToRender, new HashMap() );
-                
+                // Populate UIViewRoot
+                f.apply(context, viewToRender);
+
+                context.setViewRoot(viewToRender);
+
+                verifyUniqueComponentIds(viewToRender, new HashMap());
+
                 // Uses D2DViewHandler logging
                 tracePrintComponentTree(context);
             }
 
-            createResponseWriter( context );
-            renderResponse( context, viewToRender );
+            renderResponse(context, viewToRender);
         }
         catch (Exception e) {
-            if( log.isErrorEnabled() ) {
+            if (log.isErrorEnabled()) {
                 log.error("Problem in renderResponse: " + e.getMessage(), e);
             }
         }
@@ -318,26 +317,24 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
             }
         }
     }
-    
+
     protected static void verifyUniqueComponentIds(UIComponent comp, HashMap ids) {
-        if( !log.isErrorEnabled() )
+        if (!log.isErrorEnabled())
             return;
         String id = comp.getId();
-        if( id == null ) {
+        if (id == null) {
             log.error("UIComponent has null id: " + comp);
-        }
-        else {
-            if( ids.containsKey(id) ) {
+        } else {
+            if (ids.containsKey(id)) {
                 log.error("Multiple UIComponents found, which are wrongfully using the same id: " + id + ".  Most recent UIComponent: " + comp);
-            }
-            else {
-                ids.put( id, id );
+            } else {
+                ids.put(id, id);
             }
         }
         Iterator children = comp.getFacetsAndChildren();
-        while( children.hasNext() ) {
+        while (children.hasNext()) {
             UIComponent child = (UIComponent) children.next();
-            verifyUniqueComponentIds( child, ids );
+            verifyUniqueComponentIds(child, ids);
         }
     }
 }

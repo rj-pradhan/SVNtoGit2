@@ -29,6 +29,7 @@
     This.ServerError = function(message) {
         logger.error('Server side error');
         logger.error(message.firstChild.data);
+        statusManager.serverError.on();
         application.dispose();
     };
 });

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-public class MultiViewServlet extends ServerAdapter {
+public class MultiViewServlet extends AdapterServlet {
     private int viewCount = 0;
     private HttpSession session;
     private ResponseStateManager responseStateManager;

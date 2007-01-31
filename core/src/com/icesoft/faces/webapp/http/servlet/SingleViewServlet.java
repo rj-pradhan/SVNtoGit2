@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-public class SingleViewServlet extends ServerAdapter {
+public class SingleViewServlet extends AdapterServlet {
     private static final String viewNumber = "1";
     private HttpSession session;
 
@@ -50,6 +50,8 @@ public class SingleViewServlet extends ServerAdapter {
     }
 
     public void shutdown() {
+        //discard view
+        views.remove(viewNumber);
         super.shutdown();
     }
 }

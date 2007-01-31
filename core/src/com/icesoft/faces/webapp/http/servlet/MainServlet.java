@@ -13,11 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainServlet extends HttpServlet {
-    private PathDispatchingServlet dispatcher = new PathDispatchingServlet();
+    private PathDispatcher dispatcher = new PathDispatcher();
 
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
@@ -27,33 +25,16 @@ public class MainServlet extends HttpServlet {
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);
             final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
             final ResponseStateManager responseStateManager = ResponseStateManager.getResponseStateManager(servletContext);
-            final Map views = new HashMap();
 
-            ServletServer viewServer;
-            if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
-                viewServer = new SessionDispatcher() {
-                    protected ServletServer newServlet(HttpSession session) {
-                        return new MultiViewServlet(session, idGenerator, responseStateManager, views);
-                    }
-                };
-            } else {
-                viewServer = new SessionDispatcher() {
-                    protected ServletServer newServlet(HttpSession session) {
-                        return new SingleViewServlet(session, idGenerator, responseStateManager, views);
-                    }
-                };
-            }
-            ServletServer pushServer = new SessionDispatcher() {
-                protected ServletServer newServlet(HttpSession session) {
-                    return new PushServerAdapter(session, views);
+            ServerServlet sessionServer = new SessionDispatcher() {
+                protected ServerServlet newServlet(HttpSession session) {
+                    return new MainSessionBoundServlet(session, idGenerator, responseStateManager, configuration);
                 }
             };
-            ServerAdapter resourceServer = new ServerAdapter(new ResourceServer(configuration));
-
+            AdapterServlet resourceServer = new AdapterServlet(new ResourceServer(configuration));
 
             dispatcher.dispatchOn(".*xmlhttp\\/.*", resourceServer);
-            dispatcher.dispatchOn(".*block\\/.*", pushServer);
-            dispatcher.dispatchOn(".*", viewServer);
+            dispatcher.dispatchOn(".*", sessionServer);
         } catch (Exception e) {
             throw new ServletException(e);
         }

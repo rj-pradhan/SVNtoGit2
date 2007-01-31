@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public abstract class SessionDispatcher implements ServletServer {
+public abstract class SessionDispatcher implements ServerServlet {
     //having a static field here is ok because web applications are started in separate classloaders
     private final static List SessionDispatchers = new ArrayList();
     private Map sessionBoundServers = new HashMap();
@@ -27,7 +27,7 @@ public abstract class SessionDispatcher implements ServletServer {
         HttpSession session = request.getSession(true);
         //test if session is still around
         if (sessionBoundServers.containsKey(session)) {
-            ServletServer server = (ServletServer) sessionBoundServers.get(session);
+            ServerServlet server = (ServerServlet) sessionBoundServers.get(session);
             server.service(request, response);
         } else {
             //session has expired in the mean time, server removed by the session listener
@@ -38,7 +38,7 @@ public abstract class SessionDispatcher implements ServletServer {
     public void shutdown() {
         Iterator i = sessionBoundServers.values().iterator();
         while (i.hasNext()) {
-            ServletServer server = (ServletServer) i.next();
+            ServerServlet server = (ServerServlet) i.next();
             server.shutdown();
         }
     }
@@ -52,11 +52,11 @@ public abstract class SessionDispatcher implements ServletServer {
     }
 
     private void sessionDestroyed(HttpSession session) {
-        ServletServer server = (ServletServer) sessionBoundServers.remove(session);
+        ServerServlet server = (ServerServlet) sessionBoundServers.remove(session);
         server.shutdown();
     }
 
-    protected abstract ServletServer newServlet(HttpSession session) throws Exception;
+    protected abstract ServerServlet newServlet(HttpSession session) throws Exception;
 
     public static class Listener implements HttpSessionListener, ServletContextListener {
         private List sessions = new ArrayList();
@@ -109,6 +109,10 @@ public abstract class SessionDispatcher implements ServletServer {
                             } catch (IllegalStateException e) {
                                 //session was expired by the container
                                 sessions.remove(session);
+                            } catch (Throwable t) {
+                                //just inform that something went wrong
+                                //todo: replace this with a warning log call 
+                                t.printStackTrace();
                             }
                         }
                     }
