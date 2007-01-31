@@ -197,3 +197,20 @@
         </editor-class>
     </property-extension>
 </property>
+
+
+
+
+<property>
+    <description>
+        TODO
+    </description>
+    <property-name>renderOnSubmit</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

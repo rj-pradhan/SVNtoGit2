@@ -147,3 +147,47 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+
+
+
+        <property>
+	<description>
+		Scrollable
+	</description>
+	<property-name>scrollable</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+
+
+        <property>
+	<description>
+		Column widths
+	</description>
+	<property-name>columnWidths</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+        <property>
+	<description>
+		Scroll Height
+	</description>
+	<property-name>scrollHeight</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

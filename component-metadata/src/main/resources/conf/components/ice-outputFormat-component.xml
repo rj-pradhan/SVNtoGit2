@@ -7,6 +7,8 @@
 	<display-name>Output Format</display-name>
 	<component-type>com.icesoft.faces.HtmlOutputFormat</component-type>
 
+&ice-outputFormat-props;
+
 	<component-extension>
 		<base-component-type>
 			javax.faces.HtmlOutputFormat

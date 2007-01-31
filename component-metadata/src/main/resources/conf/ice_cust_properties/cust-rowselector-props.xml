@@ -51,3 +51,20 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+<property>
+	<description>
+		<![CDATA[<p>
+             Listener method to call with a RowSelectorEvent when a row is selected 
+                </p>
+             ]]>
+	</description>
+	<property-name>selectionListener</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

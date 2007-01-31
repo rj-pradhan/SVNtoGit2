@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding='UTF-8'?>
 
 &ice-ext-core-styled-props;
+&ice-effects-props;
 <property>
 	<description>Effect invoked on onchange event</description>
 	<property-name>onchangeeffect</property-name>

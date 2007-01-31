@@ -116,6 +116,7 @@
   <!ENTITY ice-selectOneListbox-props SYSTEM "ice_properties/ice-selectOneListbox-props.xml">
   <!ENTITY ice-selectOneMenu-props SYSTEM "ice_properties/ice-selectOneMenu-props.xml">
   <!ENTITY ice-selectOneRadio-props SYSTEM "ice_properties/ice-selectOneRadio-props.xml">
+  <!ENTITY ice-outputFormat-props SYSTEM "ice_properties/ice-outputFormat-props.xml">
   
   <!-- custom components properties -->
   <!ENTITY ice-cust-outputchart-props SYSTEM "ice_cust_properties/cust-outputchart-props.xml">
