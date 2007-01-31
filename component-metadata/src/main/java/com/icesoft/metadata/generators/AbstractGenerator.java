@@ -61,7 +61,7 @@ public abstract class AbstractGenerator {
 		
 		ClassLoader classLoader = Thread.currentThread()
 		.getContextClassLoader();
-		bundle = ResourceBundle.getBundle("com.sun.rave.jsfmeta.Bundle", Locale
+		bundle = ResourceBundle.getBundle("com.icesoft.metadata.Bundle", Locale
 				.getDefault(),classLoader);
 		defaults = new HashMap();
 		defaults.put("boolean", "false");

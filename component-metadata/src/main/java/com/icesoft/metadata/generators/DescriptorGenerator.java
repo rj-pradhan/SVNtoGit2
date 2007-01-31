@@ -263,9 +263,10 @@ public class DescriptorGenerator extends AbstractGenerator {
 		writer.println();
 
 		// TODO: pick up version
-		writer.println("  <tlib-version>" + "1.5" + "</tlib-version>");
+		writer.println("  <tlib-version>" + "1.6" + "</tlib-version>");
 		writer.println("  <jsp-version>1.2</jsp-version>");
 		writer.println("  <short-name>" + getPrefix() + "</short-name>");
+                writer.println("  <display-name>" + "ICEfaces Component Suite" + "</display-name>");
 		writer.println("  <uri>" + getURI() + "</uri>");
 		writer.println();
 	}

@@ -35,15 +35,10 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 	public ComponentTestBeanInfoGenerator() {
 
 		base = false;
-		baseBI = null;
 		categoryDescriptors = "com.icesoft.faces.ide.creator2.util.CategoryDescriptors";
 		defaultMarkupSection = "FORM";
 		bundleMaps = new HashMap();
-		defaultTaglibPrefix = null;
-		defaultTaglibURI = null;
-		implBD = null;
-		implPD = null;
-		useComponentResourceBundles = true;
+		useComponentResourceBundles = false;
 	}
 
 	public boolean getBase() {
@@ -228,6 +223,7 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 		writer.emitExpression("defaultPropertyIndex = -1;", true);
 		writer.emitExpression("return defaultPropertyIndex;", true);
 		writer.endMethod();
+                writer.outdent();
 		writer.emitNewline();
 		return;
 
@@ -253,14 +249,17 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+                
 		header(cb, rb);
 		body(cb, rb);
+                
 		getWriter().flush();
 		getWriter().close();
 	}
 
 	private void header(ComponentBean cb, RendererBean rb) throws IOException {
 		JavaSourceWriter writer = getWriter();
+                writer.outdent();
 		String packageName = packageName(cb);
 		if (packageName.length() > 0) {
 			writer.emitPackage(packageName);
@@ -384,7 +383,7 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 	private void propertyDescriptors(ComponentBean cb, RendererBean rb)
 			throws IOException {
 		JavaSourceWriter writer = getWriter();
-		TreeMap map = new TreeMap();
+                Map map = new TreeMap();
 		writer.startJavaDoc();
 		writer
 				.emitJavaDoc("<p>Return the <code>PropertyDescriptor</code>s for this bean.</p>");
@@ -453,26 +452,26 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 	private String simpleClassName(ComponentBean cb) {
 		return simpleClassName(cb.getComponentClass()) + "BeanInfo";
 	}
-
-	protected String trimWhitespace(String string) {
-		StringBuffer buffer = new StringBuffer(string.length());
-		boolean eatingWhite = true;
-		for (int i = 0; i < string.length(); i++) {
-			char c = string.charAt(i);
-			if (eatingWhite) {
-				if (Character.isWhitespace(c))
-					continue;
-				eatingWhite = false;
-			}
-			if (Character.isWhitespace(c)) {
-				buffer.append(" ");
-				eatingWhite = true;
-			} else {
-				buffer.append(c);
-			}
-		}
-
-		return buffer.toString();
-	}
+//
+//	protected String trimWhitespace(String string) {
+//		StringBuffer buffer = new StringBuffer(string.length());
+//		boolean eatingWhite = true;
+//		for (int i = 0; i < string.length(); i++) {
+//			char c = string.charAt(i);
+//			if (eatingWhite) {
+//				if (Character.isWhitespace(c))
+//					continue;
+//				eatingWhite = false;
+//			}
+//			if (Character.isWhitespace(c)) {
+//				buffer.append(" ");
+//				eatingWhite = true;
+//			} else {
+//				buffer.append(c);
+//			}
+//		}
+//
+//		return buffer.toString();
+//	}
 
 }
