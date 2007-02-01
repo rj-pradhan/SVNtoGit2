@@ -60,6 +60,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.ServletResponse;
 import java.beans.Beans;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -81,9 +82,8 @@ public class D2DViewHandler extends ViewHandler {
     protected static Log log = LogFactory.getLog(D2DViewHandler.class);
 
     static {
-        if (D2DViewHandler.log.isInfoEnabled()) {
-            D2DViewHandler.log
-                    .info(new ProductInfo().toString());//Announce ICEfaces
+        if (log.isInfoEnabled()) {
+            log.info(new ProductInfo().toString());//Announce ICEfaces
         }
     }
 
@@ -120,10 +120,16 @@ public class D2DViewHandler extends ViewHandler {
 
 
     public D2DViewHandler() {
+        try {
+            InputStream inputStream = this.getClass().getResourceAsStream("serializedTagToComponentMapFull.ser");
+            parser = new Parser(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public D2DViewHandler(ViewHandler delegate) {
-        super();
+        this();
         this.delegate = delegate;
     }
 
@@ -134,11 +140,6 @@ public class D2DViewHandler extends ViewHandler {
         if (delegateView(viewToRender.getViewId())) {
             delegate.renderView(context, viewToRender);
             return;
-        }
-
-        if (null == parser) {
-            parser = new Parser(this.getClass().getResourceAsStream(
-                    "serializedTagToComponentMapFull.ser"));
         }
 
         if (log.isTraceEnabled()) {
@@ -172,7 +173,7 @@ public class D2DViewHandler extends ViewHandler {
         root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
 
         Map contextServletTable =
-                D2DViewHandler.getContextServletTable(context);
+                getContextServletTable(context);
         if (null == viewId) {
             root.setViewId("default");
             context.setViewRoot(root);
@@ -239,15 +240,15 @@ public class D2DViewHandler extends ViewHandler {
         }
 
         if (null != currentRoot &&
-                D2DViewHandler.mungeViewId(viewId)
-                        .equals(D2DViewHandler.mungeViewId(
+                mungeViewId(viewId)
+                        .equals(mungeViewId(
                                 currentRoot.getViewId()))) {
             purgeSeamContexts(context, currentRoot);
             return currentRoot;
         }
 
         Map contextServletTable =
-                D2DViewHandler.getContextServletTable(context);
+                getContextServletTable(context);
         Map domResponseContexts;
         if (contextServletTable
                 .containsKey(DOMResponseWriter.RESPONSE_CONTEXTS_TABLE)) {
@@ -302,13 +303,13 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     private static Map getContextServletTables(FacesContext context) {
-        Map sessionMap = D2DViewHandler.getSessionMap(context);
+        Map sessionMap = getSessionMap(context);
         String viewNumber = "-";
         if (context instanceof BridgeFacesContext) {
             viewNumber = ((BridgeFacesContext) context).getViewNumber();
         }
 
-        String treeKey = viewNumber + "/" + D2DViewHandler.DOM_CONTEXT_TABLE;
+        String treeKey = viewNumber + "/" + DOM_CONTEXT_TABLE;
         Map contextTable;
         if (sessionMap.containsKey(treeKey)) {
             contextTable = (Map) sessionMap.get(treeKey);
@@ -321,9 +322,9 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public static Map getContextServletTable(FacesContext context) {
-        Map domContextTables = D2DViewHandler.getContextServletTables(context);
+        Map domContextTables = getContextServletTables(context);
         String servletRequestPath =
-                D2DViewHandler.getServletRequestPath(context);
+                getServletRequestPath(context);
         if (domContextTables.containsKey(servletRequestPath)) {
             return (Map) domContextTables.get(servletRequestPath);
         } else {
@@ -343,8 +344,8 @@ public class D2DViewHandler extends ViewHandler {
             String uri = ((BridgeExternalContext) externalContext)
                     .getRequestURI();
             if (null == uri) {
-                if (D2DViewHandler.log.isWarnEnabled()) {
-                    D2DViewHandler.log
+                if (log.isWarnEnabled()) {
+                    log
                             .warn("Failing over to default request path");
                 }
                 uri = "default";
@@ -408,8 +409,8 @@ public class D2DViewHandler extends ViewHandler {
         UIComponent root = context.getViewRoot();
         String viewId = ((UIViewRoot) root).getViewId();
 
-        if (D2DViewHandler.log.isTraceEnabled()) {
-            D2DViewHandler.log.trace("Rendering " + root + " with " +
+        if (log.isTraceEnabled()) {
+            log.trace("Rendering " + root + " with " +
                     root.getChildCount() + " children");
         }
 
@@ -434,14 +435,14 @@ public class D2DViewHandler extends ViewHandler {
                 URL viewURL = context.getExternalContext().getResource(viewId);
                 if (null == viewURL) {
                     if (viewId.endsWith(".faces")) {
-                        viewId = D2DViewHandler.truncate(".faces", viewId);
+                        viewId = truncate(".faces", viewId);
                     } else if (viewId.endsWith(".jsf")) {
-                        viewId = D2DViewHandler.truncate(".jsf", viewId);
+                        viewId = truncate(".jsf", viewId);
                     } else if (viewId.endsWith(".iface")) {
-                        viewId = D2DViewHandler.truncate(".iface", viewId);
+                        viewId = truncate(".iface", viewId);
                     } else if (viewId.endsWith(".jsp")) {
                         //MyFaces thinks everything is a .jsp
-                        viewId = D2DViewHandler.truncate(".jsp", viewId);
+                        viewId = truncate(".jsp", viewId);
                     }
 
                     viewId = viewId + ".jspx";
@@ -450,7 +451,7 @@ public class D2DViewHandler extends ViewHandler {
 
                 if (null == viewURL) {
                     if (viewId.endsWith(".jspx")) {
-                        viewId = D2DViewHandler.truncate(".jspx", viewId) +
+                        viewId = truncate(".jspx", viewId) +
                                 ".jsp";
                     }
                     viewURL = context.getExternalContext().getResource(viewId);
@@ -599,7 +600,7 @@ public class D2DViewHandler extends ViewHandler {
 
     protected void clearSession(FacesContext context) {
         Map contextServletTable =
-                D2DViewHandler.getContextServletTable(context);
+                getContextServletTable(context);
         contextServletTable.remove(DOMResponseWriter.RESPONSE_CONTEXTS_TABLE);
         contextServletTable.remove(DOMResponseWriter.RESPONSE_VIEWROOT);
         contextServletTable.remove(DOMResponseWriter.RESPONSE_DOM);
@@ -622,32 +623,32 @@ public class D2DViewHandler extends ViewHandler {
             if (obj instanceof CommonEnvironmentResponse) {
                 CommonEnvironmentResponse response =
                         (CommonEnvironmentResponse) obj;
-                response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
+                response.setContentType(HTML_CONTENT_TYPE);
                 try {
                     writer = new OutputStreamWriter(response.getStream(),
-                            D2DViewHandler.CHAR_ENCODING);
+                            CHAR_ENCODING);
                 } catch (IllegalStateException e) {
                     //jsp inclusion seems to have already called getWriter
                     writer = response.getWriter();
                 }
             } else if (obj instanceof ServletResponse) {
                 ServletResponse response = (ServletResponse) obj;
-                response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
+                response.setContentType(HTML_CONTENT_TYPE);
                 writer = new OutputStreamWriter(response.getOutputStream(),
-                        D2DViewHandler.CHAR_ENCODING);
+                        CHAR_ENCODING);
             } else if (obj instanceof RenderResponse) {
                 RenderResponse response = (RenderResponse) obj;
-                response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
+                response.setContentType(HTML_CONTENT_TYPE);
                 writer = new OutputStreamWriter(
                         response.getPortletOutputStream(),
-                        D2DViewHandler.CHAR_ENCODING);
+                        CHAR_ENCODING);
             } else {
                 throw new FacesException("unknown type of response: " + obj);
             }
         }
 
-        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, D2DViewHandler.HTML_CONTENT_TYPE,
-                D2DViewHandler.CHAR_ENCODING);
+        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, HTML_CONTENT_TYPE,
+                CHAR_ENCODING);
         context.setResponseWriter(responseWriter);
 
         return responseWriter;
@@ -775,12 +776,12 @@ public class D2DViewHandler extends ViewHandler {
                 id = clientId;
                 clientId = "";
             }
-            result = D2DViewHandler.findComponent(base, id);
+            result = findComponent(base, id);
             if ((result == null) || (clientId.length() == 0)) {
                 break; // Missing intermediate node or this is the last node
             }
             if (result instanceof NamingContainer) {
-                result = D2DViewHandler.findComponent(clientId, result);
+                result = findComponent(clientId, result);
                 break;
             }
         }
@@ -803,7 +804,7 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public void setReloadInterval(String param) {
-        reloadInterval = D2DViewHandler.getStringAsLong(
+        reloadInterval = getStringAsLong(
                 param, reloadIntervalDefault);
         if (-1 != reloadInterval) {
             //convert user input in seconds into milliseconds internally
@@ -876,11 +877,11 @@ public class D2DViewHandler extends ViewHandler {
 
         ExternalContext externalContext = context.getExternalContext();
         setDelegateNonIface(externalContext.getInitParameter(
-                D2DViewHandler.DELEGATE_NONIFACE));
+                DELEGATE_NONIFACE));
         setActionURLSuffix(externalContext.getInitParameter(
-                D2DViewHandler.ACTION_URL_SUFFIX));
+                ACTION_URL_SUFFIX));
         setReloadInterval(externalContext.getInitParameter(
-                D2DViewHandler.RELOAD_INTERVAL));
+                RELOAD_INTERVAL));
         jsfStateManagement = Boolean.valueOf(
                 externalContext.getInitParameter(DO_JSF_STATE_MANAGEMENT))
                 .booleanValue();
@@ -902,7 +903,7 @@ public class D2DViewHandler extends ViewHandler {
 
         int dot = viewId.lastIndexOf('.');
         if (dot == -1) {
-            D2DViewHandler.log
+            log
                     .error("Assumed extension mapping, but there is no extension in " +
                             viewId);
         } else {
@@ -925,7 +926,7 @@ public class D2DViewHandler extends ViewHandler {
         while (children.hasNext() && (component == null)) {
             child = (UIComponent) children.next();
             if (!(child instanceof NamingContainer)) {
-                component = D2DViewHandler.findComponent(child, componentId);
+                component = findComponent(child, componentId);
                 if (component != null) {
                     break;
                 }
