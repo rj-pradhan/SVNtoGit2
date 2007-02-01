@@ -314,7 +314,7 @@ public class DOMResponseWriter extends ResponseWriter {
         if (isStreamWriting())
             return;//The DOM has already been written via the Renderer streamWrite calls
 
-        enhanceAndFixDocument(context);
+        enhanceAndFixDocument();
         BridgeExternalContext externalContext =
                 (BridgeExternalContext) context.getExternalContext();
         Map sessionMap = externalContext.getApplicationSessionMap();
