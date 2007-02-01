@@ -119,12 +119,18 @@ public class DOMResponseWriter extends ResponseWriter {
     private Node cursor;
     private Map domResponseContexts;
     private Map contextServletTable;
-    private FacesContext context;
+    private BridgeFacesContext context;
 
     public DOMResponseWriter(Writer writer, FacesContext context, String contentType,
                              String encoding) {
         this.writer = writer;
-        this.context = context;
+        try {
+            this.context = (BridgeFacesContext) context;
+        } catch (ClassCastException e) {
+            throw new IllegalStateException(
+                    "ICEfaces requires the PersistentFacesServlet. " +
+                            "Please check your web.xml servlet mappings");
+        }
         this.initialize();
         this.contentType = contentType == null ? "text/html" : contentType;
         checkEncoding(encoding);
@@ -308,25 +314,14 @@ public class DOMResponseWriter extends ResponseWriter {
         if (isStreamWriting())
             return;//The DOM has already been written via the Renderer streamWrite calls
 
-        if (!(context instanceof BridgeFacesContext)) {
-            if (log.isErrorEnabled()) {
-                log.error("ICEfaces requires the PersistentFacesServlet. " +
-                        "Please check your web.xml servlet mappings");
-            }
-            throw new IllegalStateException(
-                    "ICEfaces requires the PersistentFacesServlet. " +
-                            "Please check your web.xml servlet mappings");
-        }
-        BridgeFacesContext bridgeFacesContext = (BridgeFacesContext) context;
-        enhanceAndFixDocument(bridgeFacesContext);
+        enhanceAndFixDocument(context);
         BridgeExternalContext externalContext =
                 (BridgeExternalContext) context.getExternalContext();
         Map sessionMap = externalContext.getApplicationSessionMap();
 
-        String viewNumber = bridgeFacesContext.getViewNumber();
         ResponseState nodeWriter =
                 (ResponseState) sessionMap.get(
-                        viewNumber + "/" + ResponseState.STATE);
+                        context.getViewNumber() + "/" + ResponseState.STATE);
         //We've changed IncrementalNodeWriter implementation from BlockingServlet
         //to the more generic and direct ResponseState.  This helps to support
         //running in basic mode (BlockingResponseState) or enterprise (AsyncResponseState)
@@ -378,18 +373,18 @@ public class DOMResponseWriter extends ResponseWriter {
 
     }
 
-    private void enhanceAndFixDocument(BridgeFacesContext context) {
+    private void enhanceAndFixDocument() {
         Element html = (Element) document.getDocumentElement();
         html = "html".equals(html.getTagName()) ? html : fixHtml();
 
         Element head = (Element) document.getElementsByTagName("head").item(0);
-        enhanceHead(head == null ? fixHead(html) : head, context);
+        enhanceHead(head == null ? fixHead(html) : head);
 
         Element body = (Element) document.getElementsByTagName("body").item(0);
-        enhanceBody(body == null ? fixBody(html) : body, context);
+        enhanceBody(body == null ? fixBody(html) : body);
     }
 
-    private void enhanceBody(Element body, BridgeFacesContext context) {
+    private void enhanceBody(Element body) {
         //id required for forwarded (server-side) redirects
         body.setAttribute("id", "body");
         Element iframe = document.createElement("iframe");
@@ -437,7 +432,7 @@ public class DOMResponseWriter extends ResponseWriter {
         body.appendChild(sessionID);
     }
 
-    private void enhanceHead(Element head, BridgeFacesContext context) {
+    private void enhanceHead(Element head) {
         Element meta =
                 (Element) head.appendChild(document.createElement("meta"));
         meta.setAttribute("name", "icefaces");
@@ -538,8 +533,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 //viewNumber so that it is not set with cookies.  Cookie
                 //communication gives no way for multiple included
                 //views on one page
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                String base = ApplicationBaseLocator.locate(facesContext);
+                String base = ApplicationBaseLocator.locate(context);
                 writer.write("<script language='javascript' src='" + base +
                         "xmlhttp/icefaces-d2d.js'></script>");
                 writer.write(DOMUtils.childrenToString(body));
@@ -620,12 +614,7 @@ public class DOMResponseWriter extends ResponseWriter {
     //With multiple browser windows, there will be one old DOM per window,
     //hence keyed by viewNumber
     String getOldDOMKey() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        String viewNumber = "-";
-        if (context instanceof BridgeFacesContext) {
-            viewNumber = ((BridgeFacesContext) context).getViewNumber();
-        }
-        return DOMResponseWriter.getOldDOMKey(viewNumber);
+        return getOldDOMKey(context.getViewNumber());
     }
 
     public static String getOldDOMKey(String viewNumber) {
