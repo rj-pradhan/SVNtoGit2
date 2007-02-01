@@ -53,6 +53,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -273,7 +274,10 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                 tracePrintComponentTree(context);
             }
 
+            ResponseWriter responseWriter = context.getResponseWriter();
+            responseWriter.startDocument();
             renderResponse(context, viewToRender);
+            responseWriter.endDocument();
         }
         catch (Exception e) {
             if (log.isErrorEnabled()) {

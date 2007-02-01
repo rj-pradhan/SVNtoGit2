@@ -50,12 +50,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -119,10 +119,12 @@ public class DOMResponseWriter extends ResponseWriter {
     private Node cursor;
     private Map domResponseContexts;
     private Map contextServletTable;
+    private FacesContext context;
 
-    public DOMResponseWriter(Writer writer, String contentType,
+    public DOMResponseWriter(Writer writer, FacesContext context, String contentType,
                              String encoding) {
         this.writer = writer;
+        this.context = context;
         this.initialize();
         this.contentType = contentType == null ? "text/html" : contentType;
         checkEncoding(encoding);
@@ -153,7 +155,6 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     private void initialize() {
-        FacesContext context = FacesContext.getCurrentInstance();
         contextServletTable = D2DViewHandler.getContextServletTable(context);
         // contexts for each component
         if (contextServletTable
@@ -164,11 +165,11 @@ public class DOMResponseWriter extends ResponseWriter {
         if (null == domResponseContexts) {
             domResponseContexts = new HashMap();
             contextServletTable.put(DOMResponseWriter.RESPONSE_CONTEXTS_TABLE,
-                                    domResponseContexts);
+                    domResponseContexts);
         }
         // viewroot, application
         contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT,
-                                context.getViewRoot());
+                context.getViewRoot());
         cursor = document = DOCUMENT_BUILDER.newDocument();
         contextServletTable.put(DOMResponseWriter.RESPONSE_DOM, document);
         boolean streamWritingParam = "true".equalsIgnoreCase(
@@ -179,9 +180,7 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     public void endDocument() throws IOException {
-        if (null != writer) {
-            writer.flush();
-        }
+        writeDOM();
     }
 
     public void flush() throws IOException {
@@ -192,18 +191,18 @@ public class DOMResponseWriter extends ResponseWriter {
         Node oldCursor = cursor;
         Element elem = document.createElement(name);
         cursor = cursor.appendChild(elem);
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("startElement()  name: " + name + "  elem: " + elem +
-                      "  oldCursor: " + oldCursor + "  newCursor: " + cursor);
+                    "  oldCursor: " + oldCursor + "  newCursor: " + cursor);
         }
     }
 
     public void endElement(String name) throws IOException {
         Node oldCursor = cursor;
         cursor = cursor.getParentNode();
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("endElement()  name: " + name + "  oldCursor: " +
-                      oldCursor + "  newCursor: " + cursor);
+                    oldCursor + "  newCursor: " + cursor);
         }
     }
 
@@ -228,7 +227,7 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     public void writeComment(Object comment) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("writeComment()  comment: " + comment);
         }
         cursor.appendChild(document.createComment(String.valueOf(comment)));
@@ -236,16 +235,16 @@ public class DOMResponseWriter extends ResponseWriter {
 
     public void writeText(Object text, String componentPropertyName)
             throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("writeText(O,S)  text: " + text);
         }
         cursor.appendChild(document.createTextNode(String.valueOf(text)));
     }
 
     public void writeText(char text[], int off, int len) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("writeText(c[],i,i)  text: " +
-                      (new String(text, off, len)));
+                    (new String(text, off, len)));
         }
         cursor.appendChild(document.createTextNode(new String(text, off, len)));
     }
@@ -255,14 +254,14 @@ public class DOMResponseWriter extends ResponseWriter {
         //just as the components are complete
         if (null != document) {
             try {
-                writeDOM(FacesContext.getCurrentInstance());
+                writeDOM();
             } catch (IOException e) {
                 throw new IllegalStateException(e.toString());
             }
         }
         try {
-            return new DOMResponseWriter(writer, getContentType(),
-                                         getCharacterEncoding());
+            return new DOMResponseWriter(writer, context, getContentType(),
+                    getCharacterEncoding());
         } catch (FacesException e) {
             throw new IllegalStateException();
         }
@@ -273,30 +272,30 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     public void write(char[] cbuf, int off, int len) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("writeText(c[],i,i)  str: " +
-                      (new String(cbuf, off, len)));
+                    (new String(cbuf, off, len)));
         }
         cursor.appendChild(document.createTextNode(new String(cbuf, off, len)));
     }
 
     public void write(int c) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("write(i)  hex: " + Integer.toHexString(c) +
-                      "  decimal: " + c);
+                    "  decimal: " + c);
         }
         cursor.appendChild(document.createTextNode(String.valueOf((char) c)));
     }
 
     public void write(String str) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("write(S)  str: " + str);
         }
         cursor.appendChild(document.createTextNode(str));
     }
 
     public void write(String str, int off, int len) throws IOException {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("write(S,i,i)  str_sub: " + str.substring(off, len));
         }
         cursor.appendChild(document.createTextNode(str.substring(off, len)));
@@ -305,26 +304,26 @@ public class DOMResponseWriter extends ResponseWriter {
     /**
      * This method writes the complete DOM to the current writer
      */
-    public void writeDOM(FacesContext facesContext) throws IOException {
+    public void writeDOM() throws IOException {
         if (isStreamWriting())
             return;//The DOM has already been written via the Renderer streamWrite calls
 
-        if (! (facesContext instanceof BridgeFacesContext)) {
+        if (!(context instanceof BridgeFacesContext)) {
             if (log.isErrorEnabled()) {
                 log.error("ICEfaces requires the PersistentFacesServlet. " +
-                          "Please check your web.xml servlet mappings");
+                        "Please check your web.xml servlet mappings");
             }
             throw new IllegalStateException(
                     "ICEfaces requires the PersistentFacesServlet. " +
-                    "Please check your web.xml servlet mappings");
+                            "Please check your web.xml servlet mappings");
         }
-        BridgeFacesContext context = (BridgeFacesContext) facesContext;
-        enhanceAndFixDocument(context);
+        BridgeFacesContext bridgeFacesContext = (BridgeFacesContext) context;
+        enhanceAndFixDocument(bridgeFacesContext);
         BridgeExternalContext externalContext =
-                (BridgeExternalContext) facesContext.getExternalContext();
+                (BridgeExternalContext) context.getExternalContext();
         Map sessionMap = externalContext.getApplicationSessionMap();
 
-        String viewNumber = context.getViewNumber();
+        String viewNumber = bridgeFacesContext.getViewNumber();
         ResponseState nodeWriter =
                 (ResponseState) sessionMap.get(
                         viewNumber + "/" + ResponseState.STATE);
@@ -374,7 +373,7 @@ public class DOMResponseWriter extends ResponseWriter {
         sessionMap.put(getOldDOMKey(), document);
 
         if (null != writer) {
-            writeDOM(writer, context);
+            writeDOM(writer);
         }
 
     }
@@ -413,7 +412,7 @@ public class DOMResponseWriter extends ResponseWriter {
         iframe.setAttribute("src", frameURI);
         iframe.setAttribute("frameborder", "0");
         iframe.setAttribute("style",
-                            "z-index: 10000; visibility: hidden; width: 0; height: 0; opacity: 0.22; filter: alpha(opacity=22);");
+                "z-index: 10000; visibility: hidden; width: 0; height: 0; opacity: 0.22; filter: alpha(opacity=22);");
 
         // TODO This is only meant to be a transitional focus retention(management) solution.
         String focusId = context.getFocusId();
@@ -465,7 +464,7 @@ public class DOMResponseWriter extends ResponseWriter {
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
             String lib = (String) iterator.next();
-            if(avoidCacheId != null){
+            if (avoidCacheId != null) {
                 lib += "?" + avoidCacheId;
             }
             Element script = (Element) head
@@ -478,7 +477,7 @@ public class DOMResponseWriter extends ResponseWriter {
         Element viewAndSessionScript = (Element) head.appendChild(document.createElement("script"));
         viewAndSessionScript.setAttribute("language", "javascript");
         viewAndSessionScript.appendChild(document.createTextNode(
-            "window.session = '" + sessionIdentifier + "';"
+                "window.session = '" + sessionIdentifier + "';"
         ));
     }
 
@@ -501,7 +500,7 @@ public class DOMResponseWriter extends ResponseWriter {
         for (int i = 0; i < nodes.length; i++) {
             Node node = nodes[i];
             if (!(node instanceof Element &&
-                  "head".equals(((Element) node).getTagName())))
+                    "head".equals(((Element) node).getTagName())))
                 body.appendChild(node);
         }
         html.appendChild(body);
@@ -521,7 +520,7 @@ public class DOMResponseWriter extends ResponseWriter {
      *
      * @param writer destination of the DOM output
      */
-    private void writeDOM(Writer writer, BridgeFacesContext context) throws IOException {
+    private void writeDOM(Writer writer) throws IOException {
         Map requestMap = context.getExternalContext().getRequestMap();
         String includeServletPath = (String) requestMap
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH);
@@ -542,7 +541,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 String base = ApplicationBaseLocator.locate(facesContext);
                 writer.write("<script language='javascript' src='" + base +
-                             "xmlhttp/icefaces-d2d.js'></script>");
+                        "xmlhttp/icefaces-d2d.js'></script>");
                 writer.write(DOMUtils.childrenToString(body));
             } else {
                 if (log.isDebugEnabled()) {
@@ -568,7 +567,7 @@ public class DOMResponseWriter extends ResponseWriter {
             if (output == null || ("html".equals(output) && !prettyPrinting)) {
                 if (publicID != null && systemID != null && root != null) {
                     writer.write(DOMUtils.DocumentTypetoString(publicID, systemID,
-                                                           root));
+                            root));
                 }
                 writer.write(DOMUtils.DOMtoString(document));
             } else {
@@ -701,28 +700,28 @@ public class DOMResponseWriter extends ResponseWriter {
         return isStreamWritingFlag;
     }
 
-    private String avoidCacheId(FacesContext facesContext){
+    private String avoidCacheId(FacesContext facesContext) {
         Object sessionObj = facesContext.getExternalContext().getSession(true);
-        if(sessionObj != null ){
-            if(sessionObj instanceof HttpSession){
-                HttpSession httpSession = (HttpSession)sessionObj;
+        if (sessionObj != null) {
+            if (sessionObj instanceof HttpSession) {
+                HttpSession httpSession = (HttpSession) sessionObj;
                 String id = httpSession.getId();
-                if(id == null){
+                if (id == null) {
                     log.error("HttpSession id is null. Can't get a unique script ID");
-                }else{
+                } else {
                     int size = 4;
-                    if(id.length() > size){
+                    if (id.length() > size) {
                         int start = id.length() - size;
                         return id.substring(start);
-                    }else{
+                    } else {
                         return id;
                     }
                 }
 
-            }else{
+            } else {
                 log.error("Session is not HttpSession its [" + sessionObj.getClass().getName() + "]. Can't get a unique script ID.");
             }
-        }else{
+        } else {
             log.error("Session is null. Can't get a unique script ID");
         }
         return null;

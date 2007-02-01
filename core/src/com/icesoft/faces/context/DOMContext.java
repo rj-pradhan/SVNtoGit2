@@ -102,7 +102,7 @@ public class DOMContext implements java.io.Serializable {
         if (responseWriter instanceof DOMResponseWriter) {
             domWriter = (DOMResponseWriter) responseWriter;
         } else {
-            domWriter = createTemporaryDOMResponseWriter(responseWriter);
+            domWriter = createTemporaryDOMResponseWriter(responseWriter, facesContext);
         }
         Node cursorParent = domWriter.getCursorParent();
         Document doc = domWriter.getDocument();
@@ -132,11 +132,11 @@ public class DOMContext implements java.io.Serializable {
     }
 
     private static DOMResponseWriter createTemporaryDOMResponseWriter(
-            ResponseWriter responseWriter) {
+            ResponseWriter responseWriter, FacesContext facesContext) {
         DOMResponseWriter domWriter;
-        domWriter = new DOMResponseWriter(responseWriter,
-                                          D2DViewHandler.HTML_CONTENT_TYPE,
-                                          D2DViewHandler.CHAR_ENCODING);
+        domWriter = new DOMResponseWriter(responseWriter, facesContext,
+                D2DViewHandler.HTML_CONTENT_TYPE,
+                D2DViewHandler.CHAR_ENCODING);
         Document doc = domWriter.getDocument();
         Element html = doc.createElement("html");
         doc.appendChild(html);
@@ -162,7 +162,7 @@ public class DOMContext implements java.io.Serializable {
         if (responseWriter instanceof DOMResponseWriter) {
             domWriter = (DOMResponseWriter) responseWriter;
         } else {
-            domWriter = createTemporaryDOMResponseWriter(responseWriter);
+            domWriter = createTemporaryDOMResponseWriter(responseWriter, facesContext);
         }
         Document doc = domWriter.getDocument();
         Map domContexts = domWriter.getDomResponseContexts();
@@ -352,8 +352,8 @@ public class DOMContext implements java.io.Serializable {
 
         Node nextChildToRemove = null;
         while (rootElement.hasChildNodes()
-               && ((nextChildToRemove = findChildWithNodeName(rootElement,
-                                                              name)) != null)) {
+                && ((nextChildToRemove = findChildWithNodeName(rootElement,
+                name)) != null)) {
             rootElement.removeChild(nextChildToRemove);
         }
     }
@@ -412,7 +412,7 @@ public class DOMContext implements java.io.Serializable {
         HalterDump halterDump = (HalterDump) halterDumps.get(root);
         if (null == halterDump) {
             halterDump = new HalterDump(facesContext.getResponseWriter(),
-                                        component, root);
+                    component, root);
             halterDumps.put(root, halterDump);
         }
         halterDump.streamWrite(halter);
@@ -460,15 +460,15 @@ public class DOMContext implements java.io.Serializable {
                 case Node.ELEMENT_NODE:
                     // start the element
                     writer.startElement(node.getNodeName().toLowerCase(),
-                                        component);
+                            component);
                     // write attributes
                     NamedNodeMap attributes = node.getAttributes();
 
                     for (int i = 0; i < attributes.getLength(); i++) {
                         Node current = attributes.item(i);
                         writer.writeAttribute(current.getNodeName(),
-                                              current.getNodeValue(),
-                                              current.getNodeName());
+                                current.getNodeValue(),
+                                current.getNodeName());
                     }
                     break;
 

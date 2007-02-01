@@ -39,7 +39,6 @@ import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.env.CommonEnvironmentResponse;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
-import com.icesoft.faces.webapp.xmlhttp.BlockingServlet;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.SeamUtilities;
 import org.apache.commons.logging.Log;
@@ -141,28 +140,12 @@ public class D2DViewHandler extends ViewHandler {
             parser = new Parser(this.getClass().getResourceAsStream(
                     "serializedTagToComponentMapFull.ser"));
         }
-        
-        if( log.isTraceEnabled() ) {
+
+        if (log.isTraceEnabled()) {
             log.trace("renderView(FC,UIVR)  BEFORE  renderResponse  " +
-                      "viewToRender.getViewId(): " + viewToRender.getViewId());
+                    "viewToRender.getViewId(): " + viewToRender.getViewId());
         }
         renderResponse(context);
-        if( log.isTraceEnabled() ) {
-            log.trace("renderView(FC,UIVR)  AFTER   renderResponse");
-        }
-
-        //If DOM rendering, DOM is now complete
-        ResponseWriter responseWriter = context.getResponseWriter();
-        if (responseWriter instanceof DOMResponseWriter) {
-            if( log.isTraceEnabled() ) {
-                log.trace("renderView(FC,UIVR)  BEFORE  domWriter");
-            }
-            DOMResponseWriter domWriter = (DOMResponseWriter) responseWriter;
-            domWriter.writeDOM(context);
-            if( log.isTraceEnabled() ) {
-                log.trace("renderView(FC,UIVR)  AFTER   domWriter");
-            }
-        }
 
         if (jsfStateManagement) {
             StateManager stateMgr = context.getApplication().getStateManager();
@@ -173,9 +156,10 @@ public class D2DViewHandler extends ViewHandler {
 
     /**
      * Create a new ViewRoot
+     *
      * @param context FacesContext
-     * @param viewId ViewId identifying the root
-     * @return A new viewRoot 
+     * @param viewId  ViewId identifying the root
+     * @return A new viewRoot
      */
     public UIViewRoot createView(FacesContext context, String viewId) {
         initializeParameters(context);
@@ -187,7 +171,7 @@ public class D2DViewHandler extends ViewHandler {
         UIViewRoot root = new UIViewRoot();
         root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
 
-         Map contextServletTable =
+        Map contextServletTable =
                 D2DViewHandler.getContextServletTable(context);
         if (null == viewId) {
             root.setViewId("default");
@@ -204,7 +188,6 @@ public class D2DViewHandler extends ViewHandler {
         contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
 
         return root;
-//        return restoreView(context, viewId);
     }
 
     /**
@@ -213,9 +196,9 @@ public class D2DViewHandler extends ViewHandler {
      * createView in this case.
      *
      * @param context FacesContext
-     * @param viewId ViewId identifying the view to restore
+     * @param viewId  ViewId identifying the view to restore
      * @return UIViewRoot instance if found, null if none yet created,
-     * or if trying to model Seam JSF behaviour.
+     *         or if trying to model Seam JSF behaviour.
      */
     public UIViewRoot restoreView(FacesContext context, String viewId) {
         this.initializeParameters(context);
@@ -240,25 +223,25 @@ public class D2DViewHandler extends ViewHandler {
                 bridgeExternalContext.setRequestPathInfo(viewId);
             }
 
-            if (SeamUtilities.isSeamEnvironment() ) {
+            if (SeamUtilities.isSeamEnvironment()) {
                 if (bridgeExternalContext.getRequestParameterMap().remove(
                         PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT) != null) {
-                     if (log.isTraceEnabled() ) {
+                    if (log.isTraceEnabled()) {
                         log.trace("Seam Keyword shortcut found, new ViewRoot");
                     }
                     return null;
                 } else {
-                    if (log.isTraceEnabled() ) {
+                    if (log.isTraceEnabled()) {
                         log.trace("No Seam Keyword shortcut found");
-                    } 
+                    }
                 }
             }
         }
 
         if (null != currentRoot &&
-            D2DViewHandler.mungeViewId(viewId)
-                    .equals(D2DViewHandler.mungeViewId(
-                            currentRoot.getViewId()))) {
+                D2DViewHandler.mungeViewId(viewId)
+                        .equals(D2DViewHandler.mungeViewId(
+                                currentRoot.getViewId()))) {
             purgeSeamContexts(context, currentRoot);
             return currentRoot;
         }
@@ -273,7 +256,7 @@ public class D2DViewHandler extends ViewHandler {
         } else {
             domResponseContexts = new HashMap();
             contextServletTable.put(DOMResponseWriter.RESPONSE_CONTEXTS_TABLE,
-                                    domResponseContexts);
+                    domResponseContexts);
         }
 
         UIViewRoot root = null;
@@ -281,31 +264,8 @@ public class D2DViewHandler extends ViewHandler {
         root = (UIViewRoot) contextServletTable
                 .get(DOMResponseWriter.RESPONSE_VIEWROOT);
 
-        if ( (null != root) && (null != viewId) &&
-             (mungeViewId(viewId).equals(mungeViewId(root.getViewId()))) ) {
-            //existing root is good, could just return but need post-processing
-            //return root;
-        } else {
-
-            // Moved this to createView
-
-//            root = new UIViewRoot();
-//            root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-//
-//            if (null == viewId) {
-//                root.setViewId("default");
-//                context.setViewRoot(root);
-//                contextServletTable
-//                        .put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
-//                Locale locale = calculateLocale(context);
-//                root.setLocale(locale);
-//                return root;
-//            }
-//
-//            root.setViewId(viewId);
-//            context.setViewRoot(root);
-//            contextServletTable.put(DOMResponseWriter.RESPONSE_VIEWROOT, root);
-
+        if ((null != root) && (null != viewId) &&
+                (mungeViewId(viewId).equals(mungeViewId(root.getViewId())))) {
         }
 
         // Remove seam PageContext if REMOVE_SEAM_CONTEXTS key is found
@@ -337,7 +297,7 @@ public class D2DViewHandler extends ViewHandler {
             Object key = SeamUtilities.getPageContextKey();
             Object o = root.getAttributes().remove(key);
             log.debug("Removed Seam PageContext from Request: " +
-                      (o != null));
+                    (o != null));
         }
     }
 
@@ -423,7 +383,7 @@ public class D2DViewHandler extends ViewHandler {
         if (null != actionURLSuffix) {
             viewId =
                     viewId.substring(0, viewId.lastIndexOf(".")) +
-                    actionURLSuffix;
+                            actionURLSuffix;
         }
 
         return context.getExternalContext().getRequestContextPath() + viewId;
@@ -440,7 +400,7 @@ public class D2DViewHandler extends ViewHandler {
     protected long getTimeAttribute(UIComponent root, String key) {
         Long timeLong = (Long) root.getAttributes().get(key);
         long time = (null == timeLong) ? 0 :
-                    timeLong.longValue();
+                timeLong.longValue();
         return time;
     }
 
@@ -450,11 +410,11 @@ public class D2DViewHandler extends ViewHandler {
 
         if (D2DViewHandler.log.isTraceEnabled()) {
             D2DViewHandler.log.trace("Rendering " + root + " with " +
-                                     root.getChildCount() + " children");
+                    root.getChildCount() + " children");
         }
 
         clearSession(context);
-        createResponseWriter(context);
+        ResponseWriter responseWriter = createAndSetResponseWriter(context);
 
         boolean reloadView = false;
         URLConnection viewConnection = null;
@@ -466,7 +426,7 @@ public class D2DViewHandler extends ViewHandler {
                 viewId = viewId.substring(6);
             }
             if (viewId.endsWith(".jpg") || viewId.endsWith(".gif") ||
-                viewId.endsWith(".png")) {
+                    viewId.endsWith(".png")) {
                 context.getExternalContext().dispatch(viewId);
                 return;
             }
@@ -491,7 +451,7 @@ public class D2DViewHandler extends ViewHandler {
                 if (null == viewURL) {
                     if (viewId.endsWith(".jspx")) {
                         viewId = D2DViewHandler.truncate(".jspx", viewId) +
-                                 ".jsp";
+                                ".jsp";
                     }
                     viewURL = context.getExternalContext().getResource(viewId);
                 }
@@ -508,7 +468,7 @@ public class D2DViewHandler extends ViewHandler {
                     viewConnection = viewURL.openConnection();
                     lastModified = viewConnection.getLastModified();
                     root.getAttributes().put(LAST_CHECKED_KEY,
-                                             new Long(currentTime));
+                            new Long(currentTime));
                     if (lastModified > lastLoaded) {
                         reloadView = true;
                     }
@@ -547,29 +507,31 @@ public class D2DViewHandler extends ViewHandler {
                         .remove(CURRENT_VIEW_ROOT);
                 parser.parse(viewInput, context);
                 root.getAttributes().put(LAST_LOADED_KEY,
-                                         new Long(System.currentTimeMillis()));
+                        new Long(System.currentTimeMillis()));
 
                 ExternalContext externalContext = context.getExternalContext();
                 if (externalContext instanceof BridgeExternalContext) {
                     BridgeExternalContext bridgeExternalContext =
                             (BridgeExternalContext) externalContext;
-                        bridgeExternalContext.resetRequestMap();
+                    bridgeExternalContext.resetRequestMap();
                 }
             } catch (Throwable e) {
                 throw new FacesException("Can't parse stream for " + viewId +
-                                         " " + e.getMessage(), e);
+                        " " + e.getMessage(), e);
             }
         } else {
+            responseWriter.startDocument();
             renderResponse(context, root);
-            tracePrintComponentTree(context);            
+            responseWriter.endDocument();
+            tracePrintComponentTree(context);
         }
     }
 
     protected void renderResponse(FacesContext context, UIComponent component)
             throws IOException {
-        if( !component.isRendered() )
+        if (!component.isRendered())
             return;
-        
+
         component.encodeBegin(context);
 
         if (component.getRendersChildren()) {
@@ -590,48 +552,48 @@ public class D2DViewHandler extends ViewHandler {
             stateHolder.restoreState(context, stateHolder.saveState(context));
         }
     }
-    
+
     protected void tracePrintComponentTree(FacesContext context) {
-        if( log.isTraceEnabled() ) {
+        if (log.isTraceEnabled()) {
             log.trace("tracePrintComponentTree() vvvvvv");
-            tracePrintComponentTree( context.getViewRoot(), context, 0 );
+            tracePrintComponentTree(context.getViewRoot(), context, 0);
             log.trace("tracePrintComponentTree() ^^^^^^");
         }
     }
-    
+
     private void tracePrintComponentTree(UIComponent component, FacesContext context, int levels) {
-        StringBuffer prefix = new StringBuffer( 64 );
-        for(int i = 0; i < levels; i++)
+        StringBuffer prefix = new StringBuffer(64);
+        for (int i = 0; i < levels; i++)
             prefix.append("  ");
         prefix.append("<");
         String compStr = component.toString();
-        
-        StringBuffer open = new StringBuffer( 512 );
-        open.append( prefix );
-        open.append( compStr );
+
+        StringBuffer open = new StringBuffer(512);
+        open.append(prefix);
+        open.append(compStr);
         boolean hasKids = component.getChildCount() > 0;
-        if( !hasKids )
+        if (!hasKids)
             open.append("/");
         open.append(">");
-        if( hasKids ) {
+        if (hasKids) {
             open.append(" kids: ");
-            open.append( Integer.toString(component.getChildCount()) );
+            open.append(Integer.toString(component.getChildCount()));
         }
-        log.trace( open );        
-        
-        if( hasKids ) {
+        log.trace(open);
+
+        if (hasKids) {
             Iterator kids = component.getChildren().iterator();
-            while( kids.hasNext() ) {
+            while (kids.hasNext()) {
                 tracePrintComponentTree(
-                        (UIComponent) kids.next(), context, levels+1 );
+                        (UIComponent) kids.next(), context, levels + 1);
             }
-                
-            StringBuffer close = new StringBuffer( 512 );
-            close.append( prefix );
+
+            StringBuffer close = new StringBuffer(512);
+            close.append(prefix);
             close.append("/");
-            close.append( compStr );
+            close.append(compStr);
             close.append(">");
-            log.trace( close );        
+            log.trace(close);
         }
     }
 
@@ -644,7 +606,7 @@ public class D2DViewHandler extends ViewHandler {
         contextServletTable.remove(DOMResponseWriter.RESPONSE_MODIFIED_NODES);
     }
 
-    protected void createResponseWriter(FacesContext context)
+    protected ResponseWriter createAndSetResponseWriter(FacesContext context)
             throws IOException {
         // TODO
         // Workaround to support running in both ICEfaces and plain Faces modes
@@ -663,7 +625,7 @@ public class D2DViewHandler extends ViewHandler {
                 response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
                 try {
                     writer = new OutputStreamWriter(response.getStream(),
-                                                    D2DViewHandler.CHAR_ENCODING);
+                            D2DViewHandler.CHAR_ENCODING);
                 } catch (IllegalStateException e) {
                     //jsp inclusion seems to have already called getWriter
                     writer = response.getWriter();
@@ -672,7 +634,7 @@ public class D2DViewHandler extends ViewHandler {
                 ServletResponse response = (ServletResponse) obj;
                 response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
                 writer = new OutputStreamWriter(response.getOutputStream(),
-                                                D2DViewHandler.CHAR_ENCODING);
+                        D2DViewHandler.CHAR_ENCODING);
             } else if (obj instanceof RenderResponse) {
                 RenderResponse response = (RenderResponse) obj;
                 response.setContentType(D2DViewHandler.HTML_CONTENT_TYPE);
@@ -684,9 +646,11 @@ public class D2DViewHandler extends ViewHandler {
             }
         }
 
-        context.setResponseWriter(
-                new DOMResponseWriter(writer, D2DViewHandler.HTML_CONTENT_TYPE,
-                                      D2DViewHandler.CHAR_ENCODING));
+        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, D2DViewHandler.HTML_CONTENT_TYPE,
+                D2DViewHandler.CHAR_ENCODING);
+        context.setResponseWriter(responseWriter);
+
+        return responseWriter;
     }
 
     private static Map getSessionMap(FacesContext context) {
@@ -721,7 +685,7 @@ public class D2DViewHandler extends ViewHandler {
                         .equals(supportedLocale.getLanguage())) {
 
                     if ((null == supportedLocale.getCountry()) ||
-                        ("".equals(supportedLocale.getCountry()))) {
+                            ("".equals(supportedLocale.getCountry()))) {
                         return supportedLocale;
                     }
 
@@ -746,7 +710,7 @@ public class D2DViewHandler extends ViewHandler {
             throw new NullPointerException();
         }
         if ((value.indexOf("#{") != -1) &&
-            (value.indexOf("#{") < value.indexOf('}'))) {
+                (value.indexOf("#{") < value.indexOf('}'))) {
             return true;
         }
         return false;
@@ -855,14 +819,14 @@ public class D2DViewHandler extends ViewHandler {
         }
 
         if (value.equalsIgnoreCase("false") ||
-            value.equalsIgnoreCase("off") ||
-            value.equalsIgnoreCase("no")) {
+                value.equalsIgnoreCase("off") ||
+                value.equalsIgnoreCase("no")) {
             return false;
         }
 
         if (value.equalsIgnoreCase("true") ||
-            value.equalsIgnoreCase("on") ||
-            value.equalsIgnoreCase("yes")) {
+                value.equalsIgnoreCase("on") ||
+                value.equalsIgnoreCase("yes")) {
             return true;
         }
 
@@ -934,25 +898,26 @@ public class D2DViewHandler extends ViewHandler {
                 .getExternalContext()
                 .getInitParameter(ViewHandler.DEFAULT_SUFFIX_PARAM_NAME);
         String suffix = defaultSuffix != null ?
-                        defaultSuffix : ViewHandler.DEFAULT_SUFFIX;
+                defaultSuffix : ViewHandler.DEFAULT_SUFFIX;
 
         int dot = viewId.lastIndexOf('.');
         if (dot == -1) {
             D2DViewHandler.log
                     .error("Assumed extension mapping, but there is no extension in " +
-                           viewId);
+                            viewId);
         } else {
             viewId = viewId.substring(0, dot) + suffix;
         }
 
         return viewId;
     }
-    
-    private static UIComponent findComponent(UIComponent uiComponent, 
-                                                        String componentId) {
+
+    private static UIComponent findComponent(UIComponent uiComponent,
+                                             String componentId) {
         UIComponent component = null;
-        UIComponent child = null;;
-        
+        UIComponent child = null;
+        ;
+
         if (componentId.equals(uiComponent.getId())) {
             return uiComponent;
         }
