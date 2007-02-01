@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-&core-props;
-&uidata-props;
+
+
+
+     value
+    var
+
 
 <property>
 	<description>
@@ -105,5 +109,35 @@
         </editor-class>
     </property-extension>
 </property>
+
+        
+<property>
+    <description>
+        TODO
+    </description>
+    <property-name>value</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        TODO
+    </description>
+    <property-name>var</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
 
 

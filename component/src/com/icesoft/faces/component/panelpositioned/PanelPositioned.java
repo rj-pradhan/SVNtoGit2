@@ -64,6 +64,7 @@ public class PanelPositioned extends UISeries {
     private String constraint;
     private String handle;
     private String hoverclass;
+    
 
 
     public PanelPositioned() {
