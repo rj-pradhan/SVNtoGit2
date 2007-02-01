@@ -634,8 +634,8 @@ public class D2DViewHandler extends ViewHandler {
             } else if (obj instanceof ServletResponse) {
                 ServletResponse response = (ServletResponse) obj;
                 response.setContentType(HTML_CONTENT_TYPE);
-                writer = new OutputStreamWriter(response.getOutputStream(),
-                        CHAR_ENCODING);
+                response.setCharacterEncoding(CHAR_ENCODING);
+                writer = response.getWriter();
             } else if (obj instanceof RenderResponse) {
                 RenderResponse response = (RenderResponse) obj;
                 response.setContentType(HTML_CONTENT_TYPE);
@@ -647,8 +647,7 @@ public class D2DViewHandler extends ViewHandler {
             }
         }
 
-        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, HTML_CONTENT_TYPE,
-                CHAR_ENCODING);
+        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, HTML_CONTENT_TYPE, CHAR_ENCODING);
         context.setResponseWriter(responseWriter);
 
         return responseWriter;
