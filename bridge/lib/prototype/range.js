@@ -1,12 +1,3 @@
-/*  Prototype JavaScript framework, version <%= PROTOTYPE_VERSION %>
- *  (c) 2005 Sam Stephenson <sam@conio.net>
- *
- *  Prototype is freely distributable under the terms of an MIT-style license.
- *
- *  For details, see the Prototype web site: http://prototype.conio.net/
- *
- *--------------------------------------------------------------------------*/
-
 ObjectRange = Class.create();
 Object.extend(ObjectRange.prototype, Enumerable);
 Object.extend(ObjectRange.prototype, {
@@ -18,10 +9,10 @@ Object.extend(ObjectRange.prototype, {
   
   _each: function(iterator) {
     var value = this.start;
-    do {
+    while (this.include(value)) {
       iterator(value);
       value = value.succ();
-    } while (this.include(value));
+    }
   },
   
   include: function(value) {

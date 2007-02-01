@@ -142,12 +142,16 @@
         <delete file="${extras.script}"/>
         <touch file="${extras.script}"/>
         <concat destfile="${extras.script}" append="yes" fixlastline="yes">
+        
             <filelist dir="${lib.dir}/prototype">
                 <file name="ajax.js"/>
                 <file name="dom.js"/>
                 <file name="event.js"/>
                 <file name="form.js"/>
                 <file name="position.js"/>
+                
+               
+                
             </filelist>
             <filelist dir="${lib.dir}/scriptaculous">
                 <file name="scriptaculous.js"/>

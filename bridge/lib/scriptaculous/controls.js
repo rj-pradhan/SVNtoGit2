@@ -1,12 +1,15 @@
-// Copyright (c) 2005 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
-//           (c) 2005 Ivan Krstic (http://blogs.law.harvard.edu/ivan)
-//           (c) 2005 Jon Tirsen (http://www.tirsen.com)
+// script.aculo.us controls.js v1.7.0, Fri Jan 19 19:16:36 CET 2007
+
+// Copyright (c) 2005, 2006 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
+//           (c) 2005, 2006 Ivan Krstic (http://blogs.law.harvard.edu/ivan)
+//           (c) 2005, 2006 Jon Tirsen (http://www.tirsen.com)
 // Contributors:
 //  Richard Livsey
 //  Rahul Bhargava
 //  Rob Wills
 // 
-// See scriptaculous.js for full license.
+// script.aculo.us is freely distributable under the terms of an MIT-style license.
+// For details, see the script.aculo.us web site: http://script.aculo.us/
 
 // Autocompleter.Base handles all the autocompletion functionality 
 // that's independent of the data source for autocompletion. This
@@ -33,33 +36,22 @@
 // useful when one of the tokens is \n (a newline), as it 
 // allows smart autocompletion after linebreaks.
 
+if(typeof Effect == 'undefined')
+  throw("controls.js requires including script.aculo.us' effects.js library");
+
 var Autocompleter = {}
-Autocompleter.Finder = Class.create();
-Autocompleter.Finder = {
-      list:new Array(),
-      add: function(ele, autocomplete){
-        this.list[ele.id] = autocomplete;
-      },
-      find: function(id){
-         return this.list[id];
-      }
-
-
-};
 Autocompleter.Base = function() {};
 Autocompleter.Base.prototype = {
-  baseInitialize: function(element, update, options, rowC, selectedRowC) {
-    this.element     = $(element);
-    this.update      = $(update);
-    this.hasFocus    = false;
-    this.changed     = false;
-    this.active      = false;
-    this.index       = -1;
+  baseInitialize: function(element, update, options) {
+    this.element     = $(element); 
+    this.update      = $(update);  
+    this.hasFocus    = false; 
+    this.changed     = false; 
+    this.active      = false; 
+    this.index       = 0;     
     this.entryCount  = 0;
-    this.rowClass	 =  rowC;
-    this.selectedRowClass = selectedRowC;
 
-    if (this.setOptions)
+    if(this.setOptions)
       this.setOptions(options);
     else
       this.options = options || {};
@@ -68,58 +60,56 @@ Autocompleter.Base.prototype = {
     this.options.tokens       = this.options.tokens || [];
     this.options.frequency    = this.options.frequency || 0.4;
     this.options.minChars     = this.options.minChars || 1;
-    this.options.onShow       = this.options.onShow ||
-    function(element, update){
-      if(!update.style.position || update.style.position=='absolute') {
-        update.style.position = 'absolute';
-        Position.clone(element, update, {setHeight: false, offsetTop: element.offsetHeight});
-      }
-      Effect.Appear(update,{duration:0.15});
-    };
-    this.options.onHide = this.options.onHide ||
-    function(element, update){ new Effect.Fade(update,{duration:0.15}) };
+    this.options.onShow       = this.options.onShow || 
+      function(element, update){ 
+        if(!update.style.position || update.style.position=='absolute') {
+          update.style.position = 'absolute';
+          Position.clone(element, update, {
+            setHeight: false, 
+            offsetTop: element.offsetHeight
+          });
+        }
+        Effect.Appear(update,{duration:0.15});
+      };
+    this.options.onHide = this.options.onHide || 
+      function(element, update){ new Effect.Fade(update,{duration:0.15}) };
 
-    if (typeof(this.options.tokens) == 'string')
+    if(typeof(this.options.tokens) == 'string') 
       this.options.tokens = new Array(this.options.tokens);
 
     this.observer = null;
-
+    
     this.element.setAttribute('autocomplete','off');
 
     Element.hide(this.update);
 
     Event.observe(this.element, "blur", this.onBlur.bindAsEventListener(this));
     Event.observe(this.element, "keypress", this.onKeyPress.bindAsEventListener(this));
-    Autocompleter.Finder.add(this.element, this);
   },
 
   show: function() {
-
     if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
-    if(!this.iefix &&
+    if(!this.iefix && 
       (navigator.appVersion.indexOf('MSIE')>0) &&
       (navigator.userAgent.indexOf('Opera')<0) &&
       (Element.getStyle(this.update, 'position')=='absolute')) {
-      new Insertion.After(this.update,
+      new Insertion.After(this.update, 
        '<iframe id="' + this.update.id + '_iefix" '+
        'style="display:none;position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);" ' +
-       'src="false;" frameborder="0" scrolling="no"></iframe>');
+       'src="javascript:false;" frameborder="0" scrolling="no"></iframe>');
       this.iefix = $(this.update.id+'_iefix');
     }
     if(this.iefix) setTimeout(this.fixIEOverlapping.bind(this), 50);
-
   },
-
+  
   fixIEOverlapping: function() {
-    Position.clone(this.update, this.iefix);
+    Position.clone(this.update, this.iefix, {setTop:(!this.update.style.height)});
     this.iefix.style.zIndex = 1;
     this.update.style.zIndex = 2;
     Element.show(this.iefix);
   },
 
   hide: function() {
-
-
     this.stopIndicator();
     if(Element.getStyle(this.update, 'display')!='none') this.options.onHide(this.element, this.update);
     if(this.iefix) Element.hide(this.iefix);
@@ -133,28 +123,13 @@ Autocompleter.Base.prototype = {
     if(this.options.indicator) Element.hide(this.options.indicator);
   },
 
-   onKeyPress: function(event) {
-    if(!this.active){
-         Ice.Autocompleter.logger.debug("Key press ignored. Not active.");
-          switch(event.keyCode) {
-            case Event.KEY_TAB:
-                case Event.KEY_RETURN:
-            this.getUpdatedChoices(true,event);
-        }
-    }
+  onKeyPress: function(event) {
     if(this.active)
       switch(event.keyCode) {
        case Event.KEY_TAB:
        case Event.KEY_RETURN:
-          //this.selectEntry();
-          //Event.stop(event);
-
-          this.hidden = true; // Hack to fix before beta. Was popup up the list after a selection was made
-          this.selectEntry();
-                 Ice.Autocompleter.logger.debug("Getting updated choices on enter");
-          this.getUpdatedChoices(true,event);
-          this.hide();
-          Event.stop(event);
+         this.selectEntry();
+         Event.stop(event);
        case Event.KEY_ESC:
          this.hide();
          this.active = false;
@@ -166,103 +141,64 @@ Autocompleter.Base.prototype = {
        case Event.KEY_UP:
          this.markPrevious();
          this.render();
-         //if(navigator.appVersion.indexOf('AppleWebKit')>0) 
-         Event.stop(event);
+         if(navigator.appVersion.indexOf('AppleWebKit')>0) Event.stop(event);
          return;
        case Event.KEY_DOWN:
          this.markNext();
          this.render();
-         //if(navigator.appVersion.indexOf('AppleWebKit')>0) 
-         Event.stop(event);
+         if(navigator.appVersion.indexOf('AppleWebKit')>0) Event.stop(event);
          return;
-
       }
-     else
-      if(event.keyCode==Event.KEY_TAB || event.keyCode==Event.KEY_RETURN)
-        return;
+     else 
+       if(event.keyCode==Event.KEY_TAB || event.keyCode==Event.KEY_RETURN || 
+         (navigator.appVersion.indexOf('AppleWebKit') > 0 && event.keyCode == 0)) return;
 
     this.changed = true;
     this.hasFocus = true;
 
-
-     this.index = -1;
-       //This is to avoid an element being select because the mouse just happens to be over the element when the list pops up
-       this.skip_mouse_hover=true;
-     if(this.active)
-        this.render();
     if(this.observer) clearTimeout(this.observer);
-      this.observer =
+      this.observer = 
         setTimeout(this.onObserverEvent.bind(this), this.options.frequency*1000);
   },
 
   activate: function() {
     this.changed = false;
     this.hasFocus = true;
-    //this.getUpdatedChoices();
+    this.getUpdatedChoices();
   },
 
   onHover: function(event) {
-    var element = Event.findElement(event, 'DIV');
-    if(this.index != element.autocompleteIndex)
+    var element = Event.findElement(event, 'LI');
+    if(this.index != element.autocompleteIndex) 
     {
-        if(!this.skip_mouse_hover)
-            this.index = element.autocompleteIndex;
-        //else
-            //Ice.Autocompleter.logger.error("Skip mouse hover");
-
+        this.index = element.autocompleteIndex;
         this.render();
-    }{
-        //Ice.Autocompleter.logger.error("Index Not equal");
     }
     Event.stop(event);
   },
-
-  onMove: function(event){
-      //Ice.Autocompleter.logger.error("Mouse Move");
-      if(this.skip_mouse_hover){
-          this.skip_mouse_hover=false;
-          this.onHover(event);         
-      }
-  },
-
+  
   onClick: function(event) {
-    this.hidden = true; // Hack to fix before beta. Was popup up the list after a selection was made
-    var element = Event.findElement(event, 'DIV');
+    var element = Event.findElement(event, 'LI');
     this.index = element.autocompleteIndex;
     this.selectEntry();
-    this.getUpdatedChoices();
     this.hide();
-
   },
-
+  
   onBlur: function(event) {
     // needed to make click events working
     setTimeout(this.hide.bind(this), 250);
     this.hasFocus = false;
-    this.active = false;
-  },
-
+    this.active = false;     
+  }, 
+  
   render: function() {
     if(this.entryCount > 0) {
       for (var i = 0; i < this.entryCount; i++)
-        if(this.index==i) {
-            ar = this.rowClass.split(" ");
-            for(var ai = 0; ai < ar.length; ai++)
-                Element.removeClassName(this.getEntry(i),ar[ai]);
-            ar = this.selectedRowClass.split(" ");
-            for(var ai = 0; ai < ar.length; ai++)
-                Element.addClassName(this.getEntry(i),ar[ai]);
-          }
-        else {
-            ar = this.selectedRowClass.split(" ");
-            for(var ai = 0; ai < ar.length; ai++)
-                Element.removeClassName(this.getEntry(i),ar[ai]);
-            ar = this.rowClass.split(" ");
-            for(var ai = 0; ai < ar.length; ai++)
-                Element.addClassName(this.getEntry(i),ar[ai]);
-        }
-      if(this.hasFocus) {
-
+        this.index==i ? 
+          Element.addClassName(this.getEntry(i),"selected") : 
+          Element.removeClassName(this.getEntry(i),"selected");
+        
+      if(this.hasFocus) { 
         this.show();
         this.active = true;
       }
@@ -271,36 +207,30 @@ Autocompleter.Base.prototype = {
       this.hide();
     }
   },
-
+  
   markPrevious: function() {
     if(this.index > 0) this.index--
       else this.index = this.entryCount-1;
+    this.getEntry(this.index).scrollIntoView(true);
   },
-
+  
   markNext: function() {
-    if(this.index == -1) {
-    	this.index++;
-    	return;
-    }
     if(this.index < this.entryCount-1) this.index++
       else this.index = 0;
+    this.getEntry(this.index).scrollIntoView(false);
   },
-
+  
   getEntry: function(index) {
     return this.update.firstChild.childNodes[index];
   },
-
+  
   getCurrentEntry: function() {
     return this.getEntry(this.index);
   },
-
+  
   selectEntry: function() {
     this.active = false;
-
-    if(this.index >= 0){
-	    this.updateElement(this.getCurrentEntry());
-        this.index = -1;
-    }
+    this.updateElement(this.getCurrentEntry());
   },
 
   updateElement: function(selectedElement) {
@@ -314,7 +244,7 @@ Autocompleter.Base.prototype = {
       if(nodes.length>0) value = Element.collectTextNodes(nodes[0], this.options.select);
     } else
       value = Element.collectTextNodesIgnoreClass(selectedElement, 'informal');
-
+    
     var lastTokenPos = this.findLastToken();
     if (lastTokenPos != -1) {
       var newValue = this.element.value.substr(0, lastTokenPos + 1);
@@ -326,7 +256,7 @@ Autocompleter.Base.prototype = {
       this.element.value = value;
     }
     this.element.focus();
-
+    
     if (this.options.afterUpdateElement)
       this.options.afterUpdateElement(this.element, selectedElement);
   },
@@ -335,51 +265,36 @@ Autocompleter.Base.prototype = {
     if(!this.changed && this.hasFocus) {
       this.update.innerHTML = choices;
       Element.cleanWhitespace(this.update);
-      Element.cleanWhitespace(this.update.firstChild);
+      Element.cleanWhitespace(this.update.down());
 
-      if(this.update.firstChild && this.update.firstChild.childNodes) {
-        this.entryCount =
-          this.update.firstChild.childNodes.length;
+      if(this.update.firstChild && this.update.down().childNodes) {
+        this.entryCount = 
+          this.update.down().childNodes.length;
         for (var i = 0; i < this.entryCount; i++) {
           var entry = this.getEntry(i);
           entry.autocompleteIndex = i;
           this.addObservers(entry);
         }
-      } else {
+      } else { 
         this.entryCount = 0;
       }
 
       this.stopIndicator();
-
-      this.index = -1;
-
-      this.render();
+      this.index = 0;
+      
+      if(this.entryCount==1 && this.options.autoSelect) {
+        this.selectEntry();
+        this.hide();
+      } else {
+        this.render();
+      }
     }
   },
 
   addObservers: function(element) {
     Event.observe(element, "mouseover", this.onHover.bindAsEventListener(this));
     Event.observe(element, "click", this.onClick.bindAsEventListener(this));
-    Event.observe(element, "mousemove", this.onMove.bindAsEventListener(this));
   },
-    dispose:function() {
-
-
-        for (var i = 0; i < this.entryCount; i++) {
-            var entry = this.getEntry(i);
-            entry.autocompleteIndex = i;
-
-            Event.stopObserving(entry, "mouseover", this.onHover);
-            Event.stopObserving(entry, "click", this.onClick);
-            Event.stopObserving(entry, "mousemove", this.onMove);
-        }
-         Event.stopObserving(this.element, "mouseover", this.onHover);
-            Event.stopObserving(this.element, "click", this.onClick);
-            Event.stopObserving(this.element, "mousemove", this.onMove);
-        Event.stopObserving(this.element, "blur", this.onBlur);
-        Event.stopObserving(this.element, "keypress", this.onKeyPress);
-      
-    },
 
   onObserverEvent: function() {
     this.changed = false;   
@@ -389,7 +304,6 @@ Autocompleter.Base.prototype = {
     } else {
       this.active = false;
       this.hide();
-      this.getUpdatedChoices();  
     }
   },
 
@@ -418,7 +332,7 @@ Autocompleter.Base.prototype = {
 Ajax.Autocompleter = Class.create();
 Object.extend(Object.extend(Ajax.Autocompleter.prototype, Autocompleter.Base.prototype), {
   initialize: function(element, update, url, options) {
-	  this.baseInitialize(element, update, options);
+    this.baseInitialize(element, update, options);
     this.options.asynchronous  = true;
     this.options.onComplete    = this.onComplete.bind(this);
     this.options.defaultParams = this.options.parameters || null;
@@ -561,6 +475,7 @@ Ajax.InPlaceEditor.prototype = {
     this.element = $(element);
 
     this.options = Object.extend({
+      paramName: "value",
       okButton: true,
       okText: "ok",
       cancelLink: true,
@@ -585,9 +500,10 @@ Ajax.InPlaceEditor.prototype = {
       formClassName: 'inplaceeditor-form',
       highlightcolor: Ajax.InPlaceEditor.defaultHighlightColor,
       highlightendcolor: "#FFFFFF",
-      externalControl:	null,
+      externalControl: null,
       submitOnBlur: false,
-      ajaxOptions: {}
+      ajaxOptions: {},
+      evalScripts: false
     }, options || {});
 
     if(!this.options.formId && this.element.id) {
@@ -632,7 +548,7 @@ Ajax.InPlaceEditor.prototype = {
     Element.hide(this.element);
     this.createForm();
     this.element.parentNode.insertBefore(this.form, this.element);
-    Field.scrollFreeActivate(this.editField);
+    if (!this.options.loadTextURL) Field.scrollFreeActivate(this.editField);
     // stop the event to avoid a page refresh in Safari
     if (evt) {
       Event.stop(evt);
@@ -656,6 +572,7 @@ Ajax.InPlaceEditor.prototype = {
       okButton = document.createElement("input");
       okButton.type = "submit";
       okButton.value = this.options.okText;
+      okButton.className = 'editor_ok_button';
       this.form.appendChild(okButton);
     }
 
@@ -664,6 +581,7 @@ Ajax.InPlaceEditor.prototype = {
       cancelLink.href = "#";
       cancelLink.appendChild(document.createTextNode(this.options.cancelText));
       cancelLink.onclick = this.onclickCancel.bind(this);
+      cancelLink.className = 'editor_cancel';      
       this.form.appendChild(cancelLink);
     }
   },
@@ -689,9 +607,10 @@ Ajax.InPlaceEditor.prototype = {
       var textField = document.createElement("input");
       textField.obj = this;
       textField.type = "text";
-      textField.name = "value";
+      textField.name = this.options.paramName;
       textField.value = text;
       textField.style.backgroundColor = this.options.highlightcolor;
+      textField.className = 'editor_field';
       var size = this.options.size || this.options.cols || 0;
       if (size != 0) textField.size = size;
       if (this.options.submitOnBlur)
@@ -701,10 +620,11 @@ Ajax.InPlaceEditor.prototype = {
       this.options.textarea = true;
       var textArea = document.createElement("textarea");
       textArea.obj = this;
-      textArea.name = "value";
+      textArea.name = this.options.paramName;
       textArea.value = this.convertHTMLLineBreaks(text);
       textArea.rows = this.options.rows;
       textArea.cols = this.options.cols || 40;
+      textArea.className = 'editor_field';      
       if (this.options.submitOnBlur)
         textArea.onblur = this.onSubmit.bind(this);
       this.editField = textArea;
@@ -733,6 +653,7 @@ Ajax.InPlaceEditor.prototype = {
     Element.removeClassName(this.form, this.options.loadingClassName);
     this.editField.disabled = false;
     this.editField.value = transport.responseText.stripTags();
+    Field.scrollFreeActivate(this.editField);
   },
   onclickCancel: function() {
     this.onComplete();
@@ -757,19 +678,26 @@ Ajax.InPlaceEditor.prototype = {
     // to be displayed indefinitely
     this.onLoading();
     
-    new Ajax.Updater(
-      { 
-        success: this.element,
-         // don't update on failure (this could be an option)
-        failure: null
-      },
-      this.url,
-      Object.extend({
-        parameters: this.options.callback(form, value),
-        onComplete: this.onComplete.bind(this),
-        onFailure: this.onFailure.bind(this)
-      }, this.options.ajaxOptions)
-    );
+    if (this.options.evalScripts) {
+      new Ajax.Request(
+        this.url, Object.extend({
+          parameters: this.options.callback(form, value),
+          onComplete: this.onComplete.bind(this),
+          onFailure: this.onFailure.bind(this),
+          asynchronous:true, 
+          evalScripts:true
+        }, this.options.ajaxOptions));
+    } else  {
+      new Ajax.Updater(
+        { success: this.element,
+          // don't update on failure (this could be an option)
+          failure: null }, 
+        this.url, Object.extend({
+          parameters: this.options.callback(form, value),
+          onComplete: this.onComplete.bind(this),
+          onFailure: this.onFailure.bind(this)
+        }, this.options.ajaxOptions));
+    }
     // stop the event to avoid a page refresh in Safari
     if (arguments.length > 1) {
       Event.stop(arguments[0]);
@@ -850,6 +778,35 @@ Ajax.InPlaceEditor.prototype = {
     }
   }
 };
+
+Ajax.InPlaceCollectionEditor = Class.create();
+Object.extend(Ajax.InPlaceCollectionEditor.prototype, Ajax.InPlaceEditor.prototype);
+Object.extend(Ajax.InPlaceCollectionEditor.prototype, {
+  createEditField: function() {
+    if (!this.cached_selectTag) {
+      var selectTag = document.createElement("select");
+      var collection = this.options.collection || [];
+      var optionTag;
+      collection.each(function(e,i) {
+        optionTag = document.createElement("option");
+        optionTag.value = (e instanceof Array) ? e[0] : e;
+        if((typeof this.options.value == 'undefined') && 
+          ((e instanceof Array) ? this.element.innerHTML == e[1] : e == optionTag.value)) optionTag.selected = true;
+        if(this.options.value==optionTag.value) optionTag.selected = true;
+        optionTag.appendChild(document.createTextNode((e instanceof Array) ? e[1] : e));
+        selectTag.appendChild(optionTag);
+      }.bind(this));
+      this.cached_selectTag = selectTag;
+    }
+
+    this.editField = this.cached_selectTag;
+    if(this.options.loadTextURL) this.loadExternalText();
+    this.form.appendChild(this.editField);
+    this.options.callback = function(form, value) {
+      return "value=" + encodeURIComponent(value);
+    }
+  }
+});
 
 // Delayed observer, like Form.Element.Observer, 
 // but waits for delay after last key input
