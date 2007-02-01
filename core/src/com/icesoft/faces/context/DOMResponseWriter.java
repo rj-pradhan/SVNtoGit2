@@ -55,6 +55,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -460,9 +461,13 @@ public class DOMResponseWriter extends ResponseWriter {
             libs.addAll(Arrays.asList(
                     JavascriptContext.getIncludedLibs(context)));
         }
+        String avoidCacheId = avoidCacheId(context);
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
             String lib = (String) iterator.next();
+            if(avoidCacheId != null){
+                lib += "?" + avoidCacheId;
+            }
             Element script = (Element) head
                     .appendChild(document.createElement("script"));
             script.setAttribute("language", "javascript");
@@ -694,5 +699,32 @@ public class DOMResponseWriter extends ResponseWriter {
 
     public static boolean isStreamWriting() {
         return isStreamWritingFlag;
+    }
+
+    private String avoidCacheId(FacesContext facesContext){
+        Object sessionObj = facesContext.getExternalContext().getSession(true);
+        if(sessionObj != null ){
+            if(sessionObj instanceof HttpSession){
+                HttpSession httpSession = (HttpSession)sessionObj;
+                String id = httpSession.getId();
+                if(id == null){
+                    log.error("HttpSession id is null. Can't get a unique script ID");
+                }else{
+                    int size = 4;
+                    if(id.length() > size){
+                        int start = id.length() - size;
+                        return id.substring(start);
+                    }else{
+                        return id;
+                    }
+                }
+
+            }else{
+                log.error("Session is not HttpSession its [" + sessionObj.getClass().getName() + "]. Can't get a unique script ID.");
+            }
+        }else{
+            log.error("Session is null. Can't get a unique script ID");
+        }
+        return null;
     }
 }

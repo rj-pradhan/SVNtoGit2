@@ -61,6 +61,7 @@ public class HtmlDataTable
     private String sortColumn = null;
     private Boolean sortAscending = null;
     private static final boolean DEFAULT_SORTASCENDING = true;
+    
     private Boolean scrollable = null;
     private String columnWidths = null;
     private String scrollHeight = null;

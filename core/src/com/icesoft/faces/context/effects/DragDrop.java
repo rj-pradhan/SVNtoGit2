@@ -64,6 +64,7 @@ public class DragDrop {
             StringTokenizer st = new StringTokenizer(options, ",");
             while (st.hasMoreTokens()) {
                 String token = st.nextToken();
+                token = token.trim();
                 if ("revert".equalsIgnoreCase(token)) {
                     revert = true;
                 } else if ("ghosting".equalsIgnoreCase(token)) {

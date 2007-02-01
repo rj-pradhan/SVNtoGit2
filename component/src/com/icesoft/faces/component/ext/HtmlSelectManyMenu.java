@@ -68,6 +68,17 @@ public class HtmlSelectManyMenu
     private Boolean visible = null;
 
     private CurrentStyle currentStyle;
+      private Effect onclickeffect;
+    private Effect ondblclickeffect;
+    private Effect onmousedowneffect;
+    private Effect onmouseupeffect;
+    private Effect onmousemoveeffect;
+    private Effect onmouseovereffect;
+    private Effect onmouseouteffect;
+
+    private Effect onkeypresseffect;
+    private Effect onkeydowneffect;
+    private Effect onkeyupeffect;
 
 
     private Effect onchangeeffect;
@@ -268,6 +279,218 @@ public class HtmlSelectManyMenu
     public void setCurrentStyle(CurrentStyle currentStyle) {
         this.currentStyle = currentStyle;
     }
+
+    /**
+     * <p>Set the value of the <code>onclickeffect</code> property.</p>
+     */
+    public void setOnclickeffect(Effect onclickeffect) {
+        this.onclickeffect = onclickeffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>ondblclickeffect</code> property.</p>
+     */
+    public Effect getOndblclickeffect() {
+        if (ondblclickeffect != null) {
+            return ondblclickeffect;
+        }
+        ValueBinding vb = getValueBinding("ondblclickeffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>ondblclickeffect</code> property.</p>
+     */
+    public void setOndblclickeffect(Effect ondblclickeffect) {
+        this.ondblclickeffect = ondblclickeffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onmousedowneffect</code> property.</p>
+     */
+    public Effect getOnmousedowneffect() {
+        if (onmousedowneffect != null) {
+            return onmousedowneffect;
+        }
+        ValueBinding vb = getValueBinding("onmousedowneffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onmousedowneffect</code> property.</p>
+     */
+    public void setOnmousedowneffect(Effect onmousedowneffect) {
+        this.onmousedowneffect = onmousedowneffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onmouseupeffect</code> property.</p>
+     */
+    public Effect getOnmouseupeffect() {
+        if (onmouseupeffect != null) {
+            return onmouseupeffect;
+        }
+        ValueBinding vb = getValueBinding("onmouseupeffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onmouseupeffect</code> property.</p>
+     */
+    public void setOnmouseupeffect(Effect onmouseupeffect) {
+        this.onmouseupeffect = onmouseupeffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onmousemoveeffect</code> property.</p>
+     */
+    public Effect getOnmousemoveeffect() {
+        if (onmousemoveeffect != null) {
+            return onmousemoveeffect;
+        }
+        ValueBinding vb = getValueBinding("onmousemoveeffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onmousemoveeffect</code> property.</p>
+     */
+    public void setOnmousemoveeffect(Effect onmousemoveeffect) {
+        this.onmousemoveeffect = onmousemoveeffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onmouseovereffect</code> property.</p>
+     */
+    public Effect getOnmouseovereffect() {
+        if (onmouseovereffect != null) {
+            return onmouseovereffect;
+        }
+        ValueBinding vb = getValueBinding("onmouseovereffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onmouseovereffect</code> property.</p>
+     */
+    public void setOnmouseovereffect(Effect onmouseovereffect) {
+        this.onmouseovereffect = onmouseovereffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onmouseouteffect</code> property.</p>
+     */
+    public Effect getOnmouseouteffect() {
+        if (onmouseouteffect != null) {
+            return onmouseouteffect;
+        }
+        ValueBinding vb = getValueBinding("onmouseouteffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onmouseouteffect</code> property.</p>
+     */
+    public void setOnmouseouteffect(Effect onmouseouteffect) {
+        this.onmouseouteffect = onmouseouteffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+
+    /**
+     * <p>Return the value of the <code>onkeypresseffect</code> property.</p>
+     */
+    public Effect getOnkeypresseffect() {
+        if (onkeypresseffect != null) {
+            return onkeypresseffect;
+        }
+        ValueBinding vb = getValueBinding("onkeypresseffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onkeypresseffect</code> property.</p>
+     */
+    public void setOnkeypresseffect(Effect onkeypresseffect) {
+        this.onkeypresseffect = onkeypresseffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onkeydowneffect</code> property.</p>
+     */
+    public Effect getOnkeydowneffect() {
+        if (onkeydowneffect != null) {
+            return onkeydowneffect;
+        }
+        ValueBinding vb = getValueBinding("onkeydowneffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onkeydowneffect</code> property.</p>
+     */
+    public void setOnkeydowneffect(Effect onkeydowneffect) {
+        this.onkeydowneffect = onkeydowneffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onkeyupeffect</code> property.</p>
+     */
+    public Effect getOnkeyupeffect() {
+        if (onkeyupeffect != null) {
+            return onkeyupeffect;
+        }
+        ValueBinding vb = getValueBinding("onkeyupeffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>onkeyupeffect</code> property.</p>
+     */
+    public void setOnkeyupeffect(Effect onkeyupeffect) {
+        this.onkeyupeffect = onkeyupeffect;
+        JavascriptContext
+                .includeLib(JavascriptContext.ICE_EXTRAS, getFacesContext());
+    }
+
+    /**
+     * <p>Return the value of the <code>onkeyupeffect</code> property.</p>
+     */
+    public Effect getOnclickeffect() {
+        if (onclickeffect != null) {
+            return onclickeffect;
+        }
+        ValueBinding vb = getValueBinding("onclickeffect");
+
+        return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
+    }
+
 
 
     /**

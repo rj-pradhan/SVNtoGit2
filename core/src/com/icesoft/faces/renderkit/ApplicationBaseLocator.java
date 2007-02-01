@@ -42,18 +42,9 @@ public class ApplicationBaseLocator {
     public static String locate(FacesContext facesContext) {
         String base =
                 facesContext.getExternalContext().getInitParameter("war-name");
-        if (base == null) {
-            Object requestBase = facesContext.getExternalContext().getRequest();
-            if (requestBase instanceof HttpServletRequest) {
-                HttpServletRequest request = (HttpServletRequest) requestBase;
-                base = request.getContextPath();
-                base += "/";
-            } else {
-                base = facesContext.getExternalContext().getRequestMap()
-                        .get(PersistentFacesCommonlet.REQUEST_PATH_KEY) + "/";
-            }
-        }
-
+        if (base != null) return base;        
+        base = facesContext.getExternalContext().getRequestContextPath();
+        base += "/";
         return base;
     }
 }

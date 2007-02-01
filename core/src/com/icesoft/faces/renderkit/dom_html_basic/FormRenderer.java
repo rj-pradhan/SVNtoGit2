@@ -48,6 +48,7 @@ import org.w3c.dom.Text;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -101,7 +102,7 @@ public class FormRenderer extends DomBasicRenderer {
                 String base = ApplicationBaseLocator.locate(facesContext);
 
                 d2dJSElement.setAttribute(HTML.SRC_ATTR,
-                                          base + "xmlhttp/icefaces-d2d.js");
+                                          base + "xmlhttp/icefaces-d2d.js?");
                 d2dJSElement.setAttribute("type", "text/javascript");
                 root.appendChild(d2dJSElement);
 
