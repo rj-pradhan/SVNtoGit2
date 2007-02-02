@@ -233,7 +233,7 @@ public class PassThruAttributeRenderer {
         		Object attribute = passThruAttOnComponent.next();
         		Object value = uiComponent.getAttributes().get(attribute);
         		if (excludedAttributesList != null && 
-        				!excludedAttributesList.contains(attribute)) {
+        				excludedAttributesList.contains(attribute)) {
         			continue;
         		}
 	                renderBooleanAttribute(attribute, 
@@ -323,7 +323,7 @@ public class PassThruAttributeRenderer {
         		Object attribute = passThruAttOnComponent.next();
         		Object value = uiComponent.getAttributes().get(attribute);
         		if (excludedAttributesList != null && 
-        				!excludedAttributesList.contains(attribute)) {
+        				excludedAttributesList.contains(attribute)) {
         			continue;
         		}
     	       if (value != null &&
