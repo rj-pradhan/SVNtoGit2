@@ -237,11 +237,11 @@ public class TextRenderer extends DomBasicInputRenderer {
         if (styleClass != null) {
             root.setAttribute("class", styleClass);
         }
-
-        PassThruAttributeRenderer
-                .renderAttributes(facesContext, uiComponent, null);
+        
         HashSet excludes = new HashSet();
         addJavaScript(facesContext, uiComponent, root, currentValue, excludes);
+        PassThruAttributeRenderer
+                .renderAttributes(facesContext, uiComponent, getExcludesArray(excludes));
         domContext.streamWrite(facesContext, uiComponent);
 
     }
