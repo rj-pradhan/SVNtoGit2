@@ -48,8 +48,11 @@
 
 package com.icesoft.faces.component.ext;
 
+import java.util.Map;
+
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.IceExtended;
+import com.icesoft.faces.component.IcePassThruAttributes;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.effects.CurrentStyle;
@@ -67,6 +70,7 @@ import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
+import com.icesoft.faces.component.AttributesMap;
 
 /**
  * This is an extension of javax.faces.component.html.HtmlInputText, which
@@ -79,7 +83,7 @@ import javax.faces.event.ValueChangeEvent;
 
 public class HtmlInputText
         extends javax.faces.component.html.HtmlInputText
-        implements IceExtended, ActionSource {
+        implements IceExtended, IcePassThruAttributes, ActionSource {
 
     public static final String COMPONENT_TYPE =
             "com.icesoft.faces.HtmlInputText";
@@ -791,4 +795,15 @@ public class HtmlInputText
         ValueBinding vb = getValueBinding("autocomplete");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
+    
+	  public Map getAttributes() {
+		Map attMap = super.getAttributes();
+		if (!attMap.containsKey(IcePassThruAttributes.ICE_ATTRIBUTE_MAP)) {
+			Map newMap = new AttributesMap(attMap);
+	        attMap.put(IcePassThruAttributes.ICE_ATTRIBUTE_MAP,newMap);
+	        return newMap;
+		} else {
+		    return (Map)attMap.get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP);
+		}	
+	}
 }
