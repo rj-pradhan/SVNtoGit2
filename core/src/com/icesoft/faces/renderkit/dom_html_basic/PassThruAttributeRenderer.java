@@ -219,6 +219,11 @@ public class PassThruAttributeRenderer {
             throw new FacesException("DOMContext is null");
         }
 
+        List excludedAttributesList = null;
+        if (excludedAttributes != null && excludedAttributes.length > 0) {
+            excludedAttributesList = Arrays.asList(excludedAttributes);
+        }
+        
         if (uiComponent instanceof IcePassThruAttributes &&
         		uiComponent.getAttributes().get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP) != null) {
         	Iterator passThruAttOnComponent = ((List)((Map)uiComponent.getAttributes()
@@ -227,17 +232,16 @@ public class PassThruAttributeRenderer {
         	while (passThruAttOnComponent.hasNext()) {
         		Object attribute = passThruAttOnComponent.next();
         		Object value = uiComponent.getAttributes().get(attribute);
-                renderBooleanAttribute(attribute, 
-                		value, rootElement);
+        		if (excludedAttributesList != null && 
+        				!excludedAttributesList.contains(attribute)) {
+        			continue;
+        		}
+	                renderBooleanAttribute(attribute, 
+	                		value, rootElement);
         	}
         	return;
         }
         
-        List excludedAttributesList = null;
-        if (excludedAttributes != null && excludedAttributes.length > 0) {
-            excludedAttributesList = Arrays.asList(excludedAttributes);
-        }
-
         Object nextPassThruAttributeName;
         Object nextPassThruAttributeValue = null;
         Iterator passThruNameIterator =
@@ -303,6 +307,11 @@ public class PassThruAttributeRenderer {
             throw new FacesException("DOMContext is not initialized");
         }
 
+        List excludedAttributesList = null;
+        if (excludedAttributes != null && excludedAttributes.length > 0) {
+            excludedAttributesList = Arrays.asList(excludedAttributes);
+        }
+        
         if (uiComponent instanceof IcePassThruAttributes && 
         		uiComponent.getAttributes().get(
         				IcePassThruAttributes.ICE_ATTRIBUTE_MAP) != null) {
@@ -313,24 +322,24 @@ public class PassThruAttributeRenderer {
         	while (passThruAttOnComponent.hasNext()) {
         		Object attribute = passThruAttOnComponent.next();
         		Object value = uiComponent.getAttributes().get(attribute);
+        		if (excludedAttributesList != null && 
+        				!excludedAttributesList.contains(attribute)) {
+        			continue;
+        		}
     	       if (value != null &&
     	                !attributeValueIsSentinel(value)) {
     	                rootElement.setAttribute(
     	                        attribute.toString(),
     	                        value.toString());
-    	            } else {
+    	       } else {
     	                rootElement
     	                        .removeAttribute(attribute.toString());
-    	            }
+    	       }
+        		
         	}
         	return;
         }
         
-        List excludedAttributesList = null;
-        if (excludedAttributes != null && excludedAttributes.length > 0) {
-            excludedAttributesList = Arrays.asList(excludedAttributes);
-        }
-
         Object nextPassThruAttributeName = null;
         Object nextPassThruAttributeValue = null;
         Iterator passThruNameIterator = passThruAttributeNames.iterator();

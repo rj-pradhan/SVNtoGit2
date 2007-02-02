@@ -49,6 +49,7 @@
 package com.icesoft.faces.component.ext;
 
 import java.util.Map;
+import java.util.List;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.IceExtended;
@@ -71,6 +72,8 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
 import com.icesoft.faces.component.AttributesMap;
+import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
+import com.icesoft.faces.util.event.servlet.ICEfacesIDRetrievedEvent;
 
 /**
  * This is an extension of javax.faces.component.html.HtmlInputText, which
@@ -135,13 +138,21 @@ public class HtmlInputText
     }
 
 
-    public void setValueBinding(String s, ValueBinding vb) {
-        if (s != null && s.indexOf("effect") != -1) {
+    public void setValueBinding(String name, ValueBinding vb) {
+    	Map iceAttributeMap = (Map)getAttributes().get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP);
+    	if (name != null &&  iceAttributeMap != null) {
+    		if (PassThruAttributeRenderer.passThruAttributeNames.contains(name)) {
+    			((List)iceAttributeMap.get(IcePassThruAttributes.PASS_THRU_NON_BOOLEAN_ATT_LIST)).add(name);
+    		} else if (PassThruAttributeRenderer.booleanPassThruAttributeNames.contains(name)) {
+    			((List)iceAttributeMap.get(IcePassThruAttributes.PASS_THRU_BOOLEAN_ATT_LIST)).add(name);
+    		}
+    	}
+        if (name != null && name.indexOf("effect") != -1) {
             // If this is an effect attribute make sure Ice Extras is included
             JavascriptContext.includeLib(JavascriptContext.ICE_EXTRAS,
                                          getFacesContext());
         }
-        super.setValueBinding(s, vb);
+        super.setValueBinding(name, vb);
     }
 
     /**
