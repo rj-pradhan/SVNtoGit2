@@ -1,37 +1,35 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import com.icesoft.faces.webapp.http.servlet.ServletRequestMap;
-import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
-import com.icesoft.faces.context.ApplicationMap;
-import com.icesoft.faces.context.SessionMap;
 import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.util.EnumerationIterator;
+import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.SeamUtilities;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Set;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.io.InputStream;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 //for now extend BridgeExternalContext since there are so many bloody 'instanceof' tests
 public class ServletExternalContext extends BridgeExternalContext {
     private ServletContext context;
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private HttpSession session;
     private Map applicationMap;
     private Map sessionMap;
     private Map requestParameterMap;
@@ -43,9 +41,10 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.context = (ServletContext) context;
         this.request = (HttpServletRequest) request;
         this.response = (HttpServletResponse) response;
+        this.session = this.request.getSession();
         this.requestMap = new ServletRequestMap(this.request);
         this.applicationMap = new ServletApplicationMap(this.context);
-        this.sessionMap = new ServletSessionMap(this.request.getSession());
+        this.sessionMap = new ServletSessionMap(this.session);
 
         this.initParameterMap = new HashMap();
         Enumeration names = this.context.getInitParameterNames();
@@ -58,7 +57,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public Object getSession(boolean create) {
-        return request.getSession(create);
+        return session;
     }
 
     public Object getContext() {
