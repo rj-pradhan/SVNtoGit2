@@ -55,6 +55,7 @@ public class MetadataXmlParser {
 		runtime = false;
 		digester.setNamespaceAware(false);
 		digester.setUseContextClassLoader(true);
+                //TODO: need to validating
 		digester.setValidating(false);
 		URL url = null;
 		url = getClass().getClassLoader().getResource(

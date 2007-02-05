@@ -452,26 +452,5 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
 	private String simpleClassName(ComponentBean cb) {
 		return simpleClassName(cb.getComponentClass()) + "BeanInfo";
 	}
-//
-//	protected String trimWhitespace(String string) {
-//		StringBuffer buffer = new StringBuffer(string.length());
-//		boolean eatingWhite = true;
-//		for (int i = 0; i < string.length(); i++) {
-//			char c = string.charAt(i);
-//			if (eatingWhite) {
-//				if (Character.isWhitespace(c))
-//					continue;
-//				eatingWhite = false;
-//			}
-//			if (Character.isWhitespace(c)) {
-//				buffer.append(" ");
-//				eatingWhite = true;
-//			} else {
-//				buffer.append(c);
-//			}
-//		}
-//
-//		return buffer.toString();
-//	}
 
 }

@@ -59,10 +59,9 @@ public abstract class AbstractGenerator {
 	
 	static {
 		
-		ClassLoader classLoader = Thread.currentThread()
-		.getContextClassLoader();
 		bundle = ResourceBundle.getBundle("com.icesoft.metadata.Bundle", Locale
-				.getDefault(),classLoader);
+				.getDefault(),Thread.currentThread()
+		.getContextClassLoader());
 		defaults = new HashMap();
 		defaults.put("boolean", "false");
 		defaults.put("byte", "Byte.MIN_VALUE");
