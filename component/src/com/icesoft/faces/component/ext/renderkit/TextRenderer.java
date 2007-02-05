@@ -36,6 +36,7 @@ package com.icesoft.faces.component.ext.renderkit;
 import com.icesoft.faces.component.IceExtended;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.KeyEvent;
+import com.icesoft.faces.component.ext.taglib.Util;
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
@@ -84,26 +85,11 @@ public class TextRenderer
             }
         }
 
-        if (eventSource(facesContext, uiComponent)) {
+        if (Util.isEventSource(facesContext, uiComponent)) {
             queueEventIfEnterKeyPressed(facesContext, uiComponent);
         }
     }
 
-    private boolean eventSource(FacesContext facesContext,
-                            UIComponent uiComponent) {
-        Object componenetId = facesContext.getExternalContext()
-                .getRequestParameterMap().get("ice.event.captured");
-        if (componenetId != null) {
-            if (componenetId .toString()
-                    .equals(uiComponent.getClientId(facesContext))) {
-                return true;
-            } else {
-
-                return false;
-            }
-        }
-        return false;
-    }
 
     public void queueEventIfEnterKeyPressed(FacesContext facesContext,
                                             UIComponent uiComponent) {

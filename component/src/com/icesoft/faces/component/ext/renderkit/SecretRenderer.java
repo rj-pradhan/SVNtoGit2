@@ -36,6 +36,7 @@ package com.icesoft.faces.component.ext.renderkit;
 import com.icesoft.faces.component.IceExtended;
 import com.icesoft.faces.component.ext.HtmlInputSecret;
 import com.icesoft.faces.component.ext.KeyEvent;
+import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.menubar.MenuItem;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
@@ -98,28 +99,12 @@ public class SecretRenderer
         } 
         
         super.decode(facesContext, uiComponent);        
-        if (hadFocus(facesContext, uiComponent)) {
+        if (Util.isEventSource(facesContext, uiComponent)) {
             queueEventIfEnterKeyPressed(facesContext, uiComponent);
         }
         
     }
 
-    public boolean hadFocus(FacesContext facesContext,
-                            UIComponent uiComponent) {
-        Object focusId = facesContext.getExternalContext()
-                .getRequestParameterMap().get(FormRenderer.getFocusElementId());
-        if (focusId != null) {
-            if (focusId.toString()
-                    .equals(uiComponent.getClientId(facesContext))) {
-                ((HtmlInputSecret) uiComponent).setFocus(true);
-                return true;
-            } else {
-                ((HtmlInputSecret) uiComponent).setFocus(false);
-                return false;
-            }
-        }
-        return false;
-    }
 
     public void queueEventIfEnterKeyPressed(FacesContext facesContext,
                                             UIComponent uiComponent) {
@@ -139,7 +124,7 @@ public class SecretRenderer
      * @return boolean
      */
     private boolean redisplayAttributeIsTrue(UIComponent uiComponent, FacesContext facesContext) {
-        if (hadFocus(facesContext,uiComponent)) {
+        if (Util.isEventSource(facesContext,uiComponent)) {
             return true;
         }
         Object redisplayAttribute =

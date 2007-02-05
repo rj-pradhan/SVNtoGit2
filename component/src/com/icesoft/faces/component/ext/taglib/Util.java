@@ -49,6 +49,8 @@
 package com.icesoft.faces.component.ext.taglib;
 
 import com.icesoft.faces.component.IceExtended;
+import com.icesoft.faces.component.ext.renderkit.FormRenderer;
+import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.EffectBuilder;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
@@ -420,5 +422,30 @@ public class Util extends Object {
     public static ValueBinding getValueBinding(String valueRef) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         return facesContext.getApplication().createValueBinding(valueRef);
+    }
+
+    public static boolean isEventSource(FacesContext facesContext, UIComponent uiComponent) {
+        Object focusId = facesContext.getExternalContext()
+                .getRequestParameterMap().get(FormRenderer.getFocusElementId());
+        if (focusId != null) {
+            if (focusId.toString()
+                    .equals(uiComponent.getClientId(facesContext))) {
+                ((HtmlInputText) uiComponent).setFocus(true);
+            } else {
+                ((HtmlInputText) uiComponent).setFocus(false);
+            }
+        }
+        Object componenetId = facesContext.getExternalContext()
+                .getRequestParameterMap().get("ice.event.captured");
+        if (componenetId != null) {
+            if (componenetId.toString()
+                    .equals(uiComponent.getClientId(facesContext))) {
+                return true;
+            } else {
+
+                return false;
+            }
+        }
+        return false;
     }
 } // end of class Util

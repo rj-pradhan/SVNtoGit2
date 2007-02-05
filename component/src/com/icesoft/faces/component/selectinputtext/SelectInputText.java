@@ -135,7 +135,7 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
     public void decode(FacesContext facesContext) {
         super.decode(facesContext);
         setSelectedItem(facesContext);
-        if (hadFocus(facesContext)) {
+        if (Util.isEventSource(facesContext,this)) {
             queueEventIfEnterKeyPressed(facesContext);
         }
     }
