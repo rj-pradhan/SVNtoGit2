@@ -73,22 +73,32 @@ public class TextRenderer
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         super.decode(facesContext, uiComponent);
-        if (hadFocus(facesContext, uiComponent)) {
-            queueEventIfEnterKeyPressed(facesContext, uiComponent);
-        }
-    }
-
-    public boolean hadFocus(FacesContext facesContext,
-                            UIComponent uiComponent) {
         Object focusId = facesContext.getExternalContext()
                 .getRequestParameterMap().get(FormRenderer.getFocusElementId());
         if (focusId != null) {
             if (focusId.toString()
                     .equals(uiComponent.getClientId(facesContext))) {
                 ((HtmlInputText) uiComponent).setFocus(true);
-                return true;
             } else {
                 ((HtmlInputText) uiComponent).setFocus(false);
+            }
+        }
+
+        if (eventSource(facesContext, uiComponent)) {
+            queueEventIfEnterKeyPressed(facesContext, uiComponent);
+        }
+    }
+
+    private boolean eventSource(FacesContext facesContext,
+                            UIComponent uiComponent) {
+        Object componenetId = facesContext.getExternalContext()
+                .getRequestParameterMap().get("ice.event.captured");
+        if (componenetId != null) {
+            if (componenetId .toString()
+                    .equals(uiComponent.getClientId(facesContext))) {
+                return true;
+            } else {
+
                 return false;
             }
         }
