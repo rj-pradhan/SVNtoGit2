@@ -99,7 +99,6 @@ public class OutputChart extends HtmlCommandButton {
     private String chartTitle;
     private Object data;
     private Object labels;
-    private Object legendLabel;
     private Object colors;
     private Object shapes;
 
@@ -134,24 +133,6 @@ public class OutputChart extends HtmlCommandButton {
      */
     public void setLabels(Object labels) {
         this.labels = labels;
-    }
-
-    /**
-     *<p>Return the value of the <code>legendLabel</code> property.</p> 
-     */
-    public Object getLegendLabel() {
-        if (legendLabel != null) {
-            return legendLabel;
-        }
-        ValueBinding vb = getValueBinding("legendLabel");
-        return vb != null ? vb.getValue(getFacesContext()) : null;
-    }
-
-    /**
-     * <p>Set the value of the <code>legendLabel</code> property. </p>
-     */
-    public void setLegendLabel(Object legendLabel) {
-        this.legendLabel = legendLabel;
     }
 
     /**
