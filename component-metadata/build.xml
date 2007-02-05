@@ -8,7 +8,7 @@
     <property name="maven.test.output" value="target/test-classes" />
     <property name="lib.dir" location="../lib" />
     <property name="project.title" value="ICEfaces components" />
-    <property name="project.version" value="1.5" />
+    <property name="project.version" value="1.6" />
     <property name="project.package" value="com.icesoft" />
     <property name="project.artifact" value="component" />
     <property name="project.artifact.version" value="icefaces-webui" />
@@ -93,7 +93,7 @@
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
-            <arg line="-v" />
+            <arg line="-v"/>
             <!-- -t name of output TLD file relative to -d directory -->
             <arg line="-t icefaces_component.tld" />
             <arg line="--tlDescriptor" />
@@ -269,13 +269,13 @@
         <touch file="${project.build.directory}/generated-sources/created" />
     </target>
 
-    <target name="jar" depends="compile,generator" description="Clean the JAR">
+    <target name="jar" depends="compile,generator,test" description="Clean the JAR">
         <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
     </target>
 
     <target name="compile-tests" depends="junit-present, compile" description="Compile the test code" if="junit.present">
         <mkdir dir="${maven.test.output}" />
-        <javac destdir="${maven.test.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
+        <javac destdir="${maven.test.output}" failonerror="true" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
             <src>
                 <pathelement location="src/test/java" />
                 <pathelement location="${project.build.directory}/generated-sources/testbeaninfo/main/java"/>

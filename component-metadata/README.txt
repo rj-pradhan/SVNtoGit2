@@ -67,6 +67,27 @@ cust-style-props.xml
         </property-extension>
 </property>
 
+also 
+<property>
+        <description>
+                The dropListener specifies a method on a backing bean that will
+                accept DnDEvents. This value must be a method binding
+                expression. This method will be called when a droppable is
+                dropped or hovered on this panel unless masked.
+        </description>
+        <property-name>dropListener</property-name>
+        <property-class>javax.faces.el.MethodBinding</property-class>
+                <property-extension>
+                <category>DRAGANDDROP</category>
+                <editor-class>
+                        &methodBindingEditor;
+                </editor-class>
+                <is-bindable>true</is-bindable>//indicating whether
+    or not value binding expressions may be used to specify the value of
+    the surrounding attribute or property
+        </property-extension>
+</property>
+
 #3 create entity in sun-faces-config.xml
 
   <!ENTITY ice-cust-style-props SYSTEM "ice_cust_properties/cust-style-props.xml">
