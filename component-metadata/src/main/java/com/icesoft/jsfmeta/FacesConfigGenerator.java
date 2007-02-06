@@ -86,7 +86,8 @@ public class FacesConfigGenerator {
 			URL localUrl = classLoader.getResource(".");
 			result = localUrl.getPath() + "./../../";
 
-		} catch (Exception exception) {
+		} catch (Exception ex) {
+                    ex.printStackTrace();
 		}
 		WORKING_FOLDER = result;
 	}

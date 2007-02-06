@@ -278,9 +278,6 @@
         <javac destdir="${maven.test.output}" failonerror="true" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
             <src>
                 <pathelement location="src/test/java" />
-                <pathelement location="${project.build.directory}/generated-sources/testbeaninfo/main/java"/>
-                <pathelement location="${project.build.directory}/generated-sources/taglib/main/java"/>
-                <pathelement location="${project.build.directory}/generated-sources/component/main/java"/>
             </src>
             <classpath>
                 <path refid="build.classpath" />

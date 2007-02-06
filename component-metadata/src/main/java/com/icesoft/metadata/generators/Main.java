@@ -50,7 +50,7 @@ public final class Main {
 
 	private List listeners;
 
-	protected boolean noBundles;
+	private boolean noBundles;
 
 	private boolean override;
 
