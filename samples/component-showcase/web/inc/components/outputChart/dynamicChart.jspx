@@ -64,24 +64,24 @@
                             <!-- color setting -->
                             <ice:outputText value="Color :"/>
                             <ice:selectOneMenu
-                                    valueChangeListener="#{pieChart.paintChangeListener}">
+                                    valueChangeListener="#{DynamicPieChart.paintChangeListener}">
                                 <f:selectItems
-                                        value="#{pieChart.availablePaints}"/>
+                                        value="#{DynamicPieChart.availablePaints}"/>
                             </ice:selectOneMenu>
 
                             <!-- Label -->
                             <ice:outputText value="Label :"/>
-                            <ice:inputText value="#{pieChart.label}"
+                            <ice:inputText value="#{DynamicPieChart.label}"
                                            required="false"/>
 
                             <!-- Data -->
                             <ice:outputText value="Data "/>
-                            <ice:inputText value="#{pieChart.value}"/>
+                            <ice:inputText value="#{DynamicPieChart.value}"/>
 
                             <!-- Add command button -->
                             <ice:outputText value="" />
                             <ice:commandButton value="#{msgs['component.chart.addChartCommand.label']}"
-                                               actionListener="#{pieChart.addChart}"/>
+                                               actionListener="#{DynamicPieChart.addToChart}"/>
                         </ice:panelGrid>
                         <ice:panelGrid columns="1">
                             <!-- remove chart -->
@@ -91,14 +91,14 @@
 
                             <!-- chart to remove -->
                             <ice:selectOneMenu
-                                    valueChangeListener="#{pieChart.deleteListValueChangeListener}"
+                                    valueChangeListener="#{DynamicPieChart.deleteListValueChangeListener}"
                                     partialSubmit="true">
-                                <f:selectItems value="#{pieChart.deleteList}"/>
+                                <f:selectItems value="#{DynamicPieChart.deleteList}"/>
                             </ice:selectOneMenu>
 
                             <!-- remove command button -->
                             <ice:commandButton value="#{msgs['component.chart.removeChartCommand.label']}"
-                                               actionListener="#{pieChart.deleteChart}"/>
+                                               actionListener="#{DynamicPieChart.deleteChart}"/>
                         </ice:panelGrid>
                     </ice:panelGrid>
                 </ice:panelGrid>
@@ -106,12 +106,12 @@
                 <ice:panelGrid id="centerWrapper">
                     <ice:outputChart type="pie3d"
                                      chartTitle="Pie3D Chart"
-                                     labels="#{pieChart.labels}"
+                                     labels="#{DynamicPieChart.labels}"
                                      width="350"
                                      height="350"
-                                     data="#{pieChart.data}"
-                                     colors="#{pieChart.paints}"
-                                     renderOnSubmit="#{pieChart.renderOnSubmit}"/>
+                                     data="#{DynamicPieChart.data}"
+                                     colors="#{DynamicPieChart.paints}"
+                                     renderOnSubmit="#{DynamicPieChart.renderOnSubmit}"/>
                 </ice:panelGrid>
 
             </ice:panelGrid>

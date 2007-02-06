@@ -388,8 +388,8 @@
     </managed-bean> 
     
     <managed-bean>
-        <managed-bean-name>axisChart</managed-bean-name>
-        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.AxisChartBean</managed-bean-class>
+        <managed-bean-name>DynamicPieChart</managed-bean-name>
+        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.DynamicPieChart</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     

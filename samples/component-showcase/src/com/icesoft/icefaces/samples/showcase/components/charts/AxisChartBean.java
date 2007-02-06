@@ -45,10 +45,10 @@ import java.util.List;
  *
  * @since 1.5
  */
-public class AxisChartBean {
+public class AxisChartBean extends Chart{
 
     //list of the Labels for the x axis of the chart
-    private static final List areaXaxisLabels = new ArrayList(Arrays.asList(
+    public static final List areaXaxisLabels = new ArrayList(Arrays.asList(
             new String[]{"2000", "2001", "2002", "2003", "2004", "2005",
                          "2006"}));
 
@@ -57,7 +57,7 @@ public class AxisChartBean {
             new String[]{"Bugs", "Enhancements", "Fixed"}));
 
     //The list of the data used by the chart
-    private static final List areaData = new ArrayList(
+    public static final List areaData = new ArrayList(
             Arrays.asList(new double[][]{new double[]{350, 50, 400},
                                          new double[]{45, 145, 50},
                                          new double[]{-36, 6, 98},
@@ -73,6 +73,10 @@ public class AxisChartBean {
                                                     new Color(204, 0, 1,
                                                               150)}));
 
+    
+    public AxisChartBean(){
+        super();
+    }
 
     public List getAreaXaxisLabels() {
 

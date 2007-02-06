@@ -77,6 +77,8 @@ public class ChartFactory {
     //boolean to determine if the chart is a 2D pie chart
     private boolean pie = false;
 
+    
+    
     //boolean to determine if the chart is an axis chart
     private boolean axis = true;
 
@@ -96,7 +98,9 @@ public class ChartFactory {
     private Highlight effectOutputText = new Highlight("#ffff99");
 
     //sets the chart type to bar for default
-    private String chart = OutputChart.BAR_CHART_TYPE;
+    private static String chart = OutputChart.BAR_CHART_TYPE;
+    
+    public static Chart chartObject = new Chart(chart);
 
     //sets the string returned when the chart is clicked to the default value
     private String clickedValue = DEFAULT_STRING;
@@ -166,6 +170,8 @@ public class ChartFactory {
 
         return chart;
     }
+    
+    
 
     /*
     * Sets the chart String
@@ -173,6 +179,8 @@ public class ChartFactory {
     *@param String chart
     */
     public void setChart(String chart) {
+        
+        System.out.println("setChart called");
 
         if (wasChanged != null) {
             this.chart = wasChanged;
@@ -180,19 +188,28 @@ public class ChartFactory {
         } else {
             this.chart = chart;
         }
+        
+         chartObject.setType(chart);
+        
+        
 
         if (!chart.equals(OutputChart.PIE3D_CHART_TYPE)) {
             pie3D = false;
+           
         }
         if (chart.equals(OutputChart.PIE3D_CHART_TYPE) ||
             chart.equals(OutputChart.PIE2D_CHART_TYPE)) {
             axis = false;
+            
             if (chart.equals(OutputChart.PIE3D_CHART_TYPE)) {
                 pie3D = true;
+               
+       
             }
         } else {
             axis = true;
         }
+        
     }
 
     /*
@@ -240,7 +257,9 @@ public class ChartFactory {
         return clickedValue;
     }
 
-
+    public Chart getChartObject(){
+        return chartObject;
+    }
     /*
     * Returns the text effect
     *@return Effect EffectOutputText
@@ -287,6 +306,26 @@ public class ChartFactory {
 
         }
 
+    }
+    
+    public void pieAction(ActionEvent event)
+    {
+       
+        if (event.getSource() instanceof OutputChart) {
+            OutputChart chart = (OutputChart) event.getSource();
+            if (chart.getClickedImageMapArea().getLengendLabel() != null) {
+                setClickedValue(DEFAULT_STRING + chart
+                        .getClickedImageMapArea().getLengendLabel()
+                                    + " : " +
+                                    chart.getClickedImageMapArea().getValue());
+                PieChartBean.setSalesForYear(
+                        chart.getClickedImageMapArea().getLengendLabel());
+                effectOutputText.setFired(false);
+
+
+            }
+        }
+    
     }
 
 }

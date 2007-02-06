@@ -60,45 +60,47 @@
             <ice:outputText effect="#{chartFactory.effectOutputText}"
                             value="#{chartFactory.clickedValue}"
                             rendered="#{chartFactory.axis}"/>
-            <ice:outputText effect="#{pieChart.effectOutputText}"
-                            value="#{pieChart.clickedAreaValue}"
+            <ice:outputText effect="#{chartFactory.effectOutputText}"
+                            value="#{chartFactory.clickedValue}"
                             rendered="#{!chartFactory.axis}"/>
-        </ice:panelGrid>
+                            
+
+       </ice:panelGrid>
 
         <ice:panelGrid columns="2" id="centerWrapper">
             <ice:outputChart id="axisOutputChart"
-                             type="#{chartFactory.chart}"
-                             chartTitle="#{chartFactory.chart} Chart"
+                             type="#{chartFactory.chartObject.type}"
+                             chartTitle="#{chartFactory.chartObject.type} Chart"
                              yaxisTitle="Problems"
                              xaxisTitle="Years"
-                             xaxisLabels="#{axisChart.areaXaxisLabels}"
+                             xaxisLabels="#{chartFactory.chartObject.labels}"
                              labels="#{axisChart.legendLabels}"
-                             data="#{axisChart.areaData}"
+                             data="#{chartFactory.chartObject.data}"
                              actionListener="#{chartFactory.imageClicked}"
                              renderOnSubmit="#{chartFactory.allCharts}"
                              rendered="#{chartFactory.axis and !chartFactory.pie3D and !chartFactory.pie}"/>
             <!-- Pie charts require a different data model
             Axis charts have a 2 dimensional data model, Pie charts are 1 dimensional -->
             <ice:outputChart id="pie2DOutputChart"
-                             type="#{chartFactory.chart}"
+                             type="#{chartFactory.chartObject.type}"
                              width="350"
                              height="350"
-                             chartTitle="#{chartFactory.chart} Chart"
-                             labels="#{pieChart.labels}"
-                             data="#{pieChart.data}"
+                             chartTitle="#{chartFactory.chartObject.type} Chart"
+                             labels="#{chartFactory.chartObject.labels}"
+                             data="#{chartFactory.chartObject.data}"
                              colors="#{pieChart.paints}"
-                             actionListener="#{pieChart.action}"
+                             actionListener="#{chartFactory.pieAction}"
                              renderOnSubmit="#{chartFactory.allCharts}"
                              rendered="#{!chartFactory.axis and !chartFactory.pie3D}"/>
             <ice:outputChart id="pie3DOutputChart"
-                             type="#{chartFactory.chart}"
+                             type="#{chartFactory.chartObject.type}"
                              width="350"
                              height="350"
-                             chartTitle="#{chartFactory.chart} Chart"
-                             labels="#{pieChart.labels}"
-                             data="#{pieChart.data}"
+                             chartTitle="#{chartFactory.chartObject.type} Chart"
+                             labels="#{chartFactory.chartObject.labels}"
+                             data="#{chartFactory.chartObject.data}"
                              colors="#{pieChart.paints}"
-                             actionListener="#{pieChart.action}"
+                             actionListener="#{chartFactory.pieAction}"
                              renderOnSubmit="#{chartFactory.allCharts}"
                              rendered="#{!chartFactory.axis and !chartFactory.pie and chartFactory.pie3D}"/>
             <!-- Pie charts require a different data model. -->
