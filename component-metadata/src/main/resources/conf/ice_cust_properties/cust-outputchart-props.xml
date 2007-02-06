@@ -6,7 +6,8 @@
 
 <property>
     <description>
-        TODO
+        Title for the component. The value of this attribute can be defined
+        on the page or can be bound to the backing bean as String type.
     </description>
     <property-name>chartTitle</property-name>
     <property-class>java.lang.String</property-class>
@@ -20,7 +21,26 @@
 
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>Type of the chart. The valid values are as follows:
+        <ul>
+        	<li>area</li/>
+        	<li>areastacked</li/>
+        	<li>bar</li/>
+        	<li>barclustered</li/>
+        	<li>barstacked</li/>
+        	<li>line</li/>
+        	<li>pie2D</li/>
+        	<li>pie3D</li/>
+        	<li>point</li/>
+        	<li>stock</li/>        	        	        	        	        	        	        	        	        	
+        	<li>custom</li/>        	
+        </ul>
+        
+        Only one type can be set at a time. The value of this attribute can
+        be defined on the page or can be bound to the backing bean as String type.
+        </p> 
+        ]]>
     </description>
     <property-name>type</property-name>
     <property-class>java.lang.String</property-class>
@@ -34,7 +54,9 @@
 
 <property>
     <description>
-        TODO
+        Title for x axis of the chart. Valid for all types of charts except 
+        pie2D and pie3D. The value of this attribute can
+        be defined on the page or can be bound to the backing bean as String type. 
     </description>
     <property-name>xaxisTitle</property-name>
     <property-class>java.lang.String</property-class>
@@ -48,7 +70,9 @@
 
 <property>
     <description>
-        TODO
+        Title for y axis of the chart. Valid for all types of charts except 
+        pie2D and pie3D. The value of this attribute can
+        be defined on the page or can be bound to the backing bean as String type.
     </description>
     <property-name>yaxisTitle</property-name>
     <property-class>java.lang.String</property-class>
@@ -62,7 +86,22 @@
 
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>     
+        This attribute can be used with all types of charts except pie2D and pie3D.
+        Each value of xaxisLabels is connected with a dataset.
+        It can be defined on page or bound to the backing bean.
+     	(e.g.)
+     	<pre>
+     	 &lt;ice:outputChart type="barstacked" 
+        		labels="pass, fail" 
+        		data="70, 30, 10 : 10, 50, 70" 
+        		colors="green, red"
+				xaxisLabels="2001, 2002, 2003"        		
+        		/&gt;   
+       </pre>
+        </p> 
+        ]]>       
     </description>
     <property-name>xaxisLabels</property-name>
     <property-class>java.lang.String</property-class>
@@ -76,7 +115,16 @@
 
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>     
+        The value of this attribute can be defined on page or can be defined 
+        using the backing bean, the valid types for the bean is:
+        	<ul>
+			   <li> String array</li>
+        	   <li> List of java.awt.Color</li>
+			</ul>
+        </p> 
+        ]]> 
     </description>
     <property-name>colors</property-name>
     <property-class>java.lang.Object</property-class>
@@ -90,35 +138,30 @@
 
 <property>
     <description>
-        TODO
-    </description>
-    <property-name>colors</property-name>
-    <property-class>java.lang.Object</property-class>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &stringEditor;
-        </editor-class>
-    </property-extension>
-</property>
+		<![CDATA[ <p>     
+        Data of the chart. The valud of this attribute can be defined on page or
+        can be bound to the backing bean:</br>
+		<b>(e.g.) defining on page</b>
+        <pre> 
+        &lt;ice:outputChart type="pie2d" 
+        		labels="pass, fail" 
+        		data="70, 30" 
+        		colors="green, red"/&gt;
 
-<property>
-    <description>
-        TODO
-    </description>
-    <property-name>data</property-name>
-    <property-class>java.lang.Object</property-class>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &stringEditor;
-        </editor-class>
-    </property-extension>
-</property>
-
-<property>
-    <description>
-        TODO
+        dataset can be defined using the colon ":" 
+        &lt;ice:outputChart type="barstacked" 
+        		labels="pass, fail" 
+        		data="70, 30, 10 : 10, 50, 70" 
+        		colors="green, red"/&gt;
+        </pre><br/>
+       This attribute's value has correlation with the labels and color attribute.
+       <br/> if the value bounded with backing bean:
+           <ul>
+             <li>double or 2d double array</li>
+             <li>List of double or 2d double array</li>
+           </ul>
+        </p>   
+        ]]>           
     </description>
     <property-name>data</property-name>
     <property-class>java.lang.Object</property-class>
@@ -132,7 +175,8 @@
 
 <property>
     <description>
-        TODO
+        Height of the chart. The value of this attribute can
+        be defined on the page or can be bound to the backing bean as String type.
     </description>
     <property-name>height</property-name>
     <property-class>java.lang.String</property-class>
@@ -146,7 +190,8 @@
 
 <property>
     <description>
-        TODO
+        Width of the chart. The value of this attribute can
+        be defined on the page or can be bound to the backing bean as String type.
     </description>
     <property-name>width</property-name>
     <property-class>java.lang.String</property-class>
@@ -160,7 +205,39 @@
 
 <property>
     <description>
-        TODO
+		<![CDATA[ <p>   
+        Legend label of the chart. This attribute can be used for any type of 
+        chart. The value of the labels attribute has correlation with the data 
+        and colors attribute.
+        <br/>
+        When used with pie2D and pie3D the number of values should be same for the
+        labels, data and color attributes. (e.g.)
+        <pre> 
+        &lt;ice:outputChart type="pie2d" 
+        		labels="pass, fail" 
+        		data="70, 30" 
+        		colors="green, red"/&gt;
+         </pre> 
+        When used with other charts except pie, then each labels' value should 
+        be mapped with a dataset. A dataset can be indicated by the colon ":" (e.g.)  
+        <pre>       
+        &lt;ice:outputChart type="barstacked" 
+        		labels="pass, fail" 
+        		data="70, 30, 10: 10, 50, 70" 
+        		colors="green, red"/&gt;
+        </pre> 		
+        The value of labels attribute can be defined on the page:
+        	<ul>
+			   <li> a single word </li>
+        	   <li> comma separated values </li>
+        	</ul>
+        The value of labels attribute can be defined using the backing bean:
+        	<ul>
+			   <li> as String array </li>
+        	   <li> as List of strings </li>
+			</ul>
+        </p> 
+        ]]>        
     </description>
     <property-name>labels</property-name>
     <property-class>java.lang.Object</property-class>
@@ -173,7 +250,25 @@
 </property>
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>The placement of legend label can be set to one of the following:
+        <ul>
+        	<li>top</li/>
+        	<li>bottom</li/> 
+        	<li>left</li/>
+        	<li>right</li/>          	  
+        </ul>     
+        <pre> 
+		(e.g.)
+        &lt;ice:outputChart type="barstacked" 
+        		labels="pass, fail" 
+        		data="70, 30, 10: 10, 50, 70" 
+        		colors="green, red"
+        		legendPlacement="right"/&gt;
+         </pre>         
+         Note: This attribute does not apply on pie3D
+        </p> 
+        ]]>         
     </description>
     <property-name>legendPlacement</property-name>
     <property-class>java.lang.Object</property-class>
@@ -186,7 +281,20 @@
 </property>
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>    
+        The number of columns for legend label.
+        <pre> 
+		(e.g.) To show legend columns vertically
+        &lt;ice:outputChart type="barstacked" 
+        		labels="pass, fail" 
+        		data="70, 30, 10: 10, 50, 70" 
+        		colors="green, red"
+        		legendPlacement="right"
+        		legendColumns="1"/&gt;
+         </pre>    
+        </p> 
+        ]]>                 
     </description>
     <property-name>legendColumns</property-name>
     <property-class>java.lang.Object</property-class>
@@ -197,13 +305,26 @@
         </editor-class>
     </property-extension>
 </property>
-
-
-
-
 <property>
     <description>
-        TODO
+		<![CDATA[
+		<p>     
+        The renderOnSubmit attribute lets the developer decide when to render 
+        the chart. However the chart component ensures that the chart image would 
+        be generated for first rendering phase but subsequent rendering of the
+        chart would be based on this attribute's value.<br/>
+        The value of this attribute can be defined on the page or can be bound 
+        to the backing bean as method binding.
+       <pre>
+       &lt;ice:outputChart  renderOnSubmit="true"/&gt;
+       or
+       &lt;ice:outputChart  renderOnSubmit="#{bean.render}"/&gt;
+       
+       method's signature:
+           public boolean render(OutputChart component)
+       </pre>
+        </p> 
+        ]]>        
     </description>
     <property-name>renderOnSubmit</property-name>
     <property-class>java.lang.Object</property-class>
@@ -214,3 +335,34 @@
         </editor-class>
     </property-extension>
 </property>
+<property>
+    <description>
+		<![CDATA[
+		<p>     
+        This attribute can be used with the line and point chart. <br/>
+        The following are the valid values:
+        <ul>
+        	<li>circle</li>
+        	<li>diamond</li>
+        	<li>square</li>
+        	<li>triangle</li>
+        </ul>
+        The value of this attribute can be defined on page or can be defined 
+        using the backing bean, the valid types for the bean is:
+        	<ul>
+			   <li> String array containging above strings</li>
+        	   <li> List of java.awt.Shape</li>
+			</ul>
+        </p> 
+        ]]>        
+    </description>
+    <property-name>shapes</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
