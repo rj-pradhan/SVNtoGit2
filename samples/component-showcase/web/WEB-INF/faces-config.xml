@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN" "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 <!--
   ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -31,388 +32,343 @@
   ~ this file under either the MPL or the LGPL License."
   ~
   -->
-
-<!DOCTYPE faces-config PUBLIC
-        "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
-        "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
-
-<faces-config>
-
-    
-    <application>
-        <locale-config>
-            <default-locale>en_US</default-locale>
-        </locale-config>
-    </application>
-
-    <managed-bean>
-        <managed-bean-name>inputFile</managed-bean-name>
-        <managed-bean-class>
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+  <application>
+    <locale-config>
+      <default-locale>en_US</default-locale>
+    </locale-config>
+  </application>
+  <managed-bean>
+    <managed-bean-name>inputFile</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.fileUpload.InputFileBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>renderManager</property-name>
-            <value>#{renderManager}</value>
-        </managed-property>
-    </managed-bean>
-
-
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>renderManager</property-name>
+      <value>#{renderManager}</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean>
+    <description>
             Backing bean that controls which content will be displayed and
             the MenuGroupBeans that make up the left navigation of the
             application
         </description>
-        <managed-bean-name>navigation</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>navigation</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.navigation.NavigationBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <description>
             Backing bean for tree naviagation.
         </description>
-        <managed-bean-name>treeNavigation</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>treeNavigation</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.navigation.TreeNavigation
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Managed Bean for dynamic style examples -->
-    <managed-bean>
-        <managed-bean-name>styleBean</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Managed Bean for dynamic style examples -->
+  <managed-bean>
+    <managed-bean-name>styleBean</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.util.StyleBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!--
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!--
          ||||||||||||||||||||||||||||||||||||||||
          Start of Component Example backing beans
          ||||||||||||||||||||||||||||||||||||||||
     -->
-
-    <!-- Tabbed Pane example bean-->
-    <managed-bean>
-        <description>
+  <!-- Tabbed Pane example bean-->
+  <managed-bean>
+    <description>
             Backing bean for tabbed pane example.
         </description>
-        <managed-bean-name>tabbedPaneExample</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>tabbedPaneExample</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.PanelTabSetBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>tabbedPane1Visible</property-name>
-            <value>true</value>
-        </managed-property>
-        <managed-property>
-            <property-name>tabbedPane2Visible</property-name>
-            <value>true</value>
-        </managed-property>
-        <managed-property>
-            <property-name>tabbedPane3Visible</property-name>
-            <value>true</value>
-        </managed-property>
-    </managed-bean>
-     
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>tabbedPane1Visible</property-name>
+      <value>true</value>
+    </managed-property>
+    <managed-property>
+      <property-name>tabbedPane2Visible</property-name>
+      <value>true</value>
+    </managed-property>
+    <managed-property>
+      <property-name>tabbedPane3Visible</property-name>
+      <value>true</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean>
+    <description>
             Backing bean for list example.
         </description>
-        <managed-bean-name>cashier</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>cashier</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.seriesPanel.Cashier
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- Tree Table example bean-->
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Tree Table example bean-->
+  <managed-bean>
+    <description>
             Backing bean for tree example.
         </description>
-        <managed-bean-name>treeExample</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>treeExample</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.tree.TreeBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- Calendar example bean  -->
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Calendar example bean  -->
+  <managed-bean>
+    <description>
             Backing bean for dateSelect example.
         </description>
-        <managed-bean-name>dateSelect</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>dateSelect</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.calendar.SelectInputDateBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Tree Menu backing bean-->
-    <managed-bean>
-        <managed-bean-name>treeMenu</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Tree Menu backing bean-->
+  <managed-bean>
+    <managed-bean-name>treeMenu</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.tree.TreeBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- OutputProgress properties (used for both determinate and indeterminate modes) -->
-    <managed-bean>
-        <managed-bean-name>progressProperty</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- OutputProgress properties (used for both determinate and indeterminate modes) -->
+  <managed-bean>
+    <managed-bean-name>progressProperty</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressPropertyBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <managed-bean-name>progress</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>progress</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressRenderBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property> 
-            <property-name>renderManager</property-name>
-            <value>#{renderManager}</value>
-        </managed-property>
-    </managed-bean>
-    
-    <!-- OutputProgress backing bean (indeterminate mode) -->
-    <managed-bean>
-        <managed-bean-name>progressIndeterminate</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>renderManager</property-name>
+      <value>#{renderManager}</value>
+    </managed-property>
+  </managed-bean>
+  <!-- OutputProgress backing bean (indeterminate mode) -->
+  <managed-bean>
+    <managed-bean-name>progressIndeterminate</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressIndeterminateBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property> 
-            <property-name>renderManager</property-name> 
-            <value>#{renderManager}</value> 
-        </managed-property>
-    </managed-bean>
-    
-    <!-- OutputProgress Render Manager-->
-    <managed-bean>
-        <managed-bean-name>renderManager</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>renderManager</property-name>
+      <value>#{renderManager}</value>
+    </managed-property>
+  </managed-bean>
+  <!-- OutputProgress Render Manager-->
+  <managed-bean>
+    <managed-bean-name>renderManager</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.faces.async.render.RenderManager</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Auto complete user specific values -->
-
-    <managed-bean>
-        <description>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  <!-- Auto complete user specific values -->
+  <managed-bean>
+    <description>
             This bean holds the user-specific autoComplete values and not the dictionary.
         </description>
-        <managed-bean-name>autoCompleteDictionary</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>autoCompleteDictionary</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteDictionary
         </managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <description>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <description>
             This bean holds the user-specific autoComplete values and not the dictionary.
         </description>
-        <managed-bean-name>autoCompleteBean</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>autoCompleteBean</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>dictionary</property-name>
-            <value>#{autoCompleteDictionary.dictionary}</value>
-        </managed-property>
-    </managed-bean>
-    
-    <!-- Drag and Drop backing bean -->
-    <managed-bean>
-        <managed-bean-name>cart</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>dictionary</property-name>
+      <value>#{autoCompleteDictionary.dictionary}</value>
+    </managed-property>
+  </managed-bean>
+  <!-- Drag and Drop backing bean -->
+  <managed-bean>
+    <managed-bean-name>cart</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.dragDrop.CartBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-     <!-- Popup Panel backing bean -->
-    <managed-bean>
-        <managed-bean-name>popup</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Popup Panel backing bean -->
+  <managed-bean>
+    <managed-bean-name>popup</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.popupPanel.PopupBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- Menu Bar backing bean -->
-    <managed-bean>
-        <managed-bean-name>menuBar</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Menu Bar backing bean -->
+  <managed-bean>
+    <managed-bean-name>menuBar</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.menuBar.MenuBarBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Data scroller backing bean  -->
-    <managed-bean>
-        <managed-bean-name>scrollerList</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Data scroller backing bean  -->
+  <managed-bean>
+    <managed-bean-name>scrollerList</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.DataTablePaginatorBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <managed-bean-name>salesRecordsManager</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>salesRecordsManager</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.expandableTable.SalesRecordsManager</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Data Sort Header example -->
-    <managed-bean>
-        <managed-bean-name>dataSortList</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Data Sort Header example -->
+  <managed-bean>
+    <managed-bean-name>dataSortList</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.DataTablePaginatorBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Panel stack example backing bean -->
-    <managed-bean>
-        <managed-bean-name>panelStack</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Panel stack example backing bean -->
+  <managed-bean>
+    <managed-bean-name>panelStack</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.stackingPanel.PanelStackBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>selectedPanel</property-name>
-            <value>mineral</value>
-        </managed-property>
-        <managed-property>
-            <property-name>selectedFruit</property-name>
-            <value>1</value>
-        </managed-property>
-        <managed-property>
-            <property-name>selectedColor</property-name>
-            <value>1</value>
-        </managed-property>
-        <managed-property>
-            <property-name>selectedMineral</property-name>
-            <value>1</value>
-        </managed-property>
-    </managed-bean>
-
-    <managed-bean>
-        <description>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>selectedPanel</property-name>
+      <value>mineral</value>
+    </managed-property>
+    <managed-property>
+      <property-name>selectedFruit</property-name>
+      <value>1</value>
+    </managed-property>
+    <managed-property>
+      <property-name>selectedColor</property-name>
+      <value>1</value>
+    </managed-property>
+    <managed-property>
+      <property-name>selectedMineral</property-name>
+      <value>1</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean>
+    <description>
             Backing bean that controls panel layout
         </description>
-        <managed-bean-name>borderLayout</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-name>borderLayout</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.layoutPanels.borderPanel.BorderLayoutBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Text fields and text areas backing bean -->
-    <managed-bean>
-        <managed-bean-name>textFields</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Text fields and text areas backing bean -->
+  <managed-bean>
+    <managed-bean-name>textFields</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.textEntry.TextFieldsBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Selection components backing bean -->
-    <managed-bean>
-        <managed-bean-name>selectionTags</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Selection components backing bean -->
+  <managed-bean>
+    <managed-bean-name>selectionTags</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.selection.SelectionTagsBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Buttons And Links components backing bean -->
-    <managed-bean>
-        <managed-bean-name>buttonsAndLinks</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Buttons And Links components backing bean -->
+  <managed-bean>
+    <managed-bean-name>buttonsAndLinks</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.buttonsLinks.ButtonsAndLinksBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Panel Grid backing bean -->
-    <managed-bean>
-        <managed-bean-name>table</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Panel Grid backing bean -->
+  <managed-bean>
+    <managed-bean-name>table</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.TableBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Columns backing bean -->
-    <managed-bean>
-        <managed-bean-name>columnsBean</managed-bean-name>
-        <managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Columns backing bean -->
+  <managed-bean>
+    <managed-bean-name>columnsBean</managed-bean-name>
+    <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.ColumnsBean
         </managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-     <!-- Effects Beans -->
-     <managed-bean>
-        <managed-bean-name>effects</managed-bean-name>
-      <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.effects.Effects</managed-bean-class>
-      <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Positioned Panel -->
-    <managed-bean>
-        <managed-bean-name>panelPositioned</managed-bean-name>
-      <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
-      <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Managed Beans for outputChart examples -->
-    <managed-bean>
-        <managed-bean-name>combinedChart</managed-bean-name>
-        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.CombinedChartBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean> 
-    
-    <managed-bean>
-        <managed-bean-name>DynamicPieChart</managed-bean-name>
-        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.DynamicPieChart</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <managed-bean>
-        <managed-bean-name>pieChart</managed-bean-name>
-        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.PieChartBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <managed-bean>
-        <managed-bean-name>chartFactory</managed-bean-name>
-        <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.ChartFactory</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <navigation-rule>
-        <description>Theme Reload</description>
-        <from-view-id>/showcase.iface</from-view-id>
-        <navigation-case>
-            <from-outcome>reload</from-outcome>
-            <to-view-id>/index.jsp</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Effects Beans -->
+  <managed-bean>
+    <managed-bean-name>effects</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.effects.Effects</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Positioned Panel -->
+  <managed-bean>
+    <managed-bean-name>panelPositioned</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <!-- Managed Beans for outputChart examples -->
+  <managed-bean>
+    <managed-bean-name>combinedChart</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.CombinedChartBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>dynamicPieChart</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.DynamicPieChart</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>pieChart</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.PieChartBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+    <managed-bean-name>chartMediator</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.ChartMediator</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <navigation-rule>
+    <description>Theme Reload</description>
+    <from-view-id>/showcase.iface</from-view-id>
+    <navigation-case>
+      <from-outcome>reload</from-outcome>
+      <to-view-id>/index.jsp</to-view-id>
+      <redirect/>
+    </navigation-case>
+  </navigation-rule>
 </faces-config>
