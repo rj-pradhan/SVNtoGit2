@@ -53,82 +53,75 @@ import java.util.Map;
  *
  * @since 1.5
  */
-public class PieChartBean {
-
+public class PieChartBean extends Chart{
+    
     //list of labels for the chart
-    private static List labels = new ArrayList();
-
+    protected static List labels = new ArrayList();
+    
     //list of the data used by the chart
-    private static List data = new ArrayList();
-
+    protected static List data = new ArrayList();
+    
     //list of the colors used in the pie chart
     private List paints;
-
+    
     //list of the saled data from the sales class
     private static final List sales = buildSales();
-
+    
     //a map of the sales data
     private static Map salesMap;
-
+    
     //
-    private String clickedAreaValue = ChartFactory.DEFAULT_STRING;
-
+    private static String clickedAreaValue = ChartMediator.DEFAULT_STRING;
+    
     //a temporary string for the current label
     private String label;
-
+    
     private float value;
-
+    
     //flag to determine if the chart is a 3D pie
     public static boolean is3D = false;
-
+    
     //flag to determine if the graph needs rendering
     private boolean pieNeedsRendering = false;
-
+    
     //the temporary value for the selected color
     private Color selectedColor;
-
+    
     //the highlight effect for when the value selected is changed
-    private Effect effectOutputText = new Highlight("#ffff99");
-
+    private static Effect effectOutputText = new Highlight("#ffff99");
+    
     //index to delete from
     int deletInex = 0;
-
+    
     //list of items to delete
     private List deleteList = new ArrayList();
-
-
-    //array of the available paints used in the chart
-    public static final SelectItem[] availablePaints = new SelectItem[]{
-
-            new SelectItem("black", "Black"),
-            new SelectItem("blue", "Blue"),
-            new SelectItem("cyan", "Cyan"),
-            new SelectItem("darkGray", "Dark Gray"),
-            new SelectItem("gray", "Gray"),
-            new SelectItem("green", "Green"),
-            new SelectItem("red", "Red"),
-            new SelectItem("lightGray", "Light Gray"),
-            new SelectItem("magenta", "Magenta"),
-            new SelectItem("orange", "Orange"),
-            new SelectItem("pink", "Pink"),
-            new SelectItem("red", "Red"),
-            new SelectItem("white", "White"),
-            new SelectItem("yellow", "Yellow")};
-
-
+    
+    
+    
+    
+    public PieChartBean(){
+        super();
+    }
+    
+    
+    
+    
     /**
      * Method to build the sales list and create the chart using the data from
      * the sales class
      *
-     * @return list of sales items for charting. 
+     * @return list of sales items for charting.
      */
     public static ArrayList buildSales() {
+        
         ArrayList salesTemp = new ArrayList();
         salesMap = Sales.getSales();
+        
         Iterator it = salesMap.values().iterator();
         double price;
         String label;
         while (it.hasNext()) {
+            
             Sales[] yearSale = (Sales[]) it.next();
             price = 0;
             label = "";
@@ -139,16 +132,20 @@ public class PieChartBean {
             }
             labels.add(label);
             data.add(new Double(price));
+            
         }
+        
+        
         return salesTemp;
+        
     }
-
-
+    
+    
     /**
      * Method to call the rendering of the chart based on the pieNeedsRendering
      * flag
      *
-     * @param component chart component which will be rendered. 
+     * @param component chart component which will be rendered.
      *
      * @return boolean true if OutputChart should be re-rendered; otherwise, false.
      */
@@ -160,11 +157,11 @@ public class PieChartBean {
             return false;
         }
     }
-
+    
     public static void setIs3D(boolean i3D) {
         is3D = i3D;
     }
-
+    
     /**
      * Method to return whether chart is 3D or not
      *
@@ -173,165 +170,83 @@ public class PieChartBean {
     public static boolean is3D() {
         return is3D;
     }
-
-
-    public SelectItem[] getAvailablePaints() {
-        return availablePaints;
-    }
-
-
-    /**
-     * Mehtod to listen for the change in color in the graph
-     *
-     * @param event JSF value changed event
-     */
-    public void paintChangeListener(ValueChangeEvent event) {
-        if (event.getNewValue() != null) {
-            selectedColor =
-                    AbstractChart.getColor(event.getNewValue().toString());
-        }
-    }
-
-
+    
+    
+    
+    
+    
     public String getLabel() {
         return label;
     }
-
+    
     public void setLabel(String label) {
         if (null == label || label.length() < 1) {
             label = " ";
         }
         this.label = label;
     }
-
+    
     public float getValue() {
         return value;
     }
-
+    
     public void setValue(float value) {
         this.value = value;
     }
-
-    /**
-     * Method to add a value and a color to the chart
-     *
-     * @param event JSF action event.
-     */
-    public void addChart(ActionEvent event) {
-        paints.add(selectedColor);
-        labels.add(label);
-        data.add(new Double(value));
-        Sales[] newEntry = {new Sales(1, "New Product", label)};
-        salesMap.put(label, newEntry);
-        pieNeedsRendering = true;
-    }
-
-
-    public List getDeleteList() {
-        deleteList.clear();
-        deleteList.add(new SelectItem("-1", "Select..."));
-        for (int i = 0; i < labels.size(); i++) {
-            deleteList.add(new SelectItem("" + i, "" + labels.get(i)));
-        }
-        return deleteList;
-    }
-
-    public void setDeleteList(List deleteList) {
-        this.deleteList = deleteList;
-    }
-
-
-    /**
-     * Method to listen for an action to delete from the chart
-     *
-     * @param event JSF value changed event
-     */
-    public void deleteListValueChangeListener(ValueChangeEvent event) {
-        if (event.getNewValue() != null) {
-            deletInex = Integer.parseInt(event.getNewValue().toString());
-        }
-    }
-
-    /**
-     * Method to delete an item from the chart
-     *
-     * @param event JSF action event
-     */
-    public void deleteChart(ActionEvent event) {
-        if (deletInex >= 0 && labels.size() > 1) {
-            labels.remove(deletInex);
-            data.remove(deletInex);
-            paints.remove(deletInex);
-            pieNeedsRendering = true;
-        }
-    }
-
-
+    
+    
+    
+    
+    
     public String getClickedAreaValue() {
         return clickedAreaValue;
     }
-
+    
     public void setClickedAreaValue(String clickedAreaValue) {
         this.clickedAreaValue = clickedAreaValue;
     }
-
-
+    
+    
     public Effect getEffectOutputText() {
         return effectOutputText;
     }
-
+    
     public void setEffectOutputText(Effect effectOutputText) {
         this.effectOutputText = effectOutputText;
     }
-
+    
+    
+    
     /**
-     * Method to listen for the event of a user clicking on the chart and
-     * returning the value selected
-     *
-     * @param event JSF action event
+     *Method to set the displayed table data to that corresponding
+     *with the year clicked
+     *@param String year clicked
      */
-    public void action(ActionEvent event) {
-        if (event.getSource() instanceof OutputChart) {
-            OutputChart chart = (OutputChart) event.getSource();
-            if (chart.getClickedImageMapArea().getLengendLabel() != null) {
-                setClickedAreaValue(ChartFactory.DEFAULT_STRING + chart
-                        .getClickedImageMapArea().getLengendLabel()
-                                    + " : " +
-                                    chart.getClickedImageMapArea().getValue());
-                setSalesForYear(
-                        chart.getClickedImageMapArea().getLengendLabel());
-                effectOutputText.setFired(false);
-
-
-            }
-        }
-    }
-
-    private void setSalesForYear(String year) {
+    public static void setSalesForYear(String year) {
         sales.clear();
         Sales[] yearSales = (Sales[]) salesMap.get(year);
         for (int i = 0; i < yearSales.length; i++) {
             sales.add(yearSales[i]);
         }
     }
-
+    
     public List getSales() {
         return sales;
     }
-
-
+    
+    
     public List getData() {
         return data;
     }
-
+    
     public List getLabels() {
         return labels;
     }
-
+    
     public List getPaints() {
         return paints;
     }
-
+    
     public void setPaints(List paints) {
         this.paints = paints;
     }
