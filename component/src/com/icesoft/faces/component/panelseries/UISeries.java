@@ -399,7 +399,7 @@ public class UISeries extends HtmlDataTable {
 
 
     protected void restoreChildrenState(FacesContext facesContext) {
-        Iterator children = getChildren().iterator();
+        Iterator children = getFacetsAndChildren();
         while (children.hasNext()) {
             UIComponent child = (UIComponent) children.next();
             restoreChildState(facesContext, child);
@@ -415,7 +415,7 @@ public class UISeries extends HtmlDataTable {
         }
         component.setId(id);
         restoreChild(facesContext, component);
-        Iterator children = component.getChildren().iterator();
+        Iterator children = component.getFacetsAndChildren();
         while (children.hasNext()) {
             restoreChildState(facesContext, (UIComponent) children.next());
         }
@@ -470,7 +470,7 @@ public class UISeries extends HtmlDataTable {
     }
 
     protected void saveChildrenState(FacesContext facesContext) {
-        Iterator children = getChildren().iterator();
+        Iterator children = getFacetsAndChildren();
         while (children.hasNext()) {
             UIComponent child = (UIComponent) children.next();
             saveChildState(facesContext, child);
@@ -480,7 +480,7 @@ public class UISeries extends HtmlDataTable {
     protected void saveChildState(FacesContext facesContext,
                                   UIComponent component) {
         saveChild(facesContext, component);
-        Iterator children = component.getChildren().iterator();
+        Iterator children = component.getFacetsAndChildren();
         while (children.hasNext()) {
             saveChildState(facesContext, (UIComponent) children.next());
         }
