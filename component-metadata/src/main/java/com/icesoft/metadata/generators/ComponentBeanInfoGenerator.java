@@ -1,9 +1,32 @@
+/*
+ * The contents of this file are subject to the terms of the Common Development
+ * and Distribution License (the License). You may not use this file except in
+ * compliance with the License.
+ *
+ * You can obtain a copy of the License at http://www.netbeans.org/cddl.html
+ * or http://www.netbeans.org/cddl.txt.
+ *
+ * When distributing Covered Code, include this CDDL Header Notice in each file
+ * and include the License file at http://www.netbeans.org/cddl.txt.
+ * If applicable, add the following below the CDDL Header, with the fields
+ * enclosed by brackets [] replaced by your own identifying information:
+ * "Portions Copyrighted [year] [name of copyright owner]"
+ * 
+ * Copyright 2006 Sun Microsystems, Inc. All Rights Reserved
+ * 
+ */
+
 package com.icesoft.metadata.generators;
 
 import com.icesoft.jsfmeta.util.FilterComponentBeanProperties;
 import com.sun.rave.jsfmeta.beans.*;
 import java.io.*;
 import java.util.*;
+
+/*
+ * ComponentBeanInfoGenerator generates IDE specific beaninfo 
+ *
+ */
 
 public class ComponentBeanInfoGenerator extends AbstractGenerator {
 
@@ -169,15 +192,17 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 				componentResourceBundle(packageKey, langKey, stringsByKey);
 			}
 		}
-
 	}
 
 	private void beanDescriptor(ComponentBean cb, RendererBean rb)
 			throws IOException {
+            
 		String implBD = this.implBD;
 		int period = implBD.lastIndexOf(".");
-		if (period >= 0)
+		if (period >= 0){
 			implBD = implBD.substring(period + 1);
+                }
+                
 		String packageName = packageName(cb);
 		String simpleClassName = simpleClassName(cb.getComponentClass());
 		JavaSourceWriter writer = getWriter();
@@ -186,8 +211,7 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		DescriptionBean description = cb.getDescription("");
 		DescriptionBean descriptions[] = cb.getDescriptions();
 		writer.startJavaDoc();
-		writer
-				.emitJavaDoc("<p>Return the <code>BeanDescriptor</code> for this bean.</p>");
+		writer.emitJavaDoc("<p>Return the <code>BeanDescriptor</code> for this bean.</p>");
 		writer.endJavaDoc();
 		writer.startMethod("getBeanDescriptor", "BeanDescriptor", null, null);
 		writer.emitNewline();
@@ -198,6 +222,7 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		writer.emitExpression("}", true);
 		writer.emitNewline();
 		if (cb.getCustomizerClass() != null) {
+                    
 			writer.emitExpression("Class clazz = null;", true);
 			writer.emitExpression("try {", true);
 			writer.indent();
@@ -227,8 +252,7 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 				+ ");", true);
 		writer.emitExpression("beanDescriptor.setPreferred(" + cb.isPreferred()
 				+ ");", true);
-		writer
-				.emitExpression(
+		writer.emitExpression(
 						"beanDescriptor.setValue(Constants.BeanDescriptor.FACET_DESCRIPTORS,getFacetDescriptors());",
 						true);
 		if (rb.getComponentHelpKey() != null)
@@ -237,68 +261,86 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 							+ writer.toJavaString(rb.getComponentHelpKey()
 									.trim()) + ");", true);
 		String instanceName = rb.getInstanceName();
-		if (instanceName == null)
+		
+                if (instanceName == null){
 			instanceName = simpleInstanceName(cb, rb);
-		if (instanceName != null)
+                }
+                
+		if (instanceName != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.INSTANCE_NAME,"
 							+ writer.toJavaString(instanceName.trim()) + ");",
 					true);
+                }
 		writer.emitExpression(
 				"beanDescriptor.setValue(Constants.BeanDescriptor.IS_CONTAINER,"
 						+ (rb.isContainer() ? "Boolean.TRUE" : "Boolean.FALSE")
 						+ ");", true);
-		String markupSection = rb.getMarkupSection();
-		if (markupSection == null)
+		
+                String markupSection = rb.getMarkupSection();
+		if (markupSection == null){
 			markupSection = getDefaultMarkupSection();
-		if (markupSection != null)
+                }
+		if (markupSection != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.MARKUP_SECTION,"
 							+ writer.toJavaString(markupSection.toLowerCase()
 									.trim()) + ");", true);
-		if (rb.getPropertiesHelpKey() != null)
+                }
+		if (rb.getPropertiesHelpKey() != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.PROPERTIES_HELP_KEY,"
 							+ writer.toJavaString(rb.getPropertiesHelpKey()
 									.trim()) + ");", true);
+                }
+                
 		writer
 				.emitExpression(
 						"beanDescriptor.setValue(Constants.BeanDescriptor.PROPERTY_CATEGORIES,getCategoryDescriptors());",
 						true);
-		if (rb.getResizeConstraints() != null)
+                
+		if (rb.getResizeConstraints() != null){
 			writer
 					.emitExpression(
 							"beanDescriptor.setValue(Constants.BeanDescriptor.RESIZE_CONSTRAINTS,new Integer(Constants.ResizeConstraints."
 									+ rb.getResizeConstraints().toUpperCase()
 											.trim() + "));", true);
+                }
 		String tagName = rb.getTagName();
-		if (tagName == null && !cb.isNonVisual())
+		if (tagName == null && !cb.isNonVisual()){
 			tagName = simpleTagName(cb, rb);
-		if (tagName != null)
+                }
+		if (tagName != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.TAG_NAME,"
 							+ writer.toJavaString(tagName.trim()) + ");", true);
+                }
 		String taglibPrefix = rb.getTaglibPrefix();
-		if (taglibPrefix == null)
+		if (taglibPrefix == null){
 			taglibPrefix = getDefaultTaglibPrefix();
-		if (taglibPrefix != null)
+                }
+		if (taglibPrefix != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.TAGLIB_PREFIX,"
 							+ writer.toJavaString(taglibPrefix.trim()) + ");",
 					true);
+                }
 		String taglibURI = rb.getTaglibURI();
-		if (taglibURI == null)
+		if (taglibURI == null){
 			taglibURI = getDefaultTaglibURI();
-		if (taglibURI != null)
+                }
+		if (taglibURI != null){
 			writer.emitExpression(
 					"beanDescriptor.setValue(Constants.BeanDescriptor.TAGLIB_URI,"
 							+ writer.toJavaString(taglibURI.trim()) + ");",
 					true);
-		if (cb.isNonVisual() || rb.isNonVisual())
+                }
+		if (cb.isNonVisual() || rb.isNonVisual()){
 			writer
 					.emitExpression(
 							"beanDescriptor.setValue(Constants.BeanDescriptor.TRAY_COMPONENT,Boolean.TRUE);",
 							true);
+                }
 		Map namedValues = rb.getNamedValues();
 		String key;
 		String expression;
@@ -316,9 +358,10 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		}
 
 		writer.emitNewline();
-		if (raveBaseBI())
+		if (raveBaseBI()){
 			writer.emitExpression("annotateBeanDescriptor(beanDescriptor);",
 					true);
+                }
 		writer.emitExpression("return beanDescriptor;", true);
 		writer.emitNewline();
 		writer.endMethod();
@@ -326,10 +369,12 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 	}
 
 	private void body(ComponentBean cb, RendererBean rb) throws IOException {
+            
 		String baseBI = this.baseBI;
 		int period = baseBI.lastIndexOf(".");
-		if (period >= 0)
+		if (period >= 0){
 			baseBI = baseBI.substring(period + 1);
+                }
 		JavaSourceWriter writer = getWriter();
 		String simple = simpleClassName(cb.getComponentClass());
 		simple = simple + (getBase() ? "BeanInfoBase" : "BeanInfo");
@@ -343,6 +388,7 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 							+ ".class.getClassLoader());", true);
 			writer.emitNewline();
 		}
+                
 		constructor(cb, rb);
 		instance(cb, rb);
 		beanDescriptor(cb, rb);
@@ -1209,17 +1255,19 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		if (period >= 0)
 			cname = cname.substring(period + 1);
 		String rname = rb.getRendererType();
-		if (rname == null)
+		if (rname == null){
 			rname = "";
+                }
 		period = rname.lastIndexOf('.');
 		if (period >= 0)
 			rname = rname.substring(period + 1);
-		if (cname.equalsIgnoreCase(rname) || rname.length() < 1)
+		if (cname.equalsIgnoreCase(rname) || rname.length() < 1){
 			return Character.toLowerCase(cname.charAt(0)) + cname.substring(1);
-		else
+                }else{
 			return Character.toLowerCase(cname.charAt(0)) + cname.substring(1)
 					+ Character.toUpperCase(rname.charAt(0))
 					+ rname.substring(1);
+                }
 	}
 
 	private String simpleTagName(ComponentBean cb, RendererBean rb) {
@@ -1233,15 +1281,17 @@ public class ComponentBeanInfoGenerator extends AbstractGenerator {
 		period = rname.lastIndexOf('.');
 		if (period >= 0)
 			rname = rname.substring(period + 1);
-		if (cname.equalsIgnoreCase(rname) || rname.length() < 1)
+		if (cname.equalsIgnoreCase(rname) || rname.length() < 1){
 			return Character.toLowerCase(cname.charAt(0)) + cname.substring(1);
-		else
+                }else{
 			return Character.toLowerCase(cname.charAt(0)) + cname.substring(1)
 					+ Character.toUpperCase(rname.charAt(0))
 					+ rname.substring(1);
+                }
 	}
 
 	protected String trimWhitespace(String string) {
+            
 		StringBuffer buffer = new StringBuffer(string.length());
 		boolean eatingWhite = true;
 		for (int i = 0; i < string.length(); i++) {

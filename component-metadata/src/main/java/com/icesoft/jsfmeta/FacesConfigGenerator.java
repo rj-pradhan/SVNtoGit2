@@ -1,6 +1,7 @@
 /*
- * faces-Config.xml Parser Helper
+ * FacesConfigGenerator based on generated class from dtd. 
  * 
+ * It merges component's faces-config.xml with custom renderer defined in webui-faces-config.xml
  */
 
 package com.icesoft.jsfmeta;

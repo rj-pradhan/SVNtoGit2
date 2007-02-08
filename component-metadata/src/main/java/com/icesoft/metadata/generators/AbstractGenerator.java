@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.render.RenderKitFactory;
@@ -28,10 +26,13 @@ import com.sun.rave.jsfmeta.beans.RendererBean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+ * Base Generator 
+ *
+ */
+        
 public abstract class AbstractGenerator {
 
-
-	private static final ResourceBundle bundle;
 
 	protected static Map defaults;
 
@@ -59,9 +60,6 @@ public abstract class AbstractGenerator {
 	
 	static {
 		
-		bundle = ResourceBundle.getBundle("com.icesoft.metadata.Bundle", Locale
-				.getDefault(),Thread.currentThread()
-		.getContextClassLoader());
 		defaults = new HashMap();
 		defaults.put("boolean", "false");
 		defaults.put("byte", "Byte.MIN_VALUE");
@@ -225,8 +223,7 @@ public abstract class AbstractGenerator {
 		ComponentBean bcb = getConfig().getComponent(baseComponentType);
 		if (bcb == null) {
 			
-			logger.log(Level.SEVERE, " invalid base component");
-			
+			logger.log(Level.SEVERE, " invalid base component");			
 			throw new IllegalArgumentException(" invalid base component");
 		} else {
 			return bcb;
@@ -238,10 +235,10 @@ public abstract class AbstractGenerator {
 	}
 
 	public String componentFamily(ComponentBean cb) {
-		ComponentBean bcb = null;
+            
 		String componentFamily = cb.getComponentFamily();
 		if (componentFamily == null) {
-			bcb = baseComponent(cb);
+			ComponentBean bcb = baseComponent(cb);
 			do {
 				if ((componentFamily != null) || (bcb == null)) {
 					break;
@@ -256,6 +253,7 @@ public abstract class AbstractGenerator {
 	}
 
 	protected FacetBean[] facets(ComponentBean cb, RendererBean rb) {
+            
 		List components = new ArrayList();
 		components.add(cb);
 		ComponentBean current = cb;
@@ -267,6 +265,7 @@ public abstract class AbstractGenerator {
 			components.add(bcb);
 			current = bcb;
 		} while (true);
+                
 		List facets = new ArrayList();
 		FacetBean f[] = null;
 		for (int i = components.size() - 1; i >= 0; i--) {
@@ -297,7 +296,7 @@ public abstract class AbstractGenerator {
 	}
 
 	protected boolean generated(String fqcn) {
-		// System.out.println("&&&&generated ="+ fqcn);
+            
 		for (int i = 0; i < excludes.length; i++) {
 			if (fqcn.equals(excludes[i])) {
 				return false;
@@ -359,6 +358,7 @@ public abstract class AbstractGenerator {
 	}
 
 	protected RendererBean renderer(ComponentBean cb) {
+            
 		String rendererType = rendererType(cb);
 		if (rendererType == null) {
 			return null;
@@ -372,20 +372,17 @@ public abstract class AbstractGenerator {
 
 		RenderKitBean renderKitBean = getConfig().getRenderKit(
 				getDefaultRenderKitId());
-		// System.out.println("renderKit="+ renderKitBean.getRenderKitId());
+		logger.log(Level.FINEST, "renderKit="+ renderKitBean.getRenderKitId());
 
 		RendererBean rb = renderKitBean.getRenderer(componentFamily,
 				rendererType);
 
 		if (rb == null) {
-			System.out.println("### RenderBean componentFamily="
+			logger.log(Level.SEVERE, "RenderBean componentFamily="
 					+ componentFamily + " rendererType=" + rendererType);
 		}
-		// System.out.println("renderbean
-		// className="+rb.getClass().getName()+"### render bean instance Name"+
-		// rb.getInstanceName());
-		if (rb == null) {
-			
+
+		if (rb == null) {			
 			logger.log(Level.SEVERE, "InvalidRendererType");			
 			throw new IllegalArgumentException("InvalidRendererType");
 		} else {
@@ -394,10 +391,10 @@ public abstract class AbstractGenerator {
 	}
 
 	public String rendererType(ComponentBean cb) {
-		ComponentBean bcb = null;
+            
 		String rendererType = cb.getRendererType();
 		if (rendererType == null) {
-			bcb = baseComponent(cb);
+			ComponentBean bcb = baseComponent(cb);
 			do {
 				if ((rendererType != null) || (bcb == null)) {
 					break;
@@ -412,6 +409,7 @@ public abstract class AbstractGenerator {
 	}
 
 	protected String simpleClassName(String fqcn) {
+            
 		int last = fqcn.lastIndexOf('.');
 		if (last >= 0) {
 			return fqcn.substring(last + 1);
@@ -421,13 +419,13 @@ public abstract class AbstractGenerator {
 	}
 
 	private FacetBean lookupFacet(List list, String name) {
+            
 		for (Iterator facets = list.iterator(); facets.hasNext();) {
 			FacetBean facet = (FacetBean) facets.next();
 			if (name.equals(facet.getFacetName())) {
 				return facet;
 			}
 		}
-
 		return null;
 	}
 

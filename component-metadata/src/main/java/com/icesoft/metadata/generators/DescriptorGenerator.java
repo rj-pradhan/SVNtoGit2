@@ -16,10 +16,12 @@ import com.sun.rave.jsfmeta.beans.ComponentBean;
 import com.sun.rave.jsfmeta.beans.DescriptionBean;
 import com.sun.rave.jsfmeta.beans.PropertyBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
+import java.util.logging.Level;
 
 public class DescriptorGenerator extends AbstractGenerator {
 
 	public DescriptorGenerator() {
+            
 		attributes = new TreeMap();
 		writer = null;
 		base = false;
@@ -88,18 +90,17 @@ public class DescriptorGenerator extends AbstractGenerator {
 	}
 
 	public void generate() throws IOException {
+            
 		File outputFile = new File(getDest(), getDescriptor());
 		outputFile.mkdirs();
 		outputFile.delete();
 		writer = new PrintWriter(new BufferedWriter(new FileWriter(outputFile)));
-		System.out.println("Generate " + outputFile.getAbsoluteFile());
+		logger.log(Level.INFO, "Generate " + outputFile.getAbsoluteFile());
 		license();
 		header();
 		validators();
 		listeners();
 		components();
-
-		// todo: move to metadata
 		jspTagOnly();
 
 		footer();
@@ -109,6 +110,7 @@ public class DescriptorGenerator extends AbstractGenerator {
 
 	private void attribute(ComponentBean cb, RendererBean rb, PropertyBean pb)
 			throws IOException {
+            
 		StringBuffer sb = new StringBuffer();
 		sb.append("    <attribute>\n");
 		sb.append("      <name>" + pb.getPropertyName() + "</name>\n");
@@ -140,23 +142,26 @@ public class DescriptorGenerator extends AbstractGenerator {
 	private void attributes(ComponentBean cb, RendererBean rb, Set set)
 			throws IOException {
 		PropertyBean pbs[] = cb.getProperties();
-		if (pbs == null)
+		if (pbs == null){
 			pbs = new PropertyBean[0];
+                }
 		for (int i = 0; i < pbs.length; i++) {
 			if (set.contains(pbs[i].getPropertyName()))
 				continue;
 			set.add(pbs[i].getPropertyName());
 			PropertyBean pb = merge(pbs[i], rb.getAttribute(pbs[i]
 					.getPropertyName()));
-			if (!pb.isSuppressed() && pb.isTagAttribute())
+			if (!pb.isSuppressed() && pb.isTagAttribute()){
 				attribute(cb, rb, pb);
+                        }
 		}
 
 		String baseComponentType = cb.getBaseComponentType();
 		if (baseComponentType != null) {
 			ComponentBean bcb = getConfig().getComponent(baseComponentType);
-			if (bcb != null)
+			if (bcb != null){
 				attributes(bcb, rb, set);
+                        }
 		}
 	}
 
@@ -164,19 +169,21 @@ public class DescriptorGenerator extends AbstractGenerator {
 		if (cb.isSuppressed())
 			return;
 		RendererBean rb = renderer(cb);
-		// if(cb == null){
-		// System.out.println("####component bean is null");
-		// }else{
-		// System.out.println("component bean class ="+cb.getClass().getName()+"
-		// "
-		// +"RendererBean comp family="+cb.getComponentFamily()+" componentBean
-		// rendertype="
-		// + cb.getRendererType());
-		// }
-		if (rb == null)
+                
+		if(cb == null){
+                    logger.log(Level.SEVERE, "component bean is null");
+                }else{
+                    logger.log(Level.FINEST, "component bean class ="+cb.getClass().getName()+
+                            "RendererBean comp family="+cb.getComponentFamily()+
+                            "componentBean rendertype"+cb.getRendererType());
+                }
+                
+		if (rb == null){
 			rb = new RendererBean();
-		if (rb.getTagName() == null)
+                }
+		if (rb.getTagName() == null){
 			return;
+                }
 		writer.println("  <tag>");
 		writer.println();
 		writer.println("    <name>" + rb.getTagName() + "</name>");
@@ -210,14 +217,13 @@ public class DescriptorGenerator extends AbstractGenerator {
 	private void components() throws IOException {
 		ComponentBean cbs[] = getConfig().getComponents();
 		for (int i = 0; i < cbs.length; i++) {
-			// System.out.println("$$ component="+ cbs[i].getRendererType());
+			logger.log(Level.FINEST,  "component = "+ cbs[i].getRendererType());
 			if (generated(cbs[i].getComponentClass())) {
 
 				if (cbs[i] == null) {
-					// System.out.println("component is null"+ cbs[i]);
+					logger.log(Level.SEVERE, "component is null");
 				} else {
-					// System.out.println("component class="+
-					// cbs[i].getComponentClass());
+                                        logger.log(Level.FINEST, "component class="+cbs[i].getComponentClass());
 					component(cbs[i]);
 				}
 			}
@@ -226,7 +232,7 @@ public class DescriptorGenerator extends AbstractGenerator {
 	}
 
 	/*
-	 * todo: move to metadata. jsp tag only
+	 * TODO: move to metadata. jsp tag only
 	 */
 	private void jspTagOnly() {
 

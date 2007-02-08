@@ -1,6 +1,6 @@
 /*
  * faces-Config.xml Parser Helper
- * 
+ *
  */
 
 package com.icesoft.jsfmeta.util;
@@ -24,92 +24,83 @@ import com.sun.rave.jsfmeta.beans.RenderKitBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 
 public class FacesConfigParserHelper {
-	
-	private String fileName;
-	
-	public FacesConfigParserHelper(String file){
-		fileName = file;
-	}
-	
-	public static void main(String[] args){
-		String tmp = "./src/main/resources/conf/webui-faces-config.xml";
-		FacesConfigParserHelper helper = new FacesConfigParserHelper(tmp);
-		helper.getRendererBeans();
-		
-	}
-	
-	public static void validate(String filePath) {
-
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
-				.newInstance();
-		documentBuilderFactory.setValidating(true);
-
-		DocumentBuilder documentBuilder = null;
-		try {
-			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-
-		documentBuilder.setErrorHandler(new ErrorHandler() {
-			public void error(SAXParseException e) {
-				e.printStackTrace();
-			}
-
-			public void fatalError(SAXParseException e) throws SAXException {
-				e.printStackTrace();
-			}
-
-			public void warning(SAXParseException e) {
-				e.printStackTrace();
-			}
-		});
-
-		try {
-			documentBuilder.parse(new File(filePath));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-
-		}
-	}
-	
-	
-	
-	/*
-	 * return Javascript attribute property for example: onclick
-	 */
-	public RendererBean[] getRendererBeans() {
-
-		RendererBean[] rd = null;
-		MetadataXmlParser metadataParser = new MetadataXmlParser();
-		metadataParser.setDesign(false);
-
-		try {	
-		
-			
-			System.out.println("parse file ="+ fileName);
-			File file = new File(fileName);
-
-			FacesConfigBean facesConfigBean = metadataParser.parse(file);
-			RenderKitBean renderKitBean = facesConfigBean.getRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-			RendererBean[] rendererBeans = renderKitBean.getRenderers();
-			
-			rd = rendererBeans;
-
-			for (int i = 0; i < rendererBeans.length; i++) {
-				//System.out.println(" render bean= "+ rendererBeans[i].getRendererType());
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
-
-		return rd;
-	}
-
+    
+    private String fileName;
+    
+    public FacesConfigParserHelper(String file){
+        fileName = file;
+    }
+    
+    public static void main(String[] args){
+        String tmp = "./src/main/resources/conf/webui-faces-config.xml";
+        FacesConfigParserHelper helper = new FacesConfigParserHelper(tmp);
+        helper.getRendererBeans();
+        
+    }
+    
+    public static void validate(String filePath) {
+        
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
+                .newInstance();
+        documentBuilderFactory.setValidating(true);
+        
+        DocumentBuilder documentBuilder = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        
+        documentBuilder.setErrorHandler(new ErrorHandler() {
+            public void error(SAXParseException e) {
+                e.printStackTrace();
+            }
+            
+            public void fatalError(SAXParseException e) throws SAXException {
+                e.printStackTrace();
+            }
+            
+            public void warning(SAXParseException e) {
+                e.printStackTrace();
+            }
+        });
+        
+        try {
+            documentBuilder.parse(new File(filePath));
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+            
+        }
+    }
+    
+    
+    
+        /*
+         * return Javascript attribute property for example: onclick
+         */
+    public RendererBean[] getRendererBeans() {
+        
+        RendererBean[] rd = null;
+        MetadataXmlParser metadataParser = new MetadataXmlParser();
+        metadataParser.setDesign(false);
+        
+        try {
+            
+            File file = new File(fileName);
+            FacesConfigBean facesConfigBean = metadataParser.parse(file);
+            RenderKitBean renderKitBean = facesConfigBean.getRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT);
+            RendererBean[] rendererBeans = renderKitBean.getRenderers();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+        
+        return rd;
+    }
+    
 }

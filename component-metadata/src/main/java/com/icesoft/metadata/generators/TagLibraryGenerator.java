@@ -142,8 +142,8 @@ public class TagLibraryGenerator extends AbstractGenerator {
         } else {
             String componentClass = cb.getComponentClass();
             if (componentClass.indexOf(".ext.") > 0) {
-                // System.out.println("tag class name="+
-                // simpleClassName(cb.getComponentClass()));
+                logger.log(Level.FINEST, "tag class name="+simpleClassName(cb.getComponentClass()));
+
                 tagClass = tagClassPackage
                         + "."
                         + stripHtmlName(
@@ -196,8 +196,9 @@ public class TagLibraryGenerator extends AbstractGenerator {
         if (tagClassPackage == null) {
             String componentClass = cb.getComponentClass();
             int last = componentClass.lastIndexOf('.');
-            if (last >= 0)
+            if (last >= 0){
                 writer.emitPackage(componentClass.substring(0, last));
+            }
         } else {
             String componentClass = cb.getComponentClass();
             if (componentClass.indexOf(".ext.") > 0) {
@@ -310,7 +311,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
                             "javax.faces.component.UIData",
                             "com.icesoft.faces.component.panelseries.UISeries",
                             "com.icesoft.faces.component.panelseries.UISeries" };
-                        // System.out.println("var class name="+ className);
+                        logger.log(Level.FINEST, "var class name="+ className);
                         for (int v = 0; v < hasVarClassArray.length; v++) {
                             
                             if (className.equalsIgnoreCase(hasVarClassArray[v])) {
@@ -503,11 +504,8 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     
                     
                 } else if("dragListener".equalsIgnoreCase(name)){
-                    System.out.println("Generating Method Binding for drag Listener");
-//	                Class[] ca = ca = new Class[]{PanelPositionedEvent.class};
-//	                MethodBinding mb = getFacesContext().getApplication()
-//	                        .createMethodBinding(listener, ca);
-//	                series.setListener(mb);
+                    logger.log(Level.FINEST, "Generating Method Binding for drag Listener");
+
                     writer.emitExpression("if (isValueReference(" + var
                             + ")) {", true);
                     writer.indent();
@@ -531,10 +529,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
                 }
                 
                 else if("dropListener".equalsIgnoreCase(name)){
-//	                Class[] ca = ca = new Class[]{PanelPositionedEvent.class};
-//	                MethodBinding mb = getFacesContext().getApplication()
-//	                        .createMethodBinding(listener, ca);
-//	                series.setListener(mb);
+
                     writer.emitExpression("if (isValueReference(" + var
                             + ")) {", true);
                     writer.indent();

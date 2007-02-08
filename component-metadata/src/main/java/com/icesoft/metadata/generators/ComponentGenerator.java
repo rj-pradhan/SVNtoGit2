@@ -1,3 +1,20 @@
+/*
+ * The contents of this file are subject to the terms of the Common Development
+ * and Distribution License (the License). You may not use this file except in
+ * compliance with the License.
+ *
+ * You can obtain a copy of the License at http://www.netbeans.org/cddl.html
+ * or http://www.netbeans.org/cddl.txt.
+ *
+ * When distributing Covered Code, include this CDDL Header Notice in each file
+ * and include the License file at http://www.netbeans.org/cddl.txt.
+ * If applicable, add the following below the CDDL Header, with the fields
+ * enclosed by brackets [] replaced by your own identifying information:
+ * "Portions Copyrighted [year] [name of copyright owner]"
+ * 
+ * Copyright 2006 Sun Microsystems, Inc. All Rights Reserved
+ * 
+ */
 package com.icesoft.metadata.generators;
 
 import java.io.BufferedWriter;
@@ -41,11 +58,12 @@ public class ComponentGenerator extends AbstractGenerator {
 	}
 
 	public void generate() throws IOException {
+            
 		ComponentBean cbs[] = getConfig().getComponents();
-		for (int i = 0; i < cbs.length; i++)
+		for (int i = 0; i < cbs.length; i++){
 			if (generated(cbs[i].getComponentClass()))
 				generate(cbs[i]);
-
+                }
 	}
 	
 	private boolean isAliasFor(PropertyBean[] pbs){
@@ -192,6 +210,7 @@ public class ComponentGenerator extends AbstractGenerator {
 	}
 
 	private void header(ComponentBean cb) throws IOException {
+            
 		ComponentBean bcb = null;
 		String baseComponentType = cb.getBaseComponentType();
 		if (baseComponentType != null)
@@ -215,10 +234,12 @@ public class ComponentGenerator extends AbstractGenerator {
 		writer.emitNewline();
 		writer.startJavaDoc();
 		DescriptionBean db = null;
-		if (isOverride() && rb != null)
+		if (isOverride() && rb != null){
 			db = rb.getDescription("");
-		if (db == null)
+                }
+		if (db == null){
 			db = cb.getDescription("");
+                }
 		if (db != null) {
 			String description = db.getDescription();
 			if (description != null && description.length() > 0)
@@ -229,12 +250,13 @@ public class ComponentGenerator extends AbstractGenerator {
 		writer.emitJavaDoc("<strong>will</strong> be lost!</p>");
 		writer.endJavaDoc();
 		writer.emitNewline();
-		if (bcb != null)
+		if (bcb != null){
 			writer.startClass(simple, bcb.getComponentClass(), null, true,
 					getBase());
-		else
+                }else{
 			writer.startClass(simple, "javax.faces.component.UIComponentBase",
 					null, true, getBase());
+                }
 		writer.emitNewline();
 	}
 
@@ -246,25 +268,31 @@ public class ComponentGenerator extends AbstractGenerator {
 
 	private void properties(ComponentBean cb) throws IOException {
 		PropertyBean pbs[] = cb.getProperties();
-		if (pbs == null)
+		if (pbs == null){
 			return;
-		for (int i = 0; i < pbs.length; i++)
-			if (!pbs[i].isSuppressed())
+                }
+		for (int i = 0; i < pbs.length; i++){
+			if (!pbs[i].isSuppressed()){
 				property(cb, pbs[i]);
+                        }
+                }
 
 	}
 
 	private void property(ComponentBean cb, PropertyBean pb) throws IOException {
 		String name = pb.getPropertyName();
 		String type = pb.getPropertyClass();
-		if (type == null)
+		if (type == null){
 			type = "String";
-		else if (type.startsWith("java.lang."))
+                }
+		else if (type.startsWith("java.lang.")){
 			type = type.substring(10);
+                }
 		RendererBean rb = renderer(cb);
 		AttributeBean ab = null;
-		if (rb != null)
+		if (rb != null){
 			ab = rb.getAttribute(pb.getPropertyName());
+                }
 		String var = mangle(name);
 		JavaSourceWriter writer = getWriter();
 		String aliasFor = pb.getAliasFor();
@@ -285,28 +313,33 @@ public class ComponentGenerator extends AbstractGenerator {
 					throw new IllegalArgumentException(aliasFor);
 			}
 			String aliasType = pb1.getPropertyClass();
-			if (aliasType == null)
+                        
+			if (aliasType == null){
 				aliasType = "String";
-			else if (aliasType.startsWith("java.lang."))
+                        }else if (aliasType.startsWith("java.lang.")){
 				aliasType = aliasType.substring(10);
+                        }
 			writer.emitExpression("// " + name, true);
 			String readMethod = null;
 			if (!pb.isWriteOnly()) {
 				DescriptionBean db = null;
-				if (isOverride() && ab != null)
+				if (isOverride() && ab != null){
 					db = ab.getDescription("");
-				if (db == null)
+                                }
+				if (db == null){
 					db = pb.getDescription("");
+                                }
 				if (db != null) {
 					String description = db.getDescription();
 					if (description != null && description.length() > 0) {
 						writer.startJavaDoc();
 						description = description.trim();
-						if (description.startsWith("<"))
+						if (description.startsWith("<")){
 							writer.emitJavaDocMultiLine(description);
-						else
+                                                }else{
 							writer.emitJavaDocMultiLine("<p>" + description
 									+ "</p>");
+                                                }
 						writer.endJavaDoc();
 					}
 				}
@@ -325,11 +358,13 @@ public class ComponentGenerator extends AbstractGenerator {
 					sb.append(") ");
 				}
 				String aliasMethod = pb1.getReadMethod();
-				if (aliasMethod == null)
-					if ("boolean".equals(aliasType))
+				if (aliasMethod == null){
+					if ("boolean".equals(aliasType)){
 						aliasMethod = "is" + capitalize(aliasFor);
-					else
+                                        }else{
 						aliasMethod = "get" + capitalize(aliasFor);
+                                        }
+                                }
 				sb.append(aliasMethod);
 				sb.append("();");
 				writer.emitExpression(sb.toString(), true);

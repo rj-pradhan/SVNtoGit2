@@ -3,7 +3,7 @@
     <property name="maven.build.output" value="target/classes" />
     <property name="project.build.directory" value="target" />
     <property name="maven.build.directory" value="target" />
-    <property name="maven.build.final.name" value="component-metadata-1.0-SNAPSHOT" />
+    <property name="maven.build.final.name" value="component-metadata-1.0" />
     <property name="maven.test.reports" value="${maven.build.directory}/test-reports" />
     <property name="maven.test.output" value="target/test-classes" />
     <property name="lib.dir" location="../lib" />
@@ -12,7 +12,7 @@
     <property name="project.package" value="com.icesoft" />
     <property name="project.artifact" value="component" />
     <property name="project.artifact.version" value="icefaces-webui" />
-
+    
     <!-- todo: change package name later -->
     <property name="project.taglib.package" value="${project.package}.faces.component" />
     <property name="project.taglib.prefix" value="ice" />
@@ -36,7 +36,7 @@
             </srcfiles>
         </uptodate>
     </target>
-
+    
     <target name="compile" description="Compile the code">
         <echo message="---------- ${project.title} ----------" />
         <filter token="title" value="${project.title}" />
@@ -56,10 +56,10 @@
             <fileset dir="src/main/resources" />
         </copy>
     </target>
-
-        <!-- Creator 2 generator -->
-        <target name="creator2-generator" description="code generator" depends="conf-changed,compile" unless="conf-uptodate">
-        <!-- validate meatdata xml file -->
+    
+    <!-- Creator 2 generator -->
+    <target name="creator2-generator" description="code generator" depends="conf-changed,compile" unless="conf-uptodate">
+        <!-- validate -->
         <java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
             <classpath refid="build.classpath" />
         </java>
@@ -71,7 +71,7 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
@@ -79,7 +79,7 @@
             <arg line="--tlClass" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!-- generate tld file -->
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/tld" />
@@ -89,7 +89,7 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
@@ -99,19 +99,17 @@
             <arg line="--tlDescriptor" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!-- generate baseline components source code -->
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <!--
-                <jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000"/>
-            -->
+
             <arg line="-d ${project.build.directory}/generated-sources/component/main/java" />
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <!-- The following line causes component and property descriptions  -->
@@ -124,10 +122,9 @@
             <arg line="--cpClassBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!--  TODO change component naming to property -->
-
-                <!-- Specific BeanInfo for Creator 2 only -->
+        <!-- Specific BeanInfo for Creator 2 only -->
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/beaninfo/main/java" />
             <!-- TODO: using jar:file known issue ant bug -->
@@ -137,14 +134,14 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-Creator2.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-v" />
             <arg line="--cpBeanInfoBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
@@ -152,19 +149,19 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-v" />
             <arg line="--cpTestBeanInfoBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <touch file="${project.build.directory}/generated-sources/created" />
         <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
     </target>
-
-        <!-- netbeans 5.5 VWP generator-->
+    
+    <!-- netbeans 5.5 VWP generator-->
     <target name="generator" description="code generator" depends="conf-changed" unless="conf-uptodate">
         <!-- validate meatdata xml file -->
         <java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
@@ -178,7 +175,7 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
@@ -186,7 +183,7 @@
             <arg line="--tlClass" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!-- generate tld file -->
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/tld" />
@@ -196,7 +193,7 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
@@ -206,7 +203,7 @@
             <arg line="--tlDescriptor" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!-- generate baseline components source code -->
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <!--
@@ -218,7 +215,7 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <!-- The following line causes component and property descriptions  -->
@@ -231,7 +228,7 @@
             <arg line="--cpClassBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <!--  TODO change component naming to property -->
 
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
@@ -243,14 +240,14 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-v" />
             <arg line="--cpBeanInfoBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
@@ -258,21 +255,21 @@
             <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
             <arg line="-x" />
             <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/sun-faces-config-verified.xml" />
+            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-v" />
             <arg line="--cpTestBeanInfoBase" />
             <classpath refid="build.classpath" />
         </java>
-
+        
         <touch file="${project.build.directory}/generated-sources/created" />
     </target>
-
+    
     <target name="jar" depends="compile,generator,test" description="Clean the JAR">
         <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
     </target>
-
+    
     <target name="compile-tests" depends="junit-present, compile" description="Compile the test code" if="junit.present">
         <mkdir dir="${maven.test.output}" />
         <javac destdir="${maven.test.output}" failonerror="true" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
@@ -285,7 +282,7 @@
             </classpath>
         </javac>
     </target>
-
+    
     <target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases">
         <mkdir dir="${maven.test.reports}" />
         <junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">

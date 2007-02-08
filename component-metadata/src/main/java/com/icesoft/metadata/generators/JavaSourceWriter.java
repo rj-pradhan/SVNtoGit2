@@ -154,8 +154,9 @@ public class JavaSourceWriter extends Writer {
 		emitNewline();
 	}
 
+        //TODO: pick up from file
 	public void emitLicense() throws IOException{
-
+            
 		String LICENSE_STRING = "/*\n" +
             " * Version: MPL 1.1/GPL 2.0/LGPL 2.1\n" +
             " *\n" +

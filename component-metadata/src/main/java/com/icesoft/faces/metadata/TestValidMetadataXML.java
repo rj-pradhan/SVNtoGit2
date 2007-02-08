@@ -29,28 +29,35 @@ import com.sun.rave.jsfmeta.beans.PropertyBean;
 import com.sun.rave.jsfmeta.beans.RenderKitBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 
+/*
+ * TestValidMetadataXml validates metadata.
+ *
+ */
+
 public class TestValidMetadataXML{
+    
+    private String INPUT_METADATA_XML = "extended-faces-config.xml";
+    private String OUTPUT_METADATA_XML = "extended-faces-config-stream.xml";
     
     
     public static void main(String[] args) {
         
         TestValidMetadataXML test = new TestValidMetadataXML();
         test.setUp();
-        test.testMetadata();
-        test.testMetadataBeans();
-        
+        test.testMetadata();        
     }
     
     
     private File getConfDir() {
-        ClassLoader classLoader = Thread.currentThread()
-        .getContextClassLoader();
+        
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         URL url = classLoader.getResource(".");
         
         File buildDir = new File( convertFileUrlToPath(url) );
         
         if(!buildDir.isDirectory()){
             System.out.println("test build directory does not exist: "+buildDir);
+            System.exit(1);
         }
         
         File confFile = new File(buildDir.getParent() + File.separatorChar
@@ -61,8 +68,7 @@ public class TestValidMetadataXML{
     
     protected void setUp(){
         
-        File confFile = getConfDir();
-        
+        File confFile = getConfDir();        
         boolean isConfFile = confFile.isDirectory();
         if(!isConfFile){
             System.out.println("no conf directory in the build directory: "+ confFile);
@@ -73,9 +79,9 @@ public class TestValidMetadataXML{
         String xsltStreamSourceString = confFile.getPath() + File.separatorChar
                 + "xslt_conf" + File.separatorChar + "translate-conf.xsl";
         String outputStreamString = confFile.getPath() + File.separatorChar
-                + "sun-faces-config-verified.xml";
+                + OUTPUT_METADATA_XML;
         String streamSourceString = confFile.getPath() + File.separatorChar
-                + "sun-faces-config.xml";
+                + INPUT_METADATA_XML;
         
         try {
             
@@ -102,10 +108,9 @@ public class TestValidMetadataXML{
     
     public void testMetadata(){
         
-        File confDir = getConfDir();
-        
+        File confDir = getConfDir();        
         String outputStreamString = confDir.getPath() + File.separatorChar
-                + "sun-faces-config.xml";
+                + INPUT_METADATA_XML;
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
                 .newInstance();
         documentBuilderFactory.setValidating(true);
@@ -154,85 +159,7 @@ public class TestValidMetadataXML{
             se.printStackTrace();
             System.exit(1);
         }
-    }
-    
-    public void testMetadataBeans(){
-        
-        PropertyBean[] pb = null;
-        String[] cb = null;
-        MetadataXmlParser metadataParser = new MetadataXmlParser();
-        metadataParser.setDesign(true);
-        
-        try {
-            File confDir = getConfDir();
-            
-            String newPath = confDir.getPath()+ File.separator
-                    + "sun-faces-config-verified.xml";
-            File file = new File(newPath);
-            
-            FacesConfigBean facesConfigBean = metadataParser.parse(file);
-            
-            RenderKitBean renderKitBean = facesConfigBean
-                    .getRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-            ComponentBean[] componentbeans = facesConfigBean.getComponents();
-            
-            cb = new String[componentbeans.length];
-            
-            for (int i = 0; i < componentbeans.length; i++) {
-                cb[i] = componentbeans[i].getComponentClass();
-                PropertyBean[] descriptions = componentbeans[i].getProperties();
-                
-                componentbeans[i].getBaseComponentType();
-                
-                RendererBean rendererBean = renderer(componentbeans[i],
-                        renderKitBean);
-                String rendererType = rendererBean.getRendererType();
-                String renderClassName = rendererBean.getRendererClass();
-                
-                String one = "";
-                pb = descriptions;
-                for (int j = 0; j < pb.length; j++) {
-                    one = one + "\n" + pb[j].getPropertyName();
-                }
-                
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (SAXException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
-    
-    protected RendererBean renderer(ComponentBean cb,
-            RenderKitBean renderKitBean) {
-        String rendererType = cb.getRendererType();
-        if (rendererType == null)
-            return null;
-        String componentFamily = cb.getComponentFamily();
-        if (componentFamily == null) {
-            System.out.println("TODO: component family is null");
-        }
-        RendererBean rb = renderKitBean.getRenderer(componentFamily,
-                rendererType);
-        
-        if (rb == null) {
-            System.out.println("TODO: RenderBean componentFamily=" + componentFamily
-                    + " rendererType=" + rendererType);
-        }
-        
-        if (rb == null) {
-            System.out.println("TODO: no renderer bean");
-        }
-        return rb;
-    }
+    }    
     
     /**
      * Kind of hack-ish attempt at solving problem that if the directory,
@@ -242,6 +169,7 @@ public class TestValidMetadataXML{
      *  unless we unescape it.
      */
     private static String convertFileUrlToPath(URL url) {
+        
         String path = url.getPath();
         if( url.toExternalForm().startsWith("file:") ) {
             StringBuffer sb = new StringBuffer( path.length() );
