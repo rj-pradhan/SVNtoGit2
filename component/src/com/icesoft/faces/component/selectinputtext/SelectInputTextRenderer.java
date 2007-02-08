@@ -37,6 +37,7 @@ import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicInputRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
 import com.icesoft.faces.util.DOMUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,8 +50,10 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 
 public class SelectInputTextRenderer extends DomBasicInputRenderer {
@@ -110,6 +113,12 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
                         clientId);
             }
         }
+        Set excludes = new HashSet();
+        excludes.add(HTML.ONKEYDOWN_ATTR);
+        excludes.add(HTML.ONKEYUP_ATTR);
+        excludes.add(HTML.ONFOCUS_ATTR);
+        excludes.add(HTML.ONBLUR_ATTR);
+        PassThruAttributeRenderer.renderAttributes(facesContext, uiComponent, getExcludesArray(excludes));
         JavascriptContext.addJavascriptCall(facesContext, call);
     }
 
