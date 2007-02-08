@@ -84,7 +84,7 @@ public class UIColumns extends UISeries {
 
     protected void iterate(FacesContext facesContext, PhaseId phase) {
         // process the column header facet
-        if (isHeaderFacet()) {
+        if (isHeaderFacet() && (UIComponent) getFacets().get("header")!= null) {
             // clear row index
             setRowIndex(-1);
             UIComponent facet = (UIComponent) getFacets().get("header");
