@@ -23,7 +23,7 @@ style-component.xml
 	<display-name>Output Style</display-name>
 	<component-type>com.icesoft.faces.OutputStyleComp</component-type>
 
-	&ice-cust-style-props; //entity reference in sun-faces-config.xml
+	&ice-cust-style-props; //entity reference in extended-faces-config.xml
 	<component-extension>
 	    <base-component-type>com.sun.faces.Component</base-component-type> //baseline component extended from using generated component 
 		<component-family>com.icesoft.faces.OutputStyle</component-family> // same from faces-config.xml

@@ -18,6 +18,11 @@ import com.sun.rave.jsfmeta.beans.PropertyBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 import java.util.logging.Level;
 
+/*
+ * DescriptorGenerator generate tld file
+ *
+ *
+ */
 public class DescriptorGenerator extends AbstractGenerator {
 
 	public DescriptorGenerator() {

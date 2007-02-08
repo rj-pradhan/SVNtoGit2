@@ -12,6 +12,12 @@ import com.sun.rave.jsfmeta.beans.PropertyBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 import java.util.logging.Level;
 
+/*
+ * TagLibraryGenerator generates Tag class
+ *
+ *
+ */
+
 public class TagLibraryGenerator extends AbstractGenerator {
     
     
