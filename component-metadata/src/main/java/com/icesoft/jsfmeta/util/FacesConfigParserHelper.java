@@ -92,7 +92,7 @@ public class FacesConfigParserHelper {
             File file = new File(fileName);
             FacesConfigBean facesConfigBean = metadataParser.parse(file);
             RenderKitBean renderKitBean = facesConfigBean.getRenderKit(RenderKitFactory.HTML_BASIC_RENDER_KIT);
-            RendererBean[] rendererBeans = renderKitBean.getRenderers();
+            rd = renderKitBean.getRenderers();
             
         } catch (IOException e) {
             e.printStackTrace();
