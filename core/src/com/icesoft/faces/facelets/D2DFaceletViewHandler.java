@@ -243,6 +243,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         }
         try {
             clearSession(context);
+	        ResponseWriter responseWriter = createAndSetResponseWriter(context);
 
             UIViewRoot viewToRender = context.getViewRoot();
             String renderedViewId =
@@ -266,15 +267,12 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                 // Populate UIViewRoot
                 f.apply(context, viewToRender);
 
-                context.setViewRoot(viewToRender);
-
                 verifyUniqueComponentIds(viewToRender, new HashMap());
 
                 // Uses D2DViewHandler logging
                 tracePrintComponentTree(context);
             }
 
-            ResponseWriter responseWriter = context.getResponseWriter();
             responseWriter.startDocument();
             renderResponse(context, viewToRender);
             responseWriter.endDocument();
