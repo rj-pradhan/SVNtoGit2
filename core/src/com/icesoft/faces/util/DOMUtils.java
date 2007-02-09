@@ -396,6 +396,8 @@ public class DOMUtils {
                 buffer.append("&lt;");
             } else if (ch == '&') {
                 buffer.append("&amp;");
+            } else if (ch == '\'') {
+                buffer.append("&#39;");
             } else if (ch == '"') {
                 buffer.append("&quot;");
             } else if (ch >= 0xA0 && ch <= 0xff) {
