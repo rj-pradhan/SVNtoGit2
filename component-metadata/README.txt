@@ -1,12 +1,25 @@
+This is the README file for Component Metadata.
 
-
-directory of metadata (src/main/resources):
+Directory of metadata (src/main/resources):
 -- conf
 -- -- component (extended standard component)
 -- -- custom (custom component)
 -- -- ice_cust_properties (custom component properties)
 -- -- ice_properties (extended component properties)
 -- -- properties (Sun's RI properties, normally comes from baseline component)
+
+Tools require both grammar and metadata information for JSF components in 
+order to provide a design-time experience. 
+
+The faces-config.xml contains grammar information and a minimal set of metadata for 
+components, attributes, properties, facets, and renderers. 
+
+Extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO xsd). 
+It is defined with data for generating tag class,  tld file, component baseline and beainfo specifc to IDE.
+
+extended-faces-config.xml (Netbeans VWP specifc)
+extended-faces-config-creator2.xml (Creator 2 specific )
+
 
 
 How to add in a new custom component:
@@ -153,3 +166,20 @@ component-metadata/target/generated-sources/testbeaninfo/main/java
 
 (testbeaninfo is generated without dependencies on IDE related classes)
 
+
+Reference:
+
+Design-Time Metadata for JavaServerTM Faces Components
+http://jcp.org/en/jsr/detail?id=276
+
+Schema
+http://wiki.java.net/bin/view/Javatools/SunFacesConfigDtd
+
+Component Library Package File Specification
+http://wiki.java.net/bin/view/Javatools/ThresherComplibSpec
+
+Custom Component Libraries
+http://wiki.java.net/bin/view/Javatools/CustomComponentLibraries
+
+Metadata Proposal
+http://www.jsfcentral.com/articles/oracle_metadata_proposal.html

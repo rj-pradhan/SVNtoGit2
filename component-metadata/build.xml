@@ -230,7 +230,6 @@
         </java>
         
         <!--  TODO change component naming to property -->
-
         <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/beaninfo/main/java" />
             <!-- TODO: using jar:file known issue ant bug -->
@@ -301,6 +300,7 @@
             </batchtest>
         </junit>
     </target>
+    
     <target name="test-junit-present">
         <available classname="junit.framework.Test" property="junit.present" />
     </target>
