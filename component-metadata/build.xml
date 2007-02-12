@@ -1,14 +1,15 @@
 <project name="component-metadata" default="jar" basedir=".">
     <property environment="env" />
+    <property file="../build.properties"/>
     <property name="maven.build.output" value="target/classes" />
     <property name="project.build.directory" value="target" />
-    <property name="maven.build.directory" value="target" />
-        <property name="maven.build.final.name" value="component-metadata-1.0-SNAPSHOT" />
+    <property name="maven.build.directory" value="target" />    
     <property name="maven.test.reports" value="${maven.build.directory}/test-reports" />
     <property name="maven.test.output" value="target/test-classes" />
     <property name="lib.dir" location="../lib" />
     <property name="project.title" value="ICEfaces components" />
-    <property name="project.version" value="1.6" />
+    <property name="project.version" value="${version.primary}.${version.secondary}.${version.tertiary}" />
+    <property name="maven.build.final.name" value="component-metadata-${project.version}" />
     <property name="project.package" value="com.icesoft" />
     <property name="project.artifact" value="component" />
     <property name="project.artifact.version" value="icefaces-webui" />
