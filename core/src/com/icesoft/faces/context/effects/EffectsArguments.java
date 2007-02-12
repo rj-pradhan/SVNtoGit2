@@ -47,7 +47,7 @@ public class EffectsArguments {
     private NumberFormat floatFormat = NumberFormat.getNumberInstance(Locale.US);
 
     public EffectsArguments(){
-
+        floatFormat.setGroupingUsed(false);
     }
 
 
