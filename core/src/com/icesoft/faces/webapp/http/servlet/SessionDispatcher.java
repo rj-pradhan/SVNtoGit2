@@ -115,12 +115,12 @@ public abstract class SessionDispatcher implements ServerServlet {
                                 t.printStackTrace();
                             }
                         }
-                    }
 
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        //ignore interrupts
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            //ignore interrupts
+                        }
                     }
                 }
             };
