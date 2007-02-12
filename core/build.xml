@@ -65,6 +65,8 @@
               location="${bridge.collate.dir}/icefaces-d2d.js"/>
     <property name="bridge-extras.script"
               location="${bridge.collate.dir}/ice-extras.js"/>
+    <property name="bridge-openajax.script"
+              location="${bridge.collate.dir}/openajax.js"/>
     <property name="words.obfuscation.excludes"
               value="words.obfuscation.excludes"/>
 
@@ -99,7 +101,7 @@
                     <include name="com/icesoft/faces/context/*.xslt"/>
                 </fileset>
                 <zipfileset dir="${bridge.dir}/build"
-                            includes="icefaces-d2d.js, ice-extras.js"
+                            includes="icefaces-d2d.js, ice-extras.js, openajax.js"
                             prefix="com/icesoft/faces/webapp/xmlhttp"
                         />
                 <manifest>
@@ -166,8 +168,10 @@
         <ant antfile="${bridge.dir}/build.xml" inheritall="false">
             <target name="build"/>
             <target name="build.extras"/>
+            <target name="build.open.ajax"/>
             <property name="script" location="${bridge.dir}/build/icefaces-d2d.js"/>
             <property name="extras.script" location="${bridge.dir}/build/ice-extras.js"/>
+            <property name="open.ajax.script" location="${bridge.dir}/build/openajax.js"/>
         </ant>
     </target>
 

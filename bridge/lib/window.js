@@ -39,7 +39,7 @@ window.height = function() {
     return window.innerHeight ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.clientHeight;
 };
 
-[ 'onLoad', 'onUnload', 'onResize', 'onScroll' ].each(function(name) {
+['onLoad', 'onUnload', 'onResize', 'onScroll' ].each(function(name) {
     //avoid to redeclare the callback 
     if (!window[name]) {
         window[name] = function(listener) {
@@ -57,6 +57,21 @@ window.height = function() {
         };
     }
 });
+
+if(typeof OpenAjax!='undefined'){
+    if(typeof OpenAjax.addOnLoad !='undefined'){
+        var current = window.onLoad;
+        window.onLoad = OpenAjax.addOnLoad;
+        OpenAjax.addOnLoad(current);
+    }
+    if(typeof OpenAjax.addOnUnLoad !='undefined'){
+        var current = window.onUnload;
+        window.onUnload = OpenAjax.addOnUnLoad;
+        OpenAjax.addOnLoad(current);
+    }
+
+}
+
 
 window.onKeyPress = function(listener) {
     var previousListener = document.onkeypress;

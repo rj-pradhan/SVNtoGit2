@@ -449,7 +449,11 @@ public class DOMResponseWriter extends ResponseWriter {
         //load libraries
         String base = ApplicationBaseLocator.locate(context);
         List libs = new ArrayList();
+        if(context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null){
+            libs.add("xmlhttp/openajax.js");
+        }
         libs.add("xmlhttp/icefaces-d2d.js");
+
         if (context.getExternalContext().getRequestMap()
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
             libs.addAll(Arrays.asList(

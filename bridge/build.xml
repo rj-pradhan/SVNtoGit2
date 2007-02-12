@@ -39,12 +39,15 @@
     <property name="words.obfuscation.excludes" location="words.obfuscation.excludes"/>
     <property name="lib.dir" location="${basedir}/lib"/>
     <property name="src.dir" location="${basedir}/src"/>
+    <property name="src.dir.java" location="${src.dir}/java"/>
     <property name="test.dir" location="${basedir}/test"/>
     <property name="component.dir" location="${basedir}/component"/>
     <property name="build.dir" location="${basedir}/build"/>
+    <property name="build.dir.java" location="${build.dir}/java"/>
     <property name="extras.dir" location="${lib.dir}/extras"/>
     <property name="script" location="${build.dir}/bridge.js"/>
     <property name="extras.script" location="${build.dir}/bridge.extras.js"/>
+    <property name="open.ajax.script" location="${build.dir}/openajax.js"/>
     <macrodef name="compress">
         <attribute name="src" description="The source file"/>
         <attribute name="dest" default="@{src}" description="The destination file"/>
@@ -60,13 +63,50 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="register">
+        <attribute name="src" description="The source file"/>
+        <attribute name="depends" description="a dependency"/>
+        <attribute name="dest"  description="The destination file"/>
+        <attribute name="libName" default="@{libName}" description="Lib name"/>
+        <attribute name="libUrl" default="@{libUrl}" description="Lib url"/>
+        <attribute name="libVersion" default="@{libVersion}" description="Lib Version"/>
+        <sequential>
+            <java classname="RegisterProperties"  output="@{dest}" fork="yes">
+                <arg value="@{libName}"/>
+                <arg value="@{libUrl}"/>
+                <arg value="@{libVersion}"/>
+                <arg file="@{src}"/>
+                <arg file="@{depends}"/>
+                <classpath>
+                  <pathelement location="compressor.jar"/>
+                  <pathelement path="${java.class.path}"/>
+                  <pathelement location="${build.dir.java}"/>
+                </classpath>
+            </java>
+        </sequential>
+    </macrodef>
+    
+
+    
     <target name="prepare">
         <mkdir dir="${build.dir}"/>
         <delete file="${script}"/>
         <touch file="${script}"/>
     </target>
 
-    <target name="build.prototype" depends="prepare">
+    <target name="build.RegisterProperties" depends="prepare">
+        <mkdir dir="${build.dir.java}"/>
+        <javac srcdir="${src.dir.java}" destdir="${build.dir.java}"
+               debug="on">
+            <classpath>
+                <pathelement location="compressor.jar"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </javac>
+    </target>
+
+
+    <target name="build.prototype" depends="build.RegisterProperties">
         <concat destfile="${script}" append="yes" fixlastline="yes">
             <filelist dir="${lib.dir}/prototype">
                 <file name="prototype.js"/>
@@ -126,6 +166,15 @@
             </filelist>
         </concat>
         <compress src="${script}"/>
+        <register libName="icefaces-d2d"
+                  libUrl="http://www.icefaces.org/"
+                  libVersion="1.5.3"
+                  src="${script}"
+                  depends=""
+                  dest="${script}.openajax"/>
+         <concat destfile="${script}" append="yes" fixlastline="yes" >
+             <path location="${script}.openajax"/>
+         </concat>
     </target>
 
     <target name="build.test" depends="build.base,build.extras" description="Collate code for tests">
@@ -138,20 +187,18 @@
         </concat>
     </target>
 
+
     <target name="build.extras" description="Extra libraries used by specialized components.">
         <delete file="${extras.script}"/>
         <touch file="${extras.script}"/>
         <concat destfile="${extras.script}" append="yes" fixlastline="yes">
         
-            <filelist dir="${lib.dir}/prototype">
+            <filelist dir="${lib.dir}/prototype"  >
                 <file name="ajax.js"/>
                 <file name="dom.js"/>
                 <file name="event.js"/>
                 <file name="form.js"/>
                 <file name="position.js"/>
-                
-               
-                
             </filelist>
             <filelist dir="${lib.dir}/scriptaculous">
                 <file name="scriptaculous.js"/>
@@ -180,9 +227,53 @@
             </filelist>
         </concat>
         <compress src="${extras.script}"/>
+        <register libName="ice-extras"
+                  libUrl="http://www.icefaces.org/"
+                  libVersion="1.5.3"
+                  src="${extras.script}"
+                  depends="${script}"
+                  dest="${extras.script}.openajax"/>
+         <concat destfile="${extras.script}" append="yes" fixlastline="yes" >
+             <path location="${extras.script}.openajax"/>
+         </concat>
+    </target>
+
+    <target name="build.open.ajax" description="Compress the open ajax lib">
+        <delete file="${open.ajax.script}"/>
+        <touch file="${open.ajax.script}"/>
+        <concat destfile="${open.ajax.script}" append="yes" fixlastline="yes">
+            <filelist dir="${lib.dir}/openajax"  >
+                <file name="OpenAjax.js"/>
+            </filelist>
+        </concat>
+        <compress src="${open.ajax.script}"/>
     </target>
 
     <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
+
+
+    <target name="register.icefaces-d2d"  depends="build, build.RegisterProperties">
+
+        <register libName="icefaces-d2d"
+                  libUrl="http://www.icefaces.org/"
+                  libVersion="1.5.3"
+                  src="${script}"
+                  depends=""
+                  dest="register.icefaces-d2d.js"/>
+    </target>
+
+    <target name="register.ice-extras" depends="build, build.extras, build.RegisterProperties">
+
+        <register libName="ice-extras"
+                  libUrl="http://www.icefaces.org/"
+                  libVersion="1.5.3"
+                  src="${extras.script}"
+                  depends="${script}"
+                  dest="register.ice-extras.js"/>
+    </target>
+
+
+    
 </project>
