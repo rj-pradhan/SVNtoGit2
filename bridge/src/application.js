@@ -93,10 +93,20 @@
 
 
     window.onLoad(function() {
-        this.application = new This.Application;
+        try{
+            this.application = new This.Application;
+        }catch(ignore){
+            if(console)
+                console.error(ignore);
+        }
     });
 
     window.onUnload(function() {
-        this.application.dispose();
+        try{
+            this.application.dispose();
+        }catch(ignore){
+            if(console)
+                console.error(ignore);
+        }
     });
 });
