@@ -55,6 +55,9 @@ Draggable.prototype.initialize = function(element) {
     };
     if (!ops.endeffect)ops.endeffect = function() {
     };
+    if(ops.handle){
+        ops.handle = $(ops.handle);
+    }
 //Ice.DnD.logger.error('kk-3');
     this.ORIGINAL_initialize(this.element, ops);
 //Ice.DnD.logger.error('kk-4');
