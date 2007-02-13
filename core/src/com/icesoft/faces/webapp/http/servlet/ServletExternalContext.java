@@ -9,6 +9,7 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     private Map requestParameterValuesMap;
     private Map initParameterMap;
     private Map requestMap;
+    private Map cookieMap;
 
     public ServletExternalContext(Object context, Object request, Object response) {
         this.context = (ServletContext) context;
@@ -45,7 +47,7 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.requestMap = new ServletRequestMap(this.request);
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
-
+        this.cookieMap = new HashMap();
         this.initParameterMap = new HashMap();
         Enumeration names = this.context.getInitParameterNames();
         while (names.hasMoreElements()) {
@@ -122,7 +124,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public Map getRequestCookieMap() {
-        return Collections.EMPTY_MAP;
+        return cookieMap;
     }
 
     public Locale getRequestLocale() {
@@ -133,8 +135,14 @@ public class ServletExternalContext extends BridgeExternalContext {
         return new EnumerationIterator(request.getLocales());
     }
 
+    private String requestPathInfo;
+
+    public void setRequestPathInfo(String viewId) {
+        requestPathInfo = viewId;
+    }
+
     public String getRequestPathInfo() {
-        return request.getPathInfo();
+        return requestPathInfo == null ? request.getPathInfo() : requestPathInfo;
     }
 
     public String getRequestURI() {
@@ -249,8 +257,8 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.response = response;
     }
 
-    public void setRequestPathInfo(String viewId) {
-        //do nothing
+    public void addCookie(Cookie cookie) {
+        cookieMap.put(cookie.getName(), cookie);
     }
 
     //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)
