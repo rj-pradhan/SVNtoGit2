@@ -90,11 +90,13 @@
     
     <target name="prepare">
         <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir.java}"/>
         <delete file="${script}"/>
         <touch file="${script}"/>
     </target>
 
     <target name="build.RegisterProperties" depends="prepare">
+        <mkdir dir="${build.dir.java}"/>
         <mkdir dir="${build.dir.java}"/>
         <javac srcdir="${src.dir.java}" destdir="${build.dir.java}"
                debug="on">
