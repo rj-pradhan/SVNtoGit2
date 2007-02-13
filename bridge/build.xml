@@ -198,6 +198,7 @@
             <filelist dir="${lib.dir}/prototype"  >
                 <file name="ajax.js"/>
                 <file name="dom.js"/>
+                <file name="selector.js"/>
                 <file name="event.js"/>
                 <file name="form.js"/>
                 <file name="position.js"/>
