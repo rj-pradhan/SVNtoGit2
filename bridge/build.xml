@@ -46,6 +46,8 @@
     <property name="build.dir.java" location="${build.dir}/java"/>
     <property name="extras.dir" location="${lib.dir}/extras"/>
     <property name="script" location="${build.dir}/bridge.js"/>
+    <property name="extras.script.open.ajax" location="${lib.dir}/openajax/bridge.extras.open.ajax.js"/>
+    <property name="script.open.ajax" location="${lib.dir}/openajax/bridge.open.ajax.js"/>
     <property name="extras.script" location="${build.dir}/bridge.extras.js"/>
     <property name="open.ajax.script" location="${build.dir}/openajax.js"/>
     <macrodef name="compress">
@@ -168,14 +170,9 @@
             </filelist>
         </concat>
         <compress src="${script}"/>
-        <register libName="icefaces-d2d"
-                  libUrl="http://www.icefaces.org/"
-                  libVersion="1.5.3"
-                  src="${script}"
-                  depends=""
-                  dest="${script}.openajax"/>
+        
          <concat destfile="${script}" append="yes" fixlastline="yes" >
-             <path location="${script}.openajax"/>
+             <path location="${script.open.ajax}"/>
          </concat>
     </target>
 
@@ -230,15 +227,30 @@
             </filelist>
         </concat>
         <compress src="${extras.script}"/>
+        
+         <concat destfile="${extras.script}" append="yes" fixlastline="yes" >
+             <path location="${extras.script.open.ajax}"/>
+         </concat>
+    </target>
+    
+    <target name="update.open.ajax.globals" depends="build,build.extras" description="update bridge and extras open ajax hub registration code">
+        <delete file="${script.open.ajax}"/>
+        <touch file="${script.open.ajax}"/>
+        <delete file="${extras.script.open.ajax}"/>
+        <touch file="${extras.script.open.ajax}"/>
+        <register libName="icefaces-d2d"
+                  libUrl="http://www.icefaces.org/"
+                  libVersion="1.5.3"
+                  src="${script}"
+                  depends=""
+                  dest="${script.open.ajax}"/>
         <register libName="ice-extras"
                   libUrl="http://www.icefaces.org/"
                   libVersion="1.5.3"
                   src="${extras.script}"
                   depends="${script}"
-                  dest="${extras.script}.openajax"/>
-         <concat destfile="${extras.script}" append="yes" fixlastline="yes" >
-             <path location="${extras.script}.openajax"/>
-         </concat>
+                  dest="${extras.script.open.ajax}"/>
+        
     </target>
 
     <target name="build.open.ajax" description="Compress the open ajax lib">
