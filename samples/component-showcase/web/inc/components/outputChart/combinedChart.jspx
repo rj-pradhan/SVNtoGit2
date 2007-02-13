@@ -60,7 +60,7 @@
                                     value="Click image map for chart value: #{combinedChart.clickedValue}"/>
                 </ice:panelGrid>
 
-                <ice:panelGrid id="centerWrapper">
+                <ice:panelGrid id="centerWrapperCombinedChart">
                     <ice:outputChart type="custom"
                                      renderOnSubmit="#{combinedChart.renderOnSubmit}"
                                      actionListener="#{combinedChart.action}"/>

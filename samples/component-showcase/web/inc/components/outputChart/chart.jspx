@@ -67,7 +67,7 @@
 
        </ice:panelGrid>
 
-        <ice:panelGrid columns="2" id="centerWrapper">
+        <ice:panelGrid columns="2" id="centerWrapperChart">
             <ice:outputChart id="axisOutputChart"
                              type="#{chartMediator.chartObject.type}"
                              chartTitle="#{chartMediator.chartObject.type} Chart"

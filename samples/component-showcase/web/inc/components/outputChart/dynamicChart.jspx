@@ -103,7 +103,7 @@
                     </ice:panelGrid>
                 </ice:panelGrid>
 
-                <ice:panelGrid id="centerWrapper">
+                <ice:panelGrid id="centerWrapperDynamicChart">
                     <ice:outputChart type="pie3d"
                                      chartTitle="Pie3D Chart"
                                      labels="#{dynamicPieChart.labels}"
