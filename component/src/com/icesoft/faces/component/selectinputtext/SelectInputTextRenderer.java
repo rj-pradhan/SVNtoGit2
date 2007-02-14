@@ -77,7 +77,7 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
         String clientId = uiComponent.getClientId(facesContext);
         String divId = clientId + AUTOCOMPLETE_DIV;
         String call = " new Ice.Autocompleter('" + clientId + "','" + divId +
-                      "', null ,'" + component.getRowClass() + "','" +
+                      "', " + component.getOptions() + " ,'" + component.getRowClass() + "','" +
                       component.getSelectedRowClass() + "');";
 
         if (!domContext.isInitialized()) {

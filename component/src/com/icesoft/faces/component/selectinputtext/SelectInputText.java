@@ -106,6 +106,8 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      */
     List itemList;
 
+    private String options;
+
     /**
      * Map for selectItems, where the key is the "SelectItem.getlabel()" and the
      * value is the selectItem object
@@ -443,6 +445,15 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
                                         className);
     }
 
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
+    
+
     //the following code is a fix for iraptor bug 347
     //on first page submit, all input elements gets valueChangeEvent (null to ""), 
     //so component's ids can be more then one
@@ -485,12 +496,14 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
         }
     }
 
+
+
     /**
      * <p>Gets the state of the instance as a <code>Serializable</code>
      * Object.</p>
      */
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[7];
+        Object values[] = new Object[8];
         values[0] = super.saveState(context);
         values[1] = styleClass;
         values[2] = listVar;
@@ -498,6 +511,7 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
         values[4] = width;
         values[5] = selectedItem;
         values[6] = itemList;
+        values[7] = options;
         return ((Object) (values));
     }
 
@@ -514,5 +528,6 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
         width = (String) values[4];
         selectedItem = (SelectItem) values[5];
         itemList = (List) values[6];
+        options = (String)values[7];
     }
 }
