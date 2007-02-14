@@ -40,7 +40,9 @@ import java.util.List;
 import java.util.Vector;
 
 public class DOMUtils {
-
+    private static int DEFAULT_DOM_STRING_PRESIZE = 4096;
+    private static int DEFAULT_NODE_STRING_PRESIZE = 256;
+    
     public static String DocumentTypetoString(String publicID, String systemID,
                                               String root) {
         return "<!DOCTYPE " + root + " PUBLIC \"" + publicID + "\" \"" +
@@ -48,17 +50,22 @@ public class DOMUtils {
     }
 
     public static String DOMtoString(Document document) {
-        return printNode(document, new StringBuffer());
+        return printNode(
+                document,
+                new StringBuffer(DEFAULT_DOM_STRING_PRESIZE));
     }
 
     public static String nodeToString(Node node) {
-        return printNode(node, new StringBuffer());
+        return printNode(
+                node,
+                new StringBuffer(DEFAULT_NODE_STRING_PRESIZE));
     }
 
     public static String childrenToString(Node node) {
         NodeList children = node.getChildNodes();
         Node child;
-        StringBuffer stringbuffer = new StringBuffer();
+        StringBuffer stringbuffer =
+                new StringBuffer(DEFAULT_DOM_STRING_PRESIZE);
         int l = children.getLength();
         for (int i = 0; i < l; i++) {
             child = children.item(i);
