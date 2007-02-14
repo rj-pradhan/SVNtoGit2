@@ -61,7 +61,12 @@ public class ServletView {
         // X-REDIRECT mechanism in this servlet, so resort to some
         // good old fashioned manual redirect code.
         if (externalContext.redirectRequested()) {
-            ((HttpServletResponse) externalContext.getResponse()).sendRedirect(externalContext.redirectTo());
+
+            // Append 'rvn' parameter field to trigger new ServletView creation. Otherwise, Seam
+            // based redirects wont find the new ViewId.
+            ((HttpServletResponse) externalContext.getResponse()).sendRedirect(externalContext.redirectTo() +
+                                             "&rvn="+facesContext.getViewNumber());
+            externalContext.redirectComplete();
         }
     }
 
