@@ -73,7 +73,7 @@
 	<description>
 		Config Options
         frequency: The interval to update the list after a key press
-        minChars: The minium number of characters before getting an update
+        minChars: The minimum number of characters before getting an update
         Format example:
         {frequency:0.2,minChars:2}
 	</description>

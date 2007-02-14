@@ -106,9 +106,11 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
         requestCookieMap = new HashMap();
         Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            Cookie cookie = cookies[i];
-            requestCookieMap.put(cookie.getName(), cookie);
+        if(cookies != null){
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie cookie = cookies[i];
+                requestCookieMap.put(cookie.getName(), cookie);
+            }
         }
     }
 
