@@ -11,7 +11,9 @@ public class PathDispatcher implements ServerServlet {
     private List matchers = new ArrayList();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String path = request.getRequestURI();
+        String path = request.getRequestURI();        
+    
+
         Iterator i = matchers.iterator();
         boolean matched = false;
         while (!matched && i.hasNext()) {
@@ -19,8 +21,25 @@ public class PathDispatcher implements ServerServlet {
         }
 
         if (!matched) {
+            
             response.sendError(404, "Resource at '" + path + "' not found.");
         }
+    }
+
+
+
+    public static String getPath(String path, String inc) {
+        int start = path.indexOf(inc);
+        if (start == -1) return path;
+        int end = start + inc.length() - 1;
+        if (start > 0) {
+            String stringStart = path.substring(0, start);
+            String stringEnd = path.substring(end);
+            path = stringStart + stringEnd;
+        } else {
+            path = path.substring(end);
+        }
+        return path;
     }
 
     public void dispatchOn(String pathExpression, ServerServlet toServer) {
@@ -38,9 +57,11 @@ public class PathDispatcher implements ServerServlet {
 
         boolean serviceOnMatch(String path, HttpServletRequest request, HttpServletResponse response) throws Exception {
             if (pattern.matcher(path).find()) {
+
                 server.service(request, response);
                 return true;
             } else {
+
                 return false;
             }
         }

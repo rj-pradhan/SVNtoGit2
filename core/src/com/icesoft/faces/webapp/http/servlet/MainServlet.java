@@ -3,6 +3,7 @@ package com.icesoft.faces.webapp.http.servlet;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.ResourceServer;
 import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
+import com.icesoft.faces.application.StartupTime;
 import com.icesoft.util.IdGenerator;
 
 import javax.servlet.ServletConfig;
@@ -17,9 +18,11 @@ import java.io.IOException;
 public class MainServlet extends HttpServlet {
     private PathDispatcher dispatcher = new PathDispatcher();
 
+
+
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
-
+        StartupTime.started();
         try {
             ServletContext servletContext = servletConfig.getServletContext();
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);

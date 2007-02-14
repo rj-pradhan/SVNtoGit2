@@ -35,6 +35,7 @@ package com.icesoft.faces.context.effects;
 
 
 import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.application.StartupTime;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -86,7 +87,7 @@ public class JavascriptContext {
     /**
      * URL of the ICE Extras lib
      */
-    public static final String ICE_EXTRAS = "xmlhttp/ice-extras.js";
+    public static final String ICE_EXTRAS = "xmlhttp"  + StartupTime.getStartupInc() + "ice-extras.js";
 
     /**
      * Include a script tag in the &lt;head&gt; section of the page with the src

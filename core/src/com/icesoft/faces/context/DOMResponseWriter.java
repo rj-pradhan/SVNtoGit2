@@ -34,10 +34,12 @@
 package com.icesoft.faces.context;
 
 import com.icesoft.faces.application.D2DViewHandler;
+import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.ApplicationBaseLocator;
 import com.icesoft.faces.util.DOMUtils;
 import com.icesoft.faces.webapp.xmlhttp.ResponseState;
+import com.icesoft.faces.webapp.http.servlet.MainServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -452,20 +454,17 @@ public class DOMResponseWriter extends ResponseWriter {
         if(context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null){
             libs.add("xmlhttp/openajax.js");
         }
-        libs.add("xmlhttp/icefaces-d2d.js");
+        libs.add("xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
 
         if (context.getExternalContext().getRequestMap()
                 .get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
             libs.addAll(Arrays.asList(
                     JavascriptContext.getIncludedLibs(context)));
         }
-        String avoidCacheId = avoidCacheId(context);
+
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
             String lib = (String) iterator.next();
-            if (avoidCacheId != null) {
-                lib += "?" + avoidCacheId;
-            }
             Element script = (Element) head
                     .appendChild(document.createElement("script"));
             script.setAttribute("language", "javascript");
@@ -539,7 +538,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 //views on one page
                 String base = ApplicationBaseLocator.locate(context);
                 writer.write("<script language='javascript' src='" + base +
-                        "xmlhttp/icefaces-d2d.js'></script>");
+                        "xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js'></script>");
                 writer.write(DOMUtils.childrenToString(body));
             } else {
                 if (log.isDebugEnabled()) {
@@ -693,30 +692,5 @@ public class DOMResponseWriter extends ResponseWriter {
         return isStreamWritingFlag;
     }
 
-    private String avoidCacheId(FacesContext facesContext) {
-        Object sessionObj = facesContext.getExternalContext().getSession(true);
-        if (sessionObj != null) {
-            if (sessionObj instanceof HttpSession) {
-                HttpSession httpSession = (HttpSession) sessionObj;
-                String id = httpSession.getId();
-                if (id == null) {
-                    log.error("HttpSession id is null. Can't get a unique script ID");
-                } else {
-                    int size = 4;
-                    if (id.length() > size) {
-                        int start = id.length() - size;
-                        return id.substring(start);
-                    } else {
-                        return id;
-                    }
-                }
 
-            } else {
-                log.error("Session is not HttpSession its [" + sessionObj.getClass().getName() + "]. Can't get a unique script ID.");
-            }
-        } else {
-            log.error("Session is null. Can't get a unique script ID");
-        }
-        return null;
-    }
 }

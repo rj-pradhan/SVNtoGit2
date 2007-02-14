@@ -24,6 +24,7 @@ public class ServeBridgeJSCode implements Server {
 
     public void service(Request request) throws Exception {
         String path = request.getURI().getPath();
+       
         String contextName = path.substring(0, path.indexOf("/", 1));//first atom in the resource!
 
         //create bridge configuration
