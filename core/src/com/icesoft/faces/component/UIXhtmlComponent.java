@@ -48,6 +48,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class UIXhtmlComponent extends UIComponentBase {
+    public static final String COMPONENT_FAMILY =
+            "com.icesoft.faces.XhtmlComponent";
+    public static final String RENDERER_TYPE =
+            "com.icesoft.domXhtml";
+    
     private static final Attributes EMPTY_ATTRIBUTES = new AttributesImpl();
     private static final Log log = LogFactory.getLog(UIXhtmlComponent.class);
     private static Method getELContextMethod;
@@ -83,11 +88,11 @@ public class UIXhtmlComponent extends UIComponentBase {
     }
 
     public UIXhtmlComponent() {
-        this.setRendererType("com.icesoft.domXhtml");
+        setRendererType( RENDERER_TYPE );
     }
 
     public String getFamily() {
-        return "com.icesoft.faces.XhtmlComponent";
+        return COMPONENT_FAMILY;
     }
 
     public String getTag() {

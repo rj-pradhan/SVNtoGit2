@@ -109,6 +109,10 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ExternalContext ext = ctx.getExternalContext();
 
+        // Use a TagLibrary to create UIXhtmlComponents from all xhtml Tags
+        c.addTagLibrary( new UIXhtmlTagLibrary() );
+        c.addTagDecorator( new UIXhtmlTagDecorator() );
+
         // Load libraries
         String paramLibraries = ext.getInitParameter(PARAM_LIBRARIES);
         if (paramLibraries != null) {
@@ -174,13 +178,10 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         // This has to be true, otherwise table or other container
         //   UIComponents will have text children, when they're
         //   expecting only real UIComponents
-        c.setTrimmingWhitespace(true);
-        c.setTrimmingComments(true);
-
-        // Use our special hierarchial subclasses of the stock Facelets classes
-        c.setTextUnitFactory(new D2DTextUnitFactory());
-        c.setFallbackTagCompilationUnitFactory(
-                new D2DTagCompilationUnitFactory());
+        c.setTrimmingWhitespace( true );
+        c.setTrimmingComments( true );
+        c.setTrimmingXmlDeclarations( true );
+        c.setTrimmingDoctypeDeclarations( true );
     }
 
     protected FaceletFactory createFaceletFactory(Compiler c) {
@@ -281,6 +282,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
             if (log.isErrorEnabled()) {
                 log.error("Problem in renderResponse: " + e.getMessage(), e);
             }
+            throw new FacesException("Problem in renderResponse: " + e.getMessage(), e);
         }
     }
 
