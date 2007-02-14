@@ -1,8 +1,9 @@
 package com.icesoft.faces.webapp.http.common;
 
-import java.io.OutputStream;
+import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 public interface Response {
@@ -16,6 +17,9 @@ public interface Response {
     void setHeader(String name, Date value);
 
     void setHeader(String name, int value);
+
+    //todo: move this into HeaderWriter class
+    void addCookie(Cookie cookie);
 
     OutputStream writeBody() throws IOException;
 

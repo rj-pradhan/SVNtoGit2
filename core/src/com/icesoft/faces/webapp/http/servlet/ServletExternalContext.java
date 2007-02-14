@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -37,7 +39,8 @@ public class ServletExternalContext extends BridgeExternalContext {
     private Map requestParameterValuesMap;
     private Map initParameterMap;
     private Map requestMap;
-    private Map cookieMap;
+    private Map requestCookieMap;
+    private Collection responseCookies;
 
     public ServletExternalContext(Object context, Object request, Object response) {
         this.context = (ServletContext) context;
@@ -47,8 +50,9 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.requestMap = new ServletRequestMap(this.request);
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
-        this.cookieMap = new HashMap();
+        this.requestCookieMap = new HashMap();
         this.initParameterMap = new HashMap();
+        this.responseCookies = new ArrayList();
         Enumeration names = this.context.getInitParameterNames();
         while (names.hasMoreElements()) {
             String key = (String) names.nextElement();
@@ -91,7 +95,6 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public void updateRequest(HttpServletRequest request) {
-        //requestMap = new ServletRequestMap(request);
         //update parameters
         requestParameterMap = new HashMap();
         requestParameterValuesMap = new HashMap();
@@ -100,6 +103,12 @@ public class ServletExternalContext extends BridgeExternalContext {
             String name = (String) parameterNames.nextElement();
             requestParameterMap.put(name, request.getParameter(name));
             requestParameterValuesMap.put(name, request.getParameterValues(name));
+        }
+        requestCookieMap = new HashMap();
+        Cookie[] cookies = request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            Cookie cookie = cookies[i];
+            requestCookieMap.put(cookie.getName(), cookie);
         }
     }
 
@@ -115,16 +124,18 @@ public class ServletExternalContext extends BridgeExternalContext {
         return requestParameterMap.keySet().iterator();
     }
 
+    //todo: implement!
     public Map getRequestHeaderMap() {
         return Collections.EMPTY_MAP;
     }
 
+    //todo: implement!
     public Map getRequestHeaderValuesMap() {
         return Collections.EMPTY_MAP;
     }
 
     public Map getRequestCookieMap() {
-        return cookieMap;
+        return requestCookieMap;
     }
 
     public Locale getRequestLocale() {
@@ -258,7 +269,11 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public void addCookie(Cookie cookie) {
-        cookieMap.put(cookie.getName(), cookie);
+        responseCookies.add(cookie);
+    }
+
+    public Cookie[] getResponseCookies() {
+        return (Cookie[]) responseCookies.toArray(new Cookie[responseCookies.size()]);
     }
 
     //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)

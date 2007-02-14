@@ -1,13 +1,13 @@
 package com.icesoft.faces.webapp.http.core;
 
 import com.icesoft.faces.application.D2DViewHandler;
+import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
-import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.Server;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIComponent;
@@ -17,14 +17,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.ResponseStateManager;
+import javax.servlet.http.Cookie;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.io.PrintStream;
 
 public class ReceiveSendUpdates implements Server {
     private static final LifecycleFactory LifecycleFactory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
@@ -63,7 +61,8 @@ public class ReceiveSendUpdates implements Server {
         if (externalContext.redirectRequested()) {
             request.respondWith(new SendRedirectHandler(externalContext));
         } else {
-            request.respondWith(new SendUpdatesHandler(request));
+            String[] views = request.getParameterAsStrings("viewNumber");
+            request.respondWith(new SendUpdatesHandler(views, externalContext));
         }
     }
 
@@ -148,20 +147,29 @@ public class ReceiveSendUpdates implements Server {
     }
 
     private class SendUpdatesHandler implements ResponseHandler {
-        private final Request request;
+        private String[] views;
+        private BridgeExternalContext externalContext;
 
-        public SendUpdatesHandler(Request request) {
-            this.request = request;
+        public SendUpdatesHandler(String[] views, BridgeExternalContext externalContext) {
+            this.views = views;
+            this.externalContext = externalContext;
+
         }
 
         public void respond(Response response) throws Exception {
-            String[] views = request.getParameterAsStrings("viewNumber");
             StringWriter writer = new StringWriter();
             updateManager.serialize(views, writer);
 
             byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
             response.setHeader("Content-Type", "text/xml;charset=UTF-8");
             response.setHeader("Content-Length", content.length);
+
+            //todo: replace this by a message
+            Cookie[] cookies = externalContext.getResponseCookies();
+            for (int i = 0; i < cookies.length; i++) {
+                response.addCookie(cookies[i]);
+            }
+
             response.writeBody().write(content);
         }
     }

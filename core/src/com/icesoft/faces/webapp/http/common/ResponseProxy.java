@@ -1,9 +1,10 @@
 package com.icesoft.faces.webapp.http.common;
 
-import java.util.Date;
-import java.io.OutputStream;
+import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
 
 public class ResponseProxy implements Response {
     protected Response response;
@@ -30,6 +31,10 @@ public class ResponseProxy implements Response {
 
     public void setHeader(String name, int value) {
         response.setHeader(name, value);
+    }
+
+    public void addCookie(Cookie cookie) {
+        response.addCookie(cookie);
     }
 
     public OutputStream writeBody() throws IOException {

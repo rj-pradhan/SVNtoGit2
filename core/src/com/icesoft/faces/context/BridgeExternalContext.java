@@ -40,9 +40,8 @@ package com.icesoft.faces.context;
 import com.icesoft.util.SeamUtilities;
 
 import javax.faces.context.ExternalContext;
+import javax.servlet.http.Cookie;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * This class is supposed to provide a nice, generic interface to the
@@ -83,8 +82,7 @@ public abstract class BridgeExternalContext extends ExternalContext {
         clearRequestContext();
     }
 
-    //todo: replace following methods with an internal redirection listener
-
+    //todo: replace following redirect* methods with a command that's put into the queue
     public abstract String redirectTo();
 
     public abstract boolean redirectRequested();
@@ -98,6 +96,11 @@ public abstract class BridgeExternalContext extends ExternalContext {
     public abstract void setRequestServletPath(String viewId);
 
     public abstract void setRequestPathInfo(String viewId);
+
+    public abstract void addCookie(Cookie cookie);
+
+    //todo: replace this with a message that's put into the queue
+    public abstract Cookie[] getResponseCookies();
 
     public abstract Map collectBundles();
 
