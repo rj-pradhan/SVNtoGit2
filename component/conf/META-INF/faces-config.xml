@@ -41,7 +41,11 @@
      <description>
             Custom Components
      </description>
-            <!-- Custom components -->
+            <!-- Custom components             
+            faces-config.xml is minimal info required at run time. 
+            Note, grammar and metadata information for JSF components in 
+order to provide a design-time experience is defined in "extended-faces-config.xml" for IDE integration.
+            -->
         <renderer>
             <component-family>javax.faces.Command</component-family>
             <renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
