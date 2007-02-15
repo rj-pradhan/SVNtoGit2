@@ -2,6 +2,10 @@
 
 <!-- ================== ICEfaces Component METADATA  ========================== -->
 
+<!-- This file defined IDE specific data used to generate required class and tld for
+   icefaces component suite. faces-config.xml located under component/conf/META-INF 
+     provides minimal info required at run time. -->
+     
 <!DOCTYPE faces-config PUBLIC
   "-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.1//EN"
   "dtd/web-facesconfig-overlay_1_1.dtd"
