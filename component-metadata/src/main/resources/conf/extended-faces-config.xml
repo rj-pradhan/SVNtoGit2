@@ -2,10 +2,6 @@
 
 <!-- ================== ICEfaces Component METADATA  ========================== -->
 
-<!-- This file defined IDE specific data used to generate required class and tld for
-   icefaces component suite. faces-config.xml located under component/conf/META-INF 
-     provides minimal info required at run time. -->
-     
 <!DOCTYPE faces-config PUBLIC
   "-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.1//EN"
   "dtd/web-facesconfig-overlay_1_1.dtd"
@@ -312,6 +308,10 @@
   <!ENTITY uiseries-component   SYSTEM "custom/uiseries-component.xml">
   <!ENTITY uiseries-renderer    SYSTEM "custom/uiseries-renderer.xml">
   
+  <!ENTITY ice-cust-accordion-props SYSTEM "ice_cust_properties/cust-accordion-props.xml">
+  <!ENTITY accordion-component SYSTEM "custom/accordion-component.xml">
+  <!ENTITY accordion-renderer SYSTEM "custom/accordion-renderer.xml">  
+  
   <!ENTITY % property-editors SYSTEM "dtd/property-editors.dtd">
   %property-editors;
     
@@ -375,6 +375,8 @@
     &rowselector-component;
     &outputChart-component;
     &uiseries-component;
+    &accordion-component;
+  
     
 	<render-kit>
 
@@ -434,7 +436,7 @@
         &rowselector-renderer;
         &outputChart-renderer;	
         &uiseries-renderer;
-
+        &accordion-renderer;
 	</render-kit>
 
 </faces-config>

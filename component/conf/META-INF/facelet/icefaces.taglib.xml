@@ -6,6 +6,13 @@
 <facelet-taglib>
 	<namespace>http://www.icesoft.com/icefaces/component</namespace>
 	<tag>
+		<tag-name>accordion</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.Accordion</component-type>
+			<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>
+		</component>
+	</tag>
+	<tag>
 		<tag-name>panelBorder</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.BorderLayout</component-type>

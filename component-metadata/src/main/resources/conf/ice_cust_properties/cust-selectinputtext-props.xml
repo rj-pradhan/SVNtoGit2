@@ -16,6 +16,7 @@
 	<property-name>rows</property-name>
 	<property-class>int</property-class>
 	<property-extension>
+		<category>ICE_LAYOUT</category>
 		<editor-class>
 			&integerEditor;
 		</editor-class>
@@ -69,22 +70,3 @@
 	</property-extension>
 </property>
 
-<property>
-	<description>
-		Config Options
-        frequency: The interval to update the list after a key press
-        minChars: The minimum number of characters before getting an update
-        Format example:
-        {frequency:0.2,minChars:2}
-	</description>
-	<display-name>Options</display-name>
-	<icon></icon>
-	<property-name>options</property-name>
-    <property-class>java.lang.String</property-class>
-    <property-extension>
-        <category>ICE_LAYOUT</category>
-        <editor-class>
-            &stringEditor;
-        </editor-class>
-    </property-extension>
-</property>
