@@ -35,12 +35,13 @@ public class SingleViewServlet extends AdapterServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //create single view or re-create view if the request is the result of a redirect 
-        if (!views.containsKey(viewNumber) || request.getParameter("rvn") != null) {
-            views.put(viewNumber, new ServletView(viewNumber, request, response, responseStateManager));
+        ServletView view = (ServletView) views.get(viewNumber);
+        if ((request.getParameter("rvn") != null && view.differentURI(request)) || view == null) {
+            view = new ServletView(viewNumber, request, response, responseStateManager);
+            views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
         }
 
-        ServletView view = (ServletView) views.get(viewNumber);
         view.setAsCurrentDuring(request);
         view.switchToImmediateMode(response);
         super.service(request, response);

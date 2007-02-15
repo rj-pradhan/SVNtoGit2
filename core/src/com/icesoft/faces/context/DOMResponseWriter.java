@@ -39,7 +39,6 @@ import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.ApplicationBaseLocator;
 import com.icesoft.faces.util.DOMUtils;
 import com.icesoft.faces.webapp.xmlhttp.ResponseState;
-import com.icesoft.faces.webapp.http.servlet.MainServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -53,13 +52,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.beans.Beans;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -370,6 +369,8 @@ public class DOMResponseWriter extends ResponseWriter {
         sessionMap.put(getOldDOMKey(), document);
 
         if (null != writer) {
+            //drain the updates since the entire document is sent to the browser
+            nodeWriter.serialize(new StringWriter());
             writeDOM(writer);
         }
 

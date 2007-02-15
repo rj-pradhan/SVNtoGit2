@@ -31,16 +31,25 @@ public class MultiViewServlet extends AdapterServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //extract viewNumber if this request is from a redirect
-        final String viewNumber;
+        ServletView view;
         String redirectViewNumber = request.getParameter("rvn");
         if (redirectViewNumber == null) {
-            viewNumber = String.valueOf(++viewCount);
+            String viewNumber = String.valueOf(++viewCount);
+            view = new ServletView(viewNumber, request, response, responseStateManager);
+            views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
         } else {
-            viewNumber = redirectViewNumber;
+            view = (ServletView) views.get(redirectViewNumber);
+            if (view == null || view.differentURI(request)) {
+                view = new ServletView(redirectViewNumber, request, response, responseStateManager); 
+                views.put(redirectViewNumber, view);
+                ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(redirectViewNumber));
+            } else {
+                view.setAsCurrentDuring(request);
+                view.switchToImmediateMode(response);
+            }
         }
-        ServletView view = new ServletView(viewNumber, request, response, responseStateManager);
-        views.put(viewNumber, view);
+
         super.service(request, response);
         view.redirectIfRequired();
         view.switchToPushMode();

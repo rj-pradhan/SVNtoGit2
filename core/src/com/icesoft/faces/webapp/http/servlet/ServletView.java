@@ -4,16 +4,13 @@ import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.webapp.xmlhttp.BlockingResponseState;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
-import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
-import com.icesoft.util.IdGenerator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
-import java.util.Random;
 import java.io.IOException;
+import java.util.Map;
 
 //todo: refactor this structure into an object with behavior
 public class ServletView {
@@ -22,11 +19,13 @@ public class ServletView {
     private BlockingResponseState responseState;
     private PersistentFacesState persistentFacesState;
     private Map bundles;
-
+    private ServletEnvironmentRequest wrappedRequest;
+                                                                       
     public ServletView(String viewIdentifier, HttpServletRequest request, HttpServletResponse response, ResponseStateManager responseStateManager) {
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
-        externalContext = new ServletExternalContext(servletContext, new ServletEnvironmentRequest(request), response);
+        wrappedRequest = new ServletEnvironmentRequest(request);
+        externalContext = new ServletExternalContext(servletContext, wrappedRequest, response);
         facesContext = new ServletFacesContext(externalContext, viewIdentifier);
         //the call has the side effect of creating and setting up the state
         //todo: make this concept more visible and less subversive
@@ -68,6 +67,10 @@ public class ServletView {
                                              "&rvn="+facesContext.getViewNumber());
             externalContext.redirectComplete();
         }
+    }
+
+    public boolean differentURI(HttpServletRequest request) {
+        return !request.getRequestURI().equals(wrappedRequest.getRequestURI());
     }
 
     public void release() {
