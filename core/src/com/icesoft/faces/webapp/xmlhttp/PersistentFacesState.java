@@ -209,16 +209,15 @@ public class PersistentFacesState implements Serializable {
     }
 
     /**
-     * execute and Render the view associated with this <code>PersistentFacesState</code>.
-     * The user's browser will be immediately updated with any changes.
+     * Execute  the view associated with this <code>PersistentFacesState</code>.
+     * This is typically followed immediatly by a call to 
+     * {@link PersistentFacesState#render}.
      */
-    void execute() throws RenderingException {
+    public void execute() throws RenderingException {
         facesContext.setCurrentInstance();
         synchronized (facesContext) {
             try {
                 lifecycle.execute(facesContext);
-                lifecycle.render(facesContext);
-                facesContext.release();
             } catch (IllegalStateException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("fatal render failure for viewNumber "

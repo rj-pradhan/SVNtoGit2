@@ -74,6 +74,7 @@ public abstract class FileUploadServlet extends HttpServlet {
         if (state != null) {
             try {
                 state.execute();
+                state.render();
             } catch (RenderingException e) {
                 if (log.isDebugEnabled()) {
                     log.debug(e.getMessage());
