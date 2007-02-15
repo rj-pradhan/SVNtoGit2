@@ -134,7 +134,7 @@ public class MetadataXmlParser {
         return parse(url.toURL(), new FacesConfigBean());
     }
     
-    public FacesConfigBean parse(URL url, FacesConfigBean metadata) throws IOException, SAXException {
+    public FacesConfigBean parse(URL url, FacesConfigBean metadata)throws IOException, SAXException{
         
         configure();
         digester.clear();
@@ -148,11 +148,25 @@ public class MetadataXmlParser {
             source = new InputSource(url.toString());
             source.setByteStream(stream);
             fcb = (FacesConfigBean) digester.parse(source);
+        } catch(SAXException e){
+            System.err.println("@Please check the syntax for the following file: "+ url.getFile());
+            e.printStackTrace();
+            System.exit(1);
+            
+        } catch(IOException e){
+            System.err.println("@Please check the syntax for the following file: "+ url.getFile());
+            e.printStackTrace();
+            System.exit(1);
+            
         } finally {
+        
             if (stream != null)
                 try {
                     stream.close();
                 } catch (IOException e) {
+                    System.err.println("@Please check the following file:"+url.getFile());
+                    e.printStackTrace();
+                    System.exit(1);
                 }
             stream = null;
         }
