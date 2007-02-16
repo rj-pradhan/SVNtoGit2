@@ -11,14 +11,11 @@ Directory of metadata (src/main/resources):
 Tools require both grammar and metadata information for JSF components in 
 order to provide a design-time experience. 
 
-faces-config.xml is the JavaServer Faces configuration file shipped at run time located 
-component/conf/META-INF. 
-
-The component/conf/META-INF/faces-config.xml contains grammar information and a minimal set of metadata for 
+The faces-config.xml contains grammar information and a minimal set of metadata for 
 components, attributes, properties, facets, and renderers. 
 
-By Extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO: xsd). 
-extended-faces-config.xml is defined with data for generating tag class,  tld file, component baseline and beainfo specifc to IDE.
+Extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO xsd). 
+It is defined with data for generating tag class,  tld file, component baseline and beainfo specifc to IDE.
 
 extended-faces-config.xml (Netbeans VWP specifc)
 extended-faces-config-creator2.xml (Creator 2 specific )
@@ -104,13 +101,13 @@ also
         </property-extension>
 </property>
 
-#3 create entity in extended-faces-config.xml 
+#3 create entity in sun-faces-config.xml
 
   <!ENTITY ice-cust-style-props SYSTEM "ice_cust_properties/cust-style-props.xml">
   <!ENTITY style-component SYSTEM "custom/style-component.xml">
   <!ENTITY style-renderer SYSTEM "custom/style-renderer.xml">
 
-#4 add component and render in component/conf/META-INF/faces-config.xml which is shipped at run time. 
+#4 add component and render in faces-config.xml
 
       <renderer>
             <component-family>com.icesoft.faces.OutputStyle</component-family>
@@ -167,13 +164,10 @@ component-metadata/target/generated-sources/beaninfo/main/java
 testbeaninfo
 component-metadata/target/generated-sources/testbeaninfo/main/java
 
-(testbeaninfo is generated without dependencies on IDE related classes.)
+(testbeaninfo is generated without dependencies on IDE related classes)
 
 
 Reference:
-
-JSF API
-http://java.sun.com/javaee/javaserverfaces/reference/api/index.html
 
 Design-Time Metadata for JavaServerTM Faces Components
 http://jcp.org/en/jsr/detail?id=276

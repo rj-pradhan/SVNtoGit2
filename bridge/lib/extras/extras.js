@@ -116,3 +116,15 @@ Ice.DnD = {
         return false;
      }
 };
+
+Ice.Accordion = {
+    fire:function(eleId) {
+        var ele = document.getElementById(eleId);
+        if(Element.visible(ele)){
+            Effect.SlideUp(ele,{uploadCSS:true,submit:true});
+        }else{
+            Effect.SlideDown(ele,{uploadCSS:true,submit:true});
+
+        }
+    }
+}

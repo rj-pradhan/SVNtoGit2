@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		<![CDATA[ Accordion Componenet ]]>
+	</description>
+	<display-name>Accordion</display-name>
+	<component-type>com.icesoft.faces.Accordion</component-type>
+    &ice-cust-accordion-props;
+	<component-extension>
+	    <base-component-type>com.sun.faces.Component</base-component-type>
+		<component-family>com.icesoft.faces.AccordionFamily</component-family>
+		<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>  
+	</component-extension>
+</component>
