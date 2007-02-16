@@ -36,7 +36,7 @@ public class SingleViewServlet extends AdapterServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //create single view or re-create view if the request is the result of a redirect 
         ServletView view = (ServletView) views.get(viewNumber);
-        if (view == null || (request.getParameter("rvn") != null || view.differentURI(request))) {
+        if (view == null || view.differentURI(request)) {
             view = new ServletView(viewNumber, request, response, responseStateManager);
             views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
