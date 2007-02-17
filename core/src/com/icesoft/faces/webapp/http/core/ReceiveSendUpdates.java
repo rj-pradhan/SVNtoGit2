@@ -7,8 +7,8 @@ import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.util.DOMUtils;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Response;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIComponent;
@@ -19,7 +19,8 @@ import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.render.ResponseStateManager;
 import javax.servlet.http.Cookie;
-import java.io.StringWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -147,7 +148,7 @@ public class ReceiveSendUpdates implements Server {
         return (UIForm) parent;
     }
 
-    private class SendUpdatesHandler implements ResponseHandler {
+    private class SendUpdatesHandler extends FixedXMLContentHandler {
         private String[] views;
         private BridgeExternalContext externalContext;
 
@@ -156,35 +157,29 @@ public class ReceiveSendUpdates implements Server {
             this.externalContext = externalContext;
         }
 
-        public void respond(Response response) throws Exception {
-            StringWriter writer = new StringWriter();
+        public void writeTo(Writer writer) throws IOException {
             updateManager.serialize(views, writer);
+        }
 
-            byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
-            response.setHeader("Content-Type", "text/xml;charset=UTF-8");
-            response.setHeader("Content-Length", content.length);
-
+        public void respond(Response response) throws Exception {
             //todo: replace this by a message
             Cookie[] cookies = externalContext.getResponseCookies();
             for (int i = 0; i < cookies.length; i++) {
                 response.addCookie(cookies[i]);
             }
-
-            response.writeBody().write(content);
+            super.respond(response);
         }
     }
 
-    private static class SendRedirectHandler implements ResponseHandler {
+    private static class SendRedirectHandler extends FixedXMLContentHandler {
         private final BridgeExternalContext externalContext;
 
         public SendRedirectHandler(BridgeExternalContext externalContext) {
             this.externalContext = externalContext;
         }
 
-        public void respond(Response response) throws Exception {
-            response.setHeader("Content-Type", "text/xml;charset=UTF-8");
-            String body = "<redirect url=\"" + DOMUtils.escapeAnsi( externalContext.redirectTo() ) + "\"/>";
-            response.writeBody().write(body.getBytes("UTF-8"));
+        public void writeTo(Writer writer) throws IOException {
+            writer.write("<redirect url=\"" + DOMUtils.escapeAnsi(externalContext.redirectTo() ) + "\"/>");
             externalContext.redirectComplete();
         }
     }

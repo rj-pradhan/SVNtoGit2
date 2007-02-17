@@ -1,20 +1,20 @@
 package com.icesoft.faces.webapp.http.core;
 
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.Response;
 import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 
-import java.io.StringWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 public class SendUpdatedViews implements Server {
     private ResponseHandler responseHandler;
 
     public SendUpdatedViews(final UpdateManager updateManager) {
-        this.responseHandler = new ResponseHandler() {
-
-            public void respond(Response response) throws Exception {
-                StringWriter writer = new StringWriter();
+        this.responseHandler = new FixedXMLContentHandler() {
+            
+            public void writeTo(Writer writer) throws IOException {
                 String[] views = updateManager.getUpdatedViews();
                 writer.write("<updated-views>");
                 for (int i = 0; i < views.length; i++) {
@@ -22,10 +22,6 @@ public class SendUpdatedViews implements Server {
                     if (i < views.length - 1) writer.write(' ');
                 }
                 writer.write("</updated-views>");
-                byte[] content = writer.toString().getBytes("UTF-8");
-                response.setHeader("Content-Type", "text/xml;charset=UTF-8");
-                response.setHeader("Content-Length", content.length);
-                response.writeBody().write(content);
             }
         };
     }

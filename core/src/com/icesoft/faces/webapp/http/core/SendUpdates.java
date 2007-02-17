@@ -1,11 +1,11 @@
 package com.icesoft.faces.webapp.http.core;
 
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.Response;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 
-import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 public class SendUpdates implements Server {
     private UpdateManager updateManager;
@@ -15,13 +15,11 @@ public class SendUpdates implements Server {
     }
 
     public void service(final Request request) throws Exception {
-        request.respondWith(new ResponseHandler() {
-            public void respond(Response response) throws Exception {
-                response.setHeader("Content-Type", "text/xml");
+        request.respondWith(new FixedXMLContentHandler() {
+
+            public void writeTo(Writer writer) throws IOException {
                 String[] views = request.getParameterAsStrings("viewNumber");
-                OutputStreamWriter writer = new OutputStreamWriter(response.writeBody());
                 updateManager.serialize(views, writer);
-                writer.flush();
             }
         });
     }

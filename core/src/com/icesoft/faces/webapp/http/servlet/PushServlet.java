@@ -27,9 +27,16 @@ public class PushServlet implements ServerServlet {
         //FileUploadServlet needs this
         session.setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
         ServletView view = (ServletView) views.get(viewNumber);
-        view.setAsCurrentDuring(request);
-        server.service(request, response);
-        view.release();
+        if (view == null) {
+            byte[] content = "<session-expired/>".getBytes("UTF-8");
+            response.setContentType("text/xml;charset=UTF-8");
+            response.setContentLength(content.length);
+            response.getOutputStream().write(content);
+        } else {
+            view.setAsCurrentDuring(request);
+            server.service(request, response);
+            view.release();
+        }
     }
 
     public void shutdown() {
