@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+Displays the status of the network connection between the client browser and the server
+	</description>
+
+	<display-name>Output Connection Status</display-name>
+	<component-type>
+		com.icesoft.faces.OutputConnectionStatus
+	</component-type>
+
+	&ice-cust-outputConnectionStatus-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>
+			com.icesoft.faces.OutputConnectionStatusRenderer
+		</renderer-type>
+	</component-extension>
+
+</component>

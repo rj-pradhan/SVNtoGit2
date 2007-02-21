@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+&message-message-props;
+ -->
+&ice-ext-core-styled-props;
+<property>
+	<description>The Javascript Effect</description>
+	<property-name>effect</property-name>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>

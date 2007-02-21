@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+    Inline text associated with a page or field
+  </description>
+
+  <display-name>Inline Help</display-name>
+
+  <component-type>com.sun.rave.web.ui.HelpInline</component-type>
+
+  <property>
+    <description>
+      The inline help text to display.
+    </description>
+    <display-name>text</display-name>
+    <property-name>text</property-name>
+    <!-- <RAVE> -->
+    <!-- <property-class>java.lang.String</property-class> -->
+    <!-- </RAVE> -->
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <!-- <RAVE> -->
+      <alias-for>value</alias-for>
+      <!-- </RAVE> -->
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      The type of inline help - valid values are "page" or "field". Note that
+      "page" is the default.
+    </description>
+    <display-name>Type of Help</display-name>
+    <property-name>type</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>"page"</default-value>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Output</base-component-type>
+    <component-family>com.sun.rave.web.ui.HelpInline</component-family>
+    <renderer-type>com.sun.rave.web.ui.HelpInline</renderer-type>
+  </component-extension>
+
+</component>

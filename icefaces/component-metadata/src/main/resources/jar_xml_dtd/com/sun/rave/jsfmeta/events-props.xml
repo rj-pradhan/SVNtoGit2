@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== Event Properties =========================================== -->
+
+
+      <property>
+        <property-name>onclick</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>ondblclick</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onmousedown</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onmouseup</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onmouseover</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onmousemove</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onmouseout</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onkeypress</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onkeydown</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onkeyup</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            com.sun.jsfcl.std.JavaScriptPropertyEditor
+          </editor-class>
+        </property-extension>
+      </property>

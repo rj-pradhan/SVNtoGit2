@@ -1,0 +1,28 @@
+<?xml encoding='UTF-8'?>
+
+      &uicomponent-props;
+      &value-props;
+      <property>
+        <property-name>itemDescription</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemDisabled</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemLabel</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemValue</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+

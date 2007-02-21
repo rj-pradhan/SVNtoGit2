@@ -1,0 +1,165 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, two types of popup panel components can be toggled on and
+off.
+The Draggable panel can be moved. The Modal panel cannot be moved, interrupts
+the application
+and must be dismissed before the application's functionality will return.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Example include, also see source code include.
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+    <ice:panelGrid
+            styleClass="componentLayoutRootTable"
+            columns="1">
+
+        <!-- Application title  -->
+        <ice:panelGroup styleClass="formBorderHighlight">
+            <h3>
+                <ice:outputText value="#{msgs['component.popupPanel.title']}"/>
+            </h3>
+            <h4>
+                <ice:outputText
+                        value="#{msgs['component.popupPanel.instructions']}"/>
+            </h4>
+
+            <!-- popup selection -->
+            <ice:panelGrid columns="2" styleClass="popupControls">
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.popupPanel.draggable.controlLabel']}"/>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="#{popup.showDraggablePanel}"/>
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.popupPanel.modal.controlLabel']}"/>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="#{popup.showModalPanel}"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+    </ice:panelGrid>
+
+    <!-- panel popup code, draggable type  -->
+    <ice:panelPopup
+            draggable="true"
+            rendered="#{popup.showDraggablePanel}"
+            visible="#{popup.showDraggablePanel}"
+            style="z-index: 1000; top: 300px; left: 300px; position: absolute; width: 300px; height: 150px;">
+
+        <f:facet name="header">
+            <ice:panelGrid width="100%" cellpadding="0"
+                           cellspacing="0" columns="2"
+                           columnClasses="dummy, popupButton">
+                <ice:outputText style="color:#FFFFFF;font-size:13px;"
+                                value="#{msgs['component.popupPanel.draggable.title']}"/>
+                <ice:commandButton id="popupClose" type="button"
+                                   image="#{popup.closePopupImage}"
+                                   actionListener="#{popup.closeDraggablePopup}"
+                                   style="cursor: pointer;"/>
+            </ice:panelGrid>
+        </f:facet>
+
+        <f:facet name="body">
+            <ice:panelGrid width="100%" cellpadding="0"
+                           cellspacing="0" column="1"
+                           styleClass="popupModalBody">
+                <ice:outputText
+                        value="#{msgs['component.popupPanel.draggable.content']}"/>
+            </ice:panelGrid>
+        </f:facet>
+
+    </ice:panelPopup>
+
+    <!-- panel popup code, modal type -->
+    <ice:panelPopup id="popupDiv"
+                    rendered="true"
+                    visible="#{popup.showModalPanel}"
+                    modal="true"
+                    style="z-index:1001;  width: 300px; height: 150px; top:35%; left:35%;">
+
+        <f:facet name="header">
+            <ice:outputText styleClass="popupTitle"
+                            value="#{msgs['component.popupPanel.modal.title']}"/>
+        </f:facet>
+
+        <f:facet name="body">
+            <ice:panelGrid width="100%" cellpadding="0"
+                           cellspacing="0" column="1"
+                           styleClass="popupModalBody">
+                <ice:outputText
+                        value="#{msgs['component.popupPanel.modal.content']}"/>
+                <ice:commandButton id="closeModal"
+                                   actionListener="#{popup.closeModalPopup}"
+                                   value="Close"
+                                   style="z-index:2;"/>
+            </ice:panelGrid>
+        </f:facet>
+
+    </ice:panelPopup>
+
+</ice:panelTab>
+
+<!--
+The bean is responsible for streaming html documentation to
+this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/panelPopupDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/layoutPanels/panelPopup.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

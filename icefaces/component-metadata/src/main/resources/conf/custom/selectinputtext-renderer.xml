@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[
+            <p>The selectInputText component provides an inputText component enhanced with auto-complete functionality.
+            As the user enters text into the component it provides a popup list of possible matching values that the
+            user may select from. The component predicts a word or phrase that a user wants to type in without the user
+            actually completely typing it in. The selectInputText component requires developers to implement the 
+            matching list search algorithm in their backing bean.
+            <p>
+            The selectInputText component can generate one of two types of lists:<br/>
+            
+               1. A list of String data.<br/>
+               2. A list of arbitrarily complex child components.<br/>
+        ]]>
+	</description>
+	<component-family>javax.faces.Input</component-family>
+
+	<renderer-type>com.icesoft.faces.SelectInputText</renderer-type>
+
+	<renderer-extension>
+		<instance-name>selectInputText</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>selectInputText</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

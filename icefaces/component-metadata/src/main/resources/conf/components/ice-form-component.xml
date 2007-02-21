@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	Defines a form region
+	</description>
+
+	<display-name>Form</display-name>
+	<component-type>com.icesoft.faces.HtmlForm</component-type>
+
+	&ice-form-props;	
+	
+	<!-- &form-form-props; -->
+	<component-extension>
+		<base-component-type>javax.faces.HtmlForm</base-component-type>
+		<component-family>javax.faces.Form</component-family>
+		<renderer-type>com.icesoft.faces.Form</renderer-type>
+	</component-extension>
+
+</component>

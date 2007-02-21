@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-ext-core-styled-props;
+&ice-att-autoComplete-props;
+&ice-att-userrole-enabled-props;
+
+<property>
+	<description>
+		Set directory for location of the tree images.
+	</description>
+	<property-name>imageDir</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Not Applicable - the ICEfaces popup dateSelect does not require
+		any special attributes.
+	</description>
+	<property-name>popupDateFormat</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+
+	<property-name>navDate</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&dateEditor;
+		</editor-class>
+		<is-bindable>false</is-bindable>
+		<is-hidden>true</is-hidden>
+		<tag-attribute>false</tag-attribute>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Render the input-dateSelect as a java-script popup on client.
+	</description>
+	<property-name>renderAsPopup</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-bindable>true</is-bindable>
+		<is-hidden>false</is-hidden>
+	</property-extension>
+</property>

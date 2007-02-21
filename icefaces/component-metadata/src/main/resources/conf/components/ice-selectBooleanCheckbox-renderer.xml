@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	<![CDATA[<p>Renders an HTML "input" element of type "checkbox".</p><p>Decode Behavior</p><ul><p>Obtain the <code>Map</code> from the "requestParameterMap"
+          property of the <code>ExternalContext</code>.  If there is no
+          entry in the <code>Map</code> for the "clientId" of this
+          component, pass "false" to the <code>setSubmittedValue()</code>
+          method of the component, which must be an instance of
+          <code>EditableValueHolder</code>.  If there is an entry, and its
+          value is equal, ignoring case and without quotes, to any of the
+          Strings: "on", "yes" or "true" pass true to the
+          <code>setSubmittedValue()</code> method of the component.</p></ul><p>Encode Behavior</p><ul><p>
+          Render the clientId of the component as the value of the "name"
+          attribute.  If the current value of the component is "true",
+          output the "checked" attribute.  If the "styleClass" attribute is
+          specified, render its value as the value of the "class"
+          attribute.</p></ul>]]>
+	</description>
+	<component-family>javax.faces.SelectBoolean</component-family>
+
+	<renderer-type>com.icesoft.faces.Checkbox</renderer-type>
+
+	<renderer-extension>
+		<instance-name>selectBooleanCheckbox</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>selectBooleanCheckbox</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

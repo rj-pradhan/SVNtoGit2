@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+    A table of data
+  </description>
+
+  <display-name>Table</display-name>
+  <component-type>com.sun.rave.web.ui.Table</component-type>
+
+  <property>
+    <description><![CDATA[
+Flag indicating that the table title should be augmented with the range of items 
+currently displayed and the total number of items in the table. For example, 
+"(1 - 25 of 200)". If the table is not currently paginated, the title is 
+augmented with the number of displayed items. For example, "(18)". When set to 
+false, any values set for <code>itemsText</code> and <code>filterText</code> 
+are overridden.
+    ]]></description>
+    <display-name>Show Augmented Title</display-name>
+    <property-name>augmentTitle</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>true</default-value>
+      <short-description>
+          Display additional information (number of rows, range of rows) as
+                    part of the table title
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+In the View-Changing Controls area of the Action Bar, display a button that 
+clears any sorting of the table. When the button is clicked, the table items 
+return to the order they were in when the page was initially rendered.
+    ]]></description>
+    <display-name>Show Clear Sort Button</display-name>
+    <property-name>clearSortButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Display a button to clear any sorting done after the table was
+                    initially displayed
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+In the Action Bar, display a deselect button for tables in which multiple rows 
+can be selected, to allow users to deselect all table rows that are currently 
+displayed. This button is used to deselect a column of checkboxes using the id 
+that was given to the selectId attribute of the <code>ui:tableColumn</code> tag.
+    ]]></description>
+    <display-name>Show Deselect Multiple Button</display-name>
+    <property-name>deselectMultipleButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Display a button to deselect all currently selected rows
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Scripting code that is executed when the user clicks the deselect multiple 
+button. You should use the JavaScript <code>setTimeout()</code> function to 
+invoke the script to ensure that checkboxes are deselected immediately, instead 
+of waiting for the script to complete.
+    ]]></description>
+    <display-name>Deselect Multiple Click Script</display-name>
+    <property-name>deselectMultipleButtonOnClick</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+In the Action Bar, display a deselect button for tables in which only a single 
+table row can be selected at a time. This button is used to deselect a column of 
+radio buttons using the id that was given to the selectId attribute of the 
+<code>ui:tableColumn</code> tag.
+    ]]></description>
+    <display-name>Show Deselect Single Button</display-name>
+    <property-name>deselectSingleButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Scripting code executed when the Deselect Multiple button is
+                    pressed 
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Scripting code that is executed when the user clicks the deselect single button.
+You should use the JavaScript <code>setTimeout()</code> function to invoke the 
+script to ensure that the radio button is deselected immediately, instead of 
+waiting for the script to complete.
+    ]]></description>
+    <display-name>Deselect Single Click Script</display-name>
+    <property-name>deselectSingleButtonOnClick</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt; </code>HTML element that  
+is rendered for the Action Bar (bottom). Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"style=`myActionBarStyle'"</code>.
+    ]]></description>
+    <display-name>Extra Action (bottom) HTML</display-name>
+    <property-name>extraActionBottomHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the table Action Bar at the bottom
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt; </code>HTML element that 
+is rendered for the Action Bar (top). Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"style=`myActionBarStyle'"</code>.
+    ]]></description>
+    <display-name>Extra Action (top) HTML</display-name>
+    <property-name>extraActionTopHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the table Action Bar at the top
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt; </code>HTML element that 
+is rendered for the table footer. Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"nowrap=`nowrap'"</code>.
+    ]]></description>
+    <display-name>Extra Footer HTML</display-name>
+    <property-name>extraFooterHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>HTML that is appended to the table footer</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt; </code>HTML element that 
+is rendered for an embedded panel. Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity.
+    ]]></description>
+    <display-name>Extra Panel HTML</display-name>
+    <property-name>extraPanelHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to an embedded panel in the table
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;caption&gt;</code> HTML element 
+that is rendered for the table title. Use only code that is valid in an HTML 
+<code>&lt;caption&gt;</code> element. The code you specify is inserted in the 
+HTML element, and is not checked for validity. For example, you might set this 
+attribute to <code>"style=`myTitleStyle'"</code>.
+    ]]></description>
+    <display-name>Extra Title HTML</display-name>
+    <property-name>extraTitleHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the title element in the table
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The element id to be applied to the outermost HTML element that is rendered 
+for the dropDown component used to display filter options. The id must be 
+fully qualified. This id is required for JavaScript functions to set the 
+dropDown styles when the embedded filter panel is opened, and to reset the 
+default selected value when the panel is closed. Note that if you use the 
+<code>ui:dropDown</code> tag as the only component in the <code>filter</code> 
+facet, the <code>filterId</code> is optional. If you use a custom component, or 
+use the <code>ui:dropDown</code> as a child component, you must specify a 
+filterID.
+    ]]></description>
+    <display-name>Filter Component Id</display-name>
+    <property-name>filterId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Fully qualified ID that represents the dropDown component used to
+                    display filter options
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The element id used to set focus when the filter panel is open.
+    ]]></description>
+    <display-name>Filter Panel Focus ID</display-name>
+    <property-name>filterPanelFocusId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Text to be inserted into the table title bar when a filter is applied. This text 
+is expected to be the name of the filter that the user has selected. The 
+attribute value should be a JavaServer Faces EL expression that resolves to a 
+backing bean property whose value is set in your filter code. The value of the 
+filterText attribute is inserted into the table title, as follows: Your Table's 
+Title <span style="font-style: italic;">filterText</span> Filter Applied.
+    ]]></description>
+    <display-name>Filter Text</display-name>
+    <property-name>filterText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Text to be inserted into the table title bar when a filter is applied
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The text to be displayed in the table footer, which expands across the width of 
+the table.
+    ]]></description>
+    <display-name>Footer Text</display-name>
+    <property-name>footerText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Flag indicating that selected rows might be currently hidden from view. UI 
+guidelines recommend that rows that are not in view are deselected. For example, 
+when users select rows of the table and navigate to another page, the selected 
+rows should be deselected automatically. Or, when a user applies a filter or 
+sort that hides previously selected rows from view, those selected rows should 
+be deselected. By deselecting hidden rows, you prevent the user from 
+inadvertantly invoking an action on rows that are not displayed.
+<br/><br/>
+However, sometimes state must be maintained aross table pages. If your table 
+must maintain state, you must set the hiddenSelectedRows attribute to true. The 
+attribute causes text to be displayed in the table title and footer to indicate 
+the number of selected rows that are currently hidden from view. This title and 
+footer text is also displayed with a count of 0 when there are no hidden 
+selections, to make the user aware of the possibility of hidden selections.
+<br/><br/>
+Note: When hiddenSelectedRows is false, the descending sort button for the 
+select column is disabled when the table is paginated. Disabling this button 
+prevents a sort from placing selected rows on a page other than the current 
+page.
+    ]]></description>
+    <display-name>Is Hidden Selected Rows</display-name>
+    <property-name>hiddenSelectedRows</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Enable selected rows to be hidden in order to maintain state
+                    across table pages
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Flag indicating that this component should use a virtual form. A virtual form is 
+equivalent to enclosing the table component in its own HTML form element, 
+separate from other HTML elements on the same page. As an example, consider the 
+case where a required text field and table appear on the same page. If the user 
+clicks on a table sort button, while the required text field has no value, the 
+sort action is never invoked because a value was required and validation failed. 
+Placing the table in a virtual form allows the table sort action to complete 
+because validation for the required text field is not processed. This is similar 
+to using the immediate property of a button, but allows table children to be 
+submitted so that selected checkbox values may be sorted, for example.
+    ]]></description>
+    <display-name>Is Internal Virtual Form</display-name>
+    <property-name>internalVirtualForm</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <tag-attribute>false</tag-attribute>
+      <short-description>Force this table to use it's own virtual form</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Text to add to the title of an unpaginated table. For example, if your table 
+title is "Critical" and there are 20 items in the table, the default unpaginated 
+table title would be Critical (20). If you specify itemsText="alerts", the title 
+would be Critical (20 alerts).
+    ]]></description>
+    <display-name>Items Text</display-name>
+    <property-name>itemsText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Additional title text to describe the rows in the table
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Renders the table in a style that makes the table look lighter weight, generally 
+by omitting the shading around the table and in the title bar.
+    ]]></description>
+    <display-name>Light Weight Table</display-name>
+    <property-name>lite</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Apply a lighter visual style to the table</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Show table paginate button to allow users to switch between viewing all data on 
+a single page (unpaginated) or to see data in multiple pages (paginated).
+    ]]></description>
+    <display-name>Show Paginate Button</display-name>
+    <property-name>paginateButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Display a paginate button to enable switching between a single
+                    page and multiple pages
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Show the table pagination controls, which allow users to change which page is 
+displayed. The controls include an input field for specifying the page number, a 
+Go button to go to the specified page, and buttons for going to the first, last, 
+previous, and next page.
+    ]]></description>
+    <display-name>Show Pagination Controls</display-name>
+    <property-name>paginationControls</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Display buttons to control pagination including an input field to
+                    specify a target page number
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The element id used to set focus when the preferences panel is open.
+    ]]></description>
+    <display-name>Preferences Panel Focus ID</display-name>
+    <property-name>preferencesPanelFocusId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Show the button that is used for selecting multiple rows. The button is 
+displayed in the Action Bar (top), and allows users to select all rows currently 
+displayed. The button selects a column of checkboxes using the id specified in 
+the selectId attribute of the <code>ui:tableColumn</code> tag.
+    ]]></description>
+    <display-name>Show Select Multiple Button</display-name>
+    <property-name>selectMultipleButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Display a buttons to allow selection of all rows currently displayed
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Scripting code executed when the user clicks the mouse on the select multiple 
+button.
+    ]]></description>
+    <display-name>Select Multiple Click Script</display-name>
+    <property-name>selectMultipleButtonOnClick</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The element id used to set focus when the sort panel is open.
+    ]]></description>
+    <display-name>Sort Panel Focus ID</display-name>
+    <property-name>sortPanelFocusId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Show the button that is used to open and close the sort panel.
+    ]]></description>
+    <display-name>Show Sort Panel Toggle Button</display-name>
+    <property-name>sortPanelToggleButton</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Text that describes this table's purpose and structure, for user agents 
+rendering to non-visual media such as speech and Braille.
+    ]]></description>
+    <display-name>Summary</display-name>
+    <property-name>summary</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The text displayed for the table title.
+    ]]></description>
+    <display-name>Table Title</display-name>
+    <property-name>title</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  &onClickXXX-props;
+  &onKeyXXX-props;
+  &onMouseXXX-props;
+  &tabIndex-props;
+  &toolTip-props;
+  &visible-props;
+  &table-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Table</component-family>
+    <renderer-type>com.sun.rave.web.ui.Table</renderer-type>
+  </component-extension>
+</component>

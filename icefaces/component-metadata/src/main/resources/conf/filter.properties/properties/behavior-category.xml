@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<property>
+	<description>effect</description>
+	<property-name>effect</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>disabled</description>
+	<property-name>disabled</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>maxLength</description>
+	<property-name>maxLength</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>partialSubmit</description>
+	<property-name>partialSubmit</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>readOnly</description>
+	<property-name>readOnly</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>scrollHeight</description>
+	<property-name>scrollHeight</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>scrollWidth</description>
+	<property-name>scrollWidth</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>sortAscending</description>
+	<property-name>sortAscending</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>sortColumn</description>
+	<property-name>sortColumn</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>visible</description>
+	<property-name>visible</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>BEHAVIOR</category>
+	</property-extension>
+</property>
+
+
+
+

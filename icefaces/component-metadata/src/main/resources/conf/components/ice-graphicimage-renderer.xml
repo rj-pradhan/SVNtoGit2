@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description><![CDATA[Renders an HTML "img" element.  Render the clientId
+          as the value of the "id" attribute.  Render the value of the
+          component as the value of the "src" attribute, after passing it
+          to the <code>getResourceUR()</code> method of the <code>ViewHandler</code>
+          for this application, and passing the result
+          through the <code>encodeResourceURL()</code> method of the
+          <code>ExternalContext</code>.  If present, render the value of the
+          alt attribute as the value of the "alt" attribute.  If the
+          "styleClass" attribute is specified, render its value as the value
+          of the "class" attribute.]]></description>
+	<component-family>javax.faces.Graphic</component-family>
+
+	<renderer-type>com.icesoft.faces.Image</renderer-type>
+
+	<renderer-extension>
+		<instance-name>graphicImage</instance-name>
+		<is-container>false</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>graphicImage</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+            MenuItem components are the menu items contained by a menuBar. The value attribute 
+            defines the label displayed for the menuItem. The icon attribute can be used to 
+            specify an image that displays on the left side of the menuItem. The action and 
+            actionListener attributes operate in the same way os the standard component attributes
+            of the same name. The menuItem component is only used in the static approach to defining 
+            the heirarchy of menu items.
+	</description>
+	<component-family>com.icesoft.faces.MenuNode</component-family>
+
+
+	<renderer-type>com.icesoft.faces.View</renderer-type>
+
+	<renderer-extension>
+		<instance-name>menuItem</instance-name>
+		<is-container>true</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>menuItem</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

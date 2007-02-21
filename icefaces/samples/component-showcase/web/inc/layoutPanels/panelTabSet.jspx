@@ -1,0 +1,287 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration ice:panelTabSet is manipulated by the following controls
+to show how visibility, focus and tab placement can be dynamically changed.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Controls to show/hide the table columns
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<ice:panelGrid
+        styleClass="componentLayoutRootTable"
+        columns="1">
+
+<!-- Static Panel Tab set example -->
+<ice:panelGrid columnClasses="contentLayoutGridColumn" columns="2">
+<!-- Controls for Static tabs -->
+<ice:panelGrid>
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.tabSet.static.title']}"/>
+    </h3>
+    <!-- Tab Visibility Selection controls -->
+    <ice:panelGrid styleClass="tabPanelControls"
+                   columnClasses="contentLayoutGridColumn" columns="1">
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.tabVisibility']}"/>
+        </h3>
+        <ice:panelGrid columns="6">
+            <ice:selectBooleanCheckbox partialSubmit="true"
+                                       value="#{tabbedPaneExample.tabbedPane1Visible}"/>
+            <ice:outputText value="#{msgs['component.tabSet.tab1']}"/>
+            <ice:selectBooleanCheckbox partialSubmit="true"
+                                       value="#{tabbedPaneExample.tabbedPane2Visible}"/>
+            <ice:outputText value="#{msgs['component.tabSet.tab2']}"/>
+            <ice:selectBooleanCheckbox partialSubmit="true"
+                                       value="#{tabbedPaneExample.tabbedPane3Visible}"/>
+            <ice:outputText value="#{msgs['component.tabSet.tab3']}"/>
+        </ice:panelGrid>
+
+        <br/>
+        <!-- Tab Focus controls -->
+
+        <h3>
+            <ice:outputText value="#{msgs['component.tabSet.tabFocus']}"/>
+        </h3>
+        <ice:selectOneRadio
+                binding="#{tabbedPaneExample.bindSelectedTabObject}"
+                valueChangeListener="#{tabbedPaneExample.selectTab}"
+                partialSubmit="true"
+                value="#{tabbedPaneExample.selectedTabFocus}">
+            <f:selectItem itemValue="0"
+                          itemLabel="#{msgs['component.tabSet.tab1']}"/>
+            <f:selectItem itemValue="1"
+                          itemLabel="#{msgs['component.tabSet.tab2']}"/>
+            <f:selectItem itemValue="2"
+                          itemLabel="#{msgs['component.tabSet.tab3']}"/>
+        </ice:selectOneRadio>
+
+        <br/>
+        <!-- Tab placement controls -->
+
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.tabPlacement']}"/>
+        </h3>
+        <ice:selectOneRadio value="bottom"
+                            valueChangeListener="#{tabbedPaneExample.selectTabPlacement}"
+                            partialSubmit="true">
+            <f:selectItem itemLabel="#{msgs['component.tabSet.top']}"
+                          itemValue="top"/>
+            <f:selectItem itemLabel="#{msgs['component.tabSet.bottom']}"
+                          itemValue="bottom"/>
+        </ice:selectOneRadio>
+    </ice:panelGrid>
+
+</ice:panelGrid>
+
+<ice:panelGroup
+        styleClass="contentLayoutGridColumn"
+        style="margin-bottom:5px;margin-top:10px; width:350px;">
+    <h3>&#160;</h3>
+    <ice:panelTabSet binding="#{tabbedPaneExample.tabSet}"
+                     selectedIndex="1"
+                     tabPlacement="#{tabbedPaneExample.tabPlacement}"
+                     styleClass="myTab"
+            >
+
+        <!-- Panel tab 1 defined with some basic content -->
+        <ice:panelTab rendered="#{tabbedPaneExample.tabbedPane1Visible}"
+                      label="#{msgs['component.tabSet.tab1']}"
+                      icon="images/menu/recent.gif">
+            <div style="height:150px;">
+                <h3>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.iceFaces.title']}"/>
+                </h3>
+                <p>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.iceFaces.description']}"/>
+                </p>
+                <br/></div>
+        </ice:panelTab>
+
+        <!-- Panel tab 2 defined with some basic content -->
+        <ice:panelTab rendered="#{tabbedPaneExample.tabbedPane2Visible}"
+                      label="#{msgs['component.tabSet.tab2']}">
+            <div style="height:150px;">
+                <h3>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.iceBrowser.title']}"/>
+                </h3>
+                <p>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.iceBrowser.description']}"/>
+                </p>
+                <br/>
+                <br/>
+            </div>
+        </ice:panelTab>
+
+        <!-- Panel tab 3 defined with some basic content -->
+        <ice:panelTab rendered="#{tabbedPaneExample.tabbedPane3Visible}"
+                      label="#{msgs['component.tabSet.tab3']}"
+                      icon="images/menu/recent.gif" iconAlignRight="true">
+            <div style="height:150px;">
+                <h3>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.icePdf.title']}"/>
+                </h3>
+                <p>
+                    <ice:outputText
+                            value="#{msgs['components.tabSet.example.icePdf.description']}"/>
+                </p>
+                <br/>
+                <br/>
+            </div>
+        </ice:panelTab>
+
+        <!--
+            This text is not part of a panelTab and will be displayed on all
+            panel tabs.
+        -->
+        <p>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.persistantText']}"/>
+        </p>
+
+    </ice:panelTabSet>
+</ice:panelGroup>
+
+<!-- Controls for Dynamic Tabs -->
+<ice:panelGrid>
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.tabSet.dynamic.title']}"/>
+    </h3>
+    <!-- add a new tab -->
+    <ice:panelGrid columns="1" styleClass="tabPanelControls">
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.addTab.title']}"/>
+        </h3>
+
+        <h5>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.addTab.tabLabel']}"/>
+        </h5>
+        <ice:inputText value="#{tabbedPaneExample.newTabLabel}"/>
+        <h5>
+            <ice:outputText
+                    value="#{msgs['component.tabSet.addTab.tabContent']}"/>
+        </h5>
+        <ice:inputTextarea rows="3"
+                           value="#{tabbedPaneExample.newTabContent}"/>
+
+        <ice:commandButton id="addButton" value="Add Tab"
+                           actionListener="#{tabbedPaneExample.addTab}"/>
+
+    </ice:panelGrid>
+
+</ice:panelGrid>
+
+<ice:panelGroup
+        styleClass="contentLayoutGridColumn"
+        style="margin-bottom:5px;margin-top:10px; width:350px;">
+    <h3>&#160;</h3>
+    <ice:panelTabSet var="tab"
+                     value="#{tabbedPaneExample.tabs}"
+                     tabPlacement="bottom"
+                     styleClass="myTab">
+        <ice:panelTab label="#{tab.label}">
+            <ice:outputText value="#{tab.content}"/>
+        </ice:panelTab>
+    </ice:panelTabSet>
+</ice:panelGroup>
+
+</ice:panelGrid>
+<!-- remove a new tab -->
+<ice:panelGrid style="position: relative;left: 06px;"
+               styleClass="tabPanelControls">
+
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.tabSet.removeTab.title']}"/>
+    </h3>
+
+    <ice:panelGrid columns="2">
+        <ice:selectOneMenu value="#{tabbedPaneExample.removedTab}">
+            <f:selectItems value="#{tabbedPaneExample.tabItems}"/>
+        </ice:selectOneMenu>
+
+
+        <ice:commandButton id="removeButton" value="Remove Tab"
+                           actionListener="#{tabbedPaneExample.removeTab}"/>
+    </ice:panelGrid>
+</ice:panelGrid>
+</ice:panelGrid>
+
+</ice:panelTab>
+
+<!--
+  The bean is responsible for streaming html documentation to
+  this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/panelTabSetDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/layoutPanels/panelTabSet.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>
+

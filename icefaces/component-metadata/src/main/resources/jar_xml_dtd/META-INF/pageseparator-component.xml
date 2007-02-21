@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      A horizontal page separator line
+  </description>
+
+  <display-name>Page Separator</display-name>
+
+  <component-type>com.sun.rave.web.ui.PageSeparator</component-type>
+
+  <property>
+    <description/>
+    <display-name>Value</display-name>
+    <property-name>value</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &visible-props;
+
+  <component-extension>
+    <!-- <RAVE> -->
+    <!-- <base-component-type>javax.faces.Output</base-component-type> -->
+    <!-- </RAVE> -->
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.PageSeparator</component-family>
+    <renderer-type>com.sun.rave.web.ui.PageSeparator</renderer-type>
+  </component-extension>
+
+</component>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<span style="text-decoration: line-through;"></span><span
+ style="color: rgb(0, 0, 0);">Use the </span><code
+ style="color: rgb(0, 0, 0);">ui:script</code><span
+ style="color: rgb(0, 0, 0);"> tag to create a </span><code
+ style="color: rgb(0, 0, 0);">&lt;script&gt;</code><span
+ style="color: rgb(0, 0, 0);"> element in the rendered
+HTML page.
+The </span><code
+ style="color: rgb(0, 0, 0);">ui:script</code><span
+ style="color: rgb(0, 0, 0);"> tag must be used within
+the </span><code
+ style="color: rgb(0, 0, 0);">ui:head</code><span
+ style="color: rgb(0, 0, 0);"> tag, or within the </span><code
+ style="color: rgb(0, 0, 0);">ui:body</code><span
+ style="color: rgb(0, 0, 0);"> tag.&nbsp; The </span><code
+ style="color: rgb(0, 0, 0);">ui:script</code><span
+ style="color: rgb(0, 0, 0);"> tag can be used to
+refer to a
+Javascript file, by using the url attribute. The tag can also be used
+embed Javascript code within the rendered HTML page. </span>
+<p style="color: rgb(0, 0, 0);">The
+client-side script allows
+you to perform some interactive functions such as input checking before
+the page is submitted. <br>
+</p>
+<h3 style="color: rgb(0, 0, 0);">HTML
+Elements and Layout</h3>
+<span
+ style="text-decoration: line-through; color: rgb(0, 0, 0);"></span><span
+ style="color: rgb(0, 0, 0);">The rendered HTML page
+contains a <code>&lt;script&gt;</code>
+element with any attributes
+specified through the <code>ui:script</code>
+tag attributes.&nbsp; <br>
+<br>
+</span>
+<h3 style="color: rgb(0, 0, 0);">Theme
+Identifiers</h3>
+<span style="color: rgb(0, 0, 0);">None.<br>
+</span>
+<h3 style="color: rgb(0, 0, 0);">Client
+Side Javascript Functions</h3>
+<span style="color: rgb(0, 0, 0);">None.
+</span><br
+ style="color: rgb(0, 0, 0);">
+<h3 style="color: rgb(0, 0, 0);">Example</h3>
+<b style="color: rgb(0, 0, 0);">Example
+1: Create a script tag to a file</b><br
+ style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<code style="color: rgb(0, 0, 0);">
+&lt;ui:script url="/pathtomyjs/myjavascript.js" /&gt;
+</code><i
+ style="color: rgb(0, 0, 0);"><br>
+</i><br
+ style="color: rgb(0, 0, 0);">
+<b style="color: rgb(0, 0, 0);">Example
+2: Create a script tag with embedded script (Not Recommended)</b><br
+ style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<code style="color: rgb(0, 0, 0);">
+&lt;ui:script&gt;
+<br>
+<code style="color: rgb(0, 0, 0);">
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;f:verbatim&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function foo(text) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(text);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/f:verbatim&gt;</code><br>
+&lt;/ui:script&gt;</code><br>
+<br><span style="color: rgb(0, 0, 0);">Note: If the embeded script includes characters like "<" or "&", the script
+code should be placed in an external file (see Example 1).
+</span><br>
+
+
+
+
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Script</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Script</renderer-type>
+
+  &binding-attrs;
+
+  <renderer-extension>
+    <tag-name>script</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

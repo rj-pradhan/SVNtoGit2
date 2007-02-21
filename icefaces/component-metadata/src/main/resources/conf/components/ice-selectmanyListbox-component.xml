@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	A multiple-choice listbox
+	</description>
+
+	<display-name>Select Many Listbox</display-name>
+	<component-type>
+		com.icesoft.faces.HtmlSelectManyListbox
+	</component-type>
+
+	&ice-selectManyListbox-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlSelectManyListbox
+		</base-component-type>
+		<component-family>javax.faces.SelectMany</component-family>
+		<renderer-type>com.icesoft.faces.Listbox</renderer-type>
+	</component-extension>
+
+</component>

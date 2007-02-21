@@ -1,0 +1,122 @@
+<component>
+
+  <description><![CDATA[
+    Convenience implementation that compares the value of a value binding
+    with a predefined compare value.  A user may specify matches to include 
+    less than, equal, to, or greater than the compare value object, as well 
+    as any combination of the above.
+  ]]></description>
+  <display-name>Value Expression Filter Criteria</display-name>
+  <component-type>
+    com.sun.rave.web.ui.faces.ValueExpressionFilterCriteria
+  </component-type>
+  <component-class>
+    com.sun.rave.web.ui.faces.ValueExpressionFilterCriteria
+  </component-class>
+
+  &filter-criteria-props;
+
+  <property>
+    <description>
+      Locale to use when comparing data objects.
+    </description>
+    <display-name>Compare Locale</display-name>
+    <property-name>compareLocale</property-name>
+    <property-class>java.util.Locale</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Data value to compare with value binding data
+    </description>
+    <display-name>Compare Value</display-name>
+    <property-name>compareValue</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Value expression to retrieve the value to be compared for 
+      this criteria.
+    </description>
+    <display-name>Value Expression</display-name>
+    <property-name>valueExpression</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Request map attribute key to store a TableRowDataProvider 
+      while iterating the rows
+    </description>
+    <display-name>Request Map Key</display-name>
+    <property-name>requestMapKey</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Flag indicating that this criteria should accept data values
+      equal to the specified compare value.
+    </description>
+    <display-name>Match Equal To</display-name>
+    <property-name>matchEqualTo</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Flag indicating that this criteria should accept data values
+      greater than the specified compare value.
+    </description>
+    <display-name>Match Greater Than</display-name>
+    <property-name>matchGreaterThan</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      Flag indicating that this criteria should accept data values
+      less than the specified compare value.
+    </description>
+    <display-name>Match Less Than</display-name>
+    <property-name>matchLessThan</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+      <read-only>false</read-only>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+</component>

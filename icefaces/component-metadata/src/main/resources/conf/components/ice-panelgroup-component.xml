@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>Groups a set of child components together</description>
+
+	<display-name>Panel Group</display-name>
+	<component-type>com.icesoft.faces.HtmlPanelGroup</component-type>
+
+
+	&ice-panelGroup-props;
+	&panel-group-props;
+	&uipanel-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.Group</renderer-type>
+	</component-extension>
+
+</component>

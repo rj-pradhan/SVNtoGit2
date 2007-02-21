@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<span style="text-decoration: line-through; "></span><span
+>Use the <code>ui:anchor</code> tag
+to create HTML anchors in the rendered HTML page. You can then use <code>ui:hyperlink</code>
+tags that jump to the locations of the anchors in the page.</span><br
+>
+<h3 >HTML Elements and Layout</h3>
+<span style="text-decoration: line-through; "></span><span
+>The <code>ui:anchor</code> tag
+creates an <code>&lt;a&gt;</code> element in the rendered HTML page.
+The name and id attributes of the <code>&lt;a&gt;</code> element are
+both set to the value of the id attribute specified with the <code>ui:anchor</code>
+tag. The name attibute is included to maintain compatibility with older
+browsers.</span><br >
+<h3 >Client Side Javascript Functions</h3>
+<span >None.&nbsp; </span><br
+>
+<h3 >Examples</h3>
+<h4 >Example 1: Create an anchor</h4>
+<code >&lt;ui:anchor id="anchor1" /&gt;
+<br>
+<br>
+</code><span >This generates an anchor,
+with id and name set to the same
+value. </span><br >
+<span >&nbsp;&nbsp; </span><br
+>
+<code >&lt;a id="anchor1" name="anchor1"
+/&gt;
+</code><br >
+<span style="font-style: italic; "><span
+style="text-decoration: line-through;"></span></span>
+<h4 >Example 2: Create a hyperlink to
+that will go to the anchor above<br>
+</h4>
+<code >&lt;ui:hyperlink id="gotoAnchor1"
+url="#anchor1" /&gt;<br>
+</code>
+<h4 >Example 3: Create a <span
+style="text-decoration: line-through;"></span>context&nbsp;<span
+style="text-decoration: line-through;"></span> relative hyperlink to
+go to
+the anchor
+in <span style="text-decoration: line-through;"></span>Example 1</h4>
+<code >&lt;ui:hyperlink id="gotoAnchor1"
+url="/faces/hyperlink.jsp#anchor1" /&gt;<br>
+</code><span ><br>
+Note:&nbsp; In the <code>url</code>
+attribute, you must specify a path that maps to the correct servlet.
+However, you do not need the context. In this example, the </span><code
+>/faces</code> <span
+> part of the path maps to the servlet
+through the JSF FacesServlet as defined in the web.xml.</span>
+
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Anchor</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Anchor</renderer-type>
+
+  &binding-attrs;
+
+<!-- restore in future as different name
+  &visible-attrs;
+-->
+
+  <renderer-extension>
+    <tag-name>anchor</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

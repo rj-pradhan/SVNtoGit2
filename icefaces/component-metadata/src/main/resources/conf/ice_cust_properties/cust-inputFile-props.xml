@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+&ice-att-userrole-enabled-props;
+<property>
+	<description>
+		<![CDATA[
+		<p>
+		MethodBinding representing a progress listener method that will be notify 
+		the application on the percentage of the file being uploaded. The expression 
+		must evaluate to a public method that takes an java.util.EventObject 
+		parameter, with a return type of void.
+		</p>
+		<p>
+       These are some things to consider when implementing the progressListener. 
+		<ul>
+			<li>Method must take a single argument of type java.util.EventObject. </li>
+			<li>Developer must invoke the render() call on the PersistentFacesState instance, inorder to render the page. </li>
+			<li>Beans which implement the progressListener must be in session scope. </li>
+			<li>The PersistentFacesState must be set in the constructor of session bean. </li>
+		</ul>
+		</p>
+		]]>
+	</description>
+	<property-name>progressListener</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>	
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&methodBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		Text that will appear on the submit button.
+	</description>
+    <property-name>label</property-name>
+    <property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Mimetype of the file being uploaded.
+	</description>	
+	<property-name>mimeType</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Bean property that will be a reference to the uploaded file.
+	</description>
+	<property-name>file</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		File name of the file being uploaded.
+	</description>
+	<property-name>filename</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>Size of the input text box.</description>
+	<property-name>size</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+  <description>Flag indicating that this component will prohibit
+      changes by the user.  The element may receive focus
+      unless it has also been disabled.
+  </description>
+  <property-name>readonly</property-name>
+  <property-class>boolean</property-class>
+  <property-extension>
+    <category>APPEARANCE</category>
+  </property-extension>  
+</property>
+
+<property>
+	<description>
+		Passed through to root element.
+	</description>	
+	<property-name>alt</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		Passed through to root element.
+	</description>
+	<property-name>maxlength</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		<![CDATA[
+		This uniqueFolder attribute works in conjunction with the com.icesoft.faces.uploadDirectory 
+		parameter with four possible combinations as illustrated in the table below:
+		<table border="1">
+			<tr><td></td><td colspan="2" align="center"> <b>com.icesoft.faces.uploadDirectory</b> </td></tr>
+			<tr><td><b>uniqueFolder</b></td><td align="center"><b>Set</b></td><td align="center"><b>Not Set</b></td></tr>
+			<tr><td>True</td><td>/application-context/uploadDirectory/sessionid/</td><td>/application-context/sessionid/</td></tr>			
+			<tr><td>False</td><td>/application-context/uploadDirectory/</td><td>/application-context/</td></tr>				
+		</table>
+		]]>		
+	</description>
+	<property-name>uniqueFolder</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+	</property-extension>
+</property>
+<property>
+	<description>
+		style class for the submit button.
+	</description>
+    <property-name>buttonClass</property-name>
+    <property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

@@ -1,0 +1,10 @@
+<?xml encoding='UTF-8'?>
+
+      &uicomponent-props;
+      &value-props;
+      <property>
+        <property-name>name</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+

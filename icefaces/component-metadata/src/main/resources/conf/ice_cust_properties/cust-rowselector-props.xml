@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&value-props;
+
+<!--  TODO: -->
+
+<property>
+	<description>
+		<![CDATA[<p>
+                 multiple
+                </p>
+             ]]>
+	</description>
+	<property-name>multiple</property-name>
+	<property-class>java.lang.Object</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		<![CDATA[<p>
+                 mouseOverClass
+                </p>
+             ]]>
+	</description>
+	<property-name>mouseOverClass</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		<![CDATA[<p>
+                 selectedClass
+                </p>
+             ]]>
+	</description>
+	<property-name>selectedClass</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

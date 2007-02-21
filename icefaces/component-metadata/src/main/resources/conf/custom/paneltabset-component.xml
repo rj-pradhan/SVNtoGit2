@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A container for a set of child Panel Tab components
+		</description>
+
+	<display-name>Panel Tab Set</display-name>
+	<component-type>com.icesoft.faces.PanelTabSet</component-type>
+
+	&ice-cust-paneltabset-props;
+	
+<!--  PanelTabSet with com.icesoft.faces.HtmlPanelGroup -->
+
+	<component-extension>
+		<base-component-type>
+			com.icesoft.faces.series
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.TabbedPane</renderer-type>
+	</component-extension>
+
+</component>

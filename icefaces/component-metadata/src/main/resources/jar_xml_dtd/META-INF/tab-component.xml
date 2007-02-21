@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      A single tab specified as part of a TabSet component
+  </description>
+
+  <display-name>Tab</display-name>
+
+  <component-type>com.sun.rave.web.ui.Tab</component-type>
+
+  <property>
+    <description>
+        The id of this tab's currently selected Tab child or null if one is not selected.
+      </description>
+    <display-name>selectedChildId</display-name>
+    <property-name>selectedChildId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          The identifier of the selected tab child, if this tab has children
+      </short-description>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Hyperlink</base-component-type>
+    <component-family>com.sun.rave.web.ui.Tab</component-family>
+    <renderer-type>com.sun.rave.web.ui.Tab</renderer-type>
+  </component-extension>
+
+</component>

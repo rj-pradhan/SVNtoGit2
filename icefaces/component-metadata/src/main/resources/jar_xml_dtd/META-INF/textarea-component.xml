@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Represents a text area whose content will be included
+      when the surrounding form is submitted.
+    ]]></description>
+
+  <display-name>Text Area</display-name>
+
+  <component-type>com.sun.rave.web.ui.TextArea</component-type>
+
+  <property>
+    <description>
+        Number of rows used to display for this field.  
+      </description>
+    <display-name>Rows</display-name>
+    <property-name>rows</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <default-value>2</default-value>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Field</base-component-type>
+    <component-family>com.sun.rave.web.ui.TextArea</component-family>
+    <renderer-type>com.sun.rave.web.ui.TextArea</renderer-type>
+  </component-extension>
+
+</component>

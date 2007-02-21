@@ -1,0 +1,161 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, various button and link tags are used to present
+different kinds of
+links and buttons. A text input field is used to test submission of inputs for
+those buttons
+and links that trigger submits.
+-->
+<ice:form
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGrid
+            styleClass="contentLayoutGridStyle"
+            columns="1" border="0">
+
+        <ice:panelTabSet styleClass="componentPanelTabSetLayout">
+            <!--
+              Example include, also see source code include.
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+                <ice:panelGrid
+                        styleClass="componentLayoutRootTable">
+
+                    <ice:panelGrid
+                            columnClasses="contentLayoutGridColumn"
+                            columns="1">
+
+                        <!-- Layout the links and buttons. -->
+                        <ice:panelGrid columns="2"
+                                       styleClass="formBorderHighlight"
+                                       rowClasses="textFieldNameRow">
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.inputTextLabel']}"/>
+                            <!--ice:inputText value="#{buttonsAndLinks.inputText}" onblur="javascript:iceSubmitPartial(form,this,event)"/-->
+                            <ice:panelGroup>
+                                <ice:inputText
+                                        value="#{buttonsAndLinks.inputText}"/>
+                                <ice:outputText
+                                        value="#{msgs['component.buttonsAndLinks.inputTextNote']}"/>
+                            </ice:panelGroup>
+
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.submitButtonLabel']}"/>
+                            <ice:commandButton type="submit" value="Submit"
+                                               actionListener="#{buttonsAndLinks.submitButtonListener}"/>
+
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.resetButtonLabel']}"/>
+                            <ice:panelGroup>
+                                <ice:commandButton type="reset" value="Reset"/>
+                                <ice:outputText
+                                        value="#{msgs['component.buttonsAndLinks.resetButtonNote']}"/>
+                            </ice:panelGroup>
+
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.imageButtonLabel']}"/>
+                            <ice:commandButton image="images/button-submit.gif"
+                                               actionListener="#{buttonsAndLinks.imageButtonListener}"
+                                               styleClass=""/>
+
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.commandLinkLabel']}"/>
+                            <ice:commandLink value="Submit"
+                                             actionListener="#{buttonsAndLinks.commandLinkListener}"/>
+
+                            <ice:outputText styleClass="propertyLabel"
+                                            value="#{msgs['component.buttonsAndLinks.outputLinkLabel']}"/>
+                            <ice:outputLink value="http://www.icesoft.com"
+                                            target="_blank">
+                                <ice:outputText value="www.icesoft.com"
+                                                styleClass=""/>
+                            </ice:outputLink>
+                        </ice:panelGrid>
+
+                        <!-- Display the input value submitted, if any. -->
+                        <ice:panelGrid columns="1"
+                                       styleClass="formBorderHighlight">
+                            <h3>
+                                <ice:outputText
+                                        value="#{msgs['component.buttonsAndLinks.serverFeedback']}"/>
+                            </h3>
+                            <ice:panelGrid columns="2">
+                                <ice:outputText
+                                        value="#{msgs['component.buttonsAndLinks.inputTextLabel']}"
+                                        styleClass="valueHeader"/>
+                                <ice:outputText
+                                        value="#{buttonsAndLinks.inputText}"
+                                        styleClass="valueText"/>
+
+                                <ice:outputText
+                                        value="#{msgs['component.buttonsAndLinks.clickedLabel']}"
+                                        styleClass="valueHeader"/>
+                                <ice:outputText
+                                        value="#{buttonsAndLinks.clicked}"
+                                        styleClass="valueText"/>
+                            </ice:panelGrid>
+                        </ice:panelGrid>
+                    </ice:panelGrid>
+                </ice:panelGrid>
+
+            </ice:panelTab>
+
+            <!--
+              The bean is responsible for streaming html documentation to
+               this placeholder
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+                <iframe src="./docs/buttonAndLinksDoc.html"
+                        class="includeIframe"
+                        width="100%"></iframe>
+            </ice:panelTab>
+
+            <!--
+              Template for component source code.  This servlet loads
+              the component example jsp include as an xml stream
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+                <iframe src="./sourcecodeStream.html?path=./inc/components/buttonsAndLinks.jspx"
+                        class="includeIframe"
+                        width="100%"></iframe>
+            </ice:panelTab>
+
+        </ice:panelTabSet>
+
+    </ice:panelGrid>
+</ice:form>

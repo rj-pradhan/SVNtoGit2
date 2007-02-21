@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+
+<p>Use the ui:upload tag to create a component that can be used to
+browse the local file system for a file, and upload a copy of the
+file's contents to the web application.</p> 
+
+
+<h3>HTML Elements and Layout</h3> 
+
+<p>The Upload component produces an XHTML &lt;input type="file"&gt;
+    element, which displays a text input field with an adjacent Browse button.
+    The user can type a file name or click the Browse button to select
+    a file.  When the form is submitted, the file is uploaded.  Note
+    that this tag requires the use of a filter.</p> 
+
+
+<h3>Configuring the UploadFilter</h3> 
+
+<p>In order for the <code>ui:upload</code> tag to work, you must
+    configure the web application to use the
+    <code>com.sun.rave.web.ui.util.UploadFilter</code>. 
+Configure the filter by declaring a filter element in the web application's
+ deployment descriptor, <code>web.xml</code>.</p> 
+ <pre> 
+  &lt;filter&gt;
+    &lt;filter-name&gt;UploadFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;com.sun.rave.web.ui.util.UploadFilter&lt;/filter-class&gt;
+  &lt;/filter&gt;
+ </pre>
+<p>Map the filter to the FacesServlet by adding the following filter
+    mapping in the same file, for example</p>
+<pre>
+  &lt;filter-mapping&gt;
+    &lt;filter-name&gt;UploadFilter&lt;/filter-name&gt;
+    &lt;servlet-name&gt;FacesServlet&lt;/servlet-name&gt;
+  &lt;/filter-mapping&gt;
+ </pre> 
+<p>The UploadFilter uses the Apache commons fileupload package. You
+    can optionally configure the parameters of the DiskFileUpload
+    class by specifying init parameters on the UploadFilter. The
+    following parameters are available: 
+<ul> 
+<li><code>maxSize</code> The maximum allowed upload size in bytes. 
+If negative, there is no maximum. The default value is 1,000,000.</li> 
+
+<li><code>sizeThreshold</code>The implementation of the uploading 
+ functionality uses temporary storage of the file contents before the 
+ Upload component stores them per its configuration. In the temporary 
+ storage, smaller files are stored in memory while larger files are 
+ written directly to disk . Use this parameter 
+ to specify an integer value of the cut-off where files should be 
+ written to disk. The default value is 4096 bytes.</li> 
+<li><code>tmpDir</code> Use this directory to specify the directory to 
+be used for temporary storage of files. The default behaviour is to use
+the directory specified in the system property "java.io.tmpdir". </li> 
+</ul> 
+
+    <h3>The <code>UploadedFile</code> model object</h3>
+
+<p>The contents of the uploaded file, together with some information
+about it are stored in an instance of
+<code>com.sun.rave.web.ui.model.UploadedFile</code>. Using this object you
+can get the content of the file as a String or write the contents to
+disk, as well as get properties such as the name and the size of the
+file. In the interest of conserving memory, the contents and file data
+are only available during the HTTP request in which the file was
+uploaded.</p>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF">
+<TH ALIGN="left" COLSPAN="2">
+<B>UploadedFile Method Summary</B></TH>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><code>dispose</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dispose of the resources associated with the file upload (this will
+ happen automatically when the resource is garbage collected).</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><code>getAsString</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this method to retrieve the contents of the file as a String</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;byte[]</CODE></FONT></TD>
+<TD><CODE><B><code>getBytes</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this method to retrieve the contents of the file as an array of bytes.</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><code>getContentType</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the content-type that the browser communicated with the request
+ that included the uploaded file.</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.io.InputStream</CODE></FONT></TD>
+<TD><CODE><B><code>getInputStream</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a <CODE>InputStream</CODE> for reading the file.</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><code>getOriginalName</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use this method to retrieve the name that the file has on the web 
+ application user's local system.</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><code>getSize</code></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The size of the file in bytes</TD>
+</TR>
+<TR BGCOLOR="white">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><code>write</code></B>(java.io.File&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write the contents of the uploaded file to a file on the server host.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+    <h3>Configuring the  <code>ui:upload</code> tag</h3>
+
+
+<p>To access the contents of the uploaded file from the
+    <code>ui:upload</code> tag you have two
+    options:</p> 
+<ul> 
+<li>Bind the <code>uploadedFile</code> attribute to managed bean
+    property of type <code>com.sun.rave.web.ui.model.UploadedFile</code>. 
+    Have the setter or an action method process the file.</li> 
+<li>Specify a valueChangeListener on the Upload component. 
+    The method invoked by the value change listener has access to the
+    new value of the component.</code>
+    method. </li> 
+</ul> 
+
+    <p>To optionally specify a label for the component, use the
+    <code>label</code> attribute, or specify a label facet. </p>
+
+<h3>Client Side Javascript Functions</h3>
+
+    <p>In all the functions below, <code>&lt;id&gt;</code> should be
+    the generated id of the Upload component. 
+
+    <table cellpadding="2" cellspacing="2" border="1" 
+           style="text-align: left; width: 100%;">
+    <tbody>
+    <tr>
+    <td style="vertical-align">
+    <code>field_setDisabled(&lt;id&gt;, &lt;disabled&gt;)</code>
+    </td>
+    <td style="vertical-align: top">
+    Enable/disable the field. Set <code>&lt;disabled&gt;</code>
+    to true to disable the component, or false to enable it.
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align: top">
+    <code>field_setValue(&lt;id&gt;, &lt;newValue&gt;)</code>
+    </td>
+    <td style="vertical-align: top">
+    Set the value of the field to <code>&lt;newValue&gt;</code>.
+    </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">
+    <code>field_getValue(&lt;id&gt;)</code>
+  </td>
+    <td style="vertical-align: top">Get the value of the field.</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">
+    <code>field_getInputElement(&lt;id&gt;)</code></td>
+    <td style="vertical-align: top">
+    Get hold of a reference to the input element rendered by this
+    component.
+    </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top">
+    <code>component_setVisible(&lt;id&gt;)</code>
+  </td>
+      <td style="vertical-align: top">Hide or show this component.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h3>Examples</h3>
+
+<h4>Get the contents of the file as a String (using a managed bean)</h4>
+
+<p>On the form that controls the upload:</p> 
+<pre> 
+&lt;ui:upload id="upload2"
+           uploadedFile = "#{FileUploadBean.uploadedFile}"
+           label="Choose a file: "
+           required="true"/&gt;
+</pre> 
+
+<p>On the page that displays the results of the upload:</p> 
+<pre> 
+&lt;ui:staticText id="text"
+               text ="File contents are bound to string: " &gt;
+&lt;ui:staticText id="text"
+               text ="#{FileUploadBean.stringContent}"/&gt;
+
+</pre> 
+<p> The managed bean looks like this:</p> 
+<pre> 
+import java.io.Serializable;
+import com.sun.rave.web.ui.model.UploadedFile;
+
+public class FileUploadBean implements Serializable {
+        
+     //
+     // Holds value of property uploadedFile.
+     //
+    transient private UploadedFile uploadedFile;
+
+     //
+     // Getter for property stringContent.
+     // @return Value of property stringContent.
+     //
+    public String getStringContent() {
+        return uploadedFile.getAsString();
+    }
+
+     //
+     // Getter for property uploadedFile.
+     // @return Value of property uploadedFile.
+     //
+    public UploadedFile getUploadedFile() {
+        return this.uploadedFile;
+    }
+
+     //
+     // Setter for property uploadedFile.
+     // @param uploadedFile New value of property uploadedFile.
+     //
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
+    }
+}
+</pre> 
+
+<h4>Write the contents of the file to disk (using a ValueChangeListener)</h4>
+
+<p>On the form that controls the upload:</p> 
+<pre> 
+&lt;ui:upload id="upload1"
+           label="Choose a file: "
+           valueChangeListener="#{FileUploadedListener.processValueChange}"/&gt;
+</pre> 
+
+<p>Code for the ValueChangeListener</p> 
+<pre>
+import java.io.File; 
+import java.io.Serializable;
+import javax.faces.event.AbortProcessingException; 
+import javax.faces.event.ValueChangeEvent;
+import com.sun.rave.web.ui.model.UploadedFile;
+
+public class FileUploadedListener implements ValueChangeListener, Serializable {
+    
+        public void processValueChange(ValueChangeEvent event) 
+        throws AbortProcessingException {
+        Object value = event.getNewValue(); 
+        if(value != null && value instanceof UploadedFile) {
+            UploadedFile uploadedFile = (UploadedFile)value;
+                     
+            String name = uploadedFile.getOriginalName();
+            if(name == null || name.length() == 0) {
+                name = "tmp.tmp";
+            }
+            String suffix = name.substring(name.indexOf("."));
+            if(suffix.length() == 0) {
+                suffix = ".tmp";
+            }
+            String prefix = name.substring(0, name.indexOf("."));
+            try {
+                File tmpFile = File.createTempFile(prefix, suffix);
+                uploadedFile.write(tmpFile);
+            } catch(Exception ex) {
+                // report the problem
+            }         
+        }
+    }
+}
+</pre> 
+ ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Upload</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Upload</renderer-type>
+
+  <attribute>
+    <description><![CDATA[The binding attribute is used to configure the
+      component through Java code. This approach is intended for
+      advanced uses, when the tag attributes cannot provide the
+      desired output. The value of the binding attribute must be a
+      JavaServer Faces EL expression that resolves to a backing bean,
+      or to a backing bean property of type 
+      <code>com.sun.rave.web.ui.component.HiddenField</code>. ]]>
+        </description>
+    <attribute-name>binding</attribute-name>
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>trim</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <description>If readOnly is true, the name of the uploaded file
+      will be displayed.</description> 
+    <attribute-name>readOnly</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description><![CDATA[The value of the binding attribute must be a JSF EL
+      expression that resolves to a Managed Bean or a ManagedBean
+      property of type <code>com.sun.rave.web.ui.component.Upload</code>. 
+      The bean can then manipulate the UIComponent, its properties
+      and its children. This attribute is intended for advanced
+      uses.]]> </description>  
+    <attribute-name>binding</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description><![CDATA[The value of the valueChangeListener attribute must
+      be the name of a method in a Managed Bean. The method must take a
+      single parameter of type
+      <code>javax.faces.event.ValueChangeEvent</code> and it must
+      return void. The Managed Bean in which the method is defined must
+      either implement java.io.Serializable, or
+      <code>javax.faces.component.StateHolder</code>. To get at the
+      file, cast the return value of the  <code>getValue()</code>
+      method of the <code>ValueChangeEvent</code> to 
+      <code>com.sun.rave.web.ui.model.UploadedFile</code>.]]></description>  
+    <attribute-name>valueChangeListener</attribute-name>
+  </attribute>
+
+  <attribute>
+    <attribute-name>text</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+      &visible-attrs;
+      &converter-props;
+      &validator-props;
+
+      <renderer-extension>
+        <default-property-name>uploadedFile</default-property-name>
+        <instance-name>upload</instance-name>
+        <is-container>false</is-container>
+        <is-non-visual>false</is-non-visual>
+        <tag-name>upload</tag-name>
+        <taglib-prefix>ui</taglib-prefix>
+        <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+      </renderer-extension>
+</renderer>

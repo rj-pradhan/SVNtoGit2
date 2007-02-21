@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p>The outputDeclaration component causes a DOCTYPE declaration to be placed at the beginning of the output document. <br>
+For example,
+<blockquote>
+&lt;ice:outputDeclaration doctypeRoot="HTML" doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN" doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" /&gt;<br>
+</blockquote>
+will insert the following at the beginning of the document
+<blockquote>
+&lt;!DOCCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" &gt;
+</blockquote>
+            ]]>
+	</description>
+	<component-family>javax.faces.Output</component-family>
+
+	<renderer-type>com.icesoft.faces.OutputDeclaration</renderer-type>
+
+	<renderer-extension>
+		<instance-name>outputDeclaration</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>outputDeclaration</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

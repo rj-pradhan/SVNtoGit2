@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+Use the <code>ui:messageGroup</code> tag to display a list of messages that are not (necessarily) associated with any single component.<br>
+<h3>HTML Elements and Layout</h3>
+A message group consists of a list of messages. <br>
+<h3>Client Side Javascript Functions</h3>
+none.<br>
+<h3>Examples</h3>
+<b>Example 1: An example showing how to show a list of global errors at the top of the page:</b> <br>
+<code><br>
+&lt;ui:messageGroup showGlobalOnly="true"/&gt;<br>
+<br>
+&lt;ui:staticText text="Validator checks that the value is between 0-10 inclusive. /&gt;<br>
+&lt;ui:message for="form1:textTest1"/&gt;<br>
+<br>
+&lt;ui:field id="textTest1" label="Enter a number:" 
+text="#{FieldTest.number}" validator="#{FieldTest.checkNumber}"/&gt;<br>
+</code>
+<br>
+
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.MessageGroup</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.MessageGroup</renderer-type>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>converter</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>messageGroup</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

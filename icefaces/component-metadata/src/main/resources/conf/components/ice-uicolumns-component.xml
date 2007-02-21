@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>a single column of data with a dataTable</description>
+
+	<display-name>UIColumn</display-name>
+	<component-type>com.icesoft.faces.Columns</component-type>
+
+	&ice-uicolumn-props;
+
+	<component-extension>
+		<base-component-type>com.icesoft.faces.series</base-component-type>
+		<component-family>javax.faces.Columns</component-family>
+		<renderer-type>null</renderer-type>
+	</component-extension>
+
+</component>

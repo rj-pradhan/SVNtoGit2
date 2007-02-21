@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>creates chart</description>
+	<display-name>Output Chart</display-name>
+	<component-type>com.icesoft.faces.OutputChart</component-type>
+
+	&ice-cust-outputchart-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>javax.faces.Command</component-family>
+		<renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
+	</component-extension>
+</component>

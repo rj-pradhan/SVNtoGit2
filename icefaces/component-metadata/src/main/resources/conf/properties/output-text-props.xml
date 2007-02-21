@@ -1,0 +1,12 @@
+<?xml encoding='UTF-8'?>
+
+
+&value-props;
+<property>
+	<property-name>escape</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+	</property-extension>
+</property>
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+&ice-cust-table-props;
+&i18n-props;
+&ice-att-title-props;
+
+<property>
+	<description>
+		layout | north | south | west | east | center |
+		===================|========|========|=======|========|========|
+		default | top | bottom | left | right | center | horizontal
+		reverse | top | bottom | right | left | center | vertical
+		reverse | bottom | top | left | right | center | center only |
+		none | none | none | none | center | hide north | none | bottom
+		| left | right | center | hide east | top | bottom | left | none
+		| center | hide south | top | none | left | right | center |
+		hide west | top | bottom | none | right | center |
+	</description>
+	<property-name>layout</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>Passed through to root element.</description>
+
+	<property-name>align</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+
+<property>
+	<description>
+		If false, the north facet will not be rendered. The layout
+		attribute overrides this property.
+	</description>
+	<property-name>renderNorth</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		If false, the south facet will not be rendered. The layout
+		attribute overrides this property.
+	</description>
+	<property-name>renderSouth</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		If false, the center facet will not be rendered. The layout
+		attribute overrides this property.
+	</description>
+	<property-name>renderCenter</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		If false, the east facet will not be rendered. The layout
+		attribute overrides this property.
+	</description>
+	<property-name>renderEast</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		If false, the west facet will not be rendered. The layout
+		attribute overrides this property.
+	</description>
+	<property-name>renderWest</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
