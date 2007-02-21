@@ -1,0 +1,23 @@
+<property>
+  <property-name>onKeyDown</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>onKeyPress</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>onKeyUp</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>

@@ -1,0 +1,13 @@
+<?xml encoding='UTF-8'?>
+
+      &uiinput-props;
+
+      <property>
+        <property-name>selected</property-name>
+        <property-class>boolean</property-class>
+        <property-extension>
+          <read-only>true</read-only>
+	  <is-hidden>true</is-hidden>
+          <tag-attribute>false</tag-attribute>
+        </property-extension>
+      </property>

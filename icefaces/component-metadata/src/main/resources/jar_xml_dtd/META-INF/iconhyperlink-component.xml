@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      A hyperlink with an icon or image
+  </description>
+
+  <display-name>Hyperlink</display-name>
+
+  <component-type>com.sun.rave.web.ui.IconHyperlink</component-type>
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.ImageHyperlink</base-component-type>
+    <component-family>com.sun.rave.web.ui.IconHyperlink</component-family>
+    <renderer-type>com.sun.rave.web.ui.IconHyperlink</renderer-type>
+  </component-extension>
+
+</component>

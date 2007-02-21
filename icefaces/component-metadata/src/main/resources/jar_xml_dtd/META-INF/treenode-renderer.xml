@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+	
+    <h3>HTML Elements and Layout</h3>
+
+    <p> The <code>TreeNode</code> component is designed to be used as a child
+	of a <code>Tree</code> or another <code>TreeNode</code> component.
+	This allows <code>TreeNode</code>s to form a tree structure.  When the
+	tree structure is rendered, the <code>TreeNode</code> component
+	represents a "node" in the tree.  The <code>TreeNode</code> component
+	is responsible for rendering:</p>
+
+    <ul><li>A row of the tree lines that connect to other tree nodes.</li>
+	<li>An expand / collapse <code>IconHyperlink</code> if there is atleast
+	    1 child <code>TreeNode</code> (this will show or hide its child
+	    <code>TreeNode</code>(s)).</li>
+	<li>An optional <code>ImageHyperlink</code> that pertains to the
+	    content of the tree node.</li>
+	<li>Text or a <code>Hyperlink</code> for the content of the
+	    <code>TreeNode</code>.</li></ul>
+
+    <p>	Portions of the <code>TreeNode</code> may be overriden using facets.
+	The following facets are supported:</p>
+
+    <ul><li><div style="float:left; width: 100px;"><code>image</code></div>
+	    <div style="float:left; width: 50px;"><code>--</code></div>
+	    Replaces the <code>ImageHyperlink</code> which pertains to the
+	    content of the <code>TreeNode</code>.  When used properties that
+	    pertain to the <code>ImageHyperlink</code> will not have any
+	    effect.</li>
+	<li><div style="float:left; width: 100px;"><code>content</code></div>
+	    <div style="float:left; width: 50px;"><code>--</code></div>
+	    Replaces the static text/<code>Hyperlink</code> area.  When used
+	    properties that pertain to this area will not have any
+	    effect.</li></ul>
+
+
+    <h3>Client Side Javascript Functions</h3>
+
+    <p> None (although the <code>Tree</code> component does contain JavaScript functions).</p>
+
+
+    <h3>Example:</h3>
+
+    <p> For an example, please see the documentation for the <code>Tree</code> Tag.</p>
+
+	
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.TreeNode</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.TreeNode</renderer-type>
+
+  <facet>
+    <description>
+	    
+    &lt;p&gt; This facet allows you to provide your own content for the
+	&lt;code&gt;TreeNode&lt;/code&gt; instead of using the built-in support for static
+	text or a &lt;code&gt;Hyperlink&lt;/code&gt;.&lt;/p&gt;
+	    
+	</description>
+    <display-name>TreeNode Content</display-name>
+    <facet-name>content</facet-name>
+  </facet>
+
+  <facet>
+    <description>
+	    
+    &lt;p&gt; This facet allows you to provide your own image for the
+	&lt;code&gt;TreeNode&lt;/code&gt; instead of using the built-in support for adding
+	an image via Properties.  If you use this facet, you will also be
+	responsible for making the content of this link "clickable" if that is
+	desired.&lt;/p&gt;
+    &lt;p&gt;	One common use for this facet may be to provide an
+	&lt;code&gt;IconHyperlink&lt;/code&gt; in order to leverage images that are defined
+	by the &lt;code&gt;Theme&lt;/code&gt;.&lt;/p&gt;
+	    
+	</description>
+    <display-name>TreeNode Image</display-name>
+    <facet-name>image</facet-name>
+  </facet>
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>treeNode</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

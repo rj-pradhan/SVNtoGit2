@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+&core-props;
+
+
+
+<property>
+	<property-name>selectedPanel</property-name>
+	<property-class>java.util.String</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+	</property-extension>
+</property>
+
+<property>
+	<property-name>rowClass</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<property-name>columnClass</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

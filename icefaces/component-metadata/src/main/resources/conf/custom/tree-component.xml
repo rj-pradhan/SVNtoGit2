@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	Provides a hierarchical tree view of expandable/collapsible Tree Nodes
+	</description>
+
+	<display-name>Tree</display-name>
+	<component-type>com.icesoft.faces.TreeView</component-type>
+
+	&ice-cust-tree-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>com.icesoft.faces.TreeView</component-family>
+		<renderer-type>com.icesoft.faces.View</renderer-type>
+	</component-extension>
+
+</component>

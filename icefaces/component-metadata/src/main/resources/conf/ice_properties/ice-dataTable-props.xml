@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+&table-props;
+&uidata-props;
+
+
+<property>
+	<description>
+		Sets default sort order, required for sortheader component.
+	</description>
+	<property-name>sortAscending</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_ADVANCED</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Sets column to be sort, required for sortheader component.
+	</description>
+	<property-name>sortColumn</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		This attribute can be used to define the separate style classes for the each 
+		header of the each column.
+		
+		The default would rendered as : Header1, Header2, .....
+		
+	</description>
+	<property-name>headerClasses</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

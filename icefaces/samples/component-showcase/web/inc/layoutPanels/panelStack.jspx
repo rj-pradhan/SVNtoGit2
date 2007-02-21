@@ -1,0 +1,180 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration ice:panelStack is manipulated by the following coontrols
+to show how the selected panel can be dynamically changed.
+-->
+<ice:form
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+
+<!--
+  Controls to show/hide the table columns
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+    <ice:panelGrid
+            styleClass="componentLayoutRootTable"
+            columns="1">
+
+        <ice:panelGroup styleClass="formBorderHighlight">
+
+            <h3>
+                <ice:outputText
+                        value="#{msgs['components.panelStack.example.summary']}"/>
+            </h3>
+
+            <!-- Panel stack selection controls -->
+            <ice:selectOneRadio
+                    value="#{panelStack.selectedPanel}"
+                    styleClass="selectOneMenu"
+                    valueChangeListener="#{panelStack.selectedPanelChanged}"
+                    partialSubmit="true">
+                <f:selectItem itemValue="fruit"
+                              itemLabel="#{msgs['contentDemo.fruit.title']}"/>
+                <f:selectItem itemValue="color"
+                              itemLabel="#{msgs['contentDemo.color.title']}"/>
+                <f:selectItem itemValue="mineral"
+                              itemLabel="#{msgs['contentDemo.mineral.title']}"/>
+            </ice:selectOneRadio>
+        </ice:panelGroup>
+
+        <ice:panelGroup styleClass="formBorderHighlight">
+
+            <!-- Panel Stack declaration - three panels, fruit, color and minerals. -->
+            <ice:panelStack
+                    selectedPanel="#{panelStack.selectedPanel}"
+                    styleClass="">
+                <!-- Fruit Panel -->
+                <ice:panelGroup id="fruit" styleClass="panelGroupFruit">
+                    <h3>
+                        <ice:outputText
+                                value="#{msgs['contentDemo.fruit.title']}"/>
+                    </h3>
+                    <ice:selectOneRadio
+                            value="#{panelStack.selectedFruit}"
+                            partialSubmit="true">
+                        <f:selectItem itemValue="1"
+                                      itemLabel="#{msgs['contentDemo.fruit.type1']}"/>
+                        <f:selectItem itemValue="2"
+                                      itemLabel="#{msgs['contentDemo.fruit.type2']}"/>
+                        <f:selectItem itemValue="3"
+                                      itemLabel="#{msgs['contentDemo.fruit.type3']}"/>
+                        <f:selectItem itemValue="4"
+                                      itemLabel="#{msgs['contentDemo.fruit.type4']}"/>
+                        <f:selectItem itemValue="5"
+                                      itemLabel="#{msgs['contentDemo.fruit.type5']}"/>
+                    </ice:selectOneRadio>
+                    <br/>
+                </ice:panelGroup>
+                <!-- Color Panel -->
+                <ice:panelGroup id="color" styleClass="panelGroupColor">
+                    <h3>
+                        <ice:outputText
+                                value="#{msgs['contentDemo.color.title']}"/>
+                    </h3>
+                    <ice:selectOneRadio
+                            value="#{panelStack.selectedColor}"
+                            partialSubmit="true">
+                        <f:selectItem itemValue="1"
+                                      itemLabel="#{msgs['contentDemo.color.type1']}"/>
+                        <f:selectItem itemValue="2"
+                                      itemLabel="#{msgs['contentDemo.color.type2']}"/>
+                        <f:selectItem itemValue="3"
+                                      itemLabel="#{msgs['contentDemo.color.type3']}"/>
+                        <f:selectItem itemValue="4"
+                                      itemLabel="#{msgs['contentDemo.color.type4']}"/>
+                        <f:selectItem itemValue="5"
+                                      itemLabel="#{msgs['contentDemo.color.type5']}"/>
+                    </ice:selectOneRadio>
+                    <br/>
+                </ice:panelGroup>
+                <!-- Mineral Panel -->
+                <ice:panelGroup id="mineral" styleClass="panelGroupMineral">
+                    <h3>
+                        <ice:outputText
+                                value="#{msgs['contentDemo.mineral.title']}"/>
+                    </h3>
+                    <ice:selectOneRadio
+                            value="#{panelStack.selectedMineral}"
+                            partialSubmit="true">
+                        <f:selectItem itemValue="1"
+                                      itemLabel="#{msgs['contentDemo.mineral.type1']}"/>
+                        <f:selectItem itemValue="2"
+                                      itemLabel="#{msgs['contentDemo.mineral.type2']}"/>
+                        <f:selectItem itemValue="3"
+                                      itemLabel="#{msgs['contentDemo.mineral.type3']}"/>
+                        <f:selectItem itemValue="4"
+                                      itemLabel="#{msgs['contentDemo.mineral.type4']}"/>
+                        <f:selectItem itemValue="5"
+                                      itemLabel="#{msgs['contentDemo.mineral.type5']}"/>
+                    </ice:selectOneRadio>
+                    <br/>
+                </ice:panelGroup>
+            </ice:panelStack>
+        </ice:panelGroup>
+    </ice:panelGrid>
+</ice:panelTab>
+
+<!--
+  The bean is responsible for streaming html documentation to
+  this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/panelstackDoc.html"
+            class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe src="./sourcecodeStream.html?path=./inc/layoutPanels/panelStack.jspx"
+            class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

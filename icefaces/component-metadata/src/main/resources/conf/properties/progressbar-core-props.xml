@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<property>
+	<property-name>style</property-name>
+
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&cssStyleEditor;
+		</editor-class>
+	</property-extension>
+
+</property>

@@ -1,0 +1,770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- saved from url=(0022)http://internet.e-mail -->
+  <meta http-equiv="content-type"
+ content="text/html; charset=iso-8859-1">
+  <title>ICEfaces&#8482; V1.5 Release Notes</title>
+</head>
+<body style="font-family: helvetica,arial,sans-serif;">
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td width="78%">
+      <h1>ICEfaces&#8482; <br>
+      </h1>
+      <h1>V1.5 Release Notes</h1>
+      <p><strong><em>November 13th, 2006</em></strong></p>
+      </td>
+      <td align="center" valign="top" width="22%"><img
+ alt="ICEfaces Logo" src="resources/ICEfaces-logo.gif" style=""><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<h2 style="font-style: italic;"><a name="Overview"></a>Overview</h2>
+This document contains the following sections:<br>
+<ul>
+  <li><a href="#Understanding_ICEfaces">Understanding ICEfaces </a></li>
+  <li><a href="#New_Notable">Changes in this
+release</a></li>
+  <li><a href="#Supported_Platforms">Supported
+browsers, application servers, and tools</a></li>
+  <li><a href="#Known_Issues">Known issues with this release</a></li>
+  <li><a href="#Support">Getting support for ICEfaces</a></li>
+  <li><a href="#License_Management">License information</a></li>
+</ul>
+For release note information for earlier ICEfaces releases, refer to
+the <a
+ href="http://support.icesoft.com/jive/category.jspa?categoryID=50">ICEfaces
+Knowledge Base</a>.<br>
+<br>
+<hr>
+<h2 style="font-style: italic;"><a name="Understanding_ICEfaces"></a>Understanding
+ICEfaces<br>
+</h2>
+<p>ICEfaces delivers extensions to Java ServerFaces (JSF) that provide
+an
+AJAX-enabled rich presentation environment for JSF applications.
+ICEfaces
+brings value to any J2EE development project that needs to provide
+superior
+presentation capabilities to the web application user. In particular,
+ICEfaces provides the following features:</p>
+<ul>
+  <li>Smooth, incremental page updates that do not require a full page
+refresh to achieve presentation changes in the application.</li>
+  <li>Server-initiated asynchronous presentation updates for dynamic
+instantaneous data push.</li>
+  <li>The ICEfaces Component Suite, a complete rich JSF component suite
+that fully leverages ICEfaces capabilities. </li>
+  <li>Intelligent form processing that facilitates fine-grained
+interactions with the user as they manipulate a form.</li>
+  <li>API support for rapid development of group-aware and
+collaborative applications, such as Chat, Webcast, social apps., etc.</li>
+  <li>JSP or Facelets based development.</li>
+  <li>Tool integrations for leading Java IDEs.<br>
+  </li>
+</ul>
+<h3>Learn More</h3>
+<p>This ICEfaces release comes with extensive documentation that will
+help you
+understand the product thoroughly. Documentation for this release is
+located
+in your installation directory at <span style="font-weight: bold;">.../<span
+ style="font-style: italic;">install_dir</span>/ICEfaces-1.5/icefaces/docs/</span>.
+The
+following documents are provided in PDF format:</p>
+<ol>
+  <li><span style="font-style: italic;">ICEfaces Getting Started Guide</span>:
+This guide takes you through product installation, environment
+configuration, demo app installation, and a basic 5-stage tutorial.
+This guide also contains information related to support for different
+application server environments and development tools.</li>
+  <li><span style="font-style: italic;">ICEfaces Developer's Guide</span>:
+This guide contains information relevant to developing applications
+with ICEfaces. It describes the ICEfaces architecture, and explains key
+concepts that the ICEfaces developer should be aware of. It also
+provides a complete reference guide that covers APIs, configuration,
+components (including the ICEfaces Component Suite) and TLDs, and
+covers advanced topics like server-initiated rendering.</li>
+</ol>
+<p>Additionally, all ICEfaces documentation is also available on-line
+at<span style="text-decoration: underline;"> </span><a
+ class="moz-txt-link-freetext" href="http://documentation.icefaces.org/">http://documentation.icefaces.org/.</a><br>
+</p>
+<h2 style="font-style: italic;"><a name="New_Notable"></a>Changes in
+This Release<br>
+</h2>
+<p>ICEfaces V1.5 includes<span style="font-weight: bold;"> over 140
+fixes and enhancements</span>.&nbsp;
+Click <a target="_blank"
+ href="http://support.icesoft.com/jive/category.jspa?categoryID=50">here</a>
+to review the complete <a target="_blank"
+ href="http://support.icesoft.com/jive/category.jspa?categoryID=50">Change
+Log</a> of changes made between the V1.5 and V1.0.1. releases. </p>
+<p>The most notable changes are listed below: </p>
+<h3>General</h3>
+<ul>
+  <li>ICEfaces is now an open source product.&nbsp; It is available in
+both a binary and a source code release.<span
+ style="font-weight: bold; font-style: italic;"></span>&nbsp;<span
+ style="font-weight: bold;"></span></li>
+</ul>
+<h3>Core Framework<br>
+</h3>
+<ul>
+  <li>Clean DOM rendering mechanism improves support for 3rd party JSF
+component compatibility.<br>
+    <br>
+  </li>
+  <li>Server-initiated rendering API's now support startup, shutdown
+and disposal methods for group renderers.<br>
+    <br>
+  </li>
+  <li>Performance Improvements:</li>
+  <ul>
+    <li>Use of hidden fields has been reduced which improves form
+processing time and reduces size of DOM updates.</li>
+    <li>Finer-grained synchronization has been incorporated into
+Servlet processing.<br>
+      <br>
+    </li>
+  </ul>
+  <li>Dynamic application reload for modified .jspx and .jsp pages
+improves developer productivity.<br>
+  </li>
+</ul>
+<h3>ICEfaces Component Suite</h3>
+<ul>
+  <li>New Components;</li>
+  <ul>
+    <li><span style="font-style: italic;">Positioned Panel Component:</span>&nbsp;
+With the panelPositioned component lists can be used to generate a
+series of repeating child-components within a panel.
+Each one of these child-components is draggable and can exchange
+positions with other children. In addition, a child component can be
+moved between different positioned panels components. <br>
+    </li>
+    <li><span style="font-style: italic;">Chart Component</span>: The
+outputChart component encapsulates Krysalis jCharts functionality (<a
+ href="http://jcharts.sourceforge.net/">http://jcharts.sourceforge.net/</a>).&nbsp;
+It supports both pie&nbsp; (2D and 3D), and axis (area, areastacked,
+bar, barclustered, barstacked, line, and point) type charts.&nbsp; The
+outputChart component provides full interactivity through
+actionListener bindings with the clientSideImageMap. The outputChart
+component can be generated statically or dynamically.</li>
+  </ul>
+</ul>
+<ul>
+  <li>Modification to the tree component provide better support for
+lazy loading of branches.</li>
+  <ul>
+    <li>IceUserObject includes a new boolean attribute <span
+ style="font-style: italic;">leaf</span> which explicitly declares leaf
+nodes.&nbsp; All other nodes default to branches.</li>
+    <li>Expand/collapse events are now available through ActionListener
+binding to the Tree and/or TreeNode.&nbsp; It is possible to cause and
+capture Node expand/collapse events.<br>
+      <br>
+    </li>
+  </ul>
+  <li>Several enhancements to the data table have been introduced.</li>
+  <ul>
+    <li>A columns component has been introduced that provides a dynamic
+model for adding and deleting columns programmatically.&nbsp; The
+columns component works in conjunction with the ice:dataTable, with the
+headerClass and columnClasses being assigned for all generated columns.</li>
+    <li>A rowSelector tag enables row selection for dataTable and
+supports the following attributes: value, multiple, selectionListener,
+selectedClass, mouseOverClass.</li>
+    <li>dataTable now supports a scrollable attribute that enables a
+scroll bar for the table.<br>
+      <br>
+    </li>
+  </ul>
+  <li>Several additional script.aculo.us effects are now supported
+including: scale, puff, blind up/down, switch off, drop out, shake,
+slide up/down, squish, grow, shrink, and fold.<br>
+  </li>
+</ul>
+<ul>
+  <li>A new attribute <span style="font-style: italic;">target</span>
+has been added to menu component that can change the URL in a separate
+window or frame. (Same as the
+Anchor target attribute.)</li>
+</ul>
+<ul>
+  <li>Connection status component now support ability to redirect on
+connection error.<br>
+    <br>
+  </li>
+  <li>File Upload component now uses commons-io-1.2.<br>
+    <br>
+  </li>
+  <li>Panel Tab now supports icons in the tabs.<br>
+    <br>
+  </li>
+  <li>A Hover class has been added to Panel Group.<br>
+    <br>
+  </li>
+  <li>Panel Popup now supports the <span style="font-style: italic;">effect</span>
+attribute.<br>
+    <br>
+  </li>
+  <li>SelectInputText width can now be specified in any unit (eg: 100,
+100px, 100em, 100pt).<br>
+    <br>
+  </li>
+  <li>A style class has been added to command sort header.<br>
+  </li>
+</ul>
+<h3>Tools </h3>
+<ul>
+  <li>Tools integration bundles are now supplied separately from the
+ICEfaces release and include their own release notes.&nbsp; Go to <a
+ href="http://www.icefaces.org">http://www.icefaces.org</a> to download
+tools integration bundles.<br>
+  </li>
+</ul>
+<h3>Early Access Features<br>
+</h3>
+<ul>
+  <li>Preliminary integration with JBoss Seam has been achieved.&nbsp;
+Visit the <a
+ href="http://support.icesoft.com/jive/category.jspa?categoryID=50">ICEfaces
+Knowledge Base</a> for details.<br>
+    <br>
+  </li>
+  <li>Preliminary Portal support has been achieved.&nbsp; Visit the <a
+ href="http://support.icesoft.com/jive/category.jspa?categoryID=50">ICEfaces
+Knowledge Base</a> for details.
+  </li>
+</ul>
+<h2 style="font-style: italic;"><a name="Supported_Platforms"></a>Supported
+Browsers, Application Servers, and Tools<br>
+</h2>
+<h3>Browsers</h3>
+This release of ICEfaces has been certified on the following
+Browsers:
+<br>
+<br>
+<table style="text-align: left; width: 717px; height: 179px;" border="1"
+ cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Vendor<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Product<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Version<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Microsoft<br>
+      </td>
+      <td style="vertical-align: top;">Internet Explorer<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">6.x+, 7<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Mozilla<br>
+      </td>
+      <td style="vertical-align: top;">Firefox<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">1.x+<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Mozilla<br>
+      </td>
+      <td style="vertical-align: top;">Mozilla<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">1.7.x+<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Apple<br>
+      </td>
+      <td style="vertical-align: top;">Safari<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">1.3+<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Netscape<br>
+      </td>
+      <td style="vertical-align: top;">Netscape<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">7.x+</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3>J2EE Application Servers</h3>
+This release of ICEfaces has been certified on the following
+Application Servers:
+<br>
+<br>
+<table style="text-align: left; width: 717px; height: 179px;" border="1"
+ cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Vendor<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Product<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Version<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Apache<br>
+      </td>
+      <td style="vertical-align: top;">Tomcat<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">5.0.28, 5.5<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">JBoss Inc.<br>
+      </td>
+      <td style="vertical-align: top;">JBoss Application Server<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">4.0.3<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BEA Systems Inc.<br>
+      </td>
+      <td style="vertical-align: top;">Weblogic Server<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">8.1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Sun Microsystems<br>
+      </td>
+      <td style="vertical-align: top;">Sun Java System Application
+Server<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">8.1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Oracle<br>
+      </td>
+      <td style="vertical-align: top;">Oracle Application Server
+Container for J2EE (OC4J)<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">10.1.3<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">IBM<br>
+      </td>
+      <td style="vertical-align: top;">Websphere Application Server<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">6.0.0.1, 6.1<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h3>J2EE Integrated Development Environments (IDEs)<br>
+</h3>
+ICEfaces includes IDE integration bundles for the following
+development
+tools:<br>
+<br>
+<table style="text-align: left; width: 592px; height: 108px;" border="1"
+ cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Vendor<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Product<br>
+      </td>
+      <td
+ style="vertical-align: top; font-weight: bold; text-align: center;">Version<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Eclipse<br>
+      </td>
+      <td style="vertical-align: top;">Eclipse/Web Tools Platform<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">3.1.1/1.0,
+3.2/1.5<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">Eclipse/Web Tools Platform with
+JSF tools<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">3.2/1.5<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">IBM<br>
+      </td>
+      <td style="vertical-align: top;">Rational Application Developer<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">6.0.1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Oracle<br>
+      </td>
+      <td style="vertical-align: top;">JDeveloper 10g Studio Edition<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">10.1.3<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BEA<br>
+      </td>
+      <td style="vertical-align: top;">Workshop Studio 3, Workshop
+Studio for JSF<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">3.0, 3.1, 3.2<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Genuitec LLC<br>
+      </td>
+      <td style="vertical-align: top;">MyEclipse Enterprise Workbench<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">5.0<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Sun<br>
+      </td>
+      <td style="vertical-align: top;">Java Studio Creator 2<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">2.0 - Update 1<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Sun<br>
+      </td>
+      <td style="vertical-align: top;">NetBeans<br>
+      </td>
+      <td style="vertical-align: top; text-align: right;">5.0, 5.5<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Note that the tool integration bundles may be updated independently
+from ICEfaces releases. Go to<a target="_blank"
+ class="moz-txt-link-freetext" href="http://www.icefaces.org"><br>
+http://www.icefaces.org</a> to get the most recent
+tools bundles.<br>
+<br>
+<ol>
+</ol>
+<hr>
+<h2 style="font-style: italic;"><a name="Known_Issues"></a>Known Issues</h2>
+<p>The following are known issues with this release:<br>
+</p>
+<h3>General</h3>
+<ul>
+  <li>There are conditions in which the asynchronous communication
+between the server and browser stops (such as the user pressing the
+browser "stop" button or allowing their machine to sleep). In this
+situation, the application server console will show the following
+exception (including stack trace) with no functional impact:</li>
+</ul>
+<div style="margin-left: 40px;"><span style="font-family: monospace;">java.lang.RuntimeException:
+IncrementalNodeWriter Queue limit
+exceeded: 51</span>. <br>
+<br>
+The user may need to refresh the page to continue using
+the application.</div>
+<ul>
+  <li>If at any time the asynchronous connection between the browser
+and the server is lost due to a network interruption, reloading the
+page
+will generally restore normal operation from the previous application
+state.</li>
+</ul>
+<ul>
+  <li>ICEfaces pages included via &lt;jsp:include&gt; or
+&lt;tiles:insert&gt; have distinct PersistentFacesContext objects even
+if they are included by the same parent page. For this reason,
+application-initiated renders will apply only to the inclusion
+associated with the particular PersistentFacesContext.</li>
+</ul>
+<ul>
+  <li>Inclusion of ICEfaces content from JSP is not compatible with
+MyFaces.</li>
+</ul>
+<ul>
+  <li>Integration of HTML renderers with the ICEfaces Direct-to-DOM
+renderers is
+generally possible but idiosyncrasies have been noted with a small
+number of custom renderers. In these cases, enclosing the custom tag
+with a standard JSF panelGrid tag in the source document can help to
+correct the problem.</li>
+</ul>
+<ul>
+  <li>Attempting to retrieve a Request parameter in the url using the
+following syntax is not supported (returns null):<br>
+&nbsp;&nbsp; <span style="font-family: monospace;">FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(paramName);</span><br>
+A workaround for this issue is to retrieve the Request parameter using
+the following alternative syntax:<br>
+&nbsp;<span style="font-family: monospace;">((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter(paramName);</span>
+  </li>
+</ul>
+<ul>
+  <li>When using ICEfaces with <span style="font-family: monospace;">com.icesoft.faces.concurrentDOMViews</span>
+enabled, reloading the page or opening the application with more than
+one browser window simultaneously will prevent references to any
+request-scoped beans from being removed, resulting in them being unable
+to be garbage collected until the user session expires. Further, any
+component bindings must be in request scope
+in this configuration as a component binding in
+session or application scope in concurrent views can lead to a
+component existing simultaneously
+in two component trees with unpredictable behavior.<br>
+  </li>
+</ul>
+<ul>
+  <li>Cookies can be set though the <span
+ style="font-family: monospace;">((BridgeExternalContext)
+FacesContext.getCurrentInstance().getExternalContext()).addCookie(new
+Cookie("test","test"));</span> method. </li>
+</ul>
+<h3>JSP Markup </h3>
+<ul>
+  <li>UIComponentBodyTag processing supports only a single call to
+doAfterBody(). The full JSP lifecycle for iterative body processing is
+not supported.</li>
+</ul>
+<ul>
+  <li>The first-generation children of the DataTable's table-header and
+column-header facets must be standard JSF components. For example,
+plain markup cannot be contained on its own within these facets, it
+must be wrapped in a panelGrid and the panelGrid, in turn, can be
+contained within the facet.</li>
+</ul>
+<ul>
+  <li>JSP Page to Document conversion escapes &amp;nbsp, but &amp;nbsp
+in JSP Documents must be manually escaped by the developer as
+&amp;amp;nbsp. Similarly, &amp; characters must be escaped as
+&amp;amp;.</li>
+</ul>
+<ul>
+  <li>Non-JSF JSP tags (&lt;jsp:xxx/&gt;, etc.) embedded in JSP Pages
+and Documents are ignored by the ICEfaces parser with the exception of
+the inclusion mechanism (see Markup Reference in Developer's Guide for
+details).</li>
+</ul>
+<ul>
+  <li>Java code (&lt;% ...%&gt;, etc.) embedded in JSP Pages and
+Documents is ignored by the ICEfaces parser with the exception of the
+inclusion mechanism (see Markup Reference in Developer's Guide for
+details).</li>
+</ul>
+<ul>
+  <li>Input documents must be well-formed XML.</li>
+</ul>
+<ul>
+  <li>Deprecated HTML elements, specifically the FONT element, do not
+respond properly to DOM manipulation functions in the ICEfaces
+client-side JavaScript bridge. (see HTML 4.01 Specification for details
+on deprecated HTML Elements).</li>
+</ul>
+<ul>
+  <li>Pages should contain both a &lt;head&gt; tag and a &lt;body&gt;
+tag
+so that they are well-formed XHTML and ICEfaces can
+easily add a link to its own custom JavaScript library.</li>
+</ul>
+<ul>
+  <li>Any ICEfaces page included from a JSP via &lt;jsp:include/&gt;
+must contain a &lt;body&gt; tag as the content of the &lt;body&gt; tag
+is precisely the content inserted into the including page.</li>
+</ul>
+<ul>
+  <li>Tiles tags are not supported within ICEfaces pages, but ICEfaces
+pages may be included via Tiles.</li>
+</ul>
+<ul>
+  <li>If multiple ICEfaces inclusions are performed by the same parent
+JSP, each ICEfaces form must have a manually applied unique ID.</li>
+</ul>
+<ul>
+  <li>JSP Pages are dynamically converted to JSP Documents for
+processing by the ICEfaces parser, so it is important not to mix JSP
+Page and JSP document types when performing static inclusion.</li>
+</ul>
+<h3>ICEfaces Component Suite<br>
+</h3>
+<ul>
+  <li>All ICEfaces Component Suite components must be enclosed in a JSF
+form component (i.e.<span style="font-family: monospace;"> ice:form</span>,
+    <span style="font-family: monospace;">h:form</span>, or <span
+ style="font-family: monospace;">ui:form</span>).</li>
+</ul>
+<ul>
+  <li>Drag &amp; Drop (panelGroup)<br>
+  </li>
+  <ul>
+    <li>In Internet Explorer dragging and holding an image will cause
+the cursor to change to the not symbol. Operation returns to normal
+with a second left mouse button click.</li>
+  </ul>
+</ul>
+<ul>
+  <li>Effects (various components)<br>
+  </li>
+  <ul>
+    <li>In Internet Explorer the Fade, Appear, and Pulsate effects
+will not transition when used with select elements.<br>
+    </li>
+  </ul>
+  <ul>
+    <li>In Safari the Highlight effect will does not work on buttons
+and lists.</li>
+  </ul>
+  <ul>
+  </ul>
+</ul>
+<ul>
+  <li>inputFile <br>
+  </li>
+  <ul>
+    <li>When using Firefox / Mozilla with the inputFile component, if
+the user interacts with the ICEfaces application while a file is being
+uploaded, the file-upload operation may terminate abnormally. The
+ICEfaces application itself will remain functional. In order to avoid
+this possibility it is recommended that fileUpload operations be
+performed in a modal panelPopup to prevent user-interaction with the
+ICEfaces application while the file upload is in progress. For example,
+the application may display a progress-bar in a modal panelPopup that
+displays the upload progress while also preventing further
+user-interaction while the upload is in progress.</li>
+  </ul>
+</ul>
+<ul>
+  <li>menuBar
+    <ul>
+      <li>When a menu is expanded and the user clicks on one of the
+menu items, and then the same
+menu is expanded again, the last-clicked menu item will appear with a
+dashed outline. This is
+only an issue in the Firefox or Mozilla browser.</li>
+    </ul>
+  </li>
+</ul>
+<ul>
+  <li>panelPopup</li>
+  <ul>
+    <li>When using a modal <span style="font-family: monospace;">panelPopup</span>
+it may be necessary to ensure that the body region of the page covers
+the entire visible region of the document or the component used to
+block user interaction with the document may not cover the entire page.
+To accomplish this a surrounding DIV sized to 100% width and height can
+be used to enclose all content in the document body. For example: <br>
+      <pre id="comment_text_1">&lt;html&gt;&lt;body&gt;<span
+ style="font-weight: bold;">&lt;div style="width:100%;height:100%;"&gt;</span> ...<span
+ style="font-style: italic;">page content...</span>  <span
+ style="font-weight: bold;">&lt;/div&gt;</span>&lt;/body&gt;&lt;/html&gt; </pre>
+    </li>
+  </ul>
+</ul>
+<ul>
+  <li>panelTabSet</li>
+  <ul>
+    <li>On Safari browsers only, the layout of the tabs is incorrect,
+with horizontal spacing between the tabs.</li>
+    <li>On Safari browsers only, the tab panel resizes when tabs are
+selected.</li>
+  </ul>
+</ul>
+<ul>
+  <li>Row Selector</li>
+  <ul>
+    <li>SelectOneMenu tags don't work in Tables using Row Selector unless the following code is added.
+     <pre id="comment_text_2"><span
+ style="font-weight: bold;">&lt;ice:selectOneMenu onclick="Event.stop(event);"&gt; </span>  </pre>       
+    </li>
+  </ul>
+</ul>
+
+<h3>Facelets</h3>
+<ul>
+  <li>When using an ice:outputDeclaration component in a Facelets
+document on a JBoss application server, several warning messages may be
+logged. These warnings do not affect the performance or behavior of the
+component and can be ignored.</li>
+</ul>
+<h3>Application Servers<br>
+</h3>
+<ul>
+  <li>BEA Weblogic Server 9</li>
+  <ul>
+    <li>In order to run ICEfaces on the BEA Weblogic Server 9, the html
+and core tld files located in jsf-impl.jar should be extracted from the
+jar file and placed into the WEB-INF folder of any application you want
+to deploy.</li>
+  </ul>
+</ul>
+<ul>
+  <li>Websphere Application Server 6.0.0.1 </li>
+  <ul>
+    <li>A bug in the application server prevents the Timezone Step 3+
+tutorials from running correctly. A WebSphere patch is available from
+IBM that resolves this issue: APAR numberPQ99195, <a target="_blank"
+ href="http://www-1.ibm.com/support/docview.wss?rs=180&amp;uid=swg1PQ99195">http://www-1.ibm.com/support/docview.wss?rs=180&amp;uid=swg1PQ99195.</a><br>
+    </li>
+    <li>The Component Effects demonstration in the ICEfaces Component
+Showcase application doesn't display the effects when hosted on
+WebSphere v6.0.0.1 server.<br>
+&nbsp;<br>
+    </li>
+  </ul>
+  <li>Tomcat 5.5</li>
+  <ul>
+    <li>Tutorials bundled with the ICEfaces release will not build and
+deploy to Tomcat 5.5 with MyFaces due to a conflict related to
+jsp-api.jar.&nbsp; To build and deploy tutorials on Tomcat 5.5 with
+MyFaces, it is necessary to modify the <span
+ style="font-style: italic; font-weight: bold;">.../install_dir/ICEfaces-1.5/icefaces/samples/tutorial/build.properties</span>
+and set <span style="font-style: italic; font-weight: bold;">tomcat55=true</span>
+prior to building the application.<br>
+    </li>
+  </ul>
+</ul>
+<hr>
+<h2 style="font-style: italic;"><a name="Support"></a>Support</h2>
+<p>Open source community support is available at <a
+ href="http://www.icefaces.org">http://www.icefaces.org</a>. For
+commercial support please visit <a
+ href="http://www.icesoft.com/support/">http://www.icesoft.com/support</a><span
+ style="font-weight: bold; vertical-align: baseline; text-transform: none; color: rgb(0, 0, 0); font-style: normal; text-decoration: none;"></span>.<br>
+</p>
+<hr>
+<h2 style="font-style: italic;"><a name="License_Management"></a>License
+Notice</h2>
+<p class="Body">License agreements can be found in the <span
+ style="font-weight: bold;">.../<span style="font-style: italic;">install_dir</span>/</span><span
+ style="font-style: italic; font-weight: bold;">ICEfaces-1.5/icefaces/</span><span
+ style="font-weight: bold;">docs/license</span> directory.</p>
+<p class="Body">&copy; Copyright 2005-2006. ICEsoft Technologies, Inc.</p>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A multi-line text input field
+	</description>
+
+	<display-name>Input Text Area</display-name>
+	<component-type>com.icesoft.faces.HtmlInputTextarea</component-type>
+
+	&ice-inputTextarea-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlInputTextarea
+		</base-component-type>
+		<component-family>javax.faces.Input</component-family>
+		<renderer-type>com.icesoft.faces.Textarea</renderer-type>
+	</component-extension>
+</component>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A checkbox for a single, selectable option
+	</description>
+
+	<display-name>Select Boolean CheckBox</display-name>
+	<component-type>
+		com.icesoft.faces.HtmlSelectBooleanCheckbox
+	</component-type>
+
+	&ice-selectBooleanCheckbox-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlSelectBooleanCheckbox
+		</base-component-type>
+		<component-family>javax.faces.SelectBoolean</component-family>
+		<renderer-type>com.icesoft.faces.Checkbox</renderer-type>
+	</component-extension>
+
+</component>

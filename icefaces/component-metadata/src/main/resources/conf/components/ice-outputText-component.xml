@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Displays text for labels and other read-only values
+	</description>
+
+	<display-name>Output Text</display-name>
+	<component-type>com.icesoft.faces.HtmlOutputText</component-type>
+
+	&ice-outputText-props;
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlOutputText
+		</base-component-type>
+		<component-family>javax.faces.Output</component-family>
+		<renderer-type>com.icesoft.faces.Text</renderer-type>
+	</component-extension>
+
+</component>

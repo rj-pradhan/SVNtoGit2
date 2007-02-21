@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<!--todo: remove the following one  -->
+<property>
+	<description>
+		Every component must have an unique id. Automatically created i omitted.
+	</description>
+	<property-name>id</property-name>
+	<property-extension>
+		<category>GENERAL</category>
+		<is-bindable>false</is-bindable>
+		<is-hidden>true</is-hidden>
+		<tag-attribute>true</tag-attribute>
+	</property-extension>
+</property>

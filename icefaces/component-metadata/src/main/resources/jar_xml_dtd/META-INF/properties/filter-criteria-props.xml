@@ -1,0 +1,22 @@
+<property>
+  <property-name>class</property-name>
+  <property-extension>
+    <category>DATA</category>
+    <is-hidden>true</is-hidden>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>displayName</property-name>
+  <property-extension>
+    <category>DATA</category>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>include</property-name>
+  <property-extension>
+    <category>DATA</category>
+  </property-extension>
+</property>
+

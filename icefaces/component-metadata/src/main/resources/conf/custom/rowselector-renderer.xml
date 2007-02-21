@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<renderer>
+	<description>
+		<![CDATA[The Row Selector tag enables row selection for DataTables. The Row Selector has the following
+attributes
+<ul>
+  <li><b>value</b> The boolean value that indicate this row is selected. This value must be defined
+  in the 'var' of the dataTable. Required</li>
+  <li><b>multiple</b> When true more then one row can be selected. Default is false</li>
+  <li><b>selectionListener</b> The listener method to call when a row is clicked</li>
+  <li><b>selectedClass</b> The CSS style to apply when a row is selected</li>
+  <li><b>mouseOverClass</b> The CSS style to apply when the mouse is over a row.</li>
+</ul>]]>
+	</description>
+	<component-family>
+		com.icesoft.faces.RowSelectorFamily
+	</component-family>
+	<renderer-type>
+		com.icesoft.faces.component.ext.renderkit.RowSelectorRenderer
+	</renderer-type>
+
+	<renderer-extension>
+		<instance-name>rowSelector</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>rowSelector</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

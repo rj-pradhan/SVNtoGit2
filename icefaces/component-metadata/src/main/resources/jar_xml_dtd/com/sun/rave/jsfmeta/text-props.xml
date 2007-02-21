@@ -1,0 +1,59 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== Text Properties ============================================ -->
+
+
+      <property>
+        <property-name>alt</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>maxlength</property-name>
+        <property-extension>
+            <category>DATA</category>
+            <editor-class>
+              com.sun.jsfcl.std.property.IntegerPropertyEditor
+            </editor-class>
+          <named-value>
+            <name>minValue</name>
+            <expression>new Integer(0)</expression>
+          </named-value>
+          <named-value>
+            <name>unsetValue</name>
+            <expression>new Integer(Integer.MIN_VALUE)</expression>
+         </named-value>       
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>size</property-name>
+        <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+          com.sun.jsfcl.std.property.IntegerPropertyEditor
+        </editor-class>
+          <named-value>
+            <name>minValue</name>
+            <expression>new Integer(0)</expression>
+          </named-value>
+          <named-value>
+            <name>unsetValue</name>
+            <expression>new Integer(Integer.MIN_VALUE)</expression>
+         </named-value>       
+        </property-extension>
+      </property>
+
+    <property>
+      <property-name>value</property-name>
+      <display-name>value (text)</display-name>
+      <description>The text value contained and visually presented by this component</description>
+    </property>

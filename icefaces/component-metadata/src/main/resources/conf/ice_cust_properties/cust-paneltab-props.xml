@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+&ice-att-userrole-enabled-props;
+&ice-att-title-props;
+&i18n-props;
+&events-props;
+
+<property>
+    <description>Label of this tab.</description>
+    <property-name>label</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+  <property>
+    <description>
+        The icon attribute sets the icon file for this panelTab component           
+    </description>          
+    <property-name>icon</property-name>
+    <property-extension>
+      <category>APPEARANCE</category>
+    <editor-class>
+        &stringEditor;
+    </editor-class>
+    </property-extension>
+  </property>
+  <property>
+      <description>
+        The icon attribute sets the icon file for this panelTab component           
+    </description>    
+    <property-name>iconAlignRight</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>

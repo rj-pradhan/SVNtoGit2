@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding='UTF-8'?>
+
+&ice-ext-core-styled-props;
+&ice-effects-props;
+<property>
+	<description>Effect invoked on onchange event</description>
+	<property-name>onchangeeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+<property>
+	<description>The Javascript Effect</description>
+	<property-name>effect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>		
+	</property-extension>
+</property>
+&uiselectmany-props;
+&ice-att-userrole-enabled-props;
+&ice-att-partialsubmit-props;

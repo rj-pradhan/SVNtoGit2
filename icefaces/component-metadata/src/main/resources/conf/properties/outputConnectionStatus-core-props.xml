@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<property>
+	<property-name>ActiveClass</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<is-hidden>false</is-hidden>
+	</property-extension>
+</property>

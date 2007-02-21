@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+    <description>
+    Inserts a DOCTYPE declaration at the beginning of the page
+    </description>
+
+    <display-name>Output Declaration</display-name>
+    <component-type>com.icesoft.faces.OutputDeclaration</component-type>
+
+	&ice-cust-outputDeclaration-props;
+         
+    <component-extension>
+        <base-component-type>
+            javax.faces.Output
+        </base-component-type>
+        <component-family>javax.faces.Output</component-family>
+        <renderer-type>com.icesoft.faces.OutputDeclaration</renderer-type>
+    </component-extension>
+
+</component>

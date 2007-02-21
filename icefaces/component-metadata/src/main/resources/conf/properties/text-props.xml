@@ -1,0 +1,57 @@
+<?xml encoding='UTF-8'?>
+
+<property>
+	<property-name>alt</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+	</property-extension>
+</property>
+
+<property>
+	<property-name>maxlength</property-name>
+	<property-extension>
+		<category>DATA</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+		<named-value>
+			<name>unsetValue</name>
+			<expression>new Integer(Integer.MIN_VALUE)</expression>
+		</named-value>
+	</property-extension>
+</property>
+
+<property>
+	<property-name>size</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+		<named-value>
+			<name>unsetValue</name>
+			<expression>new Integer(Integer.MIN_VALUE)</expression>
+		</named-value>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The text value contained and visually presented by this
+		component
+	</description>
+	<display-name>value (text)</display-name>
+	<property-name>value</property-name>
+
+	<property-extension>
+		<category>APPEARANCE</category>
+	</property-extension>
+</property>

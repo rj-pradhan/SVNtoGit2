@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+  <property>
+	<description>
+		Indicates the root element of the XML document.
+	</description>
+    <property-name>doctypeRoot</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>DATA</category>
+      <editor-class>&stringEditor;</editor-class>
+    </property-extension>
+  </property>
+
+  <property>
+	<description>
+		An identifier for the DTD without giving a specific location.
+	</description>
+    <property-name>doctypePublic</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>DATA</category>
+      <editor-class>&stringEditor;</editor-class>
+    </property-extension>
+  </property>
+  
+  <property>
+	<description>
+		Indicates the URI reference to the DTD.
+	</description>	
+    <property-name>doctypeSystem</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>DATA</category>
+      <editor-class>&stringEditor;</editor-class>
+    </property-extension>
+  </property>

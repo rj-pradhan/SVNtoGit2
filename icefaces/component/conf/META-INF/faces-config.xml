@@ -1,0 +1,639 @@
+<?xml version="1.0"?>
+<!--
+  ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  ~
+  ~ "The contents of this file are subject to the Mozilla Public License
+  ~ Version 1.1 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://www.mozilla.org/MPL/
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations under
+  ~ the License.
+  ~
+  ~ The Original Code is ICEfaces 1.5 open source software code, released
+  ~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+  ~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+  ~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+  ~
+  ~ Contributor(s): _____________________.
+  ~
+  ~ Alternatively, the contents of this file may be used under the terms of
+  ~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+  ~ License), in which case the provisions of the LGPL License are
+  ~ applicable instead of those above. If you wish to allow use of your
+  ~ version of this file only under the terms of the LGPL License and not to
+  ~ allow others to use your version of this file under the MPL, indicate
+  ~ your decision by deleting the provisions above and replace them with
+  ~ the notice and other provisions required by the LGPL License. If you do
+  ~ not delete the provisions above, a recipient may use your version of
+  ~ this file under either the MPL or the LGPL License."
+  ~
+  -->
+
+<!DOCTYPE faces-config PUBLIC
+ "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+ "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+  
+<faces-config>
+  <render-kit>
+     <description>
+            Custom Components
+     </description>
+            <!-- Custom components -->
+        <renderer>
+            <component-family>javax.faces.Command</component-family>
+            <renderer-type>com.icesoft.faces.OutputChartRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.outputchart.OutputChartRenderer</renderer-class>
+        </renderer> 
+                    
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.PanelSeriesRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.panelseries.PanelSeriesRenderer</renderer-class>
+        </renderer> 
+                            
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.OutputConnectionStatusRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.outputconnectionstatus.OutputConnectionStatusRenderer</renderer-class>
+        </renderer>    
+        
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.TabbedPane</renderer-type>
+            <renderer-class>com.icesoft.faces.component.paneltabset.PanelTabSetRenderer</renderer-class>
+        </renderer>
+
+       <renderer>
+          <component-family>com.icesoft.faces.TreeView</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.tree.TreeRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.TreeNode</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.tree.TreeNodeRenderer</renderer-class>
+       </renderer>
+      
+       <renderer>
+          <component-family>com.icesoft.faces.Menu</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuBarRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.MenuNode</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuItemRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.MenuNodes</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuItemsRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.MenuNodeSeparator</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuItemSeparatorRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.MenuNodeCheckbox</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuItemCheckboxRenderer</renderer-class>
+       </renderer>
+       
+       <renderer>
+          <component-family>com.icesoft.faces.MenuNodeRadio</component-family>
+          <renderer-type>com.icesoft.faces.View</renderer-type>
+          <renderer-class>com.icesoft.faces.component.menubar.MenuItemRadioRenderer</renderer-class>
+       </renderer>
+       
+      
+       <renderer>
+          <component-family>com.icesoft.faces.Progress</component-family>
+          <renderer-type>com.icesoft.faces.Bar</renderer-type>
+          <renderer-class>com.icesoft.faces.component.outputprogress.OutputProgressRenderer</renderer-class>
+       </renderer>
+
+       <renderer>
+          <component-family>javax.faces.Input</component-family>
+          <renderer-type>com.icesoft.faces.Calendar</renderer-type>
+          <renderer-class>com.icesoft.faces.component.selectinputdate.SelectInputDateRenderer</renderer-class>
+       </renderer>
+
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.DataScroller</renderer-type>
+            <renderer-class>com.icesoft.faces.component.datapaginator.DataPaginatorRenderer</renderer-class>
+        </renderer>    
+        
+        <renderer>
+             <component-family>javax.faces.Command</component-family>
+             <renderer-type>com.icesoft.faces.SortHeader</renderer-type>
+             <renderer-class>com.icesoft.faces.component.commandsortheader.CommandSortHeaderRenderer</renderer-class>
+        </renderer>          
+
+       <renderer>
+          <component-family>com.icesoft.faces.File</component-family>
+          <renderer-type>com.icesoft.faces.Upload</renderer-type>
+          <renderer-class>com.icesoft.faces.component.inputfile.InputFileRenderer</renderer-class>
+       </renderer>
+
+       <renderer>
+          <component-family>javax.faces.Panel</component-family>
+          <renderer-type>com.icesoft.faces.PanelStack</renderer-type>
+          <renderer-class>com.icesoft.faces.component.panelstack.PanelStackRenderer</renderer-class>
+       </renderer>
+             
+       <renderer>
+          <component-family>javax.faces.Panel</component-family>
+          <renderer-type>com.icesoft.faces.BorderLayout</renderer-type>
+          <renderer-class>com.icesoft.faces.component.panelborder.PanelBorderRenderer</renderer-class>
+       </renderer>       
+
+       <renderer>
+             <component-family>javax.faces.Input</component-family>
+             <renderer-type>com.icesoft.faces.SelectInputText</renderer-type>
+             <renderer-class>com.icesoft.faces.component.selectinputtext.SelectInputTextRenderer</renderer-class>
+       </renderer>              
+
+
+
+
+      
+      <renderer>
+        <component-family>javax.faces.Output</component-family>
+        <renderer-type>com.icesoft.faces.OutputDeclaration</renderer-type>
+        <renderer-class>com.icesoft.faces.component.outputdeclaration.OutputDeclarationRenderer</renderer-class>
+      </renderer>
+      
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.PanelPopup</renderer-type>
+            <renderer-class>com.icesoft.faces.component.panelpopup.PanelPopupRenderer</renderer-class>
+
+        </renderer>
+
+      <renderer>
+            <component-family>com.icesoft.faces.OutputStyle</component-family>
+            <renderer-type>com.icesoft.faces.style.OutputStyleRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.style.OutputStyleRenderer</renderer-class>
+      </renderer>
+        <renderer>
+            <component-family>com.icesoft.faces.dragdrop.PanelPositionedFamily</component-family>
+            <renderer-type>com.icesoft.faces.dragdrop.PanelPositionedRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.panelpositioned.PanelPositionedRenderer</renderer-class>
+        </renderer>
+
+      <renderer>
+        <component-family>com.icesoft.faces.RowSelectorFamily</component-family>
+        <renderer-type>com.icesoft.faces.RowSelectorRenderer</renderer-type>
+        <renderer-class>com.icesoft.faces.component.ext.renderkit.RowSelectorRenderer</renderer-class>
+      </renderer>
+      
+      <renderer>
+            <component-family>com.icesoft.faces.AccordionFamily</component-family>
+            <renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.accordion.AccordionRenderer</renderer-class>
+      </renderer>      
+
+        <!--<renderer>
+            <component-family>com.icesoft.faces.SliderFamily</component-family>
+            <renderer-type>com.icesoft.faces.SliderRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.slider.SliderRenderer</renderer-class>
+        </renderer>-->
+  </render-kit>
+  
+  <component>
+	  <component-type>com.icesoft.faces.series</component-type>
+	  <component-class>com.icesoft.faces.component.panelseries.UISeries</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.OutputChart</component-type>
+      <component-class>com.icesoft.faces.component.outputchart.OutputChart</component-class>
+  </component>  
+ 
+  <component>
+      <component-type>com.icesoft.faces.PanelSeries</component-type>
+      <component-class>com.icesoft.faces.component.panelseries.PanelSeries</component-class>
+  </component>
+    
+  <component>
+      <component-type>com.icesoft.faces.OutputDeclaration</component-type>
+      <component-class>com.icesoft.faces.component.outputdeclaration.OutputDeclaration</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.OutputConnectionStatus</component-type>
+      <component-class>com.icesoft.faces.component.outputconnectionstatus.OutputConnectionStatus</component-class>
+  </component>
+      
+  <component>
+      <component-type>com.icesoft.faces.BorderLayout</component-type>
+      <component-class>com.icesoft.faces.component.panelborder.PanelBorder</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.PanelStack</component-type>
+      <component-class>com.icesoft.faces.component.panelstack.PanelStack</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.File</component-type>
+      <component-class>com.icesoft.faces.component.inputfile.InputFile</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.Progress</component-type>
+      <component-class>com.icesoft.faces.component.outputprogress.OutputProgress</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.SelectInputDate</component-type>
+      <component-class>com.icesoft.faces.component.selectinputdate.SelectInputDate</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.TreeView</component-type>
+      <component-class>com.icesoft.faces.component.tree.Tree</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.TreeNode</component-type>
+      <component-class>com.icesoft.faces.component.tree.TreeNode</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.Menu</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuBar</component-class>
+  </component>
+
+  <component>
+      <component-type>com.icesoft.faces.MenuNode</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuItem</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.MenuNodes</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuItems</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.MenuNodeCheckbox</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuItemCheckbox</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuItemSeparator</component-class>
+  </component>
+  
+  <component>
+      <component-type>com.icesoft.faces.MenuNodeRadio</component-type>
+      <component-class>com.icesoft.faces.component.menubar.MenuItemRadio</component-class>
+  </component>
+  
+  <component>
+    <component-type>com.icesoft.faces.PanelTab</component-type>
+    <component-class>com.icesoft.faces.component.paneltabset.PanelTab</component-class>
+  </component>
+
+  <component>
+    <component-type>com.icesoft.faces.PanelTabSet</component-type>
+    <component-class>com.icesoft.faces.component.paneltabset.PanelTabSet</component-class>
+  </component>     
+  
+  <component>
+    <component-type>com.icesoft.faces.DataScroller</component-type>
+    <component-class>com.icesoft.faces.component.datapaginator.DataPaginator</component-class>
+  </component>
+  
+  <component>
+    <component-type>com.icesoft.faces.SortHeader</component-type>
+    <component-class>com.icesoft.faces.component.commandsortheader.CommandSortHeader</component-class>
+  </component>
+  
+  <component>
+    <component-type>com.icesoft.faces.SelectInputText</component-type>
+    <component-class>com.icesoft.faces.component.selectinputtext.SelectInputText</component-class>
+  </component>
+  
+  <component>
+    <component-type>com.icesoft.faces.PanelPopup</component-type>
+    <component-class>com.icesoft.faces.component.panelpopup.PanelPopup</component-class>
+  </component>
+
+    <component>
+      <component-type>com.icesoft.faces.OutputStyleComp</component-type>
+      <component-class>com.icesoft.faces.component.style.OutputStyle</component-class>
+    </component>
+
+    <component>
+      <component-type>com.icesoft.faces.Accordion</component-type>
+      <component-class>com.icesoft.faces.component.accordion.Accordion</component-class>
+    </component>
+ 
+
+  <!-- extended components -->
+   <render-kit>
+   
+       <renderer>
+            <component-family>javax.faces.Command</component-family>
+            <renderer-type>com.icesoft.faces.Button</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.ButtonRenderer</renderer-class>
+        </renderer>
+
+       <renderer>
+            <component-family>javax.faces.Command</component-family>
+            <renderer-type>com.icesoft.faces.Link</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.CommandLinkRenderer</renderer-class>
+        </renderer>
+
+       <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>com.icesoft.faces.Link</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.OutputLinkRenderer</renderer-class>
+        </renderer>
+        
+        <renderer>
+            <component-family>javax.faces.SelectOne</component-family>
+            <renderer-type>com.icesoft.faces.Menu</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.MenuRenderer</renderer-class>
+        </renderer>
+
+        <renderer>
+            <component-family>javax.faces.SelectOne</component-family>
+            <renderer-type>com.icesoft.faces.Listbox</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.ListboxRenderer</renderer-class>
+        </renderer>
+
+        <renderer>
+            <component-family>javax.faces.SelectOne</component-family>
+            <renderer-type>com.icesoft.faces.Radio</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.RadioRenderer</renderer-class>
+        </renderer>
+         
+        <renderer>
+            <component-family>javax.faces.SelectMany</component-family>
+            <renderer-type>com.icesoft.faces.Menu</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.MenuRenderer</renderer-class>
+        </renderer>   
+
+        <renderer>
+            <component-family>javax.faces.SelectMany</component-family>
+            <renderer-type>com.icesoft.faces.Listbox</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.ListboxRenderer</renderer-class>
+        </renderer>                               
+
+        <renderer>
+            <component-family>javax.faces.SelectMany</component-family>
+            <renderer-type>com.icesoft.faces.Checkbox</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.SelectManyCheckboxListRenderer</renderer-class>
+        </renderer>  
+
+        <renderer>
+            <component-family>javax.faces.SelectBoolean</component-family>
+            <renderer-type>com.icesoft.faces.Checkbox</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.CheckboxRenderer</renderer-class>
+        </renderer>
+        
+        <renderer>
+            <component-family>javax.faces.Input</component-family>
+            <renderer-type>com.icesoft.faces.Text</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.TextRenderer</renderer-class>
+        </renderer>
+        
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>com.icesoft.faces.Text</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.TextRenderer</renderer-class>
+        </renderer>  
+
+        <renderer>
+            <component-family>javax.faces.Input</component-family>
+            <renderer-type>com.icesoft.faces.Secret</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.SecretRenderer</renderer-class>
+        </renderer>  
+
+        <renderer>
+            <component-family>javax.faces.Input</component-family>
+            <renderer-type>com.icesoft.faces.Textarea</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.TextareaRenderer</renderer-class>
+        </renderer>     
+
+        <renderer>
+            <component-family>javax.faces.Form</component-family>
+            <renderer-type>com.icesoft.faces.Form</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.FormRenderer</renderer-class>
+        </renderer> 
+
+        <renderer>
+            <component-family>javax.faces.Data</component-family>
+            <renderer-type>com.icesoft.faces.Table</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.TableRenderer</renderer-class>
+        </renderer>                   
+        
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.Grid</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.GridRenderer</renderer-class>
+        </renderer>
+        
+        <renderer>
+            <component-family>javax.faces.Panel</component-family>
+            <renderer-type>com.icesoft.faces.Group</renderer-type>
+            <renderer-class>com.icesoft.faces.component.ext.renderkit.GroupRenderer</renderer-class>
+        </renderer>   
+        
+        <renderer>
+            <component-family>javax.faces.Graphic</component-family>
+            <renderer-type>com.icesoft.faces.Image</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.ImageRenderer</renderer-class>
+        </renderer>
+
+        <renderer>
+            <component-family>javax.faces.Message</component-family>
+            <renderer-type>com.icesoft.faces.Message</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.MessageRenderer</renderer-class>
+        </renderer>
+
+        <renderer>
+            <component-family>javax.faces.Messages</component-family>
+            <renderer-type>com.icesoft.faces.Messages</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.MessagesRenderer</renderer-class>
+        </renderer>
+
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>com.icesoft.faces.Label</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.LabelRenderer</renderer-class>
+        </renderer>  
+                
+        <renderer>
+            <component-family>javax.faces.Input</component-family>
+            <renderer-type>com.icesoft.faces.Hidden</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.HiddenRenderer</renderer-class>
+        </renderer>
+        
+        <renderer>
+            <component-family>javax.faces.Output</component-family>
+            <renderer-type>com.icesoft.faces.Format</renderer-type>
+            <renderer-class>com.icesoft.faces.renderkit.dom_html_basic.OutputMessageRenderer</renderer-class>
+        </renderer>  
+        
+   </render-kit>
+   
+    <component>
+        <component-type>com.icesoft.faces.HtmlOutputFormat</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlOutputFormat</component-class>
+    </component>
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlInputHidden</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlInputHidden</component-class>
+    </component>
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlCommandButton</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlCommandButton</component-class>
+    </component>
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlCommandLink</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlCommandLink</component-class>
+    </component>
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlPanelGrid</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlPanelGrid</component-class>
+    </component>
+  
+    <component>
+        <component-type>com.icesoft.faces.HtmlPanelGroup</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlPanelGroup</component-class>
+    </component>
+          
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectOneMenu</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectOneMenu</component-class>
+    </component>
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectOneRadio</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectOneRadio</component-class>
+    </component> 
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectOneListbox</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectOneListbox</component-class>
+    </component> 
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectManyListbox</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectManyListbox</component-class>
+    </component>
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectManyMenu</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectManyMenu</component-class>
+    </component>   
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectManyCheckbox</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectManyCheckbox</component-class>
+    </component> 
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlSelectBooleanCheckbox</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox</component-class>
+    </component> 
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlInputText</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlInputText</component-class>
+    </component>     
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlInputTextarea</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlInputTextarea</component-class>
+    </component> 
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlForm</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlForm</component-class>
+    </component> 
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlDataTable</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlDataTable</component-class>
+    </component> 
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlOutputText</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlOutputText</component-class>
+    </component>  
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlGraphicImage</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlGraphicImage</component-class>
+    </component>  
+
+    <component>
+        <component-type>com.icesoft.faces.HtmlInputSecret</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlInputSecret</component-class>
+    </component>          
+  
+    <component>
+        <component-type>com.icesoft.faces.HtmlMessage</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlMessage</component-class>
+    </component>  
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlMessages</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlMessages</component-class>
+    </component>  
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlOutputLabel</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlOutputLabel</component-class>
+    </component>  
+    
+    <component>
+        <component-type>com.icesoft.faces.HtmlOutputLink</component-type>
+        <component-class>com.icesoft.faces.component.ext.HtmlOutputLink</component-class>
+    </component>
+
+
+    <component>
+        <component-type>com.icesoft.faces.Column</component-type>
+        <component-class>com.icesoft.faces.component.ext.UIColumn</component-class>
+    </component>   
+
+    <component>
+        <component-type>com.icesoft.faces.dragdrop.PanelPositioned</component-type>
+        <component-class>com.icesoft.faces.component.panelpositioned.PanelPositioned</component-class>
+    </component>
+
+<!--        <component>
+        <component-type>com.icesoft.faces.Slider</component-type>
+        <component-class>com.icesoft.faces.component.slider.Slider</component-class>
+    </component>    -->
+    
+    <component>
+        <component-type>com.icesoft.faces.Columns</component-type>
+        <component-class>com.icesoft.faces.component.ext.UIColumns</component-class>
+    </component>
+
+    <component>
+        <component-type>com.icesoft.faces.RowSelector</component-type>
+        <component-class>com.icesoft.faces.component.ext.RowSelector</component-class>
+    </component>
+      <!-- end extended components -->
+</faces-config>

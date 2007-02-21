@@ -1,0 +1,22 @@
+<?xml encoding='UTF-8'?>
+
+
+      &uicomponent-props;
+
+      <property>
+        <property-name>locale</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>renderKitId</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>viewId</property-name>
+        <property-extension>
+        </property-extension>
+      </property>

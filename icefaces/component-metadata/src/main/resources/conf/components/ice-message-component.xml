@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	Displays a message associated with a component
+	</description>
+
+	<display-name>Message</display-name>
+	<component-type>com.icesoft.faces.HtmlMessage</component-type>
+
+	&ice-message-props;
+	<component-extension>
+		<base-component-type>javax.faces.HtmlMessage</base-component-type>
+		<component-family>javax.faces.Message</component-family>
+		<renderer-type>com.icesoft.faces.Message</renderer-type>
+	</component-extension>
+
+</component>

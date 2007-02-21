@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+Render a breadcrumb or parentage path. <br>
+<h3>HTML Elements and Layout</h3>
+This tag will render a breadcrumb (or parentage path) on a page. A breadcrumb or parentage path is a set of hyperlinks, displayed on a page to show the user's location within an application, and the physical or logical path to a page. The breadcrumbs can be used to navigate to other locations within the application.
+<h3>Client Side Javascript Functions</h3>
+none.
+<h3>Examples</h3>
+The pages which comprise breadcrumbs can be specified as child components of the breadcrumbs or by using the <code>pages</code> attribute. If the <code>pages</code> attribute is used, the value must an EL expression that identifies an array of <code>com.sun.rave.web.ui.Hyperlink</code>.<br>
+Breadcrumbs must be used within a <code>&lt;ui:form&gt;</code> tag.
+<h4>Example 1:</h4>
+Using child components:<br>
+<code>
+<pre>
+      &lt;ui:breadcrumbs id="breadcrumbs1"&gt;
+        &lt;ui:hyperlink url="http://google.com" label="Google"/&gt;
+        &lt;ui:hyperlink url="http://yahoo.com" label="Yahoo"/&gt;
+        &lt;ui:hyperlink url="http://sun.com" label="Sun"/&gt;
+      &lt;/ui:breadcrumbs&gt;
+</pre>
+</code>
+<h4>Example 2:</h4>
+Using a value binding:<br>
+<code>
+<pre>
+      &lt;ui:breadcrumbs id="breadcrumbs2" pages="#{FieldBean.pagelist}" /&gt;
+</pre>
+</code>
+<br>
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Breadcrumbs</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Breadcrumbs</renderer-type>
+
+  <attribute>
+    <attribute-name>converter</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>action</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>actionListener</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>immediate</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>breadcrumbs</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

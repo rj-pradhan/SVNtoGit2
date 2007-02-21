@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<span style="text-decoration: line-through;"></span><span
+ style="text-decoration: line-through;"></span><span
+ style="color: rgb(0, 0, 0);">Use the <code>ui:html</code>
+tag to create an <code>&lt;html&gt;</code>
+element in the rendered
+HTML page. The </span><code
+ style="color: rgb(0, 0, 0);">ui:html</code><span
+ style="color: rgb(0, 0, 0);"> tag must be used as a
+child of the <code>ui:page</code>
+tag, following </span><code
+ style="color: rgb(0, 0, 0);"></code><span
+ style="color: rgb(0, 0, 0);">immediately after the <code>ui:page</code>
+tag.&nbsp; This tag is required for pages that are not in a portal
+enviroment and not subviews.<br>
+</span><br
+ style="color: rgb(0, 0, 0);">
+<span
+ style="font-weight: bold; color: rgb(0, 0, 0);"></span>
+<h3 style="color: rgb(0, 0, 0);">HTML
+Elements and Layout</h3>
+<span
+ style="text-decoration: line-through; color: rgb(0, 0, 0);"></span><span
+ style="color: rgb(0, 0, 0);">The rendered HTML page
+includes an </span><code
+ style="color: rgb(0, 0, 0);">&lt;html&gt;</code><span
+ style="color: rgb(0, 0, 0);">
+tag that uses attributes indicated by the attributes you specify with
+the </span><code
+ style="color: rgb(0, 0, 0);">ui:html</code><span
+ style="color: rgb(0, 0, 0);"> tag in the JSP page. </span><br
+ style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<h3 style="color: rgb(0, 0, 0);">Theme
+Identifiers</h3>
+<span style="color: rgb(0, 0, 0);">None.</span><br
+ style="color: rgb(0, 0, 0);">
+<h3 style="color: rgb(0, 0, 0);">Client
+Side Javascript Functions</h3>
+<span style="color: rgb(0, 0, 0);">None.
+</span>
+<h3 style="color: rgb(0, 0, 0);">Examples</h3>
+<h4 style="color: rgb(0, 0, 0);">Example
+1: Using a <code>ui:html</code>
+tag<br>
+</h4>
+<code style="color: rgb(0, 0, 0);">&lt;ui:page&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:html&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&lt;ui:head id="blah"
+title="hyperlink test page" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;ui:body&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;ui:form id="form1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &lt;ui:hyperlink&nbsp;
+id="hyperlinkSubmitsPage"&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+label="#{HyperlinkBean.label}" <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+action="#{HyperlinkBean.determineWhatToDoFunction}" /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&lt;/ui:form&gt;<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+&lt;/ui:body&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:html&gt;<br>
+&lt;/ui:page&gt;</code><br
+ style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);"><br>
+</span><span
+ style="color: rgb(0, 0, 0);"></span><code
+ style="color: rgb(0, 0, 0);"><br>
+</code>
+
+
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Html</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Html</renderer-type>
+
+  &binding-attrs;
+
+  <renderer-extension>
+    <tag-name>html</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

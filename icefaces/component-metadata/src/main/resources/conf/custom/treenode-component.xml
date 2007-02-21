@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	A single tree node for use within a Tree
+	</description>
+
+	<display-name>Tree Node</display-name>
+	<component-type>com.icesoft.faces.TreeNode</component-type>
+
+	&ice-cust-treenode-props;
+	<component-extension>
+	    <base-component-type>com.sun.faces.Component</base-component-type>
+		<component-family>com.icesoft.faces.TreeNode</component-family>
+		<renderer-type>com.icesoft.faces.View</renderer-type>
+	</component-extension>
+</component>

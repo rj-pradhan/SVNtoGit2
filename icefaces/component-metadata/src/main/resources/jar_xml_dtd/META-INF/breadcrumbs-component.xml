@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Displays a set of hyperlinks that represent a user's location within an application
+  </description>
+
+  <display-name>Breadcrumbs</display-name>
+
+  <component-type>com.sun.rave.web.ui.Breadcrumbs</component-type>
+
+  <property>
+    <description>
+         Value binding expression that points to an array of UIComponents containing
+         the information for the pages in the breadcrumbs.
+      </description>
+    <display-name>Pages</display-name>
+    <property-name>pages</property-name>
+    <property-class>com.sun.rave.web.ui.component.Hyperlink[]</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+	<short-description>
+	    Expression that refers to an array of components that represent
+               the pages
+	</short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &tabIndex-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Command</base-component-type>
+    <component-family>com.sun.rave.web.ui.Breadcrumbs</component-family>
+    <renderer-type>com.sun.rave.web.ui.Breadcrumbs</renderer-type>
+  </component-extension>
+
+</component>

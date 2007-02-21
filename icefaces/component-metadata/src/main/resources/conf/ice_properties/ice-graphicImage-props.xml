@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-ext-core-styled-props;
+&ice-effects-props;
+<property>
+          <description>
+
+              Context-relative URL to retrieve the resource associated with
+              this component.  This is an alias for the "value" property.
+
+          </description>
+	<property-name>url</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DATA</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

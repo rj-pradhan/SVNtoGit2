@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p>The inputFile component renders an file input HTML element. Users specify a file to upload
+            either by entering the path to a file directly, or by  clicking the  <b> Browse </b>  button
+            to open a file-system navigation dialog window.  Clicking the  <b> Upload </b>  button uploads
+            the specified file to the server.<br>
+            The inputFile component can be used to provide a user-specified file upload capability.<br>
+            Note: The inputFile component must render itself inside a form with its encode type set to 
+            "multipart/form-data". This limitation prevents using the inputFile component inside another form. <br>
+            Note: The web.xml parameter com.icesoft.faces.uploadDirectoryAbsolute when set to true will use 
+            the value of the com.icesoft.faces.uploadDirectory parameter as an absolute directory.<br>
+            Note: If the styleClass, buttonClass or the inputTextClass need to be set, then the css file
+            must be referenced using the ice:outputStyle component.<br/>
+            Note: In order to set the height and width of this component, it is recomended to use the height and the width
+            attribute of this component instead of setting it using the style or styleClass. This is due to 
+            the rendering of an iframe.
+            ]]>
+            
+	</description>
+	<component-family>com.icesoft.faces.File</component-family>
+	<renderer-type>com.icesoft.faces.Upload</renderer-type>
+	<renderer-extension>
+		<instance-name>inputFile</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>inputFile</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

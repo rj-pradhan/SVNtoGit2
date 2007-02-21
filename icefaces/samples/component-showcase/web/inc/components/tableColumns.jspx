@@ -1,0 +1,117 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGrid id="columnsLayoutGrid" styleClass="contentLayoutGridStyle"
+                   columns="1" border="0">
+        <ice:panelTabSet styleClass="componentPanelTabSetLayout">
+            
+            <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+                <ice:panelGrid id="columnsRootTable"
+                               styleClass="componentLayoutRootTable"
+                               columns="1">
+
+                    <ice:panelGrid id="columnsTopGrid" columns="1"
+                                   styleClass="formBorderHighlight"
+                                   columnClasses="contentLayoutGridColumn">
+                        <h3>
+                            <ice:outputText id="columnsTitle"
+                                            value="#{msgs['component.columns.title']}"/>
+                        </h3>
+                        <br/>
+                        <ice:outputText id="columnsText" value="The ice:columns component will dynamically 
+                            generate columns of ASCII characters based on the number of columns
+                             entered."/>
+                        <br/>
+                        <ice:panelGroup id="columnsInputGroup">
+                            <ice:outputLabel id="columnsOutputLabel"
+                                             for="columnsInput"
+                                             value="Columns: "/>
+                            <ice:inputText id="columnsInput" maxlength="3"
+                                           size="5"
+                                           valueChangeListener="#{columnsBean.updateTableColumns}"
+                                           value="#{columnsBean.columns}"
+                                           partialSubmit="true">
+                                <f:validateLongRange minimum="1" maximum="26"/>
+                            </ice:inputText>
+                            <ice:message id="columnsInputMessage"
+                                         for="columnsInput"/>
+                        </ice:panelGroup>
+                    </ice:panelGrid>
+
+                    <ice:panelGroup styleClass="columnsContainer">
+                        <ice:dataTable var="item"
+                                       value="#{columnsBean.rowDataModel}"
+                                       columnClasses="columnsColumn"
+                                       rows="#{columnsBean.rows}">
+
+                            <ice:columns value="#{columnsBean.columnDataModel}"
+                                         var="column">
+                                <f:facet name="header">
+                                    <ice:panelGroup >
+                                        <ice:outputText value="#{columnsBean.columnDataModel.rowData}"/>
+                                    </ice:panelGroup>
+                                </f:facet>
+                                <!-- display the table cell values-->
+                                <ice:panelGroup style="text-align: center; white-space: nowrap;" >
+                                    <ice:outputText
+                                            value="#{columnsBean.cellValue}"/>
+
+                                </ice:panelGroup>
+
+                            </ice:columns>
+
+                        </ice:dataTable>
+                    </ice:panelGroup>
+
+                </ice:panelGrid>
+            </ice:panelTab>
+
+            <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+                <iframe src="./docs/columnsDoc.html"
+                        class="includeIframe"
+                        width="100%"></iframe>
+            </ice:panelTab>
+
+            <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+                <iframe src="./sourcecodeStream.html?path=./inc/components/tableColumns.jspx"
+                        class="includeIframe"
+                        width="100%"></iframe>
+            </ice:panelTab>
+
+        </ice:panelTabSet>
+    </ice:panelGrid>
+</ice:form>

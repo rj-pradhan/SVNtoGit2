@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description> <![CDATA[<p>Renders an HTML "input"
+          element of "type" "text".</p><p><a name="decode">Decode Behavior</a></p><ul><p>Obtain the <code>Map</code> from the "requestParameterMap"
+          property of the <code>ExternalContext</code>.  If the
+          <code>Map</code> contains an entry for the "clientId" of the
+          component, pass the value of the entry to the
+          <code>setSubmittedValue()</code> method of the component, which
+          must be an instance of <code>EditableValueHolder</code>.</p></ul><p>Encode Behavior</p><ul><p>  Render the clientId of the component as
+          the value of the "name" attribute.  Render the current value of
+          the component as the value of the "value" attribute.  If the
+          "styleClass" attribute is specified, render its value as the value
+          of the "class" attribute.
+          </p></ul>]]></description>
+	<component-family>javax.faces.Input</component-family>
+
+	<renderer-type>com.icesoft.faces.Text</renderer-type>
+
+	<renderer-extension>
+		<instance-name>inputText</instance-name>
+		<is-container>false</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>inputText</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

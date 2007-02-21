@@ -1,0 +1,159 @@
+<project name="common">
+
+<property name="build.sysclasspath" value="ignore"/>
+
+<property name="build.dir" location="build"/>
+<property name="dist.dir" location="dist"/>
+<property name="src.dir" location="src"/>
+<property name="web.content.dir" location="web"/>
+<property name="web.inf.dir" location="${web.content.dir}/WEB-INF"/>
+<property name="classes.dir" location="${web.inf.dir}/classes"/>
+<property name="app.lib.dir" location="${web.inf.dir}/lib"/>
+
+<property name="compile.source" value="1.4"/>
+<property name="compile.target" value="1.4"/>
+<property name="compile.debug" value="true"/>
+
+<dirname property="build.common.basedir" file="${ant.file.common}"/>
+<property name="icefaces.lib.dir" location="${build.common.basedir}/../../lib"/>
+
+<patternset id="common.icefaces.lib.jars.to.include"
+    includes="
+        backport-util-concurrent.jar
+        commons-beanutils.jar
+        commons-collections.jar
+        commons-digester.jar
+        commons-discovery.jar
+        commons-el.jar
+        commons-fileupload.jar
+        commons-logging.jar
+        el-api.jar
+        icefaces.jar
+        icefaces-comps.jar
+        jstl.jar
+        xercesImpl.jar
+        xml-apis.jar
+    "
+/>
+
+<patternset id="additional.icefaces.lib.jars.to.include"/>
+
+<selector id="myfaces.jars">
+    <or>
+        <filename name="myfaces-api.jar"/>
+        <filename name="myfaces-impl.jar"/>
+    </or>
+</selector>
+
+<selector id="sunri.jars">
+    <or>
+        <filename name="jsf-api.jar"/>
+        <filename name="jsf-impl.jar"/>
+    </or>
+</selector>
+
+<macrodef name="clean">
+    <sequential>
+        <delete includeemptydirs="true" quiet="true">
+            <fileset dir="${build.dir}"/>
+            <fileset dir="${dist.dir}"/>
+            <fileset dir="${classes.dir}" includes="**/*"/>
+            <fileset dir="${app.lib.dir}">
+                <patternset refid="common.icefaces.lib.jars.to.include"/>
+                <patternset refid="additional.icefaces.lib.jars.to.include"/>
+            </fileset>
+            <fileset dir="${app.lib.dir}">
+                <or>
+                    <selector refid="myfaces.jars"/>
+                    <selector refid="sunri.jars"/>
+                </or>
+            </fileset>
+        </delete>
+    </sequential>
+</macrodef>
+
+<macrodef name="compile">
+    <attribute name="src.copy.excludes" default=""/>
+    <element name="add.javac.elements" optional="true"/>
+
+    <sequential>
+        <mkdir dir="${src.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${app.lib.dir}"/>
+
+        <javac destdir="${classes.dir}" sourcepath=""
+            source="${compile.source}" target="${compile.target}" debug="${compile.debug}"
+        >
+            <src location="${src.dir}"/>
+            <include name="**/*.java"/>
+            <classpath>
+                <fileset dir="${app.lib.dir}" includes="*.jar"/>
+                <fileset dir="${icefaces.lib.dir}" includes="*.jar">
+                    <or>
+                        <selector if="myfaces">
+                            <not><selector refid="sunri.jars"/></not>
+                        </selector>
+                        <selector unless="myfaces">
+                            <not><selector refid="myfaces.jars"/></not>
+                        </selector>
+                    </or>
+                </fileset>
+            </classpath>
+            <add.javac.elements/>
+        </javac>
+
+        <copy todir="${classes.dir}" preservelastmodified="true">
+            <fileset dir="${src.dir}" excludes="@{src.copy.excludes}"/>
+        </copy>
+    </sequential>
+</macrodef>
+
+<macrodef name="build.war">
+    <attribute name="war.file.name" default="${ant.project.name}.war"/>
+    <attribute name="web.xml" default="${web.inf.dir}/web.xml"/>
+    <element name="add.filesets" optional="true"/>
+
+    <sequential>
+        <mkdir dir="${dist.dir}"/>
+
+        <copy todir="${web.inf.dir}" preservelastmodified="true">
+            <fileset dir="${build.common.basedir}" includes="web.xml">
+                <present present="srconly" targetdir="${web.inf.dir}"/>
+            </fileset>
+        </copy>
+
+        <copy file="@{web.xml}" tofile="${web.inf.dir}/web.xml" preservelastmodified="true" overwrite="true"/>
+
+        <copy todir="${app.lib.dir}" preservelastmodified="true">
+            <fileset dir="${icefaces.lib.dir}">
+                <patternset refid="common.icefaces.lib.jars.to.include"/>
+                <patternset refid="additional.icefaces.lib.jars.to.include"/>
+            </fileset>
+            <fileset dir="${icefaces.lib.dir}">
+                <or>
+                    <selector refid="myfaces.jars" if="myfaces"/>
+                    <selector refid="sunri.jars" unless="myfaces"/>
+                </or>
+            </fileset>
+        </copy>
+
+        <war basedir="${web.content.dir}" destfile="${dist.dir}/@{war.file.name}" duplicate="fail"
+             webxml="${web.inf.dir}/web.xml" excludes="WEB-INF/web.xml">
+            <add.filesets/>
+        </war>
+    </sequential>
+</macrodef>
+
+<target name="clean">
+    <clean/>
+</target>
+
+<target name="compile">
+    <compile/>
+</target>
+
+<target name="build.war" depends="compile">
+    <build.war/>
+</target>
+
+</project>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+<p>
+	Use the <code>ui:radioButtonGroup</code> tag to display two or more 
+	radio buttons in a grid layout in the rendered HTML page. The 
+	<code>ui:radioButtonGroup</code> tag attributes that
+	you specify determine how the radio buttons are displayed. 
+</p>
+<p>
+	If the <code>label</code> attribute is specified a
+	<code>com.sun.rave.web.ui.component.Label</code> component
+	is rendered before the first radio button and
+	identifies the radio button group. The label component's
+	<code>for</code> attribute is 
+	set to the <code>id</code> attribute of the first radio button in
+	the rendered HTML page.
+</p>
+<p>
+	The radio buttons are laid out in rows and columns in an HTML
+	&lt;table&gt;
+	element. The number of rows is defined by the length of the items
+	array. The number of columns is defined by the columns attribute. The
+	default layout is a single vertical column.
+</p>
+<p>
+	The <code>items</code> attribute must be a value binding expression.
+	The value binding expression assigned to the <code>items</code>
+	property evaluates to an <code>Object</code> array of 
+	<code>com.sun.rave.web.ui.model.Option</code> instances.
+	Each
+	instance represents one radio button. The <code>value</code> property
+	of an <code>Option</code> instance represents the value of a
+	selected radio button.
+	If the <code>items</code> array is empty nothing is rendered.
+</p>
+<p>	
+	At least one radio button should be selected by the application.
+	The <code>selected</code> attribute must also be a value binding
+	expression that is evaluated to read and write an <code>Object</code>.
+	When an <code>Object</code> value is read from the value binding
+	expression, it identifies the selected radio button.
+	The <code>Object</code> value must
+	be equal to the value property of at least one <code>Option</code>
+	instance specified in the array obtained from the value binding
+	expression assigned to the <code>items</code> attribute.
+</p>
+<p>
+	The write method of the <code>selected</code> attribute value
+	binding expression is called during the <code>UPDATE_MODEL_PHASE</code>
+	of the JSF lifecyle. If a radio button is selected
+	an <code>Object</code> value is passed as an argument to the
+	write method. The <ccode>Object</code> value is the 
+	value of the selected radio button.
+</p>
+
+	<h3>HTML Elements and Layout</h3>
+<p>
+	A <code>ui:radioButtonGroup</code> renders one
+	<code>com.sun.rave.web.ui.component.RadioButton</code> component for
+	each element in the <code>items</code> array. 
+	See <a href="radioButton.html" target="tagFrame">ui:radioButton</a> for
+	details on the HTML elements and components rendered for a 
+	radio button.
+</p>
+<p>
+	The value of the <code>name</code> attribute of each 
+	<code>RadioButton</code> component rendered is assigned the
+	<code>clientId</code> of the <code>RadioButtonGroup</code>
+	component instance associated with this tag. The <code>id</code>
+	attribute of each <code>RadioButton</code> component rendered
+	is formed as follows, where <em>rbgrpid</em> is the id of the
+	<code>RadioButtonGroup</code> instance and <em>N</em> is the nth
+	radio button.
+</p>
+	<ul>
+	<li> <em>rbgrpid_N</em></li>
+	</ul>
+<p>
+	See <a href="radioButton.html" target="tagFrame">ui:radioButton</a> for
+	details on how the id properties of the components that make up the 
+	radio button are defined.
+</p>
+        <h3>Client Side Javascript Functions</h3>
+<p>
+	none.
+</p>
+	<h3>Example</h3>
+	<b>Example 1: Create a radio button group</b>
+	<p>
+	<code>
+	&nbsp;&lt;ui:radioButtonGroup items="#{rbcbGrp.selections}"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;label="#{rbcbGrp.rbGrpLabel}"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;toolTip="rbgrp-tooltip"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;tabIndex="1"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;columns="3"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;labelLevel="2"</br>
+	&nbsp;&nbsp;&nbsp;&nbsp;selected="#{rbcbGrp.selection}"&gt;</br>
+	&nbsp;&lt;/ui:radioButtonGroup&gt;</br>
+	</code>
+	</p>
+	<p>
+	This example creates a radio button group with an identifying
+	label for the group before the first radio button. The 
+	data for the radio buttons is obtained from the value binding
+	expression <code>#{rbcbGrp.selections}</code> where <code>rbcbGrp</code>
+	is an application defined managed bean. The bean provides the values for
+	other attributes such as <code>selected</code> to receive the
+	value of the selected radio button in the group.
+	</p>
+
+	<!--
+	<h3>CSS style selectors</h3>
+<p>
+	<ul>
+	<li>RbGrp for the TABLE element.</li>
+	<li>RbGrpCpt for the TD element containing the group label</li>
+	<li>RbGrpLbl for the LABEL element used as the CAPTION</li>
+	<li>RbGrpLblDis for the LABEL used as the CAPTION if the group is disabled</li>
+	<li>RbGrpRwEv for even TR elements</li>
+	<li>RbGrpRwOd for odd TR elements</li>
+	<li>RbGrpClEv for even TD elements</li>
+	<li>RbGrpClOd for odd TD elements</li>
+	<li>Rb for the INPUT element</li>
+	<li>RbDis for the INPUT element for disabled radio button </li>
+	<li>RbLbl for a LABEL element of a radio button</li>
+	<li>RbLblDis for a LABEL element of a disabled radio button</li>
+	<li>RbImg for an IMG element of a radio button</li>
+	<li>RbImgDis for an IMG element of a disabled radio button</li>
+	</ul>
+</p>
+	-->
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.RadioButtonGroup</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.RadioButtonGroup</renderer-type>
+
+  <attribute>
+    <description>
+	The object that represents the selection made from the
+	available options. This attribute
+	must be bound to an Object.
+      </description>
+    <attribute-name>selected</attribute-name>
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>onSelect</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>onBlur</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>onChange</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>onFocus</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>radioButtonGroup</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Renders an HTML frame tag
+    ]]></description>
+
+  <display-name>Frame</display-name>
+
+  <component-type>com.sun.rave.web.ui.Frame</component-type>
+
+  <property>
+    <description>
+        Set the value of the frameBorder attribute to "true" when a border is 
+        needed around the frame.
+      </description>
+    <display-name>Frame Border</display-name>
+    <property-name>frameBorder</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        A URL to a long description of the frame contents. Use it for browsers that do not support frames
+      </description>
+    <display-name>Long Description</display-name>
+    <property-name>longDesc</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Defines the top and bottom margins in the frame
+      </description>
+    <display-name>Margin Height</display-name>
+    <property-name>marginHeight</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Defines the left and right margins in the frame
+      </description>
+    <display-name>Margin Width</display-name>
+    <property-name>marginWidth</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Defines a unique name for the frame (to use in scripts)
+      </description>
+    <display-name>Name</display-name>
+    <property-name>name</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Set the value of the noResize attribute to "true" when  user 
+        is not allowed to resize the frame.  
+      </description>
+    <display-name>No Resize</display-name>
+    <property-name>noResize</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Determines scrollbar action (valid values are: yes, no, auto)
+      </description>
+    <display-name>Scrolling</display-name>
+    <property-name>scrolling</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Defines the URL of the file to show in the frame.
+      </description>
+    <display-name>URL</display-name>
+    <property-name>url</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &toolTip-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Frame</component-family>
+    <renderer-type>com.sun.rave.web.ui.Frame</renderer-type>
+  </component-extension>
+
+</component>

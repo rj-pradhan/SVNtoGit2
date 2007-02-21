@@ -1,0 +1,7 @@
+<property>
+    <property-name>alt</property-name>
+    <property-extension>
+        <category>ACCESSIBILITY</category>
+        <editor-class>&stringEditor;</editor-class>
+    </property-extension>
+</property>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component>
+	<description>
+		<![CDATA[ Links one or more theme CSS files into the page ]]>
+	</description>
+	<display-name>Output Style</display-name>
+	<component-type>com.icesoft.faces.OutputStyleComp</component-type>
+
+	&ice-cust-style-props;
+	<component-extension>
+	    <base-component-type>com.sun.faces.Component</base-component-type>
+		<component-family>com.icesoft.faces.OutputStyle</component-family>
+		<renderer-type>
+			com.icesoft.faces.style.OutputStyleRenderer
+		</renderer-type>
+	</component-extension>
+</component>

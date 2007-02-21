@@ -1,0 +1,40 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!-- ========== UIGraphic Properties ======================================= -->
+
+
+      &uicomponent-props;
+
+      <property>
+        <property-name>url</property-name>
+        <property-extension>
+          <tag-attribute>false</tag-attribute>
+          <category>DATA</category>
+          <editor-class>            
+            com.sun.rave.propertyeditors.UrlPropertyEditor
+          </editor-class>
+          <is-hidden>true</is-hidden>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>value</property-name>
+        <description>
+          The current path or URL to the image of this component.
+        </description>
+        <property-extension>
+            <category>DATA</category>
+            <editor-class>
+              com.sun.jsfcl.std.ValueBindingPropertyEditor
+            </editor-class>
+            <named-value>
+              <name>ignoreIsBound</name>
+              <value>true</value>
+            </named-value>
+        </property-extension>
+      </property>

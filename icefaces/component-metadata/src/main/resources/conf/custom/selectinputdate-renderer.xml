@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<renderer>
+	<description>
+		<![CDATA[<p>The selectInputDate component renders a localized dateSelect. Users may select a date by clicking
+            on a date in the displayed month. The displayed month and year can be changed using arrow buttons.
+            Optionally, the selectInputDate component may be used in popup mode. In this mode an inputText
+            component is rendered that displays the selected date. Users may enter a date directly into the
+            inputText component, or optionally click a button beside the inputText component to display a popup
+            dateSelect view. Selecting a date in the dateSelect closes  the popup dateSelect view and updates the
+            selected date.<br>
+            The selectInputDate component can be used in cases where a date value must be displayed or entered. ]]>
+	</description>
+	<component-family>javax.faces.Input</component-family>
+	<renderer-type>com.icesoft.faces.Calendar</renderer-type>
+	<renderer-extension>
+		<instance-name>selectInputDate</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>selectInputDate</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+    Render actions of a table.
+  </description>
+  <display-name>Actions</display-name>
+  <component-type>com.sun.rave.web.ui.TableActions</component-type>
+
+  <property>
+    <description><![CDATA[
+Extra HTML to be appended to the tag output by this renderer.
+    ]]></description>
+    <display-name>Extra HTML</display-name>
+    <property-name>extraHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Flag indicating this component should render actions at the bottom of 
+the table. The default renders action for the top of the table.
+    ]]></description>
+    <display-name>Is Actions Bottom</display-name>
+    <property-name>actionsBottom</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <tag-attribute>false</tag-attribute>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  &onClickXXX-props;
+  &onKeyXXX-props;
+  &onMouseXXX-props;
+  &toolTip-props;
+  &visible-props;
+  &td-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.TableActions</component-family>
+    <renderer-type>com.sun.rave.web.ui.TableActions</renderer-type>
+  </component-extension>
+
+</component>

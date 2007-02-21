@@ -1,0 +1,49 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!-- ========== UISelectItem Properties ==================================== -->
+
+
+      &uicomponent-props;
+
+      <property>
+        <property-name>itemDescription</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemDisabled</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemLabel</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>itemValue</property-name>
+        <property-extension>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>value</property-name>
+        <property-extension>
+            <category>DATA</category>
+            <editor-class>
+              com.sun.jsfcl.std.ValueBindingPropertyEditor
+            </editor-class>
+            <named-value>
+              <name>ignoreIsBound</name>
+              <value>true</value>
+            </named-value>
+        </property-extension>
+      </property>

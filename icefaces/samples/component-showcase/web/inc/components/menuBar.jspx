@@ -1,0 +1,227 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, ice:menuBar and ice:menuItem are
+used to build an application menubar. The memuItem selection events
+are shown but could easily be made to invoke application logic.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+
+<!--
+  Example include, also see source code include.
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<ice:panelGrid
+        styleClass="componentLayoutRootTable"
+        columns="1">
+
+<!-- description for menubar -->
+<ice:panelGroup styleClass="formBorderHighlight">
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.menuBar.instructions']}"/>
+    </h3>
+    <h4>
+        <ice:outputText
+                value="#{msgs['component.menuBar.subInstructions']}"/>
+    </h4>
+    <br/>
+
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.menuBar.orientationLabel']}"/>
+    </h3>
+
+    <!-- toggle menu bar orientation -->
+    <ice:selectOneRadio value="#{menuBar.orientation}" partialSubmit="true">
+        <f:selectItem itemValue="horizontal" itemLabel="Horizontal"/>
+        <f:selectItem itemValue="vertical" itemLabel="Vertical"/>
+    </ice:selectOneRadio>
+
+</ice:panelGroup>
+
+<!-- menubar example -->
+<ice:panelGroup styleClass="formBorderHighlight">
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.global.serverFeedback']}"/>
+    </h3>
+    <ice:panelGrid columns="2">
+        <ice:outputText value="#{msgs['component.menuBar.selection']}"
+                        styleClass="valueHeader"/>
+        <ice:outputText value="#{menuBar.actionFired}" styleClass="valueText"/>
+        <ice:outputText value="#{msgs['component.menuBar.param']}"
+                        styleClass="valueHeader"/>
+        <ice:outputText value="#{menuBar.param}" styleClass="valueText"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- menubar -->
+<ice:panelGroup styleClass="formBorderHighlight"
+                style="height: 150px ">
+    <!-- main menu declaration  -->
+    <ice:menuBar id="menu" orientation="#{menuBar.orientation}">
+
+        <!-- File menu -->
+        <ice:menuItem value="File" id="file">
+            <ice:menuItem actionListener="#{menuBar.primaryListener}"
+                          id="open" value="Open" icon="images/menu/open.gif">
+                <f:param name="myParam" value="Open"/>
+            </ice:menuItem>
+            <ice:menuItem id="close" value="Close"
+                          actionListener="#{menuBar.primaryListener}">
+                <f:param name="myParam" value="Close"/>
+            </ice:menuItem>
+            <ice:menuItemSeparator/>
+            <ice:menuItem id="recent" value="Recent"
+                          icon="images/menu/recent.gif"
+                          actionListener="#{menuBar.primaryListener}">
+                <f:param name="myParam" value="Recent"/>
+                <ice:menuItem id="file1"
+                              value="File 1"
+                              actionListener="#{menuBar.primaryListener}">
+                    <f:param name="myParam" value="File 1"/>
+                </ice:menuItem>
+                <ice:menuItem id="file2"
+                              actionListener="#{menuBar.primaryListener}"
+
+                              value="File 2">
+                    <f:param name="myParam" value="File 2"/>
+                    <ice:menuItem id="para1"
+                                  actionListener="#{menuBar.primaryListener}"
+                                  value="Para 1">
+                        <f:param name="myParam" value="Para 1"/>
+                    </ice:menuItem>
+                    <ice:menuItem id="para2" value="Para 2"
+                                  actionListener="#{menuBar.primaryListener}">
+                        <f:param name="myParam" value="Para 2"/>
+                    </ice:menuItem>
+
+                    <ice:menuItem id="para3" value="Para 3"
+                                  actionListener="#{menuBar.primaryListener}"/>
+
+                </ice:menuItem>
+                <ice:menuItem value="File 3"
+                              id="file3"
+                              actionListener="#{menuBar.primaryListener}"/>
+                <ice:menuItem value="File 4"
+                              id="file4"
+                              actionListener="#{menuBar.primaryListener}"/>
+            </ice:menuItem>
+
+            <ice:menuItem id="save"
+                          icon="images/menu/save.gif" value="Save"
+                          actionListener="#{menuBar.primaryListener}"/>
+
+            <ice:menuItem id="print"
+                          icon="images/menu/print.gif" value="Print"
+                          actionListener="#{menuBar.primaryListener}"/>
+        </ice:menuItem>
+
+        <!-- Edit menu -->
+        <ice:menuItem value="Edit" id="edit">
+            <ice:menuItem id="cut" value="Cut"
+
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+            <ice:menuItem id="copy" value="Copy"
+
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+            <ice:menuItem id="paste" value="Paste"
+
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+        </ice:menuItem>
+
+        <!-- View menu -->
+        <ice:menuItem value="View" id="view">
+            <ice:menuItem id="zoom_in" value="Zoom In"
+                          icon="images/menu/zoomin.gif"
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+            <ice:menuItem id="zoom_out" value="Zoom Out"
+                          icon="images/menu/zoomout.gif"
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+            <ice:menuItem id="fit_in_window" value="Fit In Window"
+                          icon="images/menu/fitinwindow.gif"
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+            <ice:menuItem id="actual_size" value="Actual Size"
+                          icon="images/menu/actualsize.gif"
+                          actionListener="#{menuBar.primaryListener}">
+            </ice:menuItem>
+        </ice:menuItem>
+
+    </ice:menuBar>
+</ice:panelGroup>
+
+
+</ice:panelGrid>
+
+</ice:panelTab>
+
+<!--
+The bean is responsible for streaming html documentation to
+this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/menuBarDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/components/menuBar.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

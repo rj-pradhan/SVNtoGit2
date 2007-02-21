@@ -1,0 +1,67 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== Graphic+Image Attributes =================================== -->
+
+
+    <attribute>
+      <attribute-name>alt</attribute-name>
+      <attribute-extension>
+          <category>APPEARANCE</category>
+      </attribute-extension>
+    </attribute>
+
+    <attribute>
+      <attribute-name>height</attribute-name>
+      <attribute-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.LengthValuePropertyEditor
+          </editor-class>
+      </attribute-extension>
+    </attribute>
+
+    <attribute>
+      <attribute-name>ismap</attribute-name>
+      <attribute-extension>
+          <category>ADVANCED</category>
+      </attribute-extension>
+    </attribute>
+
+    <attribute>
+      <attribute-name>longdesc</attribute-name>
+      <attribute-extension>
+          <category>APPEARANCE</category>
+      </attribute-extension>
+    </attribute>
+
+    <attribute>
+      <attribute-name>usemap</attribute-name>
+      <attribute-extension>
+          <category>ADVANCED</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.IMAGE_MAP_NAMES
+            </expression>
+          </named-value>
+      </attribute-extension>
+    </attribute>
+
+    <attribute>
+      <attribute-name>width</attribute-name>
+      <attribute-extension>
+            <category>APPEARANCE</category>
+            <editor-class>
+              com.sun.jsfcl.std.property.LengthValuePropertyEditor
+            </editor-class>
+      </attribute-extension>
+    </attribute>

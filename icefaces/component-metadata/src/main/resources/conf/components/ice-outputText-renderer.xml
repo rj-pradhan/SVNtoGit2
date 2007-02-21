@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		If the "styleClass" or "style" attributes are present, render a
+		"span" element. If the "styleClass" attribute is present, render
+		its value as the value of the "class" attribute. If the "style"
+		attribute is present, pass it thru. If the "escape" attribute is
+		not present, or it is present and its value is "true" all angle
+		brackets should be converted to the ampersand xx semicolon
+		syntax when rendering the value of the "value" attribute as the
+		value of the component. If the "escape" attribute is present and
+		is "false" the value of the component should be rendered as text
+		without escaping.
+	</description>
+	<component-family>javax.faces.Output</component-family>
+
+	<renderer-type>com.icesoft.faces.Text</renderer-type>
+
+	<renderer-extension>
+		<instance-name>outputText</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>outputText</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

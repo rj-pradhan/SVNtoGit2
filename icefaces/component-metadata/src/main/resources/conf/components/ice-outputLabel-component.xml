@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Displays a label for an associated component
+	</description>
+
+	<display-name>Output Label</display-name>
+	<component-type>com.icesoft.faces.HtmlOutputLabel</component-type>
+
+	&ice-outputLabel-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlOutputLabel
+		</base-component-type>
+		<component-family>javax.faces.Output</component-family>
+		<renderer-type>com.icesoft.faces.Label</renderer-type>
+	</component-extension>
+</component>
