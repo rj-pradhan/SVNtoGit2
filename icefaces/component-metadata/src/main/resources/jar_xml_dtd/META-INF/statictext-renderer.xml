@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<span style="color: rgb(51, 51, 255);"><span
+style="color: rgb(0, 0, 0);">Use the </span><code
+style="color: rgb(0, 0, 0);">ui:staticText</code><span
+style="color: rgb(0, 0, 0);">
+tag to display text that is not interactive in the rendered HTML
+page.&nbsp; The text can be plain static text, or be formatted using
+parameters to insert variable text in the rendered HTML. The JSF core
+tag </span><code style="color: rgb(0, 0, 0);">f:param</code><span
+style="color: rgb(0, 0, 0);"> can be used along with view beans to
+provide
+the variable data.</span><br>
+</span></p>
+<p><code></code>If there are one or more
+params, the component will convert the list of parameter values to an <code>Object</code>
+array, and call <code>MessageFormat.format()</code>, passing the value
+of the param
+of this component as the first argument, the value of the
+array of parameter
+values as the second argument, and render the result. See <code>MessageFormat.format()</code>for
+details.<code> </code>Otherwise, render
+the text of
+this component unmodified.</p>
+<span style="color: rgb(255, 153, 0);"></span>
+<h3>HTML Elements and Layout</h3>
+<span style="color: rgb(0, 0, 0);">The rendered HTML page includes
+a </span><code style="color: rgb(0, 0, 0);">&lt;span&gt;</code><span
+style="color: rgb(0, 0, 0);"> element that contains the resulting
+text.&nbsp; In the </span><code style="color: rgb(0, 0, 0);">&lt;span&gt;</code><span
+style="color: rgb(0, 0, 0);"> element, the class and style
+attribute values are set to the values specified with the </span><code
+style="color: rgb(0, 0, 0);">ui:staticText</code><span
+style="color: rgb(0, 0, 0);"> tag's styleclass and style
+attributes.</span>
+<h3>Client Side Javascript Functions</h3>
+None.
+<br>
+<h3>Examples</h3>
+<h4>Example 1: Render plain old text<br>
+</h4>
+<div style="margin-left: 40px;"><code>&lt;ui:staticText
+id="statictext1" text="#{bean.someText}" /&gt; </code><br>
+<code></code><code>&lt;ui:staticText id="statictext1" text="some text
+to display" /&gt;</code><code></code><br>
+<code></code></div>
+<h4>Example 2: Use Params to format a whole line<br>
+</h4>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText id="blah"
+text="At {1,time} on {1,date}, there was {2} on planet
+{0,number,integer}."&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;f:param
+id="b1" value="#{HyperlinkBean.myInt}"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;f:param
+id="b2" value="#{HyperlinkBean.date}"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;f:param
+id="b3" value="2
+fools"/&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:staticText&gt;<br>
+<br>
+</code>The above will render:&nbsp; <span id="form1:blah">"At 8:36:18
+AM on Dec 13, 2004, there was 2 fools on planet 7." <br>
+</span>
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.StaticText</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.StaticText</renderer-type>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>staticText</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

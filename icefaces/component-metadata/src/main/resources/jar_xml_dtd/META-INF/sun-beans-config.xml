@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<!-- ============== Non-Visual (JavaBean) Components Overlay ================= -->
+
+
+<!--
+    Overlay information about the non-visual (non JSF) components in this library,
+    for integration with Sun Java Studio Creator
+-->
+
+
+<!DOCTYPE faces-config PUBLIC 
+ "-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.2//EN"
+ "http://www.sun.com/dtd/web-facesconfig-overlay_1_2.dtd" [
+
+ <!-- Include component definitions. -->
+ 
+ <!ENTITY value-binding-filter-criteria SYSTEM "value-binding-filter-criteria.xml">
+ <!ENTITY value-binding-sort-criteria SYSTEM "value-binding-sort-criteria.xml">
+ <!ENTITY value-expression-filter-criteria SYSTEM "value-expression-filter-criteria.xml">
+ <!ENTITY value-expression-sort-criteria SYSTEM "value-expression-sort-criteria.xml">
+ 
+ <!-- Include definitions of common properties -->
+ 
+ <!ENTITY filter-criteria-props SYSTEM "properties/filter-criteria-props.xml">
+ <!ENTITY sort-criteria-props SYSTEM "properties/sort-criteria-props.xml">
+ 
+]>
+ 
+<faces-config>
+
+  &value-binding-filter-criteria;
+  &value-binding-sort-criteria;
+  &value-expression-filter-criteria;
+  &value-expression-sort-criteria;
+ 
+</faces-config>

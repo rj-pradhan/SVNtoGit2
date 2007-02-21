@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A single Menu Item for use within a Menu Bar or parent Menu Item
+	</description>
+
+	<display-name>Menu Item</display-name>
+	<component-type>com.icesoft.faces.MenuNode</component-type>
+
+	&ice-cust-menunode-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>com.icesoft.faces.MenuNode</component-family>
+		<renderer-type>com.icesoft.faces.View</renderer-type>
+	</component-extension>
+
+</component>

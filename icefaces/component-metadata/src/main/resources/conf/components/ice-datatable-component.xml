@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	Provides a tabular view of a UIData structure
+	</description>
+
+	<display-name>Data Table</display-name>
+	<component-type>com.icesoft.faces.HtmlDataTable</component-type>
+
+	&ice-dataTable-props;
+
+	<component-extension>
+		<base-component-type>
+			com.icesoft.faces.series
+		</base-component-type>
+		<component-family>javax.faces.Data</component-family>
+		<renderer-type>com.icesoft.faces.Table</renderer-type>
+	</component-extension>
+</component>

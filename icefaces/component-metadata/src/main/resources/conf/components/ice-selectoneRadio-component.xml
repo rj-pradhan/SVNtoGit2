@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+A single-choice control represented as a set of radio-buttons
+	</description>
+
+	<display-name>Select One Radio</display-name>
+	<component-type>
+		com.icesoft.faces.HtmlSelectOneRadio
+	</component-type>
+
+	&ice-selectOneRadio-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlSelectOneRadio
+		</base-component-type>
+		<component-family>javax.faces.SelectOne</component-family>
+		<renderer-type>com.icesoft.faces.Radio</renderer-type>
+	</component-extension>
+
+</component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>A hyperlink to an external URL</description>
+
+	<display-name>Output Link</display-name>
+	<component-type>com.icesoft.faces.HtmlOutputLink</component-type>
+
+	&ice-outputLink-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlOutputLink
+		</base-component-type>
+		<component-family>javax.faces.Output</component-family>
+		<renderer-type>com.icesoft.faces.Link</renderer-type>
+	</component-extension>
+
+</component>

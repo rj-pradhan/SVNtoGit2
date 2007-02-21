@@ -1,0 +1,1212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description>
+    <![CDATA[
+Use the <code>ui:tableColumn</code>
+tag to define the column cells of a table, inside a <a
+href="tableRowGroup.html"><code>ui:table</code></a>
+tag.&nbsp; A <code>ui:tableRowGroup</code> must include at least one <code>ui:tableColumn</code>
+tag.<br>
+<p><span style="color: rgb(0, 0, 0);">The <code>ui:table</code>
+tag is
+used to define the structure and actions of the table, and is a
+container for <a href="tableRowGroup.html"><code>ui:tableRowGroup</code></a>
+which define the rows of a table.&nbsp; The <code>ui:tableRowGroup</code>
+tag is a container for <code></code></span><span
+style="color: rgb(0, 0, 0);"><code>ui:tableColumn</code></span><span
+style="color: rgb(0, 0, 0);"><code></code>
+tags, which are used&nbsp;<code></code>to define the
+columns of the table.&nbsp;</span><span
+style="color: rgb(102, 102, 204);"><span style="color: rgb(0, 0, 0);">
+The </span><a href="table.html" style="color: rgb(0, 0, 0);">documentation
+for the <code>ui:table</code> tag</a><span style="color: rgb(0, 0, 0);">
+contains detailed information
+about the table component.&nbsp; This page provides details about how
+to define table columns only.</span><br>
+</span></p>
+<p>
+</p>
+<p>
+</p>
+<h3>HTML Elements and Layout</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">The tableColumn component is
+used to define attributes for XHTML <code>&lt;td&gt;</code>
+elements, which are used
+to display table data cells. However, the rendering of
+column headers and footers is handled by the tableRowGroup component.
+The <a href="#diagram">diagram</a> shows the table layout, and
+highlights the areas that are defined with the <code>ui:tableColumn</code>
+tag. </span><br>
+<br>
+<a name="diagram"></a><br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2"
+cellspacing="2">
+<tbody>
+<tr style="color: rgb(192, 192, 192);">
+<td
+style="vertical-align: top; background-color: rgb(153, 153, 153);"
+rowspan="1" colspan="1">Title
+Bar&nbsp;</td>
+</tr>
+<tr style="color: rgb(153, 153, 153);">
+<td
+style="vertical-align: top; background-color: rgb(208, 208, 208);"
+rowspan="1" colspan="1">Action
+Bar (top)&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td
+style="vertical-align: top; background-color: rgb(210, 224, 235);">
+<table style="text-align: left; width: 100%;" border="1"
+cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;">Column Header <big><span
+style="color: rgb(0, 0, 0);"><small>(specified </small></span></big>with
+<code>headerText</code>
+attribute or <code>header</code> facet <big><span
+style="color: rgb(0, 0, 0);"><small>in first <code>ui:tableColumn</code>
+tag in&nbsp; <code>ui:tableRowGroup</code> tag)</small></span></big></td>
+<td style="vertical-align: top;">Column Header <big><span
+style="color: rgb(0, 0, 0);"><small>(specified </small></span></big>with
+<code>headerText</code>
+attribute or <code>header</code> facet <big><span
+style="color: rgb(0, 0, 0);"><small>in second <code>ui:tableColumn</code>
+tag in <code>ui:tableRowGroup</code> tag)</small></span></big></td>
+</tr>
+<tr style="color: rgb(153, 153, 153);">
+<td
+style="vertical-align: top; background-color: rgb(232, 232, 232);"
+rowspan="1" colspan="2">Group
+Header Bar&nbsp;</td>
+</tr>
+<tr>
+<td
+style="vertical-align: top; background-color: rgb(232, 232, 232); color: rgb(153, 153, 153);"><span
+style="font-style: italic;">Table
+data</span> <code><br>
+<br>
+<br>
+<br>
+<br>
+</code></td>
+<td
+style="vertical-align: top; background-color: rgb(232, 232, 232); color: rgb(153, 153, 153);"><span
+style="font-style: italic;">Table
+data</span> <code></code></td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Column Footer<span
+style="color: rgb(0, 0, 0);"> (specified </span>with <code>footerText</code>
+attribute or <code>footer</code>
+facet <span style="color: rgb(0, 0, 0);">in first <code>ui:tableColumn</code>
+tag in <code>ui:tableRowGroup</code> tag)</span></td>
+<td style="vertical-align: top;">Column Footer <span
+style="color: rgb(0, 0, 0);">(specified </span>with <code>footerText</code>
+attribute or <code>footer</code>
+facet <span style="color: rgb(0, 0, 0);">in second <code>ui:tableColumn</code>
+tag in <code>ui:tableRowGroup</code> tag)</span></td>
+</tr>
+<tr style="color: rgb(153, 153, 153);">
+<td
+style="vertical-align: top; background-color: rgb(232, 232, 232);"
+rowspan="1" colspan="2">Group
+Footer Bar&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">Table
+Column Footer (specified with <code>tableFooterText</code>
+attribute <code></code>or <code>tableFooter</code> facet in <code>ui:tableColumn</code>
+tag)</td>
+<td style="vertical-align: top;">Table
+Column Footer (specified with <code>tableFooterText</code>
+attribute <code></code>or <code>tableFooter</code> facet <code></code>in
+<code>ui:tableColumn</code>
+tag)</td>
+</tr>
+</tbody>
+</table>
+<big><span style="color: rgb(0, 0, 0);"> </span></big></td>
+</tr>
+<tr>
+<td
+style="vertical-align: top; background-color: rgb(208, 208, 208);"><span
+style="color: rgb(153, 153, 153);">Action
+Bar (bottom)&nbsp;</span><small> </small> </td>
+</tr>
+<tr style="color: rgb(192, 192, 192);">
+<td
+style="vertical-align: top; background-color: rgb(153, 153, 153);"
+rowspan="1" colspan="1">Footer<code></code><code> </code></td>
+</tr>
+</tbody>
+</table>
+<br style="color: rgb(102, 102, 204);">
+<h4 style="color: rgb(0, 0, 0);">Column Header</h4>
+<span style="color: rgb(0, 0, 0);">The Column Header area
+displays
+a header for each table column.&nbsp; If you specify the text of a
+column header with the <code>headerText</code> attribute in the <code>ui:tableColumn</code>
+tag, the default implementation of the header is rendered. You can
+specify a separate component to provide column header content by using
+the <code>header</code>
+facet, which overrides the <code>headerText</code> attribute.&nbsp;
+You can add extra HTML code to the
+header's rendered<code> &lt;td&gt;</code> element with the <code>extraHeaderHtml</code>
+attribute.<br>
+<br>
+The following <code>ui:tableColumn</code> attributes can be used to
+change
+the appearance and behavior for sorting of the Column Header:<br>
+</span>
+<ul style="color: rgb(0, 0, 0);">
+<li>
+<p><code>sort</code>
+specifies a sort key and makes a column sortable.&nbsp; </p>
+<p> </p>
+</li>
+<li>
+<p><code>sortIcon</code>
+specifies a theme identifier to select a different image to use as the
+sort icon that is displayed in the header of a sortable column.</p>
+</li>
+<li>
+<p><code>sortImageURL</code>
+specifies the path to an image to use as the sort icon that is
+displayed in the header of a
+sortable column.</p>
+</li>
+<li>
+<p><code>descending</code> when set to true causes the column
+to be sorted in descending order.</p>
+</li>
+<li><code>severity </code>specifies the severity of an alarm
+in each cell, and causes the column to&nbsp; sort on the severity value
+if used with the <code>sort</code> attribute. <code></code></li>
+</ul>
+<span style="color: rgb(0, 0, 0);">
+</span>
+<h4 style="color: rgb(0, 0, 0);">Column Footer</h4>
+<span style="color: rgb(0, 0, 0);">The Column Footers area
+displays a footer for each table column.
+If you specify the text of a column footer with the <code>footerText</code>
+attribute in the <code>ui:tableColumn</code> tag, the default
+implementation of the footer is rendered. You can specify a separate
+component to provide footer content by using the <code>footer</code>
+facet, which overrides the <code>footerText</code> attribute.&nbsp;
+You can add extra HTML code to the
+footer's rendered<code> &lt;td&gt;</code> element with the <code>extraFooterHtml</code>
+attribute.<br>
+</span>
+<h4 style="color: rgb(0, 0, 0);">Table Column Footer</h4>
+<span style="color: rgb(0, 0, 0);">The Table Column
+Footers area displays column footers at the
+bottom of the table.
+The table column footers are useful in tables with multiple groups of
+rows. If you specify the text of table column footers with the <code>tableFooterText</code>
+attribute, the default implementation of the footer is rendered.&nbsp;
+You can specify a separate component to provide the content for a table
+column footer by
+using the <code>tableFooter</code> facet, which overrides the <code>tableFooterText</code>
+attribute.&nbsp; You
+can add extra HTML code to the table footer's rendered<code> &lt;td&gt;</code>
+element with the <code>extraTableFooterHtml</code> attribute.<br>
+</span>
+<h4 style="color: rgb(0, 0, 0);">Alignment and Formatting
+of Cells</h4>
+<span style="color: rgb(0, 0, 0);">In addition to defining the
+headers and footers for columns, the
+<code>ui:tableColumn</code> tag can be used to set other aspects of the
+table's
+appearance and&nbsp; behavior.&nbsp; <br>
+<br>
+The following attributes affect
+the alignment of table cells:<br>
+</span>
+<ul style="color: rgb(0, 0, 0);">
+<li><code>align </code>specifies the horizontal alignment
+for
+the cell data in the
+column</li>
+<li><code>alignKey </code>specifies a particular data element on
+which to align the
+cell data <br>
+</li>
+<li><code>char </code>specifies a character to use for
+horizontal alignment of cell data<br>
+</li>
+<li><code>charOff </code>specifies the offset of
+the first
+occurrence of
+the alignment character</li>
+<li><code>valign </code>specifies the vertical alignment
+for
+the content of each cell</li>
+</ul>
+<span style="color: rgb(0, 0, 0);">
+Attributes that can be used to make the column headers more accessible
+for adaptive technologies include:<br>
+</span>
+<ul style="color: rgb(0, 0, 0);">
+<li> <code>scope</code> set
+to a keyword to specify the portion of the table that this header
+applies to. <br>
+</li>
+<li><code>rowHeader</code>
+set to true to specify that the content of the column's cells applies
+to the row in which the
+cell is located. </li>
+</ul>
+<span style="color: rgb(0, 0, 0);">Attributes that affect other
+aspects of cells include:</span><br style="color: rgb(0, 0, 0);">
+<ul style="color: rgb(0, 0, 0);">
+<li><code>abbr</code>&nbsp;
+specifies an abbreviated form of the cell's content, to
+be used when the browser has little space to render the content.<br>
+</li>
+<li><code>embeddedActions</code>
+when set to true causes separators to be rendered
+between multiple action hyperlinks.</li>
+<li><code>emptyCell</code> when
+set to
+true causes an unexpectedly empty cell to be
+rendered with an appropriate image.</li>
+<li><code>spacerColumn</code> when
+set to true causes the column to be rendered as a blank column to
+enhance table spacing.<code><br>
+</code></li>
+<li><code>height </code>specifies
+the height of a column's cells.<code><br>
+</code></li>
+<li><code>width </code>specifies
+the width of a column's cells.<code><br>
+</code></li>
+<li><code>nowrap </code>prevents
+the content of the cell from wrapping to a new line.<br>
+</li>
+</ul>
+<h4 style="color: rgb(0, 0, 0);">Selection Column</h4>
+<span style="color: rgb(0, 0, 0);">To make table rows selectable,
+the first column of the table should display only checkboxes or radio
+buttons that the user clicks to select the row. When you set the <code>selectId</code>
+attribute in the <code>ui:tableColumn</code> tag and include a <code>ui:checkbox</code>
+or <code>ui:radioButton</code> tag as a child of the <code>ui:tableColumn</code></span><span
+style="color: rgb(102, 102, 204);"><span style="color: rgb(0, 0, 0);">
+tag, the first column is rendered
+appropriately.&nbsp; See the</span><a href="#SelectSingleRow"
+style="color: rgb(0, 0, 0);"> Select Single
+Row example </a><span style="color: rgb(0, 0, 0);">for more
+information. </span><br style="color: rgb(0, 0, 0);">
+<br>
+</span>
+<h3>Facets</h3>
+<span style="color: rgb(0, 0, 0);">The </span><code
+style="color: rgb(0, 0, 0);">ui:tableColumn</code><span
+style="color: rgb(0, 0, 0);"> tag supports the following facets,
+which
+allow you to customize the
+layout of the component.</span><br style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<table style="width: 100%; color: rgb(0, 0, 0);" border="1"
+cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;"><span style="font-weight: bold;">Facet
+Name</span><code><br>
+</code></td>
+<td style="vertical-align: top; font-weight: bold;">Table Item
+Implemented by the Facet<br>
+</td>
+</tr>
+<tr>
+<td><code>footer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+</code></td>
+<td>Footer that is displayed at the bottom of the column within
+the group of rows. The footer applies to the column of cells that are
+defined
+by the <code>ui:tableColumn</code>
+tag.&nbsp; This facet can be used to replace the default footer for the
+column.<br>
+</td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td>Header that applies to the column of cells that are defined
+by the <code>ui:tableColumn</code>
+tag. This facet can be used to replace the default header for the
+column. </td>
+</tr>
+<tr>
+<td style="vertical-align: top;"><code>tableFooter<br>
+</code></td>
+<td style="vertical-align: top;">Footer that is displayed at the
+bottom of the table, below the last group of rows, above the Action Bar
+and overall table footer. The table footer content should apply to the
+column for all the groups of rows in the table.&nbsp; This facet can be
+used to replace the default table footer for the
+column. </td>
+</tr>
+</tbody>
+</table>
+<br style="color: rgb(0, 0, 0);">
+<h3 style="color: rgb(0, 0, 0);">Client Side JavaScript
+Functions</h3>
+<span style="color: rgb(0, 0, 0);">See the </span><a
+href="table.html#JavaScript" style="color: rgb(0, 0, 0);"><code>ui:table</code>
+tag's
+JavaScript documentation</a><span style="color: rgb(0, 0, 0);">.&nbsp;
+The same functions are used for the
+<code>ui:tableColumn</code> tag.</span><br>
+<br>
+<h3>Examples
+</h3>
+<span style="color: rgb(0, 0, 0);">The following examples use a
+backing bean called </span><a href="table.html#Example:_TableBean_"
+style="color: rgb(0, 0, 0);">TableBean</a><span
+style="color: rgb(0, 0, 0);">,
+which is shown in the <code>ui:table</code> tag documentation. </span><a
+href="table.html#UtilityClasses" style="color: rgb(0, 0, 0);">Utility
+classes</a><span style="color: rgb(0, 0, 0);"> used in the examples are
+included
+in this page, after the examples.&nbsp;
+Additional examples are shown in the </span><code
+style="color: rgb(0, 0, 0);"><a href="table.html#Examples">ui:table</a></code><span
+style="color: rgb(0, 0, 0);">
+and </span><code style="color: rgb(0, 0, 0);"><a
+href="tableRowGroup.html">ui:tableRowGroup</a></code><span
+style="color: rgb(0, 0, 0);">
+documents.<br>
+<br>
+All examples assume that the <code>ui:table</code> tag is contained
+within an HTML <code>&lt;form&gt;</code> element so that actions can
+submit form data. <br>
+</span><br style="color: rgb(0, 0, 0);">
+<span style="font-weight: bold; color: rgb(0, 0, 0);">Examples in
+this file:<br>
+<br>
+</span>
+<div style="margin-left: 40px; color: rgb(0, 0, 0);"><a
+href="tableColumn.html#SortableTable">Example
+1: Sortable Table</a><br>
+<p><a href="tableColumn.html#SelectSingleRow">Example
+2: Select Single
+Row</a><br>
+</p>
+<p><a href="tableColumn.html#SelectMultipleRows">Example
+3: Select
+Multiple Rows</a><br>
+</p>
+<p><a href="#HiddenSelectedRows">Example 4: Hidden Selected Rows</a><br>
+</p>
+<a href="#SpacerColumn">Example
+5: Spacer Columns</a><br>
+<p><a href="#EmptyCells">Example 6: Empty Cells</a><br>
+</p>
+<p><a href="#EmbeddedActions">Example 7:&nbsp; Embedded Actions</a><br>
+</p>
+<p><a href="#Alarms">Example 8: Alarms</a><br>
+</p>
+<p><a href="#MultiColumnHeaders">Example 9: Multiple Column Headers and
+Footers</a><br>
+</p>
+</div>
+<span style="font-weight: bold; color: rgb(0, 0, 0);">Supporting
+files:</span>
+<div style="margin-left: 40px;">
+<p style="color: rgb(0, 0, 0);"><a href="table.html#Example:_TableBean_">TableBean
+backing bean in <code>ui:table</code> documentation<br>
+</a></p>
+<p><a href="table.html#UtilityClasses" style="color: rgb(0, 0, 0);">Utility
+classes in <code>ui:table</code> documentation</a><a
+href="table.html#UtilityClasses"><span style="color: rgb(0, 0, 0);"> </span><br>
+</a></p>
+</div>
+<h3><a name="SortableTable"></a>Example 1: Sortable Table<br>
+</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example shows how to
+implement table sorting, and uses the </span><a
+href="table.html#Example:_TableBean_" style="color: rgb(0, 0, 0);">TableBean</a><span
+style="color: rgb(0, 0, 0);"> and <a href="table.html#Name.java">Name.java</a>
+code shown in the <code>ui:table</code> documentation. Notice that the
+<code>ui:table</code>
+tag includes the <code>clearSortButton</code> attribute to enable
+users to clear any sorts applied to the table.<br>
+<br>
+The value binding objects that you assign to the <code>sort</code>
+attribute in <code>ui:tableColumn</code> must be the proper data type
+for sorting to work as expected. For example, you should not use String
+objects for numeric data because the digits will be sorted according to
+their ASCII values. Sorting the numbers as strings causes the number 2
+to be displayed before the number 11, for example.&nbsp; Be sure to
+sort using objects such as Number, Character, Date, Boolean, etc.</span><br
+style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);">You can use a FieldKey id or
+value binding to define criteria for sorting the contents of
+TableDataProvider. However, when sorting a column of checkboxes or
+radio buttons, you must use a value binding because values are external
+to the data (i.e., TableDataProvider does not contain FieldKey ids for
+a selected checkbox value).&nbsp; <br>
+<br>
+User interface
+guidelines recommend not setting a default initial sort. However, if
+you want to set a default initial sort, you can do so by using the <code>addSort(SortCriteria)</code>
+method of TableRowGroup. When the table is rendered, the data is sorted
+and the primary sort column is highlighted.&nbsp; </span><br
+style="color: rgb(0, 0, 0);">
+<br style="color: rgb(102, 102, 204);">
+<span style="color: rgb(102, 102, 204);"></span><code>&lt;!-- Sortable
+Table --&gt;<br>
+&lt;ui:table id="table1" <br>
+&nbsp;&nbsp;&nbsp; clearSortButton="true"<br>
+&nbsp;&nbsp;&nbsp; sortPanelToggleButton="true"<br>
+&nbsp;&nbsp;&nbsp; title="Sortable Table"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupB.names}"
+sourceVar="name"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="Last Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowHeader="true"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="last"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="first"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="First Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="first"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="SelectSingleRow"></a>Example 2: Select Single Row</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example shows a column of
+radioButton components that are used to select
+a single table row. Dynamic row highlighting is set by invoking an
+<code>initAllRows()</code> JavaScript function whenever the state of
+the radio button
+changes. The <code>initAllRows()</code>
+function is defined in <a href="#select.js"><code>select.js</code>
+shown below</a>. The
+radio button state is maintained through the <code>selected</code>
+attribute of the
+<code>ui:tableRowGroup</code> tag. This example does not maintain state
+across paginated
+pages.</span><br style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);">Note: UI guidelines recommend
+that items should not remain selected when they cannot be seen by the
+user. Using the
+<code>com.sun.rave.web.ui.event.TableSelectPhaseListener</code> object
+ensures that rows that are hidden from view are
+deselected because the phase listener clears the selected state after
+the
+rendering phase. The <code>TableSelectPhaseListener</code>
+object is used in this example in </span><a
+href="table.html#Select.java" style="color: rgb(0, 0, 0);">Select.java
+in the <code>ui:table</code> documentation</a><span
+style="color: rgb(0, 0, 0);">.&nbsp; Also refer to the JavaDoc
+for <code>TableSelectPhaseListener</code> for more information.&nbsp; </span><br
+style="color: rgb(0, 0, 0);">
+<br>
+<code>&lt;!-- Single Select Row --&gt;<br>
+&lt;ui:table id="table1"<br>
+&nbsp;&nbsp;&nbsp; deselectSingleButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginateButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginationControls="true"<br>
+&nbsp;&nbsp;&nbsp; title="Select Single Row"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selectedState}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupA.names}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceVar="name" rows="5"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+onClick="setTimeout('initAllRows()', 0)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectId="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sort="#{TableBean.groupA.select.selectedState}"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:radioButton id="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; name="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selected}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedValue="#{TableBean.groupA.select.selectedValue}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"
+headerText="Last Name" rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2" alignKey="first"
+headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<br>
+<span style="font-weight: bold;"><a name="select.js"></a>select.js</span><br>
+<br>
+This example shows the contents of the <code>select.js</code> file
+used in the
+example above.<br>
+<br>
+<code>// Use this function to initialize all rows displayed in the
+table when the<br>
+// state of selected components change (i.e., checkboxes or
+radiobuttons used to<br>
+// de/select rows of the table). This functionality requires the
+selectId <br>
+// property of the tableColumn component to be set.<br>
+// <br>
+// Note: Use setTimeout when invoking this function. This will ensure
+that <br>
+// checkboxes and radiobutton are selected immediately, instead of
+waiting for <br>
+// the onClick event to complete. For example: <br>
+//<br>
+// onClick="setTimeout('initAllRows(); disableActions()', 0)"<br>
+function initAllRows() {<br>
+&nbsp;&nbsp;&nbsp; // Disable table actions by default.<br>
+&nbsp;&nbsp;&nbsp; var table = document.getElementById("form1:table1");<br>
+&nbsp;&nbsp;&nbsp; table.initAllRows();<br>
+}</code><br>
+<h3><a name="SelectMultipleRows"></a>Example 3: Select Multiple Rows<br>
+</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example shows a column of
+checkbox components that are used to select multiple table rows.
+Dynamic row highlighting is set by
+invoking an
+<code>initAllRows()</code> JavaScript function whenever the state of
+the checkbox
+changes. The <code>initAllRows()</code>
+function is defined in&nbsp; <a href="#select.js"><code>select.js </code>in
+the previous example</a>. The checkbox state is maintained
+through the <code>selected</code> attribute of the
+<code>ui:tableRowGroup</code> tag. This example does not maintain state
+across paginated
+pages.</span><br style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);"><br>
+Note: UI guidelines recommend
+that items should not remain selected when they cannot be seen by the
+user. Using the
+<code>com.sun.rave.web.ui.event.TableSelectPhaseListener</code> object
+ensures that rows that are hidden from view are
+deselected because the phase listener clears the selected state after
+the
+rendering phase. The <code>TableSelectPhaseListener</code>
+object is used in this example in </span><a
+href="table.html#Select.java" style="color: rgb(0, 0, 0);">Select.java</a><span
+style="color: rgb(0, 0, 0);">,
+shown in the </span><code style="color: rgb(0, 0, 0);">ui:table</code><span
+style="color: rgb(0, 0, 0);"> documentation.&nbsp; Also refer to the
+JavaDoc
+for <code>TableSelectPhaseListener</code> for more information.&nbsp; </span><br>
+<br>
+<code>&lt;!-- Select Multiple Rows --&gt;<br>
+&lt;ui:table id="table1"<br>
+&nbsp;&nbsp;&nbsp; deselectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp; selectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginateButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginationControls="true"<br>
+&nbsp;&nbsp;&nbsp; title="Select Multiple Rows"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selectedState}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupA.names}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceVar="name" rows="5"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectId="select"
+sort="#{TableBean.groupA.select.selectedState}"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:checkbox id="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+onClick="setTimeout('initAllRows()', 0)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selected}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedValue="#{TableBean.groupA.select.selectedValue}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"
+headerText="Last Name" rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2" alignKey="first"
+headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<span style="text-decoration: line-through;"></span>
+<h3><a name="HiddenSelectedRows"></a>Example 4: Hidden Selected Rows<br>
+</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example is the same as <a
+href="#SelectMultipleRows">Example 3: Select Multiple Rows</a> except
+that it maintains state across paginated pages, and shows how to deal
+appropriately with the possibility of hiding rows that have been
+selected.&nbsp; As in the previous example, the first column is a
+column of checkboxes that can be used to select multiple rows. The
+checkbox state is maintained through the <code>selected</code>
+attribute of
+the
+<code>ui:tableRowGroup</code> tag.&nbsp; Dynamic row highlighting is
+set by
+invoking an
+<code>initAllRows()</code> JavaScript function whenever the state of
+the checkbox
+changes. The <code>initAllRows()</code>
+function is defined in&nbsp; <a href="tableColumn.html#select.js"><code>select.js
+</code>in the previous example</a>. </span><br
+style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);">If your table must maintain state,
+you must set the <code>hiddenSelectedRows</code> attribute to true in
+the <code>ui:table</code> tag as shown in this example. The attribute
+causes text to be
+displayed in the table title and footer to indicate the number of
+selected rows that are currently hidden from view.&nbsp; See the </span><a
+href="table.html#Select.java" style="color: rgb(0, 0, 0);">Select.java</a><span
+style="color: rgb(0, 0, 0);">
+</span><span style="color: rgb(102, 102, 204);"><span
+style="color: rgb(0, 0, 0);">utility class in the </span><code
+style="color: rgb(0, 0, 0);">ui:table</code><span
+style="color: rgb(0, 0, 0);">
+documentation.</span></span><br>
+<br>
+<code></code><span
+style="font-weight: bold; text-decoration: line-through;"></span><code>&lt;!--
+Hidden Selected Rows --&gt;<br>
+&lt;ui:table id="table1"<br>
+&nbsp;&nbsp;&nbsp; deselectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp;
+deselectMultipleButtonOnClick="setTimeout('disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp; hiddenSelectedRows="true"<br>
+&nbsp;&nbsp;&nbsp; paginateButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginationControls="true"<br>
+&nbsp;&nbsp;&nbsp; selectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp;
+selectMultipleButtonOnClick="setTimeout('disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp; title="Hidden Selected Rows"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+binding="#{TableBean.groupA.tableRowGroup}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selectedState}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupA.names}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceVar="name" rows="5"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectId="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sort="#{TableBean.groupA.select.selectedState}"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:checkbox id="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+binding="#{TableBean.groupA.checkbox}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+onClick="setTimeout('initAllRows(); disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selected}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedValue="#{TableBean.groupA.select.selectedValue}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"
+headerText="Last Name" rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2" alignKey="first"
+headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+<br>
+&nbsp; &lt;!-- Actions (Top) --&gt;<br>
+&nbsp; &lt;f:facet name="actionsTop"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;f:subview id="actionsTop"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;jsp:include
+page="actionsTop.jsp"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/f:subview&gt;<br>
+&nbsp; &lt;/f:facet&gt;<br>
+<br>
+&nbsp; &lt;!-- Actions (Bottom) --&gt;<br>
+&nbsp; &lt;f:facet name="actionsBottom"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;f:subview id="actionsBottom"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;jsp:include
+page="actionsBottom.jsp"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/f:subview&gt;<br>
+&nbsp; &lt;/f:facet&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="SpacerColumn"></a>Example 5: Spacer Column<br>
+</h3>
+<span style="color: rgb(0, 0, 0);">This example shows how to
+create a blank column to use for spacing in a table. The spacer column
+is especially useful in two-column tables. A property table, which is
+used to display properties for a single object, typically includes two
+data columns. The
+first column identifies the properties of the object, and the second
+column displays the values for each of the properties. Because tables
+created with the <code>ui:table</code> tag expand to the width of the
+browser window, the two data columns might become so wide that the
+properties and their values are not close together, and readability is
+reduced. To solve this problem, you can add a spacer column to one side
+of the table.<br>
+<br>
+In the example, the third column includes the <code>spacerColumn</code>
+attribute set to true, and the <code>width </code>attribute set to
+70%. The column has no header or footer text, and no data. This column
+acts to always keep
+the data
+of the first two columns in close proximity.&nbsp; If a column header
+and footer are required, provide an empty string for the <code>headerText</code>
+and
+<code>footerText</code> attributes. Set the width attribute to a value
+that achieves the desired spacing. </span><br>
+<br>
+<code>&lt;!-- Spacer Column --&gt;<br>
+&lt;ui:table id="table1" title="Spacer Column"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1" <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupB.names}"
+sourceVar="name"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; footerText="Column Footer"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="Last Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="first"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; footerText="Column Footer"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3" spacerColumn="true"
+width="70%"/&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="EmptyCells"></a>Example 6: Empty Cells<br>
+</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example shows how to
+display a theme-specific icon that indicates an empty cell, when
+the content of a table cell is not applicable or is unexpectedly empty.
+UI guidelines
+suggest that the empty cell icon should not be used for a value that is
+truly null, such as an
+empty alarm cell or a comment field that is blank. In addition, the
+icon should not be used for cells that
+contain user interface elements such as checkboxes or drop-down lists
+when these elements are not applicable. Instead, the elements should
+not be displayed so the cell is left empty.</span><br
+style="color: rgb(0, 0, 0);">
+<br style="color: rgb(0, 0, 0);">
+<span style="color: rgb(0, 0, 0);">In this example, the <code>emptyCell
+</code>attribute is set to
+an expression that evaluates to true in every fifth row. In your
+application, it is up to you to decide how to
+test if the cell is truly empty. For example, you could use this
+syntax: <code>emptyCell="#{name.value.last == null}"</code></span><br
+style="color: rgb(0, 0, 0);">
+<code style="color: rgb(102, 102, 204);"></code><code><br>
+&lt;!-- Empty Cells --&gt;<br>
+&lt;ui:table id="table1" title="Empty Cells"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupB.select.selectedState}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupB.names}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceVar="name" rows="5"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+emptyCell="#{name.tableRow.rowId % 5 == 0}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectId="select"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:checkbox id="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+onClick="setTimeout('initAllRows()', 0)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupB.select.selected}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedValue="#{TableBean.groupB.select.selectedValue}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+emptyCell="#{name.tableRow.rowId % 5 == 0}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="Last Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+emptyCell="#{name.tableRow.rowId % 5 == 0}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="first" <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="EmbeddedActions"></a>Example 7: Embedded Actions<br>
+</h3>
+<span style="color: rgb(0, 0, 0);">This example shows how to add
+embedded actions to a table. If the
+</span><code style="color: rgb(0, 0, 0);">ui:tableColumn</code><span
+style="color: rgb(0, 0, 0);"> tag contains more than one tag
+such as&nbsp;</span><code style="color: rgb(0, 0, 0);"></code><code
+style="color: rgb(0, 0, 0);">ui:hyperlink</code><span
+style="color: rgb(0, 0, 0);"> that a</span><code
+style="color: rgb(0, 0, 0);"></code><span style="color: rgb(0, 0, 0);">re
+used as embedded actions, you
+should set the <code>ui:tableColumn</code> tag's </span><code
+style="color: rgb(0, 0, 0);">embeddedActions </code><span
+style="color: rgb(0, 0, 0);">attribute to
+true. This attribute causes an action separator image to be displayed
+between each of the rendered hyperlinks, as recommended in UI
+guidelines.</span><br style="color: rgb(0, 0, 0);">
+<br>
+<code>&lt;!-- Embedded Actions --&gt;<br>
+&lt;ui:table id="table1" title="Embedded Actions"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupB.names}"
+sourceVar="name"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0" embeddedActions="true"
+headerText="Actions"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:hyperlink id="action1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+action="#{TableBean.groupB.actions.action}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text="Action
+1"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;f:param name="param"
+value="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:hyperlink&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:hyperlink id="action2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+action="#{TableBean.groupB.actions.action}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text="Action
+2"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;f:param name="param"
+value="#{name.tableRow.rowId}"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:hyperlink&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"
+headerText="Last Name" rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2" alignKey="first"
+headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="Alarms"></a>Example 8: Alarms<br>
+</h3>
+<span style="text-decoration: line-through;"></span><span
+style="color: rgb(0, 0, 0);">This example shows how to add
+alarms to table data cells. The second </span><code
+style="color: rgb(0, 0, 0);">ui:tableColumn</code><span
+style="color: rgb(0, 0, 0);"> tag includes a </span><code
+style="color: rgb(0, 0, 0);">ui:alarm</code><span
+style="color: rgb(0, 0, 0);"> tag to render the alarm icon. The </span><code
+style="color: rgb(0, 0, 0);">ui:tableColumn</code><span
+style="color: rgb(0, 0, 0);"> tag's </span><code
+style="color: rgb(0, 0, 0);">severity</code><span
+style="color: rgb(0, 0, 0);">&nbsp; attribute is set to true, which
+causes the
+table data cell to appear highlighted according to level of
+severity.&nbsp;
+Note also that the column
+is set to sort on the severity of the alarms. See
+the <a href="table.html#Example:_TableBean_">TableBean</a>
+backing bean
+and&nbsp; </span><a style="color: rgb(0, 0, 0);"
+href="table.html#Name.java">Name.java</a><span
+style="color: rgb(0, 0, 0);"> utlity class example in the </span><code
+style="color: rgb(0, 0, 0);">ui:table</code><span
+style="color: rgb(0, 0, 0);"> documentation for the model data. </span><br
+style="color: rgb(255, 153, 0);">
+<br>
+<code>&lt;!-- Alarms --&gt;<br>
+&lt;ui:table id="table1" title="Alarms"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1" <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupB.names}"
+sourceVar="name"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="Last Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowHeader="true"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="last"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="first"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="First Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+severity="#{name.value.severity}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="alarm"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:alarm id="alarm"
+severity="#{name.value.severity}"/&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><br>
+<h3><a name="MultiColumnHeaders"></a>Example 9: Multiple Column Headers
+&amp; Footers<br>
+</h3>
+This example shows how to use nested tableColumn components to create
+multiple headers and footers. The column header of the parent
+tableColumn component will span the nested tableColumn children. Not
+all attributes are supported in this configuration. Typically, only the
+header, footer, tableFooter, and sort would apply to a header and
+spaning multuple columns. Sorting is supported, but is recommended only
+for tableColumn children. Further, nesting tableColumn components will
+render; however, the styles used here support one level of nexting.<br>
+<br>
+<span style="color: rgb(0, 0, 0);">This example shows how to use
+nested <code>ui:tableColumn</code> tags to create
+multiple headers and footers. The third <code>ui:tableColumn</code>
+(col3) contains four nested columns col3a, col3b, col3c, and col3d. The
+column header specified in col3 spans the four nested columns.&nbsp;
+However, not
+all <code>ui:tableColumn</code></span><span
+style="color: rgb(102, 102, 204);"><span style="color: rgb(0, 0, 0);">
+attributes are supported when the
+tags are nested. Typically, only the
+header, footer, tableFooter, and sort would apply to a header and
+spaning multiple columns. Sorting in the parent tableColumn is
+supported, but for usability, sorting is recommended only for
+tableColumn children. In addition, nesting of more than one level of
+tableColumn components will render, but the CSS styles only support one
+level of nesting.&nbsp;&nbsp;&nbsp;</span>
+<br style="color: rgb(0, 0, 0);">
+</span><br>
+<code>&lt;!-- Multiple Headers &amp;amp; Footers --&gt;<br>
+&lt;ui:table id="table1"<br>
+&nbsp;&nbsp;&nbsp; clearSortButton="true"<br>
+&nbsp;&nbsp;&nbsp; deselectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp;
+deselectMultipleButtonOnClick="setTimeout('disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp; footerText="Table Footer"<br>
+&nbsp;&nbsp;&nbsp; paginateButton="true"<br>
+&nbsp;&nbsp;&nbsp; paginationControls="true"<br>
+&nbsp;&nbsp;&nbsp; selectMultipleButton="true"<br>
+&nbsp;&nbsp;&nbsp;
+selectMultipleButtonOnClick="setTimeout('disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp; sortPanelToggleButton="true"<br>
+&nbsp;&nbsp;&nbsp; title="Multiple Headers &amp;amp; Footers"&gt;<br>
+&nbsp; &lt;ui:tableRowGroup id="rowGroup1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+binding="#{TableBean.groupA.tableRowGroup}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+rows="#{TableBean.groupA.preferences.rows}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selectedState}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceData="#{TableBean.groupA.names}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sourceVar="name"&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col0"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectId="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sort="#{TableBean.groupA.select.selectedState}"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:checkbox id="select"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+onClick="setTimeout('initAllRows(); disableActions()', 0)"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected="#{TableBean.groupA.select.selected}"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedValue="#{TableBean.groupA.select.selectedValue}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col1"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="Last Name"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowHeader="true"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.last}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col2"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alignKey="first"
+headerText="First Name"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="#{name.value.first}"/&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3" headerText="Task
+Status"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- Nested Columns --&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3a"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="A"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+footerText="ColFtrA"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="last"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sortIcon="ALARM_CRITICAL_MEDIUM"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tableFooterText="TblFtrA"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="a"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3b"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="B"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+footerText="ColFtrB"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort="first"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sortIcon="ALARM_MAJOR_MEDIUM"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tableFooterText="TblFtrB"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="b"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3c"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="C"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+footerText="ColFtrC"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sortIcon="ALARM_MINOR_MEDIUM"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tableFooterText="TblFtrC"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="c"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:tableColumn id="col3d"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText="D"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+footerText="ColFtrD"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sortIcon="ALARM_DOWN_MEDIUM"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tableFooterText="TblFtrD"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ui:staticText
+text="d"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/ui:tableColumn&gt;<br>
+&nbsp; &lt;/ui:tableRowGroup&gt;<br>
+&lt;/ui:table&gt;</code><span style="font-family: monospace;"></span><br>
+<h3 style="color: rgb(0, 0, 0);">faces_config.xml Entry for
+Managed Beans</h3>
+<span style="color: rgb(0, 0, 0);">The examples use the <a
+href="table.html#Example:_TableBean_">TableBean</a>
+managed bean, which requires the following entry to be added to the </span><code
+style="color: rgb(0, 0, 0);">faces_config.xml</code><span
+style="color: rgb(0, 0, 0);"> file. </span><br>
+<br>
+<code>&lt;!DOCTYPE faces-config PUBLIC <br>
+&nbsp;&nbsp;&nbsp; '-//Sun Microsystems, Inc.//DTD JavaServer Faces
+Config 1.0//EN' <br>
+&nbsp;&nbsp;&nbsp; 'http://java.sun.com/dtd/web-facesconfig_1_1.dtd'&gt;<br>
+<br>
+&lt;faces-config&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;managed-bean&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;description&gt;The
+backing bean for the table example&lt;/description&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;managed-bean-name&gt;TableBean&lt;/managed-bean-name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;managed-bean-class&gt;table.TableBean&lt;/managed-bean-class&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;managed-bean-scope&gt;session&lt;/managed-bean-scope&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/managed-bean&gt;<br>
+&lt;/faces-config&gt;</code>
+<br>
+    ]]>
+  </description>
+
+  <component-family>com.sun.rave.web.ui.TableColumn</component-family>
+  <renderer-type>com.sun.rave.web.ui.TableColumn</renderer-type>
+
+  <attribute>
+    <attribute-name>abbr</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>axis</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>bgColor</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <description><![CDATA[
+The binding attribute is used to configure the component through Java code. 
+This approach is intended for advanced uses, when the tag attributes cannot 
+provide the desired output. The value of the binding attribute must be a 
+JavaServer Faces EL expression that resolves to a backing bean, or to a 
+backing bean property of type <code>com.sun.rave.web.ui.component.TableColumn</code>. 
+You must assign a component id to the component instance.
+    ]]></description>
+    <attribute-name>binding</attribute-name>
+  </attribute>
+
+  <attribute>
+    <attribute-name>char</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>charOff</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>colSpan</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>headers</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>rowSpan</attribute-name>
+    <attribute-extension>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <instance-name>tableColumn</instance-name>
+    <tag-name>tableColumn</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

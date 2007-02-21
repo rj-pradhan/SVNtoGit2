@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<h3>NOT FOR DEVELOPER USE - base renderer class for ui:calendar and ui:scheduler</h3>
+
+  ]]></description>
+
+  <component-family>com.sun.rave.web.ui.CalendarMonth</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.CalendarMonth</renderer-type>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension/>
+
+</renderer>

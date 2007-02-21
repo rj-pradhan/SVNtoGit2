@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Represents a Property
+    ]]></description>
+
+  <display-name>Property</display-name>
+
+  <component-type>com.sun.rave.web.ui.Property</component-type>
+
+  <property>
+    <description>
+	  The help text will appear below the content of the "property".
+	  Optionally, the helpText may also be provided as a facet named
+	  "helpText".  This allows advanced users to have more control over
+	  the types of content provided in the helpText area.
+      </description>
+    <display-name>Help Text</display-name>
+    <property-name>helpText</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Help text to appear below the Property component</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+	Use this attribute to specify the text of the label of this
+      property. The <code>for</code> attribute of the label will be
+      the first input element in the content area of this component. 
+      To label a different component, use the label facet instead.]]> 
+      </description>
+    <display-name>Label</display-name>
+    <property-name>label</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Set the text to be displayed as the label for the first input
+          element contained in the Property component
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	Specifies the label alignment for the label of this component.  The
+	label itself may be added via the label property or the label facet.
+	The value will typically be "left" or "right".
+      </description>
+    <display-name>Label Alignment</display-name>
+    <property-name>labelAlign</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Indicates if the position of the label relative to the component
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	Specifies if the label component should not wrap.  The label itself
+	may be added via the label property or the label facet.
+      </description>
+    <display-name>Label No-Wrap</display-name>
+    <property-name>noWrap</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Specifies whether the label component should not wrap</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	  This indicates whether the property should overlap into the label
+	  area or not.  Default: false -- do not extend into the label area.
+      </description>
+    <display-name>Overlap Label</display-name>
+    <property-name>overlapLabel</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Indicates whether the property should overlap into the label area
+      </short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  
+  &disabled-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Template</base-component-type>
+    <component-family>com.sun.rave.web.ui.Property</component-family>
+    <renderer-type>com.sun.rave.web.ui.Property</renderer-type>
+  </component-extension>
+
+</component>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+    Use this tag to render references to theme resource files on a
+    page where the <code>ui:head</code> component cannot be used. 
+
+    <h3>Configuring the <code>ui:themeLinks</code> Tag</h3>
+
+<p>If no attributes are specified, the component renders a
+    <code>link</code> to the CSS stylesheet class(es) and a
+    <code>script</code> element with a reference to the JavaScript
+    functions definition file required by the Sun Java Web UI
+    Components. </p> 
+
+<p>To suppress rendering of the <code>script</code> element, set the 
+<code>javaScript</code> attribute value to false. </p> 
+
+<p>To suppress rendering of the <code>link</code> element, set the 
+<code>styleSheet</code> attribute value to false. </p> 
+
+<p>To render a style element with an inline import of the stylesheet
+    definitions, set the 
+<code>styleSheetInline</code> attribute value to true. </p> 
+
+    <h3>Example</h3>
+
+<pre> 
+&lt;head&gt;
+&lt;title&gt;ThemeLinks test&lt;/title&gt;
+&lt;ui:themeLinks styleSheetInline="true"/&gt;
+&lt;/head&gt;
+</pre> 
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.ThemeLinks</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.ThemeLinks</renderer-type>
+
+  &binding-attrs;
+
+  <renderer-extension>
+    <tag-name>themeLinks</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

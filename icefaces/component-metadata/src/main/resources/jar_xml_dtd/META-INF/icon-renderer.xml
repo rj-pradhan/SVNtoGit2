@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+<p>Use the <code>ui:icon</code> tag to display a theme-specific image in the 
+rendered HTML page. The icon attribute used in the <code>ui:icon</code> tag is 
+a key value that is mapped to a URL in theme properties file. The key is used 
+to look up the appropriate image source and related attributes from the current
+theme. By specifying a key, you avoid the need to specify predefined constants 
+such as height and width. The image can also be seamlessly changed when a 
+different theme is selected.</p>
+<p>Note: currently the list of icons that you can use is not publicly 
+supported, but the icon names are specified in the 
+<code>/com/sun/rave/web/ui/suntheme/SunTheme.properties</code> file. The names are 
+listed as resource keys of the format <code>image.ICON_NAME</code>. Use only 
+the part of the key that follows image. For example, if the key is 
+<code>image.ALARM_CRITICAL_SMALL</code>, you should specify 
+<code>ALARM_CRITICAL_SMALL</code> as the value of the icon attribute of the 
+<code>ui:icon</code> tag. A list of supported icon values will be published in
+the near future.<br>
+<h3>HTML Elements and Layout</h3>
+The rendered HTML page displays an XHTML compliant <code>&lt;img&gt;</code>
+element with any applicable element attributes. Some attributes are determined 
+by the theme, and others can be specified through the <code>ui:icon</code> tag 
+attributes.<br>
+<h3>Theme Identifiers</h3>
+TBD.
+<h3>Client Side Javascript Functions</h3>
+None.
+<br>
+<h3>Examples</h3>
+<h4>Example 1: Create an icon</h4>
+<code>&lt;ui:icon icon="ALARM_CRITICAL_SMALL" /&gt;
+<br>
+<br>
+</code>This will generate the following img element: <br>
+&nbsp;&nbsp; <br>
+<code>&lt;img src="com_sun_rave_web_ui/images/alarms/alarm_critical_small.gif" height="10" width="10" /&gt;
+</code><br>
+
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Icon</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Icon</renderer-type>
+
+  <renderer-extension/>
+
+</renderer>

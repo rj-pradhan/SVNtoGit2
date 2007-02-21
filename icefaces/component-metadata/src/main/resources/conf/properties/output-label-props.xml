@@ -1,0 +1,17 @@
+<?xml encoding='UTF-8'?>
+
+    <property>
+      <property-name>for</property-name>
+      <property-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            &chooseOneReferenceDataEditor;
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.COMPONENT_IDS
+            </expression>
+          </named-value>
+      </property-extension>
+    </property>

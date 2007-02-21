@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<property>
+	<description>
+		Set the visibility of this component. When false CSS style is
+		set to display:none
+	</description>
+	<property-name>visible</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>

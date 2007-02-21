@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	    <description>
+          <![CDATA[<p> The treeNode tag provides the template that be applied in rendering each node in the
+            backing data model. The treeNode tag supports two facets: the icon facet and the content facet. The icon facet is 
+            intended to contain a graphic image that will serve as the icon for the node it represents. This 
+            image can be customized for each node, or default icons for leaf nodes, expand branch nodes, and contracted 
+            branch nodes will be used. The content facet can contain any collection of components. For each node in the tree's backing 
+            data model, the child components of the two facets will be rendered with state retrieved from the
+            data model as configured in the JSP by the application developer.<br> ]]>
+        </description>
+	</description>
+	<component-family>com.icesoft.faces.TreeNode</component-family>
+	<renderer-type>com.icesoft.faces.View</renderer-type>
+
+	<renderer-extension>
+		<instance-name>treeNode</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>treeNode</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

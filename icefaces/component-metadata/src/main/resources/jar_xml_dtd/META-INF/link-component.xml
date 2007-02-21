@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+     An implementation of the HTML link tag. 
+  </description>
+
+  <display-name>Link</display-name>
+
+  <component-type>com.sun.rave.web.ui.Link</component-type>
+
+  <property>
+    <description>
+        Defines the character encoding (charset) of the target URL. Default 
+        value is "ISO-8859-1".
+      </description>
+    <display-name>Charset</display-name>
+    <property-name>charset</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Defines the character encoding (charset) of the target URL
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Specifies the type of display device for which the referenced document 
+        is designed.  The media attribute is useful for specifying different 
+        stylesheets for print and viewing on a screen.  The default value is 
+        "screen".
+      </description>
+    <display-name>Media Type</display-name>
+    <property-name>media</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          The type of display device for which the referenced document is designed
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         The absolute or relative target URL of the resource.
+      </description>
+    <display-name>URL</display-name>
+    <property-name>url</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Defines the ISO language code of the human language used in the target 
+        URL file. For example, valid values might be en, fr, es.  
+      </description>
+    <display-name>URL Language</display-name>
+    <property-name>urlLang</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          The ISO language code of the human language used by the target page
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Defines the relationship between the current document and the 
+         targeted document. Default is "stylesheet". Other possible values 
+         are described at w3.org.
+      </description>
+    <display-name>Rel</display-name>
+    <property-name>rel</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>"stylesheet"</default-value>
+      <short-description>
+          Defines the relationship between the current page and the target page
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Specifies the MIME type of the target resource.  Default is: "text/css"
+      </description>
+    <display-name>Mime type</display-name>
+    <property-name>type</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <default-value>"text/css"</default-value>
+      <is-bindable>true</is-bindable>
+      <short-description>The MIME type of the target resource</short-description>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Link</component-family>
+    <renderer-type>com.sun.rave.web.ui.Link</renderer-type>
+  </component-extension>
+
+</component>

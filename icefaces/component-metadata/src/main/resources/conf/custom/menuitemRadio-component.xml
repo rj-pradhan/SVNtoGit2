@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+  </description>
+
+  <display-name>Menu Item Radio</display-name>
+  <component-type>com.icesoft.faces.MenuNodeRadio</component-type>
+
+&ice-cust-menunodeRadio-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Command</base-component-type>
+    <component-family>com.icesoft.faces.MenuNodeRadio</component-family>
+    <renderer-type>com.icesoft.faces.View</renderer-type>
+  </component-extension>
+
+</component>

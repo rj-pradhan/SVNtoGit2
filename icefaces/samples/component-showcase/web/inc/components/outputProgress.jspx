@@ -1,0 +1,225 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration ice:outputProgress is manipulated by the following
+coontrols
+to show how the progress bars status label and complete message can be
+dynamically changed.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid styleClass="contentLayoutGridStyle"
+               columnClasses="contentLayoutGridColumn" columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Controls to show/hide the table columns
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<ice:panelGrid columns="1" cellspacing="2"
+               styleClass="componentLayoutRootTable">
+
+<ice:panelGrid columns="2" styleClass="formBorderHighlight"
+               style="width:550px;">
+    <ice:panelGroup>
+
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.progressBar.demo.selectMode']}"/>
+        </h3>
+        <ice:selectOneRadio value="#{progressProperty.mode}"
+                            partialSubmit="true">
+
+            <f:selectItem itemValue="standard" itemLabel="Standard"/>
+            <f:selectItem itemValue="indeterminate"
+                          itemLabel="Indeterminate"/>
+        </ice:selectOneRadio>
+        <br/>
+    </ice:panelGroup>
+
+    <!-- grouping border decoration -->
+    <ice:panelGroup>
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.progressBar.labelAlign']}"/>
+        </h3>
+        <!-- Controls the progress bar label alignment -->
+        <!-- |left | right | top | topcenter | topright | bottom | bottomcenter | bottomright | embed | -->
+
+        <ice:selectOneMenu value="top"
+                           valueChangeListener="#{progressProperty.progressPositionChanged}"
+                           partialSubmit="true"
+                           styleClass="progressSelectMenu">
+            <f:selectItem itemValue="embed"
+                          itemLabel="#{msgs['component.progressBar.embed']}"/>
+            <f:selectItem itemValue="left"
+                          itemLabel="#{msgs['component.progressBar.left']}"/>
+            <f:selectItem itemValue="right"
+                          itemLabel="#{msgs['component.progressBar.right']}"/>
+            <f:selectItem itemValue="top"
+                          itemLabel="#{msgs['component.progressBar.top']}"/>
+            <f:selectItem itemValue="bottom"
+                          itemLabel="#{msgs['component.progressBar.bottom']}"/>
+
+            <f:selectItem itemValue="topcenter"
+                          itemLabel="#{msgs['component.progressBar.topCenter']}"/>
+            <f:selectItem itemValue="topright"
+                          itemLabel="#{msgs['component.progressBar.topRight']}"/>
+            <f:selectItem itemValue="bottomcenter"
+                          itemLabel="#{msgs['component.progressBar.bottomCenter']}"/>
+            <f:selectItem itemValue="bottomright"
+                          itemLabel="#{msgs['component.progressBar.bottomRight']}"/>
+        </ice:selectOneMenu>
+        <br/>
+    </ice:panelGroup>
+
+
+    <ice:panelGroup>
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.progressBar.label']}"/>
+        </h3>
+        <!--
+            Controls the progress bar label, if no label is specified
+            a percent is shown, otherwise the custom label is shown.
+        -->
+        <ice:selectBooleanCheckbox value="#{progressProperty.customProgress}"
+                                   partialSubmit="true"/>
+
+        <ice:inputText value="#{progressProperty.progressLabel}"
+                       partialSubmit="true"/>
+    </ice:panelGroup>
+
+
+    <ice:panelGroup>
+        <!-- grouping border decoration -->
+
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.progressBar.labelComplete']}"/>
+        </h3>
+        <!--
+            Controls the progress bar completed label, if no label is specified
+            "Done" is shown.
+        -->
+        <ice:selectBooleanCheckbox value="#{progressProperty.customComplete}"
+                                   partialSubmit="true"/>
+
+
+        <ice:inputText value="#{progressProperty.progressCompleteLabel}"
+                       partialSubmit="true"/>
+    </ice:panelGroup>
+
+</ice:panelGrid>
+
+<ice:panelGrid styleClass="formBorderHighlight"
+               style="width:550px; height:105px;">
+
+    <ice:panelStack selectedPanel="#{progressProperty.mode}"
+                    style="width: 100%; height: 100%;">
+
+        <!-- Standard Mode -->
+        <ice:panelGroup id="standard" style="width: 100%; height: 100%;">
+            <ice:panelGrid columns="1" rows="3">
+                <ice:outputText
+                        value="#{msgs['component.progressBar.demo.content']}"
+                        style="font-weight: bold;"/>
+
+                <ice:outputProgress
+                        value="#{progress.percent}"
+                        label="#{progressProperty.progressLabelAfter}"
+                        labelComplete="#{progressProperty.progressCompleteLabelAfter}"
+                        labelPosition="#{progressProperty.labelPosition}"
+                        binding="#{progress.progressBar}"/>
+
+                <ice:commandButton actionListener="#{progress.start}"
+                                   value="#{msgs['component.progressBar.startButton']}"
+                                   disabled="#{progress.disableStartButton}"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- Indeterminate Mode -->
+        <ice:panelGroup id="indeterminate" style="width: 100%; height: 100%;">
+
+            <ice:panelGrid columns="1" rows="3">
+                <ice:outputText
+                        value="#{msgs['component.progressBar.demo.content2']}"
+                        style="font-weight: bold;"/>
+
+                <ice:outputProgress
+                        indeterminate="true"
+                        label="#{progressProperty.progressLabelAfter}"
+                        labelComplete="#{progressProperty.progressCompleteLabelAfter}"
+                        labelPosition="#{progressProperty.labelPosition}"
+                        value="#{progressIndeterminate.percent}"/>
+
+                <ice:commandButton
+                        actionListener="#{progressIndeterminate.longOperation}"
+                        value="#{msgs['component.progressBar.startButton']}"
+                        disabled="#{progressIndeterminate.runningTask}"/>
+
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+    </ice:panelStack>
+</ice:panelGrid>
+
+</ice:panelGrid>
+</ice:panelTab>
+
+<!--
+  The bean is responsible for streaming html documentation to
+   this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/outputProgressDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/components/outputProgress.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+</ice:panelGrid>
+</ice:form>

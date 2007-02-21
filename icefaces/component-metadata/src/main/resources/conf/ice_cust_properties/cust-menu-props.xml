@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-style-props;
+&uicommand-props;
+
+<property>
+    <description>
+        Defines whether the submenus of the top-level menu items appear
+        beside or below the top-level menu items. Horizontal (default)
+        and Vertical menu orientations.
+    </description>
+    <property-name>orientation</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[Set directory for location of the tree images.
+            Default directory is xmlhttp/css/xp/css-images/ which is include in the icefaces.jar.]]>
+    </description>
+    <property-name>imageDir</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[If true, this component will not rendered icons and icon spacers in menuItems.
+        The default is false. By default icons are rendered.]]>
+    </description>
+    <property-name>noIcons</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

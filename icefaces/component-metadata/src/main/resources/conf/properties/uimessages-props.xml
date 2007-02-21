@@ -1,0 +1,26 @@
+<?xml encoding='UTF-8'?>
+
+
+
+      &uicomponent-props;
+
+      <property>
+        <property-name>globalOnly</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>showDetail</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>showSummary</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>

@@ -1,0 +1,29 @@
+<?xml encoding='UTF-8'?>
+<!-- The disabled & enabledOnUserRole attributes works together -->
+<property>
+	<description>
+		If user is in given role, this component will be rendered
+		normally. If not, the component will be in disabled state.
+	</description>
+	<property-name>enabledOnUserRole</property-name>
+
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_ADVANCED</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Flag indicating that this element must never receive focus or be included 
+		in a subsequent submit.
+	</description>
+	<property-name>disabled</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+	</property-extension>
+</property>

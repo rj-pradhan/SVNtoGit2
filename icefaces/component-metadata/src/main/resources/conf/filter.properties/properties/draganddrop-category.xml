@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<property>
+	<description>draggable</description>
+	<property-name>draggable</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dragListener</description>
+	<property-name>dragListener</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dragMask</description>
+	<property-name>dragMask</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dragOptions</description>
+	<property-name>dragOptions</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dragValue</description>
+	<property-name>dragValue</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dropListener</description>
+	<property-name>dragListener</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dropMask</description>
+	<property-name>dragMask</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dropTarget</description>
+	<property-name>dragTargedt</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+<property>
+	<description>dropValue</description>
+	<property-name>dragValue</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>DRAGANDDROP</category>
+	</property-extension>
+</property>
+
+
+
+
+
+

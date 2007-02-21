@@ -1,0 +1,143 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ The contents of this file are subject to the terms
+ of the Common Development and Distribution License
+ (the License). You may not use this file except in
+ compliance with the License.
+ 
+ You can obtain a copy of the License at
+ https://javaserverfaces.dev.java.net/CDDL.html or
+ legal/CDDLv1.0.txt. 
+ See the License for the specific language governing
+ permission and limitations under the License.
+ 
+ When distributing Covered Code, include this CDDL
+ Header Notice in each file and include the License file
+ at legal/CDDLv1.0.txt.    
+ If applicable, add the following below the CDDL Header,
+ with the fields enclosed by brackets [] replaced by
+ your own identifying information:
+ "Portions Copyrighted [year] [name of copyright owner]"
+ 
+ [Name of File] [ver.__] [Date]
+ 
+ Copyright 2006 Sun Microsystems Inc. All Rights Reserved
+-->
+
+
+<!-- ========== Message+Message Attributes ================================= -->
+
+
+<!-- template
+
+      <attribute>
+        <description>
+        </description>
+        <display-name></display-name>
+        <icon></icon>
+        <attribute-name></attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+
+-->
+
+      <attribute>
+        <description>
+          CSS style class to apply to any message
+          with a severity class of "ERROR".
+        </description>
+        <display-name>Error Class</display-name>
+        <icon></icon>
+        <attribute-name>errorClass</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style(s) to apply to any message
+          with a severity class of "ERROR".
+        </description>
+        <display-name>Error Styles</display-name>
+        <icon></icon>
+        <attribute-name>errorStyle</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style class to apply to any message
+          with a severity class of "FATAL".
+        </description>
+        <display-name>Fatal Class</display-name>
+        <icon></icon>
+        <attribute-name>fatalClass</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style(s) to apply to any message
+          with a severity class of "FATAL".
+        </description>
+        <display-name>Fatal Styles</display-name>
+        <icon></icon>
+        <attribute-name>fatalStyle</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style class to apply to any message
+          with a severity class of "INFO".
+        </description>
+        <display-name>Info Class</display-name>
+        <icon></icon>
+        <attribute-name>infoClass</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style(s) to apply to any message
+          with a severity class of "INFO".
+        </description>
+        <display-name>Info Styles</display-name>
+        <icon></icon>
+        <attribute-name>infoStyle</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          Flag indicating whether the detail portion of the
+          message should be displayed as a tooltip.
+        </description>
+        <display-name>Tooltip</display-name>
+        <icon></icon>
+        <attribute-name>tooltip</attribute-name>
+        <attribute-class>boolean</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style class to apply to any message
+          with a severity class of "WARN".
+        </description>
+        <display-name>Warning Class</display-name>
+        <icon></icon>
+        <attribute-name>warnClass</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      
+      <attribute>
+        <description>
+          CSS style(s) to apply to any message
+          with a severity class of "WARN".
+        </description>
+        <display-name>Warning Styles</display-name>
+        <icon></icon>
+        <attribute-name>warnStyle</attribute-name>
+        <attribute-class>java.lang.String</attribute-class>
+      </attribute>
+      

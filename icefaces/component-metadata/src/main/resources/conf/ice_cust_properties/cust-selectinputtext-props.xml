@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--todo -->
+&ice-inputText-props;
+&ice-att-autoComplete-props;
+
+<property>
+	<description>
+		The number of rows to display, starting with the one identified
+		by the "first" property. If this value is set to zero, all
+		available rows in the underlying data model will be displayed.
+	</description>
+	<display-name>Rows To Display</display-name>
+	<icon></icon>
+	<property-name>rows</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<!--  width attribute  drop down list, not pass through attribute-->
+<property>
+	<description>
+		Sets the width of both, inputText and associated drop down list.
+	</description>
+	<display-name>Table Width</display-name>
+	<icon></icon>
+	<property-name>width</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		Name of a request-scope attribute under which the model data for
+		the row selected by the current value of the "rowIndex" property
+		(i.e. also the current value of the "rowData" property) will be
+		exposed.
+	</description>
+	<display-name>list var</display-name>
+	<icon></icon>
+	<property-name>listVar</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&valueBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>The list of selectItem components.</description>
+	<display-name>selectItem component list</display-name>
+	<icon></icon>
+	<property-name>listValue</property-name>
+	<property-class>java.util.List</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+

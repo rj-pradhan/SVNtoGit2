@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p>Render an HTML option list.</p><p><a name="decode">Decode Behavior</a></p><ul><p>See the <a href="javax.faces.SelectManyjavax.faces.Listbox.html#decodeMany">"Decode
+          Behavior for UISelectMany Components"</a> section.</p></ul><p>Encode Behavior</p><ul><p>Render an HTML "select" element.  Render the clientId of
+          the component as the value of the "name" attribute.  If the "styleClass" 
+          attribute is specified, render its value as the value of the "class" 
+          attribute on the "select" element. If the component
+          to be rendered is a UISelectMany, render "true" as the value of
+          the "multiple" attribute.  Render "1" as the value of the "size"
+          attribute.  See the <a href="javax.faces.SelectManyjavax.faces.Listbox.html#options">"Rendering the option
+          elements" </a> specification for <code>ListboxRenderer</code> for
+          more detail on how to render the "option" elements in this
+          renderer.</p></ul>]]>
+	</description>
+	<component-family>javax.faces.SelectMany</component-family>
+
+	<renderer-type>com.icesoft.faces.Menu</renderer-type>
+
+	<renderer-extension>
+		<instance-name>selectManyMenu</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>selectManyMenu</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

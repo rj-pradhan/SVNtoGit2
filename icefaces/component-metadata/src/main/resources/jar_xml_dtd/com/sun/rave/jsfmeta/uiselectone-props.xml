@@ -1,0 +1,25 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!-- ========== UISelectOne Properties ===================================== -->
+
+
+      &uiinput-props;
+
+      <property>
+        <property-name>disabledClass</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>enabledClass</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>

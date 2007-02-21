@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+	An image or icon
+	</description>
+
+	<display-name>Graphic Image</display-name>
+	<component-type>com.icesoft.faces.HtmlGraphicImage</component-type>
+
+	&ice-graphicImage-props;
+	
+	<component-extension>
+		<base-component-type>javax.faces.HtmlGraphicImage</base-component-type>
+		<component-family>javax.faces.Graphic</component-family>
+		<renderer-type>com.icesoft.faces.Image</renderer-type>
+	</component-extension>
+
+</component>

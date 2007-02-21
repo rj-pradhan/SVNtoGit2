@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+      <attribute>
+        <attribute-name>id</attribute-name>
+        <attribute-extension>
+          <is-bindable>false</is-bindable>
+          <is-hidden>true</is-hidden>
+        </attribute-extension>
+      </attribute>
+
+      <attribute>
+        <attribute-name>binding</attribute-name>
+        <attribute-extension>
+          <is-bindable>false</is-bindable>
+          <is-hidden>true</is-hidden>
+        </attribute-extension>
+      </attribute>
+
+      <attribute>
+        <attribute-name>rendered</attribute-name>
+        <attribute-extension>
+          <category>ADVANCED</category>
+        </attribute-extension>
+      </attribute>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-att-userrole-rendered-props;
+&core-props;
+&uipanel-props;
+
+<property>
+	<description>Id of the child to be rendered.</description>
+	<property-name>selectedPanel</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>

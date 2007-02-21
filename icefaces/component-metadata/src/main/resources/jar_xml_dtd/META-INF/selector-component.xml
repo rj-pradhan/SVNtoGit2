@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+    Base component for UI components that allow the user to make a
+    selection from a set of options. 
+    ]]></description>
+
+  <display-name>Selector</display-name>
+
+  <component-type>com.sun.rave.web.ui.Selector</component-type>
+
+  <property>
+    <description>
+             The object that represents the selections made from the
+             available options. If multiple selections are allowed, this
+             must be bound to ArrayList, an Object array, or an array of
+             primitives.  
+         </description>
+    <display-name>Selected</display-name>
+    <property-name>selected</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <alias-for>value</alias-for>
+      <is-bindable>true</is-bindable>
+      <short-description>The object that represents the selected value or values</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Specifies the options that the web application user can choose
+         from. The value must be one of an array, Map or Collection
+         whose members are all subclasses of
+         &lt;code&gt;com.sun.rave.web.ui.model.Option&lt;/code&gt;.  
+         </description>
+    <display-name>Items</display-name>
+    <property-name>items</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>The object that represents the options from which the user can select</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      If set, a label is rendered adjacent to the component with the
+      value of this attribute as the label text.
+      </description>
+    <display-name>Label</display-name>
+    <property-name>label</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Label for the component</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Sets the style level for the generated label, provided the
+      label attribute has been set. Valid values are 1 (largest), 2 and
+      3 (smallest). The default value is 2.
+      </description>
+    <display-name>Label Level</display-name>
+    <property-name>labelLevel</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <default-value>2</default-value>
+      <is-bindable>true</is-bindable>
+      <short-description>Set the style for the label property</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      If this attribute is set to true, the value of the component is
+      rendered as text, preceded by the label if one was defined. 
+      </description>
+    <display-name>Read-only</display-name>
+    <property-name>readOnly</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  
+  &disabled-props;
+
+  &onChange-props;
+
+  &onClickXXX-props;
+
+  &onFocusXXX-props;
+
+  &onKeyXXX-props;
+
+  &onMouseXXX-props;
+
+  &onSelect-props;
+
+  &tabIndex-props;
+
+  &toolTip-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Input</base-component-type>
+    <component-family>com.sun.rave.web.ui.Selector</component-family>
+    <is-hidden>true</is-hidden>
+    <renderer-type>com.sun.rave.web.ui.Selector</renderer-type>
+  </component-extension>
+
+</component>

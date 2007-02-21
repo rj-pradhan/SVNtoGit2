@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<property>
+	<description>
+		Enable component to perform partial submit.
+	</description>
+	<property-name>partialSubmit</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+	</property-extension>
+</property>

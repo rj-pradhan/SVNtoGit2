@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Provides a paginated view and navigation facets for a DataTable
+	</description>
+
+	<display-name>Data Paginator</display-name>
+	<component-type>com.icesoft.faces.DataScroller</component-type>
+
+	&ice-cust-datapaginator-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.DataScroller</renderer-type>
+	</component-extension>
+</component>

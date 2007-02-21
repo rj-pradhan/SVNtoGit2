@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	<![CDATA[<p>The panelTabSet is a container component which itself contains one or more panelTab
+            components, which are  also container components. The panelTabSet component displays the "active"
+            panelTab, hiding the contents of the others. Users can select which panelTab to make visible by 
+            clicking on the tab header of the panelTab that they want to display.<br>
+            The panelTabSet component can be used in cases where a file-tab navigation interface is appropriate.]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+
+	<renderer-type>com.icesoft.faces.TabbedPane</renderer-type>
+
+	<renderer-extension>
+		<instance-name>panelTabSet</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelTabSet</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

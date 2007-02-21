@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+TODO
+	</description>
+
+	<display-name>UISeries</display-name>
+	<component-type>com.icesoft.faces.series</component-type>
+
+	&ice-cust-panelSeries-props;
+
+<!--  PanelSeries with com.icesoft.faces.HtmlPanelGroup -->
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlDataTable
+		</base-component-type>
+		<component-family>javax.faces.Data</component-family>
+		<renderer-type>
+			com.icesoft.faces.seriesRenderer
+		</renderer-type>
+	</component-extension>
+
+</component>

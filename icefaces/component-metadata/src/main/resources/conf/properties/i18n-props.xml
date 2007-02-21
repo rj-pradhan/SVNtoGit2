@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<property>
+	<description>
+		Direction indication for text that does not inherit
+		directionality. Valid values are "LTR" (left-to-right) and "RTL"
+		(right-to-left).
+	</description>
+	<property-name>dir</property-name>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&chooseOneReferenceDataEditor;
+		</editor-class>
+		<named-value>
+			<name>referenceDataDefiner</name>
+			<expression>
+				com.sun.jsfcl.std.reference.ReferenceDataManager.TEXT_DIRECTIONS
+			</expression>
+		</named-value>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Code describing the language used in the generated markup for
+		this component.
+	</description>
+	<property-name>lang</property-name>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&chooseOneReferenceDataEditor;
+		</editor-class>
+		<named-value>
+			<name>referenceDataDefiner</name>
+			<expression>
+				com.sun.jsfcl.std.reference.ReferenceDataManager.LANGUAGE_CODES
+			</expression>
+		</named-value>
+	</property-extension>
+</property>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+Use the <code>ui:legend</code>
+tag to display legend, typically at the top of a page.
+<br>
+The legend tag has one facet:<br>
+&nbsp;&nbsp;&nbsp;<code>legendImage</code> - this allows the developer to place their own image and/or text in the legend.<br>
+<h3>HTML Elements and Layout</h3>
+A legend consists of an icon/image followed by explanatory text describing the icon/image.
+<h3>Client Side Javascript Functions</h3>
+none.
+<h3>Examples</h3>
+<b>Example 1: An example showing the default (indicates required field) legend:</b> <br>
+<code>
+&lt;ui:legend id="legend1" /&gt;
+</code>
+<br><br>
+<b>Example 2: An example showing a custom icon, text, styles:</b> <br>
+<pre>
+<code>&lt;ui:legend id="legend2" text="Critical Alarms" 
+&nbsp;&nbsp;&nbsp;&nbsp;style="position: absolute; left:100px; color:red; font-weight:bold"/&gt;
+&nbsp;&nbsp;&lt;f:facet name="legendImage"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;ui:image id="alarmimage" icon="ALARM_CRITICAL_SMALL" alt="Critical Alarm"/&gt;
+&nbsp;&nbsp;&lt;/f:facet&gt;
+&lt;/ui:legend&gt;
+</code>
+</pre>
+<br>
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Legend</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Legend</renderer-type>
+
+  <attribute>
+    <attribute-name>converter</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>legend</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

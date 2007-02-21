@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-ext-core-styled-props;
+&value-props;
+
+
+<property>
+	<description>The Javascript Effect</description>
+	<property-name>effect</property-name>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&valueBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>
+

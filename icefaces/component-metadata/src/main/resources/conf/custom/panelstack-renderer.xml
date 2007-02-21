@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p>The panelStack is a container component that itself contains multiple panel groups.
+            A single contained panel group is visible at one time, filling the area covered by
+            the panelStack component. The panel group specified in the selectPanel attribute will
+            be visible, with the others being hidden.<br>
+            The panelStack component can be used in cases where a form region must contain several embedded
+            panels, only one of which is visible at one time, changing dynamically depending on an application
+            state change or user selection. ]]>
+	</description>
+	<component-family>javax.faces.Panel</component-family>
+	<renderer-type>com.icesoft.faces.PanelStack</renderer-type>
+	<renderer-extension>
+		<instance-name>panelStack</instance-name>
+		<is-container>true</is-container>
+		<renders-children>true</renders-children>
+		<tag-name>panelStack</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>
