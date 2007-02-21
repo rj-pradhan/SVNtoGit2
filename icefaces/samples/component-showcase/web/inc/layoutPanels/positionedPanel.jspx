@@ -1,0 +1,134 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+        <!--
+        In this demonstration, ice:dataTable is used to display data. There is
+        a control on the data to hide/show the table columns.
+        -->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+    <!--
+      Controls to show/hide the table columns
+    -->
+    <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+        <ice:panelGrid
+                styleClass="componentLayoutRootTable"
+                columns="1">
+
+            <!-- Description -->
+            <ice:panelGroup styleClass="formBorderHighlight">
+                <h4>
+                    <ice:outputText
+                            value="#{msgs['component.table.row.panelPositioned.instruction']}"/>
+                </h4>
+            </ice:panelGroup>
+
+            <ice:panelGrid columns="2">
+                <!-- Edit rank colum -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.table.row.panelPositioned.positionable.column.label']}"/>
+
+                <!-- Edit status colum -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.table.row.panelPositioned.fixed.column.label']}"/>
+
+                <!-- Positioned Panel, can be manipulated by the user -->
+                <ice:panelPositioned var="person"
+                                     value="#{panelPositioned.people}"
+                                     styleClass="positionPanelContainer"
+                                     listener="#{panelPositioned.changed}"
+                                     constraint="vertical">
+                    <ice:panelGroup style="cursor:move;">
+
+                        <ice:outputText value="#{person.name}"/>
+
+                    </ice:panelGroup>
+
+                </ice:panelPositioned>
+
+                <!-- Shows the dataset manaipulated by the panelPostioned Component -->
+                <ice:panelSeries var="person"
+                                 value="#{panelPositioned.people}"
+                                 styleClass="positionPanelContainer" >
+                    <ice:panelGroup effect="#{person.effect}">
+                        <ice:outputText
+                                value="#{person.nameWithRank}"/>
+                    </ice:panelGroup>
+                </ice:panelSeries>
+
+
+                <!-- spacer -->
+                <ice:panelGroup  style="height: 25px;" />
+                <ice:panelGroup visible="false" >
+                    <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.table.row.panelPositioned.changed.column.label']}"/>
+                </ice:panelGroup>
+
+            </ice:panelGrid>
+        </ice:panelGrid>
+
+    </ice:panelTab>
+
+    <!--
+      The bean is responsible for streaming html documentation to
+      this placeholder
+    -->
+    <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+        <iframe src="./docs/panelPositionedDoc.html"
+                class="includeIframe"
+                width="100%"></iframe>
+    </ice:panelTab>
+
+    <!--
+      Template for component source code.  This servlet loads
+      the component example jsp include as an xml stream
+    -->
+    <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+        <iframe
+                src="./sourcecodeStream.html?path=./inc/layoutPanels/positionedPanel.jspx"
+                class="includeIframe" width="100%"></iframe>
+    </ice:panelTab>
+
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

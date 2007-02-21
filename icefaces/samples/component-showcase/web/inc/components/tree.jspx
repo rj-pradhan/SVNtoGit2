@@ -1,0 +1,167 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, a basic Tree is built and displayed. When a user
+selects a node, the respective tree node name is displayed in an output field.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+               border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Example include, also see source code include.
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+
+
+<ice:panelGroup styleClass="formBorderHighlight">
+
+    <h3>
+        <ice:outputText
+                value="#{msgs['components.tree.explanation']}"/>
+    </h3>
+    <ul>
+        <li>
+            <ice:outputText
+                    value="#{msgs['components.tree.explanation.point1']}"/>
+        </li>
+
+        <li>
+            <ice:outputText
+                    value="#{msgs['components.tree.explanation.point3']}"/>
+        </li>
+    </ul>
+</ice:panelGroup>
+
+<!-- Layout the input fields and enable partial submits for them. -->
+<ice:panelGrid columns="2"
+               columnClasses="contentLayoutGridColumn"
+               cellpadding="5" style="width: 100%;">
+
+    <ice:panelGroup styleClass="treeContainer">
+        <ice:tree id="tree"
+                  value="#{treeExample.model}"
+                  var="item"
+                  hideRootNode="false"
+                  hideNavigation="false"
+                  imageDir="#{styleBean.imageDirectory}">
+            <ice:treeNode>
+                <f:facet name="icon">
+                    <ice:panelGroup style="display: inline">
+                        <ice:graphicImage
+                                value="#{item.userObject.icon}"/>
+                        <ice:commandLink
+                                actionListener="#{item.userObject.nodeClicked}">
+                            <ice:outputText
+                                    value="#{item.userObject.text}"/>
+                        </ice:commandLink>
+                    </ice:panelGroup>
+                </f:facet>
+                <f:facet name="content">
+                    <ice:panelGroup style="display: inline">
+                        <ice:outputText value="#{msgs['components.tree.node.outputText.label']}"
+                                        style="font-style: italic"
+                                        rendered="#{item.userObject.componentType == 1}"/>
+                        <ice:inputText
+                                rendered="#{item.userObject.componentType == 2}"/>
+                        <ice:commandButton
+                                value="#{msgs['components.tree.node.outputText.label']}"
+                                rendered="#{item.userObject.componentType == 3}"/>                    
+                    </ice:panelGroup>
+                </f:facet>
+            </ice:treeNode>
+        </ice:tree>
+    </ice:panelGroup>
+
+    <!-- Show selected node title -->
+    <ice:panelGrid columns="1"
+                   styleClass="treeNodeControlButtonsBorder">
+        <ice:panelGroup>
+            <h3>
+                <ice:outputText
+                        style="font-weight: bold;"
+                        value="#{msgs['components.tree.selected']} "/>
+                <ice:outputText
+                        value="#{treeExample.selectedNode}"/>
+            </h3>
+        </ice:panelGroup>
+        <ice:selectOneMenu
+                value="#{treeExample.componentToAdd}"
+                valueChangeListener="#{treeExample.componentTypeChanged}"
+                partialSubmit="true">
+            <f:selectItems
+                    value="#{treeExample.componentList}"/>
+        </ice:selectOneMenu>
+        <ice:panelGroup>
+            <ice:commandButton
+                    actionListener="#{treeExample.addSelectedNode}"
+                    value="Add"/>
+            <ice:commandButton
+                    actionListener="#{treeExample.deleteSelectedNode}"
+                    value="Delete"
+                    disabled="#{treeExample.deleteDisabled}"/>
+        </ice:panelGroup>
+    </ice:panelGrid>
+</ice:panelGrid>
+</ice:panelGrid>
+</ice:panelTab>
+
+<!--
+  The bean is responsible for streaming html documentation to
+  this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/treeDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe src="./sourcecodeStream.html?path=./inc/components/tree.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

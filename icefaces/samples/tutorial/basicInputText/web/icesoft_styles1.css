@@ -1,0 +1,696 @@
+ /*
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * "The contents of this file are subject to the Mozilla Public License
+ * Version 1.1 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations under
+ * the License.
+ *
+ * The Original Code is ICEfaces 1.5 open source software code, released
+ * November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+ * Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+ * 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+ *
+ * Contributor(s): _____________________.
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+ * License), in which case the provisions of the LGPL License are
+ * applicable instead of those above. If you wish to allow use of your
+ * version of this file only under the terms of the LGPL License and not to
+ * allow others to use your version of this file under the MPL, indicate
+ * your decision by deleting the provisions above and replace them with
+ * the notice and other provisions required by the LGPL License. If you do
+ * not delete the provisions above, a recipient may use your version of
+ * this file under either the MPL or the LGPL License."
+ *
+ */ /*
+ICEsoft Auction Monitor CSS styles Created Dec2004 by MkiD
+the following CSS styles are used in the ICEsoft eBay JSF demo
+To avoid any possible preaks in the demo it is important not to
+change the names of the following styles. The classes used by the
+Java Beans are explicitly commented and should not be modified, however
+you can add/change the classes for the other styles as long as the 
+html file is modified to reflect the new style names.
+*/
+
+/*
+General HTML styles - the following modifications apply to general HTML tags
+used in the demo
+*/
+body{
+    background-color:#FFFFFF;
+    color:#666666;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:.8em;
+    font-weight:normal;
+    margin:5px;
+}
+
+
+/* controls the appearance of links throughout of the application */
+a:link,a:hover,a:visited,a:active {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+table{
+    font-size:.9em;
+}
+
+/*
+The following styles control the appearance of the major sections of the page
+*/
+
+/*
+Controls the appearance of the header section of the document including the 
+application logo
+*/
+#headerDiv {
+    text-align: right;
+    /*float: left;
+    height: 120px;*/
+    width: 100%;
+}
+
+/*
+CSS for the section of the page that holds the search field
+*/
+#searchDiv {
+    width:98%;
+    border:2px solid #FFCC0B;
+    background-color:#F9EA94;
+    color:#000000;
+    /*float:left;*/
+    padding:5px;
+    text-align:center;
+}
+
+/*
+CSS for the sections of the page that hold golden band top and bottom
+*/
+#bandDiv {
+    width:98%;
+    /*border:2px solid #FFCC0B;*/
+    background-color: #EFEFEF;
+    background-image:url(images/blue-fade-bkgnd.gif);
+    background-repeat:repeat-x;
+    background-position: center;
+    color:#F9EA94;
+    /*float:left;*/
+    padding:5px;
+    text-align:center;
+}
+
+/*
+CSS for the hidden sections of the page
+*/
+#hiddenDiv {
+    display:none;
+    height:0px;
+}
+
+/*
+CSS for the hidden sections of the page
+*/
+#hiddenDiv2 {
+    visibility:hidden;
+    height:0px;
+}
+
+/*
+CSS for the Readme section
+*/
+#readmeDiv {
+    position:absolute;
+    width: 50%;
+    border:1px solid #DEDEDE;
+    background-color::#FFFFFF;
+    color:#000000;
+    left:25%;
+    padding:5px;
+    top:450px;
+    /*text-align:left;*/
+}
+
+/*
+CSS for the section of the page that holds the search results
+*/
+#resultsDiv {
+    width:98%;
+    /*float:left;*/
+    background-color:#FFFFFF;
+    border:1px solid #717171;
+    padding:3px;
+}
+
+/*
+CSS for the section of the page that holds the items you are watching
+*/
+#watchDiv {
+    width:98%;
+    /*float:left;*/
+    background-color:#FFFFFF;
+    border:1px solid #717171;
+    padding:5px;
+}
+
+/*
+CSS for the tabs including the hover states
+*/
+#tabDivActive{
+    width:200px;
+    height:20px;
+    background-image:url(images/tab_outline.gif);
+    background-position:top;
+    background-repeat:no-repeat;
+    background-color:#FCDA54;
+    color:#000000;
+    text-align:center;
+    float:left;
+    vertical-align:bottom;
+    padding-top:5px;
+    margin-top:15px;
+    margin-right:1px;
+    cursor:hand;
+}
+#tabDivActive:hover {
+    background-color:#FFCC0B;
+    cursor:hand;
+}
+
+#tabDivInActive{
+    width:200px;
+    height:20px;
+    background-image:url(images/tab_outline.gif);
+    background-position:top;
+    background-repeat:no-repeat;
+    background-color:#F9EA94;
+    color:#666666;
+    text-align:center;
+    float:left;
+    vertical-align:bottom;
+    padding-top:5px;
+    margin-top:15px;
+    margin-right:1px;
+    cursor:hand;
+}
+
+/*
+Forms elements styles. These classes are used to control the appearance of the
+standard HTML form elements including buttons and text boxes
+*/
+form{
+    margin:0px auto;
+    padding:0px;
+}
+
+
+.buttons {
+    background-color:#FFFFFF;
+    background-image:url(images/button_bkgnd.gif);
+    background-position:right;
+    background-repeat:repeat-x;
+    color:#333333;
+    border:1px solid #343434;
+    margin:4px;
+}
+.buttonDisabled {
+        background-color:#FFFFFF;
+        color:#ABABAB;
+        border:1px solid #ABABAB;
+        margin:4px;
+}
+.bidButtons {
+    background-color:#FFFFFF;
+    background-image:url(images/button_bid.gif);
+    background-position:left;
+    background-repeat:no-repeat;
+    border:none;
+    width:70px;
+    height:30px;
+    color: #E48716;
+    text-indent:0px;
+}
+.orangeButtons {
+    background-image: url(images/button_orange_120x22.gif);
+    background-position:left;
+    background-repeat:no-repeat;
+    border:none;
+    width:120px;
+    height:22px;
+    color: #FFFFFF;
+    text-indent:0px;
+    font-size:.9em;
+}
+.endChatButtons {
+    background-image: url(images/end-chat-dot.gif);
+    background-position:right;
+    background-repeat:no-repeat;
+    border:none;
+    height:22px;
+    color: #506491;
+    text-indent:0px;
+    font-size:.9em;
+    font-weight:bold;
+    padding-right:20px;
+}
+
+
+
+.textField {
+    background-color:#FFFFFF;
+    color:#333333;
+    border-top:1px solid #343434;
+    border-left:1px solid #343434;
+    border-bottom:1px solid #9a9a9a;
+    border-right:1px solid #ABABAB;
+}
+.textFieldDynamic {
+    background-color:#FFFFFF;
+    color:#333333;
+    border-top:1px solid #343434;
+    border-left:1px solid #343434;
+    border-bottom:1px solid #9a9a9a;
+    border-right:1px solid #ABABAB;
+    width:96%;
+}
+
+.hiddenTextField {
+    visibilty:hidden
+    background-color:#FFFFFF;
+    color:#333333;
+    border-top:1px solid #343434;
+    border-left:1px solid #343434;
+    border-bottom:1px solid #9a9a9a;
+    border-right:1px solid #ABABAB;
+}
+
+.formLabel{
+    color:#333333;
+    font-size:1em;
+    font-weight:bold;
+}
+
+/*
+TABLE CLASSES - the styles below are for the various parts of the tables
+that display the information, starting with the various table header styles
+*/
+/* styles for the links used in the headers of the tables*/
+.tableHeader a{
+    color:#FFFFFF;
+}
+/* the standard table header */
+.tableHeader{
+    background-color:#A6A6A6;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+/* the header for a selected column in ascending order */
+.tableHeaderSelAsc1{
+    width:40%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_up.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelAsc2{
+    width:10%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_up.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelAsc3{
+    width:10%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_up.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelAsc4{
+    width:18%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_up.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+/* the header for a selected column in decending order  */
+.tableHeaderSelDesc1{
+    width:40%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_down.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelDesc2{
+    width:10%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_down.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelDesc3{
+    width:10%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_down.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+.tableHeaderSelDesc4{
+    width:18%;
+    background-color:#717171;
+    background-image:url(images/header_arrow_down.gif);
+    background-position:3px 1px;
+    background-repeat:no-repeat;
+    font-size:1em;
+    color:#FFFFFF;
+    text-align:center;
+}
+
+/* the classes for the background rows of the table alternate the rows to 
+make the list easier to read */
+.rowClass1{
+    background-color:#FFFFFF;
+}
+.rowClass2{
+    background-color:#EEEEEE;
+}
+.column1{
+    width:40%;
+}
+.column2{
+    width:10%;
+}
+.column3{
+    width:10%;
+}
+.column4{
+    width:18%;
+}
+.column5{
+    width:12%;
+}
+.column6{
+    width:10%;
+}
+
+/* the class below is used to hilite the rows of information when
+an item is expanded to show additional information*/
+.rowClassHilite{
+    background-color:#F9EA94;
+    color:#000000;
+}
+.expandedColumn1{
+    width:19%;
+}
+.expandedColumn2{
+    width:48%;
+}
+.expandedColumn3{
+    width:33%;
+}
+
+/* the classes below are used to control the display of the fonts in
+the time left column */
+.timeCellDays{
+    color:#666666;
+    font-style:italic;
+    font-weight:normal;
+}
+.timeCellHours{
+    color:#000000;
+    font-style:normal;
+    font-weight:normal;
+}
+.timeCellMins{
+    color:#AA0000;
+    font-style:normal;
+    font-weight:bold;
+}
+
+/*
+ICEsoft JSF BEAN CLASSES - the classes below are used to create the dynamic visual
+effects coded into the beans. *IMPORTANT* do not change the names of these classes 
+*/
+/* the following 3 classes are used for the dynamic effects moving from rowCalss1 or 
+rowClass2 through 1->2->3 */
+.rowHilite1{
+    background-color: #FFFFCC;
+}
+.rowHilite2{
+    background-color: #FFFF99;
+}
+.rowHilite3{
+    background-color: #FFFF66;
+}
+
+/* the following class is used to magnify the row as it changes position int he list */
+.rowMagnify{
+    background-color: #FFFF66;
+    font-size: 1.2em;
+    font-weight:bold;
+    color: #000000;
+}
+
+/* class for highlighting the price of recently bid items */
+.priceHilite{
+    background-color: #FFCC0B;
+}
+
+/* CSS for rounded corner boxes */
+b.rtop, b.rbottom{
+display:block;
+background: #FFFFFF;
+}
+#nifty{ 
+margin: 0px auto;
+background-color: #CDCDCD ;
+text-align:left;
+font-size:1em;
+color:#000000;
+clear:both;
+width:100%;
+}
+
+#nifty a{
+    color:#000033;
+    text-decoration:none;
+}
+#nifty a:hover{
+    color:#000066;
+    text-decoration:underline;
+}
+
+
+b.rtop b, b.rbottom b{
+display:block;
+height: 1px;
+overflow: hidden; 
+background-color: #CDCDCD;
+
+}
+
+b.r1{margin: 0 5px;}
+b.r2{margin: 0 3px;}
+b.r3{margin: 0 2px;}
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px;}
+
+.headLine{
+    color: #003366;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.75em;
+    font-weight:bold;
+}
+
+.infoHeader{
+    color: #003366;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:1.15em;
+    font-weight:bold;
+
+}
+
+/* CSS styles for the chat widgets*/
+.chatLine{
+    width:inherit;
+    border-top:1px dotted #BEBEBE;
+    padding-top:8px;
+    clear:both;
+    margin-left:20px;
+    }
+.chatName{
+    width:70%;
+    font-weight:bold;
+    font-size:.9em;
+    color:#666666;
+    text-align:left;
+    float:left;
+}
+.chatTime{
+    width:30%;
+    font-weight:normal;
+    font-size:.8em;
+    color:#666666;
+    text-align:right;
+    float:right;
+}
+.chatText{
+    width:100%;
+    font-weight:normal;
+    font-size:.8em;
+    color:#666666;
+    text-align:left;
+    float:left;
+}
+#chatPanel{
+    width:96%;
+    margin-left:2%;
+    clear:both;
+    border-right:1px solid #BEBEBE;
+    border-bottom:1px solid #BEBEBE;
+    border-left:1px solid #BEBEBE;
+}
+#chatPanelTabs{
+    width:96%;
+    margin-left:2%;
+    clear:both;
+    margin-top:20px;
+}
+#userInfoPanel{
+    width:96%;
+    margin-left:2%;
+    clear:both;
+    border-bottom: 1px solid #BEBEBE;
+    border-right: 1px solid #BEBEBE;
+    border-left: 1px solid #BEBEBE;
+}
+#loginPanel{
+    position:absolute;
+    width: 350px;
+    height: 180px;
+    border-top:1px solid #999999;
+    border-left:1px solid #999999;
+    border-right:2px solid #666666;
+    border-bottom:2px solid #666666;
+    z-index:10;
+    margin-top:5%;
+    margin-left:25%;
+    left: 73px;
+    top: 110px;
+    background-color:#FFFFFF;
+}
+    
+.floatingDialogHeader{
+    background-image:url(images/blue-header-fade.gif);
+    background-position:top left;
+    background-repeat:repeat-x;
+    color:#FFFFFF;
+    background-color:#3333CC;
+    font-size:1.1em;
+    height:30px;
+    
+}
+
+#newChatPanel{
+    position:absolute;
+    width: 350px;
+    height: 180px;
+    border-top:1px solid #999999;
+    border-left:1px solid #999999;
+    border-right:2px solid #666666;
+    border-bottom:2px solid #666666;
+    z-index:9;
+    margin-top:5%;
+    margin-left:25%;
+    left: 10%;
+    top: 5%;
+    background-color:#FFFFFF;
+}
+
+#chatRequestPanel{
+    position:absolute;
+    width: 350px;
+    height: 120px;
+    border-top:1px solid #999999;
+    border-left:1px solid #999999;
+    border-right:2px solid #666666;
+    border-bottom:2px solid #666666;
+    z-index:11;
+    margin-top:5%;
+    margin-left:25%;
+    left: 10%;
+    top: 5%;
+    background-color:#FFFFFF;
+}
+
+#addressFormPanel{
+    position:absolute;
+    width: 50%;
+    height: 250px;
+    border-top:1px solid #999999;
+    border-left:1px solid #999999;
+    border-right:2px solid #666666;
+    border-bottom:2px solid #666666;
+    z-index:10;
+    top:150px;
+    left:25%;
+    background-color:#FFFFFF;
+}
+
+.tabON{
+    width:123px;
+    height:25px;
+    background-image:url(images/tab_on.gif);
+    background-position:left;
+    background-repeat:no-repeat;
+    color:#000000;
+    font-size:1.1em;
+    float:left;
+    margin-left:1px;
+    }
+.tabON a{
+    color:#000000;
+    text-decoration:none;
+}
+.tabOFF{
+    width:123px;
+    height:25px;
+    background-image:url(images/tab_off.gif);
+    background-position:left;
+    background-repeat:no-repeat;
+    color:#000000;
+    font-size:1.1em;
+    float:left;
+    }
+.tabOFF a{
+    color:#FFFFFF;
+    text-decoration:none;
+}
