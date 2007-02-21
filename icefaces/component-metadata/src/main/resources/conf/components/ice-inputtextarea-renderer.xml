@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description><![CDATA[<p>Renders an HTML "textarea" element.</p><p>Decode Behavior</p><ul><p>See the encode description for the <a href="javax.faces.Inputjavax.faces.Text.html#encode">Input
+          Text</a> renderer.</p></ul><p>Encode Behavior</p><ul><p>  Render the
+          clientId as the value of the "name" attribute.  Render the current
+          value of the component inside the "textarea"
+          element.</p></ul>]]>
+	</description>
+	<component-family>javax.faces.Input</component-family>
+
+	<renderer-type>com.icesoft.faces.Textarea</renderer-type>
+	<renderer-extension>
+		<instance-name>inputTextarea</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>inputTextarea</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

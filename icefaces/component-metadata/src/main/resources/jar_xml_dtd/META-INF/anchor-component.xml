@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Marks a particular spot on a page to jump to from a hyperlink
+  </description>
+
+  <display-name>Anchor</display-name>
+
+  <component-type>com.sun.rave.web.ui.Anchor</component-type>
+
+  &core-braveheart-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Anchor</component-family>
+    <renderer-type>com.sun.rave.web.ui.Anchor</renderer-type>
+  </component-extension>
+
+</component>

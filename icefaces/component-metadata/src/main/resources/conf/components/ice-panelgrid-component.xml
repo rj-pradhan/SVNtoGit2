@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>Arranges child components in a grid</description>
+
+	<display-name>Panel Grid</display-name>
+	<component-type>com.icesoft.faces.HtmlPanelGrid</component-type>
+
+	&ice-panelGrid-props;
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGrid
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.Grid</renderer-type>
+	</component-extension>
+
+</component>

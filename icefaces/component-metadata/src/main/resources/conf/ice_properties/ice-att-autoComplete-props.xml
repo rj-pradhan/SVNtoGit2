@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <property>
+  <description>Passed through to root element.</description>
+    <property-name>autocomplete</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+  </property>

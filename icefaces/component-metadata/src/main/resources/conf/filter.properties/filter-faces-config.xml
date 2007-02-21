@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- ================== ICEfaces Component Filter METADATA  ========================== -->
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Overlay 1.1//EN"
+  "dtd/web-facesconfig-overlay_1_1.dtd"
+  [
+  <!ENTITY advanced-category       SYSTEM "properties/advanced-category.xml"> 
+  <!ENTITY appearance-category       SYSTEM "properties/appearance-category.xml"> 
+  <!ENTITY behavior-category       SYSTEM "properties/behavior-category.xml"> 
+  <!ENTITY data-category       SYSTEM "properties/data-category.xml"> 
+  <!ENTITY draganddrop-category       SYSTEM "properties/draganddrop-category.xml"> 
+  <!ENTITY eventscategory       SYSTEM "properties/events-category.xml"> 
+  <!ENTITY general-category       SYSTEM "properties/general-category.xml"> 
+  ]
+  >
+
+<!-- design time needs to filter through some of beans properties to a category -->
+
+<faces-config>
+	<component>
+		<description>filter component (compile usage only)</description>
+
+		<display-name>filter component</display-name>
+		<component-type>
+			com.icesoft.faces.metadata.FilterComponent
+		</component-type>
+		&advanced-category;
+		&appearance-category;
+		&behavior-category;
+		&data-category;
+		&draganddrop-category;
+		&eventscategory;
+		&general-category;		
+		<component-extension>
+			<base-component-type>
+				com.sun.faces.Component
+			</base-component-type>
+			<component-family>
+				com.icesoft.faces.metadata.FilterComponent
+			</component-family>
+			<renderer-type>
+				com.icesoft.faces.metadata.FilterRenderer
+			</renderer-type>
+		</component-extension>
+	</component>
+	<render-kit></render-kit>
+</faces-config>

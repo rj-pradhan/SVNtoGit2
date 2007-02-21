@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<property>
+	<description>
+		<![CDATA[<p>
+                  The href value of the link element that is rendered. An additional link elelement is rendered for internet explorer browsers.
+                  The IE style sheet must end with '_ie.css'. For example if the href value is 'style.css' then the IE style sheet needs to be
+                  named 'style_ie.css'  
+                </p>
+             ]]>
+             </description>
+		<property-name>href</property-name>
+		<property-class>java.lang.String</property-class>		
+		<property-extension>
+			<category>ICE_LAYOUT</category>
+			<editor-class>&sunWebUrlEditor;</editor-class>
+		</property-extension>
+</property>

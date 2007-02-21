@@ -1,0 +1,797 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, various effects are applied to ice custom components.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Example include, also see source code include.
+-->
+
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+<!-- Effects Demo -->
+<ice:panelGrid
+        styleClass="componentLayoutRootTable"
+        columns="1">
+
+<!-- Effects parameters -->
+<ice:panelGroup styleClass="effectsControlsBorder">
+
+<!-- select effect type, triggers panel tap switch
+for config parameters -->
+<ice:panelGrid columns="2"
+               columnClasses="attributeColumnLabel, attributeColumnValue">
+    <h3>
+        <ice:outputText value="#{msgs['effects.instructions']}"/>
+    </h3>
+
+    <ice:selectOneMenu value="#{effects.selectedEffect}"
+                       styleClass="effectsSelectMenu"
+                       partialSubmit="true">
+        <f:selectItem itemValue="effectAppearFade"
+                      itemLabel="#{msgs['effects.appearFade.title']}"/>
+        <f:selectItem itemValue="effectHighlight"
+                      itemLabel="#{msgs['effects.highlight.title']}"/>
+        <f:selectItem itemValue="effectPulsate"
+                      itemLabel="#{msgs['effects.pulsate.title']}"/>
+        <f:selectItem itemValue="effectMove"
+                      itemLabel="#{msgs['effects.move.title']}"/>
+
+        <f:selectItem itemValue="effectScale"
+                      itemLabel="#{msgs['effects.scale.title']}"/>
+        <f:selectItem itemValue="effectPuff"
+                      itemLabel="#{msgs['effects.puff.title']}"/>
+        <f:selectItem itemValue="effectBlindUp"
+                      itemLabel="#{msgs['effects.blindup.title']}"/>
+        <f:selectItem itemValue="effectBlindDown"
+                      itemLabel="#{msgs['effects.blinddown.title']}"/>
+        <f:selectItem itemValue="effectSwitchOff"
+                      itemLabel="#{msgs['effects.swtichoff.title']}"/>
+        <f:selectItem itemValue="effectDropOut"
+                      itemLabel="#{msgs['effects.dropout.title']}"/>
+        <f:selectItem itemValue="effectShake"
+                      itemLabel="#{msgs['effects.shake.title']}"/>
+        <f:selectItem itemValue="effectSlideDown"
+                      itemLabel="#{msgs['effects.slideDown.title']}"/>
+        <f:selectItem itemValue="effectSlideUp"
+                      itemLabel="#{msgs['effects.slideup.title']}"/>
+        <f:selectItem itemValue="effectSquish"
+                      itemLabel="#{msgs['effects.squish.title']}"/>
+        <f:selectItem itemValue="effectGrow"
+                      itemLabel="#{msgs['effects.grow.title']}"/>
+        <f:selectItem itemValue="effectShrink"
+                      itemLabel="#{msgs['effects.shrink.title']}"/>
+        <f:selectItem itemValue="effectFold"
+                      itemLabel="#{msgs['effects.fold.title']}"/>
+
+
+    </ice:selectOneMenu>
+
+    <h3>
+        <ice:outputText value="#{msgs['effects.labels.duration']}"/>
+    </h3>
+
+    <ice:selectOneMenu value="#{effects.duration}"
+                       styleClass="effectsSelectMenu"
+                       partialSubmit="true">
+        <f:selectItems value="#{effects.durationChoices}"/>
+
+    </ice:selectOneMenu>
+
+
+</ice:panelGrid>
+
+<!-- Panelstack of specific attributes for an selected effect -->
+<ice:panelGrid columns="1"
+               columnClasses="attributeColumnLabel, attributeColumnValue"
+               styleClass="specAttributes selectionRadioGroup">
+<!-- title -->
+
+<!-- Panel Stack is used to show parameters for the different effects -->
+<ice:panelStack
+        selectedPanel="#{effects.selectedEffect}SpecMenu"
+        styleClass="specMenu">
+
+<!-- Fade effects  -->
+<ice:panelGroup id="effectAppearFadeSpecMenu">
+
+    <ice:panelGrid columns="2"
+                   columnClasses="attributeColumnLabel, attributeColumnValue">
+
+        <ice:commandButton value="Appear"
+                           action="#{effects.appearFadeBean.appearAction}"/>
+        <ice:commandButton value="Fade"
+                           action="#{effects.appearFadeBean.fadeAction}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Move effects  -->
+<ice:panelGroup id="effectMoveSpecMenu">
+
+    <ice:panelGrid columns="8">
+
+
+        <ice:outputText value="#{msgs['effects.move.labels.mode']}"
+                        styleClass="propertyLabel"/>
+        <ice:selectOneMenu value="#{effects.moveBean.mode}"
+                           styleClass="moveModeSelectMenu">
+            <f:selectItem itemValue="relative" itemLabel="Relative"/>
+            <f:selectItem itemValue="absolute" itemLabel="Absolute"/>
+        </ice:selectOneMenu>
+        <ice:outputText value="#{msgs['effects.move.labels.x']}"
+                        styleClass="propertyLabel"/>
+        <ice:inputText size="3" value="#{effects.moveBean.x}"
+                       style="width:35px;"/>
+
+        <ice:outputText value="#{msgs['effects.move.labels.y']}"
+                        styleClass="propertyLabel"/>
+        <ice:inputText size="3" value="#{effects.moveBean.y}"
+                       style="width:35px;"/>
+
+        <ice:commandButton value="Invoke"
+                           action="#{effects.moveBean.invokeEffect}"/>
+
+        <ice:commandButton value="Reset"
+                           action="#{effects.moveBean.reset}"/>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Highlight effects  -->
+<ice:panelGroup id="effectHighlightSpecMenu">
+    <ice:panelGrid columns="4">
+
+        <ice:outputText
+                value="#{msgs['effects.highlight.labels.colour']}"
+                styleClass="propertyLabel"/>
+        <ice:selectOneMenu value="#{effects.highlightBean.effectColor}">
+            <f:selectItem itemValue="#CC0000" itemLabel="Red"/>
+            <f:selectItem itemValue="#FF6600" itemLabel="Orange"/>
+            <f:selectItem itemValue="#FFFF33" itemLabel="Yellow"/>
+            <f:selectItem itemValue="#33CC33" itemLabel="Green"/>
+            <f:selectItem itemValue="#3333CC" itemLabel="Blue"/>
+            <f:selectItem itemValue="#0099FF" itemLabel="Indigo"/>
+            <f:selectItem itemValue="#660066" itemLabel="Violet"/>
+            <f:selectItem itemValue="#000000" itemLabel="Black"/>
+        </ice:selectOneMenu>
+
+        <ice:commandButton value="Invoke"
+                           action="#{effects.highlightBean.invokeEffect}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Pulsate effects  -->
+<ice:panelGroup id="effectPulsateSpecMenu">
+    <ice:panelGrid columns="2"
+                   columnClasses="attributeColumnLabel, attributeColumnValue">
+        <ice:commandButton value="Invoke"
+                           action="#{effects.pulsateBean.invoke}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Scale effects  -->
+<ice:panelGroup id="effectScaleSpecMenu">
+    <ice:panelGrid columns="2"
+                   columnClasses="attributeColumnLabel, attributeColumnValue">
+
+        <ice:commandButton value="Shrink"
+                           action="#{effects.scale}"/>
+
+        <ice:commandButton value="Enlarge"
+                           action="#{effects.resetScale}"/>
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Puff effects  -->
+<ice:panelGroup id="effectPuffSpecMenu">
+
+    <ice:panelGrid columns="2"
+                   columnClasses="attributeColumnLabel, attributeColumnValue">
+
+         <ice:commandButton value="Invoke"
+                       action="#{effects.puff}"/>
+
+         <ice:commandButton value="Reset"
+                       action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+
+</ice:panelGroup>
+<!-- Blind Up effects  -->
+<ice:panelGroup id="effectBlindUpSpecMenu">
+
+    <ice:panelGrid columns="2"
+                   columnClasses="attributeColumnLabel, attributeColumnValue">
+
+         <ice:commandButton value="Invoke"
+                       action="#{effects.blindUp}"/>
+
+         <ice:commandButton value="Reset"
+                       action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+
+</ice:panelGroup>
+<!-- blind Down effects  -->
+<ice:panelGroup id="effectBlindDownSpecMenu">
+    <ice:commandButton value="Invoke"
+                       action="#{effects.blindDown}"/>
+</ice:panelGroup>
+<!-- Swtich Off effects  -->
+<ice:panelGroup id="effectSwitchOffSpecMenu">
+    <ice:commandButton value="Invoke"
+                       action="#{effects.switchOff}"/>
+</ice:panelGroup>
+<!-- Drop Out effects  -->
+<ice:panelGroup id="effectDropOutSpecMenu">
+
+    <ice:panelGrid columns="2"
+               columnClasses="attributeColumnLabel, attributeColumnValue">
+
+     <ice:commandButton value="Invoke"
+                   action="#{effects.dropOut}"/>
+
+     <ice:commandButton value="Reset"
+                   action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+
+</ice:panelGroup>
+<!-- Shake effects  -->
+<ice:panelGroup id="effectShakeSpecMenu">
+    <ice:commandButton value="Invoke"
+                       action="#{effects.shake}"/>
+</ice:panelGroup>
+<!-- Slide Down effects  -->
+<ice:panelGroup id="effectSlideDownSpecMenu">
+    <ice:commandButton value="Invoke"
+                       action="#{effects.slideDown}"/>
+</ice:panelGroup>
+<!-- Slide Up effects  -->
+<ice:panelGroup id="effectSlideUpSpecMenu">
+
+    <ice:panelGrid columns="2"
+               columnClasses="attributeColumnLabel, attributeColumnValue">
+
+     <ice:commandButton value="Invoke"
+                   action="#{effects.slideUp}"/>
+
+     <ice:commandButton value="Reset"
+                   action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+
+</ice:panelGroup>
+<!-- Squish effects  -->
+<ice:panelGroup id="effectSquishSpecMenu">
+    
+    <ice:panelGrid columns="2"
+           columnClasses="attributeColumnLabel, attributeColumnValue">
+
+     <ice:commandButton value="Invoke"
+                   action="#{effects.squish}"/>
+
+     <ice:commandButton value="Reset"
+                   action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- grow effects  -->
+<ice:panelGroup id="effectGrowSpecMenu">
+    <ice:commandButton value="Invoke"
+                       action="#{effects.grow}"/>
+</ice:panelGroup>
+<!-- Shrink effects  -->
+<ice:panelGroup id="effectShrinkSpecMenu">
+
+    <ice:panelGrid columns="2"
+           columnClasses="attributeColumnLabel, attributeColumnValue">
+
+         <ice:commandButton value="Invoke"
+                       action="#{effects.shrink}"/>
+
+         <ice:commandButton value="Reset"
+                       action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Fold effects  -->
+<ice:panelGroup id="effectFoldSpecMenu">
+
+    <ice:panelGrid columns="2"
+           columnClasses="attributeColumnLabel, attributeColumnValue">
+
+         <ice:commandButton value="Invoke"
+                       action="#{effects.fold}"/>
+
+         <ice:commandButton value="Reset"
+                       action="#{effects.resetDisappearEffect}"/>
+
+    </ice:panelGrid>
+</ice:panelGroup>
+
+
+</ice:panelStack>
+</ice:panelGrid>
+</ice:panelGroup>
+
+<ice:panelGroup styleClass="formBorderHighlight">
+
+<!-- effects example for each effect type.  different
+content for the different effects -->
+
+<h3>
+    <ice:outputText value="#{msgs['effects.results']}"/>
+</h3>
+
+<ice:panelStack selectedPanel="#{effects.selectedEffect}"
+                styleClass="">
+
+<!-- Move effects demo -->
+<ice:panelGroup id="effectMove">
+
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+
+        <!-- panel group row -->
+        <ice:outputText value="ice:panelGroup"/>
+        <ice:panelGroup effect="#{effects.moveBean.effectPanelGroup}"
+                        styleClass="effectDemoPanelGroup">
+            <h3>Panel Group</h3>
+            <ice:panelGrid columns="2">
+                <ice:panelGroup>
+                    <ice:inputText value="#{effects.sampleData}"/>
+                    <ice:commandButton value="Command Button"/>
+                </ice:panelGroup>
+                <ice:graphicImage url="images/dragDrop/ice_sailer.jpg"
+                                  width="100" height="75" alt="Ice Sailer"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- button row -->
+        <ice:outputText value="ice:commandButton"/>
+        <ice:commandButton effect="#{effects.moveBean.effectCommandButton}"
+                           style="border:1px solid black;"
+                           action="#{effects.sampleDataAction}" value="Button"/>
+
+        <!-- inputtext row -->
+        <ice:outputText value="ice:inputText"/>
+        <ice:inputText effect="#{effects.moveBean.effectInputText}"
+                       value="#{effects.sampleData}"/>
+    </ice:panelGrid>
+
+</ice:panelGroup>
+
+
+<!-- appearFade effects demo -->
+<ice:panelGroup id="effectAppearFade">
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <!-- panel group row -->
+        <ice:outputText value="ice:panelGroup"/>
+        <ice:panelGroup effect="#{effects.appearFadeBean.effectPanelGroup}"
+                        styleClass="effectDemoPanelGroup">
+            <h3>Panel Group</h3>
+            <ice:panelGrid columns="2">
+                <ice:panelGroup>
+                    <ice:inputText value="#{effects.sampleData}"/>
+                    <ice:commandButton value="Command Button"/>
+                </ice:panelGroup>
+                <ice:graphicImage url="images/dragDrop/ice_sailer.jpg"
+                                  width="100" height="75" alt="Ice Sailer"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- button row -->
+        <ice:outputText value="ice:commandButton"/>
+        <ice:commandButton
+                effect="#{effects.appearFadeBean.effectCommandButton}"
+                style="border:1px solid black;"
+                action="#{effects.sampleDataAction}" value="Button"/>
+
+        <!-- inputtext row -->
+        <ice:outputText value="ice:inputText"/>
+        <ice:inputText effect="#{effects.appearFadeBean.effectInputText}"
+                       value="#{effects.sampleData}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+
+<!-- Highlight effects demo -->
+<ice:panelGroup id="effectHighlight">
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <!-- panel group row -->
+        <ice:outputText value="ice:panelGroup"/>
+        <ice:panelGroup effect="#{effects.highlightBean.effectPanelGroup}"
+                        styleClass="effectDemoPanelGroup">
+            <h3>Panel Group</h3>
+            <ice:panelGrid columns="2">
+                <ice:panelGroup>
+                    <ice:inputText value="#{effects.sampleData}"/>
+                    <ice:commandButton value="Command Button"/>
+                </ice:panelGroup>
+                <ice:graphicImage url="images/dragDrop/ice_sailer.jpg"
+                                  width="100" height="75" alt="Ice Sailer"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- button row -->
+        <ice:outputText value="ice:commandButton"/>
+        <ice:commandButton effect="#{effects.highlightBean.effectCommandButton}"
+                           style="border:1px solid black;"
+                           action="#{effects.sampleDataAction}" value="Button"/>
+
+        <!-- inputtext row -->
+        <ice:outputText value="ice:inputText"/>
+        <ice:inputText effect="#{effects.highlightBean.effectInputText}"
+                       value="#{effects.sampleData}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Pulsate effects demo -->
+<ice:panelGroup id="effectPulsate">
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <ice:panelGroup effect="#{effects.pulsateBean.effectPanelGroup}"
+                        styleClass="effectDemoPanelGroup">
+            <h3>Panel Group</h3>
+            <ice:panelGrid columns="2">
+                <ice:panelGroup>
+                    <ice:inputText value="#{effects.sampleData}"/>
+                    <ice:commandButton value="Command Button"/>
+                </ice:panelGroup>
+                <ice:graphicImage url="images/dragDrop/ice_sailer.jpg"
+                                  width="100" height="75" alt="Ice Sailer"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- button row -->
+        <ice:outputText value="ice:commandButton"/>
+        <ice:commandButton effect="#{effects.pulsateBean.effectCommandButton}"
+                           style="border:1px solid black;"
+                           action="#{effects.sampleDataAction}" value="Button"/>
+
+        <!-- inputtext row -->
+        <ice:outputText value="ice:inputText"/>
+        <ice:inputText effect="#{effects.pulsateBean.effectInputText}"
+                       value="#{effects.sampleData}"/>
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Sacle effects demo -->
+<ice:panelGroup id="effectScale">
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+
+<!-- Puff effects demo -->
+<ice:panelGroup id="effectPuff">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Blind Up effects demo -->
+<ice:panelGroup id="effectBlindUp">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Blind Down effects demo -->
+<ice:panelGroup id="effectBlindDown">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup" visible="false">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Swtich Off effects demo -->
+<ice:panelGroup id="effectSwitchOff">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Drop Out effects demo -->
+<ice:panelGroup id="effectDropOut">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Shake effects demo -->
+<ice:panelGroup id="effectShake">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- SlideDown effects demo -->
+<ice:panelGroup id="effectSlideDown">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup" visible="false">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Slide Up effects demo -->
+<ice:panelGroup id="effectSlideUp">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Squish effects demo -->
+<ice:panelGroup id="effectSquish">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Grow effects demo -->
+<ice:panelGroup id="effectGrow">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}" visible="false"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Shrink effects demo -->
+<ice:panelGroup id="effectShrink">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+<!-- Fold effects demo -->
+<ice:panelGroup id="effectFold">
+    <!-- panel group row -->
+    <!-- panel group row -->
+    <ice:panelGrid columns="2" styleClass="effectDemoResultsTable"
+                   rowClasses="effectFirstRow, effectSecondRow, effectThirdRow">
+        <ice:outputText value="ice:panelGroup"/>
+        <!-- To center it -->
+        <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
+            <ice:panelGroup effect="#{effects.panelGroupEffect}"
+                            styleClass="effectDemoPanelGroup">
+                <ice:outputText
+                        value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
+
+            </ice:panelGroup>
+        </ice:panelGroup>
+
+
+    </ice:panelGrid>
+</ice:panelGroup>
+
+
+</ice:panelStack>
+
+</ice:panelGroup>
+
+
+</ice:panelGrid>
+</ice:panelTab>
+
+<!--
+The bean is responsible for streaming html documentation to
+this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/effectsDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/components/effects.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+</ice:form>

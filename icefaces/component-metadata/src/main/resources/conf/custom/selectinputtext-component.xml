@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>An auto-completing text input control</description>
+
+	<display-name>Select Input Text</display-name>
+	<component-type>com.icesoft.faces.SelectInputText</component-type>
+
+	&ice-cust-selectinputtext-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlInputText
+		</base-component-type>
+		<component-family>javax.faces.Input</component-family>
+		<renderer-type>com.icesoft.faces.SelectInputText</renderer-type>
+	</component-extension>
+
+</component>

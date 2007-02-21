@@ -1,0 +1,15 @@
+<property>
+  <property-name>onClick</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>onDblClick</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>

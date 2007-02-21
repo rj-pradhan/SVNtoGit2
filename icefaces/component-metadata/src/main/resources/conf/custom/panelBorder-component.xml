@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Arranges and resizes child components to fit in five predefined
+		regions (N, S, E, W, Center)
+	</description>
+
+	<display-name>Panel Border</display-name>
+	<component-type>com.icesoft.faces.BorderLayout</component-type>
+
+	&ice-cust-panelBorder-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>com.icesoft.faces.BorderLayout</renderer-type>
+	</component-extension>
+
+</component>

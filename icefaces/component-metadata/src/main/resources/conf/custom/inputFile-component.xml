@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Provides an input field that specifies the location of a file to
+		be uploaded to the server
+	</description>
+	<display-name>Input File</display-name>
+	<component-type>com.icesoft.faces.File</component-type>
+
+	&ice-cust-inputFile-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>com.icesoft.faces.File</component-family>
+		<renderer-type>com.icesoft.faces.Upload</renderer-type>
+	</component-extension>
+</component>

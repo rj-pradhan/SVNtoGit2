@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+A multiple-choice control represented as checkboxes
+	</description>
+
+	<display-name>Select Many Checkbox</display-name>
+	<component-type>
+		com.icesoft.faces.HtmlSelectManyCheckbox
+	</component-type>
+
+	&ice-selectManyCheckbox-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlSelectManyCheckbox
+		</base-component-type>
+		<component-family>javax.faces.SelectMany</component-family>
+		<renderer-type>com.icesoft.faces.Checkbox</renderer-type>
+	</component-extension>
+
+</component>

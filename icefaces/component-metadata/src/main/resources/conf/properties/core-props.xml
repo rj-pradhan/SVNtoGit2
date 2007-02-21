@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+
+<property>
+	<description>
+		CSS style(s) to be applied when this component is rendered.
+	</description>
+	<property-name>style</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&cssStyleEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Space-separated list of CSS style class(es) to be applied when
+		this element is rendered. This value must be passed through as
+		the "class" attribute on generated markup.
+	</description>
+	<property-name>styleClass</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+

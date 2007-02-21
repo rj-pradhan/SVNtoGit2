@@ -1,0 +1,13 @@
+<?xml encoding='UTF-8'?>
+
+&uicomponent-props;
+<property>
+	<description>submitted</description>
+	<property-name>submitted</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>GENERAL</category>
+        <is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+ 

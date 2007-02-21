@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+&ice-ext-core-styled-props;
+&ice-cust-table-props;
+&i18n-props;
+&value-props;
+&ice-att-title-props;
+
+
+<property>
+	<description>
+		Sets or retrieves which field of a given data source, as
+		specified by the dataSrc property, to bind to the specified
+		object.
+	</description>
+	<property-name>first</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&valueBindingEditor;
+		</editor-class>
+		<is-hidden>true</is-hidden>
+		<tag-attribute>true</tag-attribute>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		Name of a request-scope attribute under which the model data for
+		the row selected by the current value of the "rowIndex" property
+		(i.e. also the current value of the "rowData" property) will be
+		exposed.
+	</description>
+	<property-name>var</property-name>
+	<property-extension>
+		<category>DATA</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+		<is-bindable>false</is-bindable>
+	</property-extension>
+</property>
+
+<property>
+	<description>Index of tab that is selected by default.</description>
+	<property-name>selectedIndex</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The placement for the tabs relative to the content. Possible
+		values; Top, Bottom. Default is Top. Left and Right not
+		supported in this release.
+	</description>
+	<property-name>tabPlacement</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		the name of the class that will be added to the
+		HtmlPanelTabbedPane component as a TabChangeListener
+	</description>
+	<property-name>tabChangeListener</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&methodBindingEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+
+<property>
+	<description>
+		<![CDATA[        
+    Sets the horizontal alignment (left, right, justify, center) for the cell contents  
+      ]]>
+	</description>
+	<property-name>align</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+<property>
+	<description>
+		Width (in pixels) of the border to be drawn around this table.
+	</description>
+	<property-name>border</property-name>
+	<property-class>int</property-class>	
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+		<named-value>
+			<name>unsetValue</name>
+			<expression>new Integer(Integer.MIN_VALUE)</expression>
+		</named-value>
+	</property-extension>
+</property>
+
+<property>
+	<description>
+		The number of rows to display, starting with the one identified
+		by the "first" property. If this value is set to zero, all
+		available rows in the underlying data model will be displayed.
+	</description>
+	<property-name>rows</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&numberEditor;
+		</editor-class>
+	</property-extension>
+</property>

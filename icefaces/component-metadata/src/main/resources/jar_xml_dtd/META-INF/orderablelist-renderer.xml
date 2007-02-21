@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+ 
+<p> Use the <code>ui:orderableList</code> tag to create a list with
+    buttons that allow the items on the list to be reordered.</p> 
+
+    <h3>HTML Elements and Layout</h3>
+
+<p>The textField component renders an XHTML fragment consisting of a
+<code>select</code>element representing a list, an <code>input
+type="hidden"</code> element which represents the current order of the
+list items, two or four <code>input type="submit"</code> elements for the
+buttons, and a <code>label</code> element for the label. The buttons are
+organized using a <code>table</code>, and the whole component is laid
+out using <code>div</code>s.  </p>
+
+    <h3>Configuring the <code>ui:orderableList</code> Tag</h3>
+
+
+    <p>Use the <code>list</code> attribute to associate the component
+    with a set of orderable items. The value of the list attribute
+    must be a JavaServer Faces EL expression that evaluates to an
+    array of Objects or to a <code>java.util.List</code>.</p>
+
+    <p>To allow users to select more than one item to move at a time, 
+    set <code>multiple</code> to true. To display buttons which moves
+    the selected items to the top and bottom of the list, set 
+    <code>moveTopBottom</code> to true.</code> 
+
+    <p>To specify a label for the component, use the
+    <code>label</code> attribute, or specify a label facet. To place
+    the label above the component, set <code>labelOnTop</code> to
+    true.</p> 
+
+    <h3>Facets</h3>
+
+    <ul>
+    <li><code>label</code>: use this facet to specify a custom 
+    component for the label.</li>
+    <li><code>readOnly</code>: use this facet to specify a custom 
+    component for displaying the value of this component when it is
+    marked as readonly. The default is a
+    <code>ui:staticText</code>. </li>
+     <li><code>moveUpButton</code>: use this facet to specify a custom 
+    component for the button that moves items up one step.</li>
+     <li><code>moveDownButton</code>: use this facet to specify a custom 
+    component for the button that moves items down one step.</li>
+     <li><code>moveTopButton</code>: use this facet to specify a custom 
+    component for the button that moves items to the top.</li>
+     <li><code>moveBottomButton</code>: use this facet to specify a custom 
+    component for the button that moves items to the bottom.</li>
+    </ul>
+
+    <h3>Client-side JavaScript functions</h3>
+
+
+    <p>The functions below must be invoked on the JavaScript object
+    that corresponds to the orderableList. The name of this object is
+    <code>OrderableList_</code><em>id</em> where <em>id</em> is the
+    DOM ID of the OrderableList component (the id of the outermost
+    <code>div</code> with the colons replaced by underscores,
+    e.g. <code>OrderableList_form_taskOrder</code>.</p> 
+ </p>
+    <table cellpadding="2" cellspacing="2" border="1" 
+           style="text-align: left; width: 100%;">
+    <tbody>
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.updateValue()</code>
+    </td>
+    <td style="vertical-align: top">
+    Use this method to update the hidden field which represents the
+    component value in any JavaScript function that changes the order
+    of the items on the list. 
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.moveUp()</code>
+    </td>
+    <td style="vertical-align: top">
+    Moves the selected items up one step and updates the component
+    value. 
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.moveDown()</code>
+    </td>
+    <td style="vertical-align: top">
+    Moves the selected items down one step and updates the component
+    value. 
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.moveTop()</code>
+    </td>
+    <td style="vertical-align: top">
+    Moves the selected items to the top of the list and updates the
+    component value. 
+    </td>
+    </tr>
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.moveBottom()</code>
+    </td>
+    <td style="vertical-align: top">
+    Moves the selected items to the bottom of the list and updates the
+    component value. 
+    </td>
+    </tr>
+
+    <tr>
+    <td style="vertical-align">
+    <code><em>object</em>.updateButtons()</code>
+    </td>
+    <td style="vertical-align: top">
+    Use this method to update which buttons are selected in any
+    JavaScript method that programmatically selects elements on the
+    list. 
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+    <h3>Example</h3>
+    
+<h4>Example 1: OrderableList with Move to Top and Move to Bottom
+    Buttons</h4> 
+
+<p>This example uses a backing bean called
+    <code>AutomatedTasks</code> with a property <code>taskList</code>
+    which represents a list of tasks.  Users are allowed to 
+    select more than one task to move. Buttons to move the items to
+    the top and to the bottom are shown in addition to the default
+    move up and move down buttons. </p> 
+    
+
+<pre>
+    &lt;ui:orderableList id="taskOrder"
+                      list="#{AutomatedTasks.taskList}"
+                      label="Task execution order: "
+                      multiple="true"
+                      moveTopBottom="true"/&gt;
+
+</pre>
+
+<h4>Example 1: OrderableList with Move to Top and Move to Bottom
+    Buttons</h4> 
+
+<p>This example uses a backing bean called <code>Volunteers</code> and
+    a property <code>rotationOrder</code> which is an ordered list of
+    objects representing individual persons. A converter is used to
+    derive a string representation of the person. Only the default 
+    move up and move down buttons are shown. </p> 
+    
+
+<pre>
+    &lt;ui:orderableList id="callUpOrder"
+                      list="#{Volunteers.rotationOrder}"
+                      label="Call Up Order:" &gt;
+        &lt;f:converter converterId="org.example.Person"/&gt;
+    &lt;ui:orderableList&gt;
+</pre>
+ 
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.OrderableList</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.OrderableList</renderer-type>
+
+  <attribute>
+      <description><![CDATA[The binding attribute is used to configure the
+      component through Java code. This approach is intended for
+      advanced uses, when the tag attributes cannot provide the
+      desired output. The value of the binding attribute must be a
+      JavaServer Faces EL expression that resolves to a backing bean,
+      or to a backing bean property of type 
+      <code>com.sun.rave.web.ui.component.OrderableList</code>. ]]>
+        </description>
+  <attribute-name>binding</attribute-name>
+
+  </attribute>
+
+  <attribute>
+    <attribute-name>value</attribute-name>
+    <attribute-extension>
+      <is-hidden>true</is-hidden>
+      <tag-attribute>false</tag-attribute>
+    </attribute-extension>
+  </attribute>
+
+  <attribute>
+    <description>
+      Use the rendered attribute to indicate whether the HTML code for
+      the component should be included in the rendered HTML page. If
+      set to false, the rendered HTML page does not include the HTML
+      for the component. If the component is not rendered, it is also
+      not processed on any subsequent form submission. 
+        </description>
+    <attribute-name>rendered</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>
+Flag indicating that activation of this component by the user is not currently permitted.
+        </description>
+    <attribute-name>disabled</attribute-name>
+  </attribute>
+
+  <attribute>
+    <description>Flag indicating that event handling for this
+      component should be handled immediately (in Apply Request Values
+      phase) rather than waiting until Invoke Application phase. 
+        </description>
+    <attribute-name>immediate</attribute-name>
+  </attribute>
+
+
+
+  <attribute>
+    <description>
+        If set, a label is rendered adjacent to the component with the
+        value of this attribute as the label text. 
+        </description>
+    <attribute-name>label</attribute-name>
+  </attribute>
+
+ <attribute>
+    <description>
+      Position of this element in the tabbing order for the current
+      document. The tabbing order determines the sequence in which
+      elements receive focus when the tab key is pressed. The tabIndex
+      value must be an integer between 0 and 32767.
+         </description>
+    <attribute-name>tabIndex</attribute-name>
+  </attribute>
+
+  &visible-attrs;
+  &converter-props;
+  &validator-props;
+
+  <renderer-extension>
+    <tag-name>orderableList</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

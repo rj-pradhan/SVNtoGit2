@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+A multiple-choice listbox
+	</description>
+
+	<display-name>Select One Listbox</display-name>
+	<component-type>
+		com.icesoft.faces.HtmlSelectOneListbox
+	</component-type>
+
+	&ice-selectOneListbox-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlSelectOneListbox
+		</base-component-type>
+		<component-family>javax.faces.SelectOne</component-family>
+		<renderer-type>com.icesoft.faces.Listbox</renderer-type>
+	</component-extension>
+
+</component>

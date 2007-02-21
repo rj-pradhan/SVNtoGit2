@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== I18N Properties ============================================ -->
+
+
+      <property>
+        <property-name>dir</property-name>
+        <property-extension>
+          <category>ADVANCED</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.TEXT_DIRECTIONS
+            </expression>
+          </named-value>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>lang</property-name>
+        <property-extension>
+          <category>ADVANCED</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.LANGUAGE_CODES
+            </expression>
+          </named-value>
+        </property-extension>
+      </property>

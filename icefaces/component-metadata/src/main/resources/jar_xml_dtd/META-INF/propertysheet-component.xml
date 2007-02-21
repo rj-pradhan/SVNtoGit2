@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Represents a PropertySheet
+    ]]></description>
+
+  <display-name>Property Sheet</display-name>
+
+  <component-type>com.sun.rave.web.ui.PropertySheet</component-type>
+
+  <property>
+    <description>
+	  This property indicates whether jump links should be displayed if
+	  appropriate.  Jump links will only show up if are at least 2 visible
+	  sections.
+      </description>
+    <display-name>Show Jump Links</display-name>
+    <property-name>jumpLinks</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Display jump links (only if there are at least 2 visible sections)
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	  This property indicates whether a required field legend should be
+	  displayed at the top right-hand side of the property sheet.
+      </description>
+    <display-name>Required Field Legend</display-name>
+    <property-name>requiredFields</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Display a required field legend on the property sheet 
+      </short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Template</base-component-type>
+    <component-family>com.sun.rave.web.ui.PropertySheet</component-family>
+    <renderer-type>com.sun.rave.web.ui.PropertySheet</renderer-type>
+  </component-extension>
+
+</component>

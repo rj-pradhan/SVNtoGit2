@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+	</description>
+	
+	
+	<component-family>com.icesoft.faces.MenuNodeRadio</component-family>
+
+	<renderer-type>com.icesoft.faces.View</renderer-type>
+
+			<renderer-extension>
+				<instance-name>menuItemRadio</instance-name>
+				<is-container>false</is-container>
+				<renders-children>false</renders-children>
+				<tag-name>menuItemRadio</tag-name>
+				<taglib-prefix>@taglib-prefix@</taglib-prefix>
+				<taglib-uri>@taglib-uri@</taglib-uri>
+			</renderer-extension>
+
+</renderer>

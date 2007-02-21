@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Renders references to Theme resources. 
+    ]]></description>
+
+  <display-name>ThemeLinks</display-name>
+
+  <component-type>com.sun.rave.web.ui.ThemeLinks</component-type>
+
+  <property>
+    <description><![CDATA[
+      If the <code>javaScript</code> attribute is true, a <code>script</code>
+      element with a reference to the JavaScript file that defines the
+      client side behaviour of the Sun Java Web UI Components is
+      rendered. The default value is true. This component is primarily
+	    intended for portlet 
+      environments. In a web application, this functionality is
+      automatically provided by the <code>ui:head</code>
+      component. ]]> 
+      </description>
+    <display-name>Include JavaScript Element</display-name>
+    <property-name>javaScript</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>true</default-value>
+    </property-extension>
+  </property>
+
+
+  <property>
+    <description><![CDATA[
+      If the <code>styleSheet</code> attribute is true, a <code>link</code>
+      element with a reference to the CSS stylesheet that defines the
+      appearance of the Sun Java Web UI Components is
+      rendered. The default value is true.
+      This component is primarily intended for portlet
+      environments. In a web application, this functionality is
+      automatically provided by the <code>ui:head</code>
+      component. ]]> 
+      </description>
+    <display-name>Include StyleSheet Link</display-name>
+    <property-name>styleSheet</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>true</default-value>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+      If the <code>styleSheetInline</code> attribute is true, the
+      stylesheet that defines the appearance of the Sun Java Web UI
+      Components is rendered inline. The default value is true.
+      This component is primarily
+      intended for portlet environments. In a web application, this
+      functionality is automatically provided by the
+      <code>ui:head</code> component. ]]> 
+      </description>
+    <display-name>Include StyleSheet Definitions Inline</display-name>
+    <property-name>styleSheetInline</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.ThemeLinks</component-family>
+    <renderer-type>com.sun.rave.web.ui.ThemeLinks</renderer-type>
+  </component-extension>
+
+</component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+  A single Menu Item checkbox for use within a Menu Bar or parent Menu Item
+  </description>
+
+  <display-name>Menu Item Checkbox</display-name>
+  <component-type>com.icesoft.faces.MenuNodeCheckbox</component-type>
+
+&ice-cust-menunodecheckbox-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Command</base-component-type>
+    <component-family>com.icesoft.faces.MenuNodeCheckbox</component-family>
+    <renderer-type>com.icesoft.faces.View</renderer-type>
+  </component-extension>
+
+</component>

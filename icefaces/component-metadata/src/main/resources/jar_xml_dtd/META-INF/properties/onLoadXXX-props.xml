@@ -1,0 +1,15 @@
+<property>
+  <property-name>onLoad</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>
+
+<property>
+  <property-name>onUnload</property-name>
+  <property-extension>
+    <category>JAVASCRIPT</category>
+    <editor-class>&javascriptEditor;</editor-class>
+  </property-extension>
+</property>

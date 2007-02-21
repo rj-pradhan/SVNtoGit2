@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Represents a TreeNode of a Tree.
+  </description>
+
+  <display-name>Tree Node</display-name>
+
+  <component-type>com.sun.rave.web.ui.TreeNode</component-type>
+
+  <property>
+    <description>
+	
+    &lt;p&gt;	Specifies the &lt;code&gt;action&lt;/code&gt; for the &lt;code&gt;Hyperlink&lt;/code&gt; and
+	for the &lt;code&gt;HyperlinkImage&lt;/code&gt; of this component.  The
+	&lt;code&gt;Hyperlink&lt;/code&gt; may alternately be defined via the
+	"&lt;code&gt;content&lt;/code&gt;" facet, and the image via the
+	"&lt;code&gt;image&lt;/code&gt;" facet.  See &lt;code&gt;Hyperlink&lt;/code&gt; documentation
+	for more information on how to use &lt;code&gt;action&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;	This property will not apply to the facets when a facet is used.&lt;/p&gt;
+	
+      </description>
+    <display-name>Hyperlink Action</display-name>
+    <property-name>action</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+        Method binding to invoke an action when this tree node is selected
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	
+    &lt;p&gt;	Specifies if this &lt;code&gt;TreeNode&lt;/code&gt; will be expanded or collapsed,
+	in other words if its child &lt;code&gt;TreeNode&lt;/code&gt;s should be
+	displayed.&lt;/p&gt;
+	
+      </description>
+    <display-name>Expanded</display-name>
+    <property-name>expanded</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>false</default-value>
+      <short-description>
+        Indicates whether this tree node is expanded
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	
+    &lt;p&gt;	Specifies &lt;code&gt;imageURL&lt;/code&gt; for the &lt;code&gt;ImageHyperlink&lt;/code&gt;
+	of this component.  The image may alternately be defined
+	via the "&lt;code&gt;image&lt;/code&gt;" facet.  The "&lt;code&gt;image&lt;/code&gt;" facet may
+	be an &lt;code&gt;IconHyperlink&lt;/code&gt; component to utilize
+	&lt;code&gt;Theme&lt;/code&gt; images.&lt;/p&gt;  This property will not apply to the
+	facet when the facet used.
+	
+      </description>
+    <display-name>Image URL</display-name>
+    <property-name>imageURL</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	
+    &lt;p&gt; Specifies the target for the &lt;code&gt;Hyperlink&lt;/code&gt; and the
+	&lt;code&gt;ImageHyperlink&lt;/code&gt; of this component.  The
+	&lt;code&gt;Hyperlink&lt;/code&gt; may alternately be defined via the
+	"&lt;code&gt;content&lt;/code&gt;" facet  of this tree node, and the image via the
+	"&lt;code&gt;image&lt;/code&gt;" facet.&lt;/p&gt;
+    &lt;p&gt;	This property will not apply to the facet when a facet is used.&lt;/p&gt;
+	
+      </description>
+    <display-name>Hyperlink Target</display-name>
+    <property-name>target</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+        The window or frame target in which to display the resource
+      </short-description>
+    </property-extension>
+  </property>
+  
+  <property>
+    <description>
+       Method binding to a method that is invoked when this tree node is toggled
+       open or close
+    </description>
+    <display-name>Action Listener</display-name>
+    <property-name>actionListener</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+  
+  <property>
+    <description>
+	
+    &lt;p&gt;	Specifies the &lt;code&gt;url&lt;/code&gt; for the &lt;code&gt;Hyperlink&lt;/code&gt; and the
+	&lt;code&gt;ImageHyperlink&lt;/code&gt; for this component.  The
+	&lt;code&gt;Hyperlink&lt;/code&gt; may alternately be defined via the
+	"&lt;code&gt;content&lt;/code&gt;" facet, and the image via the
+	"&lt;code&gt;image&lt;/code&gt;" facet.&lt;/p&gt;
+    &lt;p&gt;	This property will not apply to the facet when a facet is used.&lt;/p&gt;
+	
+      </description>
+    <display-name>Hyperlink Url</display-name>
+    <property-name>url</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+        Resource path (may be absolute, relative, or context-relative)
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+	
+    &lt;p&gt;	Specifies the &lt;code&gt;text&lt;/code&gt; for this component.  If a
+	&lt;code&gt;url&lt;/code&gt; or &lt;code&gt;action&lt;/code&gt; is also specified, these
+	properties will be used to create a &lt;code&gt;Hyperlink&lt;/code&gt; as the
+	content of this component.  If neither the
+	&lt;code&gt;action&lt;/code&gt; or &lt;code&gt;url&lt;/code&gt; properties are specified, this
+	property will be used to display static text as the content for this
+	component.&lt;/p&gt;
+    &lt;p&gt;	Alternately, the "&lt;code&gt;content&lt;/code&gt;" facet may be used to specify
+	the content for this component.  If this facet is used, this
+	property has no effect.&lt;/p&gt;
+	
+      </description>
+    <display-name>Text</display-name>
+    <property-name>text</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+        The text description of this tree node
+      </short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &toolTip-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.rave.web.ui.Template</base-component-type>
+    <component-family>com.sun.rave.web.ui.TreeNode</component-family>
+    <renderer-type>com.sun.rave.web.ui.TreeNode</renderer-type>
+  </component-extension>
+
+</component>

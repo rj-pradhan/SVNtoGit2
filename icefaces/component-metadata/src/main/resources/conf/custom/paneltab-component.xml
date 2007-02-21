@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A single tab panel for use within a Panel Tab Set
+	</description>
+
+	<display-name>Panel Tab</display-name>
+	<component-type>com.icesoft.faces.PanelTab</component-type>
+
+	&ice-cust-paneltab-props;
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlPanelGroup
+		</base-component-type>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>javax.faces.Group</renderer-type>
+	</component-extension>
+
+</component>

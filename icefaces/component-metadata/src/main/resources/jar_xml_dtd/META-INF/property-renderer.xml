@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description><![CDATA[
+
+
+<h3>HTML Elements and Layout</h3>
+
+<p> The <code>Property</code> component was written to be used within the
+    <code>PropertySheetSection</code> component, which is in turn used within
+    the context of a <code>PropertySheet</code> component.  The
+    <code>Property</code> component allows you to encapsulate a logic
+    "property" and help you lay it out on the page.  A "property" has a number
+    of configuration options, including: the property content; an optional
+    label; the ability to stretch the property to include the label area (in
+    addition to the content area of the "property"; the ability to mark a
+    property required; and the ability to associate help text with the property
+    to inform your end user how to interact with the property.</p>
+
+<p> Help text can be provided for each property by supplying the
+    <code>helpText</code> attribute.  This attribute may be a literal String
+    or a <code>ValueBinding</code> expression.  The help text will appear
+    below the content of the "property".  Optionally, the helpText may also
+    be provided as a facet named "helpText".  This allows advanced users to
+    have more control over the types of content provided in the helpText
+    area.</p>
+
+<p> The label may be provided via the <code>label</code> attribute.  The label
+    will be rendered to the left of the content area of the "property".  The
+    label area will not exist if the <code>overlapLabel</code> attribute is set
+    to true.  Optionally advanced users may provide a label facet named
+    "label".  This allows developers to have more control over the content of
+    the label area.</p>
+
+<p> The <code>labelAlign</code> attribute can use used to specify "left" or
+    "right" alignment of the label table cell.</p>
+
+<p> Setting the <code>noWrap</code> attribute to true specifies that the label
+    should not be wraped to a new line.</p>
+
+<p> The <code>overlapLabel</code> attribute causes the content of the property
+    to be stretched into the label area as well as the content area.  This may
+    be useful for titles which should span the entire width, or other cases
+    where you need the whole width of the <code>PropertySheet</code>.</p>
+
+<h3>Client Side Javascript Functions</h3>
+
+<p> None.</p>
+
+<h3>Examples</h3>
+
+<h4>Example 1</h4> 
+
+<p>The label is specified via the label attribute. The components of
+    the content area are specified as children of the
+    <code>ui:property</code> tag.  </p> 
+
+<pre> 
+   &lt;ui:property id="prop1" label="Log file name: "&gt;           
+       &lt;ui:textField id="logfile" required="true"/&gt;
+       &lt;h:message id="logfile_error" for="logfile" showDetail="true"/&gt; 
+   &lt;/ui:property&gt;
+</pre>
+
+<h4>Example 2</h4> 
+
+<p>The components of the content area are specified as children of the
+<code>ui:property</code> tag. The label is specified via a label
+facet, to label the dropDown in the content area.  </p>
+
+<pre>            
+   &lt;ui:property id="prop2"&gt;    
+       &lt;f:facet name="label"&gt;
+           &lt;ui:label id="prop2label" 
+                     text="Select update frequency"
+                     for="unit"/&gt;
+       &lt;/f:facet&gt;   
+       &lt;ui:textField id="frequency" 
+                     text="#{Logger.frequency.number}"
+                     label="Every "/&gt;
+       &lt;ui:dropDown id="unit" 
+                    selected="#{Logger.frequency.unit}"  
+                    items="#{Logger.frequency.units}"  
+                    required="true"/&gt;
+       &lt;h:message id="msg1"_msg4b" for="frequency" showDetail="true"/&gt; 
+       &lt;h:message id="msg2" for="unit" showDetail="true"/&gt; 
+   &lt;/ui:property&gt;
+</pre> 
+
+<h4>Example 3</h4> 
+
+<p>The components of the content area are specified inside a
+    PanelGroup child component. </p>
+<pre> 
+   &lt;ui:property id="prop3" label="Admin Server URI"&gt; 
+       &lt;ui:panelGroup id="pg"&gt;
+           &lt;ui:textField id="uri" text="#{Server.uri}" required="true"/&gt;
+           &lt;h:message id="msg3" for="uri" showDetail="true"/&gt; 
+       &lt;/ui:panelGroup&gt;                               
+   &lt;/ui:property&gt;
+</pre> 
+
+
+<h4>Example 4</h4> 
+
+
+<p>The components of the content area are specified inside a
+    PanelGroup inside a facet.</p>           
+
+<pre> 
+   &lt;ui:property id="prop3" label="Admin Server URI"&gt; 
+       &lt;f:facet name="content"&gt;
+           &lt;ui:panelGroup id="pg"&gt;
+               &lt;ui:textField id="uri" text="#{Server.uri}" required="true"/&gt;
+               &lt;h:message id="msg3" for="uri" showDetail="true"/&gt; 
+           &lt;/ui:panelGroup&gt;                               
+       &lt;/f:facet&gt;                       
+   &lt;/ui:property&gt;
+
+</pre> 
+           
+      ]]></description>
+
+  <component-family>com.sun.rave.web.ui.Property</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.Property</renderer-type>
+
+  <facet>
+    <description>
+
+    &lt;p&gt;	This facet may be used to supply the content of this
+	&lt;code&gt;ui:property&lt;/code&gt;.  The content may also be supply by simply
+	adding children to this property without specifying the content
+	facet.&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Example 1:&lt;/b&gt;&lt;/p&gt;
+    &lt;p&gt;
+	&lt;code&gt;
+	&lt;pre&gt;
+	   &amp;lt;f:facet name="content"&amp;gt;
+	       &amp;lt;ui:checkbox id="limitLongChoice" label="Limit excessively long messages" /&amp;gt;
+	   &amp;lt;/f:facet&amp;gt;
+	&lt;/pre&gt;
+	&lt;/code&gt;
+    &lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Example 2:&lt;/b&gt;&lt;/p&gt;
+    &lt;p&gt;
+	&lt;code&gt;
+	&lt;pre&gt;
+           &amp;lt;f:facet name="content"&amp;gt;
+	       &amp;lt;ui:panelGroup id="group5"&amp;gt;
+		   &amp;lt;ui:dropDown id="numberToDisplay" items="#{BackingFileChoice.airports}" /&amp;gt;
+		   &amp;lt;f:verbatim&amp;gt;entries per page&amp;lt;/f:verbatim&amp;gt;
+	       &amp;lt;/ui:panelGroup&amp;gt;
+	   &amp;lt;/f:facet&amp;gt;
+	&lt;/pre&gt;
+	&lt;/code&gt;
+    &lt;/p&gt;
+
+	  </description>
+    <display-name>Property Content</display-name>
+    <facet-name>content</facet-name>
+  </facet>
+
+  <facet>
+    <description>
+	      This facet allows advanced developers to provide an alternate helpText implementation.
+	  </description>
+    <display-name>Help Text</display-name>
+    <facet-name>helpText</facet-name>
+  </facet>
+
+  <facet>
+    <description>
+	      This facet allows advanced developers to provide an alternate label implementation.
+	  </description>
+    <display-name>Label</display-name>
+    <facet-name>label</facet-name>
+  </facet>
+
+  &binding-attrs;
+
+  &visible-attrs;
+
+  <renderer-extension>
+    <tag-name>property</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

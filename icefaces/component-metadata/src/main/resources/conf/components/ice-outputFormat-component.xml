@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>		
+	Displays formatted text from an external resource bundle
+	</description>
+
+	<display-name>Output Format</display-name>
+	<component-type>com.icesoft.faces.HtmlOutputFormat</component-type>
+
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlOutputFormat
+		</base-component-type>
+		<component-family>javax.faces.Output</component-family>
+		<renderer-type>javax.faces.Format</renderer-type>
+	</component-extension>
+</component>

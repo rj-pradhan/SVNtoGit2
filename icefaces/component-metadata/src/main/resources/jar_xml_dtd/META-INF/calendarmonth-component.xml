@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description/>
+
+  <display-name>Calendar Month</display-name>
+
+  <component-type>com.sun.rave.web.ui.CalendarMonth</component-type>
+
+  <property>
+    <description>
+      Flag determining whether the component should be rendered in its
+      popup version (as used by Calendar), or in the
+      inline version used by Scheduler. 
+      </description>
+    <display-name>Popup Version</display-name>
+    <property-name>popup</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>false</is-bindable>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>javax.faces.Output</base-component-type>
+    <component-family>com.sun.rave.web.ui.CalendarMonth</component-family>
+    <is-hidden>true</is-hidden>
+    <renderer-type>com.sun.rave.web.ui.CalendarMonth</renderer-type>
+  </component-extension>
+
+</component>

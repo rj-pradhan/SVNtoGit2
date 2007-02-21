@@ -1,0 +1,26 @@
+<?xml encoding='UTF-8'?>
+
+<!--
+ Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+ SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+
+<!-- ========== List Properties ============================================ -->
+
+
+    <property>
+      <property-name>layout</property-name>
+      <property-extension>
+          <category>APPEARANCE</category>
+          <editor-class>
+            com.sun.jsfcl.std.property.ChooseOneReferenceDataPropertyEditor
+          </editor-class>
+          <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+              com.sun.jsfcl.std.reference.ReferenceDataManager.MANY_CHECKBOX_LAYOUT_STYLES
+            </expression>
+          </named-value>
+      </property-extension>
+    </property>

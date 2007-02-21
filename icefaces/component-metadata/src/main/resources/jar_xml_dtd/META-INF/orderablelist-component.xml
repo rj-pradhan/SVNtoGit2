@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+    Base component for UI components that allow the user to make a
+    selection from a set of options. 
+    ]]></description>
+
+  <display-name>Orderable List</display-name>
+
+  <component-type>com.sun.rave.web.ui.OrderableList</component-type>
+
+  <facet>
+    <description>Use this facet to replace the standard label. 
+</description>
+    <display-name>Label</display-name>
+    <facet-name>label</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the child component that
+      displays the value when the component is read-only. The default 
+      is StaticText. 
+</description>
+    <display-name>Read-Only Component</display-name>
+    <facet-name>readOnly</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to add content below the list and
+      buttons. 
+</description>
+    <display-name>Footer</display-name>
+    <facet-name>footer</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move Up"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveUpButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveUp()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Up Button</display-name>
+    <facet-name>moveUpButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move Down"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveDownButton&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveDown()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Down Button</display-name>
+    <facet-name>moveDownButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move To Top"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveToTop&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveUp()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Up Button</display-name>
+    <facet-name>moveUpButton</facet-name>
+  </facet>
+
+  <facet>
+    <description>Use this facet to replace the standard "Move To Bottom"
+button. If 
+you use a facet to replace this component, the JSF ID of this
+component should be the ID given to the AddRemove component with
+&lt;code&gt;_moveToBottom&lt;/code&gt; appended at the end. If you wish to use the
+JavaScript function associated with the default button, use the &lt;code&gt;
+moveDown()&lt;/code&gt; function. See the section on JavaScript for details.
+</description>
+    <display-name>Move Down Button</display-name>
+    <facet-name>moveDownButton</facet-name>
+  </facet>
+
+  <property>
+    <description><![CDATA[ <p>
+      The object that represents the list. It must be a JavaServer
+      Faces EL expression that evaluates to an array of Objects or to
+      a <code>java.util.List</code>.</p> ]]>
+      </description>
+    <display-name>List</display-name>
+    <property-name>list</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <alias-for>value</alias-for>
+      <short-description>Object that represents the list of items</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        The number of items to display. The default value is 6. 
+      </description>
+    <display-name>Number of Items to Display</display-name>
+    <property-name>rows</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <named-value>
+        <name>com.sun.rave.propertyeditors.MIN_VALUE</name>
+        <value>1</value>
+      </named-value>
+      <is-bindable>true</is-bindable>
+      <default-value>12</default-value>
+      <short-description>Number of items to display in the listbox</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Flag indicating that the application user may make select
+	more than one option from the listbox . 
+      </description>
+    <display-name>Multiple</display-name>
+    <property-name>multiple</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      The label of the list
+      </description>
+    <display-name>List Label</display-name>
+    <property-name>label</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Sets the style level for the generated labels. Valid values
+	are 1 (largest), 2 and 3 (smallest). The default value is 2.
+      </description>
+    <display-name>Label Level</display-name>
+    <property-name>labelLevel</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <default-value>2</default-value>
+      <is-bindable>true</is-bindable>
+      <short-description>Determines the style of the labels (default is 2, 1 is the strongest)</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      If this attribute is set to true, the value of the component is
+      rendered as text, preceded by the label if one was defined. 
+      </description>
+    <display-name>Read-only</display-name>
+    <property-name>readOnly</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      If this attribute is true, the label is rendered above the
+      component. If it is false, the label is rendered next to the
+      component. The default is false.
+      </description>
+    <display-name>Label on Top</display-name>
+    <property-name>labelOnTop</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+      If this attribute is true, the Move to Top and Move to Bottom
+      buttons are shown. The default is false.
+      </description>
+    <display-name>Move Top and Bottom</display-name>
+    <property-name>moveTopBottom</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  
+  &disabled-props;
+
+  &tabIndex-props;
+
+  &toolTip-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>javax.faces.Input</base-component-type>
+    <component-family>com.sun.rave.web.ui.OrderableList</component-family>
+    <renderer-type>com.sun.rave.web.ui.OrderableList</renderer-type>
+  </component-extension>
+
+</component>

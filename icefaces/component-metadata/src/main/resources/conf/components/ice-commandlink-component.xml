@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		A hyperlink that can Submit a form
+	</description>
+
+	<display-name>Command Link</display-name>
+	<component-type>com.icesoft.faces.HtmlCommandLink</component-type>
+	&ice-commandLink-props;
+	<component-extension>
+		<base-component-type>
+			javax.faces.HtmlCommandLink
+		</base-component-type>
+		<component-family>javax.faces.Command</component-family>
+		<renderer-type>com.icesoft.faces.Link</renderer-type>
+	</component-extension>
+</component>

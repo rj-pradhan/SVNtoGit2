@@ -1,0 +1,168 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<ice:form
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:panelGrid
+            styleClass="contentLayoutGridStyle"
+            columns="1" border="0">
+
+        <ice:panelTabSet styleClass="componentPanelTabSetLayout">
+            <!--
+              Controls to show/hide the table columns
+            -->
+            <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+                <ice:panelGrid
+                        styleClass="componentLayoutRootTable"
+                        columns="1">
+
+                    <!-- Basic table -->
+                    <ice:dataTable
+                            value="#{salesRecordsManager.salesGroupRecordBeans}"
+                            var="salesRecord" cellpadding="0"
+                            width="550px"
+                            columnClasses="triangleColumn,cartNameColumn,cartQuantityColumn,cartQuantityColumn,cartPriceColumn,cartQuantityColumn">
+                        <!-- contract/expand column -->
+                        <ice:column >
+                            <ice:panelGroup styleClass="#{salesRecord.indentStyleClass">
+			                    <!-- Render the expand/contract if there is an image -->
+			                    <ice:commandLink
+			                            actionListener="#{salesRecord.toggleSubGroupAction}">
+                                <ice:graphicImage
+                                        value="#{salesRecord.expandContractImage}"
+                                        style="border: 0px solid;"/>
+                            </ice:commandLink>
+                        </ice:panelGroup>
+                    </ice:column>
+                    <!-- Description -->
+                    <ice:column>
+                        <f:facet name="header">
+                            <ice:outputText value="Description"/>
+                        </f:facet>
+                        <ice:panelGroup
+                                styleClass="#{salesRecord.rowStyleClass}"
+                                style="width: 130px;">
+                            <ice:outputText value="#{salesRecord.description}"/>
+                        </ice:panelGroup>
+                    </ice:column>
+                    <!-- Date -->
+                    <ice:column>
+                        <f:facet name="header">
+                            <ice:outputText value="Date"/>
+                        </f:facet>
+                        <ice:panelGroup
+                                styleClass="#{salesRecord.rowStyleClass}"
+                                style="width: 85px;">
+                            <ice:outputText value="#{salesRecord.dateString}"/>
+                        </ice:panelGroup>
+                    </ice:column>
+                    <!-- qty. -->
+                    <ice:column>
+                        <f:facet name="header">
+                            <ice:outputText value="Quantity"/>
+                        </f:facet>
+                        <ice:panelGroup
+                                styleClass="#{salesRecord.rowStyleClass}"
+                                style="width: 60px;">
+                            <ice:outputText value="#{salesRecord.quantity}"/>
+                        </ice:panelGroup>
+                    </ice:column>
+                    <!-- price -->
+                    <ice:column>
+                        <f:facet name="header">
+                            <ice:outputText value="Price"/>
+                        </f:facet>
+                        <ice:panelGroup
+                                styleClass="#{salesRecord.rowStyleClass}"
+                                style="width: 60px;">
+                            <ice:outputText value="#{salesRecord.price}"/>
+                        </ice:panelGroup>
+                    </ice:column>
+                    <!-- total -->
+                    <ice:column>
+                        <f:facet name="header">
+                            <ice:outputText value="Total"/>
+                        </f:facet>
+                        <ice:panelGroup
+                                styleClass="#{salesRecord.rowStyleClass}"
+                                style="width: 60px;">
+                            <ice:outputText value="#{salesRecord.total}"/>
+                        </ice:panelGroup>
+                    </ice:column>
+
+                </ice:dataTable>
+
+    </ice:panelGrid>
+</ice:panelTab>
+
+<!--
+The bean is responsible for streaming html documentation to
+this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <ice:panelGroup>
+        <f:verbatim>
+            <br/>
+            <br/>
+
+            <p>The Expandable Table example illustrates the flexibility of the
+                ice:dataTable component when bound to a backing-bean via the
+                component &lt;binding&gt; attribute. </p>
+
+            <p>Source code to this example is available in the package
+                com.icesoft.samples.showcase.components.expandableTable.* in
+                both the Community and Enterprise editions of ICEfaces. </p>
+        </f:verbatim>
+    </ice:panelGroup>
+</ice:panelTab>
+
+<!--
+Template for component source code. This servlet loads
+the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/components/tableExpandable.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+
+</ice:form>

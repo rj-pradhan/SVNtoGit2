@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+     This is an implementation of the HTML script tag. 
+    ]]></description>
+
+  <display-name>Script</display-name>
+
+  <component-type>com.sun.rave.web.ui.Script</component-type>
+
+  <property>
+    <description>
+         Defines the character (charset) encoding of the target URL.
+         See iana.org for a complete list of character encodings. 
+      </description>
+    <display-name>Charset</display-name>
+    <property-name>charset</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Defines the absolute or relative URL to a file that contains the 
+         script.  Use this attribute to refer to a file instead of inserting the 
+         script into your HTML document
+      </description>
+    <display-name>URL</display-name>
+    <property-name>url</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Indicates the MIME type of the script.  Default is "text/javascript"
+      </description>
+    <display-name>Type</display-name>
+    <property-name>type</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>"text/javascript"</default-value>
+    </property-extension>
+  </property>
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.Script</component-family>
+    <renderer-type>com.sun.rave.web.ui.Script</renderer-type>
+  </component-extension>
+
+</component>

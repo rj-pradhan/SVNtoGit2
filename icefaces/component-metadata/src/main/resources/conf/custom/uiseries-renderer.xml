@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[TODO:]]>
+	</description>
+	<component-family>javax.faces.Data</component-family>
+	<renderer-type>com.icesoft.faces.seriesRenderer</renderer-type>
+
+	<renderer-extension>
+	</renderer-extension>
+
+</renderer>

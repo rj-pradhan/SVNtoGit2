@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component>
+	<description>		  	
+An text entry or popup calendar date-input control
+		</description>
+	<display-name>Select Input Date</display-name>
+	<component-type>com.icesoft.faces.SelectInputDate</component-type>
+
+	&ice-cust-selectInputDate-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.HtmlInputText</base-component-type>
+		<component-family>javax.faces.Input</component-family>
+		<renderer-type>com.icesoft.faces.Calendar</renderer-type>
+	</component-extension>
+</component>

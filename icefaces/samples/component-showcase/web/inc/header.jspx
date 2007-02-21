@@ -1,0 +1,14 @@
+<!-- Example header, ICEsoft logos and example name-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td background="images/address-bkgnd.gif"><img
+                src="images/address-left.gif" alt=""/></td>
+        <td background="images/address-bkgnd.gif" valign="top" align="right">
+            <img id="logoShowcase"
+                 src="images/component_showcase.gif" alt="Component Showcase"
+                 width="253" height="57"/>
+            <img id="logoD2D" src="images/address-right.gif" width="119"
+                 height="102" alt="ICEfaces Direct to DOM Technology"/>
+        </td>
+    </tr>
+</table>

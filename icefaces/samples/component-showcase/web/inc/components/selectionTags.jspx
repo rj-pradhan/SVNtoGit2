@@ -1,0 +1,200 @@
+<!--
+~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+~
+~ "The contents of this file are subject to the Mozilla Public License
+~ Version 1.1 (the "License"); you may not use this file except in
+~ compliance with the License. You may obtain a copy of the License at
+~ http://www.mozilla.org/MPL/
+~
+~ Software distributed under the License is distributed on an "AS IS"
+~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+~ License for the specific language governing rights and limitations under
+~ the License.
+~
+~ The Original Code is ICEfaces 1.5 open source software code, released
+~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+~
+~ Contributor(s): _____________________.
+~
+~ Alternatively, the contents of this file may be used under the terms of
+~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+~ License), in which case the provisions of the LGPL License are
+~ applicable instead of those above. If you wish to allow use of your
+~ version of this file only under the terms of the LGPL License and not to
+~ allow others to use your version of this file under the MPL, indicate
+~ your decision by deleting the provisions above and replace them with
+~ the notice and other provisions required by the LGPL License. If you do
+~ not delete the provisions above, a recipient may use your version of
+~ this file under either the MPL or the LGPL License."
+~
+-->
+
+<!--
+In this demonstration, various selection tags are used to present different
+kinds of selection components. The inputs are submitted to the server one by
+one as they are being entered. These partial submits are triggered when the user
+clicks a selection or tabs out of a field.
+-->
+<ice:form xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+
+<ice:panelGrid
+        styleClass="contentLayoutGridStyle"
+        columns="1" border="0">
+
+
+<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+<!--
+  Example include, also see source code include.
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
+
+    <ice:panelGrid columns="1" cellspacing="2"
+                   styleClass="componentLayoutRootTable">
+
+        <!-- Description -->
+        <ice:panelGroup styleClass="formBorderHighlight">
+            <h3>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.instructions']}"/>
+            </h3>
+            <h4>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.subInstructions']}"/>
+            </h4>
+        </ice:panelGroup>
+
+        <!-- selection tags -->
+        <ice:panelGroup styleClass="formBorderHighlight">
+            <ice:panelGrid columns="2"
+                           columnClasses="selectionLabelColumn, selectionTagsColumn"
+                           styleClass="componentPropertySelection">
+                <!-- Check box - new user -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.newUser']}"/>
+                <ice:selectBooleanCheckbox value="#{selectionTags.newUser}"
+                                           partialSubmit="true"/>
+
+                <!-- Select one menu - component type -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.componentTypeLabel']}"/>
+                <ice:selectOneMenu styleClass="selectTagMenu"
+                                   value="#{selectionTags.componentType}"
+                                   partialSubmit="true">
+                    <f:selectItems value="#{selectionTags.componentTypeItems}"/>
+                </ice:selectOneMenu>
+
+                <!-- Radio buttons - select drink -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.popButtonLabel']}"/>
+                <ice:panelGroup styleClass="selectionRadioGroup">
+                    <ice:selectOneRadio value="#{selectionTags.drink}"
+                                        partialSubmit="true">
+                        <f:selectItems value="#{selectionTags.drinkItems}"/>
+                    </ice:selectOneRadio>
+                </ice:panelGroup>
+
+                <!-- Check boxes - select language -->
+
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.languageButtonLabel']}"/>
+                <ice:panelGroup styleClass="selectionRadioGroup">
+                    <ice:selectManyCheckbox value="#{selectionTags.languages}"
+                                            partialSubmit="true">
+                        <f:selectItems value="#{selectionTags.languageItems}"/>
+                    </ice:selectManyCheckbox>
+                </ice:panelGroup>
+
+
+                <!-- Select one list boxes - select countries and city -->
+                <ice:outputText styleClass="propertyLabel"
+                                value="#{msgs['component.selectionTags.countryAndCitiesLabel']}"/>
+                <ice:panelGroup styleClass="selectionListBoxGroup">
+                    <ice:selectOneListbox value="#{selectionTags.country}"
+                                          partialSubmit="true"
+                                          style="overflow: auto;"
+                                          valueChangeListener="#{selectionTags.countryChanged}">
+                        <f:selectItems value="#{selectionTags.countryItems}"/>
+                    </ice:selectOneListbox>
+                    <ice:selectManyListbox id="citiesListBox"
+                                           partialSubmit="true"
+                                           value="#{selectionTags.cities}"
+                                           style="overflow: auto;"
+                                           valueChangeListener="#{selectionTags.cityChanged}">
+                        <f:selectItems value="#{selectionTags.cityItems}"/>
+                    </ice:selectManyListbox>
+                </ice:panelGroup>
+
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+        <!-- displayed values -->
+        <ice:panelGroup styleClass="formBorderHighlight">
+            <h3>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.serverFeedback']}"/>
+            </h3>
+            <ice:panelGrid columns="2">
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.resultNewUserLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.newUser}"
+                                styleClass="valueText"/>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.componentTypeLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.componentType}"
+                                styleClass="valueText"/>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.resultDrinkLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.drink}"
+                                styleClass="valueText"/>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.resultLanguageLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.languagesString}"
+                                styleClass="valueText"/>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.resultCountryLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.country}"
+                                styleClass="valueText"/>
+                <ice:outputText
+                        value="#{msgs['component.selectionTags.resultCitiesLabel']}"
+                        styleClass="valueHeader"/>
+                <ice:outputText value="#{selectionTags.citiesString}"
+                                styleClass="valueText"/>
+            </ice:panelGrid>
+        </ice:panelGroup>
+
+    </ice:panelGrid>
+</ice:panelTab>
+<!--
+  The bean is responsible for streaming html documentation to
+  this placeholder
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.description']}">
+    <iframe src="./docs/selectionDoc.html" class="includeIframe"
+            width="100%"></iframe>
+</ice:panelTab>
+
+<!--
+  Template for component source code.  This servlet loads
+  the component example jsp include as an xml stream
+-->
+<ice:panelTab label="#{msgs['tabbedHeadings.source']}">
+    <iframe
+            src="./sourcecodeStream.html?path=./inc/components/selectionTags.jspx"
+            class="includeIframe" width="100%"></iframe>
+</ice:panelTab>
+
+</ice:panelTabSet>
+
+</ice:panelGrid>
+
+</ice:form>

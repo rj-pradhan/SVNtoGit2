@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+    Render the column of a table.
+  </description>
+  <display-name>Column</display-name>
+  <component-type>com.sun.rave.web.ui.TableColumn</component-type>
+
+  <property>
+    <description><![CDATA[
+Use the <code>alignKey</code> attribute to specify the FieldKey id or FieldKey 
+to be used as an identifier for a specific data element on which to align the 
+table cell data in the column. If <code>alignKey</code> specifies a 
+FieldKey, the FieldKey is used as is; otherwise, a FieldKey is created using 
+the <code>alignKey</code> value that you specify. Alignment is based on 
+the object type of the data element. For example, Date and Number objects are 
+aligned "right", Character and String objects are aligned "left", and Boolean 
+objects are aligned "center". All columns, including select columns, are 
+aligned "left" by default. Note that the align property overrides this value.
+    ]]></description>
+    <display-name>Horizontal Alignment Key</display-name>
+    <property-name>alignKey</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Identifies a FieldKey for a data element to use for cell data alignment
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>descending</code> attribute to specify that the first 
+user-applied sort is descending. By default, the first time a user clicks a 
+column's sort button or column header, the sort is ascending. Note that this 
+not an initial sort. The data is initially displayed unsorted.
+    ]]></description>
+    <display-name>Is Descending</display-name>
+    <property-name>descending</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Define a user's first click on a column header to sort descending
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Set the <code>embeddedActions</code> attribute to true when the column includes 
+more than one embedded action. This attribute causes a separator image to be 
+displayed between the action links. This attribute is overridden by the 
+<code>emptyCell</code> attribute.
+    ]]></description>
+    <display-name>Is Embedded Actions</display-name>
+    <property-name>embeddedActions</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+          Indicates that a column includes more than one embedded action link
+      </short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>emptyCell</code> attribute to cause a theme-specific image to be 
+displayed when the content of a table cell is not applicable or is unexpectedly 
+empty. You should not use this attribute for a value that is truly null, such 
+as an empty alarm cell or a comment field that is blank. In addition, the image 
+should not be used for cells that contain user interface elements such as 
+checkboxes or drop-down lists when these elements are not applicable. Instead, 
+the elements should simply not be displayed so the cell is left empty.
+    ]]></description>
+    <display-name>Empty Cell</display-name>
+    <property-name>emptyCell</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Show a theme specific image when the cell is empty or not applicable
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt;</code> HTML element that 
+is rendered for the column footer. Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"nowrap=`nowrap'"</code>.
+    ]]></description>
+    <display-name>Extra Footer HTML</display-name>
+    <property-name>extraFooterHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the TR element for the column footer
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;th&gt;</code> HTML element that 
+is rendered for the column header. Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"nowrap=`nowrap'"</code>.
+    ]]></description>
+    <display-name>Extra Header HTML</display-name>
+    <property-name>extraHeaderHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the TR element for the column header
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Extra HTML code to be appended to the <code>&lt;td&gt;</code> HTML element that 
+is rendered for the table column footer. Use only code that is valid in an HTML 
+<code>&lt;td&gt;</code> element. The code you specify is inserted in the HTML 
+element, and is not checked for validity. For example, you might set this 
+attribute to <code>"nowrap=`nowrap'"</code>.
+    ]]></description>
+    <display-name>Extra Table Footer HTML</display-name>
+    <property-name>extraTableFooterHtml</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+HTML that is appended to the TR element for the table column header
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The text to be displayed in the column footer.
+    ]]></description>
+    <display-name>Footer Text</display-name>
+    <property-name>footerText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The text to be displayed in the column header.
+    ]]></description>
+    <display-name>header Text</display-name>
+    <property-name>headerText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>rowHeader</code> attribute to specify that the cells of the 
+column are acting as row headers. Row headers are cells that "label" the row. 
+For example, consider a table where the first column contains checkboxes, and 
+the second column contains user names. The third and subsequent columns contain 
+attributes of those users. The content of the cells in the user name column are 
+acting as row headers. The <code>ui:tableColumn</code> tag for the user name 
+column should set the <code>rowHeader</code> attribute to true. If a table 
+contains, for example, a system log with time stamp and log entry columns, 
+neither column is acting as a row header, so the <code>rowHeader</code> 
+attribute should not be set. 
+<br><br>
+By default, most column cells are rendered by the table component with HTML 
+<code>&lt;td scope="col"&gt;</code> elements. The exceptions are columns that 
+contain checkboxes or radio buttons and spacer columns, all of which are 
+rendered as <code>&lt;td&gt;</code> elements without a scope property. 
+<br><br>
+When you set the <code>rowHeader</code> attribute, the column cells are 
+rendered as <code>&lt;th scope="row"&gt;</code> elements, which enables 
+adaptive technologies such as screen readers to properly read the table to 
+indicate that the contents of these cells are headers for the rows.
+    ]]></description>
+    <display-name>Row Header</display-name>
+    <property-name>rowHeader</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Define the cells in the column are acting as row headers
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>selectId</code> attribute in select columns, which contain 
+checkboxes or radio buttons for selecting table rows. The value of 
+<code>selectId</code> must match the <code>id</code> attribute of the checkbox 
+or radioButton component that is a child of the tableColumn component. A fully 
+qualified ID based on the tableColumn component ID and the 
+<code>selectId</code> for the current row will be dynamically created for the 
+<code>&lt;input&gt;</code> element that is rendered for the checkbox or radio 
+button. The <code>selectId</code> is required for functionality that supports 
+the toggle buttons for selecting rows. The <code>selectId</code> also 
+identifies the column as a select column, for which the table component 
+uses different CSS styles.
+    ]]></description>
+    <display-name>Select Component Id</display-name>
+    <property-name>selectId</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Set the id of the select component (radio button or checkbox) for
+                    this column
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>severity</code> attribute when including the <code>ui:alarm</code> 
+component in a column, to match the severity of the alarm. Valid values are 
+described in the <code>ui:alarm</code> documentation. When the 
+<code>severity</code> attribute is set in the tableColumn, the table 
+component renders sort tool tips to indicate that the column will be sorted 
+least/most severe first, and the table cell appears hightlighted according to 
+the level of severity. This functionality is overridden by the 
+<code>emptyCell</code> attribute.
+    ]]></description>
+    <display-name>Severity</display-name>
+    <property-name>severity</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Applies only when an alarm component is used as the column content
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>sort</code> attribute to specify a FieldKey id or SortCriteria 
+that defines the criteria to use for sorting the contents of a 
+TableDataProvider. If SortCriteria is provided, the object is used for sorting 
+as is. If an id is provided, a FieldIdSortCriteria is created for sorting. In 
+addition, a value binding can also be used to sort on an object that is 
+external to TableDataProvider, such as the selected state of a checkbox or 
+radiobutton. When a value binding is used, a ValueBindingSortCriteria object 
+is created for sorting. All sorting is based on the object type associated with 
+the data element (for example, Boolean, Character, Comparator, Date, Number, 
+and String). If the object type cannot be determined, the object is compared as 
+a String. The <code>sort</code> attribute is required for a column to be shown 
+as sortable.
+    ]]></description>
+    <display-name>Sort Key</display-name>
+    <property-name>sort</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+Specify a FieldKey id or SortCriteria to sort the contents of the table
+</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The theme identifier to use for the sort button that is displayed in the column 
+header. Use this attribute to override the default image.
+    ]]></description>
+    <display-name>Sort Icon</display-name>
+    <property-name>sortIcon</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Absolute or relative URL to the image used for the sort button that is 
+displayed in the column header.
+    ]]></description>
+    <display-name>Sort Image URL</display-name>
+    <property-name>sortImageURL</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+Use the <code>spacerColumn</code> attribute to use the column as a blank column 
+to enhance spacing in two or three column tables. When the 
+<code>spacerColumn</code> attribute is true, the CSS styles applied to the 
+column make it appear as if the columns are justified. If a column header and 
+footer are required, provide an empty string for the <code>headerText</code> 
+and <code>footerText</code> attributes. Set the <code>width</code> attribute to 
+justify columns accordingly.
+    ]]></description>
+    <display-name>Spacer Column</display-name>
+    <property-name>spacerColumn</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>Identify the column to be used for spacing</short-description>
+    </property-extension>
+  </property>
+
+  <property>
+    <description><![CDATA[
+The text to be displayed in the table column footer. The table column footer is 
+displayed once per table, and is especially useful in tables with multiple 
+groups of rows.
+    ]]></description>
+    <display-name>Table Footer Text</display-name>
+    <property-name>tableFooterText</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <short-description>
+The text to be displayed in the table column footer
+</short-description>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+  &onClickXXX-props;
+  &onKeyXXX-props;
+  &onMouseXXX-props;
+  &toolTip-props;
+  &visible-props;
+  &td-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.TableColumn</component-family>
+    <renderer-type>com.sun.rave.web.ui.TableColumn</renderer-type>
+  </component-extension>
+
+</component>

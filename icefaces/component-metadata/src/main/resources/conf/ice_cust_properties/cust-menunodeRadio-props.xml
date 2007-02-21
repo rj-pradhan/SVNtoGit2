@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+&uicommand-props;
+
+ <property>
+ <description>selected</description>
+    <property-name>selected</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+  </property>
+  

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description>
+      Layout for a full page alert including title, action buttons and optional input components
+  </description>
+
+  <display-name>Page Alert</display-name>
+
+  <component-type>com.sun.rave.web.ui.PageAlert</component-type>
+
+  <property>
+    <description>
+        Optional detailed message text for the alert. This message might include more information about the alert and instructions for what to do about the alert. 
+      </description>
+    <display-name>Detail Message</display-name>
+    <property-name>detail</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        Flag indicating that the message text should be escaped so that it is 
+        not interpreted by the browser.
+      </description>
+    <display-name>Escape</display-name>
+    <property-name>escape</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>true</default-value>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Summary message text for the alert. This brief message is displayed under the page alert title.
+      </description>
+    <display-name>Summary Message</display-name>
+    <property-name>summary</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        The text to display as the page title
+      </description>
+    <display-name>Title</display-name>
+    <property-name>title</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        The type or category of alert. The type attribute can be set to one of the following:  "question", "information", "warning" or "error". The default type is error.
+      </description>
+    <display-name>Alert Type</display-name>
+    <property-name>type</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+      <default-value>"error"</default-value>
+      <short-description>The type or category of alert</short-description>
+    </property-extension>
+  </property>
+
+  &alt-props;
+
+  &core-braveheart-props;
+
+  &tabIndex-props;
+
+  &visible-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.PageAlert</component-family>
+    <renderer-type>com.sun.rave.web.ui.PageAlert</renderer-type>
+  </component-extension>
+
+</component>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description> 
+	A single-line text input field
+	</description>
+
+	<display-name>Input Text</display-name>
+	<component-type>com.icesoft.faces.HtmlInputText</component-type>
+
+	&ice-inputText-props;
+	<component-extension>
+		<base-component-type>javax.faces.HtmlInputText</base-component-type>
+		<component-family>javax.faces.Input</component-family>
+		<renderer-type>com.icesoft.faces.Text</renderer-type>
+	</component-extension>
+
+</component>

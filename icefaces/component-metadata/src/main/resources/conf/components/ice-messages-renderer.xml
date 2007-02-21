@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+	<description>
+		<![CDATA[<p>The same as for the Message renderer, but output all the
+               messages.  If the value of the "layout" attribute is "table",
+               render nested "table", "tr", and "td" elements, in that order,
+               otherwise, don't render the table.  The component is a
+               <code>UIMessages</code>, and there is no "for" attribute.
+               Therefore, use either <code>null</code> to obtain the messages from
+               the <code>FacesContext</code> or the empty string if the components
+               "globalOnly" property is <code>true</code>.  If the layout was
+               "table" close out the table elements.  </p>]]>
+	</description>
+	<component-family>javax.faces.Messages</component-family>
+
+	<renderer-type>com.icesoft.faces.Messages</renderer-type>
+
+	<renderer-extension>
+		<instance-name>messages</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>messages</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+
+</renderer>

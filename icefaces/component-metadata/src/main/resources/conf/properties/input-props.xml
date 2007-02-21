@@ -1,0 +1,35 @@
+<?xml encoding='UTF-8'?>
+
+      <property>
+        <property-name>disabled</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onchange</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            &javascriptEditor;
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>onselect</property-name>
+        <property-extension>
+          <category>JAVASCRIPT</category>
+          <editor-class>
+            &javascriptEditor;
+          </editor-class>
+        </property-extension>
+      </property>
+
+      <property>
+        <property-name>readonly</property-name>
+        <property-extension>
+          <category>APPEARANCE</category>
+        </property-extension>
+      </property>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		Dynamically specifies a hierarchy of menu items
+	</description>
+
+	<display-name>Menu Items</display-name>
+	<component-type>com.icesoft.faces.MenuNodes</component-type>
+
+	&ice-cust-menunodes-props;
+
+	<component-extension>
+		<base-component-type>javax.faces.Command</base-component-type>
+		<component-family>com.icesoft.faces.MenuNodes</component-family>
+		<renderer-type>com.icesoft.faces.View</renderer-type>
+	</component-extension>
+
+</component>

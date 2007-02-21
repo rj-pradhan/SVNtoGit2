@@ -1,0 +1,7 @@
+<property>
+  <property-name>toolTip</property-name>
+  <property-extension>
+    <category>BEHAVIOR</category>
+    <editor-class>&stringEditor;</editor-class>
+  </property-extension>
+</property>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!--  todo:  -->
+&ice-ext-core-props;
+&ice-att-userrole-enabled-props;
+&value-props;
+  <property>
+	<description>
+		Indicates whether an arrow, that shows the sort direction should be 
+		rendered. Default: false
+	</description>
+    <property-name>arrow</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+  </property>
+
+  <property>
+	<description>
+		The name of this column. This name must uniquely identify this column among 
+		all other (sortable) columns in the same data_table. The sortColumn attribute 
+		of the embedding data_table reflects the current sort column (see extended 
+		data_table).
+	</description>
+    <property-name>columnName</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+      <editor-class>&stringEditor;</editor-class>
+    </property-extension>
+  </property>

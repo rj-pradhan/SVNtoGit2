@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+  <description>
+    <![CDATA[
+    <p> Use the <code>ui:panelGroup</code> tag to display a group of components
+	that are separated by a common separator.  This tag is often useful for
+	providing a consistently formatted layout of a group of components.</p>
+    <h3>HTML Elements and Layout</h3>
+    <p>	By default the PanelGroup component is rendered with a
+	<code><span></code> element surrounding the group of child
+	components.  You can change the rendered element to a
+	<code><div></code> by setting the <code>block</code> attribute to
+	<code>true</code>.  When a <code><div></code> is used, the
+	panel group is displayed on a new line.  Note that if you use a
+	component in the <code>ui:panelGroup</code> tag that renders a block
+	element such as a <code><p></code>, that component is always
+	displayed on its own line.  The behavior of child block elements is
+	independent of the setting of the block attribute.</p>
+
+    <p> PanelGroup is a NamingContainer.</p>
+
+    <h3>Theme Identifiers</h3>
+
+    <p> Not Applicable </p>
+
+    <h3>Client Side Javascript Functions</h3>
+
+    <p> Not Applicable </p>
+
+    <h3>Examples:</h3>
+
+    <h4>Example 1: Buttons in a panelGroup that uses default separator</h4>
+
+    <p>	The default separator is a return character.</p>
+
+    <code>
+	<ui:panelGroup id="myPanelGroup1"><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button1" text="Button 1" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button2" text="Button 2" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button3" text="Button 3" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button4" text="Button 4" /><br />
+	</ui:panelGroup>
+    </code>
+
+    <h4>Example 2: Specifying a separator with the <code>separator</code>
+	attribute</h4>
+
+    <p>	This example uses the separator attribute to specify a separator
+	consisting of a pipe character surrounded by spaces.</p>
+
+    <code>
+	<ui:panelGroup id="myPanelGroup2" separator=" | "><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button1" text="Button 1" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button2" text="Button 2" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button3" text="Button 3" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button4" text="Button 4" /><br />
+	</ui:panelGroup>
+    </code>
+
+    <h4>Example 3: Specifying a separator with the <code>separator</code>
+	facet</h4>
+
+    <p>	This example shows how to use the <code>separator</code> facet and
+	the <code>block</code> attribute.</p>
+
+    <code>
+	<ui:panelGroup id="myPanelGroup3" block="true"><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <facet name="separator"><br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<h:outputText value="==" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    </f:facet><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button1" text="Button 1" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button2" text="Button 2" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button3" text="Button 3" /><br />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	    <ui:button id="button4" text="Button 4" /><br />
+	</ui:panelGroup>
+    </code>
+  ]]>
+  </description>
+
+  <component-family>com.sun.rave.web.ui.PanelGroup</component-family>
+
+  <renderer-type>com.sun.rave.web.ui.PanelGroup</renderer-type>
+
+  &binding-attrs;
+  &visible-attrs;
+
+  <renderer-extension>
+    <instance-name>groupPanel</instance-name>
+    <tag-name>panelGroup</tag-name>
+    <taglib-prefix>ui</taglib-prefix>
+    <taglib-uri>http://www.sun.com/web/ui</taglib-uri>
+  </renderer-extension>
+
+</renderer>

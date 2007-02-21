@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+&core-props;
+&uicommand-props;
+
+<property>
+    <description>
+        Sets the component's model value, which must be a JSF value binding expression 
+        to an implementation of the "javax.swing.tree.TreeModel" interface.
+     </description>
+    <property-name>value</property-name>
+    <property-class>java.lang.Object</property-class>
+    <property-extension>
+        <category>DATA</category>
+        <editor-class>
+            &valueBindingEditor;
+        </editor-class>
+        <named-value>
+            <name>ignoreIsBound</name>
+            <value>true</value>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>folderOpenImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &urlEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>document image</description>
+
+    <property-name>documentImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &urlEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        Name of the image that overrides the default image.
+    </description>
+    <property-name>navOpenTop</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        Name of the image that overrides the default image.
+    </description>
+    <property-name>navOpenTopNoSiblings</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>navCloseTop</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+
+<property>
+    <description>
+        Name of the image that overrides the default image.
+    </description>
+    <property-name>folderImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &urlEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        Set directory for location of the tree images.
+    </description>
+    <property-name>imageDir</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &urlEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        Declares whether the navigation links will be rendered. Valid
+        values are true and false.
+    </description>
+    <property-name>hideNavigation</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+        <default-value>"hideNavigation"</default-value>
+    </property-extension>
+
+</property>
+
+
+<property>
+    <description>
+        Declares whether the root tree node will be rendered. Valid
+        values are true and false.
+    </description>
+    <property-name>hideRootNode</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+        <default-value>"hideRootNode"</default-value>
+    </property-extension>
+
+</property>
+
+
+<property>
+    <description>
+        Name of a request-scope attribute under which the model data for
+        the row selected by the current value of the "rowIndex" property
+        (i.e. also the current value of the "rowData" property) will be
+        exposed.
+    </description>
+    <property-name>var</property-name>
+    <property-extension>
+        <category>DATA</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+        <is-bindable>true</is-bindable>
+    </property-extension>
+</property>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <description><![CDATA[
+      Represents an entire frameset Frameset for a web application.
+      This is not for use in portlet applications.
+    ]]></description>
+
+  <display-name>Frame Set</display-name>
+
+  <component-type>com.sun.rave.web.ui.FrameSet</component-type>
+
+  <property>
+    <description>
+        The width, in pixels, of the space around frames. The frameSpacing 
+        attribute and the border attribute set the same property in different 
+        browsers.  Set frameSpacing and border to the same value.
+      </description>
+    <display-name>border</display-name>
+    <property-name>border</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+  	 The bordercolor attribute allows you to set the color of the frame 
+         borders using a hex value or a color name.      
+      </description>
+    <display-name>Border Color</display-name>
+    <property-name>borderColor</property-name>
+    <property-class>String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Defines the number and size of columns in a frameset. The size can be 
+         specified in pixels, percentage of the page width, or with an 
+         asterisk (*).  Specifying * causes the columns to use available space.
+         See the HTML specification for the frameset element for more details.
+      </description>
+    <display-name>Number of Columns</display-name>
+    <property-name>cols</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Flag indicating whether frames should have borders or not. If 
+         frameBorder is true, decorative borders are drawn. If frameBorder is  
+         false, a space between frames shows up as the background color of the
+         page.  To show no border or space between frames, you should set 
+         frameBorder to false, and set frameSpacing and border to 0.
+      </description>
+    <display-name>Frame Border</display-name>
+    <property-name>frameBorder</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+        The width, in pixels, of the space around frames. The frameSpacing attribute 
+        and the border attribute set the same property in different browsers.  
+        Set frameSpacing and border to the same value. 
+      </description>
+    <display-name>Frame Spacing</display-name>
+    <property-name>frameSpacing</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  <property>
+    <description>
+         Defines the number and size of rows in a frameset. The size can be 
+         specified in pixels, percentage of the page length, or with an 
+         asterisk (*).  Specifying * causes the rows to use available space.
+         See the HTML specification for the frameset element for more details.    
+      </description>
+    <display-name>Number of Rows</display-name>
+    <property-name>rows</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <is-bindable>true</is-bindable>
+    </property-extension>
+  </property>
+
+  &core-braveheart-props;
+
+  &toolTip-props;
+
+  <component-extension>
+    <base-component-type>com.sun.faces.Component</base-component-type>
+    <component-family>com.sun.rave.web.ui.FrameSet</component-family>
+    <renderer-type>com.sun.rave.web.ui.FrameSet</renderer-type>
+  </component-extension>
+
+</component>
