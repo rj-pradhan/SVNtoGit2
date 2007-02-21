@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  ~
+  ~ "The contents of this file are subject to the Mozilla Public License
+  ~ Version 1.1 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://www.mozilla.org/MPL/
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations under
+  ~ the License.
+  ~
+  ~ The Original Code is ICEfaces 1.5 open source software code, released
+  ~ November 5, 2006. The Initial Developer of the Original Code is ICEsoft
+  ~ Technologies Canada, Corp. Portions created by ICEsoft are Copyright (C)
+  ~ 2004-2006 ICEsoft Technologies Canada, Corp. All Rights Reserved.
+  ~
+  ~ Contributor(s): _____________________.
+  ~
+  ~ Alternatively, the contents of this file may be used under the terms of
+  ~ the GNU Lesser General Public License Version 2.1 or later (the "LGPL"
+  ~ License), in which case the provisions of the LGPL License are
+  ~ applicable instead of those above. If you wish to allow use of your
+  ~ version of this file only under the terms of the LGPL License and not to
+  ~ allow others to use your version of this file under the MPL, indicate
+  ~ your decision by deleting the provisions above and replace them with
+  ~ the notice and other provisions required by the LGPL License. If you do
+  ~ not delete the provisions above, a recipient may use your version of
+  ~ this file under either the MPL or the LGPL License."
+  ~
+  -->
+
+<project name="bridge" default="build">
+
+    <property file="build.properties"/>
+    <property name="words.obfuscation.excludes" location="words.obfuscation.excludes"/>
+    <property name="lib.dir" location="${basedir}/lib"/>
+    <property name="src.dir" location="${basedir}/src"/>
+    <property name="test.dir" location="${basedir}/test"/>
+    <property name="component.dir" location="${basedir}/component"/>
+    <property name="build.dir" location="${basedir}/build"/>
+    <property name="extras.dir" location="${lib.dir}/extras"/>
+    <property name="script" location="${build.dir}/bridge.js"/>
+    <property name="extras.script" location="${build.dir}/bridge.extras.js"/>
+    <macrodef name="compress">
+        <attribute name="src" description="The source file"/>
+        <attribute name="dest" default="@{src}" description="The destination file"/>
+        <sequential>
+            <java jar="compressor.jar" output="@{dest}" fork="yes">
+                <arg value="-c"/>
+                <arg file="@{src}"/>
+                <classpath>
+                  <pathelement location="compressor.jar"/>
+                  <pathelement path="${java.class.path}"/>
+                </classpath>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+        <delete file="${script}"/>
+        <touch file="${script}"/>
+    </target>
+
+    <target name="build.prototype" depends="prepare">
+        <concat destfile="${script}" append="yes" fixlastline="yes">
+            <filelist dir="${lib.dir}/prototype">
+                <file name="prototype.js"/>
+                <file name="base.js"/>
+                <file name="string.js"/>
+                <file name="enumerable.js"/>
+                <file name="array.js"/>
+                <file name="hash.js"/>
+                <file name="range.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="build.lib" depends="build.prototype">
+        <concat destfile="${script}" append="yes" fixlastline="yes">
+            <filelist dir="${lib.dir}">
+                <file name="namespace.js"/>
+                <file name="object.js"/>
+                <file name="boolean.js"/>
+                <file name="date.js"/>
+                <file name="string.js"/>
+                <file name="array.js"/>
+                <file name="function.js"/>
+                <file name="window.js"/>
+                <file name="enumerator.js"/>
+                <file name="logger.js"/>
+                <file name="ajax.js"/>
+                <file name="parameters.js"/>
+                <file name="geometry.js"/>
+                <file name="element.js"/>
+                <file name="event.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="build.base" depends="build.lib">
+        <concat destfile="${script}" append="yes" fixlastline="yes">
+            <filelist dir="${src.dir}">
+                <file name="submit.js"/>
+                <file name="synchronizer.js"/>
+                <file name="update.js"/>
+                <file name="identity.js"/>
+                <file name="focus.js"/>
+                <file name="status.js"/>
+                <file name="connection.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="build" depends="build.base" description="Collate code for community edition">
+        <concat destfile="${script}" append="yes" fixlastline="yes">
+            <filelist dir="${src.dir}">
+                <file name="namespace.js"/>
+                <file name="connection.async.js"/>
+                <file name="application.js"/>
+            </filelist>
+        </concat>
+        <compress src="${script}"/>
+    </target>
+
+    <target name="build.test" depends="build.base,build.extras" description="Collate code for tests">
+        <concat destfile="${script}" append="yes" fixlastline="yes">
+            <filelist dir="${test.dir}">
+                <file name="namespace.js"/>
+                <file name="connection.js"/>
+                <file name="application.js"/>
+            </filelist>
+        </concat>
+    </target>
+
+    <target name="build.extras" description="Extra libraries used by specialized components.">
+        <delete file="${extras.script}"/>
+        <touch file="${extras.script}"/>
+        <concat destfile="${extras.script}" append="yes" fixlastline="yes">
+            <filelist dir="${lib.dir}/prototype">
+                <file name="ajax.js"/>
+                <file name="dom.js"/>
+                <file name="event.js"/>
+                <file name="form.js"/>
+                <file name="position.js"/>
+            </filelist>
+            <filelist dir="${lib.dir}/scriptaculous">
+                <file name="scriptaculous.js"/>
+                <file name="builder.js"/>
+                <file name="effects.js"/>
+                <file name="dragdrop.js"/>
+                <file name="controls.js"/>
+                <file name="slider.js"/>
+            </filelist>
+            <filelist dir="${extras.dir}">
+                <file name="extras.js"/>
+                <file name="extras_util.js"/>                
+                <file name="state_mon.js"/>
+                <file name="style.js"/>
+                <file name="initializer.js"/>              
+                <file name="dragdrop_custom.js"/>
+                <file name="draggable_ext.js"/>
+                <file name="droppable_ext.js"/>
+                <file name="sortable_ext.js"/>
+                <file name="autocomplete_ext.js"/>
+                <file name="effects_ext.js"/>
+                <file name="bootstrap.js"/>                                                              
+            </filelist>
+            <filelist dir="${component.dir}">
+		        <file name="menu.js"/>
+            </filelist>
+        </concat>
+        <compress src="${extras.script}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
