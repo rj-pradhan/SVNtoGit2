@@ -283,6 +283,10 @@ public class InputFile extends UICommand implements Serializable{
 
 
     boolean fireEvent() {
+    	if (getFileInfo().getPercent() <=0) {
+    		return false;
+    	}
+
         if (baseClass != null && methodName != null) {
             Class array[] = new Class[1];
             array[0] = EventObject.class;
@@ -468,8 +472,15 @@ public class InputFile extends UICommand implements Serializable{
     }
 
     public void broadcast(FacesEvent event) throws AbortProcessingException {
-        // Perform standard superclass processing
-        super.broadcast(event);
+        if (event instanceof ActionEvent) {
+            FacesContext context = getFacesContext();
+
+            // Notify the specified action listener method (if any)
+            MethodBinding mb = getActionListener();
+            if (mb != null) {
+                mb.invoke(context, new Object[] { event });
+            }
+        }
 
         // action and actionListener has been invoked now reset the state to default
         setStatus(DEFAULT);
