@@ -47,3 +47,37 @@
 		</editor-class>
 	</property-extension>
 </property>
+        
+ <property>
+	<description>
+		When true table is scrollable.
+	</description>
+    <property-name>scrollable</property-name>
+    <property-class>java.lang.Boolean</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+  </property>
+
+
+<property>
+	<description>
+		Set the height of the scroll table.
+	</description>
+    <property-name>scrollHeight</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+  </property>
+
+<property>
+	<description>
+		A comma seperated list of the widths of each column for a scrollable table
+	</description>
+    <property-name>columnWidths</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+  </property>

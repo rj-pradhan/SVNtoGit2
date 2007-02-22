@@ -128,6 +128,7 @@ public class TableRenderer
         uiData.setRowIndex(-1);
         Element root = (Element) domContext.getRootNode();
         if (isScrollable(uiComponent)) {
+            
             if (header) {
                 // First table in first div
                 root = (Element) root.getFirstChild().getFirstChild();
