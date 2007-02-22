@@ -44,7 +44,7 @@ import java.io.OutputStream;
 public class ProgressOutputStream extends OutputStream implements Runnable {
     OutputStream originalStream = null;
     InputFile inputFile = null;
-    boolean saved = false;
+    transient boolean saved = false;
     double bytesWritten = -1;
     double requestSize = -1;
     private HttpSession session = null;
@@ -81,11 +81,18 @@ public class ProgressOutputStream extends OutputStream implements Runnable {
         }
     }
 
+    void stopNotification() {
+    	   this.saved = true;
+    }
+    
     public void run() {
         while (!isSaved()) {
             session.getId();
             int percent =
                     (int) Math.abs(((bytesWritten / 1024) / requestSize) * 100);
+            if (percent > 100) {
+            	return;
+            }
             inputFile.getFileInfo().setPercent(percent);
             inputFile.setStatus(InputFile.UPLOADING);
             inputFile.fireEvent();

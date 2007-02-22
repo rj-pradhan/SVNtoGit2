@@ -37,7 +37,6 @@ import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.ApplicationBaseLocator;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicInputRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
-import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;

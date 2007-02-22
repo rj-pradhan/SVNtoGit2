@@ -95,7 +95,7 @@ public class FileUploadServlet
     private void processMultipartContent(HttpServletRequest request,
                                          HttpServletResponse response) throws ServletException{
         HttpSession session = request.getSession(true);
-        DiskFileUpload upload = new DiskFileUpload(session);
+        DiskFileUpload upload = new DiskFileUpload(session, getInputFile(request));
         upload.setSizeMax(uploadMaxFileSize);
 
         List items;

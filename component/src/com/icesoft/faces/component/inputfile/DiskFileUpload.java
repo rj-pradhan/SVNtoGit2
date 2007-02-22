@@ -61,8 +61,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 
 public class DiskFileUpload
@@ -70,10 +68,10 @@ public class DiskFileUpload
     InputFile inputFile = null;
     HttpSession session = null;
     String fileName = null;
-       private static Logger log = Logger.getLogger(DiskFileUpload.class.getName());
 
-    DiskFileUpload(HttpSession session) {
+    DiskFileUpload(HttpSession session, InputFile inputFile) {
         this.session = session;
+        this.inputFile = inputFile;
     }
 
     public List parseRequest(HttpServletRequest req)
@@ -159,6 +157,7 @@ public class DiskFileUpload
                                 inputFile.setStatus(InputFile.INVALID);
                                 inputFile.getFileInfo()
                                         .setFileName(getFileName());
+                                inputFile.getFileInfo().setPercent(0);
                                 FileUploadException exception =
                                         new FileUploadException(
                                                 "The file name ["+ getFileName() +"] does not match with the file name pattern ["+ inputFile.getFileNamePattern() +"]");
@@ -184,10 +183,12 @@ public class DiskFileUpload
                                 inputFile.setStatus(InputFile.INVALID);
                                 inputFile.getFileInfo()
                                         .setFileName(getFileName());
+                                inputFile.getFileInfo().setPercent(0);                                
                                 FileUploadException exception =
                                         new FileUploadException(
                                                 "This is not a valid file");
                                 inputFile.getFileInfo().setException(exception);
+                                inputFile.fireEvent();
                                 throw exception;
                             }
                             pos.setSaved(true);
@@ -211,16 +212,6 @@ public class DiskFileUpload
                             }
                             items.add(item);
 
-                            registerCompoponent(item.getString());
-                            if(inputFile == null){
-                                if(log.isLoggable(Level.WARNING))
-                                    log.warning("DiskFileUpload. The InputFile was null. Upload failed.");
-                                throw new FileUploadException("File not found");
-                            }else{
-                                if(inputFile.getFileInfo() == null){
-                                    throw new NullPointerException("Input File File Info is null");
-                                }
-                            }
                             inputFile.getFileInfo().reset();
                             if (getSizeMax() >= 0 &&
                                 requestSize > getSizeMax()) {
@@ -265,18 +256,12 @@ public class DiskFileUpload
         }
         finally {
             if (pos != null) {
-                pos.setSaved(true);
+                pos.stopNotification();
             }
         }
         return items;
     }
 
-    void registerCompoponent(String componentId) {
-        if (session.getAttribute(componentId) != null) {
-            inputFile = (InputFile) session.getAttribute(componentId);
-            inputFile.fireEvent();
-        }
-    }
 
     InputFile getInputFile() {
         return inputFile;
