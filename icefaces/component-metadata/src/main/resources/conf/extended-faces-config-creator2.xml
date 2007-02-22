@@ -306,6 +306,10 @@
   
   <!ENTITY uiseries-component   SYSTEM "custom/uiseries-component.xml">
   <!ENTITY uiseries-renderer    SYSTEM "custom/uiseries-renderer.xml">
+
+  <!ENTITY ice-cust-accordion-props SYSTEM "ice_cust_properties/cust-accordion-props.xml">
+  <!ENTITY accordion-component SYSTEM "custom/accordion-component.xml">
+  <!ENTITY accordion-renderer SYSTEM "custom/accordion-renderer.xml"> 
   
   <!ENTITY % property-editors-creator2 SYSTEM "dtd/property-editors-creator2.dtd">
   %property-editors-creator2;
@@ -370,6 +374,7 @@
     &rowselector-component;
     &outputChart-component;
     &uiseries-component;
+    &accordion-component;
     
 	<render-kit>
 
@@ -429,6 +434,7 @@
         &rowselector-renderer;
         &outputChart-renderer;	
         &uiseries-renderer;
+        &accordion-renderer;
 
 	</render-kit>
 
