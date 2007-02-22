@@ -312,12 +312,13 @@ public class TagLibraryGenerator extends AbstractGenerator {
                                 .getComponentClass());
                         
                         String[] hasVarClassArray = new String[] {
-                            "HtmlDataTable", "PanelTabSet", "PanelSeries" };
-                        String[] castClassArray = new String[] {
-                            "javax.faces.component.UIData",
-                            "com.icesoft.faces.component.panelseries.UISeries",
-                            "com.icesoft.faces.component.panelseries.UISeries" };
-                        logger.log(Level.FINEST, "var class name="+ className);
+                                "HtmlDataTable", "PanelTabSet", "PanelSeries", "UIColumns"};
+                            String[] castClassArray = new String[] {
+                                "javax.faces.component.UIData",
+                                "com.icesoft.faces.component.panelseries.UISeries",
+                                "com.icesoft.faces.component.panelseries.UISeries",
+                                "com.icesoft.faces.component.ext.UIColumns"
+                                };                        logger.log(Level.FINEST, "var class name="+ className);
                         for (int v = 0; v < hasVarClassArray.length; v++) {
                             
                             if (className.equalsIgnoreCase(hasVarClassArray[v])) {

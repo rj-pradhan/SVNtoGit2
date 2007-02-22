@@ -5,8 +5,6 @@
 	<display-name>UIColumn</display-name>
 	<component-type>com.icesoft.faces.Column</component-type>
 
-	&ice-uicolumn-props;
-
 	<component-extension>
 		<base-component-type>javax.faces.Column</base-component-type>
 		<component-family>javax.faces.Column</component-family>
