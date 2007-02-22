@@ -302,14 +302,18 @@ public class HtmlDataTable
         this.colNumber = colNumber;
     }
 
-    public boolean isScrollable() {
+    public Boolean getScrollable(){
+        return isScrollable();
+    }
+
+    public Boolean isScrollable() {
         if (scrollable != null) {
-            return scrollable.booleanValue();
+            return scrollable;
         }
         ValueBinding vb = getValueBinding("scrollable");
         Boolean v =
                 vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
-        return v != null ? v.booleanValue() : false;
+        return v != null ? v : Boolean.FALSE;
     }
 
     public void setScrollable(Boolean scrollable) {
