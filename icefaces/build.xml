@@ -99,7 +99,7 @@
 </target>
 
 <target name="zip.src">
-    <touch  file="${bin.bundle.file}" mkdirs="true"/>
+    <touch  file="${bin.bundle.file}" mkdirs="true"/> 
     <delete file="${bin.bundle.file}"/>
 
     <ice:zip destfile="${bin.bundle.file}">
