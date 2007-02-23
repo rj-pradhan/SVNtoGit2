@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+	<description>
+		<![CDATA[ Add effects to parent component ]]>
+	</description>
+	<display-name>effect</display-name>
+	<component-type>com.icesoft.faces.ApplyEffect</component-type>
+
+	&ice-cust-effect-props;
+	<component-extension>
+	    <base-component-type>com.sun.faces.Component</base-component-type>
+		<component-family>com.icesoft.faces.ApplyEffectFamily</component-family>
+		<renderer-type>com.icesoft.faces.ApplyEffectRenderer</renderer-type>
+	</component-extension>
+</component>

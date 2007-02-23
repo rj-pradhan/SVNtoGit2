@@ -310,7 +310,11 @@
   
   <!ENTITY ice-cust-accordion-props SYSTEM "ice_cust_properties/cust-accordion-props.xml">
   <!ENTITY accordion-component SYSTEM "custom/accordion-component.xml">
-  <!ENTITY accordion-renderer SYSTEM "custom/accordion-renderer.xml">  
+  <!ENTITY accordion-renderer SYSTEM "custom/accordion-renderer.xml">
+
+<!ENTITY ice-cust-effect-props SYSTEM "ice_cust_properties/cust-effect-props.xml">
+  <!ENTITY effect-component SYSTEM "custom/effect-component.xml">
+  <!ENTITY effect-renderer SYSTEM "custom/effect-renderer.xml">          
   
   <!ENTITY % property-editors SYSTEM "dtd/property-editors.dtd">
   %property-editors;
@@ -376,9 +380,10 @@
     &outputChart-component;
     &uiseries-component;
     &accordion-component;
+    &effect-component;
   
     
-	<render-kit>
+    <render-kit>
 
 		<!-- extended component -->
 		&ice-button-renderer;
@@ -437,6 +442,7 @@
         &outputChart-renderer;	
         &uiseries-renderer;
         &accordion-renderer;
-	</render-kit>
+        &effect-renderer;
+    </render-kit>
 
 </faces-config>

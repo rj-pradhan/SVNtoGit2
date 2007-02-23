@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<renderer>
+         <description>
+             <![CDATA[ Add effects to parent component ]]>
+         </description>
+	<component-family>com.icesoft.faces.ApplyEffectFamily</component-family>
+	<renderer-type>com.icesoft.faces.ApplyEffectRenderer</renderer-type>
+	<renderer-extension>
+		<instance-name>effect</instance-name>
+		<is-container>false</is-container>
+		<renders-children>false</renders-children>
+		<tag-name>effect</tag-name>
+		<taglib-prefix>@taglib-prefix@</taglib-prefix>
+		<taglib-uri>@taglib-uri@</taglib-uri>
+	</renderer-extension>
+</renderer>

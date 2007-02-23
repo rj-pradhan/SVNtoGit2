@@ -104,4 +104,11 @@ public class LocalEffectEncoder {
             }
         }
     }
+
+    public static void encodeLocalEffect(String id, Effect fx, String event, FacesContext facesContext){
+        String value = JavascriptContext.applyEffect(fx, id, facesContext);
+        //TODO: refactor so that is dosen't clobber an existing effect
+        String js = "$('" + id + "').on"+event  + "=function(){" + value + "};";
+        JavascriptContext.addJavascriptCall(facesContext, js);
+    }
 }
