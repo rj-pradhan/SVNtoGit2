@@ -60,7 +60,7 @@ import java.util.regex.Pattern;
  */
 public class BlockingResponseState implements ResponseState, Serializable {
     protected static Log log = LogFactory.getLog(BlockingResponseState.class);
-    protected int maxNumberOfUpdates = 50;
+    protected int maxNumberOfUpdates = 200;
 
     private Kicker kicker;
     private Object eventLock = new Object();
@@ -184,7 +184,7 @@ public class BlockingResponseState implements ResponseState, Serializable {
             return;
         }
 
-        if (unflushed > maxUnflushed) {
+        if (updates.size() > maxUnflushed) {
             throw new RuntimeException("viewNumber " + viewNumber +
                                        " update queue exceeded " + unflushed);
         }
