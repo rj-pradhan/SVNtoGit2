@@ -49,6 +49,7 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -124,7 +125,7 @@ public class PersistentFacesPortlet implements Portlet {
         try {
             Lifecycle lifecycle = commonlet.getLifecycle();
             lifecycle.execute(facesContext);
-            setupPersistentContext(externalContext, request);
+            setupPersistentContext(externalContext, request, response);
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error(e.getMessage(), e);
@@ -229,7 +230,7 @@ public class PersistentFacesPortlet implements Portlet {
             Lifecycle lifecycle = commonlet.getLifecycle();
             lifecycle.execute(facesContext);
             lifecycle.render(facesContext);
-            setupPersistentContext(externalContext, request);
+            setupPersistentContext(externalContext, request, response);
 
             ResponseState state =
                     stateManager.getState(session, String.valueOf(viewNumber));
@@ -264,7 +265,7 @@ public class PersistentFacesPortlet implements Portlet {
      * @param request
      */
     void setupPersistentContext(ExternalContext extContext,
-                                PortletRequest request) {
+            PortletRequest request, PortletResponse response) {
 
         // We have our own copy of the request because when a request has completed, we need to
         // ensure access to some of its information.  So we keep relevant information
@@ -276,6 +277,11 @@ public class PersistentFacesPortlet implements Portlet {
         BridgeExternalContext perExtContext =
                 new BridgeExternalContext(extContext.getContext(), envReq,
                                           null);
+       //TODO remove this once proper virtual response is created
+       if (response instanceof RenderResponse)  {
+            perExtContext.setPortletNamespace(
+                    ((RenderResponse) response).getNamespace());
+        }
         perExtContext.setRequestServletPath(extContext.getRequestServletPath());
         BridgeFacesContext persistentContext =
                 new BridgeFacesContext(perExtContext);

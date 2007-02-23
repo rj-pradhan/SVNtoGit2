@@ -805,6 +805,14 @@ public class BridgeExternalContext extends ExternalContext {
     }
 
 
+    private String portletNamespace;
+
+    //TODO Remove this method once proper virtual Response is created
+    public void setPortletNamespace(String namespace)  {
+        this.portletNamespace = namespace;
+    }
+
+
     public String encodeNamespace(String name) {
         //TODO
         //Not sure what or why we are doing this here. Hopefully more correct
@@ -829,6 +837,9 @@ public class BridgeExternalContext extends ExternalContext {
                             ((RenderResponse) portletResponse).getNamespace());
                     buf.append(name);
                     name = buf.toString();
+                } else {
+                    //TODO Remove this once proper virtual Response is created
+                    name = portletNamespace + name;
                 }
                 break;
         }
