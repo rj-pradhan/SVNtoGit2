@@ -33,24 +33,13 @@
 
 package com.icesoft.faces.webapp.xmlhttp;
 
-import com.icesoft.faces.util.DOMUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Element;
-
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.regex.Pattern;
-
 import org.mortbay.util.ajax.Continuation;
 import org.mortbay.util.ajax.ContinuationSupport;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Implementation of blocking functionality via Jetty Continuations
@@ -85,7 +74,6 @@ public class ContinuationResponseState extends BlockingResponseState {
         if (log.isTraceEnabled()) {
             log.trace("Continuation DOMUpdate flushed");
         }
-        unflushed++;
         if (null != continuation) {
             continuation.resume();
         }

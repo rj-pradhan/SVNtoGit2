@@ -38,8 +38,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
@@ -60,7 +60,6 @@ import java.util.regex.Pattern;
  */
 public class BlockingResponseState implements ResponseState, Serializable {
     protected static Log log = LogFactory.getLog(BlockingResponseState.class);
-    protected int maxNumberOfUpdates = 50;
 
     private Kicker kicker;
     private Object eventLock = new Object();
@@ -71,7 +70,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
     protected String viewNumber;
 
     private final int maxUnflushed = 200;
-    protected int unflushed = 0;
     protected HttpSession session;
 
     /*
@@ -146,7 +144,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
             log.trace("DOMUpdate flushed");
         }
         synchronized (kicker) {
-            unflushed++;
             kicker.isKicked = true;
             kicker.notifyAll();
         }
@@ -184,9 +181,10 @@ public class BlockingResponseState implements ResponseState, Serializable {
             return;
         }
 
-        if (updates.size() > maxUnflushed) {
+        int unflushedElements = updates.size();
+        if (unflushedElements > maxUnflushed) {
             throw new RuntimeException("viewNumber " + viewNumber +
-                                       " update queue exceeded " + unflushed);
+                                       " update queue exceeded " + unflushedElements);
         }
         String nodeString = DOMUtils.nodeToString(element);
         this.addUpdate(element.getAttribute("id"), nodeString);
@@ -201,7 +199,6 @@ public class BlockingResponseState implements ResponseState, Serializable {
             ((Update) i.next()).serialize(writer);
         }
         this.updates.clear();
-        unflushed = 0;
     }
 
     private synchronized void addUpdate(String address, String content) {
