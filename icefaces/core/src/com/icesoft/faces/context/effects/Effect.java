@@ -405,6 +405,10 @@ public abstract class Effect {
         this.sequenceId = sequenceId;
     }
 
+    public void setOptions(String options){       
+        ea.setOptions(options);
+    }
+
     public int hashCode() {
         return getIntfromString(toString());
     }

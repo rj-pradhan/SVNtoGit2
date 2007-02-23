@@ -45,6 +45,7 @@ public class EffectsArguments {
     private Map map = new HashMap();
     private List parameter = new ArrayList();
     private NumberFormat floatFormat = NumberFormat.getNumberInstance(Locale.US);
+    private String options = null;
 
     public EffectsArguments(){
         floatFormat.setGroupingUsed(false);
@@ -70,7 +71,11 @@ public class EffectsArguments {
         map.put(argument, "'" + value + "'");
     }
 
-    public void add(String argument, float value) {       
+    public void setOptions(String value){
+        options = value;
+    }
+
+    public void add(String argument, float value) {
         map.put(argument, floatFormat.format(value));
     }
 
@@ -89,6 +94,11 @@ public class EffectsArguments {
 
 
     public String toString() {
+        if(options != null){
+            // To prevent javascript injection
+            options = options.replace(')', ' ');
+            options = options.replace('}', ' ');
+        }
         StringBuffer sb = new StringBuffer(",{");
         Iterator iter = parameter.iterator();
         if (iter.hasNext()) {
@@ -102,6 +112,9 @@ public class EffectsArguments {
             }
         }
         if (map.isEmpty()) {
+            if(options != null){
+                return ",{ " +options + "})";
+            }
             return ");";
         }
 
@@ -114,7 +127,11 @@ public class EffectsArguments {
                 sb.append(",");
             }
         }
+        if(options != null){
+            sb.append(",").append(options);
+        }
         sb.append("});");
+        
         return sb.toString();
     }
 }

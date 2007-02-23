@@ -43,6 +43,8 @@ public class Move extends Effect {
     private int y;
     private String mode;
 
+
+    public Move(){}
     /**
      * Move an element to a new position
      *

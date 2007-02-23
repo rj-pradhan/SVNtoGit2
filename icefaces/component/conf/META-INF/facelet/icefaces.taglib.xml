@@ -13,6 +13,13 @@
 		</component>
 	</tag>
 	<tag>
+		<tag-name>effect</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.ApplyEffect</component-type>
+			<renderer-type>com.icesoft.faces.ApplyEffectRenderer</renderer-type>
+		</component>
+	</tag>
+	<tag>
 		<tag-name>panelBorder</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.BorderLayout</component-type>
