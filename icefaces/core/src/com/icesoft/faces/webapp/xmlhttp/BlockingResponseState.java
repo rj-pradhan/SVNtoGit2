@@ -60,7 +60,7 @@ import java.util.regex.Pattern;
  */
 public class BlockingResponseState implements ResponseState, Serializable {
     protected static Log log = LogFactory.getLog(BlockingResponseState.class);
-    protected int maxNumberOfUpdates = 200;
+    protected int maxNumberOfUpdates = 50;
 
     private Kicker kicker;
     private Object eventLock = new Object();
@@ -70,7 +70,7 @@ public class BlockingResponseState implements ResponseState, Serializable {
     protected String iceID;
     protected String viewNumber;
 
-    private final int maxUnflushed = 10;
+    private final int maxUnflushed = 200;
     protected int unflushed = 0;
     protected HttpSession session;
 
