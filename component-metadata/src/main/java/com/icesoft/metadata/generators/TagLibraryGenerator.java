@@ -169,7 +169,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
         outputFile.delete();
         getWriter().setOutputWriter(
                 new BufferedWriter(new FileWriter(outputFile)));
-        logger.log(Level.INFO, "Generate " + outputFile.getAbsoluteFile());
+        logger.log(Level.FINEST, "Generate " + outputFile.getAbsoluteFile());
         license(cb);
         header(cb);
         required(cb);

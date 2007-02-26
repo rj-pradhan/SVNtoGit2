@@ -124,7 +124,6 @@ public final class MetadataGenerator {
             String url = "file:"+WORKING_FOLDER+urlList[i];
             try {
                 parser.parse(new URL(url), config);
-                //logger.info("parsing file="+ url);
             } catch (MalformedURLException ex) {
                 ex.printStackTrace();
                 System.exit(1);
@@ -144,12 +143,13 @@ public final class MetadataGenerator {
         String standard_html_renderkit = "jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml";
         String standard_html_renderkit_overlay = "jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml";
         String standard_html_renderkit_fixup = "jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml";
-        String component_faces_config = "../../../component/conf/META-INF/faces-config.xml";
-        String extended_faces_config = "conf/extended-faces-config.xml";
         
         String[] baseUrlList = new String[]{standard_html_renderkit, standard_html_renderkit_overlay, standard_html_renderkit_fixup};
         parseXML(baseUrlList);
         exclude();
+                
+        String component_faces_config = "../../../component/conf/META-INF/faces-config.xml";
+        String extended_faces_config = "conf/extended-faces-config.xml";
         String[] urlList = new String[]{component_faces_config, extended_faces_config};
         parseXML(urlList);
         
@@ -159,6 +159,7 @@ public final class MetadataGenerator {
     private void execute(String args[]) throws Exception {
         
         init();
+        //TODO: metadata 
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (arg.equals("-c")) {
