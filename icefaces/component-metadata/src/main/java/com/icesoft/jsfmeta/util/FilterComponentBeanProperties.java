@@ -13,7 +13,7 @@ import com.sun.rave.jsfmeta.beans.PropertyBean;
 /*
  * filter to reset category for component beans
  *
- * TODO: create new category 
+ * TODO: remove me
  */
 
 public class FilterComponentBeanProperties {
