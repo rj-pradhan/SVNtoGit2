@@ -122,7 +122,7 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
                     .getMethod("getAttribute", new Class[]{String.class});
         } catch (Throwable t) {
             if (log.isDebugEnabled()) {
-                log.debug("Portlet classes not available: " + t);
+                log.debug("Portlet classes not available");
             }
         }
 
