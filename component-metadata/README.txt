@@ -15,7 +15,7 @@ The faces-config.xml contains grammar information and a minimal set of metadata 
 components, attributes, properties, facets, and renderers. 
 
 Extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO xsd). 
-It is defined with data for generating tag class,  tld file, component baseline and beainfo specifc to IDE.
+It is defined with data for generating tag class,  tld file and beainfo specifc to IDE.
 
 extended-faces-config.xml (Netbeans VWP specifc)
 extended-faces-config-creator2.xml (Creator 2 specific )

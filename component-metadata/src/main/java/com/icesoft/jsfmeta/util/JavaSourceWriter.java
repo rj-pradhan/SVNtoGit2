@@ -1,4 +1,4 @@
-package com.icesoft.metadata.generators;
+package com.icesoft.jsfmeta.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;

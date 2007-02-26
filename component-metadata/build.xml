@@ -56,127 +56,20 @@
         <copy todir="${maven.build.output}" filtering="on">
             <fileset dir="src/main/resources" />
         </copy>
-    </target>
+    </target>    
     
-    <!-- Creator 2 generator -->
-    <target name="creator2-generator" description="code generator" depends="conf-changed,compile" unless="conf-uptodate">
-        <!-- validate -->
-        <java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
-            <classpath refid="build.classpath" />
-        </java>
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/taglib/main/java" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.component.ext.taglib" />
-            <arg line="-v" />
-            <arg line="--tlClass" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <!-- generate tld file -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/tld" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.component.ext.taglib" />
-            <arg line="-v"/>
-            <!-- -t name of output TLD file relative to -d directory -->
-            <arg line="-t icefaces_component.tld" />
-            <arg line="--tlDescriptor" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <!-- generate baseline components source code -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-
-            <arg line="-d ${project.build.directory}/generated-sources/component/main/java" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <!-- The following line causes component and property descriptions  -->
-            <!-- to be overridden from the renderer and attribute descriptions. -->
-            <!-- If you wish to have component and property descriptions used   -->
-            <!-- in the components (so that the output is different from the    -->
-            <!-- comments in the TLDDocs), simply remove the following line.    -->
-            <arg line="-O" />
-            <arg line="-v" />
-            <arg line="--cpClassBase" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <!--  TODO change component naming to property -->
-        <!-- Specific BeanInfo for Creator 2 only -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/beaninfo/main/java" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <!-- jar:file:${jsf-impl.jar}!/com/sun/faces/standard-html-renderkit.xml" -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-v" />
-            <arg line="--cpBeanInfoBase" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config-creator2.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-v" />
-            <arg line="--cpTestBeanInfoBase" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <touch file="${project.build.directory}/generated-sources/created" />
-        <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html" />
-    </target>
-    
-    <!-- netbeans 5.5 VWP generator-->
+    <!-- generator -->
     <target name="generator" description="code generator" depends="conf-changed" unless="conf-uptodate">
         <!-- validate meatdata xml file -->
         <java classname="com.icesoft.faces.metadata.TestValidMetadataXML" failonerror="true" fork="true">
             <classpath refid="build.classpath" />
         </java>
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
+        
+        <!-- generate tag class -->
+        <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/taglib/main/java" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
+            <!-- TODO: using jar:file known issue ant bug -->          
+           
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
@@ -186,76 +79,22 @@
         </java>
         
         <!-- generate tld file -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
+        <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/tld" />
             <!-- TODO: using jar:file known issue ant bug -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-T com.icesoft.faces.component.ext.taglib" />
             <arg line="-v" />
-            <!-- -t name of output TLD file relative to -d directory -->
             <arg line="-t icefaces_component.tld" />
             <arg line="--tlDescriptor" />
             <classpath refid="build.classpath" />
-        </java>
+        </java>                
         
-        <!-- generate baseline components source code -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <!--
-                <jvmarg line="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8000"/>
-            -->
-            <arg line="-d ${project.build.directory}/generated-sources/component/main/java" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <!-- The following line causes component and property descriptions  -->
-            <!-- to be overridden from the renderer and attribute descriptions. -->
-            <!-- If you wish to have component and property descriptions used   -->
-            <!-- in the components (so that the output is different from the    -->
-            <!-- comments in the TLDDocs), simply remove the following line.    -->
-            <arg line="-O" />
-            <arg line="-v" />
-            <arg line="--cpClassBase" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <!--  TODO change component naming to property -->
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/beaninfo/main/java" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <!-- jar:file:${jsf-impl.jar}!/com/sun/faces/standard-html-renderkit.xml" -->
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-v" />
-            <arg line="--cpBeanInfoBase" />
-            <classpath refid="build.classpath" />
-        </java>
-        
-        <java classname="com.icesoft.metadata.generators.Main" failonerror="true" fork="true">
+        <!-- generate test beaninfo -->
+        <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
             <arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml" />
-            <arg line="-f file:${project.build.directory}/classes/jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml" />
-            <arg line="-x" />
-            <arg line="-f file:${project.build.directory}/../../component/conf/META-INF/faces-config.xml" />
-            <arg line="-f file:${project.build.directory}/classes/conf/extended-faces-config.xml" />
+                    
             <arg line="-p ${project.taglib.prefix}" />
             <arg line="-u ${project.taglib.uri}" />
             <arg line="-v" />

@@ -1,5 +1,7 @@
 package com.icesoft.metadata.generators;
 
+import com.icesoft.jsfmeta.util.AbstractGenerator;
+import com.icesoft.jsfmeta.util.JavaSourceWriter;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -167,7 +169,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
         outputFile.delete();
         getWriter().setOutputWriter(
                 new BufferedWriter(new FileWriter(outputFile)));
-        logger.log(Level.FINER, "Generate " + outputFile.getAbsoluteFile());
+        logger.log(Level.INFO, "Generate " + outputFile.getAbsoluteFile());
         license(cb);
         header(cb);
         required(cb);
