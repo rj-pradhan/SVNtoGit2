@@ -238,12 +238,16 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
             itemList = Util.getSelectItems(FacesContext.getCurrentInstance(),
                                            this);
         }
-        Iterator items = itemList.iterator();
-        SelectItem item = null;
-        itemMap.clear();
-        while (items.hasNext()) {
-            item = (SelectItem) items.next();
-            itemMap.put(item.getLabel(), item);
+        try {
+            Iterator items = itemList.iterator();
+            SelectItem item = null;
+            itemMap.clear();
+            while (items.hasNext()) {
+                item = (SelectItem) items.next();
+                itemMap.put(item.getLabel(), item);
+            }
+        } catch(NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
