@@ -333,10 +333,7 @@ public class TableRenderer
         int columnStyleIndex = 0;
         int columnStylesMaxIndex = columnStyles.length - 1;
         while (uiData.isRowAvailable()) {
-            if ((numberOfRowsToDisplay > 0) &&
-                (countOfRowsDisplayed >= numberOfRowsToDisplay)) {
-                break;
-            }
+
            String selectedClass =null;
             Iterator childs = uiData.getChildren().iterator();
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
@@ -442,6 +439,10 @@ public class TableRenderer
             }
             rowIndex++;
             countOfRowsDisplayed++;
+            if (numberOfRowsToDisplay > 0 &&
+                    countOfRowsDisplayed >= numberOfRowsToDisplay) {
+                    break;
+                }            
             uiData.setRowIndex(rowIndex);
         }
         uiData.setRowIndex(-1);
