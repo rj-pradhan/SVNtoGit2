@@ -1,5 +1,7 @@
 package com.icesoft.metadata.generators;
 
+import com.icesoft.jsfmeta.util.AbstractGenerator;
+import com.icesoft.jsfmeta.util.JavaSourceWriter;
 import com.sun.rave.jsfmeta.beans.*;
 import java.io.*;
 import java.util.*;

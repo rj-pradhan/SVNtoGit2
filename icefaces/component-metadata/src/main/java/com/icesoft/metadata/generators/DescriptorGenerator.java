@@ -1,6 +1,7 @@
 
 package com.icesoft.metadata.generators;
 
+import com.icesoft.jsfmeta.util.AbstractGenerator;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
