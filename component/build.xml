@@ -217,7 +217,9 @@
             <src>
                 <pathelement location="test/java" />
                 <pathelement location="../component-metadata/target/generated-sources/testbeaninfo/main/java"/>
+                <!-- TODO:
                 <pathelement location="../component-metadata/target/generated-sources/component/main/java"/>
+                -->
             </src>
             <classpath>
                 <path refid="compile.run.classpath" />
