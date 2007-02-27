@@ -67,37 +67,18 @@
         
         <!-- generate tag class -->
         <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/taglib/main/java" />
-            <!-- TODO: using jar:file known issue ant bug -->          
-           
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.component.ext.taglib" />
-            <arg line="-v" />
             <arg line="--tlClass" />
             <classpath refid="build.classpath" />
         </java>
         
         <!-- generate tld file -->
         <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/tld" />
-            <!-- TODO: using jar:file known issue ant bug -->
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-T com.icesoft.faces.component.ext.taglib" />
-            <arg line="-v" />
-            <arg line="-t icefaces_component.tld" />
             <arg line="--tlDescriptor" />
             <classpath refid="build.classpath" />
         </java>                
         
         <!-- generate test beaninfo -->
         <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
-            <arg line="-d ${project.build.directory}/generated-sources/testbeaninfo/main/java" />
-                    
-            <arg line="-p ${project.taglib.prefix}" />
-            <arg line="-u ${project.taglib.uri}" />
-            <arg line="-v" />
             <arg line="--cpTestBeanInfoBase" />
             <classpath refid="build.classpath" />
         </java>
