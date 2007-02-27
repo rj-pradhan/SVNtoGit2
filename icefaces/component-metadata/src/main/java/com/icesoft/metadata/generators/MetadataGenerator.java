@@ -83,16 +83,20 @@ public final class MetadataGenerator {
     
     private void parseXML(String[] urlList){
         for(int i=0; i< urlList.length; i++){
-            String url = "file:"+GeneratorUtil.getWorkingFolder()+urlList[i];
+            String url = urlList[i];
             try {
+                
                 parser.parse(new URL(url), config);
             } catch (MalformedURLException ex) {
+                System.out.println("@Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             } catch (IOException ex) {
+                System.out.println("@Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             } catch (SAXException ex) {
+                System.out.println("@Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             }
@@ -111,17 +115,17 @@ public final class MetadataGenerator {
     //TODO: move to catalog
     private void init(){
         
-        String standard_html_renderkit = "jar_xml_dtd/com/sun/faces/standard-html-renderkit.xml";
-        String standard_html_renderkit_overlay = "jar_xml_dtd/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml";
-        String standard_html_renderkit_fixup = "jar_xml_dtd/META-INF/standard-html-renderkit-fixups.xml";
+        String standard_html_renderkit = "jar:file:"+GeneratorUtil.getWorkingFolder()+"jsfmeta-resources.jar!/com/sun/faces/standard-html-renderkit.xml";
+        String standard_html_renderkit_overlay = "jar:file:"+GeneratorUtil.getWorkingFolder()+"jsfmeta-resources.jar!/com/sun/rave/jsfmeta/standard-html-renderkit-overlay.xml";
+        String standard_html_renderkit_fixup = "jar:file:"+GeneratorUtil.getWorkingFolder()+"jsfmeta-resources.jar!/META-INF/standard-html-renderkit-fixups.xml";
         
         String[] baseUrlList = new String[]{standard_html_renderkit, standard_html_renderkit_overlay, standard_html_renderkit_fixup};
         parseXML(baseUrlList);
         
         exclude();
         
-        String component_faces_config = "../../../component/conf/META-INF/faces-config.xml";
-        String extended_faces_config = "conf/extended-faces-config.xml";
+        String component_faces_config = "file:"+GeneratorUtil.getWorkingFolder()+"../../../component/conf/META-INF/faces-config.xml";
+        String extended_faces_config = "file:"+GeneratorUtil.getWorkingFolder()+"conf/extended-faces-config.xml";
         String[] urlList = new String[]{component_faces_config, extended_faces_config};
         parseXML(urlList);
         
