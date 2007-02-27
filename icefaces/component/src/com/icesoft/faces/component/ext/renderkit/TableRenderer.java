@@ -295,6 +295,10 @@ public class TableRenderer
 
         HtmlDataTable uiData = (HtmlDataTable) uiComponent;
         int rowIndex = uiData.getFirst();
+        if (uiData.getRowCount() <= rowIndex) {
+            domContext.stepOver();
+            return;
+        }
         uiData.setRowIndex(rowIndex);
         int numberOfRowsToDisplay = uiData.getRows();
         int countOfRowsDisplayed = 0;
@@ -439,10 +443,12 @@ public class TableRenderer
             }
             rowIndex++;
             countOfRowsDisplayed++;
-            if (numberOfRowsToDisplay > 0 &&
-                    countOfRowsDisplayed >= numberOfRowsToDisplay) {
+            if ((numberOfRowsToDisplay > 0 &&
+                    countOfRowsDisplayed >= numberOfRowsToDisplay) || 
+                    (rowIndex >= uiData.getRowCount())) {
                     break;
-                }            
+            }            
+            
             uiData.setRowIndex(rowIndex);
         }
         uiData.setRowIndex(-1);
