@@ -217,11 +217,12 @@ public class HtmlDataTable
         // loop over dataModel processing each row once
         while (1 == 1) {
             // break if we have processed the number of rows requested
-            if ((displayedRows > 0) && (++rowsProcessed > displayedRows)) {
+            if ((++currentRowIndex >= getRowCount()) || 
+                    ((displayedRows > 0) && (++rowsProcessed > displayedRows))) {
                 break;
             }
             // process the row at currentRowIndex
-            setRowIndex(++currentRowIndex);
+            setRowIndex(currentRowIndex);
             // break if we've moved past the last row
             if (!isRowAvailable()) {
                 break;
