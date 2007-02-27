@@ -1,6 +1,7 @@
 package com.icesoft.metadata.generators;
 
 import com.icesoft.jsfmeta.util.AbstractGenerator;
+import com.icesoft.jsfmeta.util.InternalConfig;
 import com.icesoft.jsfmeta.util.JavaSourceWriter;
 import com.sun.rave.jsfmeta.beans.*;
 import java.io.*;
@@ -29,13 +30,16 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
     
     protected boolean useComponentResourceBundles;
     
-    public ComponentTestBeanInfoGenerator() {
-        
-        base = false;
+    public ComponentTestBeanInfoGenerator(InternalConfig internalConfig) {
+        super(internalConfig);
+        base = true;
         categoryDescriptors = "com.icesoft.faces.ide.creator2.util.CategoryDescriptors";
         defaultMarkupSection = "FORM";
         bundleMaps = new HashMap();
         useComponentResourceBundles = false;
+        baseBI = internalConfig.getProperty("project.base.beaninfo");
+        implBD = internalConfig.getProperty("project.impl.beanDescriptor");
+        implPD = internalConfig.getProperty("project.impl.propertyDescriptor");
     }
     
     public boolean getBase() {

@@ -1,23 +1,22 @@
 package com.icesoft.metadata.generators;
 
-import com.icesoft.jsfmeta.util.DebugUtil;
+import com.icesoft.jsfmeta.util.GeneratorUtil;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import com.icesoft.jsfmeta.MetadataXmlParser;
+import com.icesoft.jsfmeta.util.ConfigStorage;
+import com.icesoft.jsfmeta.util.InternalConfig;
 import com.sun.rave.jsfmeta.beans.ComponentBean;
 import com.sun.rave.jsfmeta.beans.ConverterBean;
 import com.sun.rave.jsfmeta.beans.FacesConfigBean;
-import com.sun.rave.jsfmeta.beans.FacetBean;
-import com.sun.rave.jsfmeta.beans.RenderKitBean;
 import com.sun.rave.jsfmeta.beans.RendererBean;
 import com.sun.rave.jsfmeta.beans.ValidatorBean;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
+import java.util.Enumeration;
+import java.util.Properties;
 import java.util.logging.Logger;
 import org.xml.sax.SAXException;
 
@@ -33,18 +32,8 @@ public final class MetadataGenerator {
     
     private String constantMethodBindingPackage;
     
-    private String defaultMarkupSection;
-    
-    private String defaultRenderKitId;
-    
-    private String defaultTaglibPrefix;
-    
-    private String defaultTaglibURI;
-    
-    private String descriptor;
-    
-    private File dest;
-    
+    private String defaultMarkupSection;        
+        
     private List excludes;
     
     private String implBD;
@@ -61,15 +50,9 @@ public final class MetadataGenerator {
     
     private MetadataXmlParser parser;
     
-    private String tagClassPackage;
-    
     private List validators;
     
-    private boolean verbose;
-    
-    private boolean warning;
-    
-    private static final String WORKING_FOLDER;
+    private InternalConfig internalConfig;
     
     public MetadataGenerator() {
         
@@ -78,11 +61,6 @@ public final class MetadataGenerator {
         config = new FacesConfigBean();
         constantMethodBindingPackage = null;
         defaultMarkupSection = null;
-        defaultRenderKitId = "HTML_BASIC";
-        defaultTaglibPrefix = null;
-        defaultTaglibURI = null;
-        descriptor = "taglib.tld";
-        dest = new File(".");
         excludes = new ArrayList();
         implBD = "java.beans.BeanDescriptor";
         implPD = "java.beans.PropertyDescriptor";
@@ -91,37 +69,21 @@ public final class MetadataGenerator {
         noBundles = false;
         override = false;
         parser = new MetadataXmlParser();
-        tagClassPackage = null;
         validators = new ArrayList();
-        verbose = false;
-        warning = false;
     }
     
-    static{
-        String result = ".";
-        try {
-            ClassLoader classLoader = Thread.currentThread()
-            .getContextClassLoader();
-            URL localUrl = classLoader.getResource(".");
-            if(localUrl != null){
-                result = localUrl.getPath();
-            }
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        WORKING_FOLDER = result;
-    }
     
     public static void main(String args[]) throws Exception {
         
         MetadataGenerator main = new MetadataGenerator();
+        
+        main.loadProps();
         main.execute(args);
     }
     
     private void parseXML(String[] urlList){
         for(int i=0; i< urlList.length; i++){
-            String url = "file:"+WORKING_FOLDER+urlList[i];
+            String url = "file:"+GeneratorUtil.getWorkingFolder()+urlList[i];
             try {
                 parser.parse(new URL(url), config);
             } catch (MalformedURLException ex) {
@@ -137,6 +99,15 @@ public final class MetadataGenerator {
         }
     }
     
+    
+    private void loadProps(){
+        
+        init();
+        String fileName = GeneratorUtil.getWorkingFolder()+"conf/config.properties";
+        Properties props = ConfigStorage.getInstance(fileName).loadProperties();        
+        internalConfig = new InternalConfig(props);
+    }
+    
     //TODO: move to catalog
     private void init(){
         
@@ -146,8 +117,9 @@ public final class MetadataGenerator {
         
         String[] baseUrlList = new String[]{standard_html_renderkit, standard_html_renderkit_overlay, standard_html_renderkit_fixup};
         parseXML(baseUrlList);
+        
         exclude();
-                
+        
         String component_faces_config = "../../../component/conf/META-INF/faces-config.xml";
         String extended_faces_config = "conf/extended-faces-config.xml";
         String[] urlList = new String[]{component_faces_config, extended_faces_config};
@@ -158,90 +130,8 @@ public final class MetadataGenerator {
     
     private void execute(String args[]) throws Exception {
         
-        init();
-        //TODO: metadata 
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
-            if (arg.equals("-c")) {
-                categoryDescriptors = args[++i];
-                continue;
-            }
-            if (arg.equals("-C")) {
-                constantMethodBindingPackage = args[++i];
-                continue;
-            }
-            if (arg.equals("-d")) {
-                dest = new File(args[++i]);
-                dest.mkdirs();
-                continue;
-            }
-            if (arg.equals("-e")) {
-                excludes.add(args[++i]);
-                continue;
-            }
-            
-            if (arg.equals("-h")) {
-                usage();
-                continue;
-            }
-            if (arg.equals("-i")) {
-                includes.add(args[++i]);
-                continue;
-            }
-            if (arg.equals("-L")) {
-                listeners.add(args[++i]);
-                continue;
-            }
-            if (arg.equals("-m")) {
-                defaultMarkupSection = args[++i];
-                continue;
-            }
-            if (arg.equals("-nobundles")) {
-                noBundles = true;
-                continue;
-            }
-            if (arg.equals("-o"))
-                continue;
-            if (arg.equals("-O")) {
-                override = true;
-                continue;
-            }
-            if (arg.equals("-p")) {
-                defaultTaglibPrefix = args[++i];
-                continue;
-            }
-            if (arg.equals("-r")) {
-                defaultRenderKitId = args[++i];
-                continue;
-            }
-            if (arg.equals("-t")) {
-                descriptor = args[++i];
-                continue;
-            }
-            if (arg.equals("-T")) {
-                tagClassPackage = args[++i];
-                continue;
-            }
-            if (arg.equals("-u")) {
-                defaultTaglibURI = args[++i];
-                continue;
-            }
-            if (arg.equals("-v")) {
-                verbose = true;
-                continue;
-            }
-            if (arg.equals("-V")) {
-                validators.add(args[++i]);
-                continue;
-            }
-            if (arg.equals("-x")) {
-                exclude();
-                continue;
-            }
-            if (arg.equals("-w")) {
-                warning = !warning;
-                continue;
-            }
             if (arg.equals("--baseBI")) {
                 baseBI = args[++i];
                 continue;
@@ -289,78 +179,62 @@ public final class MetadataGenerator {
                 //TODO:
                 throw new IllegalArgumentException(arg);
             }
-        }
-        
+        }        
     }
     
     private void tagLibrary(boolean base) throws Exception {
-        
-        TagLibraryGenerator generator = new TagLibraryGenerator();
-        generator.setBase(base);
-        generator.setConfig(config);
-        
-        generator.setConstantMethodBindingPackage(constantMethodBindingPackage);
-        generator.setDefaultRenderKitId(defaultRenderKitId);
-        generator.setDest(dest);
-        generator.setExcludes((String[]) excludes.toArray(new String[excludes
-                .size()]));
-        generator.setIncludes((String[]) includes.toArray(new String[includes
-                .size()]));
-        generator.setTagClassPackage(tagClassPackage);
-        generator.setVerbose(verbose);
-        generator.generate();
+        try {
+            
+            TagLibraryGenerator generator = new TagLibraryGenerator(internalConfig);
+            
+            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/taglib/main/java");
+            defaultDest.mkdirs();
+            generator.setDest(defaultDest);
+            generator.setConfig(config);
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
     
     
-    //TODO: BaseComponentGenerator
+    //TODO: BaseLine ComponentGenerator
     private void component(boolean base) throws Exception {
     }
     
-    //TODO: IDEComponentBeanInfoGenerator
+    //TODO: IDE Specific ComponentBeanInfoGenerator
     private void componentBeanInfo(boolean base) throws Exception {
     }
     
     private void componentTestBeanInfo(boolean base) throws Exception {
-        ComponentTestBeanInfoGenerator generator = new ComponentTestBeanInfoGenerator();
-        generator.setBase(base);
-        generator.setBaseBI(baseBI);
-        generator.setCategoryDescriptors(categoryDescriptors);
-        generator.setConfig(config);
-        generator.setDefaultMarkupSection(defaultMarkupSection);
-        generator.setDefaultRenderKitId(defaultRenderKitId);
-        generator.setDefaultTaglibPrefix(defaultTaglibPrefix);
-        generator.setDefaultTaglibURI(defaultTaglibURI);
-        generator.setDest(dest);
-        generator.setExcludes((String[]) excludes.toArray(new String[excludes
-                .size()]));
-        generator.setImplBD(implBD);
-        generator.setImplPD(implPD);
-        generator.setIncludes((String[]) includes.toArray(new String[includes
-                .size()]));
-        generator.setUseComponentResourceBundles(!noBundles);
-        generator.setVerbose(verbose);
-        generator.generate();
+        try {
+            ComponentTestBeanInfoGenerator generator = new ComponentTestBeanInfoGenerator(internalConfig);
+            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/testbeaninfo/main/java");
+            defaultDest.mkdirs();
+            generator.setDest(defaultDest);
+            generator.setConfig(config);
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
     
     private void descriptor() throws Exception {
-        DescriptorGenerator generator = new DescriptorGenerator();
-        generator.setConfig(config);
-        generator.setDefaultRenderKitId(defaultRenderKitId);
-        generator.setDescriptor(descriptor);
-        generator.setDest(dest);
-        generator.setExcludes((String[]) excludes.toArray(new String[excludes
-                .size()]));
-        generator.setIncludes((String[]) includes.toArray(new String[includes
-                .size()]));
-        generator.setListeners((String[]) listeners
-                .toArray(new String[listeners.size()]));
-        generator.setPrefix(defaultTaglibPrefix);
-        generator.setTagClassPackage(tagClassPackage);
-        generator.setURI(defaultTaglibURI);
-        generator.setValidators((String[]) validators
-                .toArray(new String[validators.size()]));
-        generator.setVerbose(verbose);
-        generator.generate();
+        try {
+            TLDGenerator generator = new TLDGenerator(internalConfig);
+            generator.setConfig(config);
+            
+            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld");
+            defaultDest.mkdirs();
+            generator.setDest(defaultDest);
+            
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
     
     

@@ -1,6 +1,8 @@
 package com.icesoft.metadata.generators;
 
 import com.icesoft.jsfmeta.util.AbstractGenerator;
+import com.icesoft.jsfmeta.util.GeneratorUtil;
+import com.icesoft.jsfmeta.util.InternalConfig;
 import com.icesoft.jsfmeta.util.JavaSourceWriter;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,11 +31,12 @@ public class TagLibraryGenerator extends AbstractGenerator {
     
     private String tagClassPackage;
     
-    public TagLibraryGenerator() {
-        
-        base = false;
-        constantMethodBindingPackage = null;
-        tagClassPackage = null;
+    public TagLibraryGenerator(InternalConfig internalConfig) {
+        super(internalConfig);
+           
+        base = Boolean.getBoolean(internalConfig.getProperty("project.base.beaninfo"));
+        constantMethodBindingPackage = internalConfig.getProperty("constantMethodBinding");
+        tagClassPackage = internalConfig.getProperty("project.taglib.package");
     }
     
     public boolean getBase() {
@@ -41,6 +44,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
     }
     
     public void setBase(boolean base) {
+        
         this.base = base;
     }
     

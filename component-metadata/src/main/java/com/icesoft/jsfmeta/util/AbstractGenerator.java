@@ -147,14 +147,14 @@ public abstract class AbstractGenerator {
 	}
 	
 	
-	public AbstractGenerator() {
+	public AbstractGenerator(InternalConfig internalConfig) {
 
 		defaultRenderKitId = RenderKitFactory.HTML_BASIC_RENDER_KIT;
 		excludes = new String[0];
 		includes = new String[0];
 		config = null;
 		dest = new File(".");
-		verbose = false;
+		verbose = Boolean.getBoolean(internalConfig.getProperty("project.verbose"));
 		writer = new JavaSourceWriter();
 	}
 
@@ -204,6 +204,7 @@ public abstract class AbstractGenerator {
 	}
 
 	public void setVerbose(boolean verbose) {
+            System.out.println("@@output"+verbose);
 		this.verbose = verbose;
 	}
 
