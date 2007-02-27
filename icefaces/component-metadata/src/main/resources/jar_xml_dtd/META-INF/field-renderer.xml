@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<renderer>
-  <component-family>com.sun.rave.web.ui.Field</component-family>
-
-  <renderer-type>com.sun.rave.web.ui.Field</renderer-type>
-
-  <renderer-extension/>
-
-</renderer>
