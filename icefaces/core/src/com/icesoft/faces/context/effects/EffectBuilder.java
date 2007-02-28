@@ -42,6 +42,10 @@ public class EffectBuilder {
         if ("appear".equalsIgnoreCase(name)) {
             return new Appear();
         }
+        if("move".equalsIgnoreCase(name)){
+            return new Move();
+        }
+
         if ("fade".equalsIgnoreCase(name)) {
             System.err.println("Returning [" + Fade.class.getName() + "]");
             return new Fade();
