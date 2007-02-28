@@ -113,7 +113,13 @@
         
         <!-- generate test beaninfo -->
         <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
-            <arg line="--cpTestBeanInfoBase" />
+            <arg line="--cpTestBeanInfo" />
+            <classpath refid="build.classpath" />
+        </java>
+        
+        <!-- generate base componenent -->
+        <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
+            <arg line="--cpClassBase" />
             <classpath refid="build.classpath" />
         </java>
         
