@@ -154,7 +154,7 @@ public class DiskFileUpload
                             // A single file.
                         	
                             if (!inputFile.patternMatched(getFileName())) {
-                                inputFile.setStatus(InputFile.INVALID);
+                                inputFile.setStatus(InputFile.INVALID_NAME_PATTERN);
                                 inputFile.getFileInfo()
                                         .setFileName(getFileName());
                                 inputFile.getFileInfo().setPercent(0);
