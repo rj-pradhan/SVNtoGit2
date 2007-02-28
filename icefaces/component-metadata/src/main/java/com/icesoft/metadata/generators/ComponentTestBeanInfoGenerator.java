@@ -65,7 +65,7 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
     
     public ComponentTestBeanInfoGenerator(InternalConfig internalConfig) {
         super(internalConfig);
-        base = true;
+        base = false;
         categoryDescriptors = "com.icesoft.faces.ide.creator2.util.CategoryDescriptors";
         defaultMarkupSection = "FORM";
         bundleMaps = new HashMap();
@@ -221,7 +221,7 @@ public class ComponentTestBeanInfoGenerator extends AbstractGenerator {
         JavaSourceWriter writer = getWriter();
         String simple = simpleClassName(cb.getComponentClass());
         simple = simple + "BeanInfo";
-        writer.startClass(simple, baseBI, null, getBase(), !getBase());
+        writer.startClass(simple, baseBI, null, !getBase(), getBase());
         writer.emitNewline();
         
         constructor(cb, rb);

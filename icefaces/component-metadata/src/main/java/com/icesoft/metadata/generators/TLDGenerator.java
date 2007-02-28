@@ -59,6 +59,36 @@ import java.util.logging.Level;
  *
  */
 public class TLDGenerator extends AbstractGenerator {
+
+        
+    private TreeMap attributes;
+    
+    private PrintWriter writer;
+    
+    private boolean base;
+    
+    private static PropertyBean binding;
+    
+    private String descriptor;
+    
+    private String listeners[];
+    
+    private String prefix;
+    
+    private String tagClassPackage;
+    
+    private String uri;
+    
+    private String validators[];
+    
+    static {
+        binding = new PropertyBean();
+        binding.setPropertyName("binding");
+        String db_string = "The value binding expression linking this component to a property in a backing bean";
+        DescriptionBean dbBean = new DescriptionBean("", db_string);
+        binding.addDescription(dbBean);
+        binding.setRequired(false);
+    }
     
     public TLDGenerator(InternalConfig internalConfig) {
         
@@ -370,33 +400,5 @@ public class TLDGenerator extends AbstractGenerator {
         }
         
     }
-    
-    private TreeMap attributes;
-    
-    private PrintWriter writer;
-    
-    private boolean base;
-    
-    private static PropertyBean binding;
-    
-    private String descriptor;
-    
-    private String listeners[];
-    
-    private String prefix;
-    
-    private String tagClassPackage;
-    
-    private String uri;
-    
-    private String validators[];
-    
-    static {
-        binding = new PropertyBean();
-        binding.setPropertyName("binding");
-        String db_string = "The value binding expression linking this component to a property in a backing bean";
-        DescriptionBean dbBean = new DescriptionBean("", db_string);
-        binding.addDescription(dbBean);
-        binding.setRequired(false);
-    }
+
 }

@@ -34,6 +34,8 @@
 
 package com.icesoft.jsfmeta.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 
 public class GeneratorUtil {
@@ -61,5 +63,16 @@ public class GeneratorUtil {
     
     public static String getWorkingFolder(){
         return WORKING_FOLDER;
+    }
+    
+    public static File getDestFolder(String path) throws FileNotFoundException{
+        File file = new File(path);
+        if(!file.exists()){
+            if(!file.mkdirs()){
+                throw new FileNotFoundException(file.getPath());
+            }
+        }
+        
+        return file;
     }
 }

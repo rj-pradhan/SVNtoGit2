@@ -55,32 +55,16 @@ import org.xml.sax.SAXException;
 
 public final class MetadataGenerator {
     
-    private static Logger logger = Logger.getLogger("com.icesoft.metadata.generators.MetadataGenerator");
-    
-    private String baseBI;
-    
-    private String categoryDescriptors;
+    private static Logger logger = Logger.getLogger("com.icesoft.metadata.generators.MetadataGenerator");        
     
     private FacesConfigBean config;
-    
-    private String constantMethodBindingPackage;
-    
-    private String defaultMarkupSection;        
         
     private List excludes;
-    
-    private String implBD;
-    
-    private String implPD;
     
     private List includes;
     
     private List listeners;
-    
-    private boolean noBundles;
-    
-    private boolean override;
-    
+        
     private MetadataXmlParser parser;
     
     private List validators;
@@ -89,36 +73,27 @@ public final class MetadataGenerator {
     
     public MetadataGenerator() {
         
-        baseBI = "java.beans.SimpleBeanInfo";
-        categoryDescriptors = "com.icesoft.faces.ide.creator2.util.CategoryDescriptors";
-        config = new FacesConfigBean();
-        constantMethodBindingPackage = null;
-        defaultMarkupSection = null;
-        excludes = new ArrayList();
-        implBD = "java.beans.BeanDescriptor";
-        implPD = "java.beans.PropertyDescriptor";
-        includes = new ArrayList();
-        listeners = new ArrayList();
-        noBundles = false;
-        override = false;
         parser = new MetadataXmlParser();
+        config = new FacesConfigBean();
+        excludes = new ArrayList();
+        includes = new ArrayList();
+        listeners = new ArrayList();        
         validators = new ArrayList();
     }
     
     
     public static void main(String args[]) throws Exception {
         
-        MetadataGenerator main = new MetadataGenerator();
-        
+        MetadataGenerator main = new MetadataGenerator();        
         main.loadProps();
         main.execute(args);
     }
     
     private void parseXML(String[] urlList){
+        
         for(int i=0; i< urlList.length; i++){
             String url = urlList[i];
-            try {
-                
+            try {                
                 parser.parse(new URL(url), config);
             } catch (MalformedURLException ex) {
                 System.out.println("@Please check following: url="+url);
@@ -136,7 +111,7 @@ public final class MetadataGenerator {
         }
     }
     
-    
+    //TODO: filter version from ICEfaces core
     private void loadProps(){
         
         init();
@@ -169,64 +144,52 @@ public final class MetadataGenerator {
         
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
-            if (arg.equals("--baseBI")) {
-                baseBI = args[++i];
-                continue;
-            }
-            if (arg.equals("--cpBeanInfo")) {
-                componentBeanInfo(false);
-                continue;
-            }
-            if (arg.equals("--cpBeanInfoBase")) {
-                componentBeanInfo(true);
-                continue;
-            }
-            if (arg.equals("--cpTestBeanInfoBase")) {
-                componentTestBeanInfo(true);
-                continue;
-            }
-            if (arg.equals("--cpClass")) {
-                component(false);
+//            if (arg.equals("--cpBeanInfo")) {
+//                componentBeanInfo(false);
+//                continue;
+//            }
+//            if (arg.equals("--cpBeanInfoBase")) {
+//                componentBeanInfo(true);
+//                continue;
+//            }
+            if (arg.equals("--cpTestBeanInfo")) {
+                componentTestBeanInfo();
                 continue;
             }
             if (arg.equals("--cpClassBase")) {
-                component(true);
-                continue;
-            }
-            if (arg.equals("--implBD")) {
-                implBD = args[++i];
-                continue;
-            }
-            if (arg.equals("--implPD")) {
-                implPD = args[++i];
+                component();
                 continue;
             }
             if (arg.equals("--tlClass")) {
-                tagLibrary(false);
-                continue;
-            }
-            if (arg.equals("--tlClassBase")) {
-                tagLibrary(true);
+                tagLibrary();
                 continue;
             }
             if (arg.equals("--tlDescriptor")) {
                 descriptor();
             } else {
-                usage();
-                //TODO:
+                usage();                
                 throw new IllegalArgumentException(arg);
             }
         }        
     }
     
-    private void tagLibrary(boolean base) throws Exception {
-        try {
-            
+    private void tagLibrary() throws Exception {
+        try {            
             TagLibraryGenerator generator = new TagLibraryGenerator(internalConfig);
-            
-            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/taglib/main/java");
-            defaultDest.mkdirs();
-            generator.setDest(defaultDest);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/taglib/main/java"));
+            generator.setConfig(config);
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+        
+    private void component() throws Exception {
+                
+        try {            
+            BaseComponentGenerator generator = new BaseComponentGenerator(internalConfig);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/component/main/java"));
             generator.setConfig(config);
             generator.generate();
         } catch (Exception ex) {
@@ -235,21 +198,14 @@ public final class MetadataGenerator {
         }
     }
     
-    
-    //TODO: BaseLine ComponentGenerator
-    private void component(boolean base) throws Exception {
-    }
-    
     //TODO: IDE Specific ComponentBeanInfoGenerator
     private void componentBeanInfo(boolean base) throws Exception {
     }
     
-    private void componentTestBeanInfo(boolean base) throws Exception {
+    private void componentTestBeanInfo() throws Exception {
         try {
             ComponentTestBeanInfoGenerator generator = new ComponentTestBeanInfoGenerator(internalConfig);
-            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/testbeaninfo/main/java");
-            defaultDest.mkdirs();
-            generator.setDest(defaultDest);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/testbeaninfo/main/java"));
             generator.setConfig(config);
             generator.generate();
         } catch (Exception ex) {
@@ -260,13 +216,9 @@ public final class MetadataGenerator {
     
     private void descriptor() throws Exception {
         try {
-            TLDGenerator generator = new TLDGenerator(internalConfig);
-            generator.setConfig(config);
-            
-            File defaultDest = new File(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld");
-            defaultDest.mkdirs();
-            generator.setDest(defaultDest);
-            
+            TLDGenerator generator = new TLDGenerator(internalConfig);                      
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld"));            
+            generator.setConfig(config);  
             generator.generate();
         } catch (Exception ex) {
             ex.printStackTrace();
