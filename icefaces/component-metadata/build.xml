@@ -123,6 +123,12 @@
             <classpath refid="build.classpath" />
         </java>
         
+        <!-- generate IDE beaninfo base -->
+        <java classname="com.icesoft.metadata.generators.MetadataGenerator" failonerror="true" fork="true">
+            <arg line="--cpBeanInfoBase" />
+            <classpath refid="build.classpath" />
+        </java>
+        
         <touch file="${project.build.directory}/generated-sources/created" />
     </target>
     

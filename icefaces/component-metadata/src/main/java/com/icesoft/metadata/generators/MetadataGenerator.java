@@ -55,16 +55,16 @@ import org.xml.sax.SAXException;
 
 public final class MetadataGenerator {
     
-    private static Logger logger = Logger.getLogger("com.icesoft.metadata.generators.MetadataGenerator");        
+    private static Logger logger = Logger.getLogger("com.icesoft.metadata.generators.MetadataGenerator");
     
     private FacesConfigBean config;
-        
+    
     private List excludes;
     
     private List includes;
     
     private List listeners;
-        
+    
     private MetadataXmlParser parser;
     
     private List validators;
@@ -77,14 +77,14 @@ public final class MetadataGenerator {
         config = new FacesConfigBean();
         excludes = new ArrayList();
         includes = new ArrayList();
-        listeners = new ArrayList();        
+        listeners = new ArrayList();
         validators = new ArrayList();
     }
     
     
     public static void main(String args[]) throws Exception {
         
-        MetadataGenerator main = new MetadataGenerator();        
+        MetadataGenerator main = new MetadataGenerator();
         main.loadProps();
         main.execute(args);
     }
@@ -93,7 +93,7 @@ public final class MetadataGenerator {
         
         for(int i=0; i< urlList.length; i++){
             String url = urlList[i];
-            try {                
+            try {
                 parser.parse(new URL(url), config);
             } catch (MalformedURLException ex) {
                 System.out.println("@Please check following: url="+url);
@@ -116,7 +116,7 @@ public final class MetadataGenerator {
         
         init();
         String fileName = GeneratorUtil.getWorkingFolder()+"conf/config.properties";
-        Properties props = ConfigStorage.getInstance(fileName).loadProperties();        
+        Properties props = ConfigStorage.getInstance(fileName).loadProperties();
         internalConfig = new InternalConfig(props);
     }
     
@@ -144,14 +144,11 @@ public final class MetadataGenerator {
         
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
-//            if (arg.equals("--cpBeanInfo")) {
-//                componentBeanInfo(false);
-//                continue;
-//            }
-//            if (arg.equals("--cpBeanInfoBase")) {
-//                componentBeanInfo(true);
-//                continue;
-//            }
+            
+            if (arg.equals("--cpBeanInfoBase")) {
+                componentBeanInfo();
+                continue;
+            }
             if (arg.equals("--cpTestBeanInfo")) {
                 componentTestBeanInfo();
                 continue;
@@ -164,17 +161,21 @@ public final class MetadataGenerator {
                 tagLibrary();
                 continue;
             }
+            if (arg.equals("--cpCreatorBeanInfoBase")) {
+                componentBeanInfo();
+                continue;
+            }
             if (arg.equals("--tlDescriptor")) {
                 descriptor();
             } else {
-                usage();                
+                usage();
                 throw new IllegalArgumentException(arg);
             }
-        }        
+        }
     }
     
     private void tagLibrary() throws Exception {
-        try {            
+        try {
             TagLibraryGenerator generator = new TagLibraryGenerator(internalConfig);
             generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/taglib/main/java"));
             generator.setConfig(config);
@@ -184,10 +185,10 @@ public final class MetadataGenerator {
             System.exit(1);
         }
     }
-        
+    
     private void component() throws Exception {
-                
-        try {            
+        
+        try {
             BaseComponentGenerator generator = new BaseComponentGenerator(internalConfig);
             generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/component/main/java"));
             generator.setConfig(config);
@@ -198,8 +199,31 @@ public final class MetadataGenerator {
         }
     }
     
-    //TODO: IDE Specific ComponentBeanInfoGenerator
-    private void componentBeanInfo(boolean base) throws Exception {
+        
+    private void componentCreatorBeanInfo() throws Exception {
+                       
+        try {
+            IDEComponentBeanInfoGenerator generator = new IDEComponentBeanInfoGenerator(internalConfig);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/beaninfo/main/java"));
+            generator.setConfig(config);
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    private void componentBeanInfo() throws Exception {
+        
+        try {
+            IDEComponentBeanInfoGenerator generator = new IDEComponentBeanInfoGenerator(internalConfig);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/beaninfo/main/java"));
+            generator.setConfig(config);
+            generator.generate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
     
     private void componentTestBeanInfo() throws Exception {
@@ -216,9 +240,9 @@ public final class MetadataGenerator {
     
     private void descriptor() throws Exception {
         try {
-            TLDGenerator generator = new TLDGenerator(internalConfig);                      
-            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld"));            
-            generator.setConfig(config);  
+            TLDGenerator generator = new TLDGenerator(internalConfig);
+            generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld"));
+            generator.setConfig(config);
             generator.generate();
         } catch (Exception ex) {
             ex.printStackTrace();
