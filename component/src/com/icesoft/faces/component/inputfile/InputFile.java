@@ -38,6 +38,7 @@ import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.style.OutputStyle;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
+import com.icesoft.faces.utils.MessageUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UICommand;
@@ -77,7 +78,13 @@ public class InputFile extends UICommand implements Serializable{
     public static final int INVALID = 3;
     public static final int SIZE_LIMIT_EXCEEDED = 4;
     public static final int UNKNOWN_SIZE = 5;
-
+    public static final int INVALID_NAME_PATTERN = 6;
+    
+    public static final String INVALID_FILE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_FILE";
+    public static final String INVALID_NAME_PATTERN_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_NAME_PATTERN";
+    public static final String SIZE_LIMIT_EXCEEDED_MESSAGE_ID = "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED";
+    public static final String UNKNOWN_SIZE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE";
+        
     public static final String FILE_UPLOAD_PREFIX = "fileUpload";
     static final String ICE_UPLOAD_FILE = "uploadHtml";
     static final String SAVE_FLAG = "fileSave";
@@ -450,23 +457,29 @@ public class InputFile extends UICommand implements Serializable{
 
         if (getStatus() != InputFile.DEFAULT &&
             getStatus() != InputFile.SAVED) {
-            FileInfo fo = getFileInfo();
-            String msg = "Exception processing updates";
-            if(fo == null){
-                msg = "File info is null";
-            }else{
-                Exception ex = fo.getException();
-                if(ex == null){
-                    msg = "Null exception";
-                }else{
-                    msg = ex.getMessage();
-                }
+            FacesMessage message = null;
+            
+           switch (getStatus()) {
+           case INVALID:
+               String[] fileNameArg = {getFileInfo().getFileName()};
+               message = MessageUtils.getMessage(context, INVALID_FILE_MESSAGE_ID, fileNameArg);
+               break;
+           case SIZE_LIMIT_EXCEEDED:
+               message = MessageUtils.getMessage(context, SIZE_LIMIT_EXCEEDED_MESSAGE_ID);
+               break;
+           case INVALID_NAME_PATTERN:
+               String[] namePatternArgs = {getFileInfo().getFileName(), getFileNamePattern()};
+               message = MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, namePatternArgs);
+               break;
+           case UNKNOWN_SIZE:
+               message = MessageUtils.getMessage(context, UNKNOWN_SIZE_MESSAGE_ID);
+               break;
+           }
+            if (message != null) {
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                context.addMessage(getClientId(context), message);
             }
-            FacesMessage message =
-                    new FacesMessage(msg);
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage(getClientId(context), message);
-        }
+       }
 
 
     }
