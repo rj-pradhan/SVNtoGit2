@@ -239,7 +239,7 @@ Autocompleter.Base.prototype = {
     var element = Event.findElement(event, 'DIV');
     this.index = element.autocompleteIndex;
     this.selectEntry();
-    this.getUpdatedChoices();
+    this.getUpdatedChoices(true, event);
     this.hide();
 
   },
@@ -601,7 +601,7 @@ Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prot
      }
      else{
          Ice.Autocompleter.logger.debug("Sending partial submit");
-         iceSubmitPartial(form, this.element, null);
+         iceSubmitPartial(form, this.element, event);
      }
 
   },

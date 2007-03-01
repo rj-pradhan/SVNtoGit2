@@ -120,11 +120,16 @@ Ice.DnD = {
 Ice.Accordion = {
     fire:function(eleId) {
         var ele = document.getElementById(eleId);
+        try{
         if(Element.visible(ele)){
             Effect.SlideUp(ele,{uploadCSS:true,submit:true});
         }else{
             Effect.SlideDown(ele,{uploadCSS:true,submit:true});
-
         }
+            }catch(eee){
+
+            console.log("Error in accordion [" + eee + "]");
+        }
+
     }
 }
