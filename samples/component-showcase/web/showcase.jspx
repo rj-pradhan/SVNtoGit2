@@ -284,7 +284,14 @@
                             <jsp:directive.include file="inc/layoutPanels/positionedPanel.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                        
+
+                    <ice:panelGroup id="accordionPanel" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="accordionPanelSub">
+                            <!-- Panel Stack Header component include -->
+                            <jsp:directive.include file="inc/layoutPanels/accordionPanel.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+
                     <ice:panelGroup id="chartPanel" styleClass="contentIncludePanelGroup" >
                         <f:subview id="chartSub">
                             <!-- OutputChart include -->

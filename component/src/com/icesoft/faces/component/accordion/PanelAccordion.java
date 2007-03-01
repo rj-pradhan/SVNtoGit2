@@ -9,7 +9,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.component.UIComponentBase;
 
-public class Accordion extends UIComponentBase {
+public class PanelAccordion extends UIComponentBase {
     public static final String COMPONENET_TYPE = "com.icesoft.faces.Accordion";
     public static final String DEFAULT_RENDERER_TYPE = "com.icesoft.faces.AccordionRenderer";
     public static final String COMPONENT_FAMILY = "com.icesoft.faces.AccordionFamily";
@@ -19,7 +19,7 @@ public class Accordion extends UIComponentBase {
     private MethodBinding actionListener;
     private String styleClass;
 
-    public Accordion() {
+    public PanelAccordion() {
         super();
         JavascriptContext.includeLib(JavascriptContext.ICE_EXTRAS, FacesContext.getCurrentInstance());
     }

@@ -637,6 +637,20 @@ public class TreeNavigation {
                 branchObject.setLeaf(true);
                 // finally add the new custom component branch
                 branchNode.add(leafNode);
+
+                // component menu -> Accordion Series
+                branchObject = new PageContentBean();
+                branchObject.setMenuDisplayText(
+                        "submenuDisplayText.accordionPanelItem");
+                branchObject.setMenuContentTitle(
+                        "submenuContentTitle.accordionPanelItem");
+                branchObject.setTemplateName("accordionPanel");
+                branchObject.setNavigationSelection(navigationBean);
+                leafNode = new DefaultMutableTreeNode(branchObject);
+                branchObject.setWrapper(leafNode);
+                branchObject.setLeaf(true);
+                // finally add the new custom component branch
+                branchNode.add(leafNode);
             }
 
         }

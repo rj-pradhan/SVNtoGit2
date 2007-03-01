@@ -341,6 +341,13 @@
     <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+  <!-- Accordion Panel -->
+  <managed-bean>
+    <managed-bean-name>accordionBean</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel.AccordionBean</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
+
   <!-- Managed Beans for outputChart examples -->
   <managed-bean>
     <managed-bean-name>combinedChart</managed-bean-name>

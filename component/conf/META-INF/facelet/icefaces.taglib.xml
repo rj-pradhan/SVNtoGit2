@@ -6,7 +6,7 @@
 <facelet-taglib>
 	<namespace>http://www.icesoft.com/icefaces/component</namespace>
 	<tag>
-		<tag-name>accordion</tag-name>
+		<tag-name>panelAccordion</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.Accordion</component-type>
 			<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>
