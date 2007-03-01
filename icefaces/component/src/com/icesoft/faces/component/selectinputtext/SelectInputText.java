@@ -50,12 +50,8 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.text.DateFormat;
 
 
 /**
@@ -138,8 +134,10 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
         super.decode(facesContext);
         setSelectedItem(facesContext);
         if (Util.isEventSource(facesContext,this)) {
-            queueEventIfEnterKeyPressed(facesContext);
+          queueEventIfEnterKeyPressed(facesContext);
+         //    queueEvent(new ActionEvent(this));
         }
+
     }
 
     /**
@@ -489,12 +487,19 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      */
     private void queueEventIfEnterKeyPressed(FacesContext facesContext) {
         try {
+            Map requestParemeterMap =  facesContext.getExternalContext()
+                .getRequestParameterMap();
             KeyEvent keyEvent =
-                    new KeyEvent(this, facesContext.getExternalContext()
-                .getRequestParameterMap());
+                    new KeyEvent(this, requestParemeterMap);
+
             if (keyEvent.getKeyCode() == KeyEvent.CARRIAGE_RETURN) {
                 queueEvent(new ActionEvent(this));
             }
+            if("true".equals(requestParemeterMap.get("ice.event.left"))){
+                queueEvent(new ActionEvent(this));                
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
