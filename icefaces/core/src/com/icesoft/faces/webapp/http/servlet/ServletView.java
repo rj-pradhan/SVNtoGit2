@@ -4,6 +4,7 @@ import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.webapp.xmlhttp.BlockingResponseState;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
+import com.icesoft.util.SeamUtilities;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,11 @@ public class ServletView {
     private PersistentFacesState persistentFacesState;
     private Map bundles;
     private ServletEnvironmentRequest wrappedRequest;
+    private String viewIdParameter;
                                                                        
     public ServletView(String viewIdentifier, HttpServletRequest request, HttpServletResponse response, ResponseStateManager responseStateManager) {
+
+        viewIdParameter = "&rvn="+viewIdentifier;
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
         wrappedRequest = new ServletEnvironmentRequest(request);
@@ -37,6 +41,7 @@ public class ServletView {
     }
 
     public void setAsCurrentDuring(HttpServletRequest request) {
+        
         externalContext.updateRequest(request);
         externalContext.getRequestMap().putAll(bundles);
         persistentFacesState.setCurrentInstance();
@@ -63,14 +68,25 @@ public class ServletView {
 
             // Append 'rvn' parameter field to trigger new ServletView creation. Otherwise, Seam
             // based redirects wont find the new ViewId.
-            ((HttpServletResponse) externalContext.getResponse()).sendRedirect(externalContext.redirectTo() +
-                                             "&rvn="+facesContext.getViewNumber());
+
+            ((HttpServletResponse) externalContext.getResponse())
+                    .sendRedirect(externalContext.redirectTo() +
+                                   viewIdParameter );
             externalContext.redirectComplete();
         }
     }
 
+    /**
+     * Check to see if the URI is different in any material (or Seam) way. 
+     * @param request ServletRequest
+     * @return true if the URI is considered different
+     */
     public boolean differentURI(HttpServletRequest request) {
-        return !request.getRequestURI().equals(wrappedRequest.getRequestURI());
+
+        // As a temporary fix, all GET requests are non-faces requests, and thus,
+        // are considered different to force a new ViewRoot to be constructed. 
+        return (SeamUtilities.isSeamEnvironment() ) ||
+             !request.getRequestURI().equals(wrappedRequest.getRequestURI());
     }
 
     public void release() {
