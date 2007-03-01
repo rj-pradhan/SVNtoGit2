@@ -60,6 +60,12 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
 
         this.updateRequest(this.request);
+        if (SeamUtilities.isSeamEnvironment() ) {
+                   requestParameterMap.put(
+                           PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
+                           Boolean.TRUE);
+        }
+                
     }
 
     public Object getSession(boolean create) {
@@ -95,7 +101,13 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public void updateRequest(HttpServletRequest request) {
+
         //update parameters
+         boolean persistSeamKey = false; 
+        if (requestParameterMap != null) {
+            persistSeamKey = (requestParameterMap.containsKey(PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT ));
+        }
+
         requestParameterMap = new HashMap();
         requestParameterValuesMap = new HashMap();
         Enumeration parameterNames = request.getParameterNames();
@@ -104,6 +116,15 @@ public class ServletExternalContext extends BridgeExternalContext {
             requestParameterMap.put(name, request.getParameter(name));
             requestParameterValuesMap.put(name, request.getParameterValues(name));
         }
+
+        if (persistSeamKey) {
+            requestParameterMap.put(
+                    PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
+                    Boolean.TRUE);
+        } 
+        
+
+
         requestCookieMap = new HashMap();
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
@@ -299,31 +320,28 @@ public class ServletExternalContext extends BridgeExternalContext {
         return result;
     }
 
+    /**
+     * Setup 
+     */
     public void setupSeamEnvironment() {
-        doClearSeamContexts();
-        checkSeamRequestParameters();
+        insertNewViewrootToken();
     }
 
     /**
-     * Any request handled by the PersistentFacesServlet should have the Seam
-     * PageContext removed from our internal context complex. But we cannot do
-     * it here, since the machinery is not yet in place, so put a flag into
-     * the external context, allowing someone else to do it later.
-     */
-    private void doClearSeamContexts() {
-        requestMap.put(PersistentFacesCommonlet.REMOVE_SEAM_CONTEXTS, Boolean.TRUE);
-    }
-
-    /**
-     * Check to see if Seam specific keywords are in the request. If so,
-     * then flag that a new ViewRoot is to be constructed.
+     * Any GET request performed by the browser is a non-faces request to the framework.
+     * (JSF-spec chapter 2, introduction). Given this, the framework must create a new
+     * viewRoot for the request, even if the viewId has already been visited. (Spec
+     * section 2.1.1) <p>   
      *
-     * @param externalContextMap Map to insert Flag
+     * Only during GET's remember, not during partial submits, where the JSF framework must
+     * be allowed to attempt to restore the view. There is a great deal of Seam related code
+     * that depends on this happening. So put in a token that allows the D2DViewHandler
+     * to differentiate between the non-faces request, and the postbacks, for this
+     * request, which will allow the ViewHandler to make the right choice, since we keep
+     * the view around for all types of requests
+     *
      */
-    private void checkSeamRequestParameters() {
-        // Always on a GET request, create a new ViewRoot. New theory.
-        // This works now that the ViewHandler only calls restoreView once,
-        // as opposed to calling it again from createView
+    private void insertNewViewrootToken() {
         if (SeamUtilities.isSeamEnvironment()) {
             requestParameterMap.put(
                     PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
