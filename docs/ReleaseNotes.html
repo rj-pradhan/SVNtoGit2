@@ -4,7 +4,7 @@
 <!-- saved from url=(0022)http://internet.e-mail -->
   <meta http-equiv="content-type"
  content="text/html; charset=iso-8859-1">
-  <title>ICEfaces&#8482; V1.5 Release Notes</title>
+  <title>ICEfaces&#8482; V1.6.0 DR#1 Release Notes</title>
 </head>
 <body style="font-family: helvetica,arial,sans-serif;">
 <table border="0" width="100%">
@@ -13,8 +13,8 @@
       <td width="78%">
       <h1>ICEfaces&#8482; <br>
       </h1>
-      <h1>V1.5 Release Notes</h1>
-      <p><strong><em>November 13th, 2006</em></strong></p>
+      <h1>V1.6 DR#1 Release Notes</h1>
+      <p><strong><em>March 1st, 2007</em></strong></p>
       </td>
       <td align="center" valign="top" width="22%"><img
  alt="ICEfaces Logo" src="resources/ICEfaces-logo.gif" style=""><br>
@@ -93,155 +93,151 @@ covers advanced topics like server-initiated rendering.</li>
 <p>Additionally, all ICEfaces documentation is also available on-line
 at<span style="text-decoration: underline;"> </span><a
  class="moz-txt-link-freetext" href="http://documentation.icefaces.org/">http://documentation.icefaces.org/.</a><br>
+<br>
 </p>
 <h2 style="font-style: italic;"><a name="New_Notable"></a>Changes in
 This Release<br>
 </h2>
-<p>ICEfaces V1.5 includes<span style="font-weight: bold;"> over 140
-fixes and enhancements</span>.&nbsp;
-Click <a target="_blank"
- href="http://support.icesoft.com/jive/category.jspa?categoryID=50">here</a>
-to review the complete <a target="_blank"
- href="http://support.icesoft.com/jive/category.jspa?categoryID=50">Change
-Log</a> of changes made between the V1.5 and V1.0.1. releases. </p>
-<p>The most notable changes are listed below: </p>
-<h3>General</h3>
+<p>ICEface v1.6.0 DR#1 is an unstable Development Build that provides
+an early-access preview of new features, enhancements, and fixes that
+will be included in the upcoming ICEfaces v1.6.0 release. This build
+have only been lightly tested and should be considered unstable. It is
+completely unsuitable for Production use. Use this build only if you
+are prepared to deal with problems and are willing to report them to
+the <a target="_blank" href="http://www.icefaces.org/JForum/">forum</a>
+or <a target="_blank" href="http://jira.icefaces.org/">JIRA</a> issue
+tracker.<br>
+</p>
+<p><span style="font-weight: bold;">Note: Portlets are currently
+unsupported</span> in this build due to incomplete and ongoing internal
+refactoring required to better accomodate integration with Seam,
+Portlets, and to resolve ICE-1089.&nbsp; Portlet support will return in
+future builds.<br>
+</p>
+<p>ICEfaces V1.6.0 DR#1 includes the following fixes and enhancements: </p>
+<h2>Improvements</h2>
 <ul>
-  <li>ICEfaces is now an open source product.&nbsp; It is available in
-both a binary and a source code release.<span
- style="font-weight: bold; font-style: italic;"></span>&nbsp;<span
- style="font-weight: bold;"></span></li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1089">ICE-1089</a>]
+- Support multi-window asynchronous connectivity to same host (overcome
+XMLHttpRequest 2-connection limit)</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1177">ICE-1177</a>]
+- New panelAccordion component.</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1231">ICE-1231</a>]
+- Add optional support for the Open Ajax Alliance JavaScript hub</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-560">ICE-560</a>]&nbsp;&nbsp;
+- Add versioning to JavaScript files (was "Old Javascript not replaced
+in a new release")</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1261">ICE-1261</a>]
+- Add a Focus effect</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1277">ICE-1277</a>]
+- Effects don't work in seam, Develop effects tag to contain effects to
+the JSP</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1284">ICE-1284</a>]
+- InputFile needs I18N and message customization review</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1080">ICE-1080</a>]
+- Feature request: InputFile needs
+&lt;ice:acceptedFileTypesValidator/&gt;</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1210">ICE-1210</a>]
+- Width and Height attribute need to be added to the inputFile component</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1269">ICE-1269</a>]
+- Add frequency , and minChars options to selectInputText</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-906">ICE-906</a>]&nbsp;&nbsp;
+- AuctionMonitor: Selection of font colors for Chatters' name.</li>
 </ul>
-<h3>Core Framework<br>
-</h3>
+<h2>Bugs</h2>
 <ul>
-  <li>Clean DOM rendering mechanism improves support for 3rd party JSF
-component compatibility.<br>
-    <br>
-  </li>
-  <li>Server-initiated rendering API's now support startup, shutdown
-and disposal methods for group renderers.<br>
-    <br>
-  </li>
-  <li>Performance Improvements:</li>
-  <ul>
-    <li>Use of hidden fields has been reduced which improves form
-processing time and reduces size of DOM updates.</li>
-    <li>Finer-grained synchronization has been incorporated into
-Servlet processing.<br>
-      <br>
-    </li>
-  </ul>
-  <li>Dynamic application reload for modified .jspx and .jsp pages
-improves developer productivity.<br>
-  </li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-565">ICE-565</a>]
+- Tutorial: DragDrop2: the 'DropValue' did not update if moved outside
+the box.</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-604">ICE-604</a>]
+- standardRequestScope clears too much from the request map</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-657">ICE-657</a>]
+- Component-showcase buttons and hyperlinks</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-825">ICE-825</a>]
+- Concurrent DOM views not working properly</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-860">ICE-860</a>]
+- Address demo crashes on Complete Address</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-866">ICE-866</a>]
+- Component Demo: TREE: Summarized list of problems</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-871">ICE-871</a>]
+- Component Demo: No application demo for 'selectManyMenu' component</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-879">ICE-879</a>]
+- Component: Progress Bar: User Interface issues</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-880">ICE-880</a>]
+- Component: Charts: Summarized Chart Component Issues</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-935">ICE-935</a>]
+- Facelets: Using onmouseovereffect causes exception</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-955">ICE-955</a>]
+- Using <ice:columns> without a header facet doesn't work</ice:columns></li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-958">ICE-958</a>]
+- Columns component demo under component-showcase does two
+render/update cycle</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-996">ICE-996</a>]
+- TabChangeListeners/TabChangeEvents proliferate</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1005">ICE-1005</a>]
+- selectInputText not passing through js events</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1022">ICE-1022</a>]
+- Facelet bugs</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1026">ICE-1026</a>]
+- checkbox horizontal label alignment not pretty</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1027">ICE-1027</a>]
+- chart component cannot run headless</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1049">ICE-1049</a>]
+- InputFile tld doc: uniqueFolder attribute missing from the tld docs</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1064">ICE-1064</a>]
+- table header only spans first column of dataTable when using <ice:columns></ice:columns></li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1070">ICE-1070</a>]
+- opening multiple windows (concurrentDOMViews) through window.open
+causes problems</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1075">ICE-1075</a>]
+- Validator not called on inputFile component</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1076">ICE-1076</a>]
+- InputFile: styleClass has no effect on iframe in IE</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1078">ICE-1078</a>]
+- InputFile: size attribute has no effect</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1092">ICE-1092</a>]
+- Make ICE Facelets more like stock Facelets</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1095">ICE-1095</a>]
+- Using any components with <f:facet>s inside a PanelSeries breaks</f:facet></li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1097">ICE-1097</a>]
+- Anonymous account not being unlocked on JBoss servlet container</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1101">ICE-1101</a>]
+- DataTable throws NullPointerException in autoBeansFacelets</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1110">ICE-1110</a>]
+- SelectInputText generates js error when typing an apostrophe</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1179">ICE-1179</a>]
+- Building requires online DTD files</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1183">ICE-1183</a>]
+- Component generation problem</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1188">ICE-1188</a>]
+- outputCharts component has missing and incomplete TLD documentation</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1189">ICE-1189</a>]
+- Rewrite Component Showcase Chart Examples</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1211">ICE-1211</a>]
+- inputTextClass attribute is missing on inputFile component</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1220">ICE-1220</a>]
+- Component -showcase removal of "CITY_HACK" from selection example</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1222">ICE-1222</a>]
+- Component Showcase font size too large</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1230">ICE-1230</a>]
+- Update Prototype and Scriptaculous</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1258">ICE-1258</a>]
+- Effect durations &gt; 999 don't work</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1262">ICE-1262</a>]
+- Popup Panel isn't draggable</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1263">ICE-1263</a>]
+- SelectInputText.populateItemList() needs to check for NULL list</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1280">ICE-1280</a>]
+- TableRenderer calling UIData.setRowIndex one too many times when
+paging.</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1281">ICE-1281</a>]
+- Error Messaging: Print less unsettling debug messages when
+classloading</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1285">ICE-1285</a>]
+- uiData.setRowIndex() being called for 0 index even if there is no
+data associated with the dataModel</li>
 </ul>
-<h3>ICEfaces Component Suite</h3>
-<ul>
-  <li>New Components;</li>
-  <ul>
-    <li><span style="font-style: italic;">Positioned Panel Component:</span>&nbsp;
-With the panelPositioned component lists can be used to generate a
-series of repeating child-components within a panel.
-Each one of these child-components is draggable and can exchange
-positions with other children. In addition, a child component can be
-moved between different positioned panels components. <br>
-    </li>
-    <li><span style="font-style: italic;">Chart Component</span>: The
-outputChart component encapsulates Krysalis jCharts functionality (<a
- href="http://jcharts.sourceforge.net/">http://jcharts.sourceforge.net/</a>).&nbsp;
-It supports both pie&nbsp; (2D and 3D), and axis (area, areastacked,
-bar, barclustered, barstacked, line, and point) type charts.&nbsp; The
-outputChart component provides full interactivity through
-actionListener bindings with the clientSideImageMap. The outputChart
-component can be generated statically or dynamically.</li>
-  </ul>
-</ul>
-<ul>
-  <li>Modification to the tree component provide better support for
-lazy loading of branches.</li>
-  <ul>
-    <li>IceUserObject includes a new boolean attribute <span
- style="font-style: italic;">leaf</span> which explicitly declares leaf
-nodes.&nbsp; All other nodes default to branches.</li>
-    <li>Expand/collapse events are now available through ActionListener
-binding to the Tree and/or TreeNode.&nbsp; It is possible to cause and
-capture Node expand/collapse events.<br>
-      <br>
-    </li>
-  </ul>
-  <li>Several enhancements to the data table have been introduced.</li>
-  <ul>
-    <li>A columns component has been introduced that provides a dynamic
-model for adding and deleting columns programmatically.&nbsp; The
-columns component works in conjunction with the ice:dataTable, with the
-headerClass and columnClasses being assigned for all generated columns.</li>
-    <li>A rowSelector tag enables row selection for dataTable and
-supports the following attributes: value, multiple, selectionListener,
-selectedClass, mouseOverClass.</li>
-    <li>dataTable now supports a scrollable attribute that enables a
-scroll bar for the table.<br>
-      <br>
-    </li>
-  </ul>
-  <li>Several additional script.aculo.us effects are now supported
-including: scale, puff, blind up/down, switch off, drop out, shake,
-slide up/down, squish, grow, shrink, and fold.<br>
-  </li>
-</ul>
-<ul>
-  <li>A new attribute <span style="font-style: italic;">target</span>
-has been added to menu component that can change the URL in a separate
-window or frame. (Same as the
-Anchor target attribute.)</li>
-</ul>
-<ul>
-  <li>Connection status component now support ability to redirect on
-connection error.<br>
-    <br>
-  </li>
-  <li>File Upload component now uses commons-io-1.2.<br>
-    <br>
-  </li>
-  <li>Panel Tab now supports icons in the tabs.<br>
-    <br>
-  </li>
-  <li>A Hover class has been added to Panel Group.<br>
-    <br>
-  </li>
-  <li>Panel Popup now supports the <span style="font-style: italic;">effect</span>
-attribute.<br>
-    <br>
-  </li>
-  <li>SelectInputText width can now be specified in any unit (eg: 100,
-100px, 100em, 100pt).<br>
-    <br>
-  </li>
-  <li>A style class has been added to command sort header.<br>
-  </li>
-</ul>
-<h3>Tools </h3>
-<ul>
-  <li>Tools integration bundles are now supplied separately from the
-ICEfaces release and include their own release notes.&nbsp; Go to <a
- href="http://www.icefaces.org">http://www.icefaces.org</a> to download
-tools integration bundles.<br>
-  </li>
-</ul>
-<h3>Early Access Features<br>
-</h3>
-<ul>
-  <li>Preliminary integration with JBoss Seam has been achieved.&nbsp;
-Visit the <a
- href="http://support.icesoft.com/jive/category.jspa?categoryID=50">ICEfaces
-Knowledge Base</a> for details.<br>
-    <br>
-  </li>
-  <li>Preliminary Portal support has been achieved.&nbsp; Visit the <a
- href="http://support.icesoft.com/jive/category.jspa?categoryID=50">ICEfaces
-Knowledge Base</a> for details.
-  </li>
-</ul>
+<br>
 <h2 style="font-style: italic;"><a name="Supported_Platforms"></a>Supported
 Browsers, Application Servers, and Tools<br>
 </h2>
@@ -408,7 +404,7 @@ tools:<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top;"><br>
+      <td style="vertical-align: top;">Eclipse<br>
       </td>
       <td style="vertical-align: top;">Eclipse/Web Tools Platform with
 JSF tools<br>
@@ -699,13 +695,12 @@ selected.</li>
 <ul>
   <li>Row Selector</li>
   <ul>
-    <li>SelectOneMenu tags don't work in Tables using Row Selector unless the following code is added.
-     <pre id="comment_text_2"><span
- style="font-weight: bold;">&lt;ice:selectOneMenu onclick="Event.stop(event);"&gt; </span>  </pre>       
+    <li>SelectOneMenu tags don't work in Tables using Row Selector
+unless the following code is added.
+      <pre id="comment_text_2"><span style="font-weight: bold;">&lt;ice:selectOneMenu onclick="Event.stop(event);"&gt; </span>  </pre>
     </li>
   </ul>
 </ul>
-
 <h3>Facelets</h3>
 <ul>
   <li>When using an ice:outputDeclaration component in a Facelets
