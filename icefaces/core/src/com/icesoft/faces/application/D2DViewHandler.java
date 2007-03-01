@@ -40,6 +40,7 @@ import com.icesoft.faces.env.CommonEnvironmentResponse;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
+import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
 import com.icesoft.util.SeamUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -154,6 +155,15 @@ public class D2DViewHandler extends ViewHandler {
             StateManager stateMgr = context.getApplication().getStateManager();
             stateMgr.saveSerializedView(context);
         }
+
+        // Now clean this up here. Don't clean up in RenderResponse, since that
+        // obviously may be overridden by other ViewHandlers
+        ExternalContext externalContext = context.getExternalContext();
+        if (externalContext instanceof BridgeExternalContext) {
+            BridgeExternalContext bridgeExternalContext =
+                    (BridgeExternalContext) externalContext;
+            bridgeExternalContext.resetRequestMap();
+        }
     }
 
 
@@ -214,21 +224,23 @@ public class D2DViewHandler extends ViewHandler {
         UIViewRoot currentRoot = context.getViewRoot();
         //MyFaces expects path to match current view
         ExternalContext externalContext = context.getExternalContext();
-        if (externalContext instanceof BridgeExternalContext) {
 
-            BridgeExternalContext bridgeExternalContext =
-                    (BridgeExternalContext) externalContext;
+        if (externalContext instanceof ServletExternalContext) {
 
-            bridgeExternalContext.setRequestServletPath(viewId);
+            ServletExternalContext  servletExternalContext =
+                    (ServletExternalContext) externalContext;
+
+            servletExternalContext.setRequestServletPath(viewId);
 
             if (null != externalContext.getRequestPathInfo()) {
                 //it's not null, so must be valid to keep in synch for MyFaces
-                bridgeExternalContext.setRequestPathInfo(viewId);
+                servletExternalContext.setRequestPathInfo(viewId);
             }
 
             if (SeamUtilities.isSeamEnvironment()) {
-                if (bridgeExternalContext.getRequestParameterMap().remove(
+                if (servletExternalContext.getRequestParameterMap().remove(
                         PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT) != null) {
+                    
                     if (log.isTraceEnabled()) {
                         log.trace("Seam Keyword shortcut found, new ViewRoot");
                     }
@@ -239,13 +251,13 @@ public class D2DViewHandler extends ViewHandler {
                     }
                 }
             }
-        }
+        } 
 
         if (null != currentRoot &&
                 mungeViewId(viewId)
                         .equals(mungeViewId(
                                 currentRoot.getViewId()))) {
-            purgeSeamContexts(context, currentRoot);
+//            purgeSeamContexts(context, currentRoot);
             return currentRoot;
         }
 
@@ -271,38 +283,10 @@ public class D2DViewHandler extends ViewHandler {
                 (mungeViewId(viewId).equals(mungeViewId(root.getViewId())))) {
         }
 
-        // Remove seam PageContext if REMOVE_SEAM_CONTEXTS key is found
-        // Remove the value since this context may be shared between
-        // subsequent requests.
-        if (SeamUtilities.isSeamEnvironment()) {
-            purgeSeamContexts(context, root);
-        }
         return root;
     }
 
 
-    /**
-     * utility method to remove a Seam PageContext from the ViewRoot's attribute
-     * map, if the persistent FacesContext has inserted the appropriate code in
-     * the externalContext's attribute map
-     *
-     * @param context The current FacesContext
-     * @param root    The UIViewRoot instance
-     */
-    private void purgeSeamContexts(FacesContext context, UIViewRoot root) {
-
-        if (root == null) {
-            return;
-        }
-        if (context.getExternalContext().getRequestMap().remove(
-                PersistentFacesCommonlet.REMOVE_SEAM_CONTEXTS) != null) {
-
-            Object key = SeamUtilities.getPageContextKey();
-            Object o = root.getAttributes().remove(key);
-            log.debug("Removed Seam PageContext from Request: " +
-                    (o != null));
-        }
-    }
 
     private static Map getContextServletTables(FacesContext context) {
         Map sessionMap = getSessionMap(context);
@@ -408,6 +392,7 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     protected synchronized void renderResponse(FacesContext context) throws IOException {
+
         UIComponent root = context.getViewRoot();
         String viewId = ((UIViewRoot) root).getViewId();
 
@@ -512,12 +497,9 @@ public class D2DViewHandler extends ViewHandler {
                 root.getAttributes().put(LAST_LOADED_KEY,
                         new Long(System.currentTimeMillis()));
 
-                ExternalContext externalContext = context.getExternalContext();
-                if (externalContext instanceof BridgeExternalContext) {
-                    BridgeExternalContext bridgeExternalContext =
-                            (BridgeExternalContext) externalContext;
-                    bridgeExternalContext.resetRequestMap();
-                }
+
+
+
             } catch (Throwable e) {
                 throw new FacesException("Can't parse stream for " + viewId +
                         " " + e.getMessage(), e);
@@ -528,6 +510,7 @@ public class D2DViewHandler extends ViewHandler {
             responseWriter.endDocument();
             tracePrintComponentTree(context);
         }
+
     }
 
     protected void renderResponse(FacesContext context, UIComponent component)
