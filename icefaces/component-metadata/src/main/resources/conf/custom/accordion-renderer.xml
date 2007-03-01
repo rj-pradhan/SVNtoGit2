@@ -39,10 +39,10 @@
 	<component-family>com.icesoft.faces.AccordionFamily</component-family>
 	<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>	
 	<renderer-extension>
-		<instance-name>accordion</instance-name>
+		<instance-name>panelAccordion</instance-name>
 		<is-container>true</is-container>
 		<renders-children>true</renders-children>
-		<tag-name>accordion</tag-name>
+		<tag-name>panelAccordion</tag-name>
 		<taglib-prefix>@taglib-prefix@</taglib-prefix>
 		<taglib-uri>@taglib-uri@</taglib-uri>
 	</renderer-extension>

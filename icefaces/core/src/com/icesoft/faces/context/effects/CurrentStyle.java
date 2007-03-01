@@ -197,38 +197,43 @@ public class CurrentStyle {
     /**
      * Parse cssUpdates from browser. Format id{property:value;property;value}id{property:value}
      *
-     * @param request
-     * @param cssUpdate
      */
-    public static void decode(HttpServletRequest request, String cssUpdate) {
+    public static Map decode(FacesContext facesContext) {
+
+        Map parameters = facesContext.getExternalContext().getRequestParameterMap();
+        String cssUpdate = (String) parameters.get(CSS_UPDATE_FIELD);
+        Map requestMap = facesContext.getExternalContext().getRequestMap();
+        String oldCssUpdate = (String) requestMap.get(CSS_UPDATE_FIELD);
 
         if (cssUpdate == null || cssUpdate.length() == 0) {
-            return;
+            return null;
         }
+        Map updates = null;
+        if (!cssUpdate.equals(oldCssUpdate)) {
+            updates = new HashMap();
 
-        Map updates = new HashMap();
-        int rightBrace = 0;
-        do {
-            rightBrace = cssUpdate.indexOf("}");
-            if (rightBrace != -1) {
-                String update = cssUpdate.substring(0, ++rightBrace);
+            int rightBrace = 0;
+            do {
+                rightBrace = cssUpdate.indexOf("}");
+                if (rightBrace != -1) {
+                    String update = cssUpdate.substring(0, ++rightBrace);
 
-                cssUpdate = cssUpdate.substring(rightBrace);
-                int leftBrace = update.indexOf("{");
-                String id = update.substring(0, leftBrace);
+                    cssUpdate = cssUpdate.substring(rightBrace);
+                    int leftBrace = update.indexOf("{");
+                    String id = update.substring(0, leftBrace);
 
-                leftBrace++;
-                String style = update.substring(leftBrace, update.length() - 1);
-                if (log.isTraceEnabled()) {
-                    log.trace("Adding id[" + id + "] Style [" + style + "]");
+                    leftBrace++;
+                    String style = update.substring(leftBrace, update.length() - 1);
+                    if (log.isTraceEnabled()) {
+                        log.trace("Adding id[" + id + "] Style [" + style + "]");
+                    }
+                    updates.put(id, style);
                 }
-                updates.put(id, style);
-            }
-        } while (rightBrace != -1);
-
-        request.getSession()
-                .setAttribute(CurrentStyle.class.getName(), updates);
-
+            } while (rightBrace != -1);
+            facesContext.getExternalContext().getSessionMap().put(CurrentStyle.class.getName(), updates);
+            requestMap.put(CSS_UPDATE_FIELD, cssUpdate);
+        }
+        return updates;
     }
 
     /**
@@ -240,10 +245,11 @@ public class CurrentStyle {
     public static void decode(FacesContext facesContext,
                               UIComponent uiComponent) {
 
+        decode(facesContext);
         Map map = (Map) facesContext.getExternalContext().getSessionMap()
                 .get(CurrentStyle.class.getName());
         if (map == null) {
-            return;
+                return;
         }
         if (uiComponent == null) {
             return;

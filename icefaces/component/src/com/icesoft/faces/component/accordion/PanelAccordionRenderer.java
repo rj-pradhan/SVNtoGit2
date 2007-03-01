@@ -18,9 +18,9 @@ import org.w3c.dom.Text;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public class AccordionRenderer extends DomBasicRenderer {
+public class PanelAccordionRenderer extends DomBasicRenderer {
 
-    private static Log log = LogFactory.getLog(AccordionRenderer.class);
+    private static Log log = LogFactory.getLog(PanelAccordionRenderer.class);
     private static final String HEADER = "Header";
     private static final String CONTENT = "Content";
     private static final String CONTAINER = "Container";
@@ -37,25 +37,25 @@ public class AccordionRenderer extends DomBasicRenderer {
         String baseId = component.getClientId(context);
         String contentId = baseId + "_content";
         String style = (String)map.get(contentId);
-        Accordion accordion = (Accordion)component;
+        PanelAccordion panelAccordion = (PanelAccordion)component;
         if(style != null){
             Boolean newState = Boolean.TRUE;
             if(style.indexOf("display:none") != -1){
                 newState = Boolean.FALSE;
             }
-            Boolean currentState = accordion.getOpen();
+            Boolean currentState = panelAccordion.getOpen();
             if(!newState.equals(currentState)){
                 ActionEvent ae = new ActionEvent(component);
                 component.queueEvent(ae);
-                accordion.setOpen(newState);
+                panelAccordion.setOpen(newState);
             }
         }
     }
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-        Accordion accordion = (Accordion)uiComponent;
-        String base = accordion.getStyleClass();
-        boolean open = accordion.getOpen().booleanValue();
+        PanelAccordion panelAccordion = (PanelAccordion)uiComponent;
+        String base = panelAccordion.getStyleClass();
+        boolean open = panelAccordion.getOpen().booleanValue();
         String headerClass = base + HEADER;
         String contentClass = base + CONTENT;
         String containerClass = base + CONTAINER;
@@ -70,7 +70,7 @@ public class AccordionRenderer extends DomBasicRenderer {
         root.setAttribute(HTML.CLASS_ATTR, containerClass);
         String baseID = uiComponent.getClientId(facesContext);
         Element header = domContext.createElement(HTML.DIV_ELEM);
-        Text text = domContext.createTextNode(((Accordion)uiComponent).getLabel());
+        Text text = domContext.createTextNode(((PanelAccordion)uiComponent).getLabel());
         header.appendChild(text);
         header.setAttribute(HTML.CLASS_ATTR, headerClass);
         header.setAttribute(HTML.ONCLICK_ATTR, "Ice.Accordion.fire('" + baseID + "_content');");
