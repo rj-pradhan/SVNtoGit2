@@ -17,14 +17,17 @@ import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
     private PathDispatcher dispatcher = new PathDispatcher();
-
-
+    private static final String AWT_HEADLESS  = "java.awt.headless";
 
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
         StartupTime.started();
         try {
             ServletContext servletContext = servletConfig.getServletContext();
+            String awtHeadless = System.getProperty(AWT_HEADLESS);
+            if (null == awtHeadless)  {
+                System.setProperty(AWT_HEADLESS, "true");
+            }
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);
             final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
             final ResponseStateManager responseStateManager = ResponseStateManager.getResponseStateManager(servletContext);
