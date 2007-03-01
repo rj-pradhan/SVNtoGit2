@@ -156,14 +156,15 @@ public class D2DViewHandler extends ViewHandler {
             stateMgr.saveSerializedView(context);
         }
 
-        // Now clean this up here. Don't clean up in RenderResponse, since that
-        // obviously may be overridden by other ViewHandlers
-        ExternalContext externalContext = context.getExternalContext();
-        if (externalContext instanceof BridgeExternalContext) {
-            BridgeExternalContext bridgeExternalContext =
-                    (BridgeExternalContext) externalContext;
-            bridgeExternalContext.resetRequestMap();
-        }
+        // This should be done to ensure the Seam EventContexts are reset
+        // after every event, but this is causing problems right now.
+        // todo: 
+//        ExternalContext externalContext = context.getExternalContext();
+//        if (externalContext instanceof BridgeExternalContext) {
+//            BridgeExternalContext bridgeExternalContext =
+//                    (BridgeExternalContext) externalContext;
+//            bridgeExternalContext.resetRequestMap();
+//        }
     }
 
 
