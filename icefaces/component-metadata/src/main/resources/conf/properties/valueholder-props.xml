@@ -1,6 +1,4 @@
 <?xml encoding='UTF-8'?>
-
-      &value-props;
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -33,4 +31,6 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+&value-props;
+
 

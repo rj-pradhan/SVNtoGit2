@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-&ice-ext-core-styled-props;
-&panel-grid-props;
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -34,4 +31,8 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+  
+&ice-ext-core-styled-props;
+&panel-grid-props;
+
 

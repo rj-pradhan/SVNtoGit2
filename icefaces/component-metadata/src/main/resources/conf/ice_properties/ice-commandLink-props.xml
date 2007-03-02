@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding='UTF-8'?>
-
-&ice-ext-core-styled-props;
-&ice-effects-props;
-&uicommand-props;
-&ice-att-partialsubmit-props;
-&ice-att-userrole-enabled-props;
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -38,6 +31,13 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+&ice-ext-core-styled-props;
+&ice-effects-props;
+&uicommand-props;
+&ice-att-partialsubmit-props;
+&ice-att-userrole-enabled-props;
+
+
 
 <property>
 	<description>

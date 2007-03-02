@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
-&uicommand-props;
-
  <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -36,6 +31,11 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+
+&uicommand-props;
+
+
 
 <property>
  <description>selected</description>

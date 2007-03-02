@@ -1,27 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
-&core-props;
-
-
-
-<property>
-	<property-name>selectedPanel</property-name>
-	<property-class>java.util.String</property-class>
-	<property-extension>
-		<category>APPEARANCE</category>
-	</property-extension>
-</property>
-
-<property>
-	<property-name>rowClass</property-name>
-	<property-extension>
-		<category>APPEARANCE</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -54,6 +31,29 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+&core-props;
+
+
+
+<property>
+	<property-name>selectedPanel</property-name>
+	<property-class>java.util.String</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+	</property-extension>
+</property>
+
+<property>
+	<property-name>rowClass</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
 
 <property>
 	<property-name>columnClass</property-name>

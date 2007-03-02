@@ -1,18 +1,4 @@
 <?xml encoding='UTF-8'?>
-
-
-&uiinput-props;
-&value-props;
-
-
-<property>
-	<property-name>disabledClass</property-name>
-	<property-extension>
-		<category>APPEARANCE</category>
-		<is-hidden>true</is-hidden>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -45,6 +31,20 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+&uiinput-props;
+&value-props;
+
+
+<property>
+	<property-name>disabledClass</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+
 
 <property>
 	<property-name>enabledClass</property-name>

@@ -1,53 +1,5 @@
 <?xml encoding='UTF-8'?>
-
-    <property>
-      <property-name>alt</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-      </property-extension>
-    </property>
-
-    <property>
-      <property-name>height</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-          <editor-class>
-            &lengthValueEditor;
-          </editor-class>
-      </property-extension>
-    </property>
-
-    <property>
-      <property-name>ismap</property-name>
-      <property-extension>
-          <category>ADVANCED</category>
-      </property-extension>
-    </property>
-
-    <property>
-      <property-name>longdesc</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-      </property-extension>
-    </property>
-
-    <property>
-      <property-name>usemap</property-name>
-      <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.IMAGE_MAP_NAMES
-            </expression>
-          </named-value>
-      </property-extension>
-    </property>
-
-    <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -81,11 +33,58 @@
   -->
 
 <property>
-      <property-name>width</property-name>
-      <property-extension>
-            <category>APPEARANCE</category>
-            <editor-class>
-              &lengthValueEditor;
-            </editor-class>
-      </property-extension>
-    </property>
+    <property-name>alt</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>height</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &lengthValueEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>ismap</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>longdesc</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>usemap</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.IMAGE_MAP_NAMES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>width</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &lengthValueEditor;
+        </editor-class>
+    </property-extension>
+</property>

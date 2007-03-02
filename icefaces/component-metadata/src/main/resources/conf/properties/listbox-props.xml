@@ -1,31 +1,5 @@
 <?xml encoding='UTF-8'?>
-
-    <property>
-      <property-name>size</property-name>
-      <property-extension>
-        <category>APPEARANCE</category>
-        <editor-class>
-          &integerEditor;
-        </editor-class>
-        <named-value>
-          <name>minValue</name>
-          <expression>new Integer(0)</expression>
-        </named-value>
-        <named-value>
-          <name>unsetValue</name>
-          <expression>new Integer(Integer.MIN_VALUE)</expression>
-       </named-value>          
-       </property-extension>
-    </property>
-
-      <property>
-        <property-name>disabledClass</property-name>
-        <property-extension>
-          <category>APPEARANCE</category>
-        </property-extension>
-      </property>
-
-      <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -57,10 +31,36 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+<property>
+    <property-name>size</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &integerEditor;
+        </editor-class>
+        <named-value>
+            <name>minValue</name>
+            <expression>new Integer(0)</expression>
+        </named-value>
+        <named-value>
+            <name>unsetValue</name>
+            <expression>new Integer(Integer.MIN_VALUE)</expression>
+        </named-value>          
+    </property-extension>
+</property>
 
 <property>
-        <property-name>enabledClass</property-name>
-        <property-extension>
-          <category>APPEARANCE</category>
-        </property-extension>
-      </property>
+    <property-name>disabledClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+    </property-extension>
+</property>
+
+
+
+<property>
+    <property-name>enabledClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+    </property-extension>
+</property>

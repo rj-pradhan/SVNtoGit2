@@ -1,7 +1,7 @@
 <?xml encoding='UTF-8'?>
 
 
-    <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -35,20 +35,20 @@
   -->
 
 <property>
-      <property-name>columns</property-name>
-	  <property-class>int</property-class>
-      <property-extension>
-          <category>APPEARANCE</category>
-          <editor-class>
+    <property-name>columns</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
             &integerEditor;
-          </editor-class>
-          <named-value>
+        </editor-class>
+        <named-value>
             <name>minValue</name>
             <expression>new Integer(0)</expression>
-          </named-value>
-          <named-value>
+        </named-value>
+        <named-value>
             <name>unsetValue</name>
             <expression>new Integer(Integer.MIN_VALUE)</expression>
-         </named-value>         
+        </named-value>         
     </property-extension>
-    </property>
+</property>

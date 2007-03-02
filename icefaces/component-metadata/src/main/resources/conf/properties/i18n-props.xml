@@ -1,26 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<property>
-	<description>
-		Direction indication for text that does not inherit
-		directionality. Valid values are "LTR" (left-to-right) and "RTL"
-		(right-to-left).
-	</description>
-	<property-name>dir</property-name>
-	<property-extension>
-		<category>ADVANCED</category>
-		<editor-class>
-			&chooseOneReferenceDataEditor;
-		</editor-class>
-		<named-value>
-			<name>referenceDataDefiner</name>
-			<expression>
-				com.sun.jsfcl.std.reference.ReferenceDataManager.TEXT_DIRECTIONS
-			</expression>
-		</named-value>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -53,6 +32,27 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+<property>
+	<description>
+		Direction indication for text that does not inherit
+		directionality. Valid values are "LTR" (left-to-right) and "RTL"
+		(right-to-left).
+	</description>
+	<property-name>dir</property-name>
+	<property-extension>
+		<category>ADVANCED</category>
+		<editor-class>
+			&chooseOneReferenceDataEditor;
+		</editor-class>
+		<named-value>
+			<name>referenceDataDefiner</name>
+			<expression>
+				com.sun.jsfcl.std.reference.ReferenceDataManager.TEXT_DIRECTIONS
+			</expression>
+		</named-value>
+	</property-extension>
+</property>
 
 <property>
 	<description>

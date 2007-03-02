@@ -1,111 +1,5 @@
 <?xml encoding='UTF-8'?>
-
-      <property>
-        <property-name>charset</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.CHARACTER_SETS
-            </expression>
-          </named-value>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>coords</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &stringEditorWithShortDescription;
-          </editor-class>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>hreflang</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.LANGUAGE_CODES
-            </expression>
-          </named-value>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>rel</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
-            </expression>
-          </named-value>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>rev</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
-            </expression>
-          </named-value>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>shape</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
-            &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.REGION_SHAPES
-            </expression>
-          </named-value>
-        </property-extension>
-      </property>
-
-      <property>
-        <property-name>target</property-name>
-        <property-extension>
-        <editor-class>
-          &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-          <name>referenceDataDefiner</name>
-          <expression>
-            com.sun.jsfcl.std.reference.ReferenceDataManager.FRAME_TARGETS
-          </expression>
-        </named-value>
-        </property-extension>
-      </property>
-
-      <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -139,17 +33,123 @@
   -->
 
 <property>
-        <property-name>type</property-name>
-        <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
+    <property-name>charset</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
             &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
+        </editor-class>
+        <named-value>
             <name>referenceDataDefiner</name>
             <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.MEDIA_TYPES
+                com.sun.jsfcl.std.reference.ReferenceDataManager.CHARACTER_SETS
             </expression>
-          </named-value>
-        </property-extension>
-      </property>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>coords</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditorWithShortDescription;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>hreflang</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.LANGUAGE_CODES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>rel</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>rev</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>shape</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.REGION_SHAPES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+<property>
+    <property-name>target</property-name>
+    <property-extension>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.FRAME_TARGETS
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
+
+
+<property>
+    <property-name>type</property-name>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &chooseOneReferenceDataEditor;
+        </editor-class>
+        <named-value>
+            <name>referenceDataDefiner</name>
+            <expression>
+                com.sun.jsfcl.std.reference.ReferenceDataManager.MEDIA_TYPES
+            </expression>
+        </named-value>
+    </property-extension>
+</property>
