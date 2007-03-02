@@ -45,6 +45,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
@@ -84,7 +85,7 @@ public class FormRenderer extends DomBasicRenderer {
             throws IOException {
 
         validateParameters(facesContext, uiComponent, UIForm.class);
-
+        validateNestingForm(uiComponent);
         DOMContext domContext =
                 DOMContext.attachDOMContext(facesContext, uiComponent);
 
@@ -342,5 +343,16 @@ public class FormRenderer extends DomBasicRenderer {
             requestMap.put(COMMAND_LINK_HIDDEN_FIELDS_KEY, hiddenFieldMap);
         }
         return hiddenFieldMap;
+    }
+    private void validateNestingForm(UIComponent uiComponent) throws IOException{
+        UIComponent parent = uiComponent.getParent();
+        if (parent == null) {
+            return;
+        }
+        if (parent instanceof UIForm){
+            throw new FacesException("Nested form found on the page. The form " +
+                    "action element can not be nested");
+        }
+        validateNestingForm(parent);
     }
 }
