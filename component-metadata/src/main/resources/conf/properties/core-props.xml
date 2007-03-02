@@ -1,20 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
-
-
-<property>
-	<description>
-		CSS style(s) to be applied when this component is rendered.
-	</description>
-	<property-name>style</property-name>
-	<property-extension>
-		<category>APPEARANCE</category>
-		<editor-class>
-			&cssStyleEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -47,6 +31,21 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+<property>
+	<description>
+		CSS style(s) to be applied when this component is rendered.
+	</description>
+	<property-name>style</property-name>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&cssStyleEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+
 
 <property>
 	<description>

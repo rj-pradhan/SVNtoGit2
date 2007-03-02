@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-&ice-ext-core-styled-props;
-&ice-att-title-props;
-
-<property>
-<description>Used to render a resizable popup.</description>
-	<property-name>resizable</property-name>
-	<property-class>boolean</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<is-hidden>true</is-hidden>
-	</property-extension>
-</property>
-
-<property>
-            <description>Used to render a modal popup.
-            Note: this will only cover the body of a document. Make sure the document body takes up 100% of the window.
-                For example: &lt;html&gt;&lt;body&gt;&lt;div style="height=100%;witdh:100%;"&gt;&lt;div&gt;&lt;/body&gt;&lt;/html&gt;
-            </description>
-	<property-name>modal</property-name>
-	<property-class>boolean</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -58,6 +31,33 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+
+&ice-ext-core-styled-props;
+&ice-att-title-props;
+
+<property>
+<description>Used to render a resizable popup.</description>
+	<property-name>resizable</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+            <description>Used to render a modal popup.
+            Note: this will only cover the body of a document. Make sure the document body takes up 100% of the window.
+                For example: &lt;html&gt;&lt;body&gt;&lt;div style="height=100%;witdh:100%;"&gt;&lt;div&gt;&lt;/body&gt;&lt;/html&gt;
+            </description>
+	<property-name>modal</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+	</property-extension>
+</property>
+
 
 <property>
 	<description>

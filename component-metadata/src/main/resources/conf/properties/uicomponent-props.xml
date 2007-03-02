@@ -1,8 +1,4 @@
 <?xml encoding='UTF-8'?>
-
-
-&base-props;
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -35,4 +31,8 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+&base-props;
+
+
 

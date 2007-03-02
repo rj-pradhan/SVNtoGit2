@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-&ice-att-userrole-rendered-props;
-&core-props;
-&uipanel-props;
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -36,6 +31,12 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+  
+&ice-att-userrole-rendered-props;
+&core-props;
+&uipanel-props;
+
+
 
 <property>
 	<description>Id of the child to be rendered.</description>

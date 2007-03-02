@@ -1,26 +1,5 @@
 <?xml encoding='UTF-8'?>
 
-&value-props;
-
-<property>
-	<property-name>cols</property-name>
-	<property-class>int</property-class>	
-	<property-extension>
-		<category>APPEARANCE</category>
-		<editor-class>
-			&integerEditor;
-		</editor-class>
-		<named-value>
-			<name>minValue</name>
-			<expression>new Integer(0)</expression>
-		</named-value>
-		<named-value>
-			<name>unsetValue</name>
-			<expression>new Integer(Integer.MIN_VALUE)</expression>
-		</named-value>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -53,6 +32,27 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+&value-props;
+
+<property>
+	<property-name>cols</property-name>
+	<property-class>int</property-class>	
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&integerEditor;
+		</editor-class>
+		<named-value>
+			<name>minValue</name>
+			<expression>new Integer(0)</expression>
+		</named-value>
+		<named-value>
+			<name>unsetValue</name>
+			<expression>new Integer(Integer.MIN_VALUE)</expression>
+		</named-value>
+	</property-extension>
+</property>
+
 
 <property>
 	<property-name>rows</property-name>

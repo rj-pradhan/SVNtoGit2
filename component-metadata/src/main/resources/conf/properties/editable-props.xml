@@ -1,8 +1,6 @@
 <?xml encoding='UTF-8'?>
 
-&ice-att-immediate-props;
-
-      <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -35,14 +33,17 @@
   ~
   -->
 
+
+&ice-att-immediate-props;
+
 <property>
-        <property-name>valueChangeListener</property-name>
-        <!-- Work around typo in JSF 1.1 metadata -->
-        <property-class>javax.faces.el.MethodBinding</property-class>
-        <property-extension>
-            <category>ADVANCED</category>
-            <editor-class>
-              &methodBindingEditor;
-            </editor-class>
-        </property-extension>
-      </property>
+    <property-name>valueChangeListener</property-name>
+    <!-- Work around typo in JSF 1.1 metadata -->
+    <property-class>javax.faces.el.MethodBinding</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &methodBindingEditor;
+        </editor-class>
+    </property-extension>
+</property>

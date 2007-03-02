@@ -1,9 +1,4 @@
 <?xml encoding='UTF-8'?>
-
-
-&uicomponent-props;
-&value-props;
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -36,6 +31,11 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+
+&uicomponent-props;
+&value-props;
+
+
 
 <property>
 	<property-name>url</property-name>

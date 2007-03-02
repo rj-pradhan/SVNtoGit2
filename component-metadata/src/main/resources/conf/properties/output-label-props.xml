@@ -1,6 +1,6 @@
 <?xml encoding='UTF-8'?>
 
-    <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -34,17 +34,17 @@
   -->
 
 <property>
-      <property-name>for</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-          <editor-class>
+    <property-name>for</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
             &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
+        </editor-class>
+        <named-value>
             <name>referenceDataDefiner</name>
             <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.COMPONENT_IDS
+                com.sun.jsfcl.std.reference.ReferenceDataManager.COMPONENT_IDS
             </expression>
-          </named-value>
-      </property-extension>
-    </property>
+        </named-value>
+    </property-extension>
+</property>

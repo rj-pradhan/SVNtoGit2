@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding='UTF-8'?>
-&value-props;
-<property>
-	<description>
-		The number of rows to display, starting with the one identified
-		by the "first" property. If this value is set to zero, all
-		available rows in the underlying data model will be displayed.
-	</description>
-	<property-name>rows</property-name>
-	<property-class>int</property-class>
-	<property-extension>
-		<category>APPEARANCE</category>
-		<editor-class>
-			&numberEditor;
-		</editor-class>
-	</property-extension>
-</property>
-
 <!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
@@ -48,6 +31,24 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+  
+&value-props;
+
+<property>
+	<description>
+		The number of rows to display, starting with the one identified
+		by the "first" property. If this value is set to zero, all
+		available rows in the underlying data model will be displayed.
+	</description>
+	<property-name>rows</property-name>
+	<property-class>int</property-class>
+	<property-extension>
+		<category>APPEARANCE</category>
+		<editor-class>
+			&numberEditor;
+		</editor-class>
+	</property-extension>
+</property>
 
 <property>
 	<description>
