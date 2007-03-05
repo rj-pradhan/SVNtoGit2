@@ -193,7 +193,7 @@
 
       <renderer>
         <component-family>com.icesoft.faces.RowSelectorFamily</component-family>
-        <renderer-type>com.icesoft.faces.RowSelectorRenderer</renderer-type>
+        <renderer-type>com.icesoft.faces.component.ext.renderkit.RowSelectorRenderer</renderer-type>
         <renderer-class>com.icesoft.faces.component.ext.renderkit.RowSelectorRenderer</renderer-class>
       </renderer>
 
