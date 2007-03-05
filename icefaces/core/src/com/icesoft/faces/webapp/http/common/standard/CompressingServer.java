@@ -22,7 +22,7 @@ public class CompressingServer implements Server {
 
     public void service(Request request) throws Exception {
         String acceptEncodingHeader = request.getHeader("Accept-Encoding");
-        if (acceptEncodingHeader.indexOf("gzip") >= 0 || acceptEncodingHeader.indexOf("compress") >= 0) {
+        if (acceptEncodingHeader != null && ( acceptEncodingHeader.indexOf("gzip") >= 0 || acceptEncodingHeader.indexOf("compress") >= 0) ) {
             server.service(new CompressingRequest(request));
         } else {
             server.service(request);
