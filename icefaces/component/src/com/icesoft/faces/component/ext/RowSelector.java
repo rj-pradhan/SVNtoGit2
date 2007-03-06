@@ -57,6 +57,9 @@ public class RowSelector extends UIComponentBase {
     private String mouseOverClass;
     private String selectedClass;
     private MethodBinding selectionListener;
+    private MethodBinding selectionAction;
+    private Integer clickedRow;
+
 
     public static final String COMPONENT_TYPE = "com.icesoft.faces.RowSelector";
     public static final String RENDERER_TYPE =
@@ -90,6 +93,26 @@ public class RowSelector extends UIComponentBase {
             vb.setValue(getFacesContext(), value);
         } else {
             this.value = value;
+        }
+    }
+
+    public Integer  getClickedRow() {
+        ValueBinding vb = getValueBinding("clickedRow");
+        if (vb != null) {
+            return (Integer) vb.getValue(getFacesContext());
+        }
+        if (clickedRow != null) {
+            return clickedRow;
+        }
+        return new Integer(-1);
+    }
+
+    public void setClickedRow(Integer clickedRow) {
+        ValueBinding vb = getValueBinding("clickedRow");
+        if (vb != null) {
+            vb.setValue(getFacesContext(), clickedRow);
+        } else {
+            this.clickedRow = clickedRow;
         }
     }
 
@@ -152,11 +175,35 @@ public class RowSelector extends UIComponentBase {
             }
             setSelectionListener(mb);
 
-        } else {
+        } else if (s != null && s.equals("selectionAction")) {
+
+            MethodBinding mb =
+                    getFacesContext().getApplication().createMethodBinding(
+                            vb.getExpressionString(),
+                            null);
+            if (mb == null){
+                throw new RuntimeException("Selection Listener must be a method binding");
+            }
+
+            setSelectionAction(mb);
+
+        }
+
+        else {
             super.setValueBinding(s, vb);
         }
 
     }
+
+    public MethodBinding getSelectionAction() {
+         return selectionAction;
+     }
+
+     public void setSelectionAction(MethodBinding selectionListener) {
+         this.selectionAction = selectionListener;
+     }
+
+
 
     public void processDecodes(FacesContext facesContext){
         // Check for row selection in its parent table hidden field
@@ -191,14 +238,17 @@ public class RowSelector extends UIComponentBase {
                 boolean b = rowSelector.getValue().booleanValue();
                 b = !b;
                 rowSelector.setValue(new Boolean(b));
-
+                setClickedRow(new Integer(rowIndex));
                 if (rowSelector.getSelectionListener() != null) {
                     RowSelectorEvent evt =
                             new RowSelectorEvent(rowSelector, rowIndex, b);
                     evt.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 
                     rowSelector.queueEvent(evt);
+                } if(rowSelector.getSelectionAction() != null){
+                    rowSelector.getSelectionAction().invoke(facesContext, null);
                 }
+         
 
             } else {
                 if (Boolean.FALSE.equals(rowSelector.getMultiple())) {
