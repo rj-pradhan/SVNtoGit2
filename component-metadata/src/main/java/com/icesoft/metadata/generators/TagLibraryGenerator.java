@@ -177,10 +177,23 @@ public class TagLibraryGenerator extends AbstractGenerator {
         if (cb.isSuppressed())
             return;
         RendererBean rb = renderer(cb);
-        if (rb == null)
-            rb = new RendererBean();
-        if (rb.getTagName() == null)
+  
+        if(rb != null && rb.getInstanceName() == null && rb.getTagName() == null){
+            
+            System.err.println("Please check the following component metadata:");
+            System.err.println(" component class="+cb.getComponentClass()+" is not correct");            
+            System.exit(1);
+        }                
+        if (rb == null){     
+            
+            System.err.println("Please check the following component metadata:");
+            System.err.println(" component class="+ cb.getComponentClass()+" is not correct");
+            System.exit(1);
+        }      
+        
+        if (rb.getTagName() == null){            
             return;
+        }
         String tagClass = null;
         if (tagClassPackage == null) {
             tagClass = cb.getComponentClass() + (getBase() ? "TagBase" : "Tag");
