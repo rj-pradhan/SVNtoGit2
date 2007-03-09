@@ -40,6 +40,6 @@
 	<renderer-type>com.icesoft.faces.seriesRenderer</renderer-type>
 
 	<renderer-extension>
+		<instance-name>uiSeries</instance-name>
 	</renderer-extension>
-
 </renderer>
