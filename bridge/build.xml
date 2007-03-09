@@ -170,7 +170,7 @@
             </filelist>
         </concat>
         <compress src="${script}"/>
-        
+        <echo message="Appending open ajax script"/>
          <concat destfile="${script}" append="yes" fixlastline="yes" >
              <path location="${script.open.ajax}"/>
          </concat>
@@ -227,7 +227,7 @@
             </filelist>
         </concat>
         <compress src="${extras.script}"/>
-        
+        <echo message="Appending open ajax extras script"/>
          <concat destfile="${extras.script}" append="yes" fixlastline="yes" >
              <path location="${extras.script.open.ajax}"/>
          </concat>
@@ -289,6 +289,7 @@
                   dest="register.ice-extras.js"/>
     </target>
 
+    <target name="build.open.ajax.test" description="Build bridge libs for Open Ajax hub tests" depends="build, build.extras"/>
 
     
 </project>
