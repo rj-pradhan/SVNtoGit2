@@ -36,11 +36,10 @@ package com.icesoft.faces.application;
 import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
-import com.icesoft.faces.env.CommonEnvironmentResponse;
+import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
-import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
 import com.icesoft.util.SeamUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,15 +56,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKitFactory;
-import javax.portlet.RenderResponse;
-import javax.servlet.ServletResponse;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -88,8 +83,6 @@ public class D2DViewHandler extends ViewHandler {
         }
     }
 
-    private static final String CURRENT_VIEW_ROOT =
-            "javax.faces.webapp.CURRENT_VIEW_ROOT";
     private final static String DELEGATE_NONIFACE =
             "com.icesoft.faces.delegateNonIface";
     private final static String ACTION_URL_SUFFIX =
@@ -98,7 +91,7 @@ public class D2DViewHandler extends ViewHandler {
             "com.icesoft.faces.reloadInterval";
     private final static String DO_JSF_STATE_MANAGEMENT =
             "com.icesoft.faces.doJSFStateManagement";
-    public final static String INCLUDE_OPEN_AJAX_HUB = 
+    public final static String INCLUDE_OPEN_AJAX_HUB =
             "com.icesoft.faces.openAjaxHub";
     private final static String LAST_LOADED_KEY = "_lastLoaded";
     private final static String LAST_CHECKED_KEY = "_lastChecked";
@@ -158,7 +151,7 @@ public class D2DViewHandler extends ViewHandler {
 
         // This should be done to ensure the Seam EventContexts are reset
         // after every event, but this is causing problems right now.
-        // todo: 
+        // todo:
 //        ExternalContext externalContext = context.getExternalContext();
 //        if (externalContext instanceof BridgeExternalContext) {
 //            BridgeExternalContext bridgeExternalContext =
@@ -228,7 +221,7 @@ public class D2DViewHandler extends ViewHandler {
 
         if (externalContext instanceof ServletExternalContext) {
 
-            ServletExternalContext  servletExternalContext =
+            ServletExternalContext servletExternalContext =
                     (ServletExternalContext) externalContext;
 
             servletExternalContext.setRequestServletPath(viewId);
@@ -241,7 +234,7 @@ public class D2DViewHandler extends ViewHandler {
             if (SeamUtilities.isSeamEnvironment()) {
                 if (servletExternalContext.getRequestParameterMap().remove(
                         PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT) != null) {
-                    
+
                     if (log.isTraceEnabled()) {
                         log.trace("Seam Keyword shortcut found, new ViewRoot");
                     }
@@ -252,7 +245,7 @@ public class D2DViewHandler extends ViewHandler {
                     }
                 }
             }
-        } 
+        }
 
         if (null != currentRoot &&
                 mungeViewId(viewId)
@@ -288,9 +281,8 @@ public class D2DViewHandler extends ViewHandler {
     }
 
 
-
     private static Map getContextServletTables(FacesContext context) {
-        Map sessionMap = getSessionMap(context);
+        Map sessionMap = context.getExternalContext().getSessionMap();
         String viewNumber = "-";
         if (context instanceof BridgeFacesContext) {
             viewNumber = ((BridgeFacesContext) context).getViewNumber();
@@ -392,8 +384,8 @@ public class D2DViewHandler extends ViewHandler {
         return time;
     }
 
-    protected synchronized void renderResponse(FacesContext context) throws IOException {
-
+    protected void renderResponse(FacesContext facesContext) throws IOException {
+        BridgeFacesContext context = (BridgeFacesContext) facesContext;
         UIComponent root = context.getViewRoot();
         String viewId = ((UIViewRoot) root).getViewId();
 
@@ -403,7 +395,7 @@ public class D2DViewHandler extends ViewHandler {
         }
 
         clearSession(context);
-        ResponseWriter responseWriter = createAndSetResponseWriter(context);
+        ResponseWriter responseWriter = context.createAndSetResponseWriter();
 
         boolean reloadView = false;
         URLConnection viewConnection = null;
@@ -474,10 +466,6 @@ public class D2DViewHandler extends ViewHandler {
             try {
                 viewInput = new InputStreamReader(
                         viewConnection.getInputStream(), CHAR_ENCODING);
-
-                if (null == viewInput) {
-                    throw new NullPointerException();
-                }
                 if (viewId.endsWith(".jsp")) {
                     viewInput = JspPageToDocument.transform(viewInput);
                 } else if (viewId.endsWith(".jspx")) {
@@ -492,13 +480,9 @@ public class D2DViewHandler extends ViewHandler {
             try {
                 //TODO: pass viewInput as an InputStream in order to give to the XML parser a chance to
                 //TODO: read the encoding type declared in the xml processing instruction (<?xml version="1.0" charset="..."?>)
-                context.getExternalContext().getRequestMap()
-                        .remove(CURRENT_VIEW_ROOT);
                 parser.parse(viewInput, context);
                 root.getAttributes().put(LAST_LOADED_KEY,
                         new Long(System.currentTimeMillis()));
-
-
 
 
             } catch (Throwable e) {
@@ -590,65 +574,6 @@ public class D2DViewHandler extends ViewHandler {
         contextServletTable.remove(DOMResponseWriter.RESPONSE_CONTEXTS_TABLE);
         contextServletTable.remove(DOMResponseWriter.RESPONSE_VIEWROOT);
         contextServletTable.remove(DOMResponseWriter.RESPONSE_DOM);
-        contextServletTable.remove(DOMResponseWriter.RESPONSE_MODIFIED_NODES);
-    }
-
-    protected ResponseWriter createAndSetResponseWriter(FacesContext context)
-            throws IOException {
-        // TODO
-        // Workaround to support running in both ICEfaces and plain Faces modes
-        Object obj = context.getExternalContext().getResponse();
-        Writer writer = null;
-
-        // If the response is null, don't bother trying to do anything with it.
-        // If it's a CommonEnvironmentResponse, then we are running ICEfaces with the
-        // PersistentFacesServlet.  If not, we're likely running in plain Faces mode and just
-        // have a ServletResponse or a RenderReponse (portlets).
-        //TODO: detect and pick one of the browser's preferred character sets.
-        if (obj != null) {
-            if (obj instanceof CommonEnvironmentResponse) {
-                CommonEnvironmentResponse response =
-                        (CommonEnvironmentResponse) obj;
-                response.setContentType(HTML_CONTENT_TYPE);
-                try {
-                    writer = new OutputStreamWriter(response.getStream(),
-                            CHAR_ENCODING);
-                } catch (IllegalStateException e) {
-                    //jsp inclusion seems to have already called getWriter
-                    writer = response.getWriter();
-                }
-            } else if (obj instanceof ServletResponse) {
-                ServletResponse response = (ServletResponse) obj;
-                response.setContentType(HTML_CONTENT_TYPE);
-                response.setCharacterEncoding(CHAR_ENCODING);
-                writer = response.getWriter();
-            } else if (obj instanceof RenderResponse) {
-                RenderResponse response = (RenderResponse) obj;
-                response.setContentType(HTML_CONTENT_TYPE);
-                writer = new OutputStreamWriter(
-                        response.getPortletOutputStream(),
-                        CHAR_ENCODING);
-            } else {
-                throw new FacesException("unknown type of response: " + obj);
-            }
-        }
-
-        DOMResponseWriter responseWriter = new DOMResponseWriter(writer, context, HTML_CONTENT_TYPE, CHAR_ENCODING);
-        context.setResponseWriter(responseWriter);
-
-        return responseWriter;
-    }
-
-    private static Map getSessionMap(FacesContext context) {
-        if (null == context) {
-            context = FacesContext.getCurrentInstance();
-        }
-        Map sessionMap = context.getExternalContext().getSessionMap();
-        if (null == sessionMap) {
-            context.getExternalContext().getSession(true);
-            sessionMap = context.getExternalContext().getSessionMap();
-        }
-        return sessionMap;
     }
 
     public void writeState(FacesContext context) throws IOException {
@@ -692,9 +617,6 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public static boolean isValueReference(String value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
         if ((value.indexOf("#{") != -1) &&
                 (value.indexOf("#{") < value.indexOf('}'))) {
             return true;
@@ -710,17 +632,8 @@ public class D2DViewHandler extends ViewHandler {
      *
      * @param clientId
      * @param base
-     * @throws NullPointerException {@inheritDoc}
      */
     public static UIComponent findComponent(String clientId, UIComponent base) {
-
-        if (clientId == null) {
-            throw new NullPointerException();
-        }
-        if (base == null) {
-            throw new NullPointerException();
-        }
-
         // Set base, the parent component whose children are searched, to be the
         // nearest parent that is either 1) the view root if the id expression
         // is absolute (i.e. starts with the delimiter) or 2) the nearest parent
@@ -778,66 +691,6 @@ public class D2DViewHandler extends ViewHandler {
         return input.substring(0, input.length() - remove.length());
     }
 
-    public void setActionURLSuffix(String param) {
-        actionURLSuffix = param;
-    }
-
-
-    public void setDelegateNonIface(String param) {
-        delegateNonIface = D2DViewHandler
-                .getStringAsBoolean(param, delegateNonIfaceDefault);
-    }
-
-    public void setReloadInterval(String param) {
-        reloadInterval = getStringAsLong(
-                param, reloadIntervalDefault);
-        if (-1 != reloadInterval) {
-            //convert user input in seconds into milliseconds internally
-            reloadInterval = reloadInterval * 1000;
-        }
-    }
-
-    private static boolean getStringAsBoolean(String value,
-                                              boolean defaultValue) {
-
-        if (value == null) {
-            return defaultValue;
-        }
-
-        if (value.equalsIgnoreCase("false") ||
-                value.equalsIgnoreCase("off") ||
-                value.equalsIgnoreCase("no")) {
-            return false;
-        }
-
-        if (value.equalsIgnoreCase("true") ||
-                value.equalsIgnoreCase("on") ||
-                value.equalsIgnoreCase("yes")) {
-            return true;
-        }
-
-        return defaultValue;
-    }
-
-    private static long getStringAsLong(String param, long defaultValue) {
-        if (param == null) {
-            return defaultValue;
-        }
-
-        long value = defaultValue;
-
-        try {
-            value = Long.parseLong(param);
-        } catch (NumberFormatException e) {
-            if (log.isWarnEnabled()) {
-                log.warn("Unable to parse string as long " + param);
-            }
-        }
-
-        return value;
-
-    }
-
     //Determine whether handling of the view should be delegated to
     //the delegate ViewHandler
     private boolean delegateView(String viewId) {
@@ -860,16 +713,18 @@ public class D2DViewHandler extends ViewHandler {
             return;
         }
 
-        ExternalContext externalContext = context.getExternalContext();
-        setDelegateNonIface(externalContext.getInitParameter(
-                DELEGATE_NONIFACE));
-        setActionURLSuffix(externalContext.getInitParameter(
-                ACTION_URL_SUFFIX));
-        setReloadInterval(externalContext.getInitParameter(
-                RELOAD_INTERVAL));
-        jsfStateManagement = Boolean.valueOf(
-                externalContext.getInitParameter(DO_JSF_STATE_MANAGEMENT))
-                .booleanValue();
+        ExternalContext ec = context.getExternalContext();
+        String delegateNonIfaceParameter = ec.getInitParameter(DELEGATE_NONIFACE);
+        String reloadIntervalParameter = ec.getInitParameter(RELOAD_INTERVAL);
+        String jsfStateManagementParameter = ec.getInitParameter(DO_JSF_STATE_MANAGEMENT);
+        actionURLSuffix = ec.getInitParameter(ACTION_URL_SUFFIX);
+        delegateNonIface = delegateNonIfaceParameter == null ? delegateNonIfaceDefault : Boolean.valueOf(delegateNonIfaceParameter).booleanValue();
+        try {
+            reloadInterval = Long.parseLong(reloadIntervalParameter) * 1000;
+        } catch (NumberFormatException e) {
+            reloadInterval = reloadIntervalDefault * 1000;
+        }
+        jsfStateManagement = Boolean.valueOf(jsfStateManagementParameter).booleanValue();
         if (!jsfStateManagement) {
             log.debug("JSF State Management not provided");
         }
@@ -902,7 +757,6 @@ public class D2DViewHandler extends ViewHandler {
                                              String componentId) {
         UIComponent component = null;
         UIComponent child = null;
-        ;
 
         if (componentId.equals(uiComponent.getId())) {
             return uiComponent;
