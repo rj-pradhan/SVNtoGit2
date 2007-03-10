@@ -34,8 +34,6 @@
 package com.icesoft.faces.webapp.xmlhttp;
 
 import com.icesoft.faces.context.BridgeExternalContext;
-import com.icesoft.faces.context.BridgeFacesContext;
-import com.icesoft.faces.env.PortletEnvironmentRequest;
 import com.icesoft.util.IdGenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -96,7 +94,7 @@ public class PersistentFacesPortlet implements Portlet {
         stateManager = new ResponseStateManager();
         try {
             idGenerator = new IdGenerator(portletConfig.getPortletContext()
-                                        .getResource("/").getPath());
+                    .getResource("/").getPath());
         } catch (MalformedURLException e) {
             throw new PortletException(e);
         }
@@ -117,10 +115,10 @@ public class PersistentFacesPortlet implements Portlet {
 
         if (log.isDebugEnabled()) {
             log.debug("PersistentFacesPortlet.processAction: FacesContext =" +
-                      facesContext);
+                    facesContext);
             log.debug(
                     "PersistentFacesPortlet.processAction: ExternalContext = " +
-                    externalContext);
+                            externalContext);
         }
 
         PortletSession session = request.getPortletSession();
@@ -157,12 +155,12 @@ public class PersistentFacesPortlet implements Portlet {
 
     public void render(RenderRequest request, RenderResponse response)
             throws PortletException,
-                   IOException {
+            IOException {
 
         request.setAttribute(PersistentFacesCommonlet.SERVLET_KEY,
-                             PersistentFacesCommonlet.PERSISTENT);
+                PersistentFacesCommonlet.PERSISTENT);
         request.setAttribute(PersistentFacesCommonlet.REQUEST_PATH_KEY,
-                             request.getContextPath());
+                request.getContextPath());
         PortletSession session = request.getPortletSession();
 
         // Set up and configure our own FacesContext and ExternalContext
@@ -179,7 +177,7 @@ public class PersistentFacesPortlet implements Portlet {
             iceID =
                     idGenerator.newIdentifier();
             session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, iceID,
-                                 PortletSession.APPLICATION_SCOPE);
+                    PortletSession.APPLICATION_SCOPE);
         }
         //Ignoring the fact they might reload the page in portlet prototype
         viewNumber++;
@@ -188,15 +186,15 @@ public class PersistentFacesPortlet implements Portlet {
         BridgeExternalContext externalContext = (BridgeExternalContext)
                 facesContext.getExternalContext();
         externalContext.getRequestMap().put("com.sun.faces.portlet.INIT",
-                                            "com.sun.faces.portlet.INIT_VIEW");
+                "com.sun.faces.portlet.INIT_VIEW");
         request.setAttribute("com.sun.faces.portlet.INIT",
-                             "com.sun.faces.portlet.INIT_VIEW");
+                "com.sun.faces.portlet.INIT_VIEW");
 
         if (log.isDebugEnabled()) {
             log.debug("PersistentFacesPortlet.render: FacesContext =" +
-                      facesContext);
+                    facesContext);
             log.debug("PersistentFacesPortlet.render: ExternalContext = " +
-                      externalContext);
+                    externalContext);
         }
 
         externalContext.getRequestMap().put(
@@ -206,7 +204,7 @@ public class PersistentFacesPortlet implements Portlet {
                 .put("viewNumber", String.valueOf(viewNumber));
         externalContext.getApplicationSessionMap()
                 .put(PersistentFacesServlet.CURRENT_VIEW_NUMBER,
-                     String.valueOf(viewNumber));
+                        String.valueOf(viewNumber));
 
 //        PersistentFacesState.setLocalInstance(
 //                externalContext.getApplicationSessionMap(),
@@ -240,9 +238,9 @@ public class PersistentFacesPortlet implements Portlet {
             ResponseState state =
                     stateManager.getState(session, String.valueOf(viewNumber));
             session.setAttribute(String.valueOf(viewNumber) +
-                                 "/" + ResponseState.STATE,
-                                 state,
-                                 PortletSession.APPLICATION_SCOPE);
+                    "/" + ResponseState.STATE,
+                    state,
+                    PortletSession.APPLICATION_SCOPE);
 
         } catch (Exception e) {
             if (log.isErrorEnabled()) {

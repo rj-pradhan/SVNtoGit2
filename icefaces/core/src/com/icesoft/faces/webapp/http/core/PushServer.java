@@ -8,15 +8,19 @@ import com.icesoft.faces.webapp.http.common.standard.PathDispatcherServer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
 
 public class PushServer implements Server {
     private Server server;
 
-    public PushServer(UpdateManager updateManager) {
+    public PushServer(Map commandQueues, ViewQueue allUpdatedViews) {
         PathDispatcherServer dispatcher = new PathDispatcherServer();
-        dispatcher.dispatchOn(".*send\\-receive\\-updates$", new ReceiveSendUpdates(updateManager));
-        dispatcher.dispatchOn(".*receive\\-updates$", new SendUpdates(updateManager));
-        dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(updateManager));
+        Collection synchronouslyUpdatedViews = new HashSet();
+        dispatcher.dispatchOn(".*send\\-receive\\-updates$", new ReceiveSendUpdates(commandQueues, synchronouslyUpdatedViews));
+        dispatcher.dispatchOn(".*receive\\-updates$", new SendUpdates(commandQueues, allUpdatedViews));
+        dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
         this.server = dispatcher;
     }
 

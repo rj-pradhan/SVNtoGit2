@@ -1,24 +1,24 @@
 package com.icesoft.faces.webapp.http.common;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 import java.net.URI;
+import java.util.Date;
 
 public interface Request {
 
     String getMethod();
 
     URI getURI();
-    
+
     String getHeader(String name);
 
     String[] getHeaderAsStrings(String name);
 
     Date getHeaderAsDate(String name);
 
-    int getHeaderAsInteger(String name);    
+    int getHeaderAsInteger(String name);
 
     String getParameter(String name);
 

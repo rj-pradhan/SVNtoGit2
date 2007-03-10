@@ -37,8 +37,6 @@
 
 package com.icesoft.faces.context;
 
-import com.icesoft.util.SeamUtilities;
-
 import javax.faces.context.ExternalContext;
 import javax.servlet.http.Cookie;
 import java.util.Map;
@@ -56,38 +54,9 @@ public abstract class BridgeExternalContext extends ExternalContext {
     public static final String
             INCLUDE_SERVLET_PATH = "javax.servlet.include.servlet_path";
 
-    /**
-     * If this is found to be a Seam environment, then we have to clear out any
-     * left over request attributes. Otherwise, since this context is
-     * incorporated into the Seam Contexts structure, things put into this
-     * context linger beyond the scope of the request, which can cause problems.
-     * This method should only be called from the blocking servlet, as it's the
-     * handler for the Ajax requests that cause the issue.
-     */
-    public void clearRequestContext() {
-        if (SeamUtilities.isSeamEnvironment()) {
-            try {
-                getRequestMap().clear();
-            } catch (IllegalStateException ise) {
-                // Can be thrown in Seam example applications as a result of
-                // eg. logout, which has already invalidated the session.
-                if (redirectRequested()) {
-                    throw new RedirectException(redirectTo());
-                }
-            }
-        }
-    }
+    public abstract void clearRequestContext();
 
-    public void resetRequestMap() {
-        clearRequestContext();
-    }
-
-    //todo: replace following redirect* methods with a command that's put into the queue
-    public abstract String redirectTo();
-
-    public abstract boolean redirectRequested();
-
-    public abstract void redirectComplete();
+    public abstract void resetRequestMap();
 
     public abstract String getRequestURI();
 
@@ -99,11 +68,5 @@ public abstract class BridgeExternalContext extends ExternalContext {
 
     public abstract void addCookie(Cookie cookie);
 
-    //todo: replace this with a message that's put into the queue
-    public abstract Cookie[] getResponseCookies();
-
     public abstract Map collectBundles();
-
-    //todo: create a SeamExternalEnvironment instead
-    public abstract void setupSeamEnvironment();
 }

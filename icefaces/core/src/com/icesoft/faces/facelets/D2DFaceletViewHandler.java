@@ -34,6 +34,7 @@
 package com.icesoft.faces.facelets;
 
 import com.icesoft.faces.application.D2DViewHandler;
+import com.icesoft.faces.context.BridgeFacesContext;
 import com.sun.facelets.Facelet;
 import com.sun.facelets.FaceletFactory;
 import com.sun.facelets.compiler.Compiler;
@@ -110,8 +111,8 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         ExternalContext ext = ctx.getExternalContext();
 
         // Use a TagLibrary to create UIXhtmlComponents from all xhtml Tags
-        c.addTagLibrary( new UIXhtmlTagLibrary() );
-        c.addTagDecorator( new UIXhtmlTagDecorator() );
+        c.addTagLibrary(new UIXhtmlTagLibrary());
+        c.addTagDecorator(new UIXhtmlTagDecorator());
 
         // Load libraries
         String paramLibraries = ext.getInitParameter(PARAM_LIBRARIES);
@@ -178,10 +179,10 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         // This has to be true, otherwise table or other container
         //   UIComponents will have text children, when they're
         //   expecting only real UIComponents
-        c.setTrimmingWhitespace( true );
-        c.setTrimmingComments( true );
-        c.setTrimmingXmlDeclarations( true );
-        c.setTrimmingDoctypeDeclarations( true );
+        c.setTrimmingWhitespace(true);
+        c.setTrimmingComments(true);
+        c.setTrimmingXmlDeclarations(true);
+        c.setTrimmingDoctypeDeclarations(true);
     }
 
     protected FaceletFactory createFaceletFactory(Compiler c) {
@@ -238,13 +239,14 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     }
 
 
-    protected void renderResponse(FacesContext context) throws IOException {
+    protected void renderResponse(FacesContext facesContext) throws IOException {
         if (log.isTraceEnabled()) {
             log.trace("renderResponse(FC)");
         }
+        BridgeFacesContext context = (BridgeFacesContext) facesContext;
         try {
             clearSession(context);
-	        ResponseWriter responseWriter = createAndSetResponseWriter(context);
+            ResponseWriter responseWriter = context.createAndSetResponseWriter();
 
             UIViewRoot viewToRender = context.getViewRoot();
             String renderedViewId =

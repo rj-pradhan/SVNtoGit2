@@ -21,11 +21,13 @@ import java.util.TimeZone;
 
 public class ServletRequestResponse implements Request, Response {
     private final static DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+
     static {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
 
     public ServletRequestResponse(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
@@ -160,6 +162,7 @@ public class ServletRequestResponse implements Request, Response {
     }
 
     private void checkExistenceOf(String name) {
-        if (request.getParameter(name) == null) throw new RuntimeException("Query does not contain parameter named: " + name);
+        if (request.getParameter(name) == null)
+            throw new RuntimeException("Query does not contain parameter named: " + name);
     }
 }

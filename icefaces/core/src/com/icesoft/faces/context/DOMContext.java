@@ -36,7 +36,6 @@
  */
 package com.icesoft.faces.context;
 
-import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.util.HalterDump;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -134,9 +133,7 @@ public class DOMContext implements java.io.Serializable {
     private static DOMResponseWriter createTemporaryDOMResponseWriter(
             ResponseWriter responseWriter, FacesContext facesContext) {
         DOMResponseWriter domWriter;
-        domWriter = new DOMResponseWriter(responseWriter, facesContext,
-                D2DViewHandler.HTML_CONTENT_TYPE,
-                D2DViewHandler.CHAR_ENCODING);
+        domWriter = new DOMResponseWriter(facesContext, null);
         Document doc = domWriter.getDocument();
         Element html = doc.createElement("html");
         doc.appendChild(html);

@@ -33,12 +33,11 @@
 
 package com.icesoft.faces.webapp.xmlhttp;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * This could likely use some refactoring but the IncrementalNodeWriter is used

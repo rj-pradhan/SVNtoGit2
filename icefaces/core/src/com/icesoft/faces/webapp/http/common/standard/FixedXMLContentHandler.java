@@ -14,6 +14,7 @@ public abstract class FixedXMLContentHandler implements ResponseHandler {
     public void respond(Response response) throws Exception {
         StringWriter writer = new StringWriter();
         writeTo(writer);
+        writer.write("\n\n");
         byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
         response.setHeader("Content-Type", "text/xml; charset=UTF-8");
         response.setHeader("Content-Length", content.length);

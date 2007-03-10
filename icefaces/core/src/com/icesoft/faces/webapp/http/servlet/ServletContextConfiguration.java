@@ -29,7 +29,7 @@ public class ServletContextConfiguration extends Configuration {
     }
 
     public Configuration[] getChildren(String name) throws ConfigurationException {
-        return new Configuration[] { getChild(name) };
+        return new Configuration[]{getChild(name)};
     }
 
     public String getAttribute(String paramName) throws ConfigurationException {

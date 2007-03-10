@@ -39,8 +39,8 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 import javax.portlet.PortletSession;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
@@ -94,11 +94,11 @@ public class PortletBlockingResponseState
         this.iceID = iceID;
         synchronized (iceID) {
             kicker = (PortletKicker) session.getAttribute(iceID + "/kicker",
-                                                          PortletSession.APPLICATION_SCOPE);
+                    PortletSession.APPLICATION_SCOPE);
             if (null == kicker) {
                 kicker = new PortletKicker();
                 session.setAttribute(iceID + "/kicker", kicker,
-                                     PortletSession.APPLICATION_SCOPE);
+                        PortletSession.APPLICATION_SCOPE);
             }
         }
         this.viewNumber = viewNumber;
@@ -113,13 +113,13 @@ public class PortletBlockingResponseState
         return viewNumber;
     }
 
-    public void block(HttpServletRequest request)  {
+    public void block(HttpServletRequest request) {
         long left = 0;
 
         synchronized (kicker) {
             kicker.notifyAll(); //experimental fix for IE connection limit
             while ((!isCancelled) && (!kicker.isKicked) &&
-                   ((left = remainingMillis()) > 0)) {
+                    ((left = remainingMillis()) > 0)) {
                 try {
                     kicker.wait(left);
                 } catch (InterruptedException e) {
@@ -200,7 +200,7 @@ public class PortletBlockingResponseState
 
         if (unflushed > maxUnflushed) {
             throw new RuntimeException("viewNumber " + viewNumber +
-                                       " update queue exceeded " + unflushed);
+                    " update queue exceeded " + unflushed);
         }
         String nodeString = DOMUtils.nodeToString(element);
         this.addUpdate(element.getAttribute("id"), nodeString);
@@ -221,7 +221,7 @@ public class PortletBlockingResponseState
      * @deprecated Replaced by {@link #writeElement(Elementelement)}
      */
     public void writeElement(HttpSession session, Element element) {
-       //TODO fix interface and calls in DOMResponseWriter
+        //TODO fix interface and calls in DOMResponseWriter
         writeElement(element);
     }
 
@@ -249,7 +249,7 @@ public class PortletBlockingResponseState
 
         public void serialize(Writer writer) throws IOException {
             writer.write("<update address=\"" + this.address + "\"><![CDATA[" +
-                         this.content + "]]></update>");
+                    this.content + "]]></update>");
         }
     }
 }
