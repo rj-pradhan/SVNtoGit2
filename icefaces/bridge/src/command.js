@@ -32,4 +32,21 @@
         statusManager.serverError.on();
         application.dispose();
     };
+
+    This.Macro = function(message) {
+        $enumerate(message.childNodes).each(function(subMessage) {
+            This.deserializeAndExecute(subMessage);
+        });
+    };
+
+    This.deserializeAndExecute = function(message) {
+        switch (message.tagName) {
+            case 'updates': This.Updates(message); break;
+            case 'redirect': This.Redirect(message); break;
+            case 'server-error': This.ServerError(message); break;
+            case 'session-expired': This.SessionExpired(message); break;
+            case 'macro': This.Macro(message); break;
+            default: throw 'Unknown message received: ' + message.tagName;
+        }
+    };
 });

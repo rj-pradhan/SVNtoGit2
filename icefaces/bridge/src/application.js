@@ -42,7 +42,7 @@
 
             window.identifier = Math.round(Math.random() * 10000).toString();
             window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection, defaultParameters) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
-            
+
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
             });
@@ -52,14 +52,7 @@
             });
 
             this.connection.onReceive(function(request) {
-                var message = request.contentAsDOM().documentElement;
-                switch (message.tagName) {
-                    case 'updates': Ice.Command.Updates(message); break;
-                    case 'redirect': Ice.Command.Redirect(message); break;
-                    case 'server-error': Ice.Command.ServerError(message); break;
-                    case 'session-expired': Ice.Command.SessionExpired(message); break;
-                    default: throw 'Unknown message received: ' + message.tagName;
-                }
+                Ice.Command.deserializeAndExecute(request.contentAsDOM().documentElement);
             }.bind(this));
 
             this.connection.onReceive(function() {
@@ -91,21 +84,20 @@
         }
     });
 
-
     window.onLoad(function() {
-        try{
+        try {
             this.application = new This.Application;
-        }catch(ignore){
-            if(console)
+        } catch(ignore) {
+            if (console)
                 console.error(ignore);
         }
     });
 
     window.onUnload(function() {
-        try{
+        try {
             this.application.dispose();
-        }catch(ignore){
-            if(console)
+        } catch(ignore) {
+            if (console)
                 console.error(ignore);
         }
     });
