@@ -1,96 +1,101 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.env.ServletEnvironmentRequest;
-import com.icesoft.faces.webapp.xmlhttp.BlockingResponseState;
+import com.icesoft.faces.webapp.command.Command;
+import com.icesoft.faces.webapp.command.CommandQueue;
+import com.icesoft.faces.webapp.command.NOOP;
+import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
-import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
 import com.icesoft.util.SeamUtilities;
+import edu.emory.mathcs.backport.java.util.concurrent.locks.Lock;
+import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Map;
 
 //todo: refactor this structure into an object with behavior
-public class ServletView {
+public class ServletView implements CommandQueue {
+    private static final NOOP NOOP = new NOOP();
+    private Lock lock = new ReentrantLock();
     private ServletExternalContext externalContext;
     private ServletFacesContext facesContext;
-    private BlockingResponseState responseState;
+    private ViewQueue allServedViews;
     private PersistentFacesState persistentFacesState;
     private Map bundles;
     private ServletEnvironmentRequest wrappedRequest;
-    private String viewIdParameter;
-                                                                       
-    public ServletView(String viewIdentifier, HttpServletRequest request, HttpServletResponse response, ResponseStateManager responseStateManager) {
+    private Command currentCommand = NOOP;
+    private String viewIdentifier;
 
-        viewIdParameter = "&rvn="+viewIdentifier;
+    public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews) {
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
-        wrappedRequest = new ServletEnvironmentRequest(request);
-        externalContext = new ServletExternalContext(servletContext, wrappedRequest, response);
-        facesContext = new ServletFacesContext(externalContext, viewIdentifier);
-        //the call has the side effect of creating and setting up the state
-        //todo: make this concept more visible and less subversive
-        responseState = (BlockingResponseState) responseStateManager.getState(session, viewIdentifier);
-        persistentFacesState = new PersistentFacesState(facesContext, responseState);
+        this.wrappedRequest = new ServletEnvironmentRequest(request);
+        this.viewIdentifier = viewIdentifier;
+        this.allServedViews = allServedViews;
+        this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this);
+        this.facesContext = new ServletFacesContext(externalContext, viewIdentifier, sessionID, this);
+        this.persistentFacesState = new PersistentFacesState(facesContext);
         //collect bundles put by Tag components when the page is parsed
-        bundles = externalContext.collectBundles();
-        externalContext.setupSeamEnvironment();
+        this.bundles = externalContext.collectBundles();
     }
 
-    public void setAsCurrentDuring(HttpServletRequest request) {
-        
-        externalContext.updateRequest(request);
-        externalContext.getRequestMap().putAll(bundles);
+    public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
+        externalContext.update(request, response);
+        externalContext.injectBundles(bundles);
         persistentFacesState.setCurrentInstance();
         facesContext.setCurrentInstance();
+        facesContext.applyBrowserDOMChanges();
     }
 
-    public void switchToImmediateMode(HttpServletResponse response) {
-        externalContext.updateResponse(response);        
+    public void switchToNormalMode() {
+        facesContext.switchToNormalMode();
+        externalContext.switchToNormalMode();
     }
 
     public void switchToPushMode() {
-        //by making the request null DOMResponseWriter will redirect its output to the coresponding ResponseState
-        //todo: find better (less subversive) solution -- like creating two different implementions for DOMResponseWriter
-        externalContext.updateResponse(null);
-    }
-
-    public void redirectIfRequired() throws IOException {
-        // If the GET request handled by this servlet results in a
-        // redirect (not likely under icefaces demo apps, but happens
-        // all the time in Seam) then, we're stuck. We don't use the
-        // X-REDIRECT mechanism in this servlet, so resort to some
-        // good old fashioned manual redirect code.
-        if (externalContext.redirectRequested()) {
-
-            // Append 'rvn' parameter field to trigger new ServletView creation. Otherwise, Seam
-            // based redirects wont find the new ViewId.
-
-            ((HttpServletResponse) externalContext.getResponse())
-                    .sendRedirect(externalContext.redirectTo() +
-                                   viewIdParameter );
-            externalContext.redirectComplete();
-        }
+        facesContext.switchToPushMode();
+        externalContext.switchToPushMode();
     }
 
     /**
-     * Check to see if the URI is different in any material (or Seam) way. 
+     * Check to see if the URI is different in any material (or Seam) way.
+     *
      * @param request ServletRequest
      * @return true if the URI is considered different
      */
     public boolean differentURI(HttpServletRequest request) {
 
         // As a temporary fix, all GET requests are non-faces requests, and thus,
-        // are considered different to force a new ViewRoot to be constructed. 
-        return (SeamUtilities.isSeamEnvironment() ) ||
-             !request.getRequestURI().equals(wrappedRequest.getRequestURI());
+        // are considered different to force a new ViewRoot to be constructed.
+        return (SeamUtilities.isSeamEnvironment()) ||
+                !request.getRequestURI().equals(wrappedRequest.getRequestURI());
+    }
+
+    public void put(Command command) {
+        lock.lock();
+        currentCommand = currentCommand.coalesceWith(command);
+        lock.unlock();
+        try {
+            allServedViews.put(viewIdentifier);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Command take() {
+        lock.lock();
+        Command command = currentCommand;
+        currentCommand = NOOP;
+        lock.unlock();
+
+        return command;
     }
 
     public void release() {
         facesContext.release();
-        persistentFacesState.release();        
+        persistentFacesState.release();
     }
 }

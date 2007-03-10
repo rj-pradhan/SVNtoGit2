@@ -2,11 +2,15 @@ package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.util.EnumerationIterator;
+import com.icesoft.faces.webapp.command.CommandQueue;
+import com.icesoft.faces.webapp.command.Redirect;
+import com.icesoft.faces.webapp.command.SetCookie;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.SeamUtilities;
 
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
+import javax.faces.render.ResponseStateManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -15,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,6 +33,22 @@ import java.util.Set;
 
 //for now extend BridgeExternalContext since there are so many bloody 'instanceof' tests
 public class ServletExternalContext extends BridgeExternalContext {
+    private static String postBackKey;
+
+    static {
+        //We will place VIEW_STATE_PARAM in the requestMap so that
+        //JSF 1.2 doesn't think the request is a postback and skip
+        //execution
+        try {
+            Field field = ResponseStateManager.class.getField("VIEW_STATE_PARAM");
+            if (null != field) {
+                postBackKey = (String) field.get(ResponseStateManager.class);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private String viewIdentifier;
     private ServletContext context;
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -40,32 +60,30 @@ public class ServletExternalContext extends BridgeExternalContext {
     private Map initParameterMap;
     private Map requestMap;
     private Map requestCookieMap;
-    private Collection responseCookies;
+    private CommandQueue commandQueue;
+    private Redirector redirector;
+    private CookieTransporter cookieTransporter;
 
-    public ServletExternalContext(Object context, Object request, Object response) {
-        this.context = (ServletContext) context;
-        this.request = (HttpServletRequest) request;
-        this.response = (HttpServletResponse) response;
+    public ServletExternalContext(String viewIdentifier, ServletContext context, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue) {
+        this.viewIdentifier = viewIdentifier;
+        this.context = context;
+        this.request = request;
+        this.response = response;
+        this.commandQueue = commandQueue;
         this.session = this.request.getSession();
         this.requestMap = new ServletRequestMap(this.request);
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
         this.requestCookieMap = new HashMap();
         this.initParameterMap = new HashMap();
-        this.responseCookies = new ArrayList();
         Enumeration names = this.context.getInitParameterNames();
         while (names.hasMoreElements()) {
             String key = (String) names.nextElement();
             initParameterMap.put(key, this.context.getInitParameter(key));
         }
 
-        this.updateRequest(this.request);
-        if (SeamUtilities.isSeamEnvironment() ) {
-                   requestParameterMap.put(
-                           PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
-                           Boolean.TRUE);
-        }
-                
+        this.update(this.request, this.response);
+        this.setupSeamEnvironment();
     }
 
     public Object getSession(boolean create) {
@@ -100,16 +118,16 @@ public class ServletExternalContext extends BridgeExternalContext {
         return requestMap;
     }
 
-    public void updateRequest(HttpServletRequest request) {
-
+    public void update(HttpServletRequest request, HttpServletResponse response) {
         //update parameters
-         boolean persistSeamKey = false; 
+        boolean persistSeamKey = false;
         if (requestParameterMap != null) {
-            persistSeamKey = (requestParameterMap.containsKey(PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT ));
+            persistSeamKey = (requestParameterMap.containsKey(PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT));
         }
 
         requestParameterMap = new HashMap();
         requestParameterValuesMap = new HashMap();
+        insertPostbackKey();
         Enumeration parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String name = (String) parameterNames.nextElement();
@@ -121,18 +139,19 @@ public class ServletExternalContext extends BridgeExternalContext {
             requestParameterMap.put(
                     PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
                     Boolean.TRUE);
-        } 
-        
+        }
 
 
         requestCookieMap = new HashMap();
         Cookie[] cookies = request.getCookies();
-        if(cookies != null){
+        if (cookies != null) {
             for (int i = 0; i < cookies.length; i++) {
                 Cookie cookie = cookies[i];
                 requestCookieMap.put(cookie.getName(), cookie);
             }
         }
+
+        this.response = response;
     }
 
     public Map getRequestParameterMap() {
@@ -241,26 +260,10 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
     }
 
-    String redirectTo;
-
     public void redirect(String requestURI) throws IOException {
-        redirectTo = SeamUtilities.encodeSeamConversationId(requestURI);
-        redirect = true;
+        URI uri = URI.create(SeamUtilities.encodeSeamConversationId(requestURI));
+        redirector.redirect(uri + (uri.getQuery() == null ? "?" : "&") + "rvn=" + viewIdentifier);
         FacesContext.getCurrentInstance().responseComplete();
-    }
-
-    public String redirectTo() {
-        return redirectTo;
-    }
-
-    boolean redirect;
-
-    public boolean redirectRequested() {
-        return redirect;
-    }
-
-    public void redirectComplete() {
-        this.redirect = false;
     }
 
     public void log(String message) {
@@ -287,16 +290,8 @@ public class ServletExternalContext extends BridgeExternalContext {
         return request.isUserInRole(role);
     }
 
-    public void updateResponse(HttpServletResponse response) {
-        this.response = response;
-    }
-
     public void addCookie(Cookie cookie) {
-        responseCookies.add(cookie);
-    }
-
-    public Cookie[] getResponseCookies() {
-        return (Cookie[]) responseCookies.toArray(new Cookie[responseCookies.size()]);
+        cookieTransporter.send(cookie);
     }
 
     //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)
@@ -321,7 +316,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     /**
-     * Setup 
+     * Setup
      */
     public void setupSeamEnvironment() {
         insertNewViewrootToken();
@@ -331,21 +326,94 @@ public class ServletExternalContext extends BridgeExternalContext {
      * Any GET request performed by the browser is a non-faces request to the framework.
      * (JSF-spec chapter 2, introduction). Given this, the framework must create a new
      * viewRoot for the request, even if the viewId has already been visited. (Spec
-     * section 2.1.1) <p>   
-     *
+     * section 2.1.1) <p>
+     * <p/>
      * Only during GET's remember, not during partial submits, where the JSF framework must
      * be allowed to attempt to restore the view. There is a great deal of Seam related code
      * that depends on this happening. So put in a token that allows the D2DViewHandler
      * to differentiate between the non-faces request, and the postbacks, for this
      * request, which will allow the ViewHandler to make the right choice, since we keep
      * the view around for all types of requests
-     *
      */
     private void insertNewViewrootToken() {
         if (SeamUtilities.isSeamEnvironment()) {
             requestParameterMap.put(
                     PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
                     Boolean.TRUE);
+        }
+    }
+
+    public void switchToNormalMode() {
+        redirector = new Redirector() {
+            public void redirect(String uri) {
+                try {
+                    response.sendRedirect(uri);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        cookieTransporter = new CookieTransporter() {
+            public void send(Cookie cookie) {
+                response.addCookie(cookie);
+            }
+        };
+    }
+
+    public void switchToPushMode() {
+        redirector = new Redirector() {
+            public void redirect(String uri) {
+                commandQueue.put(new Redirect(uri));
+            }
+        };
+
+        cookieTransporter = new CookieTransporter() {
+            public void send(Cookie cookie) {
+                commandQueue.put(new SetCookie(cookie));
+            }
+        };
+    }
+
+    /**
+     * If this is found to be a Seam environment, then we have to clear out any
+     * left over request attributes. Otherwise, since this context is
+     * incorporated into the Seam Contexts structure, things put into this
+     * context linger beyond the scope of the request, which can cause problems.
+     * This method should only be called from the blocking servlet, as it's the
+     * handler for the Ajax requests that cause the issue.
+     */
+    public void clearRequestContext() {
+        if (SeamUtilities.isSeamEnvironment()) {
+            try {
+                requestMap.clear();
+            } catch (IllegalStateException ise) {
+                // Can be thrown in Seam example applications as a result of
+                // eg. logout, which has already invalidated the session.
+            }
+        }
+    }
+
+    public void resetRequestMap() {
+        clearRequestContext();
+    }
+
+    public void injectBundles(Map bundles) {
+        requestMap.putAll(bundles);
+    }
+
+    private interface Redirector {
+        void redirect(String uri);
+    }
+
+    private interface CookieTransporter {
+        void send(Cookie cookie);
+    }
+
+    private void insertPostbackKey() {
+        if (null != postBackKey) {
+            requestParameterMap.put(postBackKey, "not reload");
+            requestParameterValuesMap.put(postBackKey, new String[]{"not reload"});
         }
     }
 }
