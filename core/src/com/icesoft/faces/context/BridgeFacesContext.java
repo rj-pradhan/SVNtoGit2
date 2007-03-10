@@ -34,6 +34,8 @@
 package com.icesoft.faces.context;
 
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import java.io.IOException;
 
 /**
  * This is the ICEfaces implementation of the JSF FacesContext API.
@@ -62,4 +64,8 @@ public abstract class BridgeFacesContext extends FacesContext
      * Sets the id of the Element that should get focus in the browser.
      */
     public abstract void setFocusId(String focusId);
+
+    public abstract ResponseWriter createAndSetResponseWriter() throws IOException;
+
+    public abstract void applyBrowserDOMChanges();
 }

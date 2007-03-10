@@ -1,14 +1,10 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import javax.servlet.ServletRequest;
-import java.util.Map;
-import java.util.Set;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ServletRequestMap extends HashMap {
     private ServletRequest request;

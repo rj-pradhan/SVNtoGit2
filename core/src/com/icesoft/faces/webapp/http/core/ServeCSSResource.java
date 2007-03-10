@@ -1,9 +1,9 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.NotFoundHandler;
 
 import java.io.InputStream;
@@ -31,7 +31,7 @@ public class ServeCSSResource implements Server {
             });
         }
     }
-    
+
     public void shutdown() {
     }
 }

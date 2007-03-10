@@ -1,9 +1,7 @@
 package com.icesoft.faces.webapp.http.common.standard;
 
-import com.icesoft.faces.webapp.http.common.standard.NotFoundHandler;
-import com.icesoft.faces.webapp.http.common.standard.ServerErrorHandler;
-import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Server;
 
 import java.util.ArrayList;
 import java.util.Iterator;

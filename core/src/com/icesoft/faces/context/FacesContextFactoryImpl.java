@@ -40,12 +40,9 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.context.FacesContextFactory;
 import javax.faces.lifecycle.Lifecycle;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import java.lang.reflect.Method;
-
-import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
-import com.icesoft.faces.webapp.http.servlet.ServletFacesContext;
 
 /**
  * This is the ICEfaces implementation of the FacesContextFactory.  We take
@@ -82,7 +79,7 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
 
         // If anything is null, we're not good to go.
         if (context == null || request == null ||
-            response == null || lifecycle == null) {
+                response == null || lifecycle == null) {
             throw new NullPointerException();
         }
 
@@ -98,9 +95,7 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
         // BridgeExternalContext is responsible for differentiating the type of environment
         // and delegating the calls appropriately.
         if (context instanceof ServletContext) {
-            BridgeExternalContext externalContext =
-                new ServletExternalContext(context, request, response);
-            return new ServletFacesContext(externalContext, null);
+            return null;
         } else {
             throw new IllegalStateException("Unknown environment");
         }
@@ -127,7 +122,7 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
         }
 
         if ((null != portletRequestClass) &&
-            (portletRequestClass.isInstance(request))) {
+                (portletRequestClass.isInstance(request))) {
             //now use our reflectively obtained method to get another attribute
             String portletType = null;
             try {
@@ -140,14 +135,14 @@ public class FacesContextFactoryImpl extends FacesContextFactory {
             }
 
             if (portletType != null &&
-                portletType.equalsIgnoreCase(PERSISTENT)) {
+                    portletType.equalsIgnoreCase(PERSISTENT)) {
                 return false;
             }
         } else if (request instanceof ServletRequest) {
             String servletType = (String) ((ServletRequest) request)
                     .getAttribute(SERVLET_KEY);
             if (servletType != null &&
-                servletType.equalsIgnoreCase(PERSISTENT)) {
+                    servletType.equalsIgnoreCase(PERSISTENT)) {
                 return false;
             }
         }

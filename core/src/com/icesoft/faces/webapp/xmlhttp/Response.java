@@ -36,7 +36,7 @@ package com.icesoft.faces.webapp.xmlhttp;
 /**
  * The <code>Response</code> class represents a (pseudo-)response ready to be
  * send to the client. </p>
- *
+ * <p/>
  * Please note that this <code>Response</code> does not represent an HTTP
  * Response message! </p>
  */
@@ -62,7 +62,7 @@ public class Response
      *                                  than or equal to <code>0</code>.
      * @throws IllegalArgumentException if the specified <code>viewNumber</code>
      *                                  is either <code>null</code> or empty.
-     * @see #Response(String, String, long, String)
+     * @see #Response(String,String,long,String)
      * @see #getICEfacesID()
      * @see #getViewNumber()
      * @see #getSequenceNumber()
@@ -88,7 +88,7 @@ public class Response
      *                                  than or equal to <code>0</code>.
      * @throws IllegalArgumentException if the specified <code>viewNumber</code>
      *                                  is either <code>null</code> or empty.
-     * @see #Response(String, String, long)
+     * @see #Response(String,String,long)
      * @see #getICEfacesID()
      * @see #getViewNumber()
      * @see #getSequenceNumber()

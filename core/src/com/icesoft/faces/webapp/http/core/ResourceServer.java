@@ -1,11 +1,11 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.common.standard.PathDispatcherServer;
-import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.common.Request;
+import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.CacheControlledServer;
 import com.icesoft.faces.webapp.http.common.standard.CompressingServer;
+import com.icesoft.faces.webapp.http.common.standard.PathDispatcherServer;
 
 public class ResourceServer implements Server {
     private Server dispatcher;
@@ -26,7 +26,7 @@ public class ResourceServer implements Server {
     }
 
     public void service(Request request) throws Exception {
-        
+
         dispatcher.service(request);
     }
 

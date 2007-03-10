@@ -1,14 +1,14 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.common.Server;
-import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Configuration;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
-import java.io.ByteArrayInputStream;
 
 public class ServeBridgeJSCode implements Server {
     private static final String ENTERPRISE_JS = "com/icesoft/faces/async/server/icefaces-d2d.js";
@@ -24,24 +24,24 @@ public class ServeBridgeJSCode implements Server {
 
     public void service(Request request) throws Exception {
         String path = request.getURI().getPath();
-       
+
         String contextName = path.substring(0, path.indexOf("/", 1));//first atom in the resource!
 
         //create bridge configuration
         final InputStream bridgeConfiguration = new ByteArrayInputStream((
-            "configuration = {" +
-            "   synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
-            "   redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
-            "   connection: {" +
-            "       context: '" + contextName + "'," +
-            "       timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
-            "       heartbeat: {" +
-            "           interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
-            "           timeout: " + configuration.getAttributeAsLong("heartbeatTimeout", 3000) + "," +
-            "           retries: " + configuration.getAttributeAsLong("heartbeatRetries", 3) +
-            "       }" +
-            "   }" +
-            "};\n").getBytes());
+                "configuration = {" +
+                        "   synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
+                        "   redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
+                        "   connection: {" +
+                        "       context: '" + contextName + "'," +
+                        "       timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
+                        "       heartbeat: {" +
+                        "           interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
+                        "           timeout: " + configuration.getAttributeAsLong("heartbeatTimeout", 3000) + "," +
+                        "           retries: " + configuration.getAttributeAsLong("heartbeatRetries", 3) +
+                        "       }" +
+                        "   }" +
+                        "};\n").getBytes());
         //load bridge code
         final InputStream bridgeCode = loader.getResourceAsStream(resource);
 
@@ -52,7 +52,7 @@ public class ServeBridgeJSCode implements Server {
             }
         });
     }
-    
+
     public void shutdown() {
     }
 }

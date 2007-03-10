@@ -31,26 +31,22 @@
  *
  */
 
-package com.icesoft.faces.webapp.xmlhttp;
+package com.icesoft.faces.webapp.command;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
+/**
+ * This could likely use some refactoring but the IncrementalNodeWriter is used
+ * by the JSF ResponseWriter (which in ICEfaces is the DOMResponseWriter) to
+ * write out any updates to the DOM that are triggered by server side events.
+ * This interface captures all the functionality required.  The basic
+ * implementation is the BlockingResponseState.
+ */
+public interface Queue {
 
-//todo: deprecate this class
-public class BlockingServlet extends HttpServlet {
-    private RequestDispatcher dispatcher;
+    void put(Object object);
 
-    public void init(ServletConfig servletConfig) throws ServletException {
-        super.init(servletConfig);
-        dispatcher = servletConfig.getServletContext().getNamedDispatcher("Persistent Faces Servlet");
-    }
+    Object take();
 
-    public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
-        dispatcher.forward(servletRequest, servletResponse);
-    }
+    void onPut(Runnable listener);
+
+    void onTake(Runnable listener);
 }

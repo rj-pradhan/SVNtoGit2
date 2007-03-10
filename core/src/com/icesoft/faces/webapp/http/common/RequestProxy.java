@@ -1,13 +1,10 @@
 package com.icesoft.faces.webapp.http.common;
 
-import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.Date;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 public class RequestProxy implements Request {
     protected Request request;

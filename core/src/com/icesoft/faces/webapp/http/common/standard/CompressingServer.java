@@ -1,16 +1,16 @@
 package com.icesoft.faces.webapp.http.common.standard;
 
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
-import com.icesoft.faces.webapp.http.common.Response;
-import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.RequestProxy;
+import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.ResponseProxy;
+import com.icesoft.faces.webapp.http.common.Server;
 
-import java.util.zip.GZIPOutputStream;
-import java.io.OutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class CompressingServer implements Server {
     private Server server;
@@ -22,7 +22,7 @@ public class CompressingServer implements Server {
 
     public void service(Request request) throws Exception {
         String acceptEncodingHeader = request.getHeader("Accept-Encoding");
-        if (acceptEncodingHeader != null && ( acceptEncodingHeader.indexOf("gzip") >= 0 || acceptEncodingHeader.indexOf("compress") >= 0) ) {
+        if (acceptEncodingHeader != null && (acceptEncodingHeader.indexOf("gzip") >= 0 || acceptEncodingHeader.indexOf("compress") >= 0)) {
             server.service(new CompressingRequest(request));
         } else {
             server.service(request);

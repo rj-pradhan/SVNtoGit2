@@ -37,8 +37,6 @@ import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.ApplicationBaseLocator;
-import com.icesoft.faces.util.DOMUtils;
-import com.icesoft.faces.webapp.xmlhttp.ResponseState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -48,18 +46,14 @@ import org.w3c.dom.NodeList;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.beans.Beans;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,8 +68,7 @@ import java.util.Map;
  */
 public class DOMResponseWriter extends ResponseWriter {
     private static final Log log = LogFactory.getLog(DOMResponseWriter.class);
-    public static final String STREAM_WRITING =
-            "com.icesoft.faces.streamWriting";
+    public static final String STREAM_WRITING = "com.icesoft.faces.streamWriting";
     //DOM and current node being written to for this ResponseWriter
     public static final String DOCTYPE_PUBLIC = "com.icesoft.doctype.public";
     public static final String DOCTYPE_SYSTEM = "com.icesoft.doctype.system";
@@ -93,13 +86,6 @@ public class DOMResponseWriter extends ResponseWriter {
     //Hashtable of DOMContext objects associated with each component
     public static final String RESPONSE_CONTEXTS_TABLE =
             "com.icesoft.domResponseContexts";
-    //Hashtable of DOMContext tables to be cached per page in each session
-    public static final String RESPONSE_CONTEXT_SERVLET_TABLE =
-            "com.icesoft.domResponseContextServlet";
-    //Set of nodes that have changed since the last rendering pass
-    public static final String RESPONSE_MODIFIED_NODES =
-            "com.icesoft.domResponseContextModNodes";
-    public static final String USE_DOM_DIFF = "com.icesoft.faces.useDOMDiff";
     private static DocumentBuilder DOCUMENT_BUILDER;
 
     static {
@@ -112,19 +98,15 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     private static boolean isStreamWritingFlag = false;
-    private String contentType;
-    private String encoding;
-    private Writer writer;
     private Document document;
-    private Document oldDocument;
     private Node cursor;
     private Map domResponseContexts;
     private Map contextServletTable;
     private BridgeFacesContext context;
+    private DOMSerializer serializer;
 
-    public DOMResponseWriter(Writer writer, FacesContext context, String contentType,
-                             String encoding) {
-        this.writer = writer;
+    public DOMResponseWriter(FacesContext context, DOMSerializer serializer) {
+        this.serializer = serializer;
         try {
             this.context = (BridgeFacesContext) context;
         } catch (ClassCastException e) {
@@ -133,9 +115,6 @@ public class DOMResponseWriter extends ResponseWriter {
                             "Please check your web.xml servlet mappings");
         }
         this.initialize();
-        this.contentType = contentType == null ? "text/html" : contentType;
-        checkEncoding(encoding);
-        this.encoding = encoding;
     }
 
     Map getDomResponseContexts() {
@@ -146,16 +125,16 @@ public class DOMResponseWriter extends ResponseWriter {
         return cursor;
     }
 
-    Document getDocument() {
+    public Document getDocument() {
         return document;
     }
 
     public String getContentType() {
-        return contentType;
+        return "text/html; charset=UTF-8";
     }
 
     public String getCharacterEncoding() {
-        return encoding;
+        return "UTF-8";
     }
 
     public void startDocument() throws IOException {
@@ -187,7 +166,10 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     public void endDocument() throws IOException {
-        writeDOM();
+        if (!isStreamWriting()) {
+            enhanceAndFixDocument();
+            serializer.serialize(document);
+        }
     }
 
     public void flush() throws IOException {
@@ -261,21 +243,19 @@ public class DOMResponseWriter extends ResponseWriter {
         //just as the components are complete
         if (null != document) {
             try {
-                writeDOM();
+                endDocument();
             } catch (IOException e) {
                 throw new IllegalStateException(e.toString());
             }
         }
         try {
-            return new DOMResponseWriter(writer, context, getContentType(),
-                    getCharacterEncoding());
+            return new DOMResponseWriter(context, serializer);
         } catch (FacesException e) {
             throw new IllegalStateException();
         }
     }
 
     public void close() throws IOException {
-        writer.close();
     }
 
     public void write(char[] cbuf, int off, int len) throws IOException {
@@ -306,74 +286,6 @@ public class DOMResponseWriter extends ResponseWriter {
             log.trace("write(S,i,i)  str_sub: " + str.substring(off, len));
         }
         cursor.appendChild(document.createTextNode(str.substring(off, len)));
-    }
-
-    /**
-     * This method writes the complete DOM to the current writer
-     */
-    public void writeDOM() throws IOException {
-        if (isStreamWriting())
-            return;//The DOM has already been written via the Renderer streamWrite calls
-
-        enhanceAndFixDocument();
-        BridgeExternalContext externalContext =
-                (BridgeExternalContext) context.getExternalContext();
-        Map sessionMap = externalContext.getApplicationSessionMap();
-
-        ResponseState nodeWriter =
-                (ResponseState) sessionMap.get(
-                        context.getViewNumber() + "/" + ResponseState.STATE);
-        //We've changed IncrementalNodeWriter implementation from BlockingServlet
-        //to the more generic and direct ResponseState.  This helps to support
-        //running in basic mode (BlockingResponseState) or enterprise (AsyncResponseState)
-        //configurations.
-        if (null != nodeWriter) {
-            oldDocument = (Document) sessionMap.get(getOldDOMKey());
-
-            if (null != oldDocument) {
-                Node[] changed = DOMUtils.domDiff(oldDocument, document);
-                for (int i = 0; i < changed.length; i++) {
-                    Element changeRoot =
-                            DOMUtils.ascendToNodeWithID(changed[i]);
-                    for (int j = 0; j < i; j++) {
-                        if (changed[j] == null)
-                            continue;
-                        // If new is already in, then discard new
-                        if (changeRoot == changed[j]) {
-                            changeRoot = null;
-                            break;
-                        }
-                        // If new is parent of old, then replace old with new
-                        else if (isAncestor(changeRoot, changed[j])) {
-                            changed[j] = null;
-                        }
-                        // If new is a child of old, then discard new
-                        else if (isAncestor(changed[j], changeRoot)) {
-                            changeRoot = null;
-                            break;
-                        }
-                    }
-                    changed[i] = changeRoot;
-                }
-                for (int i = 0; i < changed.length; i++) {
-                    Element element = (Element) changed[i];
-                    if (null != element) {
-                        nodeWriter.writeElement(element);
-                    }
-                }
-            }
-
-            nodeWriter.flush();
-        }
-
-        sessionMap.put(getOldDOMKey(), document);
-
-        if (null != writer) {
-            //drain the updates since the entire document is sent to the browser
-            nodeWriter.serialize(new StringWriter());
-            writeDOM(writer);
-        }
-
     }
 
     private void enhanceAndFixDocument() {
@@ -452,7 +364,7 @@ public class DOMResponseWriter extends ResponseWriter {
         //load libraries
         String base = ApplicationBaseLocator.locate(context);
         List libs = new ArrayList();
-        if(context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null){
+        if (context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null) {
             libs.add("xmlhttp/openajax.js");
         }
         libs.add("xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
@@ -515,82 +427,6 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     /**
-     * This method writes the complete DOM to the specified writer
-     *
-     * @param writer destination of the DOM output
-     */
-    private void writeDOM(Writer writer) throws IOException {
-        Map requestMap = context.getExternalContext().getRequestMap();
-        String includeServletPath = (String) requestMap
-                .get(BridgeExternalContext.INCLUDE_SERVLET_PATH);
-        String portletParam =
-                (String) requestMap.get("com.sun.faces.portlet.INIT");
-
-        //if it's not a servlet, it must be a portlet, so we should return
-        //a fragment
-        if ((null != includeServletPath) || (null != portletParam)) {
-            Node body = DOMUtils.getChildByNodeName(
-                    document.getDocumentElement(), "body");
-            if (null != body) {
-                //TODO This should not be done here, we need to manage
-                //it with the form renderer.  But we also need to fix
-                //viewNumber so that it is not set with cookies.  Cookie
-                //communication gives no way for multiple included
-                //views on one page
-                String base = ApplicationBaseLocator.locate(context);
-                writer.write("<script language='javascript' src='" + base +
-                        "xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js'></script>");
-                writer.write(DOMUtils.childrenToString(body));
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("null body");
-                    log.debug(DOMUtils.DOMtoString(document));
-                }
-            }
-        } else {
-            String publicID =
-                    (String) requestMap.get(DOMResponseWriter.DOCTYPE_PUBLIC);
-            String systemID =
-                    (String) requestMap.get(DOMResponseWriter.DOCTYPE_SYSTEM);
-            String root =
-                    (String) requestMap.get(DOMResponseWriter.DOCTYPE_ROOT);
-            String output =
-                    (String) requestMap.get(DOMResponseWriter.DOCTYPE_OUTPUT);
-            boolean prettyPrinting =
-                    Boolean.valueOf((String) requestMap
-                            .get(DOMResponseWriter.DOCTYPE_PRETTY_PRINTING))
-                            .booleanValue();
-
-            //todo: replace this with a complete new implementation that doesn't rely on xslt but can serialize xml, xhtml, and html. 
-            if (output == null || ("html".equals(output) && !prettyPrinting)) {
-                if (publicID != null && systemID != null && root != null) {
-                    writer.write(DOMUtils.DocumentTypetoString(publicID, systemID,
-                            root));
-                }
-                writer.write(DOMUtils.DOMtoString(document));
-            } else {
-                //use a serializer. not as performant.
-                try {
-                    DOMSerializer serializer =
-                            new DOMSerializer(writer, publicID, systemID);
-                    if ("xml".equals(output)) {
-                        serializer.outputAsXML();
-                    } else {
-                        serializer.outputAsHTML();
-                    }
-                    if (prettyPrinting) {
-                        serializer.printPretty();
-                    }
-                    serializer.serialize(document);
-                } catch (TransformerException e) {
-                    new IOException(e.getMessage());
-                }
-            }
-        }
-        writer.flush();
-    }
-
-    /**
      * This method sets the write cursor for DOM modifications.  Subsequent DOM
      * modifications will take place below the cursor element.
      *
@@ -598,95 +434,6 @@ public class DOMResponseWriter extends ResponseWriter {
      */
     protected void setCursorParent(Node cursorParent) {
         this.cursor = cursorParent;
-    }
-
-    boolean isAncestor(Node test, Node child) {
-        if (test == null || child == null)
-            return false;
-        if (!test.hasChildNodes()) {
-            return false;
-        }
-        Node parent = child;
-        while ((parent = parent.getParentNode()) != null) {
-            if (test.equals(parent)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //With multiple browser windows, there will be one old DOM per window,
-    //hence keyed by viewNumber
-    String getOldDOMKey() {
-        return getOldDOMKey(context.getViewNumber());
-    }
-
-    public static String getOldDOMKey(String viewNumber) {
-        return viewNumber + "/" + DOMResponseWriter.OLD_DOM;
-    }
-
-    private static void checkEncoding(String encoding)
-            throws IllegalArgumentException {
-        try {
-            new String(new byte[]{65}, encoding);
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException(
-                    "Unsupported Encoding " + encoding);
-        }
-    }
-
-    public static void applyBrowserDOMChanges(BridgeFacesContext facesContext) {
-        ExternalContext externalContext = facesContext.getExternalContext();
-        Document document = (Document) externalContext.getSessionMap()
-                .get(DOMResponseWriter.getOldDOMKey(
-                        facesContext.getViewNumber()));
-        if (document == null) return;
-        Map parameters = externalContext.getRequestParameterValuesMap();
-
-        NodeList inputElements = document.getElementsByTagName("input");
-        int inputElementsLength = inputElements.getLength();
-        for (int i = 0; i < inputElementsLength; i++) {
-            Element inputElement = (Element) inputElements.item(i);
-            String id = inputElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
-                String value = ((String[]) parameters.get(id))[0];
-                inputElement.setAttribute("value", value);
-            }
-        }
-
-        NodeList textareaElements = document.getElementsByTagName("textarea");
-        int textareaElementsLength = textareaElements.getLength();
-        for (int i = 0; i < textareaElementsLength; i++) {
-            Element textareaElement = (Element) textareaElements.item(i);
-            String id = textareaElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
-                String value = ((String[]) parameters.get(id))[0];
-                textareaElement.getFirstChild()
-                        .setNodeValue(value);//set value on the Text node
-            }
-        }
-
-        NodeList selectElements = document.getElementsByTagName("select");
-        int selectElementsLength = selectElements.getLength();
-        for (int i = 0; i < selectElementsLength; i++) {
-            Element selectElement = (Element) selectElements.item(i);
-            String id = selectElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
-                List values = Arrays.asList((String[]) parameters.get(id));
-
-                NodeList optionElements =
-                        selectElement.getElementsByTagName("option");
-                int optionElementsLength = optionElements.getLength();
-                for (int j = 0; j < optionElementsLength; j++) {
-                    Element optionElement = (Element) optionElements.item(j);
-                    if (values.contains(optionElement.getAttribute("value"))) {
-                        optionElement.setAttribute("selected", "selected");
-                    } else {
-                        optionElement.removeAttribute("selected");
-                    }
-                }
-            }
-        }
     }
 
     public static boolean isStreamWriting() {

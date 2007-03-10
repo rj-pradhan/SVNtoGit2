@@ -65,11 +65,9 @@ public class PersistentFacesState implements Serializable {
     private static InheritableThreadLocal localInstance = new InheritableThreadLocal();
     private BridgeFacesContext facesContext;
     private Lifecycle lifecycle;
-    private ResponseState responseState;
 
-    public PersistentFacesState(BridgeFacesContext facesContext, ResponseState responseState) {
+    public PersistentFacesState(BridgeFacesContext facesContext) {
         this.facesContext = facesContext;
-        this.responseState = responseState;
 
         //put this state in the session -- mainly for the fileupload
         //todo: try to pass this state using object references
@@ -112,7 +110,7 @@ public class PersistentFacesState implements Serializable {
         return facesState;
     }
 
-     /**
+    /**
      * Render the view associated with this <code>PersistentFacesState</code>.
      * The user's browser will be immediately updated with any changes.
      */
@@ -162,7 +160,6 @@ public class PersistentFacesState implements Serializable {
             facesContext.setCurrentInstance();
             ExternalContext externalContext = facesContext.getExternalContext();
             externalContext.redirect(uri);
-            responseState.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -182,7 +179,6 @@ public class PersistentFacesState implements Serializable {
                     .handleNavigation(facesContext,
                             facesContext.getViewRoot().getViewId(),
                             outcome);
-            responseState.flush();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -210,7 +206,7 @@ public class PersistentFacesState implements Serializable {
 
     /**
      * Execute  the view associated with this <code>PersistentFacesState</code>.
-     * This is typically followed immediatly by a call to 
+     * This is typically followed immediatly by a call to
      * {@link PersistentFacesState#render}.
      */
     public void execute() throws RenderingException {
