@@ -37,6 +37,7 @@ import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.Highlight;
 
 import javax.faces.event.ActionEvent;
+import org.jboss.seam.annotations.Name;
 
 /**
  * <p>The CartItem class represents a single type of item for sale in the Drag
@@ -44,6 +45,7 @@ import javax.faces.event.ActionEvent;
  * quantities; these are increased and decreased as they are added or removed
  * from the store.</p>
  */
+
 public class CartItem {
     // item attributes
     private String key = null;

@@ -31,56 +31,14 @@
  *
  */
 
-package com.icesoft.icefaces.samples.showcase.components.calendar;
+package com.icesoft.icefaces.samples.showcase.components.autocomplete;
 
-import java.util.Date;
-import org.jboss.seam.annotations.Name;
+import java.util.List;
+import javax.ejb.Local;
 
-/**
- * <p>The SelectInputDateBean Class is used to store the selected dates from the
- * selectinputdate components.</p>
- */
-@Name("dateSelect")
-public class SelectInputDateBean {
-    /**
-     * Variables to store the selected dates.
-     */
-    private Date date1 = null;
-    private Date date2 = null;
-
-    /**
-     * Gets the first selected date.
-     *
-     * @return the first selected date
-     */
-    public Date getDate1() {
-        return date1;
-    }
-
-    /**
-     * Sets the first selected date.
-     *
-     * @param date the first selected date
-     */
-    public void setDate1(Date date) {
-        date1 = date;
-    }
-
-    /**
-     * Gets the 2nd selected date.
-     *
-     * @return the 2nd selected date
-     */
-    public Date getDate2() {
-        return date2;
-    }
-
-    /**
-     * Sets the 2nd selected date.
-     *
-     * @param date the 2nd selected date
-     */
-    public void setDate2(Date date) {
-        date2 = date;
-    }
+@Local
+public interface AutoCompleteDictionaryLocal {
+    
+    public List getDictionary();
+    
 }
