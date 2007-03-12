@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContinuationAdaptingServlet implements ServerServlet {
+public class ContinuationAdaptingServlet implements PseudoServlet {
     private Map requests = new HashMap();
     private Server server;
 

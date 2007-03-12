@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class PathDispatcher implements ServerServlet {
+public class PathDispatcher implements PseudoServlet {
     private List matchers = new ArrayList();
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -23,15 +23,15 @@ public class PathDispatcher implements ServerServlet {
         }
     }
 
-    public void dispatchOn(String pathExpression, ServerServlet toServer) {
+    public void dispatchOn(String pathExpression, PseudoServlet toServer) {
         matchers.add(new Matcher(pathExpression, toServer));
     }
 
     private class Matcher {
         private Pattern pattern;
-        private ServerServlet server;
+        private PseudoServlet server;
 
-        public Matcher(String expression, ServerServlet server) {
+        public Matcher(String expression, PseudoServlet server) {
             this.pattern = Pattern.compile(expression);
             this.server = server;
         }

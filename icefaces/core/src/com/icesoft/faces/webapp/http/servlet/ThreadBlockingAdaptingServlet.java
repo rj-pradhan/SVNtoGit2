@@ -7,7 +7,7 @@ import edu.emory.mathcs.backport.java.util.concurrent.Semaphore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ThreadBlockingAdaptingServlet implements ServerServlet {
+public class ThreadBlockingAdaptingServlet implements PseudoServlet {
     private Server server;
 
     public ThreadBlockingAdaptingServlet(Server server) {
