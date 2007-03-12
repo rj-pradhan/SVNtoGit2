@@ -33,14 +33,11 @@
 
 package com.icesoft.icefaces.samples.showcase.components.autocomplete;
 
-import org.jboss.seam.annotations.Name;
-
 /**
  * <p>The City class is used for database information for the Autocomplete
  * (selectInputText) example.</p>
  */
-@Name("city")
-public class City implements CityLocal{
+public class City {
 
     // attributes of each entry
     private String city;
@@ -75,7 +72,6 @@ public class City implements CityLocal{
     }
 
     public String getCity() {
-        System.out.println("---- Getting city");
         return city;
     }
 

@@ -34,13 +34,11 @@
 package com.icesoft.icefaces.samples.showcase.components.calendar;
 
 import java.util.Date;
-import org.jboss.seam.annotations.Name;
 
 /**
  * <p>The SelectInputDateBean Class is used to store the selected dates from the
  * selectinputdate components.</p>
  */
-@Name("dateSelect")
 public class SelectInputDateBean {
     /**
      * Variables to store the selected dates.

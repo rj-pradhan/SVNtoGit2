@@ -48,9 +48,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Scope;
 
 
 /**
@@ -60,18 +57,15 @@ import org.jboss.seam.annotations.Scope;
  *
  * @see AutoCompleteBean
  */
-@Name("autoCompleteDictionary")
-@Scope(ScopeType.APPLICATION)
-public class AutoCompleteDictionary implements AutoCompleteDictionaryLocal{
+public class AutoCompleteDictionary {
 
     private static Log log = LogFactory.getLog(AutoCompleteDictionary.class);
 
     // list of cities.
     private static List dictionary;
-    
-   public AutoCompleteDictionary() {
+
+    public AutoCompleteDictionary() {
         // initialize the ditionary
-        System.out.println("----  Dictionary starting");
         try {
             log.info("initializing dictionary");
             init();
@@ -127,7 +121,7 @@ public class AutoCompleteDictionary implements AutoCompleteDictionaryLocal{
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
                 getExternalContext().getSession(true);
         String basePath =
-                session.getServletContext().getRealPath("/WEB-INF");
+                session.getServletContext().getRealPath("/WEB-INF/resources");
         basePath += "/city.xml.zip";
 
         // extract the file
