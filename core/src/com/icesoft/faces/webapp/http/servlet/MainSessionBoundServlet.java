@@ -10,19 +10,19 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainSessionBoundServlet implements ServerServlet {
+public class MainSessionBoundServlet implements PseudoServlet {
     private PathDispatcher dispatcher = new PathDispatcher();
     private Map views = new HashMap();
     private ViewQueue allUpdatedViews = new ViewQueue();
 
     public MainSessionBoundServlet(HttpSession session, IdGenerator idGenerator, Configuration configuration) {
-        final ServerServlet viewServer;
+        final PseudoServlet viewServer;
         if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
             viewServer = new MultiViewServlet(session, idGenerator, views, allUpdatedViews);
         } else {
             viewServer = new SingleViewServlet(session, idGenerator, views, allUpdatedViews);
         }
-        final ServerServlet pushServer = new PushServlet(views, allUpdatedViews, configuration);
+        final PseudoServlet pushServer = new PushServlet(views, allUpdatedViews, configuration);
 
         dispatcher.dispatchOn(".*block\\/.*", pushServer);
         dispatcher.dispatchOn(".*", viewServer);

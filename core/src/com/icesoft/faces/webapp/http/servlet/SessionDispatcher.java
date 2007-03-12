@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public abstract class SessionDispatcher implements ServerServlet {
+public abstract class SessionDispatcher implements PseudoServlet {
     //having a static field here is ok because web applications are started in separate classloaders
     private final static List SessionDispatchers = new ArrayList();
     private Map sessionBoundServers = new HashMap();
@@ -27,7 +27,7 @@ public abstract class SessionDispatcher implements ServerServlet {
         HttpSession session = request.getSession(true);
         //test if session is still around
         if (sessionBoundServers.containsKey(session)) {
-            ServerServlet server = (ServerServlet) sessionBoundServers.get(session);
+            PseudoServlet server = (PseudoServlet) sessionBoundServers.get(session);
             server.service(request, response);
         } else {
             //session has expired in the mean time, server removed by the session listener
@@ -38,7 +38,7 @@ public abstract class SessionDispatcher implements ServerServlet {
     public void shutdown() {
         Iterator i = sessionBoundServers.values().iterator();
         while (i.hasNext()) {
-            ServerServlet server = (ServerServlet) i.next();
+            PseudoServlet server = (PseudoServlet) i.next();
             server.shutdown();
         }
     }
@@ -52,11 +52,11 @@ public abstract class SessionDispatcher implements ServerServlet {
     }
 
     private void sessionDestroyed(HttpSession session) {
-        ServerServlet server = (ServerServlet) sessionBoundServers.remove(session);
+        PseudoServlet server = (PseudoServlet) sessionBoundServers.remove(session);
         server.shutdown();
     }
 
-    protected abstract ServerServlet newServlet(HttpSession session) throws Exception;
+    protected abstract PseudoServlet newServlet(HttpSession session) throws Exception;
 
     public static class Listener implements HttpSessionListener, ServletContextListener {
         private List sessions = new ArrayList();

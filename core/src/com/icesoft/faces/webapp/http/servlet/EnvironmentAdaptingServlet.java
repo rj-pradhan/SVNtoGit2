@@ -6,8 +6,8 @@ import com.icesoft.faces.webapp.http.common.Server;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class EnvironmentAdaptingServlet implements ServerServlet {
-    private ServerServlet servlet;
+public class EnvironmentAdaptingServlet implements PseudoServlet {
+    private PseudoServlet servlet;
 
     public EnvironmentAdaptingServlet(Server server, Configuration configuration) {
         boolean useJettyContinuationsByDefault;

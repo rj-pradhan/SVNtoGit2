@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-public class PushServlet implements ServerServlet {
+public class PushServlet implements PseudoServlet {
     private Map views;
-    private ServerServlet server;
+    private PseudoServlet server;
 
     public PushServlet(Map views, ViewQueue allUpdatedViews, Configuration configuration) {
         this.server = new EnvironmentAdaptingServlet(new PushServer(views, allUpdatedViews), configuration);

@@ -30,8 +30,8 @@ public class MainServlet extends HttpServlet {
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);
             final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
 
-            ServerServlet sessionServer = new SessionDispatcher() {
-                protected ServerServlet newServlet(HttpSession session) {
+            PseudoServlet sessionServer = new SessionDispatcher() {
+                protected PseudoServlet newServlet(HttpSession session) {
                     return new MainSessionBoundServlet(session, idGenerator, configuration);
                 }
             };
