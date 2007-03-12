@@ -39,7 +39,6 @@ import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.util.Enumeration;
-import org.jboss.seam.annotations.Name;
 
 /**
  * <p>The TreeBean class is the backing bean for the Tree Component showcase
@@ -48,7 +47,6 @@ import org.jboss.seam.annotations.Name;
  * @see NodeUserObject
  * @since 0.3.0
  */
-//@Name("treeExample")
 public class TreeBean {
 
     // tree default model, used as a value for the tree component
