@@ -6,6 +6,7 @@ import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.NOOP;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
+import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.util.SeamUtilities;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.Lock;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
@@ -21,7 +22,7 @@ public class ServletView implements CommandQueue {
     private static final NOOP NOOP = new NOOP();
     private Lock lock = new ReentrantLock();
     private ServletExternalContext externalContext;
-    private ServletFacesContext facesContext;
+    private BridgeFacesContext facesContext;
     private ViewQueue allServedViews;
     private PersistentFacesState persistentFacesState;
     private Map bundles;
@@ -36,7 +37,7 @@ public class ServletView implements CommandQueue {
         this.viewIdentifier = viewIdentifier;
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this);
-        this.facesContext = new ServletFacesContext(externalContext, viewIdentifier, sessionID, this);
+        this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
         this.persistentFacesState = new PersistentFacesState(facesContext);
         //collect bundles put by Tag components when the page is parsed
         this.bundles = externalContext.collectBundles();
