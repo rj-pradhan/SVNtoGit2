@@ -44,12 +44,14 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Random;
+import org.jboss.seam.annotations.Name;
 
 /**
  * <p>The CartBean class is used as a bean for each user to maintain their store
  * and cart list and available items in the Drag and Drop store demo. It also
  * handles the store's drag and drop functionality via listeners.</p>
  */
+@Name("cart")
 public class CartBean {
     // store and cart data structures
     private ArrayList purchasedList = new ArrayList(0);

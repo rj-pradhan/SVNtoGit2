@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Out;
 
 /**
  * Stores the values picked from the AutoCompleteDictionary (different scope to
@@ -51,12 +54,19 @@ import java.util.List;
  *
  * @see AutoCompleteDictionary
  */
-public class AutoCompleteBean {
-
+@Name("autoCompleteBean")
+public class AutoCompleteBean implements AutoCompleteLocal{
+    
+    @In
+    private AutoCompleteDictionary acd;
+    
+    
+        
+    
     private static Log log = LogFactory.getLog(AutoCompleteBean.class);
 
     // list of cities, used for auto complete list.
-    private static List dictionary;
+    private static List dictionary = null;
 
 
     // default city, no value.
@@ -100,6 +110,7 @@ public class AutoCompleteBean {
      * @return selected city.
      */
     public City getCurrentCity() {
+        System.out.println("----- Getting current city");
         return currentCity;
     }
 
@@ -109,6 +120,14 @@ public class AutoCompleteBean {
      * @return list of possible matches.
      */
     public List getList() {
+        System.out.println(acd);
+        
+        if(dictionary == null)
+        {
+            
+            dictionary = acd.getDictionary();
+            System.out.println("---- Dictionary size: " + dictionary.size());
+        }
         return matchesList;
     }
 
@@ -128,13 +147,13 @@ public class AutoCompleteBean {
     }
 
 
-    public List getDictionary() {
-        return dictionary;
-    }
-
-    public void setDictionary(List dictionary) {
-        AutoCompleteBean.dictionary = dictionary;
-    }
+//    public List getDictionary() {
+//        return dictionary;
+//    }
+//
+//    public void setDictionary(List dictionary) {
+//        AutoCompleteBean.dictionary = dictionary;
+//    }
 
     /**
      * Utility method for building the match list given the current value of the
