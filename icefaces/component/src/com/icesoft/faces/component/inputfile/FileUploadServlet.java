@@ -86,6 +86,10 @@ public class FileUploadServlet
                 .toString();
     }
 
+    private String getViewNumber(HttpServletRequest request) {
+        return request.getParameter("viewNumber")
+                .toString();
+    }
     private String getDisabled(HttpServletRequest request) {
         Object disabledParam = request.getParameter("disabled");
         if (disabledParam != null &&
@@ -166,13 +170,13 @@ public class FileUploadServlet
             if (log.isDebugEnabled()) {
                 log.debug(limitExcep.getMessage());
             }
-            execute(session, state);
+            execute(session, state, getViewNumber(request));
 
         } catch (FileUploadException e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            execute(session, state);
+            execute(session, state, getViewNumber(request));
         }
     }
 
@@ -233,7 +237,7 @@ public class FileUploadServlet
                         item.write(file);
                         inputFile.setFile(file);
                         inputFile.setStatus(InputFile.SAVED);
-                        execute(session, state);
+                        execute(session, state, getViewNumber(request));
                     } catch (Exception e) {
                         if (log.isErrorEnabled()) {
                             log.error(e);
@@ -307,6 +311,9 @@ public class FileUploadServlet
                       "<INPUT name='" + InputFile.FILE_UPLOAD_COMPONENT_ID +
                       "' type='hidden' value='" + getComponentId(request) +
                       "'/>" +
+                      "<INPUT name='viewNumber'"+
+                      "' type='hidden' value='" + getViewNumber(request) +
+                      "'/>" +                      
                       "<INPUT name='inputFileField' " +
                       getInputTextClass(request) + " type='file'" +
                       getDisabled(request) + " />" +

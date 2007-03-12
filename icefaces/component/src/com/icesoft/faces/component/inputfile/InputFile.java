@@ -36,6 +36,7 @@ package com.icesoft.faces.component.inputfile;
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.style.OutputStyle;
+import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import org.w3c.dom.Element;
@@ -765,6 +766,7 @@ public class InputFile extends UICommand implements Serializable{
         boolean uniqueFolder = isUniqueFolder();
         String queryString =
                 "?" + FILE_UPLOAD_COMPONENT_ID + "=" + getRegistrationId() +
+                "&viewNumber="+ getViewNumber() +
                 "&disabled=" + isDisabled() +
                 "&inputTextClass=" + inputTextClass +
                 "&buttonClass=" + buttonClass +
@@ -809,4 +811,11 @@ public class InputFile extends UICommand implements Serializable{
         }
     }
 
+    private String viewNumber; 
+    private String getViewNumber() {
+        if (viewNumber == null)  {
+            viewNumber = ((BridgeFacesContext)facesContext).getViewNumber();
+        }
+        return viewNumber;
+    }
 }

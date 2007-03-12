@@ -75,9 +75,9 @@ public abstract class FileUploadServlet extends HttpServlet {
         PersistentFacesState.clearLocalInstance();
     }
 
-    protected void execute(HttpSession session, PersistentFacesState state) {
+    protected void execute(HttpSession session, PersistentFacesState state, String viewNumber) {
         if (state == null) {
-            state = getState(session, state);
+            state = getState(session, state, viewNumber);
         }
 
         if (state != null) {
@@ -97,15 +97,17 @@ public abstract class FileUploadServlet extends HttpServlet {
     }
 
     private PersistentFacesState getState(HttpSession session,
-                                          PersistentFacesState state) {
-        Object current_view_number = session.getAttribute(
-                PersistentFacesServlet.CURRENT_VIEW_NUMBER);
-        if (current_view_number != null) {
-            PersistentFacesState.setLocalInstance(new SessionMap(session),
-                                                  String.valueOf(
-                                                          current_view_number));
-        }
-        state = PersistentFacesState.getInstance();
+            PersistentFacesState state) {
+        //return null not being used by inputFile component
+        return null;
+        
+    }
+    
+    private PersistentFacesState getState(HttpSession session,
+                                          PersistentFacesState state, String viewNumber) {
+        state = PersistentFacesState.getInstance(new SessionMap(session), viewNumber);
+        
+        
         return state;
     }
 }
