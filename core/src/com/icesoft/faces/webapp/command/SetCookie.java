@@ -12,6 +12,7 @@ public class SetCookie implements Command {
     }
 
     public Command coalesceWith(Command command) {
+
         return command.coalesceWith(this);
     }
 
@@ -26,6 +27,10 @@ public class SetCookie implements Command {
 
     public Command coalesceWith(Redirect redirect) {
         return new Macro(redirect, this);
+    }
+
+    public Command coalesceWith(SessionExpired sessionExpired) {
+        return sessionExpired;
     }
 
     public Command coalesceWith(SetCookie setCookie) {
