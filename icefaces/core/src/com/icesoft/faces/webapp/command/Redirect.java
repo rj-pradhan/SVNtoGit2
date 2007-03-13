@@ -31,6 +31,10 @@ public class Redirect implements Command {
         return this;
     }
 
+    public Command coalesceWith(SessionExpired sessionExpired) {
+        return sessionExpired;
+    }
+
     public Command coalesceWith(SetCookie setCookie) {
         return new Macro(setCookie, this);
     }

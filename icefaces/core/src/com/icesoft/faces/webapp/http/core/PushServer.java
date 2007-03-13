@@ -1,5 +1,7 @@
 package com.icesoft.faces.webapp.http.core;
 
+import com.icesoft.faces.webapp.command.CommandQueue;
+import com.icesoft.faces.webapp.command.SessionExpired;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
@@ -10,10 +12,13 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 
 public class PushServer implements Server {
+    private static final SessionExpired SessionExpired = new SessionExpired();
     private Server server;
+    private Map commandQueues;
 
     public PushServer(Map commandQueues, ViewQueue allUpdatedViews) {
         PathDispatcherServer dispatcher = new PathDispatcherServer();
@@ -22,20 +27,31 @@ public class PushServer implements Server {
         dispatcher.dispatchOn(".*receive\\-updates$", new SendUpdates(commandQueues, allUpdatedViews));
         dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
         this.server = dispatcher;
+        this.commandQueues = commandQueues;
     }
 
     public void service(Request request) throws Exception {
         try {
             server.service(request);
-        } catch (IllegalStateException e) {
-            request.respondWith(new SessionExpired());
         } catch (Exception e) {
             request.respondWith(new ServerError(e));
         }
     }
 
     public void shutdown() {
-        server.shutdown();
+        Iterator i = commandQueues.values().iterator();
+        while (i.hasNext()) {
+            CommandQueue commandQueue = (CommandQueue) i.next();
+            commandQueue.put(SessionExpired);
+        }
+        try {
+            //wait for the for the bridge to receive the 'session-expire' command
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            //do nothing
+        } finally {
+            server.shutdown();
+        }
     }
 
     private static class ServerError extends FixedXMLContentHandler {
@@ -49,13 +65,6 @@ public class PushServer implements Server {
             writer.write("<server-error><![CDATA[");
             exception.printStackTrace(new PrintWriter(writer, true));
             writer.write("]]></server-error>");
-        }
-    }
-
-    private static class SessionExpired extends FixedXMLContentHandler {
-
-        public void writeTo(Writer writer) throws IOException {
-            writer.write("<session-expired/>");
         }
     }
 }

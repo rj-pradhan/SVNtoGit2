@@ -28,6 +28,10 @@ public class Macro implements Command {
         return this;
     }
 
+    public Command coalesceWith(SessionExpired sessionExpired) {
+        return sessionExpired;
+    }
+
     public Command coalesceWith(Macro macro) {
         commands.addAll(macro.commands);
         return this;

@@ -51,8 +51,6 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
     }
 
     public void shutdown() {
-        //discard view
-        views.remove(viewNumber);
         super.shutdown();
     }
 }

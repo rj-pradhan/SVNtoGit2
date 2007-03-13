@@ -13,6 +13,8 @@ public interface Command {
 
     Command coalesceWith(Redirect redirect);
 
+    Command coalesceWith(SessionExpired sessionExpired);
+
     Command coalesceWith(SetCookie setCookie);
 
     Command coalesceWith(NOOP noop);

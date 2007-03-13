@@ -17,6 +17,7 @@ import java.util.Set;
 public class SendUpdatedViews implements Server {
     private static final ResponseHandler EmptyResponseHandler = new ResponseHandler() {
         public void respond(Response response) throws Exception {
+            response.setHeader("Content-Length", 0);
         }
     };
     private BlockingQueue pendingRequest = new LinkedBlockingQueue(1);

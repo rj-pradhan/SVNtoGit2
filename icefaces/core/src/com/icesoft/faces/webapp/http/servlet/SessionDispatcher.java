@@ -51,9 +51,13 @@ public abstract class SessionDispatcher implements PseudoServlet {
         }
     }
 
-    private void sessionDestroyed(HttpSession session) {
-        PseudoServlet server = (PseudoServlet) sessionBoundServers.remove(session);
+    private void sessionShutdown(HttpSession session) {
+        PseudoServlet server = (PseudoServlet) sessionBoundServers.get(session);
         server.shutdown();
+    }
+
+    private void sessionDestroyed(HttpSession session) {
+        sessionBoundServers.remove(session);
     }
 
     protected abstract PseudoServlet newServlet(HttpSession session) throws Exception;
@@ -77,6 +81,19 @@ public abstract class SessionDispatcher implements PseudoServlet {
             }
         }
 
+        public void sessionShutdown(HttpSession session) {
+            Iterator i = SessionDispatchers.iterator();
+            while (i.hasNext()) {
+                try {
+                    SessionDispatcher sessionDispatcher = (SessionDispatcher) i.next();
+                    sessionDispatcher.sessionShutdown(session);
+                } catch (Exception e) {
+                    new RuntimeException(e);
+                }
+            }
+            session.invalidate();
+        }
+
         public void sessionDestroyed(HttpSessionEvent event) {
             HttpSession session = event.getSession();
             sessions.remove(session);
@@ -96,30 +113,26 @@ public abstract class SessionDispatcher implements PseudoServlet {
             Thread monitor = new Thread("Session Monitor") {
                 public void run() {
                     while (run) {
-                        //iterate over the sessions using a copying iterator
-                        Iterator iterator = new ArrayList(sessions).iterator();
-                        while (iterator.hasNext()) {
-                            HttpSession session = (HttpSession) iterator.next();
-                            try {
+                        try {
+                            //iterate over the sessions using a copying iterator
+                            Iterator iterator = new ArrayList(sessions).iterator();
+                            while (iterator.hasNext()) {
+                                final HttpSession session = (HttpSession) iterator.next();
                                 long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
                                 long maxInterval = session.getMaxInactiveInterval() * 1000;
-                                if (elapsedInterval > maxInterval) {
-                                    session.invalidate();
+                                //shutdown the session a bit (15s) before session actually expires
+                                if (elapsedInterval + 15000 > maxInterval) {
+                                    sessionShutdown(session);
                                 }
-                            } catch (IllegalStateException e) {
-                                //session was expired by the container
-                                sessions.remove(session);
-                            } catch (Throwable t) {
-                                //just inform that something went wrong
-                                //todo: replace this with a warning log call 
-                                t.printStackTrace();
                             }
-                        }
 
-                        try {
                             Thread.sleep(10000);
                         } catch (InterruptedException e) {
                             //ignore interrupts
+                        } catch (Throwable t) {
+                            //just inform that something went wrong
+                            //todo: replace this with a warning log call
+                            t.printStackTrace();
                         }
                     }
                 }
