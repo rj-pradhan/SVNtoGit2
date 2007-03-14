@@ -20,7 +20,6 @@ public class MainServlet extends HttpServlet {
 
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
-        StartupTime.started();
         try {
             ServletContext servletContext = servletConfig.getServletContext();
             String awtHeadless = System.getProperty(AWT_HEADLESS);
