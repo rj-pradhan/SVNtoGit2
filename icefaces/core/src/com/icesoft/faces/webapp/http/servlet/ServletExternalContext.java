@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -313,6 +315,10 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
 
         return result;
+    }
+
+    public Writer getWriter(String encoding) throws IOException {
+        return new OutputStreamWriter(response.getOutputStream(), encoding);
     }
 
     /**

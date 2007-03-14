@@ -53,10 +53,7 @@ import javax.faces.context.ResponseStream;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,7 +66,7 @@ import java.util.Vector;
 public class BridgeFacesContext extends FacesContext {
     private static final Log log = LogFactory.getLog(BridgeFacesContext.class);
     private Application application;
-    private ExternalContext externalContext;
+    private BridgeExternalContext externalContext;
     private HashMap faceMessages = new HashMap();
     private boolean renderResponse;
     private boolean responseComplete;
@@ -81,9 +78,9 @@ public class BridgeFacesContext extends FacesContext {
     private String viewNumber;
     private CommandQueue commandQueue;
 
-    public BridgeFacesContext(ExternalContext externalContext, String view, String icefacesID, CommandQueue commandQueue) {
+    public BridgeFacesContext(BridgeExternalContext externalContext, String view, String icefacesID, CommandQueue commandQueue) {
         setCurrentInstance(this);
-        setExternalContext(externalContext);
+        this.externalContext = externalContext;
         this.viewNumber = view;
         this.iceFacesId = icefacesID;
         this.commandQueue = commandQueue;
@@ -113,7 +110,7 @@ public class BridgeFacesContext extends FacesContext {
     }
 
     public void setExternalContext(ExternalContext externalContext) {
-        this.externalContext = externalContext;
+        //do nothing
     }
 
     public ELContext getELContext() {
@@ -206,9 +203,7 @@ public class BridgeFacesContext extends FacesContext {
 
     public void switchToNormalMode() {
         try {
-            HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
-            Writer writer = new OutputStreamWriter(response.getOutputStream(), "UTF-8");
-            domSerializer = new NormalModeSerializer(this, writer);
+            domSerializer = new NormalModeSerializer(this, externalContext.getWriter("UTF-8"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

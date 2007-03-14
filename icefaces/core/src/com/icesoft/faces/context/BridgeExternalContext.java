@@ -39,6 +39,8 @@ package com.icesoft.faces.context;
 
 import javax.faces.context.ExternalContext;
 import javax.servlet.http.Cookie;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Map;
 
 /**
@@ -69,4 +71,6 @@ public abstract class BridgeExternalContext extends ExternalContext {
     public abstract void addCookie(Cookie cookie);
 
     public abstract Map collectBundles();
+
+    public abstract Writer getWriter(String encoding) throws IOException;
 }
