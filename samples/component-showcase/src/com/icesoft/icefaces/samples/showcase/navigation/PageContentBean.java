@@ -57,6 +57,7 @@ public class PageContentBean extends IceUserObject {
     private String menuDisplayText;
     // title information to be displayed
     private String menuContentTitle;
+    private String menuContentInclusionFile;
 
     // True indicates that there is content associated with link and as a
     // result templateName and contentPanelName can be used. Otherwise we
@@ -192,6 +193,22 @@ public class PageContentBean extends IceUserObject {
         } else {
             this.menuContentTitle = "";
         }
+    }
+    
+    public String getMenuContentInclusionFile() {
+        return menuContentInclusionFile;
+    }
+
+    /**
+     * This is necessary for the Facelets version of component-showcase.
+     * Unlike the JSP version of component-showcase, which uses static includes,
+     *   the Facelets version uses dynamic inclusion tied to an EL expression,
+     *   which will call getMenuContentInclusionFile().
+     * 
+     * @param menuContentInclusionFile The server-side path to the file to be included
+     */
+    public void setMenuContentInclusionFile(String menuContentInclusionFile) {
+        this.menuContentInclusionFile = menuContentInclusionFile;
     }
 
     /**
