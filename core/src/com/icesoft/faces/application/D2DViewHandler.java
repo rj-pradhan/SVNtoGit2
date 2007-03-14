@@ -67,6 +67,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Arrays;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces ViewHandler implementation
@@ -147,6 +148,7 @@ public class D2DViewHandler extends ViewHandler {
         if (jsfStateManagement) {
             StateManager stateMgr = context.getApplication().getStateManager();
             stateMgr.saveSerializedView(context);
+            // JSF 1.1 removes transient components here, but I don't think that 1.2 does
         }
 
         // This should be done to ensure the Seam EventContexts are reset
@@ -386,8 +388,8 @@ public class D2DViewHandler extends ViewHandler {
 
     protected void renderResponse(FacesContext facesContext) throws IOException {
         BridgeFacesContext context = (BridgeFacesContext) facesContext;
-        UIComponent root = context.getViewRoot();
-        String viewId = ((UIViewRoot) root).getViewId();
+        UIViewRoot root = context.getViewRoot();
+        String viewId = root.getViewId();
 
         if (log.isTraceEnabled()) {
             log.trace("Rendering " + root + " with " +
@@ -503,7 +505,12 @@ public class D2DViewHandler extends ViewHandler {
         if (!component.isRendered())
             return;
 
-        component.encodeBegin(context);
+        // UIViewRoot.encodeBegin(FacesContext) resets its counter for
+        //   createUniqueId(), which we don't want, or else we get
+        //   duplicate ids
+        boolean isUIViewRoot = component instanceof UIViewRoot;
+        if( !isUIViewRoot )
+            component.encodeBegin(context);
 
         if (component.getRendersChildren()) {
             component.encodeChildren(context);
@@ -514,7 +521,8 @@ public class D2DViewHandler extends ViewHandler {
             }
         }
 
-        component.encodeEnd(context);
+        if( !isUIViewRoot )
+            component.encodeEnd(context);
 
         //Workaround so that MyFaces UIData will apply values to
         //child components even if the tree is not restored via StateManager
@@ -525,38 +533,85 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     protected void tracePrintComponentTree(FacesContext context) {
+        tracePrintComponentTree( context, context.getViewRoot() );
+    }
+
+    protected void tracePrintComponentTree(
+        FacesContext context, UIComponent component)
+    {
         if (log.isTraceEnabled()) {
-            log.trace("tracePrintComponentTree() vvvvvv");
-            tracePrintComponentTree(context.getViewRoot(), context, 0);
+            StringBuffer sb = new StringBuffer(4096);
+            sb.append("tracePrintComponentTree() vvvvvv\n");
+            tracePrintComponentTree(context, component, 0, sb, null);
+            log.trace(sb.toString());
             log.trace("tracePrintComponentTree() ^^^^^^");
         }
     }
 
-    private void tracePrintComponentTree(UIComponent component, FacesContext context, int levels) {
+    private void tracePrintComponentTree(
+        FacesContext context, UIComponent component,
+        int levels, StringBuffer sb, String facetName)
+    {
+        if( component == null ) {
+            sb.append("null\n");
+            return;
+        }
+        final String PREFIX_WHITESPACE = "  ";
         StringBuffer prefix = new StringBuffer(64);
         for (int i = 0; i < levels; i++)
-            prefix.append("  ");
+            prefix.append(PREFIX_WHITESPACE);
         prefix.append("<");
         String compStr = component.toString();
 
         StringBuffer open = new StringBuffer(512);
         open.append(prefix);
         open.append(compStr);
+        Map facetsMap = component.getFacets();
         boolean hasKids = component.getChildCount() > 0;
-        if (!hasKids)
+        boolean hasFacets = (facetsMap != null) && (facetsMap.size() > 0);
+        boolean hasUnderlings = hasKids | hasFacets;
+        if (!hasUnderlings)
             open.append("/");
         open.append(">");
-        if (hasKids) {
+        if( facetName != null ) {
+            open.append(" facetName: ");
+            open.append(facetName);
+        }
+        open.append(" id: ");
+        open.append(component.getId());
+        if( component.getParent() != null ) {
+            open.append(" clientId: ");
+            open.append(component.getClientId(context));
+        }
+        if(hasKids) {
             open.append(" kids: ");
             open.append(Integer.toString(component.getChildCount()));
         }
-        log.trace(open);
+        if(hasFacets) {
+            open.append(" facets: ");
+            open.append(Integer.toString(facetsMap.size()));
+        }
+        if(component.isTransient())
+            open.append(" TRANSIENT ");
+        sb.append(open.toString());
+        sb.append('\n');
 
-        if (hasKids) {
-            Iterator kids = component.getChildren().iterator();
-            while (kids.hasNext()) {
-                tracePrintComponentTree(
-                        (UIComponent) kids.next(), context, levels + 1);
+        if (hasUnderlings) {
+            if( hasFacets ) {
+                Object[] facetKeys = facetsMap.keySet().toArray();
+                Arrays.sort(facetKeys);
+                for(int i = 0; i < facetKeys.length; i++) {
+                    tracePrintComponentTree(
+                        context, (UIComponent) facetsMap.get(facetKeys[i]),
+                        levels + 1, sb, facetKeys[i].toString());
+                }
+            }
+            if( hasKids ) {
+                Iterator kids = component.getChildren().iterator();
+                while (kids.hasNext()) {
+                    tracePrintComponentTree(
+                        context, (UIComponent) kids.next(), levels + 1, sb, null);
+                }
             }
 
             StringBuffer close = new StringBuffer(512);
@@ -564,7 +619,8 @@ public class D2DViewHandler extends ViewHandler {
             close.append("/");
             close.append(compStr);
             close.append(">");
-            log.trace(close);
+            sb.append(close);
+            sb.append('\n');
         }
     }
 
