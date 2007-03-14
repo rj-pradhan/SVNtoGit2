@@ -86,6 +86,7 @@ public class TreeNavigation {
                 .setMenuDisplayText("menuDisplayText.componentSuiteMenuGroup");
         rootObject.setMenuContentTitle(
                 "submenuContentTitle.componentSuiteMenuGroup");
+        rootObject.setMenuContentInclusionFile("./content/splashComponents.jspx");
         rootObject.setTemplateName("splashComponentsPanel");
         rootObject.setNavigationSelection(navigationBean);
         rootObject.setPageContent(true);
@@ -189,6 +190,7 @@ public class TreeNavigation {
                         "submenuDisplayText.themesSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.themesSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./content/splashThemes.jspx");
                 branchObject.setTemplateName("splashThemesPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 DefaultMutableTreeNode branchNode =
@@ -219,6 +221,7 @@ public class TreeNavigation {
                         "submenuDisplayText.textFieldsSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.textFieldsSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/textFields.jspx");
                 branchObject.setTemplateName("textFieldsContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 DefaultMutableTreeNode leafNode =
@@ -234,6 +237,7 @@ public class TreeNavigation {
                         "submenuDisplayText.selectionTagsSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.selectionTagsSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/selectionTags.jspx");
                 branchObject.setTemplateName("selectionTagsContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -248,6 +252,7 @@ public class TreeNavigation {
                         "submenuDisplayText.buttonsAndLinksSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.buttonsAndLinksSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/buttonsAndLinks.jspx");
                 branchObject.setTemplateName("buttonsAndLinksContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -262,6 +267,7 @@ public class TreeNavigation {
                         "submenuDisplayText.autoCompleteSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.autoCompleteSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/autoComplete.jspx");
                 branchObject.setTemplateName("autoCompleteContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -276,6 +282,7 @@ public class TreeNavigation {
                         "submenuDisplayText.dragDropSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.dragDropSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/dragDrop.jspx");
                 branchObject.setTemplateName("dragDropContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -290,6 +297,7 @@ public class TreeNavigation {
                         "submenuDisplayText.selectInputDateComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.selectInputDateComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/selectInputDate.jspx");
                 branchObject.setTemplateName("selectInputDateContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -304,6 +312,7 @@ public class TreeNavigation {
                         "submenuDisplayText.treeComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.treeComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/tree.jspx");
                 branchObject.setTemplateName("treeContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -318,6 +327,7 @@ public class TreeNavigation {
                         "submenuDisplayText.menuBarSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.menuBarSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/menuBar.jspx");
                 branchObject.setTemplateName("menuBarContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -332,6 +342,7 @@ public class TreeNavigation {
                         "submenuDisplayText.effectsSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.effectsSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/effects.jspx");
                 branchObject.setTemplateName("effectsContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -346,6 +357,7 @@ public class TreeNavigation {
                         "submenuDisplayText.connectionStatusSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.connectionStatusSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/connectionStatus.jspx");
                 branchObject.setTemplateName("connectionStatusContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -376,6 +388,7 @@ public class TreeNavigation {
                         "submenuDisplayText.tableComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.tableComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/table.jspx");
                 branchObject.setTemplateName("tableContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -390,6 +403,7 @@ public class TreeNavigation {
                         "submenuDisplayText.columnsComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.columnsComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/tableColumns.jspx");
                 branchObject.setTemplateName("columnsContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -404,6 +418,7 @@ public class TreeNavigation {
                         "submenuDisplayText.dataSortHeaderComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.dataSortHeaderComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/commandSortHeader.jspx");
                 branchObject.setTemplateName("commandSortHeaderContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -418,6 +433,7 @@ public class TreeNavigation {
                         "submenuDisplayText.dataScrollerComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.dataScrollerComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/dataPaginator.jspx");
                 branchObject.setTemplateName("tablePaginatorContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -432,6 +448,7 @@ public class TreeNavigation {
                         "submenuDisplayText.tableExpandableComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.tableExpandableComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/tableExpandable.jspx");
                 branchObject.setTemplateName("tableExpandableContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -446,6 +463,7 @@ public class TreeNavigation {
                         "submenuDisplayText.tableRowSelectionComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.tableRowSelectionComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/tableRowSelection.jspx");
                 branchObject.setTemplateName("tableRowSelectionContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -460,6 +478,7 @@ public class TreeNavigation {
                         "submenuDisplayText.outputProgressComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.outputProgressComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/outputProgress.jspx");
                 branchObject.setTemplateName("outputProgressContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -474,6 +493,7 @@ public class TreeNavigation {
                         "submenuDisplayText.inputFileComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.inputFileComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/inputFile.jspx");
                 branchObject.setTemplateName("inputFileContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -504,6 +524,7 @@ public class TreeNavigation {
                         "submenuDisplayText.chartComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.chartComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/outputChart/chart.jspx");
                 branchObject.setTemplateName("chartPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -518,6 +539,7 @@ public class TreeNavigation {
                         "submenuDisplayText.dynamicChartComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.dynamicChartComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/outputChart/dynamicChart.jspx");
                 branchObject.setTemplateName("dynamicChartPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -532,6 +554,7 @@ public class TreeNavigation {
                         "submenuDisplayText.combinedChartComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.combinedChartComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./components/outputChart/combinedChart.jspx");
                 branchObject.setTemplateName("combinedChartPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -560,6 +583,7 @@ public class TreeNavigation {
                         "submenuDisplayText.borderLayoutComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.borderLayoutComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelBorder.jspx");
                 branchObject.setTemplateName("panelBorderContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -574,6 +598,7 @@ public class TreeNavigation {
                         "submenuDisplayText.panelStackComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.panelStackComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelStack.jspx");
                 branchObject.setTemplateName("panelStackContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -588,6 +613,7 @@ public class TreeNavigation {
                         "submenuDisplayText.tabbedComponentSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.tabbedComponentSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelTabSet.jspx");
                 branchObject.setTemplateName("tabbedPaneContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -602,6 +628,7 @@ public class TreeNavigation {
                         "submenuDisplayText.panelPopupSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.panelPopupSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelPopup.jspx");
                 branchObject.setTemplateName("panelPopupContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -616,6 +643,7 @@ public class TreeNavigation {
                         "submenuDisplayText.listSubmenuItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.listSubmenuItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelSeries.jspx");
                 branchObject.setTemplateName("listContentPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -630,6 +658,7 @@ public class TreeNavigation {
                         "submenuDisplayText.positionedPanelItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.positionedPanelItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/positionedPanel.jspx");
                 branchObject.setTemplateName("positionPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
@@ -644,6 +673,7 @@ public class TreeNavigation {
                         "submenuDisplayText.accordionPanelItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.accordionPanelItem");
+                branchObject.setMenuContentInclusionFile("./inc/layoutPanels/accordionPanel.jspx");
                 branchObject.setTemplateName("accordionPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
