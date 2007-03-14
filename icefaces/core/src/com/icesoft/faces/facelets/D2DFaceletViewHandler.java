@@ -45,6 +45,7 @@ import com.sun.facelets.impl.DefaultResourceResolver;
 import com.sun.facelets.impl.ResourceResolver;
 import com.sun.facelets.tag.TagDecorator;
 import com.sun.facelets.tag.TagLibrary;
+import com.sun.facelets.tag.jsf.ComponentSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -60,6 +61,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces Facelet ViewHandler implementation
@@ -256,25 +258,25 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                 viewToRender.setId(viewToRender.createUniqueId());
             }
 
-            if (viewToRender.getChildCount() == 0) {
-                // grab our FaceletFactory and create a Facelet
-                faceletInitialize();
-                Facelet f = null;
-                FaceletFactory.setInstance(faceletFactory);
-                try {
-                    f = faceletFactory.getFacelet(viewToRender.getViewId());
-                } finally {
-                    FaceletFactory.setInstance(null);
-                }
+            ComponentSupport.removeTransient(viewToRender);
 
-                // Populate UIViewRoot
-                f.apply(context, viewToRender);
-
-                verifyUniqueComponentIds(viewToRender, new HashMap());
-
-                // Uses D2DViewHandler logging
-                tracePrintComponentTree(context);
+            // grab our FaceletFactory and create a Facelet
+            faceletInitialize();
+            Facelet f = null;
+            FaceletFactory.setInstance(faceletFactory);
+            try {
+                f = faceletFactory.getFacelet(viewToRender.getViewId());
+            } finally {
+                FaceletFactory.setInstance(null);
             }
+
+            // Populate UIViewRoot
+            f.apply(context, viewToRender);
+
+            verifyUniqueComponentIds(context, viewToRender);
+
+            // Uses D2DViewHandler logging
+            tracePrintComponentTree(context);
 
             responseWriter.startDocument();
             renderResponse(context, viewToRender);
@@ -323,16 +325,57 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
             }
         }
     }
-
-    protected static void verifyUniqueComponentIds(UIComponent comp, HashMap ids) {
+    
+    /**
+     * For performance reasons, when there aren't id collisions
+     *   we want this to be as fast as possible.  When there are
+     *   collisions, then we'll take some extra time to do a second
+     *   pass to provide more information
+     * It could have all been done in one pass, but that would penalise
+     *   the typical case, where there are not duplicate ids
+     * 
+     * @param comp UIComponent to recurse down through, searching for
+     *             duplicate ids. Should be the UIViewRoot
+     */
+    protected static void verifyUniqueComponentIds(
+        FacesContext context, UIComponent comp)
+    {
         if (!log.isErrorEnabled())
             return;
+        
+        HashMap ids = new HashMap(512);
+        ArrayList duplicateIds = new ArrayList(256);
+        quicklyDetectDuplicateComponentIds(comp, ids, duplicateIds);
+        
+        if(!duplicateIds.isEmpty()) {
+            HashMap duplicateIds2comps = new HashMap(512);
+            compileDuplicateComponentIds(comp, duplicateIds2comps, duplicateIds);
+            reportDuplicateComponentIds(context, duplicateIds2comps, duplicateIds);
+        }
+    }
+    
+    /**
+     * Do the least amount of work to find if there are any duplicate ids,
+     *   with the assumption being that we won't typically find any
+     * We also mention any null ids, just to be safe
+     * 
+     * @param comp  UIComponent to recurse down through, searching for
+     *              duplicate ids.
+     * @param ids  HashMap<String id, String id> allows for detecting
+     *             if an id has already been encountered or not
+     * @param duplicateIds  ArrayList<String id> duplicate ids encountered
+     *                      as we recurse down
+     */
+    private static void quicklyDetectDuplicateComponentIds(
+        UIComponent comp, HashMap ids, ArrayList duplicateIds)
+    {
         String id = comp.getId();
         if (id == null) {
             log.error("UIComponent has null id: " + comp);
         } else {
             if (ids.containsKey(id)) {
-                log.error("Multiple UIComponents found, which are wrongfully using the same id: " + id + ".  Most recent UIComponent: " + comp);
+                if(!duplicateIds.contains(id))
+                    duplicateIds.add(id);
             } else {
                 ids.put(id, id);
             }
@@ -340,7 +383,81 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         Iterator children = comp.getFacetsAndChildren();
         while (children.hasNext()) {
             UIComponent child = (UIComponent) children.next();
-            verifyUniqueComponentIds(child, ids);
+            quicklyDetectDuplicateComponentIds(child, ids, duplicateIds);
+        }
+    }
+    
+    /**
+     * Make a list of every UIComponent that has a duplicate id, as found
+     *  in the duplicateIds parameter.
+     * 
+     * @param comp  UIComponent to recurse down through, searching for
+     *              duplicate ids.
+     * @param duplicateIds2comps  HashMap< String id, ArrayList<UIComponent> >
+     *                            save every UIComponent with one of the
+     *                            duplicate ids, so we can list them all
+     * @param duplicateIds  ArrayList<String id> duplicate ids encountered
+     *                      before
+     */
+    private static void compileDuplicateComponentIds(
+        UIComponent comp, HashMap duplicateIds2comps, ArrayList duplicateIds)
+    {
+        String id = comp.getId();
+        if (id != null && duplicateIds.contains(id)) {
+            ArrayList duplicateComps = (ArrayList) duplicateIds2comps.get(id);
+            if(duplicateComps == null) {
+                duplicateComps = new ArrayList();
+                duplicateIds2comps.put(id, duplicateComps);
+            }
+            duplicateComps.add(comp);
+        }
+        Iterator children = comp.getFacetsAndChildren();
+        while (children.hasNext()) {
+            UIComponent child = (UIComponent) children.next();
+            compileDuplicateComponentIds(child, duplicateIds2comps, duplicateIds);
+        }
+    }
+    
+    /**
+     * Given a list of duplicate ids, and a mapping to each list of
+     *   UIComponents sharing each id, log this info so that the user
+     *   can most easily debug their application.
+     * 
+     * @param duplicateIds2comps  HashMap< String id, ArrayList<UIComponent> >
+     *                            for each duplicated id, the UIComponents
+     *                            sharing that id
+     * @param duplicateIds  ArrayList<String id> duplicate ids encountered
+     *                      before
+     */
+    private static void reportDuplicateComponentIds(
+        FacesContext context, HashMap duplicateIds2comps, ArrayList duplicateIds)
+    {
+        // We don't simply iterate over duplicateIds2comps's keys, since that
+        //  sequence is will probably not be very useful, whereas duplicateIds
+        //  is sequenced in the order that we encountered the ids in the
+        //  component tree, and thus in the source .xhtml file.
+        
+        int numDuplicateIds = duplicateIds.size();
+        log.error("There were " + numDuplicateIds + " ids found which are duplicates, meaning that multiple UIComponents share that same id");
+        for(int i = 0; i < numDuplicateIds; i++) {
+            String id = (String) duplicateIds.get(i);
+            ArrayList duplicateComps = (ArrayList) duplicateIds2comps.get(id);
+            StringBuffer sb = new StringBuffer(512); 
+            sb.append("Duplicate id: ");
+            sb.append(id);
+            sb.append(".  Number of UIComponents sharing that id: ");
+            sb.append(Integer.toString(duplicateComps.size()));
+            sb.append('.');
+            for(int c = 0; c < duplicateComps.size(); c++) {
+                UIComponent comp = (UIComponent) duplicateComps.get(c);
+                sb.append("\n  clientId: ");
+                sb.append(comp.getClientId(context));
+                if(comp.isTransient())
+                    sb.append(".  TRANSIENT");
+                sb.append(".  component: ");
+                sb.append(comp.toString());
+            }
+            log.error(sb.toString());
         }
     }
 }
