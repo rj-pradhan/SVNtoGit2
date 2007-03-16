@@ -291,11 +291,10 @@ public class PersistentFacesState implements Serializable {
     }
 
     /**
-     * Execute  the view associated with this <code>PersistentFacesState</code>.
-     * This is typically followed immediatly by a call to 
-     * {@link PersistentFacesState#render}.
+     * execute and Render the view associated with this <code>PersistentFacesState</code>.
+     * The user's browser will be immediately updated with any changes.
      */
-    public void execute() throws RenderingException {
+    void execute() throws RenderingException {
         if (isBridgeFacesContext) {
             ((BridgeFacesContext) facesContext).setCurrentInstance();
             String viewNumber = ((BridgeFacesContext) facesContext)
@@ -304,6 +303,8 @@ public class PersistentFacesState implements Serializable {
             synchronized (bContext) {
                 try {
                     lifecycle.execute(facesContext);
+                    lifecycle.render(facesContext);
+                    bContext.release();
                 } catch (IllegalStateException e) {
                     if (log.isDebugEnabled()) {
                         log.debug("fatal render failure for viewNumber "
@@ -323,6 +324,9 @@ public class PersistentFacesState implements Serializable {
                 }
             }
         }
+		else{
+			System.out.println("PersistentFacesState.execute() did not execute anything, isBridgeFacesContext=" + isBridgeFacesContext);
+		}
     }
 
     private static class Key {
