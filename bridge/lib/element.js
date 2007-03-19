@@ -156,6 +156,7 @@
             case 'title': e.peer = new This.TitleElement(e); break;
             case 'a': e.peer = new This.AnchorElement(e); break;
             case 'fieldset': e.peer = new This.FieldSetElement(e); break;
+            case 'object': e.peer = new This.ObjectElement(e); break;
             default : e.peer = new This.Element(e); break;
         }
 
@@ -340,6 +341,12 @@
     });
 
     This.FieldSetElement = This.Element.subclass({
+        isSubmit: function(html) {
+            return false;
+        }
+    });
+
+    This.ObjectElement = This.Element.subclass({
         isSubmit: function(html) {
             return false;
         }
