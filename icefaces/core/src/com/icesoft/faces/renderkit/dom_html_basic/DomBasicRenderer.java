@@ -214,9 +214,10 @@ public abstract class DomBasicRenderer extends Renderer {
         } else {
             // Don't convert currentValues that are already a String. Some 3rd party converters attempt
             // to cast this to a specific instance. 
-            if (currentValue instanceof String) {
-                return (String) currentValue;
-            }
+            
+//            if (currentValue instanceof String) {
+//                return (String) currentValue;
+//            }
             return converter
                     .getAsString(facesContext, uiComponent, currentValue);
         }
