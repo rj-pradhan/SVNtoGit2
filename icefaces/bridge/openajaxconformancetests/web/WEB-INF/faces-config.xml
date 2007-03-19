@@ -7,11 +7,21 @@
 
     <!-- Bean Declarations -->
     <managed-bean>
-        <managed-bean-name>user</managed-bean-name>
+        <managed-bean-name>renderManager</managed-bean-name>
         <managed-bean-class>
-            com.icesoft.openajax.beans.UserBean
+            com.icesoft.faces.async.render.RenderManager
         </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>timeZoneBean</managed-bean-name>
+        <managed-bean-class>com.icesoft.openajax.beans.TimeZoneBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>renderManager</property-name>
+            <value>#{renderManager}</value>
+        </managed-property>
     </managed-bean>
     
 </faces-config>
