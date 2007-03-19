@@ -113,7 +113,7 @@
         child: function(category) {
             var childCategory = this.category.copy();
             childCategory.push(category);
-            var child = new This.Logger(childCategory, this.handler);
+            var child = new This.Logger(childCategory, this.handler, this.priority);
             this.children.push(child);
             return child;
         },
@@ -279,7 +279,7 @@
             this.handle('red', 'error', category, message, exception)
         },
 
-        //private
+    //private
         handle: function(colorName, priorityName, category, message, exception) {
             if (this.categoryMatcher.test(category.join('.'))) {
                 var elementDocument = this.log.ownerDocument;
@@ -302,7 +302,7 @@
             this.clearPreviousEvents();
         },
 
-        //private
+    //private
         clearPreviousEvents: function() {
             var nodes = $A(this.log.childNodes);
             nodes.copyFrom(0, nodes.length - this.lines).each(function(node) {
@@ -310,7 +310,7 @@
             }.bind(this));
         },
 
-        //private
+    //private
         clearAllEvents: function() {
             $A(this.log.childNodes).each(function(node) {
                 this.log.removeChild(node)
@@ -319,7 +319,7 @@
     });
 
     This.NOOPConsole = {
-        debug: Function.NOOP, info: Function.NOOP, warn: Function.NOOP, error: Function.NOOP   
+        debug: Function.NOOP, info: Function.NOOP, warn: Function.NOOP, error: Function.NOOP
     };
 
     This.FirebugLogHandler = Object.subclass({
@@ -327,19 +327,17 @@
             logger.handleWith(this);
             this.logger = logger;
             this.console = This.NOOPConsole;
-            window.onLoad(function() {
-                this.enable();
-            }.bind(this));
+            this.enable();
         },
 
         enable: function() {
             this.console = window.console;
-            this.logger.threshold(This.Priority.DEBUG);            
+            this.logger.threshold(This.Priority.DEBUG);
         },
 
         disable: function() {
             this.console = This.NOOPConsole;
-            this.logger.threshold(This.Priority.ERROR);            
+            this.logger.threshold(This.Priority.ERROR);
         },
 
         toggle: Function.NOOP,
@@ -360,7 +358,7 @@
             exception ? this.console.error(this.format(category, message), exception) : this.console.error(this.format(category, message));
         },
 
-        //private
+    //private
         format: function(category, message) {
             return '[' + category.join('.') + '] ' + message;
         }
