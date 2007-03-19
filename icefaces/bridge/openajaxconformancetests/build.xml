@@ -33,7 +33,7 @@
 
 <project name="openajax" default="build.war">
 
-<import file="../etc/build-common.xml"/>
+<import file="../../samples/etc/build-common.xml"/>
 
 <target name="build.war" depends="compile">
     <build.war web.xml="config/web.sunri.icefaces.ce.xml"/>
