@@ -33,10 +33,6 @@
 
 body {
 	background-color:#FFFFFF;
-	color:#666666;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:.8em;
-	font-weight:normal;
 	margin:5px;
 }
 
@@ -50,10 +46,9 @@ table {
 }
 
 #timeZonePanel {
-	position:absolute;
-	top:150px;
-	left:15%;
 	width:465px;
+    margin-left: 5%;
+    margin-top: 5%;
 	height:auto;
 	border-top:1px solid #999999;
 	border-left:1px solid #999999;
@@ -61,10 +56,14 @@ table {
 	border-bottom:2px solid #666666;
 	z-index:10;
 	background-color:#FFFFFF;
+	color:#666666;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:.8em;
+	font-weight:normal;
 }
 
 .floatingDialogHeader {
-	background-image:url(images/blue-header-fade.gif);
+	background-image:url(../images/blue-header-fade.gif);
 	background-position:top left;
 	background-repeat:repeat-x;
 	color:#FFFFFF;
@@ -108,3 +107,18 @@ table {
 .checkedTime {
     width:20%
 }
+
+.dialogPopup {
+    z-index: 1000;
+    top: 20%;
+    left: 20%;
+    position: absolute;
+    width: 846px;
+    height: 646px;
+    background-color: #DDDDDD;
+    border-left: 1px solid #222222;
+    border-top: 1px solid #222222;
+    border-right: 3px solid #111111;
+    border-bottom: 3px solid #111111;
+}
+

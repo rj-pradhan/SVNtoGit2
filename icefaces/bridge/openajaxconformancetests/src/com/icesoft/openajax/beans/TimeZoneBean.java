@@ -188,7 +188,6 @@ public class TimeZoneBean implements Renderable
         this.dialogRendered = dialogRendered;
     }
     
-    public String openDialog() { dialogRendered = true; return "openDialog"; }
     public String closeDialog() { dialogRendered = false; return "closeDialog"; }
 
     /**
