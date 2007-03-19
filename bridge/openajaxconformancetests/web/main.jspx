@@ -101,7 +101,7 @@
 
 <body>
     <ice:form>
-    <ice:panelPopup rendered="#{timeZoneBean.dialogRendered}" draggable="true" styleClass="dialogPopup">
+    <ice:panelPopup rendered="#{timeZoneBean.dialogRendered}" visible="#{timeZoneBean.dialogRendered}" styleClass="dialogPopup">
         <f:facet name="header">
             <ice:panelGroup>
                 <p id="OpenAjaxBanner" class="imageContainer">
@@ -110,7 +110,7 @@
             </ice:panelGroup>
         </f:facet>
         <f:facet name="body">
-            <ice:panelGroup style="width: 830px; text-align: center; vertical-align: middle;">
+            <ice:panelGroup style="width: 830px; vertical-align: middle; padding: 2px;">
 	<!--	****************************************************************************
 				THE CONTENTS OF THE FOLLOWING DIV BLOCK MUST NOT BE CHANGED.
 				(But it's OK if your library needs to move this block elsewhere
