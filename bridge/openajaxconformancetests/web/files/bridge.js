@@ -1844,27 +1844,16 @@ form.serializeOn(_221);
 }
 resetHiddenFieldsFor(_218);
 }
-window.onLoad(function(){
-$enumerate(document.forms).each(function(form){
-form.onsubmit=function(_223){
-$event(_223).cancelDefaultAction();
-iceSubmit(form,null,_223);
-};
-form.submit=function(){
-iceSubmit(form,null,null);
-};
-});
-});
-function resetHiddenFieldsFor(_224){
-$enumerate(_224.elements).each(function(_225){
-if(_225.type=="hidden"&&_225.name!="viewNumber"){
-_225.value="";
+function resetHiddenFieldsFor(_222){
+$enumerate(_222.elements).each(function(_223){
+if(_223.type=="hidden"&&_223.name!="icefacesID"&&_223.name!="viewNumber"){
+_223.value="";
 }
 });
 }
-[Ice.Document=new Object,Ice.ElementModel.Element,Ice.Connection,Ice.Ajax].as(function(This,_227,_228,Ajax){
-This.Synchronizer=Object.subclass({initialize:function(_22a){
-this.logger=_22a.child("synchronizer");
+[Ice.Document=new Object,Ice.ElementModel.Element,Ice.Connection,Ice.Ajax].as(function(This,_225,_226,Ajax){
+This.Synchronizer=Object.subclass({initialize:function(_228){
+this.logger=_228.child("synchronizer");
 this.ajax=new Ajax.Client(this.logger);
 if(window.frames[0].location.hash.length>0){
 this.reload();
@@ -1881,13 +1870,13 @@ this.logger.warn("could not mark document as modified",e);
 },reload:function(){
 try{
 this.logger.info("synchronize body");
-this.ajax.getAsynchronously(document.URL,"",function(_22b){
-_22b.setRequestHeader("Connection","close");
-_22b.on(_228.Ok,function(){
-var text=_22b.content();
-var _22d="<BODY";
+this.ajax.getAsynchronously(document.URL,"",function(_229){
+_229.setRequestHeader("Connection","close");
+_229.on(_226.Ok,function(){
+var text=_229.content();
+var _22b="<BODY";
 var end="</BODY>";
-_227.adaptToElement(document.body).replaceHtml(text.substring(text.indexOf(_22d),text.lastIndexOf(end)+end.length));
+_225.adaptToElement(document.body).replaceHtml(text.substring(text.indexOf(_22b),text.lastIndexOf(end)+end.length));
 });
 });
 }
@@ -1897,12 +1886,12 @@ this.logger.error("failed to reload body",e);
 }});
 });
 [Ice.Command=new Object].as(function(This){
-This.Updates=function(_230){
-$enumerate(_230.getElementsByTagName("update")).each(function(_231){
+This.Updates=function(_22e){
+$enumerate(_22e.getElementsByTagName("update")).each(function(_22f){
 try{
-var _232=_231.getAttribute("address");
-var html=_231.firstChild.data.replace(/<\!\#cdata\#/g,"<![CDATA[").replace(/\#\#>/g,"]]>");
-_232.asExtendedElement().replaceHtml(html);
+var _230=_22f.getAttribute("address");
+var html=_22f.firstChild.data.replace(/<\!\#cdata\#/g,"<![CDATA[").replace(/\#\#>/g,"]]>");
+_230.asExtendedElement().replaceHtml(html);
 logger.debug("applied update : "+html);
 }
 catch(e){
@@ -1910,48 +1899,22 @@ logger.error("failed to insert element: "+html,e);
 }
 });
 };
-This.Redirect=function(_234){
-var url=_234.getAttribute("url");
+This.Redirect=function(_232){
+var url=_232.getAttribute("url");
 logger.info("Redirecting to "+url);
-var _236=url.contains("?")?"&rvn=":"?rvn=";
-window.location.href=url+_236+viewIdentifiers().first();
+var _234=url.contains("?")?"&rvn=":"?rvn=";
+window.location.href=url+_234+viewIdentifiers().first();
 };
 This.SessionExpired=function(){
 logger.warn("Session has expired");
 statusManager.sessionExpired.on();
 application.dispose();
 };
-This.ServerError=function(_237){
+This.ServerError=function(_235){
 logger.error("Server side error");
-logger.error(_237.firstChild.data);
+logger.error(_235.firstChild.data);
 statusManager.serverError.on();
 application.dispose();
-};
-This.Macro=function(_238){
-$enumerate(_238.childNodes).each(function(_239){
-This.deserializeAndExecute(_239);
-});
-};
-This.deserializeAndExecute=function(_23a){
-switch(_23a.tagName){
-case "updates":
-This.Updates(_23a);
-break;
-case "redirect":
-This.Redirect(_23a);
-break;
-case "server-error":
-This.ServerError(_23a);
-break;
-case "session-expired":
-This.SessionExpired(_23a);
-break;
-case "macro":
-This.Macro(_23a);
-break;
-default:
-throw "Unknown message received: "+_23a.tagName;
-}
 };
 });
 function viewIdentifiers(){
@@ -1962,12 +1925,12 @@ return form["viewNumber"].value;
 }).asSet();
 }
 function defaultParameters(){
-return Ice.Parameter.Query.create(function(_23d){
-_23d.add("focus",currentFocus);
-_23d.add("window",window.identifier);
-_23d.add("icefacesID",window.session);
+return Ice.Parameter.Query.create(function(_238){
+_238.add("focus",currentFocus);
+_238.add("window",window.identifier);
+_238.add("icefacesID",window.session);
 viewIdentifiers().each(function(view){
-_23d.add("viewNumber",view);
+_238.add("viewNumber",view);
 });
 });
 }
@@ -1995,22 +1958,22 @@ window.logger.error("Failed to set focus on ["+id+"]",e);
 window.logger.debug("Focus interupted. Not Set on ["+id+"]");
 }
 };
-document.onKeyDown=function(_241){
-var _242=document.onkeydown;
-document.onkeydown=_242!=null?function(e){
-_241(Ice.EventModel.Event.adaptToKeyEvent(e));
-_242(e);
+document.onKeyDown=function(_23c){
+var _23d=document.onkeydown;
+document.onkeydown=_23d!=null?function(e){
+_23c(Ice.EventModel.Event.adaptToKeyEvent(e));
+_23d(e);
 }:function(e){
-_241(Ice.EventModel.Event.adaptToKeyEvent(e));
+_23c(Ice.EventModel.Event.adaptToKeyEvent(e));
 };
 };
-document.onMouseDown=function(_245){
-var _246=document.onmousedown;
-document.onmousedown=_246!=null?function(e){
-_245(e);
-_246(e);
+document.onMouseDown=function(_240){
+var _241=document.onmousedown;
+document.onmousedown=_241!=null?function(e){
+_240(e);
+_241(e);
 }:function(e){
-_245(e);
+_240(e);
 };
 };
 document.onKeyDown(Ice.Focus.userInterupt);
@@ -2023,24 +1986,24 @@ currentFocus=null;
 window.focus();
 });
 [Ice.Status=new Object].as(function(This){
-This.ElementIndicator=Object.subclass({initialize:function(_24b,_24c){
-this.elementID=_24b;
-this.indicators=_24c;
+This.ElementIndicator=Object.subclass({initialize:function(_246,_247){
+this.elementID=_246;
+this.indicators=_247;
 this.indicators.push(this);
 this.off();
 },on:function(){
-this.indicators.each(function(_24d){
-if(_24d!=this){
-_24d.off();
+this.indicators.each(function(_248){
+if(_248!=this){
+_248.off();
 }
 }.bind(this));
 this.elementID.asElement().style.visibility="visible";
 },off:function(){
 this.elementID.asElement().style.visibility="hidden";
 }});
-This.ToggleIndicator=Object.subclass({initialize:function(_24e,_24f){
-this.onElement=_24e;
-this.offElement=_24f;
+This.ToggleIndicator=Object.subclass({initialize:function(_249,_24a){
+this.onElement=_249;
+this.offElement=_24a;
 this.off();
 },on:function(){
 this.onElement.on();
@@ -2049,18 +2012,18 @@ this.offElement.off();
 this.onElement.off();
 this.offElement.on();
 }});
-This.PointerIndicator=Object.subclass({initialize:function(_250){
-this.element=_250;
+This.PointerIndicator=Object.subclass({initialize:function(_24b){
+this.element=_24b;
 this.previousCursor=this.element.style.cursor;
 },on:/Safari/.test(navigator.userAgent)?Function.NOOP:function(){
 this.element.style.cursor="wait";
 },off:/Safari/.test(navigator.userAgent)?Function.NOOP:function(){
 this.element.style.cursor=this.previousCursor;
 }});
-This.OverlayIndicator=Object.subclass({initialize:function(_251,_252,_253){
-this.message=_251;
-this.description=_252;
-this.panel=_253;
+This.OverlayIndicator=Object.subclass({initialize:function(_24c,_24d,_24e){
+this.message=_24c;
+this.description=_24d;
+this.panel=_24e;
 },on:function(){
 this.panel.on();
 messageContainer=document.createElement("div");
@@ -2081,102 +2044,102 @@ messageContainer.style.borderWidth="2px";
 messageContainer.style.borderStyle="solid";
 messageContainer.style.width="270px";
 document.body.appendChild(messageContainer);
-var _254=document.createElement("div");
-_254.appendChild(document.createTextNode(this.message));
-_254.style.marginLeft="30px";
-_254.style.textAlign="left";
-_254.style.fontSize="14px";
-_254.style.fontSize="14px";
-_254.style.fontWeight="bold";
-messageContainer.appendChild(_254);
-var _255=document.createElement("div");
-_255.appendChild(document.createTextNode(this.description));
-_255.style.fontSize="11px";
-_255.style.marginTop="7px";
-_255.style.marginBottom="7px";
-_255.style.fontWeight="normal";
-_254.appendChild(_255);
-var _256=document.createElement("input");
-_256.type="button";
-_256.value="Reload";
-_256.style.fontSize="11px";
-_256.style.fontWeight="normal";
-_256.onclick=function(){
+var _24f=document.createElement("div");
+_24f.appendChild(document.createTextNode(this.message));
+_24f.style.marginLeft="30px";
+_24f.style.textAlign="left";
+_24f.style.fontSize="14px";
+_24f.style.fontSize="14px";
+_24f.style.fontWeight="bold";
+messageContainer.appendChild(_24f);
+var _250=document.createElement("div");
+_250.appendChild(document.createTextNode(this.description));
+_250.style.fontSize="11px";
+_250.style.marginTop="7px";
+_250.style.marginBottom="7px";
+_250.style.fontWeight="normal";
+_24f.appendChild(_250);
+var _251=document.createElement("input");
+_251.type="button";
+_251.value="Reload";
+_251.style.fontSize="11px";
+_251.style.fontWeight="normal";
+_251.onclick=function(){
 window.location.reload();
 };
-messageContainer.appendChild(_256);
-var _257=function(){
+messageContainer.appendChild(_251);
+var _252=function(){
 messageContainer.style.left=((window.width()-messageContainer.clientWidth)/2)+"px";
 messageContainer.style.top=((window.height()-messageContainer.clientHeight)/2)+"px";
 }.bind(this);
-_257();
-window.onResize(_257);
+_252();
+window.onResize(_252);
 messageContainer=null;
-_254=null;
-_255=null;
-_256=null;
+_24f=null;
+_250=null;
+_251=null;
 }});
 This.StatusManager=Object.subclass({initialize:function(){
 if("connection-status".asElement()){
 this.indicators=[];
-var _258=new This.ElementIndicator("connection-working",this.indicators);
-var _259=new This.ElementIndicator("connection-idle",this.indicators);
-this.busy=new This.ToggleIndicator(_258,_259);
+var _253=new This.ElementIndicator("connection-working",this.indicators);
+var _254=new This.ElementIndicator("connection-idle",this.indicators);
+this.busy=new This.ToggleIndicator(_253,_254);
 this.connectionLost=new This.ElementIndicator("connection-lost",this.indicators);
 this.sessionExpired=this.connectionLost;
 this.serverError=this.connectionLost;
 }else{
 this.busy=new This.PointerIndicator(document.body);
-var _25a="To reconnect click the Reload button on the browser or click the button below";
-this.sessionExpired=new This.OverlayIndicator("User Session Expired",_25a,this);
-this.connectionLost=new This.OverlayIndicator("Network Connection Interrupted",_25a,this);
-this.serverError=new This.OverlayIndicator("Server Internal Error",_25a,this);
+var _255="To reconnect click the Reload button on the browser or click the button below";
+this.sessionExpired=new This.OverlayIndicator("User Session Expired",_255,this);
+this.connectionLost=new This.OverlayIndicator("Network Connection Interrupted",_255,this);
+this.serverError=new This.OverlayIndicator("Server Internal Error",_255,this);
 }
 },on:function(){
 document.body.style.zIndex="0";
 window.frames[0].document.body.style.backgroundColor="white";
-var _25b=document.getElementById("history-frame");
-_25b.style.position="absolute";
-_25b.style.visibility="visible";
-_25b.style.backgroundColor="white";
-_25b.style.zIndex="10000";
-_25b.style.top="0";
-_25b.style.left="0";
-var _25c=function(){
-_25b.style.width=window.width()+"px";
-_25b.style.height=window.height()+"px";
+var _256=document.getElementById("history-frame");
+_256.style.position="absolute";
+_256.style.visibility="visible";
+_256.style.backgroundColor="white";
+_256.style.zIndex="10000";
+_256.style.top="0";
+_256.style.left="0";
+var _257=function(){
+_256.style.width=window.width()+"px";
+_256.style.height=window.height()+"px";
 };
-_25c();
-window.onResize(_25c);
+_257();
+window.onResize(_257);
 }});
 });
-[Ice.Connection=new Object,Ice.Connection,Ice.Ajax].as(function(This,_25e,Ajax){
-This.BadResponse=function(_260){
-return _260.isComplete()&&!_260.isResponseValid();
+[Ice.Connection=new Object,Ice.Connection,Ice.Ajax].as(function(This,_259,Ajax){
+This.BadResponse=function(_25b){
+return _25b.isComplete()&&!_25b.isResponseValid();
 };
-This.Receive=function(_261){
-return _261.isOkAndComplete();
+This.Receive=function(_25c){
+return _25c.isOkAndComplete();
 };
-This.Ok=function(_262){
-return _262.isOkAndComplete();
+This.Ok=function(_25d){
+return _25d.isOkAndComplete();
 };
-This.Unavailable=function(_263){
-return _263.isUnavailableAndComplete();
+This.Unavailable=function(_25e){
+return _25e.isUnavailableAndComplete();
 };
-This.SyncConnection=Object.subclass({initialize:function(_264,_265,_266){
-this.logger=_264.child("sync-connection");
+This.SyncConnection=Object.subclass({initialize:function(_25f,_260,_261){
+this.logger=_25f.child("sync-connection");
 this.channel=new Ajax.Client(this.logger);
-this.defaultQuery=_266;
+this.defaultQuery=_261;
 this.onSendListeners=[];
 this.onReceiveListeners=[];
 this.connectionDownListeners=[];
 this.timeoutBomb={cancel:Function.NOOP};
 this.logger.info("synchronous mode");
-this.sendURI=_265.context+"/block/send-receive-updates";
-var _267=_265.timeout?_265.timeout:5000;
+this.sendURI=_260.context+"/block/send-receive-updates";
+var _262=_260.timeout?_260.timeout:5000;
 this.onSend(function(){
 this.timeoutBomb.cancel();
-this.timeoutBomb=this.connectionDownListeners.broadcaster().delayExecutionFor(_267);
+this.timeoutBomb=this.connectionDownListeners.broadcaster().delayExecutionFor(_262);
 }.bind(this));
 this.onReceive(function(){
 this.timeoutBomb.cancel();
@@ -2184,30 +2147,30 @@ this.timeoutBomb.cancel();
 this.whenDown(function(){
 this.timeoutBomb.cancel();
 }.bind(this));
-this.receiveCallback=function(_268){
+this.receiveCallback=function(_263){
 try{
-this.onReceiveListeners.broadcast(_268);
+this.onReceiveListeners.broadcast(_263);
 }
 catch(e){
 this.logger.error("receive broadcast failed",e);
 }
 }.bind(this);
 this.badResponseCallback=this.connectionDownListeners.broadcaster();
-},send:function(_269){
-this.logger.debug("send > "+_269.asString());
-var _26a=_269.addQuery(this.defaultQuery());
-this.channel.postAsynchronously(this.sendURI,_26a.asURIEncodedString(),function(_26b){
-_26b.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-_26b.on(_25e.Receive,this.receiveCallback);
-_26b.on(_25e.BadResponse,this.badResponseCallback);
-this.onSendListeners.broadcast(_26b);
+},send:function(_264){
+this.logger.debug("send > "+_264.asString());
+var _265=_264.addQuery(this.defaultQuery());
+this.channel.postAsynchronously(this.sendURI,_265.asURIEncodedString(),function(_266){
+_266.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+_266.on(_259.Receive,this.receiveCallback);
+_266.on(_259.BadResponse,this.badResponseCallback);
+this.onSendListeners.broadcast(_266);
 }.bind(this));
-},onSend:function(_26c){
-this.onSendListeners.push(_26c);
-},onReceive:function(_26d){
-this.onReceiveListeners.push(_26d);
-},whenDown:function(_26e){
-this.connectionDownListeners.push(_26e);
+},onSend:function(_267){
+this.onSendListeners.push(_267);
+},onReceive:function(_268){
+this.onReceiveListeners.push(_268);
+},whenDown:function(_269){
+this.connectionDownListeners.push(_269);
 },shutdown:function(){
 this.send=Function.NOOP;
 this.onSendListeners.clear();
@@ -2218,24 +2181,24 @@ this.connectionDownListeners.clear();
 });
 window.connection={send:Function.NOOP};
 Ice.Community=new Object;
-[Ice.Community.Connection=new Object,Ice.Connection,Ice.Ajax].as(function(This,_270,Ajax){
-This.AsyncConnection=Object.subclass({initialize:function(_272,_273,_274){
-this.logger=_272.child("async-connection");
+[Ice.Community.Connection=new Object,Ice.Connection,Ice.Ajax].as(function(This,_26b,Ajax){
+This.AsyncConnection=Object.subclass({initialize:function(_26d,_26e,_26f){
+this.logger=_26d.child("async-connection");
 this.sendChannel=new Ajax.Client(this.logger.child("ui"));
 this.receiveChannel=new Ajax.Client(this.logger.child("blocking"));
-this.defaultQuery=_274;
+this.defaultQuery=_26f;
 this.onSendListeners=[];
 this.onReceiveListeners=[];
 this.connectionDownListeners=[];
 this.listener={close:Function.NOOP};
 this.timeoutBomb={cancel:Function.NOOP};
-this.getURI=_273.context+"/block/receive-updates";
-this.sendURI=_273.context+"/block/send-receive-updates";
-this.receiveURI=_273.context+"/block/receive-updated-views";
-var _275=_273.timeout?_273.timeout:5000;
+this.getURI=_26e.context+"/block/receive-updates";
+this.sendURI=_26e.context+"/block/send-receive-updates";
+this.receiveURI=_26e.context+"/block/receive-updated-views";
+var _270=_26e.timeout?_26e.timeout:5000;
 this.onSend(function(){
 this.timeoutBomb.cancel();
-this.timeoutBomb=this.connectionDownListeners.broadcaster().delayExecutionFor(_275);
+this.timeoutBomb=this.connectionDownListeners.broadcaster().delayExecutionFor(_270);
 }.bind(this));
 this.onReceive(function(){
 this.timeoutBomb.cancel();
@@ -2243,23 +2206,23 @@ this.timeoutBomb.cancel();
 this.badResponseCallback=function(){
 this.connectionDownBroadcaster();
 }.bind(this);
-this.receiveCallback=function(_276){
+this.receiveCallback=function(_271){
 try{
-this.onReceiveListeners.broadcast(_276);
+this.onReceiveListeners.broadcast(_271);
 }
 catch(e){
 this.logger.error("receive broadcast failed",e);
 }
 }.bind(this);
-this.updatedViewsCallback=function(_277){
+this.updatedViewsCallback=function(_272){
 try{
-var _278=_277.contentAsDOM().documentElement;
-switch(_278.tagName){
+var _273=_272.contentAsDOM().documentElement;
+switch(_273.tagName){
 case "updated-views":
-this.updatedViews.saveValue(_278.firstChild.data);
+this.updatedViews.saveValue(_273.firstChild.data);
 break;
 default:
-this.receiveCallback(_277);
+this.receiveCallback(_272);
 }
 }
 finally{
@@ -2279,13 +2242,13 @@ this.connect();
 }.bind(this).repeatExecutionEvery(1000);
 this.updatesListenerProcess=function(){
 try{
-var _279=this.updatedViews.loadValue().split(" ");
-if(_279.intersect(viewIdentifiers()).isNotEmpty()){
-this.sendChannel.postAsynchronously(this.getURI,this.defaultQuery().asURIEncodedString(),function(_27a){
-_27a.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-_27a.on(_270.Receive,this.receiveCallback);
+var _274=this.updatedViews.loadValue().split(" ");
+if(_274.intersect(viewIdentifiers()).isNotEmpty()){
+this.sendChannel.postAsynchronously(this.getURI,this.defaultQuery().asURIEncodedString(),function(_275){
+_275.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+_275.on(_26b.Receive,this.receiveCallback);
 }.bind(this));
-this.updatedViews.saveValue(_279.complement(viewIdentifiers()).join(" "));
+this.updatedViews.saveValue(_274.complement(viewIdentifiers()).join(" "));
 }
 }
 catch(e){
@@ -2298,24 +2261,24 @@ this.logger.debug("closing previous connection...");
 this.listener.close();
 this.logger.debug("connect...");
 this.connectionDownBroadcaster=this.connectionDownListeners.broadcaster();
-this.listener=this.receiveChannel.getAsynchronously(this.receiveURI,this.defaultQuery().asURIEncodedString(),function(_27b){
-_27b.on(_270.BadResponse,this.badResponseCallback);
-_27b.on(_270.Receive,this.updatedViewsCallback);
+this.listener=this.receiveChannel.getAsynchronously(this.receiveURI,this.defaultQuery().asURIEncodedString(),function(_276){
+_276.on(_26b.BadResponse,this.badResponseCallback);
+_276.on(_26b.Receive,this.updatedViewsCallback);
 }.bind(this));
-},send:function(_27c){
-var _27d=_27c.addQuery(this.defaultQuery());
-this.logger.debug("send > "+_27d.asString());
-this.sendChannel.postAsynchronously(this.sendURI,_27d.asURIEncodedString(),function(_27e){
-_27e.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
-_27e.on(_270.Receive,this.receiveCallback);
-this.onSendListeners.broadcast(_27e);
+},send:function(_277){
+var _278=_277.addQuery(this.defaultQuery());
+this.logger.debug("send > "+_278.asString());
+this.sendChannel.postAsynchronously(this.sendURI,_278.asURIEncodedString(),function(_279){
+_279.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+_279.on(_26b.Receive,this.receiveCallback);
+this.onSendListeners.broadcast(_279);
 }.bind(this));
-},onSend:function(_27f){
-this.onSendListeners.push(_27f);
-},onReceive:function(_280){
-this.onReceiveListeners.push(_280);
-},whenDown:function(_281){
-this.connectionDownListeners.push(_281);
+},onSend:function(_27a){
+this.onSendListeners.push(_27a);
+},onReceive:function(_27b){
+this.onReceiveListeners.push(_27b);
+},whenDown:function(_27c){
+this.connectionDownListeners.push(_27c);
 },shutdown:function(){
 this.send=Function.NOOP;
 this.listener.close();
@@ -2330,12 +2293,12 @@ this.updatedViews.remove();
 });
 [Ice.Community].as(function(This){
 This.Application=Object.subclass({initialize:function(){
-var _283=window.logger=this.logger=new Ice.Log.Logger(["window"]);
-this.logHandler=window.console&&window.console.firebug?new Ice.Log.FirebugLogHandler(_283):new Ice.Log.WindowLogHandler(_283,window);
-var _284=new Ice.Document.Synchronizer(_283);
+var _27e=window.logger=this.logger=new Ice.Log.Logger(["window"]);
+this.logHandler=window.console&&window.console.firebug?new Ice.Log.FirebugLogHandler(_27e):new Ice.Log.WindowLogHandler(_27e,window);
+var _27f=new Ice.Document.Synchronizer(_27e);
 window.statusManager=new Ice.Status.StatusManager();
 window.identifier=Math.round(Math.random()*10000).toString();
-window.connection=this.connection=configuration.synchronous?new Ice.Connection.SyncConnection(_283,configuration.connection,defaultParameters):new This.Connection.AsyncConnection(_283,configuration.connection,defaultParameters);
+window.connection=this.connection=configuration.synchronous?new Ice.Connection.SyncConnection(_27e,configuration.connection,defaultParameters):new This.Connection.AsyncConnection(_27e,configuration.connection,defaultParameters);
 window.onKeyPress(function(e){
 if(e.isEscKey()){
 e.cancelDefaultAction();
@@ -2344,21 +2307,37 @@ e.cancelDefaultAction();
 this.connection.onSend(function(){
 Ice.Focus.userInterupt=false;
 });
-this.connection.onReceive(function(_286){
-Ice.Command.deserializeAndExecute(_286.contentAsDOM().documentElement);
+this.connection.onReceive(function(_281){
+var _282=_281.contentAsDOM().documentElement;
+switch(_282.tagName){
+case "updates":
+Ice.Command.Updates(_282);
+break;
+case "redirect":
+Ice.Command.Redirect(_282);
+break;
+case "server-error":
+Ice.Command.ServerError(_282);
+break;
+case "session-expired":
+Ice.Command.SessionExpired(_282);
+break;
+default:
+throw "Unknown message received: "+_282.tagName;
+}
 }.bind(this));
 this.connection.onReceive(function(){
-_284.synchronize();
+_27f.synchronize();
 });
 this.connection.whenDown(function(){
-_283.warn("connection to server was lost");
+_27e.warn("connection to server was lost");
 statusManager.connectionLost.on();
 this.dispose();
 }.bind(this));
-this.connection.onSend(function(_287){
+this.connection.onSend(function(_283){
 statusManager.busy.on();
 });
-this.connection.onReceive(function(_288){
+this.connection.onReceive(function(_284){
 statusManager.busy.off();
 });
 this.logger.info("page loaded!");
