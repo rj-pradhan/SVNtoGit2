@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Field;
+import java.util.StringTokenizer;
 
 /**
  * @author ICEsoft Technologies, Inc.
@@ -42,7 +43,6 @@ public class SeamUtilities {
     private static Object pageContextInstance;
 
     // This is just convenience, to avoid rebuilding the String
-    private static String versionedUrlParam;
     private static String conversationIdParameter;
 
     static {
@@ -80,27 +80,40 @@ public class SeamUtilities {
 
         String cleanedUrl = uri;
 
-        if (versionedUrlParam == null) {
+        if (conversationIdParameter == null) {
             getConversationIdParameterName();
         } 
 
         // IF the URI already contains a conversationId, strip it out,
         // and start again.
         if (log.isTraceEnabled()) {
-            log.trace("SeamConversationURLParam: " + versionedUrlParam);
+            log.trace("SeamConversationURLParam: " + conversationIdParameter);
         }
-        int spos = uri.indexOf( versionedUrlParam );
-        if (spos > 0) {
-            // extract anything up to the conversationId field
-            cleanedUrl = uri.substring(0, spos);
+        StringTokenizer st = new StringTokenizer( uri, "?&");
+        StringBuffer builder = new StringBuffer();
+        System.out.println("Unfiltered URI: " + uri);
 
-            int epos = uri.indexOf("?", spos + 1);
-            // append anything that came after the conversationId
-            if (epos > 0) {
-                cleanedUrl += uri.substring(epos);
-            }
+        String token;
+        boolean first = true; 
+        while(st.hasMoreTokens() ){
+            token = st.nextToken();
+            if (!( (token.indexOf(conversationIdParameter) > -1)  || ( token.indexOf("rvn") > -1) )) {
+                builder.append(token);
+
+                if (st.hasMoreTokens() ) {
+                    if (first) {
+                        builder.append('?');
+                        first = false;
+                    } else {
+                        builder.append('&');
+                    }
+                } 
+            } 
         }
 
+        if (builder.length() > 0) {
+            cleanedUrl = builder.toString();
+        } 
         // The manager instance is a singleton, but it's continuously destroyed
         // after each request and thus must be re-obtained during each redirect.
         try {
@@ -227,7 +240,6 @@ public class SeamUtilities {
     private static void loadSeamEnvironment() {
 
 
-        String versionId = "1.0.1";
         try {
 
             // load classes
@@ -270,8 +282,7 @@ public class SeamUtilities {
 
 
             Class.forName("org.jboss.seam.util.Parameters");
-            versionId = "1.1";
-            
+
 
         } catch (ClassNotFoundException cnf) {
 //            log.info ("Seam environment not detected ");
@@ -282,7 +293,7 @@ public class SeamUtilities {
         }
         
         if (seamManagerClass != null) {
-            log.debug("Seam environment detected v" + versionId );
+            log.debug("Seam environment detected ");
         }
     }
 
@@ -324,7 +335,6 @@ public class SeamUtilities {
                 returnVal = (String) seamConversationIdParameterMethod.invoke(
                         seamManagerInstance, seamMethodNoArgs);
                 conversationIdParameter = returnVal;
-                versionedUrlParam = "?" + conversationIdParameter;
             }
 
         } catch (Exception e) {
