@@ -1,5 +1,7 @@
 package com.icesoft.faces.webapp.command;
 
+import com.icesoft.faces.util.DOMUtils;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.net.URI;
@@ -44,6 +46,6 @@ public class Redirect implements Command {
     }
 
     public void serializeTo(Writer writer) throws IOException {
-        writer.write("<redirect url=\"" + uri + "\"/>");
+        writer.write("<redirect url=\"" + DOMUtils.escapeAnsi(uri.toString() ) + "\"/>");
     }
 }
