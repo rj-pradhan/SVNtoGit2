@@ -622,7 +622,7 @@ public class TreeNavigation {
                 // finally add the new custom component branch
                 branchNode.add(leafNode);
 
-                //component menu -> Popup Panel 
+                //component menu -> Popup Panel
                 branchObject = new PageContentBean();
                 branchObject.setMenuDisplayText(
                         "submenuDisplayText.panelPopupSubmenuItem");
@@ -673,7 +673,7 @@ public class TreeNavigation {
                         "submenuDisplayText.accordionPanelItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.accordionPanelItem");
-                branchObject.setMenuContentInclusionFile("./inc/layoutPanels/accordionPanel.jspx");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/accordionPanel.jspx");
                 branchObject.setTemplateName("accordionPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
