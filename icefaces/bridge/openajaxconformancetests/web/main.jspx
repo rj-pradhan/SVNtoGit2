@@ -87,13 +87,6 @@
 	<script language="JavaScript" type="text/javascript" src="files/OpenAjax.js"></script>
 
 	<!--	****************************************************************************
-				YOU MUST REMOVE/REPLACE THE FOLLOWING SCRIPT ELEMENT.
-				The <script> tag below that references SampleAjaxLibrary.js must be removed and 
-				instead you will need to have your own Ajax library loaded instead.
-				**************************************************************************** -->
-	<script language="JavaScript" type="text/javascript" src="files/bridge.js"></script>
-
-	<!--	****************************************************************************
 				YOU MUST LOAD THE FOLLOWING JS FILE AS THE LAST JAVASCRIPT FILE LOADED.
 				**************************************************************************** -->
 	<script language="JavaScript" type="text/javascript" src="HubTest-BasicConformance.js"></script>

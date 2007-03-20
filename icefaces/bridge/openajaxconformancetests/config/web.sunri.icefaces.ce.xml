@@ -58,13 +58,23 @@
         <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
         <param-value>true</param-value>
     </context-param>
-
-	    <!-- Asynchronous Updates -->
+    
     <context-param>
-        <param-name>com.icesoft.faces.synchronousUpdate</param-name>
-        <param-value>false</param-value>
+        <param-name>com.icesoft.faces.openAjaxHub</param-name>
+        <param-value>true</param-value>
     </context-param>
-
+    
+    <!-- Asynchronous Updates -->
+    <context-param>
+        <param-name>com.icesoft.faces.async.server</param-name>
+        <param-value>true</param-value>
+    </context-param>
+   
+    <context-param>
+        <param-name>com.icesoft.util.net.jms.properties</param-name>
+        <param-value>jboss.properties</param-value>
+    </context-param>
+    
 	<listener>
 		<listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
 	</listener>
