@@ -140,7 +140,8 @@
             this.thresholdPriority = thresholdPriority || This.Priority.DEBUG;
             this.categoryMatcher = /.*/;
             this.closeOnExit = true;
-
+            this.toggle();
+            
             this.parentWindow.onKeyPress(function(e) {
                 var key = e.keyCode();
                 if ((key == 20 || key == 84) && e.isCtrlPressed() && e.isShiftPressed()) {
@@ -155,6 +156,7 @@
                 var windowDocument = this.window.document;
 
                 this.log = this.window.document.getElementById('log-window');
+                this.toggle();
                 if (this.log) return;
 
                 windowDocument.body.appendChild(windowDocument.createTextNode(' Close on exit '));
