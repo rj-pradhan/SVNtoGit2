@@ -55,10 +55,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -363,7 +362,7 @@ public class DOMResponseWriter extends ResponseWriter {
 
         //load libraries
         String base = ApplicationBaseLocator.locate(context);
-        Collection libs = new HashSet();
+        Collection libs = new ArrayList();
         if (context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null) {
             libs.add("xmlhttp/openajax.js");
         }
@@ -371,10 +370,14 @@ public class DOMResponseWriter extends ResponseWriter {
         //todo: refactor how extral libraries are loaded into the bridge; always include extra libraries for now
         libs.add("xmlhttp" + StartupTime.getStartupInc() + "ice-extras.js");
 
-        if (context.getExternalContext().getRequestMap()
-                .get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
-            libs.addAll(Arrays.asList(
-                    JavascriptContext.getIncludedLibs(context)));
+        if (context.getExternalContext().getRequestMap().get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
+            String[] componentLibs = JavascriptContext.getIncludedLibs(context);
+            for (int i = 0; i < componentLibs.length; i++) {
+                String componentLib = componentLibs[i];
+                if (!libs.contains(componentLib)) {
+                    libs.add(componentLib);
+                }
+            }
         }
 
         Iterator iterator = libs.iterator();
