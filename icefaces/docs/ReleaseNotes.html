@@ -4,7 +4,7 @@
 <!-- saved from url=(0022)http://internet.e-mail -->
   <meta http-equiv="content-type"
  content="text/html; charset=iso-8859-1">
-  <title>ICEfaces&#8482; V1.6.0 DR#1 Release Notes</title>
+  <title>ICEfaces&#8482; V1.6.0 DR#2 Release Notes</title>
 </head>
 <body style="font-family: helvetica,arial,sans-serif;">
 <table border="0" width="100%">
@@ -13,8 +13,8 @@
       <td width="78%">
       <h1>ICEfaces&#8482; <br>
       </h1>
-      <h1>V1.6 DR#1 Release Notes</h1>
-      <p><strong><em>March 1st, 2007</em></strong></p>
+      <h1>V1.6 DR#2 Release Notes</h1>
+      <p><strong><em>March 21st, 2007</em></strong></p>
       </td>
       <td align="center" valign="top" width="22%"><img
  alt="ICEfaces Logo" src="resources/ICEfaces-logo.gif" style=""><br>
@@ -27,8 +27,9 @@
 This document contains the following sections:<br>
 <ul>
   <li><a href="#Understanding_ICEfaces">Understanding ICEfaces </a></li>
-  <li><a href="#New_Notable">Changes in this
-release</a></li>
+  <li><a href="#Changes_160_DR2">Changes in v1.6.0 DR#2 (this
+release)</a></li>
+  <li><a href="#Changes_160_DR1">Changes in v1.6.0 DR#1</a></li>
   <li><a href="#Supported_Platforms">Supported
 browsers, application servers, and tools</a></li>
   <li><a href="#Known_Issues">Known issues with this release</a></li>
@@ -95,25 +96,84 @@ at<span style="text-decoration: underline;"> </span><a
  class="moz-txt-link-freetext" href="http://documentation.icefaces.org/">http://documentation.icefaces.org/.</a><br>
 <br>
 </p>
-<h2 style="font-style: italic;"><a name="New_Notable"></a>Changes in
-This Release<br>
+<hr>
+<h2 style="font-style: italic;"><a name="Changes_160_DR2"></a>Changes
+in v1.6.0 DR#2<br>
 </h2>
-<p>ICEface v1.6.0 DR#1 is an unstable Development Build that provides
+<p>ICEface v1.6.0 DR#2 is an unstable Development Build that provides
 an early-access preview of new features, enhancements, and fixes that
 will be included in the upcoming ICEfaces v1.6.0 release. This build
-have only been lightly tested and should be considered unstable. It is
+has only been lightly tested and should be considered unstable. It is
 completely unsuitable for Production use. Use this build only if you
 are prepared to deal with problems and are willing to report them to
 the <a target="_blank" href="http://www.icefaces.org/JForum/">forum</a>
 or <a target="_blank" href="http://jira.icefaces.org/">JIRA</a> issue
 tracker.<br>
 </p>
-<p><span style="font-weight: bold;">Note: Portlets are currently
+<p>Please review the <a href="#Known_Issues">Known Issues</a> prior to
+using this release.<br>
+</p>
+<span style="font-weight: bold;">Note: Support for JBoss Seam has been
+greatly improved in this release.</span> However, there are substantial
+considerations required when using ICEfaces with a Seam project. It is
+strongly recommended that anyone wishing to use ICEfaces with Seam
+<a target="_blank" href="http://www.icefaces.org/main/downloads/">download</a>
+and explore the ICEfaces/Seam Component Showcase sample bundle
+as it provides a working application that illustrates using all the
+ICEfaces Component Suite components successfully with Seam. Please see
+the ReadMe.html file in that bundle for critical information on using
+ICEfaces with Seam.<br>
+<br>
+<span style="font-weight: bold;">Note: Portlets are currently
 unsupported</span> in this build due to incomplete and ongoing internal
 refactoring required to better accomodate integration with Seam,
 Portlets, and to resolve ICE-1089.&nbsp; Portlet support will return in
-future builds.<br>
-</p>
+future builds.
+<h2>Bug</h2>
+<ul>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-877">ICE-877</a>]
+- ICEfaces doesn't support Facelets dynamic ui:include</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1131">ICE-1131</a>]
+- Seam: RowSelector reported to not be working</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1288">ICE-1288</a>]
+- CLONE -Seam: PersistentFacesState.render() causes
+IllegalStateException "No page context active"</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1302">ICE-1302</a>]
+- renderer-type field for RowSelectorRenderer entry in component
+FacesConfig.xml file is wrong</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1303">ICE-1303</a>]
+- RE:action and actionListener attribute missing on ice:inputSecret
+component</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1304">ICE-1304</a>]
+- NullPointerException thrown by
+"com.icesoft.faces.webapp.http.common.standard.CompressingServer" class.</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1322">ICE-1322</a>]
+- TldLocationsCache.getUriFromTld() throws an NPE trying to load struts
+jars</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1328">ICE-1328</a>]
+- OBJECT element within FORM causes proble</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1331">ICE-1331</a>]
+- Script tag link to ice-extras.js is broken</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1335">ICE-1335</a>]
+- icefaces-extras.js not loaded on subsequent page renders</li>
+</ul>
+<h2>Improvement</h2>
+<ul>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1287">ICE-1287</a>]
+- CLONE -Effects don't work in seam, Develop effects tag to contain
+effects to the JSP</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1295">ICE-1295</a>]
+- Left Mouse Clicks need to fire Value Change and Action Events</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1315">ICE-1315</a>]
+- Coalesce updates for elements with same ID.</li>
+  <li>[<a href="http://jira.icefaces.org//browse/ICE-1336">ICE-1336</a>]
+- Update Facelets component-showcase to use dynamic ui:include</li>
+</ul>
+<br>
+<hr>
+<h2 style="font-style: italic;"><a name="Changes_160_DR1"></a>Changes
+in v1.6.0 DR#1<br>
+</h2>
 <p>ICEfaces V1.6.0 DR#1 includes the following fixes and enhancements: </p>
 <h2>Improvements</h2>
 <ul>
@@ -238,6 +298,7 @@ classloading</li>
 data associated with the dataModel</li>
 </ul>
 <br>
+<hr>
 <h2 style="font-style: italic;"><a name="Supported_Platforms"></a>Supported
 Browsers, Application Servers, and Tools<br>
 </h2>
@@ -334,7 +395,7 @@ Application Servers:
       </td>
       <td style="vertical-align: top;">JBoss Application Server<br>
       </td>
-      <td style="vertical-align: top; text-align: right;">4.0.3<br>
+      <td style="vertical-align: top; text-align: right;">4.0.x<br>
       </td>
     </tr>
     <tr>
@@ -477,19 +538,6 @@ tools bundles.<br>
 <p>The following are known issues with this release:<br>
 </p>
 <h3>General</h3>
-<ul>
-  <li>There are conditions in which the asynchronous communication
-between the server and browser stops (such as the user pressing the
-browser "stop" button or allowing their machine to sleep). In this
-situation, the application server console will show the following
-exception (including stack trace) with no functional impact:</li>
-</ul>
-<div style="margin-left: 40px;"><span style="font-family: monospace;">java.lang.RuntimeException:
-IncrementalNodeWriter Queue limit
-exceeded: 51</span>. <br>
-<br>
-The user may need to refresh the page to continue using
-the application.</div>
 <ul>
   <li>If at any time the asynchronous connection between the browser
 and the server is lost due to a network interruption, reloading the
@@ -641,20 +689,6 @@ and lists.</li>
   </ul>
 </ul>
 <ul>
-  <li>inputFile <br>
-  </li>
-  <ul>
-    <li>When using Firefox / Mozilla with the inputFile component, if
-the user interacts with the ICEfaces application while a file is being
-uploaded, the file-upload operation may terminate abnormally. The
-ICEfaces application itself will remain functional. In order to avoid
-this possibility it is recommended that fileUpload operations be
-performed in a modal panelPopup to prevent user-interaction with the
-ICEfaces application while the file upload is in progress. For example,
-the application may display a progress-bar in a modal panelPopup that
-displays the upload progress while also preventing further
-user-interaction while the upload is in progress.</li>
-  </ul>
 </ul>
 <ul>
   <li>menuBar
@@ -758,8 +792,10 @@ commercial support please visit <a
 Notice</h2>
 <p class="Body">License agreements can be found in the <span
  style="font-weight: bold;">.../<span style="font-style: italic;">install_dir</span>/</span><span
- style="font-style: italic; font-weight: bold;">ICEfaces-1.5/icefaces/</span><span
+ style="font-style: italic; font-weight: bold;">/</span><span
+ style="font-weight: bold;">icefaces</span><span
+ style="font-style: italic; font-weight: bold;">/</span><span
  style="font-weight: bold;">docs/license</span> directory.</p>
-<p class="Body">&copy; Copyright 2005-2006. ICEsoft Technologies, Inc.</p>
+<p class="Body">&copy; Copyright 2005-2007. ICEsoft Technologies, Inc.</p>
 </body>
 </html>
