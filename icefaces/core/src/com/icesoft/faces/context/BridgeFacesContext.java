@@ -61,6 +61,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.ArrayList;
 
 //for now extend BridgeFacesContext since there are so many bloody 'instanceof' tests
 public class BridgeFacesContext extends FacesContext {
@@ -82,7 +83,7 @@ public class BridgeFacesContext extends FacesContext {
         setCurrentInstance(this);
         this.externalContext = externalContext;
         this.viewNumber = view;
-        this.iceFacesId = icefacesID;
+        this.iceFacesId = icefacesID;              
         this.commandQueue = commandQueue;
         this.application = ((ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY)).getApplication();
         this.externalContext = externalContext;
@@ -134,7 +135,16 @@ public class BridgeFacesContext extends FacesContext {
      * @return list of FacesMessages
      */
     public Iterator getMessages() {
-        return faceMessages.values().iterator();
+
+        // Jira #1358 The hashmap contains vectors of FacesMessages, not FacesMessages
+        // See following method.
+        ArrayList buffer = new ArrayList();
+        Iterator i = faceMessages.values().iterator();
+        while( i.hasNext() ) {
+            buffer.addAll( (Vector) i.next() );
+        } 
+
+        return buffer.iterator();
     }
 
     /**
@@ -211,7 +221,27 @@ public class BridgeFacesContext extends FacesContext {
 
     public void switchToPushMode() {
         //todo: pull document in this class
-        domSerializer = new PushModeSerializer(responseWriter.getDocument(), commandQueue);
+
+        // Jira #1330.
+        // Normally, just masking a null object just leads to
+        // a bunch of further null testing later. Except, at the time of writing,
+        // a) there is no (well, not much of a) later, and
+        // b) For the problem at hand, there's no easy way to create a Noop responseWriter
+        //
+        // The problem arises when Seam uses a Get request to logout. A Seam link tag
+        // is written with the actionMethod hack to get the Identity object to logout.
+        // As a result of the Get, a new ViewRoot is created, and in our code, the
+        // createAndSetResponseWriter method is not called until the renderResponse phase,
+        // but when the result of a Seam actionMethod hack is a redirect, renderResponse
+        // is not called, and the responseWriter will not have a value. 
+        //
+        // Trying to create a Noop DomResponseWriter is problematic since the constructor
+        // of DRW does lots of initialization which needs something more than can
+        // be faked. Look in the initialize method in the DOMResponseWriter class
+        //
+        if (responseWriter != null) {
+            domSerializer = new PushModeSerializer(responseWriter.getDocument(), commandQueue);
+        }
     }
 
     public UIViewRoot getViewRoot() {
