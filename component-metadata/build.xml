@@ -89,7 +89,7 @@
         <copy todir="${maven.build.output}" filtering="on">
             <fileset dir="src/main/resources" />
         </copy>
-        <copyfile src="src/main/resources/jar_xml_dtd/jsfmeta-resources.jar" dest="${maven.build.output}/jsfmeta-resources.jar" />
+        <copy file="src/main/resources/jar_xml_dtd/jsfmeta-resources.jar" todir="${maven.build.output}" />
     </target>    
     
     <!-- generator -->
