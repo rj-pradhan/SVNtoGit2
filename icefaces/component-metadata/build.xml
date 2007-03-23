@@ -151,6 +151,10 @@
     
     <target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases">
         <mkdir dir="${maven.test.reports}" />
+        <xmlvalidate file="${project.build.directory}/generated-sources/tld/icefaces_component.tld" failonerror="true">
+            <dtd publicId="-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                 location="src/main/resources/conf/dtd/web-jsptaglibrary_1_2.dtd"/>
+        </xmlvalidate>
         <junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">
             <sysproperty key="basedir" value="." />
             <formatter type="plain" />
