@@ -149,6 +149,10 @@ public class PersistentFacesState implements Serializable {
         executorService.execute(new RenderRunner());
     }
 
+    public void renderLater(long miliseconds) {
+        executorService.execute(new RenderRunner(miliseconds));
+    }
+
     /**
      * Redirect browser to a different URI. The user's browser will be
      * immediately redirected without any user interaction required.
@@ -235,17 +239,29 @@ public class PersistentFacesState implements Serializable {
     }
 
     private class RenderRunner implements Runnable {
+        private long delay = 0;
+
+        public RenderRunner() {
+        }
+
+        public RenderRunner(long miliseconds) {
+            delay = miliseconds;
+        }
+
         /**
          * <p>Not for application use. Entry point for {@link
          * PersistentFacesState#renderLater}.</p>
          */
         public void run() {
             try {
+                Thread.sleep(delay);
                 render();
             } catch (RenderingException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("renderLater failed ", e);
                 }
+            } catch (InterruptedException e) {
+                //ignore
             }
         }
     }

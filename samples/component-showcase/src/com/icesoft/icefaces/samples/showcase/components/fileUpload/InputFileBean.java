@@ -33,15 +33,13 @@
 
 package com.icesoft.icefaces.samples.showcase.components.fileUpload;
 
-import com.icesoft.faces.component.inputfile.InputFile;
-import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
-import com.icesoft.faces.webapp.xmlhttp.RenderingException;
 import com.icesoft.faces.async.render.RenderManager;
 import com.icesoft.faces.async.render.Renderable;
+import com.icesoft.faces.component.inputfile.FileInfo;
+import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
+import com.icesoft.faces.webapp.xmlhttp.RenderingException;
 
 import javax.faces.event.ActionEvent;
-import java.io.File;
-import java.util.EventObject;
 
 /**
  * <p>The InputFileBean class is the backing bean for the inputfile showcase
@@ -49,24 +47,12 @@ import java.util.EventObject;
  *
  * @since 0.3.0
  */
-public class InputFileBean  implements Renderable {
+public class InputFileBean implements Renderable {
 
-    private int percent = -1;
-    private File file = null;
-
-    /**
-     * Renderable Interface
-     */
-    private PersistentFacesState state;
     private RenderManager renderManager;
-
     private String fileName = "";
     private String contentType = "";
-
-
-    public InputFileBean() {
-        state = PersistentFacesState.getInstance();
-    }
+    private int progress;
 
     /**
      * Sets the Render Manager.
@@ -74,7 +60,6 @@ public class InputFileBean  implements Renderable {
      * @param renderManager
      */
     public void setRenderManager(RenderManager renderManager) {
-
         this.renderManager = renderManager;
     }
 
@@ -87,14 +72,8 @@ public class InputFileBean  implements Renderable {
         return null;
     }
 
-    /**
-     * Get the PersistentFacesState.
-     *
-     * @return state the PersistantFacesState
-     */
     public PersistentFacesState getState() {
-
-        return state;
+        return PersistentFacesState.getInstance();
     }
 
     /**
@@ -106,69 +85,31 @@ public class InputFileBean  implements Renderable {
         renderingException.printStackTrace();
     }
 
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
-
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
     public void action(ActionEvent event) {
-        InputFile inputFile = (InputFile) event.getSource();
-        fileName = inputFile.getFileInfo().getFileName();
-        contentType = inputFile.getFileInfo().getContentType();
-        this.percent = inputFile.getFileInfo().getPercent();
-        if (inputFile.getStatus() == InputFile.SAVED) {
-            setFile(inputFile.getFile());
-        }
-
-        if (inputFile.getStatus() == InputFile.INVALID) {
-            inputFile.getFileInfo().getException().printStackTrace();           
-        }
-
-        if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
-            inputFile.getFileInfo().getException().printStackTrace(); 
-        }
-
-        if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
-            inputFile.getFileInfo().getException().printStackTrace(); 
-        }
+        FileInfo fileInfo = (FileInfo) event;
+        this.fileName = fileInfo.getFileName();
+        this.contentType = fileInfo.getContentType();
+        fileInfo.getFile();//do something with it...
     }
     
-    public void progress(EventObject event) {
-        InputFile file = (InputFile) event.getSource();
-        this.percent = file.getFileInfo().getPercent();
-
-        if (renderManager != null) {
-           renderManager.requestRender(this);
-        }
-
+    public void setProgress(int progress) throws RenderingException {
+        this.progress = progress;
+        PersistentFacesState.getInstance().renderLater();
     }
 
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public int getProgress() {
+        return progress;
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
     public String getContentType() {
         return contentType;
     }
 
+    public String getDownloadFolder() {
+        return null;
+    }
 }

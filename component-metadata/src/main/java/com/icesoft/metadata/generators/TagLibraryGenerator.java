@@ -522,7 +522,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     writer.indent();
                     writer
                             .emitExpression(
-                            "Class progressListenerArgs[] = { java.util.EventObject.class };",
+                            "Class progressListenerArgs[] = { int.class };",
                             true);
                     writer.emitExpression(
                             "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("

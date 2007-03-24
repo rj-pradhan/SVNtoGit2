@@ -33,62 +33,49 @@
 
 package com.icesoft.faces.component.inputfile;
 
-import com.icesoft.faces.context.DOMContext;
-import com.icesoft.faces.renderkit.ApplicationBaseLocator;
-import com.icesoft.faces.renderkit.dom_html_basic.DomBasicInputRenderer;
-import com.icesoft.faces.renderkit.dom_html_basic.HTML;
-import org.w3c.dom.Element;
+import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.utils.MessageUtils;
+import org.apache.commons.fileupload.FileUploadBase;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.render.Renderer;
 import java.io.IOException;
+import java.io.StringWriter;
 
-public class InputFileRenderer extends DomBasicInputRenderer {
+public class InputFileRenderer extends Renderer {
 
-    public void encodeEnd(FacesContext facesContext, UIComponent uiComponent)
-            throws IOException {
-        validateParameters(facesContext, uiComponent, InputFile.class);
-        DOMContext domContext =
-                DOMContext.attachDOMContext(facesContext, uiComponent);
-        InputFile inputFile = (InputFile) uiComponent;
-        if (domContext.isStreamWriting()) {
-            writeStream(facesContext, uiComponent);
-            return;
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        InputFile c = (InputFile) component;
+        BridgeFacesContext facesContext = (BridgeFacesContext) context;
+        ResponseWriter writer = context.getResponseWriter();
+        StringWriter iframeContentWriter = new StringWriter();
+        c.renderIFrame(iframeContentWriter, facesContext);
+        String pseudoURL = "javascript: document.write('" + iframeContentWriter.toString().replaceAll("\"", "%22") + "'); document.close();";
+
+        writer.startElement("iframe", c);
+        writer.writeAttribute("src", pseudoURL, null);
+        writer.writeAttribute("class", c.getStyleClass(), null);
+        writer.writeAttribute("style", "overflow: hidden;", null);
+        writer.writeAttribute("width", c.getWidth() + "px", null);
+        writer.writeAttribute("height", c.getHeight() + "px", null);
+        writer.writeAttribute("frameborder", "0", null);
+        writer.endElement("iframe");
+
+        Throwable uploadException = c.getUploadException();
+        if (uploadException != null) {
+            try {
+                throw uploadException;
+            } catch (FileUploadBase.FileSizeLimitExceededException e) {
+                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED"));
+            } catch (FileUploadBase.UnknownSizeException e) {
+                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE"));
+            } catch (FileUploadBase.InvalidContentTypeException e) {
+                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.INVALID_FILE"));
+            } catch (Throwable t) {
+                //ignore
+            }
         }
-
-        Element iframe = domContext.createRootElement(HTML.IFRAME_ELEM);
-        setRootElementId(facesContext, iframe, uiComponent);
-        iframe.setAttribute(HTML.SRC_ATTR, ApplicationBaseLocator
-                .locate(facesContext) + InputFile.ICE_UPLOAD_FILE +
-                                      inputFile.getQueryString());
-        iframe.setAttribute(HTML.NAME_ATTR, InputFile.FILE_UPLOAD_PREFIX +
-                                            uiComponent
-                                                    .getClientId(facesContext));
-        iframe.setAttribute(HTML.FRAMEBORDER_ATTR, "0");
-        iframe.setAttribute(HTML.STYLE_ATTR, "overflow:hidden;");
-        iframe.setAttribute(HTML.WIDTH_ATTR, String.valueOf(inputFile.getWidth()+10)); //600
-        iframe.setAttribute(HTML.HEIGHT_ATTR, String.valueOf(inputFile.getHeight()+10)); //60
-        domContext.stepOver();
-    }
-
-  
-    void writeStream(FacesContext facesContext, UIComponent uiComponent)
-            throws IOException {
-        DOMContext domContext =
-                DOMContext.attachDOMContext(facesContext, uiComponent);
-        InputFile inputFile = ((InputFile) uiComponent);
-        Element root = domContext.createRootElement(HTML.DIV_ELEM);
-        root.setAttribute(HTML.STYLE_ATTR, inputFile.getStyle());
-        root.setAttribute(HTML.CLASS_ATTR, inputFile.getStyleClass());
-        Element upload = domContext.createElement(HTML.INPUT_ELEM);
-        upload.setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_FILE);
-        upload.setAttribute(HTML.CLASS_ATTR, inputFile.getInputTextClass());
-        root.appendChild(upload);
-        Element submit = domContext.createElement(HTML.INPUT_ELEM);
-        submit.setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_SUBMIT);
-        submit.setAttribute(HTML.CLASS_ATTR, inputFile.getButtonClass());
-        submit.setAttribute(HTML.VALUE_ATTR, inputFile.getLabel());
-        root.appendChild(submit);
-        domContext.streamWrite(facesContext, uiComponent);
     }
 }

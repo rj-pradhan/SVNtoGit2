@@ -16,16 +16,18 @@ public class MainSessionBoundServlet implements PseudoServlet {
     private ViewQueue allUpdatedViews = new ViewQueue();
 
     public MainSessionBoundServlet(HttpSession session, IdGenerator idGenerator, Configuration configuration) {
-        final PseudoServlet viewServer;
+        final PseudoServlet viewServlet;
         if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
-            viewServer = new MultiViewServlet(session, idGenerator, views, allUpdatedViews);
+            viewServlet = new MultiViewServlet(session, idGenerator, views, allUpdatedViews);
         } else {
-            viewServer = new SingleViewServlet(session, idGenerator, views, allUpdatedViews);
+            viewServlet = new SingleViewServlet(session, idGenerator, views, allUpdatedViews);
         }
-        final PseudoServlet pushServer = new PushServlet(views, allUpdatedViews, configuration);
+        final PseudoServlet pushServlet = new PushServlet(views, allUpdatedViews, configuration);
+        final PseudoServlet uploadServlet = new UploadServlet(views, configuration, session.getServletContext());
 
-        dispatcher.dispatchOn(".*block\\/.*", pushServer);
-        dispatcher.dispatchOn(".*", viewServer);
+        dispatcher.dispatchOn(".*uploadHtml", uploadServlet);
+        dispatcher.dispatchOn(".*block\\/.*", pushServlet);
+        dispatcher.dispatchOn(".*", viewServlet);
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {

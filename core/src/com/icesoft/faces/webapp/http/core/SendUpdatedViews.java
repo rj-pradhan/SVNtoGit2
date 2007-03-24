@@ -6,7 +6,7 @@ import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 import edu.emory.mathcs.backport.java.util.concurrent.BlockingQueue;
-import edu.emory.mathcs.backport.java.util.concurrent.LinkedBlockingQueue;
+import edu.emory.mathcs.backport.java.util.concurrent.SynchronousQueue;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -20,7 +20,7 @@ public class SendUpdatedViews implements Server {
             response.setHeader("Content-Length", 0);
         }
     };
-    private BlockingQueue pendingRequest = new LinkedBlockingQueue(1);
+    private BlockingQueue pendingRequest = new SynchronousQueue();
 
     public SendUpdatedViews(final Collection synchronouslyUpdatedViews, final ViewQueue allUpdatedViews) {
         allUpdatedViews.onPut(new Runnable() {
@@ -50,6 +50,7 @@ public class SendUpdatedViews implements Server {
         if (previousRequest != null) {
             try {
                 previousRequest.respondWith(EmptyResponseHandler);
+                pendingRequest.take();
             } catch (Exception e) {
                 e.printStackTrace();
             }

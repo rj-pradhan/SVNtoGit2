@@ -1,10 +1,8 @@
 package com.icesoft.faces.webapp.http.core;
 
 import com.icesoft.faces.application.D2DViewHandler;
-import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Server;
-import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 
 import javax.faces.FactoryFinder;
 import javax.faces.component.UIComponent;
@@ -13,8 +11,6 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,16 +42,7 @@ public class ReceiveSendUpdates implements Server {
             renderCycle(context);
         }
 
-        request.respondWith(new FixedXMLContentHandler() {
-            public void writeTo(Writer writer) throws IOException {
-                String[] viewIdentifiers = request.getParameterAsStrings("viewNumber");
-                for (int i = 0; i < viewIdentifiers.length; i++) {
-                    String viewIdentifier = viewIdentifiers[i];
-                    CommandQueue queue = (CommandQueue) commandQueues.get(viewIdentifier);
-                    queue.take().serializeTo(writer);
-                }
-            }
-        });
+        request.respondWith(new SendUpdatesHandler(commandQueues, request));
     }
 
     public void shutdown() {
@@ -127,4 +114,6 @@ public class ReceiveSendUpdates implements Server {
         }
         return (UIForm) parent;
     }
+
+
 }

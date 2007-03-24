@@ -82,7 +82,7 @@
                             this.receiveCallback(response);
                     }
                 } finally {
-                    this.connect();
+                    this.connect.bind(this).delayExecutionFor(150);
                 }
             }.bind(this);
 
