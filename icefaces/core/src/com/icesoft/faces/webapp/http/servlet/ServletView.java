@@ -1,12 +1,12 @@
 package com.icesoft.faces.webapp.http.servlet;
 
+import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.webapp.command.Command;
 import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.NOOP;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
-import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.util.SeamUtilities;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.Lock;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
@@ -98,5 +98,9 @@ public class ServletView implements CommandQueue {
     public void release() {
         facesContext.release();
         persistentFacesState.release();
+    }
+
+    public BridgeFacesContext getFacesContext() {
+        return facesContext;
     }
 }

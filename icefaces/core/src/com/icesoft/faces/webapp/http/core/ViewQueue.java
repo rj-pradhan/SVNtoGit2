@@ -12,7 +12,7 @@ public class ViewQueue extends LinkedBlockingQueue {
     public void put(Object object) throws InterruptedException {
         if (!contains(object)) {
             super.put(object);
-            listener.run();
         }
+        listener.run();
     }
 }

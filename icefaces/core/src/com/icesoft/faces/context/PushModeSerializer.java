@@ -52,8 +52,10 @@ public class PushModeSerializer implements DOMSerializer {
                 elementList.add(element);
             }
         }
-        Element[] elements = (Element[]) elementList.toArray(new Element[elementList.size()]);
-        commandQueue.put(new UpdateElements(elements));
+        if (!elementList.isEmpty()) {
+            Element[] elements = (Element[]) elementList.toArray(new Element[elementList.size()]);
+            commandQueue.put(new UpdateElements(elements));
+        }
 
         oldDocument = document;
     }

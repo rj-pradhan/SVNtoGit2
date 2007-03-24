@@ -143,6 +143,15 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
         public void contextDestroyed(ServletContextEvent servletContextEvent) {
             run = false;
+            Iterator i = sessions.iterator();
+            while (i.hasNext()) {
+                HttpSession session = (HttpSession) i.next();
+                try {
+                    session.invalidate();
+                } catch (IllegalStateException e) {
+                    //session already invalidated.
+                }
+            }
         }
     }
 }

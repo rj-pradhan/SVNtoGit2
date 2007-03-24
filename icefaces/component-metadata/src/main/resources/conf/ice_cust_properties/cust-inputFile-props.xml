@@ -54,12 +54,12 @@
 		</p>
 		]]>
     </description>
-    <property-name>progressListener</property-name>
-    <property-class>javax.faces.el.MethodBinding</property-class>	
+    <property-name>progress</property-name>
+    <property-class>int</property-class>
     <property-extension>
         <category>ADVANCED</category>
         <editor-class>
-            &methodBindingEditor;
+            &integerEditor;
         </editor-class>
     </property-extension>
 </property>
@@ -102,18 +102,30 @@
 <property>
     <description>
         <![CDATA[
-		This uniqueFolder attribute works in conjunction with the com.icesoft.faces.uploadDirectory 
+		This uniqueFolder attribute works in conjunction with the com.icesoft.faces.uploadDirectory
 		parameter with four possible combinations as illustrated in the table below:
 		<table border="1">
 			<tr><td></td><td colspan="2" align="center"> <b>com.icesoft.faces.uploadDirectory</b> </td></tr>
 			<tr><td><b>uniqueFolder</b></td><td align="center"><b>Set</b></td><td align="center"><b>Not Set</b></td></tr>
-			<tr><td>True</td><td>/application-context/uploadDirectory/sessionid/</td><td>/application-context/sessionid/</td></tr>			
-			<tr><td>False</td><td>/application-context/uploadDirectory/</td><td>/application-context/</td></tr>				
+			<tr><td>True</td><td>/application-context/uploadDirectory/sessionid/</td><td>/application-context/sessionid/</td></tr>
+			<tr><td>False</td><td>/application-context/uploadDirectory/</td><td>/application-context/</td></tr>
 		</table>
-		]]>		
+		]]>
     </description>
     <property-name>uniqueFolder</property-name>
     <property-class>boolean</property-class>
+    <property-extension>
+        <category>ICE_COMPONENT</category>
+    </property-extension>
+</property>
+<property>
+    <description>
+        <![CDATA[
+		This downloadFolder attribute specifies the path where the downloaded files will be saved.
+		]]>
+    </description>
+    <property-name>downloadFolder</property-name>
+    <property-class>java.lang.String</property-class>
     <property-extension>
         <category>ICE_COMPONENT</category>
     </property-extension>

@@ -48,7 +48,6 @@
     <patternset id="faclets.jars"
                 includes="
                 icefaces-facelets.jar
-                el-api.jar
                 el-ri.jar
                 "
             />
