@@ -114,8 +114,8 @@ public class StyleBean {
      * @return the tag information needed for a valid css link tag
      */
     public String getStyle() {
-        return "<link rel='stylesheet' type='text/css' href='./xmlhttp/css/" +
-               currentStyle + "/" + currentStyle + ".css" + "'/>";
+        return "<link rel=\"stylesheet\" type=\"text/css\" href=\"xmlhttp/css/" +
+               currentStyle + "/" + currentStyle + ".css" + "\"></link>";
     }
 
     /**
