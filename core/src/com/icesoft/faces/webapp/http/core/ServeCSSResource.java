@@ -26,6 +26,7 @@ public class ServeCSSResource implements Server {
         } else {
             request.respondWith(new ResponseHandler() {
                 public void respond(Response response) throws Exception {
+                    response.setHeader("Content-Type", "text/css");
                     response.writeBodyFrom(in);
                 }
             });
