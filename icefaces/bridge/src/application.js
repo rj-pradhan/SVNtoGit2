@@ -53,6 +53,7 @@
 
             this.connection.onReceive(function(request) {
                 Ice.Command.deserializeAndExecute(request.contentAsDOM().documentElement);
+                Ice.RedirectFormSubmits();
             }.bind(this));
 
             this.connection.onReceive(function() {

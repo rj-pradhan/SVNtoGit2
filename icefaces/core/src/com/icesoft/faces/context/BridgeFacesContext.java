@@ -54,6 +54,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,7 +62,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.util.ArrayList;
 
 //for now extend BridgeFacesContext since there are so many bloody 'instanceof' tests
 public class BridgeFacesContext extends FacesContext {
@@ -338,6 +338,9 @@ public class BridgeFacesContext extends FacesContext {
         faceMessages.clear();
         renderResponse = false;
         responseComplete = false;
+        //force MyFaces to send the javascript with every submit not just with the first one
+        //todo: find a better mechanism for this
+        externalContext.getRequestMap().remove("org.apache.MyFaces.FIRST_SUBMIT_SCRIPT_ON_PAGE");
         setCurrentInstance(null);
     }
 
