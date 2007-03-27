@@ -678,6 +678,14 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private String getTitleAsString(){
     	return null;
     }
+
+    public int getProgress(){
+        return 0;
+    }
+
+    public void setProgress(int i){
+        
+    }
     
     /// STUBS TO GET BUILD WORKING - END
 
