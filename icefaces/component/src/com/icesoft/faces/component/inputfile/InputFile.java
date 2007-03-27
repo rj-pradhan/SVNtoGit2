@@ -499,4 +499,186 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         // Otherwise return the user specified override class
         return result;
     }
+    
+    
+    /// STUBS TO GET BUILD WORKING - START
+
+    public static final int DEFAULT = 0;
+    public static final int UPLOADING = 1;
+    public static final int SAVED = 2;
+    public static final int INVALID = 3;
+    public static final int SIZE_LIMIT_EXCEEDED = 4;
+    public static final int UNKNOWN_SIZE = 5;
+    public static final int INVALID_NAME_PATTERN = 6;
+    
+    public static final String INVALID_FILE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_FILE";
+    public static final String INVALID_NAME_PATTERN_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_NAME_PATTERN";
+    public static final String SIZE_LIMIT_EXCEEDED_MESSAGE_ID = "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED";
+    public static final String UNKNOWN_SIZE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE";
+        
+    public static final String FILE_UPLOAD_PREFIX = "fileUpload";
+
+
+
+   
+
+
+   
+
+    boolean isRegister() {
+        return false;
+    }
+
+    public void setRegister(FacesContext facesContext) {
+      
+    }
+
+    public void encodeBegin(FacesContext context) throws IOException {
+
+    }
+
+    public void decode(FacesContext context) {
+  
+    }
+
+    /**
+     * <p/>
+     * Return the value of the <code>fileInfo</code> property. </p>
+     */
+    public FileInfo getFileInfo() {
+      return null;
+    }
+
+    void setFileInfo(FileInfo fileInfo) {
+      
+    }
+
+    /**
+     * <p/>
+     * Return the value of the <code>file</code> property. </p>
+     */
+    public File getFile() {
+        return null;
+    }
+
+    /**
+     * <p/>
+     * Set the value of the <code>file<code> property. </p>
+     */
+    public void setFile(File file) {
+        
+    }
+
+ 
+
+   
+
+    public int getStatus() {
+        return 0;
+    }
+
+   
+    
+
+   
+   
+   
+
+    
+    
+
+    //backwards compatability
+
+    /**
+     * <p>Return the value of the <code>fileName</code> property.</p>
+     *
+     * @deprecated use getFileInfo().getFileName() instead.
+     */
+    public String getFilename() {
+        return null;
+    }
+
+    /**
+     * <p>Set the value of the <code>fileName</code> property.</p>
+     *
+     * @deprecated use getFileInfo().setFileName() instead.
+     */
+    public void setFilename(String filename) {
+        
+    }
+
+    /**
+     * <p>Return the value of the <code>size</code> property.</p>
+     *
+     * @deprecated use getFileInfo().getSize() instead.
+     */
+    public long getFilesize() {
+        return 0;
+    }
+
+    /**
+     * <p>Set the value of the <code>size</code> property.</p>
+     *
+     * @deprecated use getFileInfo().setSize() instead.
+     */
+    public void setFilesize(long filesize) {
+        
+    }
+
+   
+
+  
+
+
+   
+
+    public long getSizeMax() {
+       return 0;
+    }
+
+  
+    public String getCssFile() {
+      return null;
+    }
+
+
+
+
+	
+
+	
+
+	
+
+	
+
+    private String getDisabled() {
+    	return null;
+    }
+  
+    private String getStyleClassString() {
+    	return null;
+    }
+    
+    private String getStyleString() {
+    	return null;
+    }
+    
+    private String getStyleInfo() {
+    	return null;
+    }
+    private String getInputTextClassString() {
+    	return null;
+    }
+
+    private String getButtonClassString() {
+    	return null;
+    }
+    
+    private String getTitleAsString(){
+    	return null;
+    }
+    
+    /// STUBS TO GET BUILD WORKING - END
+
 }
