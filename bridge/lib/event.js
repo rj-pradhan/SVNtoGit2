@@ -304,7 +304,7 @@
         },
 
         target: function() {
-            return Element.adaptToElement(this.currentElement);
+            return this.currentElement == null ? null : Element.adaptToElement(this.currentElement);
         },
 
         serializeEventOn: function(query) {

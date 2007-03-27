@@ -78,23 +78,29 @@ function iceSubmit(aForm, aComponent, anEvent) {
     resetHiddenFieldsFor(aForm);
 }
 
-window.onLoad(function() {
-    $enumerate(document.forms).each(function(form) {
-        //todo: should onreset be captured as well?        
-        form.onsubmit = function(event) {
-            $event(event).cancelDefaultAction();
-            iceSubmit(form, null, event);
-        };
-
-        form.submit = function() {
-            iceSubmit(form, null, null);
-        };
-    });
-});
-
 //todo: determine if the cleanup of hidden fields should be at framework or component level
 function resetHiddenFieldsFor(aForm) {
     $enumerate(aForm.elements).each(function(formElement) {
         if (formElement.type == 'hidden' && formElement.name != 'viewNumber') formElement.value = '';
     });
 }
+
+
+[ Ice ].as(function(This) {
+
+    This.RedirectFormSubmits = function() {
+        $enumerate(document.forms).each(function(form) {
+            //todo: should onreset be captured as well?
+            form.onsubmit = function(event) {
+                $event(event).cancelDefaultAction();
+                iceSubmit(form, null, event);
+            };
+
+            form.submit = function() {
+                iceSubmit(form, null, null);
+            };
+        });
+    };
+
+    window.onLoad(This.RedirectFormSubmits);
+});
