@@ -39,25 +39,42 @@ import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.utils.MessageUtils;
 import com.icesoft.faces.webapp.http.servlet.FileUploadComponent;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
+import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.util.Streams;
 
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
+import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
+import java.util.EventObject;
 
 
 /**
  * InputFile is a JSF component class representing an ICEfaces inputFile.
  */
 public class InputFile extends UICommand implements Serializable, FileUploadComponent {
+    public static final int DEFAULT = 0;
+    public static final int UPLOADING = 1;
+    public static final int SAVED = 2;
+    public static final int INVALID = 3;
+    public static final int SIZE_LIMIT_EXCEEDED = 4;
+    public static final int UNKNOWN_SIZE = 5;
+    public static final int INVALID_NAME_PATTERN = 6;
+
+    public static final String INVALID_FILE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_FILE";
+    public static final String INVALID_NAME_PATTERN_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_NAME_PATTERN";
+    public static final String SIZE_LIMIT_EXCEEDED_MESSAGE_ID = "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED";
+    public static final String UNKNOWN_SIZE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE";
+
+    public static final String FILE_UPLOAD_PREFIX = "fileUpload";
     private Boolean disabled;
     private String style;
     private String styleClass;
@@ -68,10 +85,16 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private int height = 30;
     private int width = 500;
     private int inputTextSize = 35;
+    private String inputTextClass;
     private String fileNamePattern;
     private boolean uniqueFolder = true;
     private String downloadFolder;
     private Throwable uploadException;
+    private int status = DEFAULT;
+    private FileInfo fileInfo = new FileInfo();
+    private int progress = 0;
+    private File file;
+    private long sizeMax;
 
     /**
      * <p>Return the value of the <code>COMPONENT_TYPE</code> of this
@@ -97,32 +120,50 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         return "com.icesoft.faces.File";
     }
 
-    public void uploadFile(String fileName, String defaultFolder, String contentType, InputStream fileContent) throws IOException {
-        //clear previous exception
+    public void upload(FileItemStream stream, String defaultFolder, long maxSize) throws IOException {
+        this.fileInfo.reset();
         this.uploadException = null;
+        this.status = UPLOADING;
+        this.sizeMax = maxSize;
         FacesContext context = FacesContext.getCurrentInstance();
         String folder = getDownloadFolder();
         folder = folder == null ? defaultFolder : folder;
+        String namePattern = getFileNamePattern().trim();
+        String fileName = stream.getName();
+        fileInfo.setFileName(fileName);
+        fileInfo.setContentType(stream.getContentType());
         try {
-            String namePattern = getFileNamePattern().trim();
             if (fileName != null && fileName.trim().matches(namePattern)) {
-                File file = new File(folder, fileName);
+                file = new File(folder, fileName);
                 OutputStream output = new FileOutputStream(file);
-                Streams.copy(fileContent, output, true);
-                getActionListener().invoke(context, new Object[] { new FileInfo(fileName, contentType, null, this) });
+                Streams.copy(stream.openStream(), output, true);
+                status = SAVED;
+                fileInfo.setPhysicalPath(file.getAbsolutePath());
+                broadcast(new ActionEvent(this));
             } else {
-                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.INVALID_NAME_PATTERN", new Object[] { fileName, namePattern }));
+                status = INVALID_NAME_PATTERN;
+                context.addMessage(null, MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, new Object[] { fileName, namePattern }));
             }
         } catch (FileUploadBase.FileUploadIOException uploadException) {
             this.uploadException = uploadException.getCause();
+            try {
+                throw this.uploadException;
+            } catch (FileUploadBase.FileSizeLimitExceededException e) {
+                status = SIZE_LIMIT_EXCEEDED;
+            } catch (FileUploadBase.UnknownSizeException e) {
+                status = UNKNOWN_SIZE;
+            } catch (FileUploadBase.InvalidContentTypeException e) {
+                status = INVALID;
+            } catch (Throwable t) {
+                //do nothing
+            }
+            fileInfo.setException(uploadException);
+            file.delete();
+
             throw uploadException;
         }
 
         PersistentFacesState.getInstance().renderLater();
-    }
-    
-    public ValueBinding trackProgress() {
-        return (ValueBinding) getValueBinding("progress");
     }
 
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
@@ -450,8 +491,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
 	}
 
 
-    private String inputTextClass = null;
-
     public void setInputTextClass(String inputTextClass) {
         this.inputTextClass = inputTextClass;
     }
@@ -499,46 +538,13 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         // Otherwise return the user specified override class
         return result;
     }
-    
-    
-    /// STUBS TO GET BUILD WORKING - START
-
-    public static final int DEFAULT = 0;
-    public static final int UPLOADING = 1;
-    public static final int SAVED = 2;
-    public static final int INVALID = 3;
-    public static final int SIZE_LIMIT_EXCEEDED = 4;
-    public static final int UNKNOWN_SIZE = 5;
-    public static final int INVALID_NAME_PATTERN = 6;
-    
-    public static final String INVALID_FILE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_FILE";
-    public static final String INVALID_NAME_PATTERN_MESSAGE_ID = "com.icesoft.faces.component.inputfile.INVALID_NAME_PATTERN";
-    public static final String SIZE_LIMIT_EXCEEDED_MESSAGE_ID = "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED";
-    public static final String UNKNOWN_SIZE_MESSAGE_ID = "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE";
-        
-    public static final String FILE_UPLOAD_PREFIX = "fileUpload";
-
-
-
-   
-
-
-   
 
     boolean isRegister() {
         return false;
     }
 
     public void setRegister(FacesContext facesContext) {
-      
-    }
-
-    public void encodeBegin(FacesContext context) throws IOException {
-
-    }
-
-    public void decode(FacesContext context) {
-  
+        //do nothing
     }
 
     /**
@@ -546,11 +552,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * Return the value of the <code>fileInfo</code> property. </p>
      */
     public FileInfo getFileInfo() {
-      return null;
+        return fileInfo;
     }
 
     void setFileInfo(FileInfo fileInfo) {
-      
+        //do nothing
     }
 
     /**
@@ -558,7 +564,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * Return the value of the <code>file</code> property. </p>
      */
     public File getFile() {
-        return null;
+        return file;
     }
 
     /**
@@ -566,28 +572,12 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * Set the value of the <code>file<code> property. </p>
      */
     public void setFile(File file) {
-        
+        //do nothing
     }
-
- 
-
-   
 
     public int getStatus() {
-        return 0;
+        return status;
     }
-
-   
-    
-
-   
-   
-   
-
-    
-    
-
-    //backwards compatability
 
     /**
      * <p>Return the value of the <code>fileName</code> property.</p>
@@ -595,7 +585,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * @deprecated use getFileInfo().getFileName() instead.
      */
     public String getFilename() {
-        return null;
+        return fileInfo.getFileName();
     }
 
     /**
@@ -604,7 +594,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * @deprecated use getFileInfo().setFileName() instead.
      */
     public void setFilename(String filename) {
-        
+       fileInfo.setFileName(filename);
     }
 
     /**
@@ -613,7 +603,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * @deprecated use getFileInfo().getSize() instead.
      */
     public long getFilesize() {
-        return 0;
+        return fileInfo.getSize();
     }
 
     /**
@@ -622,35 +612,27 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * @deprecated use getFileInfo().setSize() instead.
      */
     public void setFilesize(long filesize) {
-        
+        fileInfo.setSize(filesize);
     }
-
-   
-
-  
-
-
-   
 
     public long getSizeMax() {
-       return 0;
+       return sizeMax;
     }
 
-  
+    public int getProgress(){
+        return progress;
+    }
+
+    public void setProgress(int i){
+        progress = i;
+        fileInfo.setPercent(i);
+        MethodBinding progressListener = (MethodBinding) getAttributes().get("progressListener");
+        progressListener.invoke(FacesContext.getCurrentInstance(), new Object[] {new EventObject(this)});
+    }
+
     public String getCssFile() {
       return null;
     }
-
-
-
-
-	
-
-	
-
-	
-
-	
 
     private String getDisabled() {
     	return null;
@@ -678,15 +660,4 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private String getTitleAsString(){
     	return null;
     }
-
-    public int getProgress(){
-        return 0;
-    }
-
-    public void setProgress(int i){
-        
-    }
-    
-    /// STUBS TO GET BUILD WORKING - END
-
 }

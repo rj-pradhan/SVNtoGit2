@@ -68,11 +68,11 @@ public class InputFileRenderer extends Renderer {
             try {
                 throw uploadException;
             } catch (FileUploadBase.FileSizeLimitExceededException e) {
-                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.SIZE_LIMIT_EXCEEDED"));
+                context.addMessage(null, MessageUtils.getMessage(context, InputFile.SIZE_LIMIT_EXCEEDED_MESSAGE_ID));
             } catch (FileUploadBase.UnknownSizeException e) {
-                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.UNKNOWN_SIZE"));
+                context.addMessage(null, MessageUtils.getMessage(context, InputFile.UNKNOWN_SIZE_MESSAGE_ID));
             } catch (FileUploadBase.InvalidContentTypeException e) {
-                context.addMessage(null, MessageUtils.getMessage(context, "com.icesoft.faces.component.inputfile.INVALID_FILE"));
+                context.addMessage(null, MessageUtils.getMessage(context, InputFile.INVALID_FILE_MESSAGE_ID));
             } catch (Throwable t) {
                 //ignore
             }
