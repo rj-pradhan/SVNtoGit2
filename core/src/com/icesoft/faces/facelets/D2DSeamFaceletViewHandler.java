@@ -4,6 +4,7 @@ import javax.faces.application.ViewHandler;
 
 import com.sun.facelets.compiler.Compiler;
 import com.sun.facelets.compiler.SAXCompiler;
+import com.sun.facelets.impl.ResourceResolver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,4 +41,17 @@ public class D2DSeamFaceletViewHandler extends D2DFaceletViewHandler {
             }
         }
     }
+
+    /**
+     * @see D2DFaceletViewHandler#preChainResourceResolver(com.sun.facelets.impl.ResourceResolver)
+     */
+    protected ResourceResolver preChainResourceResolver(ResourceResolver after) {
+        ResourceResolver seamDebugResourceResolver =
+            SeamDebugResourceResolver.build(after);
+        if( seamDebugResourceResolver != null )
+            return seamDebugResourceResolver;
+        else
+            return after;
+    }
+    
 }

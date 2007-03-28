@@ -223,8 +223,25 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         }
         if (resourceResolver == null)
             resourceResolver = new DefaultResourceResolver();
-
+        
+        resourceResolver = preChainResourceResolver(resourceResolver);
+        
         return new DefaultFaceletFactory(c, resourceResolver, refreshPeriod);
+    }
+    
+    /**
+     * When D2DFaceletViewHandler is setting up the ResourceResolver for
+     *  Facelets, it uses this callback to allow for any subclass to
+     *  define a ResourceResolver of higher precedence, that would have
+     *  first crack at resolving resources, and then could delegate to
+     *  the standard mechanism.
+     * 
+     * @param after The standard ResourceResolver that Facelets would ordinarily use
+     * @return Either the new pre-chained ResourceResolver if one is being added,
+     *         or just the given one if nothing is being chained in
+     */
+    protected ResourceResolver preChainResourceResolver(ResourceResolver after) {
+        return after;
     }
 
 
