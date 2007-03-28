@@ -7,6 +7,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import java.util.StringTokenizer;
 
+import javax.faces.event.PhaseListener;
+import javax.faces.lifecycle.Lifecycle;
+
 /**
  * @author ICEsoft Technologies, Inc.
  *
@@ -343,4 +346,34 @@ public class SeamUtilities {
         }
         return returnVal;
     }
+
+    /**
+     * ICE-1084 : We have to turn off Seam's PhaseListener that makes
+     *  it's debug page appear, so that our SeamDebugResourceResolver
+     *  can do its work.
+     * 
+     * @param lifecycle The Lifecycle maintains the list of PhaseListeners
+     */
+    public static void removeSeamDebugPhaseListener(Lifecycle lifecycle) {
+        PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
+//System.out.println("*** SeamUtilities.removeSeamDebugPhaseListener()");
+//System.out.println("***   phaseListeners: " + phaseListeners.length);
+        for(int i = 0; i < phaseListeners.length; i++) {
+//System.out.println("***     phaseListeners["+i+"]: " + phaseListeners[i]);
+            if( phaseListeners[i].getClass().getName().equals(
+                "org.jboss.seam.debug.jsf.SeamDebugPhaseListener") )
+            {
+                lifecycle.removePhaseListener(phaseListeners[i]);
+//System.out.println("***       REMOVED: " + phaseListeners[i]);
+                seamDebugPhaseListenerClassLoader = phaseListeners[i].getClass().getClassLoader();
+//System.out.println("******      SeamDebugPhaseListener.class.getClassLoader(): " + phaseListeners[i].getClass().getClassLoader());
+            }
+        }
+    }
+    
+    public static ClassLoader getSeamDebugPhaseListenerClassLoader() {
+        return seamDebugPhaseListenerClassLoader;
+    }
+    
+    private static ClassLoader seamDebugPhaseListenerClassLoader;
 }
