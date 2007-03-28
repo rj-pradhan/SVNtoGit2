@@ -203,7 +203,7 @@ public abstract class AbstractChart {
             List objList = (List) obj;
             paintArray = new Paint[objList.size()];
             for (int i = 0; i < objList.size(); i++) {
-                paintArray[i] = (Color) objList.get(i);
+                paintArray[i] = (Paint) objList.get(i);
             }
         }
         return paintArray;
