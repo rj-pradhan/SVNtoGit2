@@ -56,17 +56,16 @@ Once the file is uploaded, information about the file is displayed.
                     <ice:panelGroup styleClass="formBorderHighlight"
                                     style="text-align:left">
                         <ice:inputFile
-                                progress="#{inputFile.progress}"
-                                actionListener="#{inputFile.action}"
-                                downloadFolder="#{inputFile.downloadFolder}"/>
+                                progressListener="#{inputFile.progress}"
+                                actionListener="#{inputFile.action}"/>
                         <ice:outputProgress id="pro"
-                                            value="#{inputFile.progress}"/>
+                                            value="#{inputFile.percent}"/>
                         <ice:outputText
                                 value="File Name: #{inputFile.fileName}"/>
                         <br/>
                         <ice:outputText
                                 value="Content Type: #{inputFile.contentType}"/>
-                        <ice:messages globalOnly="true"/>
+                        <ice:messages/>
                     </ice:panelGroup>
                 </ice:panelGrid>
 

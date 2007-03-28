@@ -8,7 +8,6 @@ import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 
-import javax.faces.el.ValueBinding;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,7 @@ public class UploadServlet implements PseudoServlet {
     public UploadServlet(Map views, Configuration configuration, ServletContext servletContext) {
         this.views = views;
         this.maxSize = configuration.getAttributeAsLong("uploadMaxFileSize", 3 * 1024 * 1024);//3Mb
-        this.defaultFolder = servletContext.getRealPath(configuration.getAttribute("uploadDirectory", "."));
+        this.defaultFolder = servletContext.getRealPath(configuration.getAttribute("uploadDirectory", "upload"));
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -51,18 +50,17 @@ public class UploadServlet implements PseudoServlet {
             } else {
                 ServletView view = (ServletView) views.get(viewIdentifier);
                 view.setAsCurrentDuring(request, response);
-                BridgeFacesContext context = progressCalculator.context = view.getFacesContext();
+                BridgeFacesContext context = view.getFacesContext();
                 FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
-                progressCalculator.listener = component.trackProgress();
+                progressCalculator.listener = component;
                 try {
-                    component.uploadFile(item.getName(), defaultFolder, item.getContentType(), item.openStream());
+                    component.upload(item, defaultFolder, maxSize);
                 } catch (IOException e) {
                     try {
                         progressCalculator.reset();
                     } catch (Throwable tr) {
                         //ignore
                     }
-                    //ignore
                 } catch (Throwable t) {
                     //todo: log it!
                     t.printStackTrace();
@@ -80,8 +78,7 @@ public class UploadServlet implements PseudoServlet {
 
     private static class ProgressCalculator {
         private int GRANULARITY = 10;
-        private ValueBinding listener;
-        private BridgeFacesContext context;
+        private FileUploadComponent listener;
         private int stepCount = 0;
 
         public void progress(long read, long total) {
@@ -89,15 +86,15 @@ public class UploadServlet implements PseudoServlet {
                 long step = total / GRANULARITY;
                 if ((stepCount + 1) * step < read) {
                     int percentage = ++stepCount * 100 / GRANULARITY;
-                    listener.setValue(context, new Integer(percentage));
+                    listener.setProgress(percentage);
                 }
             }
         }
 
         public void reset() {
-            ValueBinding binding = listener;
+            FileUploadComponent component = listener;
             listener = null;
-            binding.setValue(context, new Integer(0));
+            component.setProgress(0);
         }
     }
 }

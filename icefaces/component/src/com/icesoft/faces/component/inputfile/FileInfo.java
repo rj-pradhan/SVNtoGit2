@@ -33,31 +33,74 @@
 
 package com.icesoft.faces.component.inputfile;
 
-import javax.faces.component.UIComponent;
-import javax.faces.event.ActionEvent;
-import java.io.File;
+public class FileInfo {
 
-public class FileInfo extends ActionEvent {
-    private String fileName;
-    private String contentType;
-    private File file;
 
-    public FileInfo(String fileName, String contentType, File file, UIComponent component) {
-        super(component);
-        this.fileName = fileName;
-        this.contentType = contentType;
-        this.file = file;
-    }
+    private long size = 0;
+    private String fileName = null;
+    private String contentType = null;
+    private String physicalPath = null;
+    private int percent = 0;
+    private Exception exception = null;
 
     public String getContentType() {
         return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public File getFile() {
-        return file;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getPhysicalPath() {
+        return physicalPath;
+    }
+
+    public void setPhysicalPath(String path) {
+        this.physicalPath = path;
+    }
+
+    public FileInfo() {
+        super();
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
+    void reset() {
+        size = 0;
+        fileName = null;
+        contentType = null;
+        physicalPath = null;
+        percent = 0;
+        exception = null;
     }
 }

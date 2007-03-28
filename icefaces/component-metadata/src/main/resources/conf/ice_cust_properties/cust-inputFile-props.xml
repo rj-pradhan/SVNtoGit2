@@ -54,12 +54,12 @@
 		</p>
 		]]>
     </description>
-    <property-name>progress</property-name>
-    <property-class>int</property-class>
+    <property-name>progressListener</property-name>
+    <property-class>javax.faces.el.MethodBinding</property-class>
     <property-extension>
         <category>ADVANCED</category>
         <editor-class>
-            &integerEditor;
+            &methodBindingEditor;
         </editor-class>
     </property-extension>
 </property>
@@ -89,7 +89,7 @@
 <property>
     <description>
         Passed through to root element.
-    </description>	
+    </description>
     <property-name>title</property-name>
     <property-class>java.lang.String</property-class>
     <property-extension>
@@ -114,18 +114,6 @@
     </description>
     <property-name>uniqueFolder</property-name>
     <property-class>boolean</property-class>
-    <property-extension>
-        <category>ICE_COMPONENT</category>
-    </property-extension>
-</property>
-<property>
-    <description>
-        <![CDATA[
-		This downloadFolder attribute specifies the path where the downloaded files will be saved.
-		]]>
-    </description>
-    <property-name>downloadFolder</property-name>
-    <property-class>java.lang.String</property-class>
     <property-extension>
         <category>ICE_COMPONENT</category>
     </property-extension>
