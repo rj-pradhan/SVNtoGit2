@@ -152,15 +152,22 @@
 
         shutdown: function() {
             //avoid sending XMLHTTP requests that might create new sessions on the server
-            this.send = Function.NOOP;
-            this.listener.close();
-            this.onSendListeners.clear();
-            this.onReceiveListeners.clear();
-            this.connectionDownListeners.clear();
-            this.updatesListenerProcess.cancel();
-            this.listenerInitializerProcess.cancel();
-            this.listening.remove();
-            this.updatedViews.remove();
+            try {
+                this.send = Function.NOOP;
+                this.listener.close();
+            } finally {
+                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
+                    f.clear();
+                });
+
+                [ this.updatesListenerProcess, this.listenerInitializerProcess ].eachWithGuard(function(f) {
+                    f.cancel();
+                });
+
+                [ this.listening, this.updatedViews ].eachWithGuard(function(f) {
+                    f.remove();
+                });
+            }
         }
     });
 });
