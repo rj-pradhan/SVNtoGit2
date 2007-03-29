@@ -63,7 +63,7 @@ public class TableRenderer extends DomBasicRenderer {
         Debug.assertTrue(responseWriter != null, "ResponseWriter is null");
         DOMContext domContext =
                 DOMContext.attachDOMContext(facesContext, uiComponent);
-
+        //System.err.println("RENDERING THE TABLE RENDERING THE TABLE RENDERING THE TABLE RENDERING THE TABLE RENDERING THE TABLE ");
         if (!domContext.isInitialized()) {
             Element root = null;
             if (isScrollable(uiComponent)) {
@@ -86,6 +86,8 @@ public class TableRenderer extends DomBasicRenderer {
         if (isScrollable(uiComponent)) {
             Element headerDiv = domContext.createElement("div");
             Element headerTable = domContext.createElement("table");
+            headerTable.setAttribute(HTML.STYLE_CLASS_ATTR, styleClass);
+            //System.err.println("Header Table Style Class [" + styleClass + "]");
             headerDiv.appendChild(headerTable);
             root.appendChild(headerDiv);
             Element bodyDiv = domContext.createElement("div");
@@ -95,6 +97,8 @@ public class TableRenderer extends DomBasicRenderer {
                                  "overflow:auto;height:" + height + ";");
 
             Element bodytable = domContext.createElement("table");
+            bodytable.setAttribute(HTML.STYLE_CLASS_ATTR, styleClass);
+            //System.err.println("Body Table Style Class [" + styleClass + "]");
             bodyDiv.appendChild(bodytable);
             root.appendChild(bodyDiv);
         }

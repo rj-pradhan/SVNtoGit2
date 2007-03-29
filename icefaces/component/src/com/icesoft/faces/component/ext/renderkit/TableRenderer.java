@@ -105,7 +105,7 @@ public class TableRenderer
             }
         } else {
             td.setAttribute("class",
-                            CSS_DEFAULT.TABLE_COLUMN_CLASSES + colNumber++);
+                            CSS_DEFAULT.TABLE_COLUMN_CLASSES);
         }
     }
 
