@@ -95,6 +95,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private int progress = 0;
     private File file;
     private long sizeMax;
+    private MethodBinding progressListener;
 
     /**
      * <p>Return the value of the <code>COMPONENT_TYPE</code> of this
@@ -609,7 +610,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     /**
      * <p>Set the value of the <code>size</code> property.</p>
      *
-     * @deprecated use getFileInfo().setSize() instead.
      */
     public void setFilesize(long filesize) {
         fileInfo.setSize(filesize);
@@ -619,12 +619,24 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
        return sizeMax;
     }
 
+    public void setValueBinding(String name, ValueBinding vb) {
+        if (name != null && name.equals("progressListener")) {
+            MethodBinding mb =
+                    getFacesContext().getApplication().createMethodBinding(
+                            vb.getExpressionString(),
+                            new Class[]{EventObject.class});
+            setProgressListener(mb);
+            return;
+        }
+        super.setValueBinding(name, vb);
+    }
+
     public MethodBinding getProgressListener() {
-        return (MethodBinding) getAttributes().get("progressListener");
+        return progressListener;
     }
 
     public void setProgressListener(MethodBinding binding) {
-        //do nothing.
+        progressListener = binding;
     }
 
     public int getProgress(){
