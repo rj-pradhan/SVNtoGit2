@@ -32,6 +32,15 @@
  */
 
 Object.extend(Array.prototype, {
+    eachWithGuard: function(iterator) {
+        this.each(function(element) {
+            try {
+                iterator(element);
+            } catch (e) {
+                //ignore
+            }
+        });
+    },
 
     intersect: function(other) {
         return this.select(function(item) {

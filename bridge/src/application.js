@@ -86,20 +86,10 @@
     });
 
     window.onLoad(function() {
-        try {
-            this.application = new This.Application;
-        } catch(ignore) {
-            if (console)
-                console.error(ignore);
-        }
+        this.application = new This.Application;
     });
 
     window.onUnload(function() {
-        try {
-            this.application.dispose();
-        } catch(ignore) {
-            if (console)
-                console.error(ignore);
-        }
+        this.application.dispose();
     });
 });
