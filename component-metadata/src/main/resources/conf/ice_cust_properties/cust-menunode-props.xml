@@ -32,7 +32,8 @@
   ~
   -->
 
-
+&ice-att-userrole-rendered-props;
+&ice-att-userrole-enabled-props;
 &uicommand-props;
 
 <property>

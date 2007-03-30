@@ -68,7 +68,8 @@ public class MenuItem extends MenuItemBase {
     private MethodBinding action = null;
     private MethodBinding actionListener = null;
     private Boolean disabled = null;
-
+    private String enabledOnUserRole = null;
+    private String renderedOnUserRole = null;
 
     /**
      * String constant defining default menu icon img
@@ -273,4 +274,61 @@ public class MenuItem extends MenuItemBase {
         return false;
     }
 
+
+    /**
+     * <p>Set the value of the <code>enabledOnUserRole</code> property.</p>
+     *
+     * @param enabledOnUserRole
+     */
+    public void setEnabledOnUserRole(String enabledOnUserRole) {
+        this.enabledOnUserRole = enabledOnUserRole;
+    }
+
+    /**
+     * <p>Return the value of the <code>enabledOnUserRole</code> property.</p>
+     *
+     * @return String enabledOnUserRole
+     */
+    public String getEnabledOnUserRole() {
+        if (enabledOnUserRole != null) {
+            return enabledOnUserRole;
+        }
+        ValueBinding vb = getValueBinding("enabledOnUserRole");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Set the value of the <code>renderedOnUserRole</code> property.</p>
+     *
+     * @param renderedOnUserRole
+     */
+    public void setRenderedOnUserRole(String renderedOnUserRole) {
+        this.renderedOnUserRole = renderedOnUserRole;
+    }
+
+    /**
+     * <p>Return the value of the <code>renderedOnUserRole</code> property.</p>
+     *
+     * @return String renderedOnUserRole
+     */
+    public String getRenderedOnUserRole() {
+        if (renderedOnUserRole != null) {
+            return renderedOnUserRole;
+        }
+        ValueBinding vb = getValueBinding("renderedOnUserRole");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Return the value of the <code>rendered</code> property.</p>
+     *
+     * @return boolean rendered
+     */
+    public boolean isRendered() {
+        if (!Util.isRenderedOnUserRole(this)) {
+            return false;
+        }
+        return super.isRendered();
+    }
+   
 }
