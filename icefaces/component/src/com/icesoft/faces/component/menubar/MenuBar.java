@@ -97,7 +97,7 @@ public class MenuBar extends UICommand implements NamingContainer {
     private String imageDir;
     private String orientation; // horizontal | vertical ; default = horizontal   
     private String style;
-
+    private String renderedOnUserRole = null;
     private Boolean noIcons;
 
     /**
@@ -284,6 +284,38 @@ public class MenuBar extends UICommand implements NamingContainer {
 
     }
 
+    /**
+     * <p>Set the value of the <code>renderedOnUserRole</code> property.</p>
+     *
+     * @param renderedOnUserRole
+     */
+    public void setRenderedOnUserRole(String renderedOnUserRole) {
+        this.renderedOnUserRole = renderedOnUserRole;
+    }
 
+    /**
+     * <p>Return the value of the <code>renderedOnUserRole</code> property.</p>
+     *
+     * @return String renderedOnUserRole
+     */
+    public String getRenderedOnUserRole() {
+        if (renderedOnUserRole != null) {
+            return renderedOnUserRole;
+        }
+        ValueBinding vb = getValueBinding("renderedOnUserRole");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+
+    /**
+     * <p>Return the value of the <code>rendered</code> property.</p>
+     *
+     * @return boolean rendered
+     */
+    public boolean isRendered() {
+        if (!Util.isRenderedOnUserRole(this)) {
+            return false;
+        }
+        return super.isRendered();
+    }
 }
 
