@@ -808,9 +808,10 @@ public class IDEComponentBeanInfoGenerator extends AbstractGenerator {
     }
     
     private void generate(ComponentBean cb) throws IOException {
-        if ("javax.faces.component.UIComponentBase".equals(cb
-                .getComponentClass()))
+
+        if(cb.getComponentClass().startsWith("javax.faces.component.")){
             return;
+        }
         if (cb.isSuppressed())
             return;
         RendererBean rb = renderer(cb);
