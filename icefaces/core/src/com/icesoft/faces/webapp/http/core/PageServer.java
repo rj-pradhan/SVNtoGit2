@@ -20,6 +20,7 @@ public class PageServer implements Server {
             response.setHeader("Cache-Control", new String[]{"no-cache", "no-store", "must-revalidate"});//HTTP 1.1
             response.setHeader("Pragma", "no-cache");//HTTP 1.0
             response.setHeader("Expires", 0);//prevents proxy caching
+            response.setHeader("Content-Type", "text/html");
             com.icesoft.util.SeamUtilities.removeSeamDebugPhaseListener(lifecycle);
             lifecycle.execute(facesContext);
             lifecycle.render(facesContext);

@@ -126,7 +126,13 @@ public class ServletRequestResponse implements Request, Response {
     }
 
     public void setHeader(String name, String value) {
-        response.setHeader(name, value);
+        if ("Content-Type".equals(name)) {
+            response.setContentType(value);
+        } else if ("Content-Length".equals(name)) {
+            response.setContentLength(Integer.parseInt(value));
+        } else {
+            response.setHeader(name, value);
+        }
     }
 
     public void setHeader(String name, String[] values) {
