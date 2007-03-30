@@ -118,21 +118,26 @@ public abstract class SessionDispatcher implements PseudoServlet {
                             Iterator iterator = new ArrayList(sessions).iterator();
                             while (iterator.hasNext()) {
                                 final HttpSession session = (HttpSession) iterator.next();
-                                long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
-                                long maxInterval = session.getMaxInactiveInterval() * 1000;
-                                //shutdown the session a bit (15s) before session actually expires
-                                if (elapsedInterval + 15000 > maxInterval) {
-                                    sessionShutdown(session);
+                                try {
+                                    long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
+                                    long maxInterval = session.getMaxInactiveInterval() * 1000;
+                                    //shutdown the session a bit (15s) before session actually expires
+                                    if (elapsedInterval + 15000 > maxInterval) {
+                                        sessionShutdown(session);
+                                    }
+                                } catch (IllegalStateException e) {
+                                    //session was already invalidated by the container
+                                    sessions.remove(session);
+                                } catch (Throwable t) {
+                                    //just inform that something went wrong
+                                    //todo: replace this with a warning log call
+                                    t.printStackTrace();
                                 }
                             }
 
                             Thread.sleep(10000);
                         } catch (InterruptedException e) {
                             //ignore interrupts
-                        } catch (Throwable t) {
-                            //just inform that something went wrong
-                            //todo: replace this with a warning log call
-                            t.printStackTrace();
                         }
                     }
                 }
