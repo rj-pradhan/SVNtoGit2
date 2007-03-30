@@ -84,7 +84,7 @@ public class UploadServlet implements PseudoServlet {
         public void progress(long read, long total) {
             if (listener != null) {
                 long step = total / GRANULARITY;
-                if ((stepCount + 1) * step < read) {
+                if ((stepCount + 1) * step <= read) {
                     int percentage = ++stepCount * 100 / GRANULARITY;
                     listener.setProgress(percentage);
                 }
