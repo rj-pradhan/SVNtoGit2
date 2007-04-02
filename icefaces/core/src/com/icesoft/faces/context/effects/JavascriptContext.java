@@ -394,8 +394,7 @@ public class JavascriptContext {
     }
 
     /**
-     * Set the application focus for the current request
-     * @param facesContext
+     * Set the application focus for the current request, overrides and setFocus call.
      * @param id
      */
     public static void applicationFocus(FacesContext facesContext, String id) {
