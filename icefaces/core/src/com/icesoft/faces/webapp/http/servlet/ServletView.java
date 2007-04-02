@@ -29,6 +29,11 @@ public class ServletView implements CommandQueue {
     private ServletEnvironmentRequest wrappedRequest;
     private Command currentCommand = NOOP;
     private String viewIdentifier;
+    public static final String STANDARD_REQUEST_SCOPE =
+            "com.icesoft.faces.standardRequestScope";
+    public static boolean standardRequestScope = false;
+    
+
 
     public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews) {
         HttpSession session = request.getSession();
@@ -41,6 +46,8 @@ public class ServletView implements CommandQueue {
         this.persistentFacesState = new PersistentFacesState(facesContext);
         //collect bundles put by Tag components when the page is parsed
         this.bundles = externalContext.collectBundles();
+        standardRequestScope = "true".equalsIgnoreCase(servletContext
+                .getInitParameter(STANDARD_REQUEST_SCOPE));
     }
 
     public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
@@ -59,6 +66,12 @@ public class ServletView implements CommandQueue {
     public void switchToPushMode() {
         facesContext.switchToPushMode();
         externalContext.switchToPushMode();
+
+        // Jira 1296. Seam requires event contexts to be clear on each event
+        // This is most likely best done at the end of the request
+        if (standardRequestScope) {
+            externalContext.clearRequestContext();
+        }
     }
 
     /**
