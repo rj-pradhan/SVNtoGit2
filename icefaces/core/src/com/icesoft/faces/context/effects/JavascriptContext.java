@@ -395,6 +395,7 @@ public class JavascriptContext {
 
     /**
      * Set the application focus for the current request, overrides and setFocus call.
+     * Generally setFocus is used by components, while setApplicationFocus is used by the application. 
      * @param id
      */
     public static void applicationFocus(FacesContext facesContext, String id) {
