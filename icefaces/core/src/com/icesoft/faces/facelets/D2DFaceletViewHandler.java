@@ -115,6 +115,8 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         // Use a TagLibrary to create UIXhtmlComponents from all xhtml Tags
         c.addTagLibrary(new UIXhtmlTagLibrary());
         c.addTagDecorator(new UIXhtmlTagDecorator());
+        
+        c.addTagDecorator(new JspTagDetector());
 
         // Load libraries
         String paramLibraries = ext.getInitParameter(PARAM_LIBRARIES);
