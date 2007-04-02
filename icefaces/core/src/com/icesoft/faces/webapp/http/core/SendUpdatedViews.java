@@ -15,15 +15,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SendUpdatedViews implements Server {
+    private static final Runnable Noop = new Runnable() {
+        public void run() {
+        }
+    };
     private static final ResponseHandler EmptyResponseHandler = new ResponseHandler() {
         public void respond(Response response) throws Exception {
             response.setHeader("Content-Length", 0);
         }
     };
     private BlockingQueue pendingRequest = new LinkedBlockingQueue(1);
+    private ViewQueue allUpdatedViews;
 
     public SendUpdatedViews(final Collection synchronouslyUpdatedViews, final ViewQueue allUpdatedViews) {
-        allUpdatedViews.onPut(new Runnable() {
+        this.allUpdatedViews = allUpdatedViews;
+        this.allUpdatedViews.onPut(new Runnable() {
             public void run() {
                 try {
                     allUpdatedViews.removeAll(synchronouslyUpdatedViews);
@@ -57,6 +63,7 @@ public class SendUpdatedViews implements Server {
     }
 
     public void shutdown() {
+        allUpdatedViews.onPut(Noop);
         respondToPreviousRequest();
     }
 
