@@ -71,7 +71,7 @@ public class ServletView implements CommandQueue {
         // This is most likely best done at the end of the request
         if (standardRequestScope) {
             externalContext.clearRequestContext();
-        }
+        } 
     }
 
     /**
@@ -111,6 +111,10 @@ public class ServletView implements CommandQueue {
     public void release() {
         facesContext.release();
         persistentFacesState.release();
+        // #1269 release event contexts from this call as well. 
+        if (standardRequestScope) {
+            externalContext.clearRequestContext();
+        } 
     }
 
     public BridgeFacesContext getFacesContext() {
