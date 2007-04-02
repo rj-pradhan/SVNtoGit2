@@ -72,7 +72,7 @@ public class BridgeFacesContext extends FacesContext {
     private boolean renderResponse;
     private boolean responseComplete;
     private ResponseStream responseStream;
-    private DOMResponseWriter responseWriter;
+    private ResponseWriter responseWriter;
     private DOMSerializer domSerializer;
     private UIViewRoot viewRoot;
     private String iceFacesId;
@@ -204,7 +204,7 @@ public class BridgeFacesContext extends FacesContext {
     }
 
     public void setResponseWriter(ResponseWriter responseWriter) {
-        //do nothing.
+        this.responseWriter = responseWriter;
     }
 
     public ResponseWriter createAndSetResponseWriter() throws IOException {
@@ -240,7 +240,8 @@ public class BridgeFacesContext extends FacesContext {
         // be faked. Look in the initialize method in the DOMResponseWriter class
         //
         if (responseWriter != null) {
-            domSerializer = new PushModeSerializer(responseWriter.getDocument(), commandQueue);
+            Document document = ((DOMResponseWriter) responseWriter).getDocument();
+            domSerializer = new PushModeSerializer(document, commandQueue);
         }
     }
 
@@ -340,13 +341,15 @@ public class BridgeFacesContext extends FacesContext {
         responseComplete = false;
         //force MyFaces to send the javascript with every submit not just with the first one
         //todo: find a better mechanism for this
-        externalContext.getRequestMap().remove("org.apache.MyFaces.FIRST_SUBMIT_SCRIPT_ON_PAGE");
+        Map requestMap = externalContext.getRequestMap();
+        requestMap.remove("org.apache.MyFaces.FIRST_SUBMIT_SCRIPT_ON_PAGE");
+        requestMap.remove("org.apache.myfaces.myFacesJavascript");
         setCurrentInstance(null);
     }
 
     public void applyBrowserDOMChanges() {
         if (responseWriter == null) return;
-        Document document = responseWriter.getDocument();
+        Document document = ((DOMResponseWriter) responseWriter).getDocument();
         if (document == null) return;
         Map parameters = externalContext.getRequestParameterValuesMap();
 
