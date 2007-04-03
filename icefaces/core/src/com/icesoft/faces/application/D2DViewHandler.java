@@ -151,15 +151,8 @@ public class D2DViewHandler extends ViewHandler {
             // JSF 1.1 removes transient components here, but I don't think that 1.2 does
         }
 
-        // This should be done to ensure the Seam EventContexts are reset
-        // after every event, but this is causing problems right now.
-        // todo:
-//        ExternalContext externalContext = context.getExternalContext();
-//        if (externalContext instanceof BridgeExternalContext) {
-//            BridgeExternalContext bridgeExternalContext =
-//                    (BridgeExternalContext) externalContext;
-//            bridgeExternalContext.resetRequestMap();
-//        }
+       // This has been moved to the ServletView 
+
     }
 
 
