@@ -37,7 +37,7 @@
         xmlns:ice="http://www.icesoft.com/icefaces/component">
 <html>
 <head><title>Auction Monitor - Direct-to-DOM (D2D) Version</title>
-    <link rel="stylesheet" type="text/css" href="auction_styles.css"/>
+    <ice:outputStyle rel="stylesheet" type="text/css" href="auction_styles.css"/>
 </head>
 
 <body bgcolor="white">
