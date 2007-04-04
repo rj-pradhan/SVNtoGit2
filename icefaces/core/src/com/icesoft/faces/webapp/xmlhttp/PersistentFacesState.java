@@ -75,10 +75,17 @@ public class PersistentFacesState implements Serializable {
 
     static ExecutorService executorService;
 
+    private ClassLoader renderableClassLoader = null;
+
     PersistentFacesState() {
+        //JIRA case ICE-1365
+        //Save a reference to the web app classloader so that server-side
+        //render requests work regardless of how they are originated.
+        renderableClassLoader = Thread.currentThread().getContextClassLoader();
     }
 
     PersistentFacesState(FacesContext facesContext) {
+        this();
         //remove this once we round out the API to include execute
         //and render
         setFacesContext(facesContext);
@@ -327,6 +334,11 @@ public class PersistentFacesState implements Serializable {
 		else{
 			System.out.println("PersistentFacesState.execute() did not execute anything, isBridgeFacesContext=" + isBridgeFacesContext);
 		}
+    }
+
+
+    public ClassLoader getRenderableClassLoader() {
+        return renderableClassLoader;
     }
 
     private static class Key {
