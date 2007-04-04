@@ -48,12 +48,8 @@
 
 package com.icesoft.faces.component.ext;
 
-import java.util.Map;
-import java.util.List;
-
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.IceExtended;
-import com.icesoft.faces.component.IcePassThruAttributes;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.effects.CurrentStyle;
@@ -71,9 +67,6 @@ import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.ValueChangeEvent;
-import com.icesoft.faces.component.AttributesMap;
-import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
-import com.icesoft.faces.util.event.servlet.ICEfacesIDRetrievedEvent;
 
 /**
  * This is an extension of javax.faces.component.html.HtmlInputText, which
@@ -86,7 +79,7 @@ import com.icesoft.faces.util.event.servlet.ICEfacesIDRetrievedEvent;
 
 public class HtmlInputText
         extends javax.faces.component.html.HtmlInputText
-        implements IceExtended, IcePassThruAttributes, ActionSource {
+        implements IceExtended, ActionSource {
 
     public static final String COMPONENT_TYPE =
             "com.icesoft.faces.HtmlInputText";
@@ -138,21 +131,13 @@ public class HtmlInputText
     }
 
 
-    public void setValueBinding(String name, ValueBinding vb) {
-    	Map iceAttributeMap = (Map)getAttributes().get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP);
-    	if (name != null &&  iceAttributeMap != null) {
-    		if (PassThruAttributeRenderer.passThruAttributeNames.contains(name)) {
-    			((List)iceAttributeMap.get(IcePassThruAttributes.PASS_THRU_NON_BOOLEAN_ATT_LIST)).add(name);
-    		} else if (PassThruAttributeRenderer.booleanPassThruAttributeNames.contains(name)) {
-    			((List)iceAttributeMap.get(IcePassThruAttributes.PASS_THRU_BOOLEAN_ATT_LIST)).add(name);
-    		}
-    	}
-        if (name != null && name.indexOf("effect") != -1) {
+    public void setValueBinding(String s, ValueBinding vb) {
+        if (s != null && s.indexOf("effect") != -1) {
             // If this is an effect attribute make sure Ice Extras is included
             JavascriptContext.includeLib(JavascriptContext.ICE_EXTRAS,
                                          getFacesContext());
         }
-        super.setValueBinding(name, vb);
+        super.setValueBinding(s, vb);
     }
 
     /**
@@ -806,15 +791,4 @@ public class HtmlInputText
         ValueBinding vb = getValueBinding("autocomplete");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
-    
-	  public Map getAttributes() {
-		Map attMap = super.getAttributes();
-		if (!attMap.containsKey(IcePassThruAttributes.ICE_ATTRIBUTE_MAP)) {
-			Map newMap = new AttributesMap(attMap);
-	        attMap.put(IcePassThruAttributes.ICE_ATTRIBUTE_MAP,newMap);
-	        return newMap;
-		} else {
-		    return (Map)attMap.get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP);
-		}	
-	}
 }
