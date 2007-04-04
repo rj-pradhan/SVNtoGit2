@@ -1,5 +1,8 @@
 package com.icesoft.faces.webapp.http.servlet;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
@@ -16,6 +19,7 @@ import java.util.Map;
 
 public abstract class SessionDispatcher implements PseudoServlet {
     //having a static field here is ok because web applications are started in separate classloaders
+    private static final Log Log = LogFactory.getLog(SessionDispatcher.class);
     private final static List SessionDispatchers = new ArrayList();
     private Map sessionBoundServers = new HashMap();
 
@@ -130,8 +134,7 @@ public abstract class SessionDispatcher implements PseudoServlet {
                                     sessions.remove(session);
                                 } catch (Throwable t) {
                                     //just inform that something went wrong
-                                    //todo: replace this with a warning log call
-                                    t.printStackTrace();
+                                    Log.warn("Failed to monitor session expiry", t);
                                 }
                             }
 
