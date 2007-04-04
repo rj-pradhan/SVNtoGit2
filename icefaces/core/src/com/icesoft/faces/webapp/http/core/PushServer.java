@@ -2,10 +2,13 @@ package com.icesoft.faces.webapp.http.core;
 
 import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.SessionExpired;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 import com.icesoft.faces.webapp.http.common.standard.PathDispatcherServer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,16 +19,23 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class PushServer implements Server {
+    private static final Log Log = LogFactory.getLog(PushServer.class);
     private static final SessionExpired SessionExpired = new SessionExpired();
     private Server server;
     private Map commandQueues;
 
-    public PushServer(Map commandQueues, ViewQueue allUpdatedViews) {
+    public PushServer(Map commandQueues, final ViewQueue allUpdatedViews, Configuration configuration) {
         PathDispatcherServer dispatcher = new PathDispatcherServer();
-        Collection synchronouslyUpdatedViews = new HashSet();
+        final Collection synchronouslyUpdatedViews = new HashSet();
         dispatcher.dispatchOn(".*send\\-receive\\-updates$", new ReceiveSendUpdates(commandQueues, synchronouslyUpdatedViews));
         dispatcher.dispatchOn(".*receive\\-updates$", new SendUpdates(commandQueues, allUpdatedViews));
-        dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
+        if (configuration.getAttributeAsBoolean("synchronousUpdate", true)) {
+            //just drain the updated views if in 'synchronous mode'
+            allUpdatedViews.onPut(new DrainUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
+        } else {
+            //setup blocking connection server
+            dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
+        }
         this.server = dispatcher;
         this.commandQueues = commandQueues;
     }
@@ -65,6 +75,24 @@ public class PushServer implements Server {
             writer.write("<server-error><![CDATA[");
             exception.printStackTrace(new PrintWriter(writer, true));
             writer.write("]]></server-error>");
+        }
+    }
+
+    private static class DrainUpdatedViews implements Runnable {
+        private final ViewQueue allUpdatedViews;
+        private final Collection synchronouslyUpdatedViews;
+
+        public DrainUpdatedViews(Collection synchronouslyUpdatedViews, ViewQueue allUpdatedViews) {
+            this.allUpdatedViews = allUpdatedViews;
+            this.synchronouslyUpdatedViews = synchronouslyUpdatedViews;
+        }
+
+        public void run() {
+           allUpdatedViews.removeAll(synchronouslyUpdatedViews);
+           if (!allUpdatedViews.isEmpty()) {
+               Log.warn(allUpdatedViews + " views have accumulated updates");
+           }
+           allUpdatedViews.clear();
         }
     }
 }
