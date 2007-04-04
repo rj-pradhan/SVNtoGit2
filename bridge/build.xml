@@ -153,6 +153,7 @@
                 <file name="submit.js"/>
                 <file name="synchronizer.js"/>
                 <file name="command.js"/>
+                <file name="script.js"/>
                 <file name="identity.js"/>
                 <file name="focus.js"/>
                 <file name="status.js"/>

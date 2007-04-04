@@ -347,6 +347,8 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     private void enhanceHead(Element head) {
+        //id required for forwarded (server-side) redirects
+        head.setAttribute("id", "head");
         Element meta =
                 (Element) head.appendChild(document.createElement("meta"));
         meta.setAttribute("name", "icefaces");

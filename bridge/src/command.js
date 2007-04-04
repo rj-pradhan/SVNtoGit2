@@ -7,6 +7,7 @@
                 var html = updateElement.firstChild.data.replace(/<\!\#cdata\#/g, '<![CDATA[').replace(/\#\#>/g, ']]>');
                 address.asExtendedElement().replaceHtml(html);
                 logger.debug('applied update : ' + html);
+                window.scriptLoader.searchAndEvaluateScripts(address.asElement());
             } catch (e) {
                 logger.error('failed to insert element: ' + html, e);
             }
