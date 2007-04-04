@@ -151,6 +151,7 @@
             case 'button': e.peer = new This.ButtonElement(e); break;
             case 'select': e.peer = new This.SelectElement(e); break;
             case 'form': e.peer = new This.FormElement(e); break;
+            case 'head': e.peer = new This.HeadElement(e); break;
             case 'body': e.peer = new This.BodyElement(e); break;
             case 'script': e.peer = new This.ScriptElement(e); break;
             case 'title': e.peer = new This.TitleElement(e); break;
@@ -310,6 +311,12 @@
             this.MouseListenerNames.each(iterator);
             this.KeyListenerNames.each(iterator);
             this.FormListenerNames.each(iterator);
+        }
+    });
+
+    This.HeadElement = This.Element.subclass({
+        replaceHtml: function(html) {
+            this.element.innerHTML = html.substring(html.indexOf('>') + 1, html.lastIndexOf('<'));
         }
     });
 
