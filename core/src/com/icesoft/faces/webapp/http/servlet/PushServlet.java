@@ -14,7 +14,7 @@ public class PushServlet implements PseudoServlet {
     private PseudoServlet server;
 
     public PushServlet(Map views, ViewQueue allUpdatedViews, Configuration configuration) {
-        this.server = new EnvironmentAdaptingServlet(new PushServer(views, allUpdatedViews), configuration);
+        this.server = new EnvironmentAdaptingServlet(new PushServer(views, allUpdatedViews, configuration), configuration);
         this.views = views;
     }
 
