@@ -85,6 +85,25 @@ class RunnableRender implements Runnable {
             return;
         }
 
+        //JIRA case ICE-1365
+        //Server-side render calls can potentially be called from threads
+        //that are outside the context of the web app which means that the
+        //context classloader for the newly created thread might be unable
+        //to access JSF artifacts.  If the render is to succeed, the classloader
+        //that created the PersistentFacesState must be correct so we ensure
+        //that the context classloader of the new render thread is set
+        //accordingly. If the current security policy does not allow this then
+        //we have to hope that the appropriate class loader settings were
+        //transferred to this new thread.  If not, then the security policy
+        //will need to be altered to allow this.
+        try {
+            Thread.currentThread().setContextClassLoader( state.getRenderableClassLoader() );
+        } catch (SecurityException se) {
+            if (log.isDebugEnabled()) {
+                log.debug("setting context class loader is not permitted", se);
+            }
+        }
+
         try {
             state.render();
         } catch (RenderingException ex) {

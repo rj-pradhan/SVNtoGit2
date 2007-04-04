@@ -34,8 +34,6 @@
 package com.icesoft.faces.async.render;
 
 import edu.emory.mathcs.backport.java.util.concurrent.ThreadFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The Rendering API uses it's own ThreadFactory so that we can set the name,
@@ -47,7 +45,6 @@ class RenderThreadFactory implements ThreadFactory {
 
     public static final String PREFIX = "Render Thread - ";
 
-    private static Log log = LogFactory.getLog(RenderThreadFactory.class);
     private static int threadCounter = 0;
 
     /**
@@ -62,21 +59,6 @@ class RenderThreadFactory implements ThreadFactory {
     public Thread newThread(Runnable runnable) {
         Thread thread = new Thread(runnable, PREFIX + (threadCounter++));
         thread.setDaemon(true);
-        try {
-            //We attempt to set the context class loader because some J2EE
-            //containers don't seem to set this properly which leads to
-            //inmportant classes not being found.  However, other J2EE containers
-            //see this as a security violation.
-            thread.setContextClassLoader(runnable.getClass().getClassLoader());
-        } catch (SecurityException se) {
-            // If the current security policy does not allow this then we have
-            // to hope that the appropriate class loader settings were
-            // transferred to this new thread.
-            if (log.isTraceEnabled()) {
-                log.trace("setting context class loader is not permitted", se);
-            }
-
-        }
         return thread;
     }
 }

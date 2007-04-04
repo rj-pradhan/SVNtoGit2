@@ -66,7 +66,14 @@ public class PersistentFacesState implements Serializable {
     private BridgeFacesContext facesContext;
     private Lifecycle lifecycle;
 
+    private ClassLoader renderableClassLoader = null;
+
     public PersistentFacesState(BridgeFacesContext facesContext) {
+        //JIRA case ICE-1365
+        //Save a reference to the web app classloader so that server-side
+        //render requests work regardless of how they are originated.
+        renderableClassLoader = Thread.currentThread().getContextClassLoader();
+
         this.facesContext = facesContext;
 
         //put this state in the session -- mainly for the fileupload
@@ -236,6 +243,11 @@ public class PersistentFacesState implements Serializable {
                                 + facesContext.getViewNumber(), e);
             }
         }
+    }
+
+
+    public ClassLoader getRenderableClassLoader() {
+        return renderableClassLoader;
     }
 
     private class RenderRunner implements Runnable {
