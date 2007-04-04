@@ -7,6 +7,8 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class UploadServlet implements PseudoServlet {
+    private static final Log Log = LogFactory.getLog(UploadServlet.class);
     private Map views;
     private long maxSize;
     private String defaultFolder;
@@ -62,8 +65,7 @@ public class UploadServlet implements PseudoServlet {
                         //ignore
                     }
                 } catch (Throwable t) {
-                    //todo: log it!
-                    t.printStackTrace();
+                    Log.warn("File upload failed", t);
                 } finally {
                     response.setContentType("text/html");
                     response.setHeader("Connection", "close");
