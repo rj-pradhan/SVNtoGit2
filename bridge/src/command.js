@@ -42,6 +42,7 @@
 
     This.deserializeAndExecute = function(message) {
         switch (message.tagName) {
+            case 'noop': /*do nothing*/; break;
             case 'updates': This.Updates(message); break;
             case 'redirect': This.Redirect(message); break;
             case 'server-error': This.ServerError(message); break;

@@ -34,6 +34,6 @@ public class NOOP implements Command {
     }
 
     public void serializeTo(Writer writer) throws IOException {
-        //do nothing!
+        writer.write("<noop/>");
     }
 }
