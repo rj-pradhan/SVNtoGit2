@@ -33,7 +33,6 @@
 
 package com.icesoft.faces.renderkit.dom_html_basic;
 
-import com.icesoft.faces.component.IcePassThruAttributes;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.CurrentStyle;
 import com.icesoft.faces.context.effects.LocalEffectEncoder;
@@ -52,8 +51,9 @@ import java.util.Map;
  * This class is responsible for the rendering of html pass thru attributes.
  */
 public class PassThruAttributeRenderer {
-    public static List passThruAttributeNames = new ArrayList();
-    public static List booleanPassThruAttributeNames = new ArrayList();
+
+    private static List passThruAttributeNames = new ArrayList();
+    private static List booleanPassThruAttributeNames = new ArrayList();
 
     static {
         passThruAttributeNames.add("accept");
@@ -223,29 +223,12 @@ public class PassThruAttributeRenderer {
         if (excludedAttributes != null && excludedAttributes.length > 0) {
             excludedAttributesList = Arrays.asList(excludedAttributes);
         }
-        
-        if (uiComponent instanceof IcePassThruAttributes &&
-        		uiComponent.getAttributes().get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP) != null) {
-        	Iterator passThruAttOnComponent = ((List)((Map)uiComponent.getAttributes()
-        			.get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP))
-        			.get(IcePassThruAttributes.PASS_THRU_BOOLEAN_ATT_LIST)).iterator();
-        	while (passThruAttOnComponent.hasNext()) {
-        		Object attribute = passThruAttOnComponent.next();
-        		Object value = uiComponent.getAttributes().get(attribute);
-        		if (excludedAttributesList != null && 
-        				excludedAttributesList.contains(attribute)) {
-        			continue;
-        		}
-	                renderBooleanAttribute(attribute, 
-	                		value, rootElement);
-        	}
-        	return;
-        }
-        
+
         Object nextPassThruAttributeName;
         Object nextPassThruAttributeValue = null;
         Iterator passThruNameIterator =
                 booleanPassThruAttributeNames.iterator();
+        boolean primitiveAttributeValue;
 
         while (passThruNameIterator.hasNext()) {
             nextPassThruAttributeName = (passThruNameIterator.next());
@@ -257,40 +240,34 @@ public class PassThruAttributeRenderer {
             }
             nextPassThruAttributeValue = uiComponent.getAttributes().get(
                     nextPassThruAttributeName);
-            renderBooleanAttribute(nextPassThruAttributeName, 
-            		nextPassThruAttributeValue, rootElement);
-        }
-    }
-
-    private static void renderBooleanAttribute(Object attribute, Object value, Element rootElement) {
-        boolean primitiveAttributeValue;
-        if (value != null) {
-            if (value instanceof Boolean) {
-                primitiveAttributeValue = ((Boolean)
-                        value).booleanValue();
-            } else {
-                if (!(value instanceof String)) {
-                    value =
-                            value.toString();
+            if (nextPassThruAttributeValue != null) {
+                if (nextPassThruAttributeValue instanceof Boolean) {
+                    primitiveAttributeValue = ((Boolean)
+                            nextPassThruAttributeValue).booleanValue();
+                } else {
+                    if (!(nextPassThruAttributeValue instanceof String)) {
+                        nextPassThruAttributeValue =
+                                nextPassThruAttributeValue.toString();
+                    }
+                    primitiveAttributeValue = (new Boolean((String)
+                            nextPassThruAttributeValue)).booleanValue();
                 }
-                primitiveAttributeValue = (new Boolean((String)
-                        value)).booleanValue();
-            }
-            if (primitiveAttributeValue) {
-                rootElement
-                        .setAttribute(attribute.toString(),
-                                      attribute.toString());
-            } else {
-                rootElement.removeAttribute(
-                        attribute.toString());
-            }
+                if (primitiveAttributeValue) {
+                    rootElement
+                            .setAttribute(nextPassThruAttributeName.toString(),
+                                          nextPassThruAttributeName.toString());
+                } else {
+                    rootElement.removeAttribute(
+                            nextPassThruAttributeName.toString());
+                }
 
-        } else {
-            rootElement
-                    .removeAttribute(attribute.toString());
+            } else {
+                rootElement
+                        .removeAttribute(nextPassThruAttributeName.toString());
+            }
         }
     }
-    
+
     private static void renderNonBooleanAttributes(
             FacesContext facesContext, UIComponent uiComponent,
             String[] excludedAttributes) {
@@ -311,35 +288,7 @@ public class PassThruAttributeRenderer {
         if (excludedAttributes != null && excludedAttributes.length > 0) {
             excludedAttributesList = Arrays.asList(excludedAttributes);
         }
-        
-        if (uiComponent instanceof IcePassThruAttributes && 
-        		uiComponent.getAttributes().get(
-        				IcePassThruAttributes.ICE_ATTRIBUTE_MAP) != null) {
-        	Iterator passThruAttOnComponent = ((List)((Map)	uiComponent.getAttributes().
-        			get(IcePassThruAttributes.ICE_ATTRIBUTE_MAP))
-        			.get(IcePassThruAttributes.PASS_THRU_NON_BOOLEAN_ATT_LIST)).iterator();
-        	
-        	while (passThruAttOnComponent.hasNext()) {
-        		Object attribute = passThruAttOnComponent.next();
-        		Object value = uiComponent.getAttributes().get(attribute);
-        		if (excludedAttributesList != null && 
-        				excludedAttributesList.contains(attribute)) {
-        			continue;
-        		}
-    	       if (value != null &&
-    	                !attributeValueIsSentinel(value)) {
-    	                rootElement.setAttribute(
-    	                        attribute.toString(),
-    	                        value.toString());
-    	       } else {
-    	                rootElement
-    	                        .removeAttribute(attribute.toString());
-    	       }
-        		
-        	}
-        	return;
-        }
-        
+
         Object nextPassThruAttributeName = null;
         Object nextPassThruAttributeValue = null;
         Iterator passThruNameIterator = passThruAttributeNames.iterator();
