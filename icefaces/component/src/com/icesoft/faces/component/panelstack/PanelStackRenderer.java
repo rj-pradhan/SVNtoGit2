@@ -109,6 +109,7 @@ public class PanelStackRenderer extends DomBasicRenderer {
 
         domContext.stepOver();
         domContext.streamWrite(facesContext, uiComponent);
+        facesContext.getExternalContext().getRequestMap().put(PanelStack.LAST_SELECTED_PANEL + uiComponent.getClientId(facesContext), selectedPanel);
     }
 
 
