@@ -100,7 +100,7 @@ public class PanelTabSet
      */
     public void applyPhase(FacesContext context, PhaseId phaseId) {
         if (context == null) {
-            throw new NullPointerException("context");
+            throw new NullPointerException("Null context in PanelTabSet");
         }
 //        if(phaseId ==  PhaseId.APPLY_REQUEST_VALUES)
 //            decode(context);
