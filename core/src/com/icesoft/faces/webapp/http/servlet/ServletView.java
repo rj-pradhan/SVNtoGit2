@@ -45,7 +45,7 @@ public class ServletView implements CommandQueue {
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
-        this.persistentFacesState = new PersistentFacesState(facesContext);
+        this.persistentFacesState = new PersistentFacesState(facesContext, configuration);
         standardRequestScope = "true".equalsIgnoreCase(servletContext
                 .getInitParameter(STANDARD_REQUEST_SCOPE));
     }

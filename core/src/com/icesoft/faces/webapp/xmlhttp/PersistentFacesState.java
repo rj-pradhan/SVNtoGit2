@@ -34,6 +34,7 @@
 package com.icesoft.faces.webapp.xmlhttp;
 
 import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import edu.emory.mathcs.backport.java.util.concurrent.ExecutorService;
 import edu.emory.mathcs.backport.java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
@@ -67,14 +68,16 @@ public class PersistentFacesState implements Serializable {
     private Lifecycle lifecycle;
 
     private ClassLoader renderableClassLoader = null;
+    private boolean synchronousMode;
 
-    public PersistentFacesState(BridgeFacesContext facesContext) {
+    public PersistentFacesState(BridgeFacesContext facesContext, Configuration configuration) {
         //JIRA case ICE-1365
         //Save a reference to the web app classloader so that server-side
         //render requests work regardless of how they are originated.
         renderableClassLoader = Thread.currentThread().getContextClassLoader();
 
         this.facesContext = facesContext;
+        this.synchronousMode = configuration.getAttributeAsBoolean("synchronousUpdate", false);
 
         //put this state in the session -- mainly for the fileupload
         //todo: try to pass this state using object references
@@ -122,6 +125,7 @@ public class PersistentFacesState implements Serializable {
      * The user's browser will be immediately updated with any changes.
      */
     public void render() throws RenderingException {
+        warn();
         facesContext.setCurrentInstance();
         facesContext.setFocusId("");
         synchronized (facesContext) {
@@ -153,10 +157,12 @@ public class PersistentFacesState implements Serializable {
      * from calling {@link #render} during view rendering.
      */
     public void renderLater() {
+        warn();
         executorService.execute(new RenderRunner());
     }
 
     public void renderLater(long miliseconds) {
+        warn();
         executorService.execute(new RenderRunner(miliseconds));
     }
 
@@ -167,6 +173,7 @@ public class PersistentFacesState implements Serializable {
      * @param uri the relative or absolute URI.
      */
     public void redirectTo(String uri) {
+        warn();
         try {
             facesContext.setCurrentInstance();
             ExternalContext externalContext = facesContext.getExternalContext();
@@ -184,6 +191,7 @@ public class PersistentFacesState implements Serializable {
      * @param outcome the 'from-outcome' field in the navigation rule.
      */
     public void navigateTo(String outcome) {
+        warn();
         try {
             facesContext.setCurrentInstance();
             facesContext.getApplication().getNavigationHandler()
@@ -275,6 +283,12 @@ public class PersistentFacesState implements Serializable {
             } catch (InterruptedException e) {
                 //ignore
             }
+        }
+    }
+
+    private void warn() {
+        if (synchronousMode) {
+            log.warn("Running in 'synchronous mode'. The page updates were queued but not sent.");
         }
     }
 }
