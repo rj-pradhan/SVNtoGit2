@@ -239,6 +239,9 @@ public class TLDGenerator extends AbstractGenerator {
     private void component(ComponentBean cb) throws IOException {
         if (cb.isSuppressed())
             return;
+        if(cb.getComponentClass().startsWith("javax.faces.component.")){
+            return;
+        }
         RendererBean rb = renderer(cb);
         
         if(cb == null){
