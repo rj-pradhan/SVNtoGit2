@@ -765,7 +765,6 @@ public class PanelTabSetRenderer
 
     /**
      * @param facesContext
-     * @param uiComponent
      * @param root
      * @param parameters
      */

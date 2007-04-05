@@ -37,8 +37,11 @@ import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
 
 import javax.faces.component.html.HtmlPanelGroup;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.PhaseId;
+import java.util.Iterator;
 
 
 /**
@@ -198,4 +201,97 @@ public class PanelStack extends HtmlPanelGroup {
         styleClass = (String) values[2];
         style = (String) values[3];
     }
+
+
+    public static final String LAST_SELECTED_PANEL =   "PanelStack-lastPanel";
+    /**
+        * @param context
+        * @param phaseId
+        */
+    public void applyPhase(FacesContext context, PhaseId phaseId) {
+        if (context == null) {
+            throw new NullPointerException("Null context in PanelTabSet");
+        }
+        Iterator it = getFacetsAndChildren();
+
+        while (it.hasNext()) {
+            UIComponent childOrFacet =
+                    (UIComponent) it.next();
+            String selectedPanel = getSelectedPanel();
+            String lastSelectedPanel = (String) context.getExternalContext().getRequestMap().get(LAST_SELECTED_PANEL + getClientId(context));
+            boolean changed = !selectedPanel.equals(lastSelectedPanel);
+            if (lastSelectedPanel == null) changed = false;
+            if (selectedPanel.equals(childOrFacet.getId())) {
+                if (!(changed && phaseId == PhaseId.APPLY_REQUEST_VALUES)) {
+                    applyPhase(context, childOrFacet, phaseId);
+                }
+            }
+        }
+
+    }
+
+    /**
+        * @param context
+        * @param component
+        * @param phaseId
+        */
+       public void applyPhase(FacesContext context, UIComponent component,
+                              PhaseId phaseId) {
+           if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+               component.processDecodes(context);
+           } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+               component.processValidators(context);
+           } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+               component.processUpdates(context);
+           } else {
+               throw new IllegalArgumentException();
+           }
+       }
+
+       /* (non-Javadoc)
+       * @see javax.faces.component.UIComponent#processDecodes(javax.faces.context.FacesContext)
+       */
+       public void processDecodes(javax.faces.context.FacesContext context) {
+         
+           if (context == null) {
+               throw new NullPointerException("context");
+           }
+
+           if (!isRendered()) {
+               return;
+           }
+
+           decode(context);
+           applyPhase(context, PhaseId.APPLY_REQUEST_VALUES);
+       }
+
+       /* (non-Javadoc)
+       * @see javax.faces.component.UIComponent#processValidators(javax.faces.context.FacesContext)
+       */
+       public void processValidators(FacesContext context) {
+
+           if (context == null) {
+               throw new NullPointerException();
+           }
+           if (!isRendered()) {
+               return;
+           }
+           applyPhase(context, PhaseId.PROCESS_VALIDATIONS);
+       }
+
+
+       /* (non-Javadoc)
+        * @see javax.faces.component.UIComponent#processUpdates(javax.faces.context.FacesContext)
+        */
+       public void processUpdates(FacesContext context) {
+
+           if (context == null) {
+               throw new NullPointerException();
+           }
+           if (!isRendered()) {
+               return;
+           }
+           applyPhase(context, PhaseId.UPDATE_MODEL_VALUES);
+       }
+    
 }
