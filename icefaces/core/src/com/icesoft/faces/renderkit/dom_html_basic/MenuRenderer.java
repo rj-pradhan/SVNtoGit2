@@ -84,17 +84,11 @@ public class MenuRenderer extends DomBasicInputRenderer {
                         ((String[]) requestParameterValuesMap.get(clientId))[0]
                                 .trim();
             } else {
-                decodedValue = null;
+                //none of the option has been selected
+                //set it to a blank string, not to null
+                decodedValue = "";
             }
-
-            if(decodedValue != null)
-                ((UISelectOne) uiComponent).setSubmittedValue(decodedValue);
-            else{
-                // Don't set null values
-                if(log.isLoggable(Level.FINE)){
-                    log.fine("Not setting blank value for menu renderer");
-                }
-            }
+            ((UISelectOne) uiComponent).setSubmittedValue(decodedValue);
 
         }
         return;
