@@ -21,11 +21,15 @@ public class PushServlet implements PseudoServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String viewNumber = request.getParameter("viewNumber");
         //FileUploadServlet needs this
-        request.getSession().setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
-        ServletView view = (ServletView) views.get(viewNumber);
-        view.setAsCurrentDuring(request, response);
-        server.service(request, response);
-        view.release();
+        if (viewNumber == null) {
+            response.sendError(500, "Cannot match view instance. 'viewNumber' parameter is missing.");
+        } else {
+            request.getSession().setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
+            ServletView view = (ServletView) views.get(viewNumber);
+            view.setAsCurrentDuring(request, response);
+            server.service(request, response);
+            view.release();
+        }
     }
 
     public void shutdown() {
