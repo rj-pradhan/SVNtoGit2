@@ -243,6 +243,7 @@ public final class MetadataGenerator {
             TLDGenerator generator = new TLDGenerator(internalConfig);
             generator.setDest(GeneratorUtil.getDestFolder(GeneratorUtil.getWorkingFolder()+"../generated-sources/tld"));
             generator.setConfig(config);
+            generator.setVerbose(true);
             generator.generate();
         } catch (Exception ex) {
             ex.printStackTrace();
