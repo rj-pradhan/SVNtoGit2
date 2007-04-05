@@ -76,7 +76,7 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.commandQueue = commandQueue;
         this.session = this.request.getSession();
 
-        if (configuration.getAttributeAsBoolean("standardRequestScope", true)) {
+        if (configuration.getAttributeAsBoolean("standardRequestScope", false)) {
             this.requestMapFactory = new StandardRequestScopeFactory();
         } else {
             this.requestMapFactory = new CustomRequestScopeFactory();
