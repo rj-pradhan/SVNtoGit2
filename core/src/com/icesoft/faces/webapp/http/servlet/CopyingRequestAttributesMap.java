@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class ServletRequestMap extends HashMap {
+public class CopyingRequestAttributesMap extends HashMap {
     private ServletRequest request;
 
-    public ServletRequestMap(ServletRequest request) {
+    public CopyingRequestAttributesMap(ServletRequest request) {
         this.request = request;
         Enumeration e = request.getAttributeNames();
         while (e.hasMoreElements()) {

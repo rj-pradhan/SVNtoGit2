@@ -1,6 +1,7 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.PageServer;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet;
@@ -18,8 +19,9 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
     private Map views;
     private String sessionID;
     private ViewQueue allUpdatedViews;
+    private Configuration configuration;
 
-    public SingleViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue allUpdatedViews) {
+    public SingleViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue allUpdatedViews, Configuration configuration) {
         super(new PageServer());
 
         this.sessionID = idGenerator.newIdentifier();
@@ -32,13 +34,14 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
         this.session = session;
         this.views = views;
         this.allUpdatedViews = allUpdatedViews;
+        this.configuration = configuration;
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //create single view or re-create view if the request is the result of a redirect 
         ServletView view = (ServletView) views.get(viewNumber);
         if (view == null || view.differentURI(request)) {
-            view = new ServletView(viewNumber, sessionID, request, response, allUpdatedViews);
+            view = new ServletView(viewNumber, sessionID, request, response, allUpdatedViews, configuration);
             views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
         }

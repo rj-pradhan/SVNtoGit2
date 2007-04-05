@@ -1,6 +1,7 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.PageServer;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
@@ -17,10 +18,10 @@ public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
     private Map views;
     private ViewQueue asynchronouslyUpdatedViews;
     private String sessionID;
+    private Configuration configuration;
 
-    public MultiViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue asynchronouslyUpdatedViews) {
+    public MultiViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue asynchronouslyUpdatedViews, Configuration configuration) {
         super(new PageServer());
-
         this.sessionID = idGenerator.newIdentifier();
         //ContextEventRepeater needs this
         session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
@@ -29,6 +30,7 @@ public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
         this.session = session;
         this.views = views;
         this.asynchronouslyUpdatedViews = asynchronouslyUpdatedViews;
+        this.configuration = configuration;
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -37,13 +39,13 @@ public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
         String redirectViewNumber = request.getParameter("rvn");
         if (redirectViewNumber == null) {
             String viewNumber = String.valueOf(++viewCount);
-            view = new ServletView(viewNumber, sessionID, request, response, asynchronouslyUpdatedViews);
+            view = new ServletView(viewNumber, sessionID, request, response, asynchronouslyUpdatedViews, configuration);
             views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
         } else {
             view = (ServletView) views.get(redirectViewNumber);
             if (view == null || view.differentURI(request)) {
-                view = new ServletView(redirectViewNumber, sessionID, request, response, asynchronouslyUpdatedViews);
+                view = new ServletView(redirectViewNumber, sessionID, request, response, asynchronouslyUpdatedViews, configuration);
                 views.put(redirectViewNumber, view);
                 ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(redirectViewNumber));
             } else {
