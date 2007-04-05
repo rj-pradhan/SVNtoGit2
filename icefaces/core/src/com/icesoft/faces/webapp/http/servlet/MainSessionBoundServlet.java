@@ -18,9 +18,9 @@ public class MainSessionBoundServlet implements PseudoServlet {
     public MainSessionBoundServlet(HttpSession session, IdGenerator idGenerator, Configuration configuration) {
         final PseudoServlet viewServlet;
         if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
-            viewServlet = new MultiViewServlet(session, idGenerator, views, allUpdatedViews);
+            viewServlet = new MultiViewServlet(session, idGenerator, views, allUpdatedViews, configuration);
         } else {
-            viewServlet = new SingleViewServlet(session, idGenerator, views, allUpdatedViews);
+            viewServlet = new SingleViewServlet(session, idGenerator, views, allUpdatedViews, configuration);
         }
         final PseudoServlet pushServlet = new PushServlet(views, allUpdatedViews, configuration);
         final PseudoServlet uploadServlet = new UploadServlet(views, configuration, session.getServletContext());

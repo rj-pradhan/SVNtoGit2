@@ -5,6 +5,7 @@ import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.webapp.command.Command;
 import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.NOOP;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.util.SeamUtilities;
@@ -15,6 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.Map;
 
 //todo: refactor this structure into an object with behavior
@@ -25,7 +27,7 @@ public class ServletView implements CommandQueue {
     private BridgeFacesContext facesContext;
     private ViewQueue allServedViews;
     private PersistentFacesState persistentFacesState;
-    private Map bundles;
+    private Map bundles = Collections.EMPTY_MAP;
     private ServletEnvironmentRequest wrappedRequest;
     private Command currentCommand = NOOP;
     private String viewIdentifier;
@@ -35,17 +37,15 @@ public class ServletView implements CommandQueue {
     
 
 
-    public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews) {
+    public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
         this.wrappedRequest = new ServletEnvironmentRequest(request);
         this.viewIdentifier = viewIdentifier;
         this.allServedViews = allServedViews;
-        this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this);
+        this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
         this.persistentFacesState = new PersistentFacesState(facesContext);
-        //collect bundles put by Tag components when the page is parsed
-        this.bundles = externalContext.collectBundles();
         standardRequestScope = "true".equalsIgnoreCase(servletContext
                 .getInitParameter(STANDARD_REQUEST_SCOPE));
     }
@@ -64,6 +64,8 @@ public class ServletView implements CommandQueue {
     }
 
     public void switchToPushMode() {
+        //collect bundles put by Tag components when the page is parsed
+        this.bundles = externalContext.collectBundles();
         facesContext.switchToPushMode();
         externalContext.switchToPushMode();
 

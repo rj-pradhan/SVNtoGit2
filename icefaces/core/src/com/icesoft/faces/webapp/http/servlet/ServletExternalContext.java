@@ -5,6 +5,7 @@ import com.icesoft.faces.util.EnumerationIterator;
 import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.Redirect;
 import com.icesoft.faces.webapp.command.SetCookie;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.SeamUtilities;
 
@@ -65,15 +66,22 @@ public class ServletExternalContext extends BridgeExternalContext {
     private CommandQueue commandQueue;
     private Redirector redirector;
     private CookieTransporter cookieTransporter;
+    private RequestMapFactory requestMapFactory;
 
-    public ServletExternalContext(String viewIdentifier, ServletContext context, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue) {
+    public ServletExternalContext(String viewIdentifier, ServletContext context, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue, Configuration configuration) {
         this.viewIdentifier = viewIdentifier;
         this.context = context;
         this.request = request;
         this.response = response;
         this.commandQueue = commandQueue;
         this.session = this.request.getSession();
-        this.requestMap = new ServletRequestMap(this.request);
+
+        if (configuration.getAttributeAsBoolean("standardRequestScope", true)) {
+            this.requestMapFactory = new StandardRequestScopeFactory();
+        } else {
+            this.requestMapFactory = new CustomRequestScopeFactory();
+        }
+
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
         this.requestCookieMap = new HashMap();
@@ -152,6 +160,8 @@ public class ServletExternalContext extends BridgeExternalContext {
                 requestCookieMap.put(cookie.getName(), cookie);
             }
         }
+
+        this.requestMap = requestMapFactory.create(request);
 
         this.response = response;
     }
@@ -263,8 +273,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public void redirect(String requestURI) throws IOException {
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        URI uri = URI.create(SeamUtilities.encodeSeamConversationId(requestURI, viewId));
+        URI uri = URI.create(SeamUtilities.encodeSeamConversationId(requestURI, viewIdentifier));
         redirector.redirect(uri + (uri.getQuery() == null ? "?" : "&") + "rvn=" + viewIdentifier);
         FacesContext.getCurrentInstance().responseComplete();
     }
@@ -417,10 +426,26 @@ public class ServletExternalContext extends BridgeExternalContext {
         void send(Cookie cookie);
     }
 
+    private interface RequestMapFactory {
+        Map create(HttpServletRequest request);
+    }
+
     private void insertPostbackKey() {
         if (null != postBackKey) {
             requestParameterMap.put(postBackKey, "not reload");
             requestParameterValuesMap.put(postBackKey, new String[]{"not reload"});
+        }
+    }
+
+    private class CustomRequestScopeFactory implements RequestMapFactory {
+        public Map create(HttpServletRequest request) {
+            return requestMap == null ? new CopyingRequestAttributesMap(request) : requestMap;
+        }
+    }
+
+    private class StandardRequestScopeFactory implements RequestMapFactory {
+        public Map create(HttpServletRequest request) {
+            return new DirectRequestAttributeMap(request);
         }
     }
 }
