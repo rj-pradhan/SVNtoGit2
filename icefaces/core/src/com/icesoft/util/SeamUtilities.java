@@ -30,8 +30,8 @@ public class SeamUtilities {
     
     private static Class[] seamClassArgs = new Class[0];
     private static Object[] seamInstanceArgs = new Object[0];
-    private static Class[] seamGetEncodeMethodArgs = {String.class};
-    private static Object[] seamEncodeMethodArgs = new Object[1];
+    private static Class[] seamGetEncodeMethodArgs = {String.class, String.class};
+    private static Object[] seamEncodeMethodArgs = new Object[2];
 
     private static Object[] seamMethodNoArgs = new Object[0];
 
@@ -74,7 +74,7 @@ public class SeamUtilities {
      * conversationId is encoded
      * @return the URI, with the conversationId if Seam is detected
      */
-    public static String encodeSeamConversationId(String uri) {
+    public static String encodeSeamConversationId(String uri, String viewId) {
 
         // If Seam's not loaded, no changes necessary
         if (! isSeamEnvironment() ) {
@@ -127,6 +127,9 @@ public class SeamUtilities {
 
             if (seamAppendConversationMethodInstance != null) {
                 seamEncodeMethodArgs[0] = cleanedUrl;
+                if (seamEncodeMethodArgs.length == 2) {
+                    seamEncodeMethodArgs[1] = viewId;
+                }
 
                // This has to do what the Manager.redirect method does.
                 cleanedUrl = (String) seamAppendConversationMethodInstance
@@ -261,10 +264,20 @@ public class SeamUtilities {
             seamPageContextGetPrefixInstance = seamScopeTypeClass.getMethod(
                     "getPrefix", seamClassArgs);
 
-
-            seamAppendConversationMethodInstance =
-                    seamManagerClass.getMethod("encodeConversationId",
-                                               seamGetEncodeMethodArgs);
+            try {
+                seamAppendConversationMethodInstance =
+                        seamManagerClass.getMethod("encodeConversationId",
+                                                   seamGetEncodeMethodArgs);
+            } catch (NoSuchMethodException e)  {
+                /* revert our reflectively discovered Seam method
+                   to the Seam 1.2.0 API
+                */
+                seamGetEncodeMethodArgs = new Class[] {String.class};
+                seamEncodeMethodArgs = new Object[1];
+                seamAppendConversationMethodInstance =
+                        seamManagerClass.getMethod("encodeConversationId",
+                                                   seamGetEncodeMethodArgs);
+            }
 
             seamConversationIdMethodInstance =
                     seamManagerClass.getMethod("getCurrentConversationId",
