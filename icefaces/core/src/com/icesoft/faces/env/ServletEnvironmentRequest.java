@@ -167,7 +167,6 @@ public class ServletEnvironmentRequest
         isSecure = req.isSecure();
 
         //Copy servlet specific data
-        headers = null;
         cookies = req.getCookies();
         method = req.getMethod();
         pathInfo = req.getPathInfo();
