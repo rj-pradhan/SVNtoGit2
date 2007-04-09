@@ -49,6 +49,10 @@
         window.connection.updateViews(views);
     };
 
+    This.Pong = function() {
+        window.connection.pong();
+    };
+
     This.deserializeAndExecute = function(message) {
         switch (message.tagName) {
             case 'noop': /*do nothing*/; break;
@@ -58,6 +62,7 @@
             case 'session-expired': This.SessionExpired(message); break;
             case 'macro': This.Macro(message); break;
             case 'updated-views': This.UpdatedViews(message); break;
+            case 'pong': This.Pong(message); break;
             default: throw 'Unknown message received: ' + message.tagName;
         }
     };

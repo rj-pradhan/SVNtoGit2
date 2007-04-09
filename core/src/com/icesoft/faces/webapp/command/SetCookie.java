@@ -37,6 +37,10 @@ public class SetCookie implements Command {
         return new Macro(setCookie, this);
     }
 
+    public Command coalesceWith(Pong pong) {
+        return new Macro(pong, this);
+    }
+
     public Command coalesceWith(NOOP noop) {
         return this;
     }
