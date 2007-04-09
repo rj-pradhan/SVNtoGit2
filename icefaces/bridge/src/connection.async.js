@@ -117,7 +117,7 @@
             this.heartbeat.onPing(function(ping) {
                 this.ping = ping;
                 this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');                    
+                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 });
             }.bind(this));
 
@@ -186,16 +186,16 @@
                 this.heartbeat.stop();
                 this.listener.close();
             } finally {
-                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
-                    f.clear();
+                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(listeners) {
+                    listeners.clear();
                 });
 
-                [ this.updatesListenerProcess, this.listenerInitializerProcess ].eachWithGuard(function(f) {
-                    f.cancel();
+                [ this.updatesListenerProcess, this.listenerInitializerProcess ].eachWithGuard(function(process) {
+                    process.cancel();
                 });
 
-                [ this.listening, this.updatedViews ].eachWithGuard(function(f) {
-                    f.remove();
+                [ this.listening, this.updatedViews ].eachWithGuard(function(cookie) {
+                    cookie.remove();
                 });
             }
         }
