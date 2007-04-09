@@ -42,6 +42,7 @@
             this.onSendListeners = [];
             this.onReceiveListeners = [];
             this.connectionDownListeners = [];
+            this.connectionTroubleListeners = [];
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
             this.getURI = configuration.context + '/block/receive-updates';
@@ -148,6 +149,10 @@
 
         whenDown: function(callback) {
             this.connectionDownListeners.push(callback);
+        },
+
+        whenTrouble: function(callback) {
+            this.connectionTroubleListeners.push(callback);
         },
 
         shutdown: function() {

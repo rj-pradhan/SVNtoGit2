@@ -38,7 +38,7 @@
             var logger = window.logger = this.logger = new Ice.Log.Logger([ 'window' ]);
             this.logHandler = window.console && window.console.firebug ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
             var documentSynchronizer = new Ice.Document.Synchronizer(logger);
-            window.statusManager = new Ice.Status.StatusManager();
+            window.statusManager = new Ice.Status.StatusManager(configuration);
             window.scriptLoader = new Ice.Script.Loader(logger);
 
             window.identifier = Math.round(Math.random() * 10000).toString();
@@ -66,6 +66,11 @@
                 statusManager.connectionLost.on();
                 this.dispose();
             }.bind(this));
+
+            this.connection.whenTrouble(function() {
+                logger.warn('connection in trouble');
+                statusManager.connectionTrouble.on();
+            });
 
             this.connection.onSend(function(request) {
                 statusManager.busy.on();

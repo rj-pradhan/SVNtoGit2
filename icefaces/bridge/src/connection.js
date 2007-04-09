@@ -108,12 +108,15 @@
             this.connectionDownListeners.push(callback);
         },
 
+        whenTrouble: function(callback) {
+            //do nothing
+        },
+
         shutdown: function() {
             this.send = Function.NOOP;
-            this.onSendListeners.clear();
-            this.onReceiveListeners.clear();
-            this.onRedirectListeners.clear();
-            this.connectionDownListeners.clear();
+            [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
+                f.clear();
+            });
         }
     });
 });
