@@ -439,7 +439,7 @@ public class OutputChart extends HtmlCommandButton {
             } else {
                 folder =
                         ((ServletContext) getFacesContext().getExternalContext()
-                                .getContext()).getRealPath("charts");
+                                .getContext()).getRealPath("/charts");
             }
         }
         return folder;
