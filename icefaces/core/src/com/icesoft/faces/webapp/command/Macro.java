@@ -46,6 +46,11 @@ public class Macro implements Command {
         return this;
     }
 
+    public Command coalesceWith(Pong pong) {
+        commands.add(pong);
+        return this;
+    }
+
     public Command coalesceWith(NOOP noop) {
         return this;
     }

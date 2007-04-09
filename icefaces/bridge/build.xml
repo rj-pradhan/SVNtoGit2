@@ -166,6 +166,7 @@
         <concat destfile="${script}" append="yes" fixlastline="yes">
             <filelist dir="${src.dir}">
                 <file name="namespace.js"/>
+                <file name="heartbeat.js"/>
                 <file name="connection.async.js"/>
                 <file name="application.js"/>
             </filelist>

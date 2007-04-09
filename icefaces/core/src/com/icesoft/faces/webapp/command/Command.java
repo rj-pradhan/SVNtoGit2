@@ -17,7 +17,9 @@ public interface Command {
 
     Command coalesceWith(SetCookie setCookie);
 
-    Command coalesceWith(NOOP noop);
+    Command coalesceWith(Pong pong);
 
+    Command coalesceWith(NOOP noop);
+    
     void serializeTo(Writer writer) throws IOException;
 }

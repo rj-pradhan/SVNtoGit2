@@ -31,7 +31,7 @@
  *
  */
 
-[ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax ].as(function(This, Connection, Ajax) {
+[ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax, Ice.Reliability.Heartbeat ].as(function(This, Connection, Ajax, Heartbeat) {
 
     This.AsyncConnection = Object.subclass({
         initialize: function(logger, configuration, defaultQuery) {
@@ -48,6 +48,7 @@
             this.timeoutBomb = { cancel: Function.NOOP };
             this.ping = { pong: Function.NOOP };
 
+            this.pingURI = configuration.context + '/block/ping';
             this.getURI = configuration.context + '/block/receive-updates';
             this.sendURI = configuration.context + '/block/send-receive-updates';
             this.receiveURI = configuration.context + '/block/receive-updated-views';
@@ -106,6 +107,32 @@
                 }
             }.bind(this).repeatExecutionEvery(300);
 
+            //heartbeat setup
+            var heartbeatInterval = configuration.heartbeat.interval ? configuration.heartbeat.interval : 20000;
+            var heartbeatTimeout = configuration.heartbeat.timeout ? configuration.heartbeat.timeout : 3000;
+            var heartbeatRetries = configuration.heartbeat.retries ? configuration.heartbeat.retries : 3;
+
+            this.heartbeat = new Heartbeat(heartbeatInterval, heartbeatTimeout, this.logger);
+
+            this.heartbeat.onPing(function(ping) {
+                this.ping = ping;
+                this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
+                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');                    
+                });
+            }.bind(this));
+
+            this.heartbeat.onLostPongs(this.connectionDownListeners.broadcaster(), heartbeatRetries);
+            this.heartbeat.onLostPongs(this.connectionTroubleListeners.broadcaster());
+            this.heartbeat.onLostPongs(function() {
+                this.logger.debug('retry to connect...');
+                this.connect();
+            }.bind(this));
+
+            this.whenDown(function() {
+                this.heartbeat.stop();
+            }.bind(this));
+
+            this.heartbeat.start();
             this.logger.info('asynchronous mode');
         },
 
@@ -136,6 +163,10 @@
             this.updatedViews.saveValue(views);
         },
 
+        pong: function() {
+            this.ping.pong();
+        },
+
         onSend: function(callback) {
             this.onSendListeners.push(callback);
         },
@@ -156,6 +187,7 @@
             //avoid sending XMLHTTP requests that might create new sessions on the server
             try {
                 this.send = Function.NOOP;
+                this.heartbeat.stop();
                 this.listener.close();
             } finally {
                 [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {

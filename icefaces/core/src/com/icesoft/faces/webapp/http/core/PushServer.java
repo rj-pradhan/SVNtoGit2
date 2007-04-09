@@ -35,6 +35,7 @@ public class PushServer implements Server {
         } else {
             //setup blocking connection server
             dispatcher.dispatchOn(".*receive\\-updated\\-views$", new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews));
+            dispatcher.dispatchOn(".*ping$", new ReceivePing(commandQueues));
         }
         this.server = dispatcher;
         this.commandQueues = commandQueues;
