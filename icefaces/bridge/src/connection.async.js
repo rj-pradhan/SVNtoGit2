@@ -43,8 +43,11 @@
             this.onReceiveListeners = [];
             this.connectionDownListeners = [];
             this.connectionTroubleListeners = [];
+
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
+            this.ping = { pong: Function.NOOP };
+
             this.getURI = configuration.context + '/block/receive-updates';
             this.sendURI = configuration.context + '/block/send-receive-updates';
             this.receiveURI = configuration.context + '/block/receive-updated-views';
@@ -71,22 +74,10 @@
                 }
             }.bind(this);
 
-            this.updatedViewsCallback = function(response) {
-                try {
-                    var message = response.contentAsDOM().documentElement;
-                    switch (message.tagName) {
-                        case "updated-views":
-                            this.updatedViews.saveValue(message.firstChild.data);
-                            break;
-                        default:
-                        //commands sent asyncronously
-                            this.receiveCallback(response);
-                    }
-                } finally {
-                    this.connect.bind(this).delayExecutionFor(150);
-                }
-            }.bind(this);
-
+            //monitor if the blocking connection needs to be started
+            //the blocking connection will be started by the first window that notices
+            //that the blocking connection was not started or was closed because the
+            //window owning was closed
             this.listenerInitializerProcess = function() {
                 try {
                     this.listening = Ice.Cookie.lookup('bconn');
@@ -99,6 +90,7 @@
                 }
             }.bind(this).repeatExecutionEvery(1000);
 
+            //get the updates for the updated views contained within this window
             this.updatesListenerProcess = function() {
                 try {
                     var views = this.updatedViews.loadValue().split(' ');
@@ -124,7 +116,8 @@
             this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
                 request.on(Connection.BadResponse, this.badResponseCallback);
-                request.on(Connection.Receive, this.updatedViewsCallback);
+                request.on(Connection.Receive, this.receiveCallback);
+                request.on(Connection.Receive, this.connect.bind(this).delayFor(150));
             }.bind(this));
         },
 
@@ -137,6 +130,10 @@
                 request.on(Connection.Receive, this.receiveCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
+        },
+
+        updateViews: function(views) {
+            this.updatedViews.saveValue(views);
         },
 
         onSend: function(callback) {

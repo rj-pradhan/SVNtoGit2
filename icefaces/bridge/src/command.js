@@ -44,6 +44,11 @@
         });
     };
 
+    This.UpdatedViews = function(message) {
+        var views = message.firstChild.data;
+        window.connection.updateViews(views);
+    };
+
     This.deserializeAndExecute = function(message) {
         switch (message.tagName) {
             case 'noop': /*do nothing*/; break;
@@ -52,6 +57,7 @@
             case 'server-error': This.ServerError(message); break;
             case 'session-expired': This.SessionExpired(message); break;
             case 'macro': This.Macro(message); break;
+            case 'updated-views': This.UpdatedViews(message); break;
             default: throw 'Unknown message received: ' + message.tagName;
         }
     };
