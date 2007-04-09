@@ -128,10 +128,6 @@
                 this.connect();
             }.bind(this));
 
-            this.whenDown(function() {
-                this.heartbeat.stop();
-            }.bind(this));
-
             this.heartbeat.start();
             this.logger.info('asynchronous mode');
         },
