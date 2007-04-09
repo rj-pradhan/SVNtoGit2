@@ -218,14 +218,17 @@
         },
 
         close: function() {
-            //replace the callback to avoid infinit loop since the callback is
-            //executed also when the connection is aborted.
-            this.request.onreadystatechange = Function.NOOP;
-            this.request.abort();
-            //avoid potential memory leaks since 'this.request' is a native object 
-            this.request = null;
-            this.callbacks = null;
-            this.logger.debug('[' + this.identifier + '] : connection closed');
+            try {
+                //replace the callback to avoid infinit loop since the callback is
+                //executed also when the connection is aborted.
+                this.request.onreadystatechange = Function.NOOP;
+                this.request.abort();
+            } finally {
+                //avoid potential memory leaks since 'this.request' is a native object
+                this.request = null;
+                this.callbacks = null;
+                this.logger.debug('[' + this.identifier + '] : connection closed');
+            }
         }
     });
 });
