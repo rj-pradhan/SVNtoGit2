@@ -309,7 +309,8 @@ public class TableRenderer
         RowSelector rowSelector = getRowSelector(uiComponent);
         boolean rowSelectorFound = rowSelector != null;
         String rowSelectionFunctionName = null;
-
+        boolean rowSelectorCodeAdded = false; // Row selector code needs to be added to the first TD, adding it to the table body breaks safari
+        Element scriptNode = null;
         if (rowSelectorFound) {
             Element rowSelectedField =
                     domContext.createElement(HTML.INPUT_ELEM);
@@ -321,15 +322,15 @@ public class TableRenderer
             root.appendChild(rowSelectedField);
             rowSelectionFunctionName = "ice_tableRowClicked" + rowSelectorNumber(facesContext); 
             String scriptSrc = "this['" + rowSelectionFunctionName + "'] = function (id){\n";
-            scriptSrc += " var fld = $('" + id +
+            scriptSrc += "try{ var fld = $('" + id +
                          "');fld.value = id;var nothingEvent = new Object();\n";
             scriptSrc +=
-                    " var form = Ice.util.findForm(fld);iceSubmit(null,fld,nothingEvent);};";
+                    " var form = Ice.util.findForm(fld);iceSubmit(null,fld,nothingEvent);}catch(e){alert(e);}};";
             JavascriptContext.addJavascriptCall(facesContext, scriptSrc);
-            Element scriptNode = domContext.createElement(HTML.SCRIPT_ELEM);
+            scriptNode = domContext.createElement(HTML.SCRIPT_ELEM);
             scriptNode.setAttribute("language", "javascript");
             scriptNode.appendChild(domContext.createTextNode(scriptSrc));
-            root.appendChild(scriptNode);
+            //root.appendChild(scriptNode);
 
         }
 
@@ -377,8 +378,8 @@ public class TableRenderer
             domContext.setCursorParent(tBody);
             tBody.appendChild(tr);
 
-            if (selectedClass != null) {
-                tr.setAttribute(HTML.CLASS_ATTR, selectedClass);
+           if (selectedClass != null) {
+                   tr.setAttribute(HTML.CLASS_ATTR, selectedClass);
 
             } else if (rowStylesMaxIndex >= 0) {
                 // if row styles exist, then render the appropriate one
@@ -398,6 +399,9 @@ public class TableRenderer
                 if (nextChild.isRendered()) {
                     if (nextChild instanceof UIColumn) {
                         Element td = domContext.createElement(HTML.TD_ELEM);
+                        if(!rowSelectorCodeAdded && scriptNode != null){
+                            td.appendChild(scriptNode);
+                        }
                         writeColStyles(columnStyles, columnStylesMaxIndex,
                                        columnStyleIndex, td, colNumber++);
                         if (isScrollable(uiComponent) &&
@@ -408,7 +412,9 @@ public class TableRenderer
                             td.setAttribute("style", "width:" + width +
                                                      ";overflow:hidden;");
 
+
                         }
+                      
                         tr.appendChild(td);
                         // if column styles exist, then apply the appropriate one
 
