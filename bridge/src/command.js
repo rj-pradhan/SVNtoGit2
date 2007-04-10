@@ -44,26 +44,26 @@
         });
     };
 
-    This.UpdatedViews = function(message) {
-        var views = message.firstChild.data;
-        window.connection.updateViews(views);
-    };
-
-    This.Pong = function() {
-        window.connection.pong();
-    };
-
+    var commands = [];
     This.deserializeAndExecute = function(message) {
-        switch (message.tagName) {
-            case 'noop': /*do nothing*/; break;
-            case 'updates': This.Updates(message); break;
-            case 'redirect': This.Redirect(message); break;
-            case 'server-error': This.ServerError(message); break;
-            case 'session-expired': This.SessionExpired(message); break;
-            case 'macro': This.Macro(message); break;
-            case 'updated-views': This.UpdatedViews(message); break;
-            case 'pong': This.Pong(message); break;
-            default: throw 'Unknown message received: ' + message.tagName;
+        var messageName = message.tagName;
+        for (name in commands) {
+            if (name == messageName) {
+                commands[messageName](message); return;
+            }
         }
+        
+        throw 'Unknown message received: ' + messageName;
     };
+
+    This.register = function(messageName, command) {
+        commands[messageName] = command;
+    };
+
+    This.register('noop', Function.NOOP);
+    This.register('updates', This.Updates);
+    This.register('redirect', This.Redirect);
+    This.register('server-error', This.ServerError);
+    This.register('session-expired', This.SessionExpired);
+    This.register('macro', This.Macro);
 });

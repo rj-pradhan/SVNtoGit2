@@ -31,7 +31,7 @@
  *
  */
 
-[ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax, Ice.Reliability.Heartbeat ].as(function(This, Connection, Ajax, Heartbeat) {
+[ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax, Ice.Reliability.Heartbeat, Ice.Command ].as(function(This, Connection, Ajax, Heartbeat, Command) {
 
     This.AsyncConnection = Object.subclass({
         initialize: function(logger, configuration, defaultQuery) {
@@ -46,7 +46,6 @@
 
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
-            this.ping = { pong: Function.NOOP };
 
             this.pingURI = configuration.context + '/block/ping';
             this.getURI = configuration.context + '/block/receive-updates';
@@ -107,6 +106,12 @@
                 }
             }.bind(this).repeatExecutionEvery(300);
 
+            //register command that handles the updated-views message
+            Command.register('updated-views', function(message) {
+                this.updatedViews.saveValue(message.firstChild.data);
+            }.bind(this));
+
+
             //heartbeat setup
             var heartbeatInterval = configuration.heartbeat.interval ? configuration.heartbeat.interval : 20000;
             var heartbeatTimeout = configuration.heartbeat.timeout ? configuration.heartbeat.timeout : 3000;
@@ -115,7 +120,10 @@
             this.heartbeat = new Heartbeat(heartbeatInterval, heartbeatTimeout, this.logger);
 
             this.heartbeat.onPing(function(ping) {
-                this.ping = ping;
+                //re-register a pong command on every ping
+                Command.register('pong', function() {
+                    ping.pong();
+                });
                 this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
                     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 });
@@ -153,14 +161,6 @@
                 request.on(Connection.Receive, this.receiveCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
-        },
-
-        updateViews: function(views) {
-            this.updatedViews.saveValue(views);
-        },
-
-        pong: function() {
-            this.ping.pong();
         },
 
         onSend: function(callback) {
