@@ -132,6 +132,15 @@
     <unzip src="${bin.bundle.file}" dest="${build.dir}"/-->
 </target>
 
+<target name="build.common">
+    <ice:subant>
+           <filelist dir="." files="core, component, component-metadata"/>
+       </ice:subant>
+
+
+    
+</target>
+
 <target name="build.src.bundle">
     <touch  file="${src.bundle.file}" mkdirs="true"/>
     <delete file="${src.bundle.file}"/>
