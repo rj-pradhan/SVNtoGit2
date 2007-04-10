@@ -111,7 +111,7 @@
 		HtmlPanelTabbedPane component as a TabChangeListener
 	</description>
 	<property-name>tabChangeListener</property-name>
-	<property-class>java.lang.String</property-class>
+	<property-class>javax.faces.el.MethodBinding</property-class>
 	<property-extension>
 		<category>ICE_LAYOUT</category>
 		<editor-class>

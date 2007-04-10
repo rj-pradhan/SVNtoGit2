@@ -34,9 +34,10 @@
 package com.icesoft.metadata.generators;
 
 import com.icesoft.jsfmeta.util.AbstractGenerator;
-import com.icesoft.jsfmeta.util.GeneratorUtil;
 import com.icesoft.jsfmeta.util.InternalConfig;
 import com.icesoft.jsfmeta.util.JavaSourceWriter;
+import com.icesoft.faces.component.paneltabset.TabChangeEvent;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -280,6 +281,11 @@ public class TagLibraryGenerator extends AbstractGenerator {
         writer.emitImport("javax.faces.webapp.UIComponentTag");
         writer.emitImport("com.icesoft.faces.component.dragdrop.DragEvent");
         writer.emitImport("com.icesoft.faces.component.dragdrop.DropEvent");
+
+        writer.emitImport("com.icesoft.faces.component.outputchart.*");
+        writer.emitImport("com.icesoft.faces.component.ext.*");
+        writer.emitImport("com.icesoft.faces.component.panelpositioned.*");
+        
         
         if (constantMethodBindingPackage != null)
             writer.emitImport(constantMethodBindingPackage
@@ -312,6 +318,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
         writer.startMethod("setProperties", "void",
                 new String[] { "UIComponent" }, new String[] { "_component" },
                 "protected");
+        //writer.emitExpression("System.err.println(\"Setting Properties\");",true);
         writer.emitExpression("try{", true);
         writer.indent();
         writer.emitExpression("super.setProperties(_component);", true);                
@@ -472,6 +479,7 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     writer.emitExpression(
                             "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
                             + var + ", actionListenerArgs);", true);
+
                     writer.emitExpression("_component.getAttributes().put(\""
                             + name + "\", _mb);", true);
                     writer.outdent();
@@ -575,8 +583,15 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     writer.emitExpression(
                             "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
                             + var + ", dragListenerArgs);", true);
-                    writer.emitExpression("_component.getAttributes().put(\""
-                            + name + "\", _mb);", true);
+                    String className = cb.getComponentClass();
+                    //RGDM
+
+                    String setterName = "set" + firstCharUpper(name);
+                    String s = "((" + className + ")_component)." + setterName + "(_mb);";
+                    writer.emitExpression(s,true);
+                    //writer.emitExpression("System.err.println(\"Setting Drag Listener\");",true);
+                    //writer.emitExpression("_component.getAttributes().put(\""
+                    //        + name + "\", _mb);", true);
                     writer.outdent();
                     writer.emitExpression("} else {", true);
                     writer.indent();
@@ -608,9 +623,92 @@ public class TagLibraryGenerator extends AbstractGenerator {
                             + var + ");", true);
                     writer.outdent();
                     writer.emitExpression("}", true);
-                    
+
+                } else if ("selectionListener".equalsIgnoreCase(name)) {
+                    writer.emitExpression("if (isValueReference(" + var
+                            + ")) {", true);
+                    writer.indent();
+                    writer
+                            .emitExpression(
+                                    "Class[] selectionListenerArgs= new Class[]{RowSelectorEvent.class};",
+                                    true);
+                    writer.emitExpression(
+                            "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+                                    + var + ", selectionListenerArgs );", true);
+                    writer.emitExpression("_component.getAttributes().put(\""
+                            + name + "\", _mb);", true);
+                    writer.outdent();
+                    writer.emitExpression("} else {", true);
+                    writer.indent();
+                    writer.emitExpression("throw new IllegalArgumentException("
+                            + var + ");", true);
+                    writer.outdent();
+                    writer.emitExpression("}", true);
+
                 }
-                
+                 else if ("selectionAction".equalsIgnoreCase(name)) {
+                    writer.emitExpression("if (isValueReference(" + var
+                            + ")) {", true);
+                    writer.indent();
+
+                    writer.emitExpression(
+                            "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+                                    + var + ", null );", true);
+                    writer.emitExpression("_component.getAttributes().put(\""
+                            + name + "\", _mb);", true);
+                    writer.outdent();
+                    writer.emitExpression("} else {", true);
+                    writer.indent();
+                    writer.emitExpression("throw new IllegalArgumentException("
+                            + var + ");", true);
+                    writer.outdent();
+                    writer.emitExpression("}", true);
+
+                }
+                else if ("tabChangeListener".equalsIgnoreCase(name)) {
+                    writer.emitExpression("if (isValueReference(" + var
+                            + ")) {", true);
+                    writer.indent();
+                     writer
+                            .emitExpression(
+                                    "Class[] selectionListenerArgs= new Class[]{TabChangeEvent.class};",
+                                    true);
+                    writer.emitExpression(
+                            "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+                                    + var + ", selectionListenerArgs );", true);
+                    writer.emitExpression("_component.getAttributes().put(\""
+                            + name + "\", _mb);", true);
+                    writer.outdent();
+                    writer.emitExpression("} else {", true);
+                    writer.indent();
+                    writer.emitExpression("throw new IllegalArgumentException("
+                            + var + ");", true);
+                    writer.outdent();
+                    writer.emitExpression("}", true);
+
+                }
+                 else if ("renderOnSubmit".equalsIgnoreCase(name)) {
+                    writer.emitExpression("if (isValueReference(" + var
+                            + ")) {", true);
+                    writer.indent();
+                     writer
+                            .emitExpression(
+                                    "Class[] selectionListenerArgs= new Class[]{OutputChart.class};",
+                                    true);
+                    writer.emitExpression(
+                            "MethodBinding _mb = getFacesContext().getApplication().createMethodBinding("
+                                    + var + ", selectionListenerArgs);", true);
+                    writer.emitExpression("_component.getAttributes().put(\""
+                            + name + "\", _mb);", true);
+                    writer.outdent();
+                    writer.emitExpression("} else {", true);
+                    writer.indent();
+                    writer.emitExpression("throw new IllegalArgumentException("
+                            + var + ");", true);
+                    writer.outdent();
+                    writer.emitExpression("}", true);
+
+                }
                 else {
                     
                     throw new IllegalArgumentException(name);
@@ -800,6 +898,14 @@ public class TagLibraryGenerator extends AbstractGenerator {
         if (name.equals("validator"))
             return true;
         return name.endsWith("Validator");
+    }
+
+    private String firstCharUpper(String s){
+        if(s == null)return null;
+        char[] ca = s.toCharArray();
+        if(ca.length < 1)return s;
+        ca[0] = Character.toUpperCase(ca[0]);
+        return new String(ca);
     }
     
 }
