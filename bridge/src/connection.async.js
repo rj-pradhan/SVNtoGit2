@@ -62,10 +62,6 @@
                 this.timeoutBomb.cancel();
             }.bind(this));
 
-            this.badResponseCallback = function() {
-                this.connectionDownBroadcaster();
-            }.bind(this);
-
             this.receiveCallback = function(response) {
                 try {
                     this.onReceiveListeners.broadcast(response);
@@ -144,9 +140,8 @@
             this.logger.debug("closing previous connection...");
             this.listener.close();
             this.logger.debug("connect...");
-            this.connectionDownBroadcaster = this.connectionDownListeners.broadcaster();
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                request.on(Connection.BadResponse, this.badResponseCallback);
+                request.on(Connection.BadResponse, this.connectionDownListeners.broadcaster());
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.Receive, this.connect.bind(this).delayFor(150));
             }.bind(this));
