@@ -36,7 +36,7 @@ package com.icesoft.metadata.generators;
 import com.icesoft.jsfmeta.util.AbstractGenerator;
 import com.icesoft.jsfmeta.util.InternalConfig;
 import com.icesoft.jsfmeta.util.JavaSourceWriter;
-import com.icesoft.faces.component.paneltabset.TabChangeEvent;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
