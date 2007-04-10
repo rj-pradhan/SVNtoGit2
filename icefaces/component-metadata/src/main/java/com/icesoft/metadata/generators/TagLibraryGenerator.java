@@ -284,7 +284,9 @@ public class TagLibraryGenerator extends AbstractGenerator {
 
         writer.emitImport("com.icesoft.faces.component.outputchart.*");
         writer.emitImport("com.icesoft.faces.component.ext.*");
-        writer.emitImport("com.icesoft.faces.component.panelpositioned.*");
+        writer.emitImport("com.icesoft.faces.component.panelpositioned.*");        
+        writer.emitImport("com.icesoft.faces.component.paneltabset.*");
+
         
         
         if (constantMethodBindingPackage != null)
