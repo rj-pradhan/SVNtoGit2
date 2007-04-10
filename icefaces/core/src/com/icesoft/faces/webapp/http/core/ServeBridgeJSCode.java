@@ -11,15 +11,10 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 
 public class ServeBridgeJSCode implements Server {
-    private static final String ENTERPRISE_JS = "com/icesoft/faces/async/server/icefaces-d2d.js";
-    private static final String COMMUNITY_JS = "com/icesoft/faces/webapp/xmlhttp/icefaces-d2d.js";
-    private ClassLoader loader = this.getClass().getClassLoader();
-    private String resource;
     private Configuration configuration;
 
     public ServeBridgeJSCode(Configuration configuration) {
         this.configuration = configuration;
-        this.resource = (loader.getResourceAsStream(ENTERPRISE_JS) == null) ? COMMUNITY_JS : ENTERPRISE_JS;
     }
 
     public void service(Request request) throws Exception {
@@ -43,7 +38,7 @@ public class ServeBridgeJSCode implements Server {
                         "   }" +
                         "};\n").getBytes());
         //load bridge code
-        final InputStream bridgeCode = loader.getResourceAsStream(resource);
+        final InputStream bridgeCode = this.getClass().getClassLoader().getResourceAsStream("com/icesoft/faces/webapp/xmlhttp/icefaces-d2d.js");
 
         request.respondWith(new ResponseHandler() {
             public void respond(Response response) throws Exception {
