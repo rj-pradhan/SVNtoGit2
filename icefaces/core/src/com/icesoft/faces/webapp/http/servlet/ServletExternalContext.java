@@ -67,6 +67,8 @@ public class ServletExternalContext extends BridgeExternalContext {
     private Redirector redirector;
     private CookieTransporter cookieTransporter;
     private RequestMapFactory requestMapFactory;
+    private boolean standardScope;
+
 
     public ServletExternalContext(String viewIdentifier, ServletContext context, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue, Configuration configuration) {
         this.viewIdentifier = viewIdentifier;
@@ -76,11 +78,15 @@ public class ServletExternalContext extends BridgeExternalContext {
         this.commandQueue = commandQueue;
         this.session = this.request.getSession();
 
-        if (configuration.getAttributeAsBoolean("standardRequestScope", false)) {
-            this.requestMapFactory = new StandardRequestScopeFactory();
-        } else {
-            this.requestMapFactory = new CustomRequestScopeFactory();
-        }
+        // todo: Iron out DirectRequestAttributeMap implementation
+        standardScope = configuration.getAttributeAsBoolean("standardRequestScope", false); 
+        this.requestMapFactory = new CustomRequestScopeFactory();
+
+//        if (configuration.getAttributeAsBoolean("standardRequestScope", false)) {
+//            this.requestMapFactory = new StandardRequestScopeFactory();
+//        } else {
+//            this.requestMapFactory = new CustomRequestScopeFactory();
+//        }
 
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
@@ -141,7 +147,8 @@ public class ServletExternalContext extends BridgeExternalContext {
         Enumeration parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String name = (String) parameterNames.nextElement();
-            requestParameterMap.put(name, request.getParameter(name));
+            Object value = request.getParameter(name);
+            requestParameterMap.put(name, value);
             requestParameterValuesMap.put(name, request.getParameterValues(name));
         }
 
@@ -150,7 +157,6 @@ public class ServletExternalContext extends BridgeExternalContext {
                     PersistentFacesCommonlet.SEAM_LIFECYCLE_SHORTCUT,
                     Boolean.TRUE);
         }
-
 
         requestCookieMap = new HashMap();
         Cookie[] cookies = request.getCookies();
@@ -397,26 +403,13 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     /**
-     * If this is found to be a Seam environment, then we have to clear out any
-     * left over request attributes. Otherwise, since this context is
-     * incorporated into the Seam Contexts structure, things put into this
-     * context linger beyond the scope of the request, which can cause problems.
-     * This method should only be called from the blocking servlet, as it's the
-     * handler for the Ajax requests that cause the issue.
+     * If in Standard request scope mode, remove all parameters from
+     * the Request Map.  
      */
-    public void clearRequestContext() {
-        if (SeamUtilities.isSeamEnvironment()) {
-            try {
-                requestMap.clear();
-            } catch (IllegalStateException ise) {
-                // Can be thrown in Seam example applications as a result of
-                // eg. logout, which has already invalidated the session.
-            }
-        }
-    }
-
     public void resetRequestMap() {
-        clearRequestContext();
+        if (standardScope) {
+            requestMap.clear();
+        } 
     }
 
     public void injectBundles(Map bundles) {
