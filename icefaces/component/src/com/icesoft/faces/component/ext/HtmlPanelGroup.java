@@ -118,21 +118,6 @@ public class HtmlPanelGroup extends javax.faces.component.html.HtmlPanelGroup {
             JavascriptContext.includeLib(JavascriptContext.ICE_EXTRAS,
                                          getFacesContext());
         }
-        if (s != null && s.equals("dragListener")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{DragEvent.class});
-            setDragListener(mb);
-            return;
-        } else if (s != null && s.equals("dropListener")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{DropEvent.class});
-            setDropListener(mb);
-            return;
-        }
         super.setValueBinding(s, vb);
     }
 

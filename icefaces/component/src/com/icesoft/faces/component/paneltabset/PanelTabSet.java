@@ -270,18 +270,6 @@ public class PanelTabSet
     public void setTabChangeListener(MethodBinding tabChangeListener) {
         _tabChangeListener = tabChangeListener;
     }
-    
-    public void setValueBinding(String s, ValueBinding vb) {
-        if (s != null && s.equals("tabChangeListener")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{TabChangeEvent.class});
-            setTabChangeListener( mb );
-        } else {
-            super.setValueBinding(s, vb);
-        }
-    }
 
     /* (non-Javadoc)
      * @see javax.faces.component.UIComponent#broadcast(javax.faces.event.FacesEvent)

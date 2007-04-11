@@ -359,7 +359,7 @@
         ]]>        
     </description>
     <property-name>renderOnSubmit</property-name>
-    <property-class>java.lang.Object</property-class>
+    <property-class>javax.faces.el.MethodBinding</property-class>
     <property-extension>
         <category>ADVANCED</category>
         <editor-class>

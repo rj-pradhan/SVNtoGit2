@@ -377,6 +377,7 @@ final class NameRule extends Rule {
                             sb.append(rendererType);
                             sb.append("</renderer-type>\n");
                         }
+                        sb.append("\t\t\t<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>\n");
                         sb.append("\t\t</component>\n\t</tag>\n");
                         faceletsTaglibXmlWriter.write(sb.toString());
                         System.out.print(sb.toString());

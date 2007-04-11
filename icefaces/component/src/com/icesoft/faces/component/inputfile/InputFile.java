@@ -619,18 +619,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
        return sizeMax;
     }
 
-    public void setValueBinding(String name, ValueBinding vb) {
-        if (name != null && name.equals("progressListener")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{EventObject.class});
-            setProgressListener(mb);
-            return;
-        }
-        super.setValueBinding(name, vb);
-    }
-
     public MethodBinding getProgressListener() {
         return progressListener;
     }
@@ -646,7 +634,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     public void setProgress(int i){
         progress = i;
         fileInfo.setPercent(i);
-        getProgressListener().invoke(FacesContext.getCurrentInstance(), new Object[] {new EventObject(this)});
+        if( getProgressListener() != null )
+            getProgressListener().invoke(FacesContext.getCurrentInstance(), new Object[] {new EventObject(this)});
     }
 
     public String getCssFile() {

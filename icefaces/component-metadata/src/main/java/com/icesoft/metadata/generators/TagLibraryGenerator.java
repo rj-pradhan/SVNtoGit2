@@ -705,8 +705,11 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     writer.outdent();
                     writer.emitExpression("} else {", true);
                     writer.indent();
-                    writer.emitExpression("throw new IllegalArgumentException("
-                            + var + ");", true);
+                    writer.emitExpression("MethodBinding _mb = new "
+                            +"com.icesoft.faces.el.LiteralBooleanMethodBinding"
+                            +"("+var+");", true);
+                    writer.emitExpression("_component.getAttributes().put(\""
+                            + name + "\", _mb);", true);
                     writer.outdent();
                     writer.emitExpression("}", true);
 

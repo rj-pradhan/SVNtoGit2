@@ -324,38 +324,23 @@ public class OutputChart extends HtmlCommandButton {
         this.height = height;
     }
 
-    private Boolean renderOnSubmit;
     private MethodBinding renderOnSubmitMethodBinding;
 
-    public void setRenderOnSubmit(Object renderOnSubmit) {
-        if (renderOnSubmit instanceof Boolean) {
-            this.renderOnSubmit = (Boolean) renderOnSubmit;
-        } else if (renderOnSubmit instanceof MethodBinding) {
-            this.renderOnSubmitMethodBinding = (MethodBinding) renderOnSubmit;
-        }
-    }
-
-    public Object getRenderOnSubmit() {
-        if (renderOnSubmit != null) {
-            return renderOnSubmit;
-        }
-        if (renderOnSubmitMethodBinding != null) {
-            return ((Boolean) renderOnSubmitMethodBinding
-                    .invoke(getFacesContext(), new Object[]{this}));
-        }
-        return Boolean.FALSE;
+    public void setRenderOnSubmit(MethodBinding renderOnSubmit) {
+        renderOnSubmitMethodBinding = renderOnSubmit;
     }
     
-    public void setValueBinding(String s, ValueBinding vb) {
-        if (s != null && s.equals("renderOnSubmit")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{OutputChart.class});
-            setRenderOnSubmit(mb);
-        } else {
-            super.setValueBinding(s, vb);
+    public MethodBinding getRenderOnSubmit() {
+        return renderOnSubmitMethodBinding;
+    }
+
+    public Boolean evaluateRenderOnSubmit(FacesContext context) {
+        if (renderOnSubmitMethodBinding != null) {
+            Boolean b = (Boolean) renderOnSubmitMethodBinding.invoke(
+                context, new Object[]{this});
+            return b;
         }
+        return Boolean.FALSE;
     }
 
     /*
@@ -369,10 +354,10 @@ public class OutputChart extends HtmlCommandButton {
 	            if (abstractChart == null) {
 	                abstractChart = AbstractChart.createChart(this);
 	                if (getType().equalsIgnoreCase(OutputChart.CUSTOM_CHART_TYPE)) {
-	                    getRenderOnSubmit();
+                        evaluateRenderOnSubmit(context);
 	                }
 	                abstractChart.encode();
-	            } else if (((Boolean) getRenderOnSubmit()).booleanValue()) {
+	            } else if (evaluateRenderOnSubmit(context).booleanValue()) {
 	                abstractChart.encode();
 	            }
 	        } catch (Throwable e) {
