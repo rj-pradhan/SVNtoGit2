@@ -36,8 +36,10 @@ public class SendUpdatedViews implements Server {
                     synchronouslyUpdatedViews.clear();
                     Set viewIdentifiers = new HashSet(allUpdatedViews);
                     if (!viewIdentifiers.isEmpty()) {
-                        Request request = (Request) pendingRequest.take();
-                        request.respondWith(new UpdatedViewsHandler((String[]) viewIdentifiers.toArray(new String[viewIdentifiers.size()])));
+                        Request request = (Request) pendingRequest.poll();
+                        if (request != null) {
+                            request.respondWith(new UpdatedViewsHandler((String[]) viewIdentifiers.toArray(new String[viewIdentifiers.size()])));
+                        }
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
