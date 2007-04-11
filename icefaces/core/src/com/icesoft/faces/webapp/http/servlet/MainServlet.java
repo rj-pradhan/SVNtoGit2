@@ -1,6 +1,5 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.ResourceServer;
 import com.icesoft.util.IdGenerator;
@@ -30,11 +29,11 @@ public class MainServlet extends HttpServlet {
             final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
 
             PseudoServlet sessionServer = new SessionDispatcher() {
-                protected PseudoServlet newServlet(HttpSession session) {
-                    return new MainSessionBoundServlet(session, idGenerator, configuration);
+                protected PseudoServlet newServlet(HttpSession session, Listener.Monitor sessionMonitor) {
+                    return new MainSessionBoundServlet(session, sessionMonitor, idGenerator, configuration);
                 }
             };
-            ThreadBlockingAdaptingServlet resourceServer = new ThreadBlockingAdaptingServlet(new ResourceServer(configuration));
+            PseudoServlet resourceServer = new BasicAdaptingServlet(new ResourceServer(configuration));
 
             dispatcher.dispatchOn(".*xmlhttp\\/.*", resourceServer);
             dispatcher.dispatchOn(".*", sessionServer);

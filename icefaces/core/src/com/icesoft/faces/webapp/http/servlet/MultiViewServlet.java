@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
+public class MultiViewServlet extends BasicAdaptingServlet {
     private int viewCount = 0;
     private HttpSession session;
     private Map views;
     private ViewQueue asynchronouslyUpdatedViews;
     private String sessionID;
     private Configuration configuration;
+    private SessionDispatcher.Listener.Monitor sessionMonitor;
 
-    public MultiViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue asynchronouslyUpdatedViews, Configuration configuration) {
+    public MultiViewServlet(HttpSession session, SessionDispatcher.Listener.Monitor sessionMonitor, IdGenerator idGenerator, Map views, ViewQueue asynchronouslyUpdatedViews, Configuration configuration) {
         super(new PageServer());
         this.sessionID = idGenerator.newIdentifier();
         //ContextEventRepeater needs this
@@ -28,6 +29,7 @@ public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
         ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
 
         this.session = session;
+        this.sessionMonitor = sessionMonitor;
         this.views = views;
         this.asynchronouslyUpdatedViews = asynchronouslyUpdatedViews;
         this.configuration = configuration;
@@ -53,7 +55,7 @@ public class MultiViewServlet extends ThreadBlockingAdaptingServlet {
                 view.switchToNormalMode();
             }
         }
-
+        sessionMonitor.touchSession();
         super.service(request, response);
         view.switchToPushMode();
         view.release();

@@ -42,7 +42,7 @@ public class ReceiveSendUpdates implements Server {
             renderCycle(context);
         }
 
-        request.respondWith(new SendUpdatesHandler(commandQueues, request));
+        request.respondWith(new SendUpdates.Handler(commandQueues, request));
     }
 
     public void shutdown() {

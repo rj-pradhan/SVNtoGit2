@@ -20,8 +20,9 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
     private String sessionID;
     private ViewQueue allUpdatedViews;
     private Configuration configuration;
+    private SessionDispatcher.Listener.Monitor sessionMonitor;
 
-    public SingleViewServlet(HttpSession session, IdGenerator idGenerator, Map views, ViewQueue allUpdatedViews, Configuration configuration) {
+    public SingleViewServlet(HttpSession session, SessionDispatcher.Listener.Monitor sessionMonitor, IdGenerator idGenerator, Map views, ViewQueue allUpdatedViews, Configuration configuration) {
         super(new PageServer());
 
         this.sessionID = idGenerator.newIdentifier();
@@ -32,6 +33,7 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
         session.setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
 
         this.session = session;
+        this.sessionMonitor = sessionMonitor;
         this.views = views;
         this.allUpdatedViews = allUpdatedViews;
         this.configuration = configuration;
@@ -48,6 +50,7 @@ public class SingleViewServlet extends ThreadBlockingAdaptingServlet {
 
         view.setAsCurrentDuring(request, response);
         view.switchToNormalMode();
+        sessionMonitor.touchSession();
         super.service(request, response);
         view.switchToPushMode();
         view.release();
