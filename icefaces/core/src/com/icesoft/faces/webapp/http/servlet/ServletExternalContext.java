@@ -328,7 +328,12 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public Writer getWriter(String encoding) throws IOException {
-        return new OutputStreamWriter(response.getOutputStream(), encoding);
+        try {
+            return new OutputStreamWriter(response.getOutputStream(), encoding);
+        } catch (IllegalStateException e) {
+            // getWriter() already called, perhaps because of JSP include
+            return response.getWriter();
+        }
     }
 
     /**
