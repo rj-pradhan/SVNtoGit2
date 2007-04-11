@@ -116,19 +116,6 @@ public class PanelPositioned extends UISeries {
         this.listener = listener;
     }
 
-    public void setValueBinding(String s, ValueBinding vb) {
-        if (s != null && s.equals("listener")) {
-            MethodBinding mb =
-                    getFacesContext().getApplication().createMethodBinding(
-                            vb.getExpressionString(),
-                            new Class[]{PanelPositionedEvent.class});
-            setListener( mb );
-        } else {
-            super.setValueBinding(s, vb);
-        }
-    }
-
-
     public String getOverlap() {
         if (overlap != null) {
             return overlap;
