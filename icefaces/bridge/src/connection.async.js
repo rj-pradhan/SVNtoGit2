@@ -46,6 +46,7 @@
 
             this.listener = { close: Function.NOOP };
             this.timeoutBomb = { cancel: Function.NOOP };
+            this.heartbeat = { stop: Function.NOOP };
 
             this.pingURI = configuration.context + '/block/ping';
             this.getURI = configuration.context + '/block/receive-updates';
@@ -70,18 +71,54 @@
                 }
             }.bind(this);
 
+            //read/create cookie that contains the updated views
+            try {
+                this.updatedViews = Ice.Cookie.lookup('updates');
+            } catch (e) {
+                this.updatedViews = new Ice.Cookie('updates', '');
+            }
+
+            //register command that handles the updated-views message
+            Command.register('updated-views', function(message) {
+                this.updatedViews.saveValue(message.firstChild.data);
+            }.bind(this));
             //monitor if the blocking connection needs to be started
             //the blocking connection will be started by the first window that notices
             //that the blocking connection was not started or was closed because the
-            //window owning was closed
+            //window owning it was closed
             this.listenerInitializerProcess = function() {
                 try {
                     this.listening = Ice.Cookie.lookup('bconn');
-                    this.updatedViews = Ice.Cookie.lookup('updates');
                 } catch (e) {
-                    //start blocking connection since no other window has started it.
+                    //start blocking connection since no other window has started it
                     this.listening = new Ice.Cookie('bconn', 'started');
-                    this.updatedViews = new Ice.Cookie('updates', '');
+                    //stop the previous heartbeat instance
+                    this.heartbeat.stop();
+                    //heartbeat setup
+                    var heartbeatInterval = configuration.heartbeat.interval ? configuration.heartbeat.interval : 20000;
+                    var heartbeatTimeout = configuration.heartbeat.timeout ? configuration.heartbeat.timeout : 3000;
+                    var heartbeatRetries = configuration.heartbeat.retries ? configuration.heartbeat.retries : 3;
+
+                    this.heartbeat = new Heartbeat(heartbeatInterval, heartbeatTimeout, this.logger);
+
+                    this.heartbeat.onPing(function(ping) {
+                        //re-register a pong command on every ping
+                        Command.register('pong', function() {
+                            ping.pong();
+                        });
+                        this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
+                            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                        });
+                    }.bind(this));
+
+                    this.heartbeat.onLostPongs(this.connectionDownListeners.broadcaster(), heartbeatRetries);
+                    this.heartbeat.onLostPongs(this.connectionTroubleListeners.broadcaster());
+                    this.heartbeat.onLostPongs(function() {
+                        this.logger.debug('retry to connect...');
+                        this.connect();
+                    }.bind(this));
+
+                    this.heartbeat.start();
                     this.connect();
                 }
             }.bind(this).repeatExecutionEvery(1000);
@@ -102,37 +139,6 @@
                 }
             }.bind(this).repeatExecutionEvery(300);
 
-            //register command that handles the updated-views message
-            Command.register('updated-views', function(message) {
-                this.updatedViews.saveValue(message.firstChild.data);
-            }.bind(this));
-
-
-            //heartbeat setup
-            var heartbeatInterval = configuration.heartbeat.interval ? configuration.heartbeat.interval : 20000;
-            var heartbeatTimeout = configuration.heartbeat.timeout ? configuration.heartbeat.timeout : 3000;
-            var heartbeatRetries = configuration.heartbeat.retries ? configuration.heartbeat.retries : 3;
-
-            this.heartbeat = new Heartbeat(heartbeatInterval, heartbeatTimeout, this.logger);
-
-            this.heartbeat.onPing(function(ping) {
-                //re-register a pong command on every ping
-                Command.register('pong', function() {
-                    ping.pong();
-                });
-                this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                });
-            }.bind(this));
-
-            this.heartbeat.onLostPongs(this.connectionDownListeners.broadcaster(), heartbeatRetries);
-            this.heartbeat.onLostPongs(this.connectionTroubleListeners.broadcaster());
-            this.heartbeat.onLostPongs(function() {
-                this.logger.debug('retry to connect...');
-                this.connect();
-            }.bind(this));
-
-            this.heartbeat.start();
             this.logger.info('asynchronous mode');
         },
 
@@ -179,6 +185,7 @@
             try {
                 this.send = Function.NOOP;
                 this.heartbeat.stop();
+                this.listening.remove();
                 this.listener.close();
             } finally {
                 [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(listeners) {
@@ -187,10 +194,6 @@
 
                 [ this.updatesListenerProcess, this.listenerInitializerProcess ].eachWithGuard(function(process) {
                     process.cancel();
-                });
-
-                [ this.listening, this.updatedViews ].eachWithGuard(function(cookie) {
-                    cookie.remove();
                 });
             }
         }
