@@ -56,8 +56,6 @@ public abstract class BridgeExternalContext extends ExternalContext {
     public static final String
             INCLUDE_SERVLET_PATH = "javax.servlet.include.servlet_path";
 
-    public abstract void clearRequestContext();
-
     public abstract void resetRequestMap();
 
     public abstract String getRequestURI();
