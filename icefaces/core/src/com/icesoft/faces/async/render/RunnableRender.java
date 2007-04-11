@@ -78,6 +78,13 @@ class RunnableRender implements Runnable {
 
         PersistentFacesState state = renderable.getState();
 
+        // This in response to an application with ServerInitiatedRendering coupled
+        // with user interaction, and GET requests. If we don't update the thread
+        // local, once user action creates a new ViewRoot, the Render thread's
+        // version of state would forever be detached from the real view, resulting
+        // in no more updates 
+        state.setCurrentInstance();
+
         if (state == null) {
             if (log.isWarnEnabled()) {
                 log.warn("state is null");
@@ -105,6 +112,7 @@ class RunnableRender implements Runnable {
         }
 
         try {
+            state.execute();
             state.render();
         } catch (RenderingException ex) {
             renderable.renderingException(ex);
