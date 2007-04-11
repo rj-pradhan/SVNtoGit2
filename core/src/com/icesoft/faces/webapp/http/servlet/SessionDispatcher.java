@@ -49,7 +49,7 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
     private void sessionCreated(HttpSession session) {
         try {
-            sessionBoundServers.put(session, this.newServlet(session));
+            sessionBoundServers.put(session, this.newServlet(session, Listener.lookupSessionMonitor(session)));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -64,15 +64,15 @@ public abstract class SessionDispatcher implements PseudoServlet {
         sessionBoundServers.remove(session);
     }
 
-    protected abstract PseudoServlet newServlet(HttpSession session) throws Exception;
+    protected abstract PseudoServlet newServlet(HttpSession session, Listener.Monitor sessionMonitor) throws Exception;
 
     public static class Listener implements HttpSessionListener, ServletContextListener {
-        private List sessions = new ArrayList();
+        private static Map sessionMonitors = new HashMap();
         private boolean run = true;
 
         public void sessionCreated(HttpSessionEvent event) {
             HttpSession session = event.getSession();
-            sessions.add(session);
+            sessionMonitors.put(session, new Monitor(session));
 
             Iterator i = SessionDispatchers.iterator();
             while (i.hasNext()) {
@@ -100,7 +100,6 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
         public void sessionDestroyed(HttpSessionEvent event) {
             HttpSession session = event.getSession();
-            sessions.remove(session);
 
             Iterator i = SessionDispatchers.iterator();
             while (i.hasNext()) {
@@ -119,23 +118,10 @@ public abstract class SessionDispatcher implements PseudoServlet {
                     while (run) {
                         try {
                             //iterate over the sessions using a copying iterator
-                            Iterator iterator = new ArrayList(sessions).iterator();
+                            Iterator iterator = new ArrayList(sessionMonitors.values()).iterator();
                             while (iterator.hasNext()) {
-                                final HttpSession session = (HttpSession) iterator.next();
-                                try {
-                                    long elapsedInterval = System.currentTimeMillis() - session.getLastAccessedTime();
-                                    long maxInterval = session.getMaxInactiveInterval() * 1000;
-                                    //shutdown the session a bit (15s) before session actually expires
-                                    if (elapsedInterval + 15000 > maxInterval) {
-                                        sessionShutdown(session);
-                                    }
-                                } catch (IllegalStateException e) {
-                                    //session was already invalidated by the container
-                                    sessions.remove(session);
-                                } catch (Throwable t) {
-                                    //just inform that something went wrong
-                                    Log.warn("Failed to monitor session expiry", t);
-                                }
+                                final Monitor sessionMonitor = (Monitor) iterator.next();
+                                sessionMonitor.shutdownIfExpired();
                             }
 
                             Thread.sleep(10000);
@@ -151,13 +137,43 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
         public void contextDestroyed(ServletContextEvent servletContextEvent) {
             run = false;
-            Iterator i = new ArrayList(sessions).iterator();
-            while (i.hasNext()) {
-                HttpSession session = (HttpSession) i.next();
+        }
+
+        public static Monitor lookupSessionMonitor(HttpSession session) {
+            return (Monitor) sessionMonitors.get(session);
+        }
+
+        public class Monitor {
+            private HttpSession session;
+            private long lastAccess;
+
+            public Monitor(HttpSession session) {
+                this.session = session;
+                this.lastAccess = session.getLastAccessedTime();
+            }
+
+            public void touchSession() {
+                lastAccess = System.currentTimeMillis();
+            }
+
+            private boolean isExpired() {
+                long elapsedInterval = System.currentTimeMillis() - lastAccess;
+                long maxInterval = session.getMaxInactiveInterval() * 1000;
+                //shutdown the session a bit (15s) before session actually expires
+                return elapsedInterval + 15000 > maxInterval;
+            }
+
+            private void shutdownIfExpired() {
                 try {
-                    session.invalidate();
+                    if (isExpired()) {
+                        sessionMonitors.remove(session);
+                        sessionShutdown(session);
+                    }
                 } catch (IllegalStateException e) {
-                    //session already invalidated.
+                    //session was already invalidated by the container
+                } catch (Throwable t) {
+                    //just inform that something went wrong
+                    Log.warn("Failed to monitor session expiry", t);
                 }
             }
         }
