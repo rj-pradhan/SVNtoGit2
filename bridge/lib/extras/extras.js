@@ -122,9 +122,9 @@ Ice.Accordion = {
         var ele = document.getElementById(eleId);
         try{
         if(Element.visible(ele)){
-            Effect.SlideUp(ele,{uploadCSS:true,submit:true});
+            Effect.SlideUp(ele,{uploadCSS:true,submit:true,duration:0.5});
         }else{
-            Effect.SlideDown(ele,{uploadCSS:true,submit:true});
+            Effect.SlideDown(ele,{uploadCSS:true,submit:true,duration:0.5});
         }
             }catch(eee){
 
