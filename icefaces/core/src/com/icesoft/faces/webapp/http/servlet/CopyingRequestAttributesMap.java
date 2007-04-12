@@ -13,14 +13,14 @@ public class CopyingRequestAttributesMap extends HashMap {
         this.request = request;
         Enumeration e = request.getAttributeNames();
         while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
+            String key = String.valueOf(e.nextElement());
             Object value = request.getAttribute(key);
             super.put(key, value);
         }
     }
 
     public Object put(Object o, Object o1) {
-        request.setAttribute((String) o, o1);
+        request.setAttribute(String.valueOf(o), o1);
         return super.put(o, o1);
     }
 
@@ -28,7 +28,7 @@ public class CopyingRequestAttributesMap extends HashMap {
         Iterator i = map.entrySet().iterator();
         while (i.hasNext()) {
             Map.Entry entry = (Map.Entry) i.next();
-            request.setAttribute((String) entry.getKey(), entry.getValue());
+            request.setAttribute(String.valueOf(entry.getKey()), entry.getValue());
         }
         super.putAll(map);
     }
@@ -41,7 +41,7 @@ public class CopyingRequestAttributesMap extends HashMap {
     public void clear() {
         Enumeration e = request.getAttributeNames();
         while (e.hasMoreElements()) {
-            request.removeAttribute((String) e.nextElement());
+            request.removeAttribute((String.valueOf(e.nextElement())));
         }
         super.clear();
     }
