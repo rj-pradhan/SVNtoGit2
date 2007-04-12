@@ -140,7 +140,7 @@ public class OutputStyleRenderer extends DomBasicRenderer {
         if (o != null) {
             if (o instanceof HttpServletRequest) {
                 HttpServletRequest request = (HttpServletRequest) o;
-                useragent = request.getHeader("User-Agent");
+                useragent = request.getHeader("user-agent");
                 if(useragent == null){
                     useragent = ((OutputStyle)uiComponent).getUserAgent();
                 }
