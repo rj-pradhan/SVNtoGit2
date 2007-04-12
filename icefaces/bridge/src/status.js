@@ -97,9 +97,10 @@
     });
 
     This.OverlayIndicator = Object.subclass({
-        initialize: function(message, description, panel) {
+        initialize: function(message, description, iconPath, panel) {
             this.message = message;
             this.description = description;
+            this.iconPath = iconPath;
             this.panel = panel;
         },
 
