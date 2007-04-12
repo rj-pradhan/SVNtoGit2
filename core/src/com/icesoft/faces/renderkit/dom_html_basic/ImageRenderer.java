@@ -39,7 +39,6 @@ import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIGraphic;
-import javax.faces.component.html.HtmlGraphicImage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
@@ -71,7 +70,7 @@ public class ImageRenderer extends DomBasicRenderer {
         }
         root.setAttribute("alt", altAttribute);
 
-        String styleClass = ((HtmlGraphicImage) uiComponent).getStyleClass();
+        String styleClass = String.valueOf(uiComponent.getAttributes().get("styleClass"));
         if (styleClass != null) {
             root.setAttribute("class", styleClass);
         }
