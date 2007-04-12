@@ -53,6 +53,7 @@ Ice.StateMon ={
             this.logger.debug('Monitor [' + monitor.id + '] has been replaced');
 	        monitor.rebuildMe = true;
         }else{
+             this.logger.debug('Monitor [' + monitor.id + '] has not been replaced');
             monitor.rebuildMe = false;
         }
         if(!this.elementExists(monitor.id)){
@@ -233,7 +234,8 @@ Ice.DraggableMonitor.prototype = Object.extend(new Ice.MonitorBase(), {
   },
   rebuild:function(){
     Ice.StateMon.logger.debug('Rebuilding Draggable ID[' + this.id + '] Options[' + this.createOptions + ']');
-    var d = new Draggable(this.id, this.createOptions)
+    var d = new Draggable(this.id, this.createOptions);
+    Ice.StateMon.logger.debug('Rebuilding Draggable ID[' + this.id + '] Options[' + this.createOptions + '] Complete');
   }
 
 });

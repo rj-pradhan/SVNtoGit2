@@ -42,7 +42,7 @@ Draggable.prototype.initialize = function(element) {
 //Ice.DnD.logger.error('kk-1');
     if (Ice.DnD.alreadyDrag(element)){
       //Ice.DnD.logger.error('kk-11');
-      Ice.DnD.logger.debug("Draggable has already been created");
+      Ice.DnD.logger.debug("Draggable [" + $(element).id  +"] has already been created");
       return;
     }
 //Ice.DnD.logger.error('kk-2');
@@ -57,6 +57,8 @@ Draggable.prototype.initialize = function(element) {
     };
     if(ops.handle){
         ops.handle = $(ops.handle);
+        //Might not have the element the first time. When rebuilding we could have a ref to a non existing element
+        ops.handle = $(ops.handle.id);
     }
 //Ice.DnD.logger.error('kk-3');
     this.ORIGINAL_initialize(this.element, ops);
@@ -67,6 +69,8 @@ Draggable.prototype.initialize = function(element) {
         monitor.object = this;
         Ice.StateMon.add(monitor);
     }
+
+    Ice.DnD.logger.debug("Draggable [" + this.element.id  +"] created");
 };
 Draggable.prototype.ORIGINAL_startDrag = Draggable.prototype.startDrag;
 Draggable.prototype.startDrag = function(event) {
