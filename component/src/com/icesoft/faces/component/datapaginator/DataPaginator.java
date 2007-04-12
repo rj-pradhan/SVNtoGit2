@@ -49,6 +49,7 @@ package com.icesoft.faces.component.datapaginator;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.application.D2DViewHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -314,7 +315,8 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
             // DataPaginator may be a child of uiData
             forComp = getParent();
         } else {
-            forComp = findComponent(forStr);
+            //forComp = findComponent(forStr);
+            forComp =  D2DViewHandler.findComponent(forStr, getFacesContext().getViewRoot());
         }
         if (forComp == null) {
             throw new IllegalArgumentException(

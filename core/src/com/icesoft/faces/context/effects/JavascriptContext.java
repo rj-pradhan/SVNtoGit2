@@ -36,6 +36,7 @@ package com.icesoft.faces.context.effects;
 
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.application.StartupTime;
+import com.icesoft.faces.application.D2DViewHandler;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -47,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.lang.reflect.Method;
 
 /**
  *
@@ -231,7 +233,9 @@ public class JavascriptContext {
     public static String applyEffect(Effect effect, String id,
                                      FacesContext context) {
         //Get the real ID if a JSF component
-        UIComponent uiComponent = context.getViewRoot().findComponent(id);
+        //UIComponent uiComponent = context.getViewRoot().findComponent(id);
+
+        UIComponent uiComponent =  D2DViewHandler.findComponent(id, context.getViewRoot());
         if (uiComponent != null) {
             id = uiComponent.getClientId(context);
         }
@@ -256,9 +260,27 @@ public class JavascriptContext {
                                   FacesContext context) {
         if (effect == null || effect.isFired()) return;
         effect.setFired(true);
-        UIComponent uiComponent = context.getViewRoot().findComponent(id);
+        Object viewRoot = context.getViewRoot();
+        try{
+
+            
+       UIComponent uiComponent =  D2DViewHandler.findComponent(id, context.getViewRoot());
         if (uiComponent != null) {
             id = uiComponent.getClientId(context);
+        }
+        }catch(Exception e){
+            /*Class clazz = context.getViewRoot().getClass();
+            Method[] methods =clazz.getMethods();
+            for(int i = 0; i < methods.length; i++){
+                Method m = methods[i];
+                System.err.println("Method [" + m.getName() + "]");
+                Class[] args = m.getParameterTypes();
+                for(int a =0; a<args.length;a++){
+                    System.err.println("Arg [" + args[a].getName() + "]");
+                }
+            } */
+            System.err.println("View Root is [" + viewRoot.getClass().getName() + "]");
+            e.printStackTrace();
         }
         effect.setId(id);
         addEffect(effect, context);

@@ -2,6 +2,7 @@ package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.webapp.http.common.Configuration;
+import com.icesoft.faces.application.D2DViewHandler;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.ProgressListener;
@@ -13,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.faces.component.UIComponent;
 import java.io.IOException;
 import java.util.Map;
 
@@ -54,7 +56,8 @@ public class UploadServlet implements PseudoServlet {
                 ServletView view = (ServletView) views.get(viewIdentifier);
                 view.setAsCurrentDuring(request, response);
                 BridgeFacesContext context = view.getFacesContext();
-                FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
+                //FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
+                FileUploadComponent component =  (FileUploadComponent)D2DViewHandler.findComponent(componentID, context.getViewRoot());
                 progressCalculator.listener = component;
                 try {
                     component.upload(item, defaultFolder, maxSize);
