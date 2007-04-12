@@ -33,6 +33,7 @@
 
 package com.icesoft.faces.env;
 
+import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -41,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Vector;
 
 /**
@@ -143,7 +145,12 @@ public class ServletEnvironmentRequest
         name = null;
         while (items.hasMoreElements()) {
             name = (String) items.nextElement();
-            headers.put(name, req.getHeaders(name));
+            Enumeration values = req.getHeaders(name);
+            LinkedList valueList = new LinkedList();
+            while (values.hasMoreElements()) {
+                 valueList.add(values.nextElement());
+            }
+            headers.put(name, valueList);
         }
 
         parameters = new Hashtable();
@@ -225,15 +232,13 @@ public class ServletEnvironmentRequest
     }
 
     public String getHeader(String name) {
-        Enumeration allProps = (Enumeration) headers.get(name);
-        if (allProps.hasMoreElements()) {
-            return (String) allProps.nextElement();
-        }
-        return null;
+        LinkedList values = (LinkedList) headers.get(name);
+        return values.isEmpty() ? null : (String)  values.getFirst();
     }
 
     public Enumeration getHeaders(String name) {
-        return (Enumeration) headers.get(name);
+        LinkedList values = (LinkedList) headers.get(name);
+        return new IteratorEnumeration(values.iterator());
     }
 
     public Enumeration getHeaderNames() {
