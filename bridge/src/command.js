@@ -31,6 +31,10 @@
         application.dispose();
     };
 
+    This.SetCookie = function(message) {
+        document.cookie = message.firstChild.data;
+    };
+
     This.ServerError = function(message) {
         logger.error('Server side error');
         logger.error(message.firstChild.data);
@@ -62,6 +66,7 @@
 
     This.register('noop', Function.NOOP);
     This.register('updates', This.Updates);
+    This.register('set-cookie', This.SetCookie);
     This.register('redirect', This.Redirect);
     This.register('server-error', This.ServerError);
     This.register('session-expired', This.SessionExpired);
