@@ -182,12 +182,12 @@ public class MetadataXmlParser {
             source.setByteStream(stream);
             fcb = (FacesConfigBean) digester.parse(source);
         } catch(SAXException e){
-            System.err.println("@Please check the syntax for the following file: "+ url.getFile());
+            System.err.println("Please check the syntax for the following file: "+ url.getFile());
             e.printStackTrace();
             System.exit(1);
             
         } catch(IOException e){
-            System.err.println("@Please check the syntax for the following file: "+ url.getFile());
+            System.err.println("Please check the syntax for the following file: "+ url.getFile());
             e.printStackTrace();
             System.exit(1);
             
@@ -197,7 +197,7 @@ public class MetadataXmlParser {
                 try {
                     stream.close();
                 } catch (IOException e) {
-                    System.err.println("@Please check the following file:"+url.getFile());
+                    System.err.println("Please check the following file:"+url.getFile());
                     e.printStackTrace();
                     System.exit(1);
                 }

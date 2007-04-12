@@ -31,14 +31,7 @@
  *
  */
 
-/*
- * InternalConfig.java
- *
- * Created on February 27, 2007, 8:37 AM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 
 package com.icesoft.jsfmeta.util;
 
@@ -55,9 +48,9 @@ import java.util.Properties;
  */
 public class InternalConfig {
     
-        
+    
     private Properties properties;
-
+    
     
     private static String WORKING_FOLDER;
     
@@ -65,14 +58,12 @@ public class InternalConfig {
     public InternalConfig(Properties properties) {
         this.properties = properties;
     }
- 
+    
     public String getProperty(String keyValue){
         
         return properties.getProperty(keyValue);
     }
     
-        
-
     
     public void clear(){
         
