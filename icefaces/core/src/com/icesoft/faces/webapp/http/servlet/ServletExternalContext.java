@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-//for now extend BridgeExternalContext since there are so many bloody 'instanceof' tests
+//for now extend BridgeExternalContext since there are so many 'instanceof' tests
 public class ServletExternalContext extends BridgeExternalContext {
     private static String postBackKey;
 

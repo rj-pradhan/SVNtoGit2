@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-//for now extend BridgeFacesContext since there are so many bloody 'instanceof' tests
+//for now extend BridgeFacesContext since there are so many 'instanceof' tests
 public class BridgeFacesContext extends FacesContext {
     private static final Log log = LogFactory.getLog(BridgeFacesContext.class);
     private Application application;
