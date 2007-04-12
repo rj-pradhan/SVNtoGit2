@@ -62,6 +62,7 @@ public class SetCookie implements Command {
         int maxAge = cookie.getMaxAge();
         if (maxAge >= 0) {
             Date expiryDate = new Date(System.currentTimeMillis() + maxAge * 1000);
+            writer.write("expires=");
             writer.write(CookieDateFormat.format(expiryDate));
             writer.write("; ");
         }
