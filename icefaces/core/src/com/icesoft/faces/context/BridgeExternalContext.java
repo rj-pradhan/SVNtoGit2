@@ -68,6 +68,11 @@ public abstract class BridgeExternalContext extends ExternalContext {
 
     public abstract void addCookie(Cookie cookie);
 
+    /**
+     * This method is not necessary. The application developer can keep track
+     * of the added cookies.
+     * @deprecated
+     */
     public abstract Map getResponseCookieMap();
 
     public abstract Map collectBundles();
