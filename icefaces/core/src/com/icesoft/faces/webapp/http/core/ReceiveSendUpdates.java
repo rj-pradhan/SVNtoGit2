@@ -8,6 +8,7 @@ import javax.faces.FactoryFinder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.component.UIInput;
+import javax.faces.el.ValueBinding;
 import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -17,8 +18,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 public class ReceiveSendUpdates implements Server {
+    private static final String REQUIRED = "required";
     private static final LifecycleFactory LifecycleFactory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
     private Lifecycle lifecycle = LifecycleFactory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
     private Map commandQueues;
@@ -59,7 +62,7 @@ public class ReceiveSendUpdates implements Server {
     private void renderCyclePartial(FacesContext context,
                                     UIComponent component) {
         synchronized (context) {
-            List alteredRequiredComponents =
+            Map alteredRequiredComponents =
                     setRequiredFalseInFormContaining(component);
             com.icesoft.util.SeamUtilities.removeSeamDebugPhaseListener(lifecycle);
             lifecycle.execute(context);
@@ -68,17 +71,23 @@ public class ReceiveSendUpdates implements Server {
         }
     }
 
-    private void setRequiredTrue(List requiredComponents) {
-        Iterator i = requiredComponents.iterator();
+    private void setRequiredTrue(Map requiredComponents) {
+        Iterator i = requiredComponents.keySet().iterator();
         UIInput next = null;
         while (i.hasNext()) {
             next = (UIInput) i.next();
-            ((UIInput) next).setRequired(true);
+            ValueBinding valueBinding = (ValueBinding) 
+                    requiredComponents.get(next);
+            if (null != valueBinding) {
+                next.setValueBinding(REQUIRED, valueBinding);
+            } else {
+                next.setRequired(true);
+            }
         }
     }
 
-    private List setRequiredFalseInFormContaining(UIComponent component) {
-        List alteredComponents = new ArrayList();
+    private Map setRequiredFalseInFormContaining(UIComponent component) {
+        Map alteredComponents = new HashMap();
         UIComponent form = getContainingForm(component);
         setRequiredFalseOnAllChildrenExceptOne(form, component,
                 alteredComponents);
@@ -87,15 +96,24 @@ public class ReceiveSendUpdates implements Server {
 
     private void setRequiredFalseOnAllChildrenExceptOne(UIComponent parent,
                                                         UIComponent componentToAvoid,
-                                                        List alteredComponents) {
+                                                        Map alteredComponents) {
+        ValueBinding FALSE_BINDING = FacesContext.getCurrentInstance()
+                .getApplication().createValueBinding("#{false}");
         int length = parent.getChildCount();
         UIComponent next = null;
         for (int i = 0; i < length; i++) {
             next = (UIComponent) parent.getChildren().get(i);
             if (next instanceof UIInput && next != componentToAvoid) {
-                if (((UIInput) next).isRequired()) {
-                    ((UIInput) next).setRequired(false);
-                    alteredComponents.add(next);
+                UIInput input = (UIInput) next;
+                if (input.isRequired()) {
+                    ValueBinding valueBinding = 
+                            input.getValueBinding(REQUIRED);
+                    if (null != valueBinding) {
+                        input.setValueBinding(REQUIRED, FALSE_BINDING);
+                    } else {
+                        input.setRequired(false);
+                    }
+                    alteredComponents.put(input, valueBinding);
                 }
             }
             setRequiredFalseOnAllChildrenExceptOne(next, componentToAvoid,
