@@ -38,6 +38,7 @@ import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
+import com.icesoft.faces.application.D2DViewHandler;
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
@@ -91,7 +92,8 @@ public class PanelStackRenderer extends DomBasicRenderer {
             }
         } else {
             // render the selected child
-            childToRender = panelStack.findComponent(selectedPanel);
+            //childToRender = panelStack.findComponent(selectedPanel);
+            childToRender =  D2DViewHandler.findComponent(selectedPanel, facesContext.getViewRoot());
             if (childToRender == null) {
                 // if not found, render the first child
                 if (panelStack.getChildCount() > 0) {
