@@ -128,15 +128,15 @@ public class TestValidMetadataXML{
             transformer.transform(streamSource, streamResult);
             
         } catch (TransformerException e) {
-            System.err.println("@Please check the following file :\n"+streamSourceString);
+            System.err.println("Please check the following file :\n"+streamSourceString);
             e.printStackTrace();
             System.exit(1);
         } catch (FileNotFoundException e) {
-            System.err.println("@Please check the following file :\n"+streamSourceString);
+            System.err.println("Please check the following file :\n"+streamSourceString);
             e.printStackTrace();
             System.exit(1);
         } catch (Exception e) {
-            System.err.println("@Please check the following file :\n"+streamSourceString);
+            System.err.println("Please check the following file :\n"+streamSourceString);
             e.printStackTrace();
             System.exit(1);
         }
@@ -162,7 +162,7 @@ public class TestValidMetadataXML{
         
         documentBuilder.setErrorHandler(new ErrorHandler() {
             public void error(SAXParseException ex) {
-                System.err.println("@Please check the following \n"+"line number="+ex.getLineNumber()+
+                System.err.println("Please check the following \n"+"line number="+ex.getLineNumber()+
                         " column number= "+ ex.getColumnNumber()+
                         "\n URL="+ex.getSystemId());
                 ex.printStackTrace();
@@ -170,7 +170,7 @@ public class TestValidMetadataXML{
             }
             
             public void fatalError(SAXParseException ex) throws SAXException {
-                System.err.println("@Please check the following \n"+"line number="+ex.getLineNumber()+
+                System.err.println("Please check the following \n"+"line number="+ex.getLineNumber()+
                         " column number="+ ex.getColumnNumber()+
                         "\n URL="+ex.getSystemId());
                 ex.printStackTrace();
@@ -178,7 +178,7 @@ public class TestValidMetadataXML{
             }
             
             public void warning(SAXParseException ex) {
-                System.err.println("@Please check the following \n"+"line number="+ex.getLineNumber()+
+                System.err.println("Please check the following \n"+"line number="+ex.getLineNumber()+
                         " column number="+ ex.getColumnNumber()+
                         "\n URL="+ex.getSystemId());
                 ex.printStackTrace();

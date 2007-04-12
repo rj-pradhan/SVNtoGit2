@@ -96,15 +96,15 @@ public final class MetadataGenerator {
             try {
                 parser.parse(new URL(url), config);
             } catch (MalformedURLException ex) {
-                System.out.println("@Please check following: url="+url);
+                System.out.println("Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             } catch (IOException ex) {
-                System.out.println("@Please check following: url="+url);
+                System.out.println("Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             } catch (SAXException ex) {
-                System.out.println("@Please check following: url="+url);
+                System.out.println("Please check following: url="+url);
                 ex.printStackTrace();
                 System.exit(1);
             }

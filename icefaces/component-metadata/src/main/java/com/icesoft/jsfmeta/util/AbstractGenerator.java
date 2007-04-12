@@ -237,7 +237,6 @@ public abstract class AbstractGenerator {
 	}
 
 	public void setVerbose(boolean verbose) {
-            System.out.println("@@output"+verbose);
 		this.verbose = verbose;
 	}
 
