@@ -63,6 +63,7 @@ public class ServletExternalContext extends BridgeExternalContext {
     private Map initParameterMap;
     private Map requestMap;
     private Map requestCookieMap;
+    private Map responseCookieMap;
     private CommandQueue commandQueue;
     private Redirector redirector;
     private CookieTransporter cookieTransporter;
@@ -166,8 +167,9 @@ public class ServletExternalContext extends BridgeExternalContext {
                 requestCookieMap.put(cookie.getName(), cookie);
             }
         }
+        responseCookieMap = new HashMap();
 
-        this.requestMap = requestMapFactory.create(request);
+        requestMap = requestMapFactory.create(request);
 
         this.response = response;
     }
@@ -309,7 +311,12 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public void addCookie(Cookie cookie) {
+        responseCookieMap.put(cookie.getName(), cookie);
         cookieTransporter.send(cookie);
+    }
+
+    public Map getResponseCookieMap() {
+        return responseCookieMap;
     }
 
     //todo: see if we can execute full JSP cycle all the time (not only when page is parsed)

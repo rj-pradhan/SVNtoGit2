@@ -68,6 +68,8 @@ public abstract class BridgeExternalContext extends ExternalContext {
 
     public abstract void addCookie(Cookie cookie);
 
+    public abstract Map getResponseCookieMap();
+
     public abstract Map collectBundles();
 
     public abstract Writer getWriter(String encoding) throws IOException;
