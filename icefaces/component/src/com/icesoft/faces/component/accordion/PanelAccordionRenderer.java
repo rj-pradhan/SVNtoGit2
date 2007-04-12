@@ -32,28 +32,35 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-         Map map = (Map) context.getExternalContext().getSessionMap()
-                .get(CurrentStyle.class.getName());
-        String baseId = component.getClientId(context);
-        String contentId = baseId + "_content";
-        String style = (String)map.get(contentId);
-        PanelAccordion panelAccordion = (PanelAccordion)component;
-        if(style != null){
-            Boolean newState = Boolean.TRUE;
-            if(style.indexOf("display:none") != -1){
-                newState = Boolean.FALSE;
+        try {
+            Map map = (Map) context.getExternalContext().getSessionMap()
+                    .get(CurrentStyle.class.getName());
+            if (map != null) {
+                String baseId = component.getClientId(context);
+                String contentId = baseId + "_content";
+                String style = (String) map.get(contentId);
+                PanelAccordion panelAccordion = (PanelAccordion) component;
+                if (style != null) {
+                    Boolean newState = Boolean.TRUE;
+                    if (style.indexOf("display:none") != -1) {
+                        newState = Boolean.FALSE;
+                    }
+                    Boolean currentState = panelAccordion.getOpen();
+                    if (!newState.equals(currentState)) {
+                        ActionEvent ae = new ActionEvent(component);
+                        component.queueEvent(ae);
+                        panelAccordion.setOpen(newState);
+                    }
+                }
             }
-            Boolean currentState = panelAccordion.getOpen();
-            if(!newState.equals(currentState)){
-                ActionEvent ae = new ActionEvent(component);
-                component.queueEvent(ae);
-                panelAccordion.setOpen(newState);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-        PanelAccordion panelAccordion = (PanelAccordion)uiComponent;
+        PanelAccordion panelAccordion = (PanelAccordion) uiComponent;
         String base = panelAccordion.getStyleClass();
         boolean open = panelAccordion.getOpen().booleanValue();
         String headerClass = base + HEADER;
@@ -66,11 +73,11 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
             domContext.setRootNode(rootSpan);
             setRootElementId(facesContext, rootSpan, uiComponent);
         }
-        Element root = (Element)domContext.getRootNode();
+        Element root = (Element) domContext.getRootNode();
         root.setAttribute(HTML.CLASS_ATTR, containerClass);
         String baseID = uiComponent.getClientId(facesContext);
         Element header = domContext.createElement(HTML.DIV_ELEM);
-        Text text = domContext.createTextNode(((PanelAccordion)uiComponent).getLabel());
+        Text text = domContext.createTextNode(((PanelAccordion) uiComponent).getLabel());
         header.appendChild(text);
         header.setAttribute(HTML.CLASS_ATTR, headerClass);
         header.setAttribute(HTML.ONCLICK_ATTR, "Ice.Accordion.fire('" + baseID + "_content');");
@@ -87,7 +94,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         root.appendChild(container);
         container.setAttribute(HTML.CLASS_ATTR, contentClass);
 
-        if(!open){
+        if (!open) {
             container.setAttribute(HTML.STYLE_ATTR, "display:none;");
         }
         domContext.setCursorParent(container);
