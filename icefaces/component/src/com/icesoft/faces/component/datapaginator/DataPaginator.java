@@ -315,8 +315,10 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
             // DataPaginator may be a child of uiData
             forComp = getParent();
         } else {
+
             //forComp = findComponent(forStr);
-            forComp =  D2DViewHandler.findComponent(forStr, getFacesContext().getViewRoot());
+
+            forComp =  D2DViewHandler.findComponent(forStr, this);
         }
         if (forComp == null) {
             throw new IllegalArgumentException(
