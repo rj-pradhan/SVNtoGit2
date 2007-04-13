@@ -329,6 +329,10 @@ public class BridgeFacesContext extends FacesContext {
         this.responseComplete = true;
     }
 
+    public void resetRenderResponse() {
+        this.renderResponse = false;
+    }
+
     /**
      * The release() found in FacesContextImpl is more comprehensive: since they
      * blow away the context instance after a response, they null/false out much
