@@ -41,7 +41,7 @@ public class MainSessionBoundServlet implements PseudoServlet {
         PseudoServlet receiveSendUpdates = new ViewBoundAdaptingServlet(new ReceiveSendUpdates(views, synchronouslyUpdatedViews), sessionMonitor, views);
         PseudoServlet sendUpdates = new BasicAdaptingServlet(new SendUpdates(views));
 
-        if (configuration.getAttributeAsBoolean("synchronousUpdate", true)) {
+        if (configuration.getAttributeAsBoolean("synchronousUpdate", false)) {
             //just drain the updated views if in 'synchronous mode'
             allUpdatedViews.onPut(new DrainUpdatedViews());
         } else {
