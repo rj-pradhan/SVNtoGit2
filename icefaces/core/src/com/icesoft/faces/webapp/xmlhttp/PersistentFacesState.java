@@ -41,6 +41,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.faces.FactoryFinder;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
@@ -118,6 +119,15 @@ public class PersistentFacesState implements Serializable {
         Object viewNumber = sessionMap.get(PersistentFacesServlet.CURRENT_VIEW_NUMBER);
         PersistentFacesState facesState = (PersistentFacesState) sessionMap.get(viewNumber + "/" + PersistentFacesState.class);
         return facesState;
+    }
+
+    /**
+     * Return the FacesContext associated with this instance.
+     *
+     * @return the FacesContext for this instance
+     */
+    public FacesContext getFacesContext() {
+        return facesContext;
     }
 
     /**
