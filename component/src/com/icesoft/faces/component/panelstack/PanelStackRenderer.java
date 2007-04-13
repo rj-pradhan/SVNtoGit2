@@ -93,7 +93,7 @@ public class PanelStackRenderer extends DomBasicRenderer {
         } else {
             // render the selected child
             //childToRender = panelStack.findComponent(selectedPanel);
-            childToRender =  D2DViewHandler.findComponent(selectedPanel, facesContext.getViewRoot());
+            childToRender =  D2DViewHandler.findComponent(selectedPanel, panelStack);
             if (childToRender == null) {
                 // if not found, render the first child
                 if (panelStack.getChildCount() > 0) {
