@@ -8,18 +8,21 @@ Directory of metadata (src/main/resources):
 -- -- ice_properties (extended component properties)
 -- -- properties (Sun's RI properties, normally comes from baseline component)
 
-Tools require both grammar and metadata information for JSF components in 
-order to provide a design-time experience. 
+IDE needs both grammar and metadata information for JSF components in 
+order to provide a design-time experience.  
 
-The faces-config.xml contains grammar information and a minimal set of metadata for 
-components, attributes, properties, facets, and renderers. 
 
-Extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO xsd). 
+faces-config.xml ( grammar information and a minimal set of metadata for 
+components, attributes, properties, facets, and renderers )
+
+The following files extending the metadata in faces-config.xml. (Schema is based on Creator 2 dtd, TODO xsd). 
 It is defined with data for generating tag class,  tld file and beainfo specifc to IDE.
 
 extended-faces-config.xml (Netbeans VWP specifc)
 extended-faces-config-creator2.xml (Creator 2 specific )
 
+Generator Configuration file:
+main/resources/conf/config.properties
 
 
 How to add in a new custom component:
