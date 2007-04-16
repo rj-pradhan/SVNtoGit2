@@ -415,8 +415,14 @@ public class ServletExternalContext extends BridgeExternalContext {
      */
     public void resetRequestMap() {
         if (standardScope) {
-            requestMap.clear();
-        } 
+
+            Enumeration e = request.getAttributeNames();
+            Object key;
+            while(e.hasMoreElements() ) {
+                key = e.nextElement();
+                request.removeAttribute((String) key );
+            }
+        }
     }
 
     public void injectBundles(Map bundles) {
