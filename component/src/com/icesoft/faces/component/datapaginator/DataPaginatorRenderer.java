@@ -281,23 +281,23 @@ public class DataPaginatorRenderer extends DomBasicRenderer {
             renderFacet(facesContext, scroller, facetComp,
                         DataPaginator.FACET_FIRST);
         }
-        if (scroller.isVertical()) {
-            facetComp = scroller.getFastRewind();
-            if (facetComp != null) {
-                if (scroller.isVertical()) {
-                    tr = domContext.createElement(HTML.TR_ELEM);
-                    table.appendChild(tr);
-                }
-                td = domContext.createElement(HTML.TD_ELEM);
-                td.setAttribute(HTML.CLASS_ATTR, scrollButtonCellClass);
-                tr.appendChild(td);
-                domContext.setCursorParent(td);
-                domContext.streamWrite(facesContext, uiComponent,
-                                       domContext.getRootNode(), td);
-                renderFacet(facesContext, scroller, facetComp,
-                            DataPaginator.FACET_FAST_REWIND);
+
+        facetComp = scroller.getFastRewind();
+        if (facetComp != null) {
+            if (scroller.isVertical()) {
+                tr = domContext.createElement(HTML.TR_ELEM);
+                table.appendChild(tr);
             }
+            td = domContext.createElement(HTML.TD_ELEM);
+            td.setAttribute(HTML.CLASS_ATTR, scrollButtonCellClass);
+            tr.appendChild(td);
+            domContext.setCursorParent(td);
+            domContext.streamWrite(facesContext, uiComponent,
+                                   domContext.getRootNode(), td);
+            renderFacet(facesContext, scroller, facetComp,
+                        DataPaginator.FACET_FAST_REWIND);
         }
+        
         facetComp = scroller.getPrevious();
         if (facetComp != null) {
             if (scroller.isVertical()) {
@@ -340,23 +340,23 @@ public class DataPaginatorRenderer extends DomBasicRenderer {
             renderFacet(facesContext, scroller, facetComp,
                         DataPaginator.FACET_NEXT);
         }
-        if (scroller.isVertical()) {
-            facetComp = scroller.getFastForward();
-            if (facetComp != null) {
-                if (scroller.isVertical()) {
-                    tr = domContext.createElement(HTML.TR_ELEM);
-                    table.appendChild(tr);
-                }
-                td = domContext.createElement(HTML.TD_ELEM);
-                td.setAttribute(HTML.CLASS_ATTR, scrollButtonCellClass);
-                tr.appendChild(td);
-                domContext.setCursorParent(td);
-                domContext.streamWrite(facesContext, uiComponent,
-                                       domContext.getRootNode(), td);
-                renderFacet(facesContext, scroller, facetComp,
-                            DataPaginator.FACET_FAST_FORWARD);
+
+        facetComp = scroller.getFastForward();
+        if (facetComp != null) {
+            if (scroller.isVertical()) {
+                tr = domContext.createElement(HTML.TR_ELEM);
+                table.appendChild(tr);
             }
+            td = domContext.createElement(HTML.TD_ELEM);
+            td.setAttribute(HTML.CLASS_ATTR, scrollButtonCellClass);
+            tr.appendChild(td);
+            domContext.setCursorParent(td);
+            domContext.streamWrite(facesContext, uiComponent,
+                                   domContext.getRootNode(), td);
+            renderFacet(facesContext, scroller, facetComp,
+                        DataPaginator.FACET_FAST_FORWARD);
         }
+        
         facetComp = scroller.getLast();
         if (facetComp != null) {
             if (scroller.isVertical()) {
