@@ -443,8 +443,21 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     private class CustomRequestScopeFactory implements RequestMapFactory {
+        private String lastRequestURI = "";
+        private CopyingRequestAttributesMap map;
+
         public Map create(HttpServletRequest request) {
-            return requestMap == null ? new CopyingRequestAttributesMap(request) : requestMap;
+            //test if request is a page reload
+            String requestURI = request.getRequestURI();
+            if (map == null) {
+                lastRequestURI = requestURI;
+                return map = new CopyingRequestAttributesMap(request);
+            } else if (lastRequestURI.equals(requestURI)) {
+                lastRequestURI = requestURI;
+                return map = map.cloneWith(request);
+            } else {
+                return map;
+            }
         }
     }
 
