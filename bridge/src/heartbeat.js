@@ -49,6 +49,13 @@
 
                 this.pingListeners.broadcast(new This.Ping(timeoutBomb, this, this.logger));
             }.bind(this);
+
+
+            window.onKeyPress(function(e) {
+                if (e.keyCode() == 46 && e.isCtrlPressed() && e.isShiftPressed()) {
+                    this.beatPID ? this.stop() : this.start();
+                }
+            }.bind(this));
         },
 
         start: function() {
@@ -60,6 +67,7 @@
         stop: function() {
             try {
                 this.beatPID.cancel();
+                this.beatPID = null;
                 this.lostPongListeners.each(function(listener) {
                     listener.ignoreNotifications();
                 });
