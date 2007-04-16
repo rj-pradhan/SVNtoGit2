@@ -100,11 +100,19 @@ Autocompleter.Base.prototype = {
     Event.observe(this.element, "blur", this.onBlur.bindAsEventListener(this));
     Event.observe(this.element, "keypress", this.onKeyPress.bindAsEventListener(this));
     Autocompleter.Finder.add(this.element, this);
+      //this.updateNOW('');
   },
 
   show: function() {
+      this.update = $(this.update.id);
+    Ice.Autocompleter.logger.debug("Show start");
+    if(Element.getStyle(this.update, 'display')=='none'){
+        this.options.onShow(this.element, this.update);
+    Ice.Autocompleter.logger.debug("Showing");
+        }else{
+Ice.Autocompleter.logger.debug("Not Showing");        
+        }
 
-    if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
     if(!this.iefix &&
       (navigator.appVersion.indexOf('MSIE')>0) &&
       (navigator.userAgent.indexOf('Opera')<0) &&
@@ -116,6 +124,7 @@ Autocompleter.Base.prototype = {
       this.iefix = $(this.update.id+'_iefix');
     }
     if(this.iefix) setTimeout(this.fixIEOverlapping.bind(this), 50);
+      Ice.Autocompleter.logger.debug("Show done");
 
   },
 
@@ -507,16 +516,16 @@ Ice.Autocompleter.init = function(){
 Ice.Autocompleter.check = function(ele){
     var i = 0;
     for(i = 0; i < Ice.Autocompleter.rendered.length;i++){
-        ac = Ice.Autocompleter.rendered[i];
+        var ac = Ice.Autocompleter.rendered[i];
         if(ac!=null){
         try{
-            acEle = ac.element;
+            var acEle = ac.element;
             if(acEle!=null){
-                currentEle = $(ac.element.id);
+                var currentEle = $(ac.element.id);
                 // If the current element is not found it could be the result of
                 // a panel not currently being rendered. It might be back later.
                 if(currentEle != null  && currentEle != acEle){
-
+                    Ice.Autocompleter.logger.debug("Rebuild Autocomplete");
                     Ice.Autocompleter.rendered[i] = null;
                     new Ice.Autocompleter(currentEle, ac.update.id, ac.options, ac.rowClass, ac.selectedRowClass);
 
@@ -611,12 +620,13 @@ Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prot
   },
 
   updateNOW: function(text){
+       Ice.Autocompleter.logger.debug("Start Update NOW");
       if(this.hidden){this.hidden = false;
-          //Ice.Autocompleter.logger.debug("Not showing due to hide force");
+          Ice.Autocompleter.logger.debug("Not showing due to hide force");
           return;}
       this.hasFocus = true;
       this.updateChoices(text);
-      //Ice.Autocompleter.logger.debug("Update NOW");
+
 
       this.show();
 
