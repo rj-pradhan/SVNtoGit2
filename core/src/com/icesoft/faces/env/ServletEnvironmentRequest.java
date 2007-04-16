@@ -221,6 +221,25 @@ public class ServletEnvironmentRequest
         return cookies;
     }
 
+
+    public void setAttribute(String name, Object value) {
+        super.setAttribute(name, value);
+        try {
+            servletRequest.setAttribute(name, value);
+        } catch (Exception e) {
+            //ignore because the container disposed servletRequest by now 
+        }
+    }
+
+    public void removeAttribute(String name) {
+        super.removeAttribute(name);
+        try {
+            servletRequest.removeAttribute(name);
+        } catch (Exception e) {
+            //ignore because the container disposed servletRequest by now
+        }
+    }
+
     public long getDateHeader(String name) {
         String header = getHeader(name);
         if (header == null) {
