@@ -414,14 +414,18 @@ public class ServletExternalContext extends BridgeExternalContext {
      * the Request Map.  
      */
     public void resetRequestMap() {
+        
         if (standardScope) {
-
             Enumeration e = request.getAttributeNames();
-            Object key;
+            String key;
             while(e.hasMoreElements() ) {
-                key = e.nextElement();
-                request.removeAttribute((String) key );
+                key = (String) e.nextElement();
+                // Leave Tomahawk parameters in for the filter
+                if (!key.startsWith( "org.apache.myfaces") ) {
+                    request.removeAttribute( key );
+                } 
             }
+            requestMap.clear();
         }
     }
 
