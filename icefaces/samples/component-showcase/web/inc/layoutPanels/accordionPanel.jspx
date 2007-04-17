@@ -181,7 +181,7 @@
       this placeholder
     -->
     <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
-        <iframe src="./docs/panelPositionedDoc.html"
+        <iframe src="./docs/accordionPanelDoc.html"
                 class="includeIframe"
                 width="100%"></iframe>
     </ice:panelTab>
@@ -192,7 +192,7 @@
     -->
     <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
         <iframe
-                src="./sourcecodeStream.html?path=./inc/layoutPanels/positionedPanel.jspx"
+                src="./sourcecodeStream.html?path=./inc/layoutPanels/accordionPanel.jspx"
                 class="includeIframe" width="100%"></iframe>
     </ice:panelTab>
 
