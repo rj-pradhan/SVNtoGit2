@@ -157,10 +157,6 @@
             }.bind(this);
             resize();
             window.onResize(resize);
-            messageContainer = null;
-            messageElement = null;
-            descriptionElement = null;
-            buttonElement = null;
         }
     });
 
@@ -194,6 +190,7 @@
 
             var panelContainer = document.getElementById('history-frame');
             panelContainer.style.position = 'absolute';
+            panelContainer.style.display = 'block';
             panelContainer.style.visibility = 'visible';
             panelContainer.style.backgroundColor = 'white';
             panelContainer.style.zIndex = '10000';
@@ -201,8 +198,8 @@
             panelContainer.style.left = '0';
 
             var resize = function() {
-                panelContainer.style.width = window.width() + 'px';
-                panelContainer.style.height = window.height() + 'px';
+                panelContainer.style.width = document.documentElement.scrollWidth + 'px';
+                panelContainer.style.height = document.documentElement.scrollHeight + 'px';
             };
             resize();
             window.onResize(resize);
