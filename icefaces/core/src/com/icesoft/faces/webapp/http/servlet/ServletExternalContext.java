@@ -420,10 +420,7 @@ public class ServletExternalContext extends BridgeExternalContext {
             String key;
             while(e.hasMoreElements() ) {
                 key = (String) e.nextElement();
-                // Leave Tomahawk parameters in for the filter
-                if (!key.startsWith( "org.apache.myfaces") ) {
-                    request.removeAttribute( key );
-                } 
+                request.removeAttribute( key );
             }
             requestMap.clear();
         }
