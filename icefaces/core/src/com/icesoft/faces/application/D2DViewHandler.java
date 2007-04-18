@@ -118,8 +118,10 @@ public class D2DViewHandler extends ViewHandler {
 
     public D2DViewHandler() {
         try {
-            InputStream inputStream = this.getClass().getResourceAsStream("serializedTagToComponentMapFull.ser");
-            parser = new Parser(inputStream);
+            if(!Beans.isDesignTime()){
+                InputStream inputStream = this.getClass().getResourceAsStream("serializedTagToComponentMapFull.ser");
+                parser = new Parser(inputStream);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,6 +135,10 @@ public class D2DViewHandler extends ViewHandler {
     // Render the components
     public void renderView(FacesContext context, UIViewRoot viewToRender)
             throws IOException, FacesException {
+        if(Beans.isDesignTime()){
+            delegate.renderView(context, viewToRender);
+        }        
+        
         initializeParameters(context);
         if (delegateView(viewToRender.getViewId())) {
             delegate.renderView(context, viewToRender);
@@ -164,6 +170,11 @@ public class D2DViewHandler extends ViewHandler {
      * @return A new viewRoot
      */
     public UIViewRoot createView(FacesContext context, String viewId) {
+        
+        if(Beans.isDesignTime()){
+            return delegate.createView(context, viewId);
+        }
+        
         initializeParameters(context);
 
         if (delegateView(viewId)) {
@@ -203,8 +214,12 @@ public class D2DViewHandler extends ViewHandler {
      *         or if trying to model Seam JSF behaviour.
      */
     public UIViewRoot restoreView(FacesContext context, String viewId) {
-        this.initializeParameters(context);
+                
+        if(Beans.isDesignTime()){
+            return delegate.restoreView(context, viewId);
+        }
 
+        this.initializeParameters(context);
 
         if (delegateView(viewId)) {
             return delegate.restoreView(context, viewId);
