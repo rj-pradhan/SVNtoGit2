@@ -287,6 +287,8 @@ public class PersistentFacesState implements Serializable {
         public void run() {
             try {
                 Thread.sleep(delay);
+                // JIRA #1377 Call execute before render.
+                execute();
                 render();
             } catch (RenderingException e) {
                 if (log.isDebugEnabled()) {
