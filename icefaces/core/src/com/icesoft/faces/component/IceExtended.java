@@ -40,7 +40,7 @@ public interface IceExtended {
     public static final String RENDERED_ON_USER_ROLE_ATTR =
             "renderedOnUserRole";
 
-    public void setPartialSubmit(boolean partialSumbit);
+    public void setPartialSubmit(boolean partialSubmit);
 
     public boolean getPartialSubmit();
 

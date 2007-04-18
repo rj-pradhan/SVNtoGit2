@@ -48,7 +48,7 @@ public class HtmlForm
     public static final String COMPONENT_TYPE = "com.icesoft.faces.HtmlForm";
     public static final String RENDERER_TYPE = "com.icesoft.faces.Form";
     private static final boolean DEFAULT_PARITALSUBMIT = false;
-    private Boolean partialSumbit = null;
+    private Boolean partialSubmit = null;
     private String enabledOnUserRole = null;
     private String renderedOnUserRole = null;
     private String styleClass = null;
@@ -59,21 +59,21 @@ public class HtmlForm
     }
 
     /**
-     * <p>Set the value of the <code>partialSumbit</code> property.</p>
+     * <p>Set the value of the <code>partialSubmit</code> property.</p>
      */
-    public void setPartialSubmit(boolean partialSumbit) {
-        this.partialSumbit = Boolean.valueOf(partialSumbit);
+    public void setPartialSubmit(boolean partialSubmit) {
+        this.partialSubmit = Boolean.valueOf(partialSubmit);
     }
 
 
     /**
-     * <p>Return the value of the <code>partialSumbit</code> property.</p>
+     * <p>Return the value of the <code>partialSubmit</code> property.</p>
      */
     public boolean getPartialSubmit() {
-        if (partialSumbit != null) {
-            return partialSumbit.booleanValue();
+        if (partialSubmit != null) {
+            return partialSubmit.booleanValue();
         }
-        ValueBinding vb = getValueBinding("partialSumbit");
+        ValueBinding vb = getValueBinding("partialSubmit");
         Boolean boolVal =
                 vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
         return boolVal != null ? boolVal.booleanValue() : DEFAULT_PARITALSUBMIT;
@@ -174,7 +174,7 @@ public class HtmlForm
     public Object saveState(FacesContext context) {
         Object values[] = new Object[5];
         values[0] = super.saveState(context);
-        values[1] = partialSumbit;
+        values[1] = partialSubmit;
         values[2] = enabledOnUserRole;
         values[3] = renderedOnUserRole;
         values[4] = autocomplete;
@@ -188,12 +188,11 @@ public class HtmlForm
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        partialSumbit = (Boolean) values[1];
+        partialSubmit = (Boolean) values[1];
         enabledOnUserRole = (String) values[2];
         renderedOnUserRole = (String) values[3];
         autocomplete = (String) values[4];
     }
 }
-   
 
-  
+
