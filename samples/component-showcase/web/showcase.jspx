@@ -43,7 +43,7 @@
         doctypeSystem="http://www.w3.org/TR/html4/loose.dtd"/>
     <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
         <title><ice:outputText value="#{msgs.showCasetitle}" /></title>
         <ice:outputText style="padding-top:0px; padding-bottom:0px;" value="#{styleBean.style}" escape="false" />
         <ice:outputStyle href="css/showcase_style.css" rel="stylesheet" type="text/css" />
