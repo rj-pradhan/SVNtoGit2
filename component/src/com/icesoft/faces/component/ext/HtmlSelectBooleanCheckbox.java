@@ -61,7 +61,7 @@ public class HtmlSelectBooleanCheckbox
     public static final String RENDERER_TYPE = "com.icesoft.faces.Checkbox";
     private static final boolean DEFAULT_VISIBLE = true;
     private String styleClass = null;
-    private Boolean partialSumbit = null;
+    private Boolean partialSubmit = null;
     private String enabledOnUserRole = null;
     private String renderedOnUserRole = null;
     private Effect effect;
@@ -148,20 +148,20 @@ public class HtmlSelectBooleanCheckbox
     }
 
     /**
-     * <p>Set the value of the <code>partialSumbit</code> property.</p>
+     * <p>Set the value of the <code>partialSubmit</code> property.</p>
      */
-    public void setPartialSubmit(boolean partialSumbit) {
-        this.partialSumbit = Boolean.valueOf(partialSumbit);
+    public void setPartialSubmit(boolean partialSubmit) {
+        this.partialSubmit = Boolean.valueOf(partialSubmit);
     }
 
     /**
-     * <p>Return the value of the <code>partialSumbit</code> property.</p>
+     * <p>Return the value of the <code>partialSubmit</code> property.</p>
      */
     public boolean getPartialSubmit() {
-        if (partialSumbit != null) {
-            return partialSumbit.booleanValue();
+        if (partialSubmit != null) {
+            return partialSubmit.booleanValue();
         }
-        ValueBinding vb = getValueBinding("partialSumbit");
+        ValueBinding vb = getValueBinding("partialSubmit");
         Boolean boolVal =
                 vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
         return boolVal != null ? boolVal.booleanValue() :
@@ -513,7 +513,7 @@ public class HtmlSelectBooleanCheckbox
     public Object saveState(FacesContext context) {
         Object values[] = new Object[23];
         values[0] = super.saveState(context);
-        values[1] = partialSumbit;
+        values[1] = partialSubmit;
         values[2] = enabledOnUserRole;
         values[3] = renderedOnUserRole;
         values[4] = styleClass;
@@ -542,7 +542,7 @@ public class HtmlSelectBooleanCheckbox
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        partialSumbit = (Boolean) values[1];
+        partialSubmit = (Boolean) values[1];
         enabledOnUserRole = (String) values[2];
         renderedOnUserRole = (String) values[3];
         styleClass = (String) values[4];
@@ -563,6 +563,5 @@ public class HtmlSelectBooleanCheckbox
         autocomplete = (String) values[22];
     }
 }
-   
 
-  
+
