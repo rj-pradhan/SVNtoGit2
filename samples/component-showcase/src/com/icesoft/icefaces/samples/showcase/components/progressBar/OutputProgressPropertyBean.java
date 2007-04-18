@@ -46,32 +46,85 @@ import javax.faces.event.ValueChangeEvent;
  */
 public class OutputProgressPropertyBean {
 
-    // value passed into component for progress label
-    private String progressLabel = null;
-
-    // value stored in input field for custom value
-    private String progressLabelField = null;
-    private boolean progressLabelCustomValue;
-
-    // value passed into component  for progress completed label
-    private String progressCompleteLabel = null;
-
-    // value stored in input field for custom value
-    private String progressCompleteLabelField = null;
-    private boolean progressCompleteLabelCustomValue;
-
-    // position of label with respect to the progress bar
-    private String labelPosition = "top";
-
-    // custom "in progress" label enabled
-    private boolean customProgress = false;
-
-    // custom "complete" label enabled
-    private boolean customComplete = false;
-
     // switch between standard and indeterminate modes
     private String mode = "standard";
+    
+    // position of label with respect to the progress bar
+    private String labelPosition = "top";
+    
+    // values stored in selectBooleanCheckbox and inputText for custom progress
+    private boolean customProgress;
+    private String progressLabel;
 
+    // values stored in selectBooleanCheckbox and inputText for custom completion
+    private boolean customComplete;
+    private String progressCompleteLabel;
+
+
+    /**
+     * Sets the mode of the progress bar.
+     *
+     * @param mode the mode of the progress bar
+     */
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     * Gets the mode of the progress bar.
+     *
+     * @return the mode of the progress bar
+     */
+    public String getMode() {
+        return mode;
+    }
+
+    /**
+     * Sets the label position.  Values can be as follows: left, right, top,
+     * topcenter, topright, bottom, bottomcenter, bottomright, embed.
+     *
+     * @param labelPosition new label position.
+     */
+    public void setLabelPosition(String labelPosition) {
+        this.labelPosition = labelPosition;
+    }
+
+    /**
+     * Gets the current position of the label.
+     *
+     * @return current position of label.
+     */
+    public String getLabelPosition() {
+        return labelPosition;
+    }
+
+    /**
+     * Sets the state of the custom progress label.
+     *
+     * @param customProgress the status of the custom progress label
+     */
+    public void setCustomProgress(boolean customProgress) {
+        this.customProgress = customProgress;
+    }
+
+    /**
+     * Determines whether a custom progress label is used.
+     *
+     * @return the status of custom progress label
+     */
+    public boolean isCustomProgress() {
+        return customProgress;
+    }
+
+    /**
+     * Sets the value of the progress Label.
+     *
+     * @param newLabel new value for label.
+     */
+    public void setProgressLabel(String newLabel) {
+        progressLabel = newLabel;
+    }
+    
     /**
      * Gets the current progress label.
      *
@@ -98,12 +151,30 @@ public class OutputProgressPropertyBean {
     }
 
     /**
-     * Sets the value of the progress Label.
+     * Sets the state of the custom complete label.
      *
-     * @param newLabel new value for label.
+     * @param customComplete
      */
-    public void setProgressLabel(String newLabel) {
-        progressLabel = newLabel;
+    public void setCustomComplete(boolean customComplete) {
+        this.customComplete = customComplete;
+    }
+    
+    /**
+     * Determines whether a custom complete label is used.
+     *
+     * @return the status of custom complete label
+     */
+    public boolean isCustomComplete() {
+        return customComplete;
+    }
+    
+    /**
+     * Sets the value of the progress complete label.
+     *
+     * @param newLabel new value for the complete label.
+     */
+    public void setProgressCompleteLabel(String newLabel) {
+        progressCompleteLabel = newLabel;
     }
 
     /**
@@ -119,122 +190,11 @@ public class OutputProgressPropertyBean {
      * @return
      */
     public String getProgressCompleteLabelAfter() {
-
         if (customComplete) {
             return progressCompleteLabel;
         } else return null;
     }
-
-    /**
-     * Sets the value of the progress complete label.
-     *
-     * @param newLabel new value for the complete label.
-     */
-    public void setProgressCompleteLabel(String newLabel) {
-        progressCompleteLabel = newLabel;
-    }
-
-    /**
-     * Gets the current position of the label.
-     *
-     * @return current position of label.
-     */
-    public String getLabelPosition() {
-        return labelPosition;
-    }
-
-    /**
-     * Gets the progress label field used to submit the text.
-     *
-     * @return progress label value.
-     */
-    public String getProgressLabelField() {
-        return progressLabelField;
-    }
-
-    /**
-     * @param progressLabelField
-     */
-    public void setProgressLabelField(String progressLabelField) {
-        this.progressLabelField = progressLabelField;
-        if (progressLabelCustomValue) {
-            progressLabel = this.progressLabelField;
-        } else {
-            // update the progress bar binding state
-            progressLabel = null;
-        }
-    }
-
-    /**
-     * @param progressCompleteLabelField
-     */
-    public void setProgressCompleteLabelField(
-            String progressCompleteLabelField) {
-        this.progressCompleteLabelField = progressCompleteLabelField;
-
-        if (progressCompleteLabelCustomValue) {
-            progressCompleteLabel = this.progressCompleteLabelField;
-        } else {
-            // upate the progress bar binding state
-            progressCompleteLabel = null;
-        }
-    }
-
-    /**
-     * Indicates if the progress label is using a custom label.
-     *
-     * @return true if a custom label is being used, false otherwise.
-     */
-    public boolean isProgressLabelCustomValue() {
-        return progressLabelCustomValue;
-    }
-
-    /**
-     * Indicates if the progress label is using a custom label.
-     *
-     * @return true if a custom label is being used, false otherwise.
-     */
-    public boolean isProgressCompleteLabelCustomValue() {
-        return progressCompleteLabelCustomValue;
-    }
-
-    /**
-     * Sets the label position.  Values can be as follows: left, right, top,
-     * topcenter, topright, bottom, bottomcenter, bottomright, embed.
-     *
-     * @param labelPosition new label position.
-     */
-    public void setLabelPosition(String labelPosition) {
-        this.labelPosition = labelPosition;
-    }
-
-    /**
-     * ?
-     */
-    public void getProgressLabelCustomSelected() {
-        progressLabelCustomValue = true;
-    }
-
-    /**
-     * Progress label complete changed listener. Updates the state of the
-     * progress label and calls a render on the persistent faces context.
-     *
-     * @param event values changed event containing new progress complete label
-     */
-    public void progressCompleteLabelChanged(ValueChangeEvent event) {
-        // figure out if label is to be custom, if so set the label value
-        // otherwise set the label value to null
-        progressCompleteLabelCustomValue =
-                Boolean.valueOf((String) event.getNewValue()).booleanValue();
-        if (progressCompleteLabelCustomValue) {
-            progressCompleteLabel = progressCompleteLabelField;
-        } else {
-            // upate the progress bar binding state
-            progressCompleteLabel = null;
-        }
-        // progressBar.setLabelComplete(progressCompleteLabel);
-    }
-
+    
     /**
      * Progress label postion has changed. Update the state of the progress
      * label position and calls a render on the persistent faces context.
@@ -243,62 +203,5 @@ public class OutputProgressPropertyBean {
      */
     public void progressPositionChanged(ValueChangeEvent event) {
         labelPosition = (String) event.getNewValue();
-        //progressBar.setLabelPosition(labelPosition);
-    }
-
-    /**
-     * Gets the mode of the progress bar.
-     *
-     * @return the mode of the progress bar
-     */
-    public String getMode() {
-        return mode;
-    }
-
-    /**
-     * Sets the mode of the progress bar.
-     *
-     * @param mode the mode of the progress bar
-     */
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    /**
-     * Determines whether a custom progress label is used.
-     *
-     * @return the status of custom progress label
-     */
-    public boolean isCustomProgress() {
-        return customProgress;
-    }
-
-    /**
-     * Sets the state of the custom progress label.
-     *
-     * @param customProgress the status of the custom progress label
-     */
-    public void setCustomProgress(boolean customProgress) {
-
-        this.customProgress = customProgress;
-    }
-
-    /**
-     * Determines whether a custom complete label is used.
-     *
-     * @return the status of custom complete label
-     */
-    public boolean isCustomComplete() {
-        return customComplete;
-    }
-
-    /**
-     * Sets the state of the custom complete label.
-     *
-     * @param customComplete
-     */
-    public void setCustomComplete(boolean customComplete) {
-
-        this.customComplete = customComplete;
     }
 }
