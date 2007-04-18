@@ -174,6 +174,7 @@ public class OutputProgressRenderBean implements Renderable {
 
         public LongOperationRunner(OutputProgressRenderBean outputBean) {
             disableStartButton = true;
+            percent = 0;
             this.outputBean = outputBean;
         }
 

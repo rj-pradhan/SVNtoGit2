@@ -116,13 +116,13 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
         }
         //update percent value in determinate mode only
         if (progressBar.getIndeterminate() == false) {
-            ((Text) percentageText).setData(percentValue + " %");
+            percentageText.setData(percentValue + " %");
         }
 
         if (percentValue < 100) {
 
-            if (progressLabel != null && progressLabel.trim().length() > 0) {
-                ((Text) percentageText).setData(progressLabel);
+            if (progressLabel != null && progressLabel.length() > 0) {
+                percentageText.setData(progressLabel);
             }
             //following if block is for Indeterminate mode only
             if (progressBar.getIndeterminate()) {
@@ -132,7 +132,7 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
                             base,
                             CSS_DEFAULT.OUTPUT_PROGRESS_INDEREMINATE_INACTIVE_CLASS);
                     fillBar.setAttribute(HTML.CLASS_ATTR, className);
-                    ((Text) percentageText).setData(space);
+                    percentageText.setData(space);
                 } else {
                     String className = Util.appendNewStyleClass(
                             CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
@@ -142,11 +142,10 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
                     fillBar.setAttribute(HTML.STYLE_ATTR,
                                          "position:absolute;width:100%");
 
-                    if (progressLabel != null &&
-                        progressLabel.trim().length() > 0) {
-                        ((Text) percentageText).setData(progressLabel);
+                    if (progressLabel != null && progressLabel.length() > 0) {
+                        percentageText.setData(progressLabel);
                     } else {
-                        ((Text) percentageText).setData(space);
+                        percentageText.setData(space);
                     }
                 }
             }
@@ -161,9 +160,9 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
                 fillBar.setAttribute(HTML.STYLE_ATTR,
                                      "position:absolute;width:100%;");
             }
-            if (progressBar.getProgressLabelComplete() != null) {
-                ((Text) percentageText)
-                        .setData(progressBar.getProgressLabelComplete());
+            String progressCompleteLabel = progressBar.getProgressLabelComplete();
+            if (progressCompleteLabel != null && progressCompleteLabel.length() > 0) {
+                percentageText.setData(progressCompleteLabel);
             }
         }
 
