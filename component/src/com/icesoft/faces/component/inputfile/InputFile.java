@@ -140,7 +140,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 Streams.copy(stream.openStream(), output, true);
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
-                broadcast(new ActionEvent(this));
+                getActionListener().invoke( FacesContext.getCurrentInstance(), 
+                        new Object[] {new ActionEvent(this)} );
             } else {
                 status = INVALID_NAME_PATTERN;
                 context.addMessage(null, MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, new Object[] { fileName, namePattern }));
