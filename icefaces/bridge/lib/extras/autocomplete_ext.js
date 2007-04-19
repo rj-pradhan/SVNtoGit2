@@ -99,12 +99,12 @@ Autocompleter.Base.prototype = {
 
     Event.observe(this.element, "blur", this.onBlur.bindAsEventListener(this));
     Event.observe(this.element, "keypress", this.onKeyPress.bindAsEventListener(this));
-    Autocompleter.Finder.add(this.element, this);
+
   },
 
   show: function() {
 
-    if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
+    if(Element.getStyle(this.update, 'display')=='none')this.options.onShow(this.element, this.update);
     if(!this.iefix &&
       (navigator.appVersion.indexOf('MSIE')>0) &&
       (navigator.userAgent.indexOf('Opera')<0) &&
@@ -151,6 +151,7 @@ Autocompleter.Base.prototype = {
             this.getUpdatedChoices(true,event);
         }
     }
+       Ice.Autocompleter.logger.debug("Key Press");
     if(this.active)
       switch(event.keyCode) {
        case Event.KEY_TAB:
@@ -271,7 +272,6 @@ Autocompleter.Base.prototype = {
                 Element.addClassName(this.getEntry(i),ar[ai]);
         }
       if(this.hasFocus) {
-
         this.show();
         this.active = true;
       }
@@ -296,7 +296,11 @@ Autocompleter.Base.prototype = {
   },
 
   getEntry: function(index) {
-    return this.update.firstChild.childNodes[index];
+      try{
+        return this.update.firstChild.childNodes[index];
+          }catch(ee){
+          return null;
+      }
   },
 
   getCurrentEntry: function() {
@@ -363,6 +367,8 @@ Autocompleter.Base.prototype = {
       this.index = -1;
 
       this.render();
+    }else{
+      Ice.Autocompleter.logger.debug("Not updating choices Not Changed[" + this.changed  +"] hasFocus[" +this.hasFocus+ "]");  
     }
   },
 
@@ -387,7 +393,8 @@ Autocompleter.Base.prototype = {
             Event.stopObserving(this.element, "mousemove", this.onMove);
         Event.stopObserving(this.element, "blur", this.onBlur);
         Event.stopObserving(this.element, "keypress", this.onKeyPress);
-
+        Autocompleter.Finder.list[this.element.id] = null;
+         Ice.Autocompleter.logger.debug("Destroyed autocomplete [" + this.element.id + "]");
     },
 
   onObserverEvent: function() {
@@ -498,86 +505,46 @@ Object.extend(Object.extend(Ajax.Autocompleter.prototype, Autocompleter.Base.pro
 // See scriptaculous.js for full license.
 
 Ice.Autocompleter = Class.create();
-Ice.Autocompleter.rendered = new Array();
-
-Ice.Autocompleter.init = function(){
-        Ice.Autocompleter.logger = logger.child('autocomplete');
- };
-
-Ice.Autocompleter.check = function(ele){
-    var i = 0;
-    for(i = 0; i < Ice.Autocompleter.rendered.length;i++){
-        ac = Ice.Autocompleter.rendered[i];
-        if(ac!=null){
-        try{
-            acEle = ac.element;
-            if(acEle!=null){
-                currentEle = $(ac.element.id);
-                // If the current element is not found it could be the result of
-                // a panel not currently being rendered. It might be back later.
-                if(currentEle != null  && currentEle != acEle){
-
-                    Ice.Autocompleter.rendered[i] = null;
-                    new Ice.Autocompleter(currentEle, ac.update.id, ac.options, ac.rowClass, ac.selectedRowClass);
-
-                    ac.dispose();
-                    ac.element = null;
-                }else{
-                    try{
-                    if(ele!=null){
-                        if(ac.element.id != ele.id){
-                            ac.hide();
-                        }
-                    }
-                    }catch(eee){Ice.Autocompleter.logger.error("Error hiding old Autocomplete [" + eee.message + "]", eee);}
-                }
-            }
-            }catch(ee){Ice.Autocompleter.logger.error("Error initializing Autocompleter [" + ee.message + "]", ee);}
-        }
-        }
-    }
-
-Ice.Autocompleter.destroyAll= function(){
-    var i = 0;
-    for(i = 0; i < Ice.Autocompleter.rendered.length;i++){
-        ac = Ice.Autocompleter.rendered[i];
-        if(ac!=null){
-        try{
-             ac.dispose();
-             ac.element = null;
-            }catch(ee){alert("Error destroying Autocompleter [" + ee.message + "]", ee);}
-        }
-        } Ice.Autocompleter.rendered = new Array();
-    }
 
 
-Ice.Autocompleter.isInitialized = function(ele){
-    ele = $(ele);
-    var found = false;
-    $A(Ice.Autocompleter.rendered).each(function(ac){
-            if(ac){
-                if(ac.element.id == ele.id){
-                    found=true;
-                }
-            }
-        });
-    return found;
-}
+
+
+
 
 
 Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prototype), {
-  initialize: function(element, update, options, rowClass, selectedRowClass) {
-      //alert("Nothing Done");
-    if(Ice.Autocompleter.isInitialized(element))return;
+  initialize: function(id, updateId, options, rowClass, selectedRowClass) {
+      Ice.Autocompleter.logger.debug("Building Ice Autocompleter ID [" + id + "]");
+      var existing = Autocompleter.Finder.list[id];
+      if(existing){
+          if(existing.monitor.changeDetected()){
+            Ice.Autocompleter.logger.debug("Change has been detected. Rebuilding");
+            Ice.StateMon.checkAll();
+            Ice.StateMon.rebuild();
+
+          }
+          Ice.Autocompleter.logger.debug("Ice Autocompleter ID [" + id + "] Already exists");
+          return;
+      }
+
       if(options)
         options.minChars  = 0;
       else
         options = {minChars:0};
-      this.baseInitialize(element, update, options, rowClass, selectedRowClass);
+      var element = $(id);
+      var ue = $(updateId);
+      this.baseInitialize(element, ue, options, rowClass, selectedRowClass);
 
-     this.options.onComplete    = this.onComplete.bind(this);
-    this.options.defaultParams = this.options.parameters || null;
-    Ice.Autocompleter.rendered.push(this);
+      this.options.onComplete    = this.onComplete.bind(this);
+      this.options.defaultParams = this.options.parameters || null;
+      this.monitor = new Ice.AutocompleterMonitor(element,ue,options,rowClass,selectedRowClass);
+      this.monitor.object = this;
+      Ice.StateMon.add(this.monitor);
+      Autocompleter.Finder.add(this.element, this);
+      Ice.Autocompleter.logger.debug("Done building Ice Autocompleter");
+      if(this.monitor.changeDetected()){
+        Ice.Autocompleter.logger.debug("Change has been detected");
+      }
   },
 
   getUpdatedChoices: function(isEnterKey, event) {
@@ -611,17 +578,28 @@ Object.extend(Object.extend(Ice.Autocompleter.prototype, Autocompleter.Base.prot
   },
 
   updateNOW: function(text){
+
+
+
       if(this.hidden){this.hidden = false;
           //Ice.Autocompleter.logger.debug("Not showing due to hide force");
           return;}
+      if(this.update && this.update.id){
+          var newEle = $(this.update.id);
+          if(newEle != this.update){
+              //Ice.Autocompleter.logger.debug("Update Element replaced");
+              //this.update = newEle;
+          }
+      }
       this.hasFocus = true;
+      Element.cleanWhitespace(this.update);
       this.updateChoices(text);
       //Ice.Autocompleter.logger.debug("Update NOW");
 
       this.show();
 
       this.render();
-      Ice.Autocompleter.check(this.element);
+     
   }
 
 });

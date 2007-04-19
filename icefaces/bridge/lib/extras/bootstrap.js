@@ -35,16 +35,16 @@ var extrasInit = function() {
      try{
 
          Ice.DnD.init();
+          Ice.Autocompleter.logger = logger.child('autocomplete');
 
 
-
-    Ice.Autocompleter.init();
+    
     if(connection && connection.onReceive){
     connection.onReceive(function() {
        
 	Ice.StateMon.checkAll();
         Ice.StateMon.rebuild();
-        Ice.Autocompleter.check();
+
 
     });
     }
@@ -59,7 +59,7 @@ var extrasCleanup = function(){
  try{
 
 	Ice.StateMon.destroyAll();
-     Ice.Autocompleter.destroyAll();
+     
      Autocompleter.Finder.list = new Array();
     }catch(ee){
          Ice.DnD.logger.debug('Unload Error [' + ee + ']');        
