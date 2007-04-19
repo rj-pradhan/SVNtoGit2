@@ -104,13 +104,13 @@ also
         </property-extension>
 </property>
 
-#3 create entity in sun-faces-config.xml
+#3 create entity in extended-faces-config.xml
 
   <!ENTITY ice-cust-style-props SYSTEM "ice_cust_properties/cust-style-props.xml">
   <!ENTITY style-component SYSTEM "custom/style-component.xml">
   <!ENTITY style-renderer SYSTEM "custom/style-renderer.xml">
 
-#4 add component and render in faces-config.xml
+#4 add component and render in faces-config.xml (component/conf/META-INF/faces-config.xml)
 
       <renderer>
             <component-family>com.icesoft.faces.OutputStyle</component-family>
