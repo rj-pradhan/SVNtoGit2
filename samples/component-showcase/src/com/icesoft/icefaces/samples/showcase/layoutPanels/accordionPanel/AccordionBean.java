@@ -35,6 +35,7 @@ package com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel;
 
 import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.Highlight;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,27 +48,26 @@ public class AccordionBean {
     private List data = new ArrayList();
     private boolean open = true;
     private Highlight effectOutputText = new Highlight("#a4bdd2");
-    private boolean infoBoolean=false;
+    private boolean infoBoolean = false;
     private String name;
     private String status;
     private String selectedPanel = "";
-     
-
 
     public AccordionBean() {
-        boolean b = true;
-        
-            data.add(new AccordionItem("Fruits"));
-            data.add(new AccordionItem("Vegetables"));
-            
+
+        data.add(new AccordionItem("Fruits"));
+        data.add(new AccordionItem("Vegetables"));
+
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
+
     public List getData() {
         return data;
     }
@@ -75,10 +75,12 @@ public class AccordionBean {
     public void setData(List data) {
         this.data = data;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-    public String getStatus(){
+
+    public String getStatus() {
         return status;
     }
 
@@ -90,49 +92,51 @@ public class AccordionBean {
     public void setOpen(boolean open) {
         this.open = open;
     }
-    
+
     public Effect getEffectOutputText() {
         return effectOutputText;
     }
-    
+
     /*
-     * Sets the output text effect
-     *@param Effect effectOutputText
-     */
+    * Sets the output text effect
+    *@param Effect effectOutputText
+    */
     public void setEffectOutputText(Effect effectOutputText) {
         this.effectOutputText = (Highlight) effectOutputText;
     }
-    public void setInfoBoolean(boolean bool){
-        infoBoolean=bool;
+
+    public void setInfoBoolean(boolean bool) {
+        infoBoolean = bool;
     }
-    public boolean getInfoBoolean(){
+
+    public boolean getInfoBoolean() {
         return infoBoolean;
     }
-    
-    public void loginActionListener(ActionEvent event){
+
+    public void loginActionListener(ActionEvent event) {
         setInfoBoolean(true);
         setStatus("Logged In");
     }
-    
-    public void registerActionListener(ActionEvent event){
+
+    public void registerActionListener(ActionEvent event) {
         setInfoBoolean(true);
         setStatus("Registered");
-        
+
     }
-    
-     /**
-     * Used in the accordion panel example to change between the selected 
+
+    /**
+     * Used in the accordion panel example to change between the selected
      * panels.
      *
      * @param event from the action listener.
      */
-    public void selectedPanelChangedAction(ActionEvent event){
+    public void selectedPanelChangedAction(ActionEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
         Map map = context.getExternalContext().getRequestParameterMap();
-        selectedPanel = (String) map.get("products"); 
-        
+        selectedPanel = (String) map.get("products");
+
     }
-    
+
     /**
      * Sets the selected panel name to the specified panel name.
      *
