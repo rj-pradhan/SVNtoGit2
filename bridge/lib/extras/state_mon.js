@@ -258,3 +258,25 @@ Ice.DroppableMonitor.prototype = Object.extend(new Ice.MonitorBase, {
     Droppables.add(this.id, this.createOptions);
   }
 });
+
+Ice.AutocompleterMonitor = Class.create();
+Ice.AutocompleterMonitor.prototype = Object.extend(new Ice.MonitorBase, {
+  initialize:function(htmlElement, update, createOptions, rowClass, selectedRowClass  ){
+    this.type = 'Autocompleter';
+    this.object = null;
+    this.id = htmlElement.id;
+    this.htmlElement = htmlElement;
+    this.createOptions = createOptions;
+    this.update = update;
+    this.rowClass = rowClass;
+    this.selectedRowClass = selectedRowClass;
+  },
+  destroy:function(){
+    this.object.dispose();
+  },
+  rebuild:function(){
+    Ice.StateMon.logger.debug('Rebuilding Autocompleter ID[' + this.id + '] Options[' + this.createOptions + ']');
+    return new Ice.Autocompleter(this.id, this.update.id, this.createOptions, this.rowClass, this.selectedRowClass);
+  }
+
+});
