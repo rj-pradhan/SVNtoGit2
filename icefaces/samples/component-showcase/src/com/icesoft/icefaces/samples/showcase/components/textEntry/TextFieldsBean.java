@@ -47,6 +47,8 @@ public class TextFieldsBean {
     private String password;
     private String comments;
 
+    private float numberValue = 500000.0f;
+
     /**
      * Gets the name property.
      *
@@ -126,5 +128,14 @@ public class TextFieldsBean {
         comments = "";
 
         return "Done";
+    }
+
+
+    public float getNumberValue() {
+        return numberValue;
+    }
+
+    public void setNumberValue(float numberValue) {
+        this.numberValue = numberValue;
     }
 }

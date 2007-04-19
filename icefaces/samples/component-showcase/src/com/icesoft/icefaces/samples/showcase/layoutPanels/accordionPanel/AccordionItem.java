@@ -62,7 +62,8 @@ public class AccordionItem {
         this.label = label;
     }
 
-    public void actionListener(ActionEvent e){
-        System.err.println("Row [" + label + "] is [" + (open?"Open":"Closed") + "]");
+    public void actionListener(ActionEvent e) {
+        System.err.println(
+                "Row [" + label + "] is [" + (open ? "Open" : "Closed") + "]");
     }
 }
