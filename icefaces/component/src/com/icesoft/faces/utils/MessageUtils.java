@@ -5,6 +5,9 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -16,6 +19,7 @@ import javax.faces.context.FacesContext;
  */
 
 public class MessageUtils {
+    private static Log log = LogFactory.getLog(MessageUtils.class);
     private static String DETAIL_SUFFIX = "_detail";
     private static int SUMMARY = 0;
     private static int DETAIL = 1;
@@ -33,7 +37,11 @@ public class MessageUtils {
         String bundleName = facesContext.getApplication().getMessageBundle();
         //see if the message has been overridden by the application
         if (bundleName != null) {
-            loadMessageInfo(bundleName, locale, messageId, messageInfo);
+            try {
+                loadMessageInfo(bundleName, locale, messageId, messageInfo);
+            } catch (Exception e)  {
+                log.warn(e + ", using " + ICE_MESSAGES_BUNDLE);
+            }
         }
         //if not overridden then check in Icefaces message bundle.
         if (messageInfo[SUMMARY] == null && messageInfo[DETAIL]== null) {
