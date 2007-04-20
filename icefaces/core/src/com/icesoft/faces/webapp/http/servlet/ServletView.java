@@ -1,6 +1,7 @@
 package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.context.ViewListener;
 import com.icesoft.faces.env.ServletEnvironmentRequest;
 import com.icesoft.faces.webapp.command.Command;
 import com.icesoft.faces.webapp.command.CommandQueue;
@@ -36,7 +37,7 @@ public class ServletView implements CommandQueue {
     private ServletEnvironmentRequest wrappedRequest;
     private Command currentCommand = NOOP;
     private String viewIdentifier;
-    private Collection onDisposeListeners = new ArrayList();
+    private Collection viewListeners = new ArrayList();
 
 
     public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
@@ -47,7 +48,8 @@ public class ServletView implements CommandQueue {
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
-        this.persistentFacesState = new PersistentFacesState(facesContext, onDisposeListeners, configuration);
+        this.persistentFacesState = new PersistentFacesState(facesContext, viewListeners, configuration);
+        this.notifyViewCreation();
     }
 
     public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
@@ -91,7 +93,7 @@ public class ServletView implements CommandQueue {
         try {
             allServedViews.put(viewIdentifier);
         } catch (InterruptedException e) {
-            Log.debug("Failed to queue updated view", e);
+            Log.warn("Failed to queue updated view", e);
         }
     }
 
@@ -115,15 +117,31 @@ public class ServletView implements CommandQueue {
     }
 
     public void dispose() {
-        Iterator i = onDisposeListeners.iterator();
+        this.notifyViewDisposal();
+        this.release();
+    }
+
+    private void notifyViewCreation() {
+        Iterator i = viewListeners.iterator();
         while (i.hasNext()) {
             try {
-                Runnable listener = (Runnable) i.next();
-                listener.run();
+                ViewListener listener = (ViewListener) i.next();
+                listener.viewCreated();
             } catch (Throwable t) {
-                Log.warn("Failed to invoke view disposal listener", t);
+                Log.warn("Failed to invoke view listener", t);
             }
         }
-        this.release();
+    }
+
+    private void notifyViewDisposal() {
+        Iterator i = viewListeners.iterator();
+        while (i.hasNext()) {
+            try {
+                ViewListener listener = (ViewListener) i.next();
+                listener.viewDisposed();
+            } catch (Throwable t) {
+                Log.warn("Failed to invoke view listener", t);
+            }
+        }
     }
 }
