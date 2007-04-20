@@ -252,7 +252,7 @@ public class ServletEnvironmentRequest
 
     public String getHeader(String name) {
         LinkedList values = (LinkedList) headers.get(name);
-        return values == null || values.isEmpty() ? 
+        return values == null || values.isEmpty() ?
                null : (String)  values.getFirst();
     }
 

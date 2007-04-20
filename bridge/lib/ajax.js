@@ -223,6 +223,8 @@
                 //executed also when the connection is aborted.
                 this.request.onreadystatechange = Function.NOOP;
                 this.request.abort();
+            } catch (e) {
+                //ignore, the request was discarded by the browser
             } finally {
                 //avoid potential memory leaks since 'this.request' is a native object
                 this.request = null;

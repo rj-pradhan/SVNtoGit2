@@ -95,7 +95,7 @@
         this.application = new This.Application;
     });
 
-    window.onUnload(function() {
+    window.onBeforeUnload(function() {
         this.application.dispose();
     });
 });

@@ -41,11 +41,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.faces.FactoryFinder;
-import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -70,14 +71,16 @@ public class PersistentFacesState implements Serializable {
 
     private ClassLoader renderableClassLoader = null;
     private boolean synchronousMode;
+    private Collection onDisposeListeners;
 
-    public PersistentFacesState(BridgeFacesContext facesContext, Configuration configuration) {
+    public PersistentFacesState(BridgeFacesContext facesContext, Collection onDisposeListeners, Configuration configuration) {
         //JIRA case ICE-1365
         //Save a reference to the web app classloader so that server-side
         //render requests work regardless of how they are originated.
         renderableClassLoader = Thread.currentThread().getContextClassLoader();
 
         this.facesContext = facesContext;
+        this.onDisposeListeners = onDisposeListeners;
         this.synchronousMode = configuration.getAttributeAsBoolean("synchronousUpdate", false);
 
         //put this state in the session -- mainly for the fileupload
@@ -268,6 +271,10 @@ public class PersistentFacesState implements Serializable {
 
     public ClassLoader getRenderableClassLoader() {
         return renderableClassLoader;
+    }
+
+    public void onDispose(Runnable listener) {
+        onDisposeListeners.add(listener);
     }
 
     private class RenderRunner implements Runnable {
