@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class SessionDispatcher implements PseudoServlet {
-    //having a static field here is ok because web applications are started in separate classloaders
     private static final Log Log = LogFactory.getLog(SessionDispatcher.class);
+    //having a static field here is ok because web applications are started in separate classloaders
     private final static List SessionDispatchers = new ArrayList();
     private Map sessionBoundServers = new HashMap();
 
@@ -55,12 +55,9 @@ public abstract class SessionDispatcher implements PseudoServlet {
         }
     }
 
-    private void sessionShutdown(HttpSession session) {
+    private void sessionDestroyed(HttpSession session) {
         PseudoServlet server = (PseudoServlet) sessionBoundServers.get(session);
         server.shutdown();
-    }
-
-    private void sessionDestroyed(HttpSession session) {
         sessionBoundServers.remove(session);
     }
 
@@ -83,19 +80,6 @@ public abstract class SessionDispatcher implements PseudoServlet {
                     new RuntimeException(e);
                 }
             }
-        }
-
-        public void sessionShutdown(HttpSession session) {
-            Iterator i = SessionDispatchers.iterator();
-            while (i.hasNext()) {
-                try {
-                    SessionDispatcher sessionDispatcher = (SessionDispatcher) i.next();
-                    sessionDispatcher.sessionShutdown(session);
-                } catch (Exception e) {
-                    new RuntimeException(e);
-                }
-            }
-            session.invalidate();
         }
 
         public void sessionDestroyed(HttpSessionEvent event) {
@@ -167,12 +151,12 @@ public abstract class SessionDispatcher implements PseudoServlet {
                 try {
                     if (isExpired()) {
                         sessionMonitors.remove(session);
-                        sessionShutdown(session);
+                        session.invalidate();
                     }
                 } catch (IllegalStateException e) {
                     //session was already invalidated by the container
                 } catch (Throwable t) {
-                    //just inform that something went wrong
+                    //warn that something went wrong
                     Log.warn("Failed to monitor session expiry", t);
                 }
             }

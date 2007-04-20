@@ -11,16 +11,21 @@ import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.util.SeamUtilities;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.Lock;
 import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 
-//todo: refactor this structure into an object with behavior
 public class ServletView implements CommandQueue {
+    private static final Log Log = LogFactory.getLog(ServletView.class);
     private static final NOOP NOOP = new NOOP();
     private Lock lock = new ReentrantLock();
     private ServletExternalContext externalContext;
@@ -31,6 +36,7 @@ public class ServletView implements CommandQueue {
     private ServletEnvironmentRequest wrappedRequest;
     private Command currentCommand = NOOP;
     private String viewIdentifier;
+    private Collection onDisposeListeners = new ArrayList();
 
 
     public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
@@ -41,7 +47,7 @@ public class ServletView implements CommandQueue {
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
-        this.persistentFacesState = new PersistentFacesState(facesContext, configuration);
+        this.persistentFacesState = new PersistentFacesState(facesContext, onDisposeListeners, configuration);
     }
 
     public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
@@ -72,7 +78,6 @@ public class ServletView implements CommandQueue {
      * @return true if the URI is considered different
      */
     public boolean differentURI(HttpServletRequest request) {
-
         // As a temporary fix, all GET requests are non-faces requests, and thus,
         // are considered different to force a new ViewRoot to be constructed.
         return (SeamUtilities.isSeamEnvironment()) ||
@@ -86,7 +91,7 @@ public class ServletView implements CommandQueue {
         try {
             allServedViews.put(viewIdentifier);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.debug("Failed to queue updated view", e);
         }
     }
 
@@ -107,5 +112,18 @@ public class ServletView implements CommandQueue {
 
     public BridgeFacesContext getFacesContext() {
         return facesContext;
+    }
+
+    public void dispose() {
+        Iterator i = onDisposeListeners.iterator();
+        while (i.hasNext()) {
+            try {
+                Runnable listener = (Runnable) i.next();
+                listener.run();
+            } catch (Throwable t) {
+                Log.warn("Failed to invoke view disposal listener", t);
+            }
+        }
+        this.release();
     }
 }

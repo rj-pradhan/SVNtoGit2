@@ -32,6 +32,10 @@
  */
 
 [ Ice.Connection = new Object, Ice.Connection, Ice.Ajax ].as(function(This, Connection, Ajax) {
+    This.FormPost = function(request) {
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    };
+
     This.BadResponse = function(request) {
         return request.isComplete() && !request.isResponseValid();
     }
@@ -59,6 +63,7 @@
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
             this.sendURI = configuration.context + '/block/send-receive-updates';
+            this.disposeViewsURI = configuration.context + '/block/dispose-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {
@@ -89,7 +94,7 @@
             this.logger.debug('send > ' + query.asString());
             var compoundQuery = query.addQuery(this.defaultQuery());
             this.channel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
-                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                This.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.BadResponse, this.badResponseCallback);
                 this.onSendListeners.broadcast(request);
@@ -114,9 +119,13 @@
 
         shutdown: function() {
             this.send = Function.NOOP;
-            [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
-                f.clear();
-            });
+            try {
+                this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
+            } finally {
+                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
+                    f.clear();
+                });
+            }
         }
     });
 });

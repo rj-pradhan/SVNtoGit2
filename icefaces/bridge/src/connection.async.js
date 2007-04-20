@@ -52,6 +52,7 @@
             this.getURI = configuration.context + '/block/receive-updates';
             this.sendURI = configuration.context + '/block/send-receive-updates';
             this.receiveURI = configuration.context + '/block/receive-updated-views';
+            this.disposeViewsURI = configuration.context + '/block/dispose-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {
@@ -83,9 +84,9 @@
                 this.updatedViews.saveValue(message.firstChild.data);
             }.bind(this));
             //monitor if the blocking connection needs to be started
-            //the blocking connection will be started by the first window that notices
-            //that the blocking connection was not started or was closed because the
-            //window owning it was closed
+            //
+            //the blocking connection will be started by the window noticing
+            //that the connection is not started
             this.listenerInitializerProcess = function() {
                 try {
                     this.listening = Ice.Cookie.lookup('bconn');
@@ -106,9 +107,7 @@
                         Command.register('pong', function() {
                             ping.pong();
                         });
-                        this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                        });
+                        this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
                     }.bind(this));
 
                     this.heartbeat.onLostPongs(this.connectionDownListeners.broadcaster(), heartbeatRetries);
@@ -129,7 +128,7 @@
                     var views = this.updatedViews.loadValue().split(' ');
                     if (views.intersect(viewIdentifiers()).isNotEmpty()) {
                         this.sendChannel.postAsynchronously(this.getURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                            Connection.FormPost(request);
                             request.on(Connection.Receive, this.receiveCallback);
                         }.bind(this));
                         this.updatedViews.saveValue(views.complement(viewIdentifiers()).join(' '));
@@ -158,7 +157,7 @@
             this.logger.debug('send > ' + compoundQuery.asString());
 
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
-                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                Connection.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
@@ -181,12 +180,19 @@
         },
 
         shutdown: function() {
-            //avoid sending XMLHTTP requests that might create new sessions on the server
             try {
+                this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
+            } catch (e) {
+                //ignore, we really need to shutdown
+            }
+            try {
+                //avoid sending XMLHTTP requests that might create new sessions on the server
                 this.send = Function.NOOP;
                 this.heartbeat.stop();
                 this.listening.remove();
                 this.listener.close();
+            } catch (e) {
+                //ignore, we really need to shutdown
             } finally {
                 [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(listeners) {
                     listeners.clear();

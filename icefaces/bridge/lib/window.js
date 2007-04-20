@@ -39,7 +39,7 @@ window.height = function() {
     return window.innerHeight ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.clientHeight;
 };
 
-['onLoad', 'onUnload', 'onResize', 'onScroll' ].each(function(name) {
+['onLoad', 'onUnload', 'onBeforeUnload', 'onResize', 'onScroll' ].each(function(name) {
     //avoid to redeclare the callback 
     if (!window[name]) {
         window[name] = function(listener) {
