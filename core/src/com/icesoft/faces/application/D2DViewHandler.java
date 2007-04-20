@@ -63,11 +63,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Arrays;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces ViewHandler implementation
@@ -334,8 +334,7 @@ public class D2DViewHandler extends ViewHandler {
                     .getRequestURI();
             if (null == uri) {
                 if (log.isWarnEnabled()) {
-                    log
-                            .warn("Failing over to default request path");
+                    log.warn("Failing over to default request path");
                 }
                 uri = "default";
 
@@ -395,7 +394,13 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     protected void renderResponse(FacesContext facesContext) throws IOException {
-        BridgeFacesContext context = (BridgeFacesContext) facesContext;
+        BridgeFacesContext context;
+        try {
+            context = (BridgeFacesContext) facesContext;
+        } catch (ClassCastException e) {
+            log.error("Running in a non-ICEfaces environment. Verify your servlet mappings.");
+            return;
+        }
         UIViewRoot root = context.getViewRoot();
         String viewId = root.getViewId();
 
