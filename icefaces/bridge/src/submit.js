@@ -85,18 +85,20 @@ function resetHiddenFieldsFor(aForm) {
     });
 }
 
-
 [ Ice ].as(function(This) {
 
     This.RedirectFormSubmits = function() {
         $enumerate(document.forms).each(function(form) {
-            //todo: should onreset be captured as well?
+            var previousOnSubmit = form.onsubmit;
             form.onsubmit = function(event) {
+                if (previousOnSubmit) previousOnSubmit();
                 $event(event).cancelDefaultAction();
                 iceSubmit(form, null, event);
             };
 
+            var previousSubmit = form.submit;
             form.submit = function() {
+                if (previousSubmit) previousSubmit(); 
                 iceSubmit(form, null, null);
             };
         });
