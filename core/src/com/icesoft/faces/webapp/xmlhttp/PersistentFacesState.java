@@ -34,6 +34,7 @@
 package com.icesoft.faces.webapp.xmlhttp;
 
 import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.context.ViewListener;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import edu.emory.mathcs.backport.java.util.concurrent.ExecutorService;
 import edu.emory.mathcs.backport.java.util.concurrent.Executors;
@@ -71,16 +72,16 @@ public class PersistentFacesState implements Serializable {
 
     private ClassLoader renderableClassLoader = null;
     private boolean synchronousMode;
-    private Collection onDisposeListeners;
+    private Collection viewListeners;
 
-    public PersistentFacesState(BridgeFacesContext facesContext, Collection onDisposeListeners, Configuration configuration) {
+    public PersistentFacesState(BridgeFacesContext facesContext, Collection viewListeners, Configuration configuration) {
         //JIRA case ICE-1365
         //Save a reference to the web app classloader so that server-side
         //render requests work regardless of how they are originated.
         renderableClassLoader = Thread.currentThread().getContextClassLoader();
 
         this.facesContext = facesContext;
-        this.onDisposeListeners = onDisposeListeners;
+        this.viewListeners = viewListeners;
         this.synchronousMode = configuration.getAttributeAsBoolean("synchronousUpdate", false);
 
         //put this state in the session -- mainly for the fileupload
@@ -273,8 +274,8 @@ public class PersistentFacesState implements Serializable {
         return renderableClassLoader;
     }
 
-    public void onDispose(Runnable listener) {
-        onDisposeListeners.add(listener);
+    public void addViewListener(ViewListener listener) {
+        viewListeners.add(listener);
     }
 
     private class RenderRunner implements Runnable {
