@@ -135,16 +135,15 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         fileInfo.setContentType(stream.getContentType());
         try {
             if (fileName != null && fileName.trim().matches(namePattern)) {
+                File folderFile = new File(folder);
+                if(!folderFile.exists())
+                    folderFile.mkdirs();
                 file = new File(folder, fileName);
                 OutputStream output = new FileOutputStream(file);
                 Streams.copy(stream.openStream(), output, true);
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
-                MethodBinding actionListener = getActionListener();
-                if(actionListener != null) {
-                    actionListener.invoke( FacesContext.getCurrentInstance(), 
-                        new Object[] {new ActionEvent(this)} );
-                }
+                notifyDone();
             } else {
                 status = INVALID_NAME_PATTERN;
                 context.addMessage(null, MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, new Object[] { fileName, namePattern }));
@@ -160,17 +159,34 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
             } catch (FileUploadBase.InvalidContentTypeException e) {
                 status = INVALID;
             } catch (Throwable t) {
-                //do nothing
+                status = INVALID;
             }
             fileInfo.setException(uploadException);
             file.delete();
-
+            notifyDone();
             throw uploadException;
         }
-
+        catch(IOException e) { // Eg: If creating the saved file fails
+            this.uploadException = e;
+            status = INVALID;
+            fileInfo.setException(e);
+            file.delete();
+            notifyDone();
+            throw e;
+        }
+        
         PersistentFacesState.getInstance().renderLater();
     }
-
+    
+    protected void notifyDone() {
+        MethodBinding actionListener = getActionListener();
+        if(actionListener != null) {
+            actionListener.invoke(
+                FacesContext.getCurrentInstance(),
+                new Object[] {new ActionEvent(this)} );
+        }
+    }
+    
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
         writer.write("<html><body>");
         writer.write("<form method=\"post\" action=\"./uploadHtml\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
