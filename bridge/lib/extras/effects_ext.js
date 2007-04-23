@@ -55,8 +55,10 @@ Effect.Highlight.prototype.finish = function() {
     this.element.highlighting = false;
 }
 
+
 Object.extend(Effect.DefaultOptions, {afterFinish:function(ele) {
     if (this.uploadCSS != null) {
+        //Upload to com.icesoft.faces.context.effects.CurrentStyle
         Ice.DnD.StyleReader.upload(ele.element, ele.options.submit);
     }
     if(ele.options.iceFinish)

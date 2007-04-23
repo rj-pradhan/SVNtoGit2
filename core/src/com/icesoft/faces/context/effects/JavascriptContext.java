@@ -223,7 +223,7 @@ public class JavascriptContext {
 
     /**
      * Wrap the effect in a javascript method to be called later. Returns the
-     * method name.
+     * method name. Used in local effects.
      *
      * @param effect
      * @param id
@@ -250,7 +250,7 @@ public class JavascriptContext {
     }
 
     /**
-     * Fire an effect at the end of the current render cycle
+     * Fire an effect at the end of the current render cycle. Fired from server, non local.
      *
      * @param effect
      * @param id      Target element of the effect

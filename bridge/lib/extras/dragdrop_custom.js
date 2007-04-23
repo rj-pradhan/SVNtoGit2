@@ -31,6 +31,8 @@
  *
  */
 
+
+// Used to improve drag perofmance when many drop targets are present
 var DropRegions = {
 
     init:false,
