@@ -285,7 +285,6 @@ public class TableRenderer
                 DOMContext.getDOMContext(facesContext, uiComponent);
         Element root = (Element) domContext.getRootNode();
 
-
         if (isScrollable(uiComponent)) {
             root = (Element) root.getChildNodes().item(1).getFirstChild();
         }
@@ -295,7 +294,7 @@ public class TableRenderer
 
         HtmlDataTable uiData = (HtmlDataTable) uiComponent;
         int rowIndex = uiData.getFirst();
-        if (uiData.getRowCount() <= rowIndex) {
+        if (uiData.getRowCount() >=0 && uiData.getRowCount() <= rowIndex) {
             domContext.stepOver();
             return;
         }
@@ -451,7 +450,7 @@ public class TableRenderer
             countOfRowsDisplayed++;
             if ((numberOfRowsToDisplay > 0 &&
                     countOfRowsDisplayed >= numberOfRowsToDisplay) || 
-                    (rowIndex >= uiData.getRowCount())) {
+                    (uiData.getRowCount() >=0 && rowIndex >= uiData.getRowCount())) {
                     break;
             }            
             
