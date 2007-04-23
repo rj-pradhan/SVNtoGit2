@@ -149,6 +149,7 @@ var Sortable = {
                 ghosting:    options.ghosting,
                 constraint:  options.constraint,
                 handle:      options.handle,
+                // Sort flag is used by Drag and Drop javascript to avoid Drag and Drop events from being sent
                 sort:        true};
 
         if (options.starteffect)
