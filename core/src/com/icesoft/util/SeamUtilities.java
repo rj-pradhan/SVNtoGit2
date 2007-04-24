@@ -40,13 +40,24 @@ public class SeamUtilities {
     private static Method seamAppendConversationMethodInstance;
     private static Method seamInstanceMethod;
     private static Method seamPageContextGetPrefixInstance;
+
+    // The method for getting the conversationId parameter name
     private static Method seamConversationIdParameterMethod;
-    private static Method seamBeforeRedirectMethodInstance;
+
+    // The method for getting the parent conversationId parameter name
+//    private static Method seamParentConversationIdParameterMethod;
+
+    // the method for getting the longRunningConversation parameter name
+    private static Method seamLongRunningConversationParameterMethod;
+
+//    private static Method seamBeforeRedirectMethodInstance;
 
     private static Object pageContextInstance;
 
     // This is just convenience, to avoid rebuilding the String
     private static String conversationIdParameter;
+    private static String conversationParentParameter = "parentConversationId";
+    private static String conversationLongRunningParameter;
 
     static {
         loadSeamEnvironment();
@@ -87,8 +98,12 @@ public class SeamUtilities {
             getConversationIdParameterName();
         } 
 
-        // IF the URI already contains a conversationId, strip it out,
-        // and start again.
+        // IF the URI already contains a conversationId, the isLongRunning parameter, or the
+        // parentConversationId parameter, strip it out, and start again.
+
+        // Maybe all of this has changed. This used to be necessary because the
+        // 
+
         if (log.isTraceEnabled()) {
             log.trace("SeamConversationURLParam: " + conversationIdParameter);
         }
@@ -100,18 +115,22 @@ public class SeamUtilities {
         boolean first = true; 
         while(st.hasMoreTokens() ){
             token = st.nextToken();
-            if (!( (token.indexOf(conversationIdParameter) > -1)  || ( token.indexOf("rvn") > -1) )) {
-                builder.append(token);
-
-                if (st.hasMoreTokens() ) {
-                    if (first) {
-                        builder.append('?');
-                        first = false;
-                    } else {
-                        builder.append('&');
-                    }
-                } 
+            if ( (token.indexOf(conversationIdParameter) > -1)  ||
+                 (token.indexOf(conversationParentParameter) > -1) ||
+                 (token.indexOf(conversationLongRunningParameter) > -1) ||
+                  token.indexOf("rvn") > -1 ) {
+                continue;
             } 
+            builder.append(token);
+
+            if (st.hasMoreTokens() ) {
+                if (first) {
+                    builder.append('?');
+                    first = false;
+                } else {
+                    builder.append('&');
+                }
+            }
         }
 
         if (builder.length() > 0) {
@@ -131,12 +150,14 @@ public class SeamUtilities {
                     seamEncodeMethodArgs[1] = viewId;
                 }
 
+//                seamBeforeRedirectMethodInstance.invoke(
+//                        seamManagerInstance, seamMethodNoArgs);
+
+                
                // This has to do what the Manager.redirect method does.
                 cleanedUrl = (String) seamAppendConversationMethodInstance
                         .invoke(seamManagerInstance, seamEncodeMethodArgs);
 
-                seamBeforeRedirectMethodInstance.invoke(
-                        seamManagerInstance, seamMethodNoArgs);
 
 
                 if (log.isDebugEnabled()) {
@@ -291,9 +312,19 @@ public class SeamUtilities {
                     seamManagerClass.getMethod("getConversationIdParameter",
                                                seamClassArgs);
 
-            seamBeforeRedirectMethodInstance =
-                    seamManagerClass.getMethod("beforeRedirect",
+            // This method is protected
+//             seamParentConversationIdParameterMethod =
+//                    seamManagerClass.getMethod("getParentConversationIdParameter",
+//                                               seamClassArgs);
+
+
+             seamLongRunningConversationParameterMethod =
+                    seamManagerClass.getMethod("getConversationIsLongRunningParameter",
                                                seamClassArgs);
+
+//            seamBeforeRedirectMethodInstance =
+//                    seamManagerClass.getMethod("beforeRedirect",
+//                                               seamClassArgs);
                     
 
 
@@ -324,9 +355,10 @@ public class SeamUtilities {
      * per application basis, so it wont change at runtime.
      * 
      * <p>
-     * Calling this method also fills in the versionedUrlParam instance
-     * variable, used in other methods in this class.  
-     *
+     * Calling this method also fills in the conversationIdParameter,
+     * the conversationIsLongRunningParameter, and the conversationParentIdParameter
+     * fields, as they are all configurable, and used in the encoding conversation
+     * id method
      * 
      * @return the appropriate parameter name for the application
      */
@@ -348,10 +380,23 @@ public class SeamUtilities {
             // The method may not be available on all versions of Manager
             if (seamConversationIdParameterMethod != null) {
 
-                returnVal = (String) seamConversationIdParameterMethod.invoke(
-                        seamManagerInstance, seamMethodNoArgs);
+                returnVal = (String) seamConversationIdParameterMethod.
+                        invoke(seamManagerInstance, seamMethodNoArgs);
                 conversationIdParameter = returnVal;
             }
+
+//            if (seamParentConversationIdParameterMethod != null) {
+//                conversationParentParameter = (String)
+//                        seamParentConversationIdParameterMethod.
+//                                invoke(seamManagerInstance, seamMethodNoArgs);
+//            }
+
+            if (seamLongRunningConversationParameterMethod != null) {
+                conversationLongRunningParameter = (String)
+                        seamLongRunningConversationParameterMethod.invoke(
+                        seamManagerInstance, seamMethodNoArgs);
+            }
+
 
         } catch (Exception e) {
             log.error("Exception fetching conversationId Parameter name: ", e);
