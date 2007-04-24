@@ -111,18 +111,16 @@ public class PersistentFacesState implements Serializable {
         return (PersistentFacesState) localInstance.get();
     }
 
-    //todo: remove this method when possible
     /**
      * Obtain the {@link PersistentFacesState} instance keyed by viewNumber from
      * the specified sessionMap. This API is not intended for application use.
      *
      * @param sessionMap session-scope parameters
      * @return the PersistentFacesState
+     * @deprecated
      */
-    public static synchronized PersistentFacesState getInstance(Map sessionMap) {
-        Object viewNumber = sessionMap.get(PersistentFacesServlet.CURRENT_VIEW_NUMBER);
-        PersistentFacesState facesState = (PersistentFacesState) sessionMap.get(viewNumber + "/" + PersistentFacesState.class);
-        return facesState;
+    public static PersistentFacesState getInstance(Map sessionMap) {
+        return getInstance();
     }
 
     /**

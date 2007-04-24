@@ -33,7 +33,8 @@
 
 package com.icesoft.faces.util.event.servlet;
 
-import java.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -41,9 +42,11 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 /*
  * The ContextEventRepeater was designed to forward servlet events to different
@@ -283,11 +286,11 @@ public class ContextEventRepeater
      * @param viewNumber the view number.
      */
     public synchronized static void viewNumberRetrieved(
-            HttpSession source, int viewNumber) {
+            HttpSession source, String icefacesID, int viewNumber) {
 
         ViewNumberRetrievedEvent viewNumberRetrievedEvent =
                 new ViewNumberRetrievedEvent(
-                        source, (String) source.getAttribute("icefacesID"),
+                        source, icefacesID,
                         viewNumber);
 
         bufferedContextEvents.put(viewNumberRetrievedEvent, source);
