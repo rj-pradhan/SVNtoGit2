@@ -40,7 +40,9 @@ import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
+import com.icesoft.faces.renderkit.LocationUtil;
 import com.icesoft.util.SeamUtilities;
+import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -63,11 +65,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Arrays;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces ViewHandler implementation
@@ -103,6 +105,8 @@ public class D2DViewHandler extends ViewHandler {
     public static final String HTML_CONTENT_TYPE =
             "text/html;charset=" + CHAR_ENCODING;
 
+    public static final String DEFAULT_VIEW_ID = "default";
+
     private String actionURLSuffix;
     protected boolean delegateNonIface = false;
     protected boolean delegateNonIfaceDefault = false;
@@ -118,10 +122,8 @@ public class D2DViewHandler extends ViewHandler {
 
     public D2DViewHandler() {
         try {
-            if(!Beans.isDesignTime()){
-                InputStream inputStream = this.getClass().getResourceAsStream("serializedTagToComponentMapFull.ser");
-                parser = new Parser(inputStream);
-            }
+            InputStream inputStream = this.getClass().getResourceAsStream("serializedTagToComponentMapFull.ser");
+            parser = new Parser(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -135,10 +137,6 @@ public class D2DViewHandler extends ViewHandler {
     // Render the components
     public void renderView(FacesContext context, UIViewRoot viewToRender)
             throws IOException, FacesException {
-        if(Beans.isDesignTime()){
-            delegate.renderView(context, viewToRender);
-        }        
-        
         initializeParameters(context);
         if (delegateView(viewToRender.getViewId())) {
             delegate.renderView(context, viewToRender);
@@ -170,11 +168,6 @@ public class D2DViewHandler extends ViewHandler {
      * @return A new viewRoot
      */
     public UIViewRoot createView(FacesContext context, String viewId) {
-        
-        if(Beans.isDesignTime()){
-            return delegate.createView(context, viewId);
-        }
-        
         initializeParameters(context);
 
         if (delegateView(viewId)) {
@@ -214,12 +207,8 @@ public class D2DViewHandler extends ViewHandler {
      *         or if trying to model Seam JSF behaviour.
      */
     public UIViewRoot restoreView(FacesContext context, String viewId) {
-                
-        if(Beans.isDesignTime()){
-            return delegate.restoreView(context, viewId);
-        }
-
         this.initializeParameters(context);
+
 
         if (delegateView(viewId)) {
             return delegate.restoreView(context, viewId);
@@ -334,7 +323,8 @@ public class D2DViewHandler extends ViewHandler {
                     .getRequestURI();
             if (null == uri) {
                 if (log.isWarnEnabled()) {
-                    log.warn("Failing over to default request path");
+                    log
+                            .warn("Failing over to default request path");
                 }
                 uri = "default";
 
@@ -379,11 +369,23 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public String getResourceURL(FacesContext context, String path) {
-        if (path.startsWith("/")) {
-            return context.getExternalContext().getRequestContextPath() + path;
-        } else {
-            return path;
+
+        String resourcePath = path;
+
+        if ( path != null ){
+            int startIndex = 0;
+            if (path.startsWith("/") ){
+                startIndex = 1;
+            }
+            resourcePath = LocationUtil.getAppBase(context) +
+                           path.substring(startIndex);
         }
+
+        if( log.isTraceEnabled() ){
+            log.trace( "\n  original path is " + path +
+                       "\n  new resource path " + resourcePath );
+        }
+        return resourcePath;
     }
 
     protected long getTimeAttribute(UIComponent root, String key) {
@@ -394,13 +396,7 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     protected void renderResponse(FacesContext facesContext) throws IOException {
-        BridgeFacesContext context;
-        try {
-            context = (BridgeFacesContext) facesContext;
-        } catch (ClassCastException e) {
-            log.error("Running in a non-ICEfaces environment. Verify your servlet mappings.");
-            return;
-        }
+        BridgeFacesContext context = (BridgeFacesContext) facesContext;
         UIViewRoot root = context.getViewRoot();
         String viewId = root.getViewId();
 

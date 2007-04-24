@@ -37,19 +37,17 @@ import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.CurrentStyle;
-import com.icesoft.faces.renderkit.ApplicationBaseLocator;
+import com.icesoft.faces.renderkit.LocationUtil;
 import com.icesoft.util.SeamUtilities;
+import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.Text;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -96,11 +94,11 @@ public class FormRenderer extends DomBasicRenderer {
             String includeServletPath =
                     (String) facesContext.getExternalContext()
                             .getRequestMap()
-                            .get(BridgeExternalContext.INCLUDE_SERVLET_PATH);
+                            .get(Constants.INC_SERVLET_PATH);
             if (includeServletPath != null) {
                 Element d2dJSElement = domContext.getDocument()
                         .createElement(HTML.SCRIPT_ELEM);
-                String base = ApplicationBaseLocator.locate(facesContext);
+                String base = LocationUtil.getAppBase(facesContext);
 
                 d2dJSElement.setAttribute(HTML.SRC_ATTR,
                                           base + "xmlhttp/icefaces-d2d.js?");
