@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class SessionDispatcher implements PseudoServlet {
-    private static final Log Log = LogFactory.getLog(SessionDispatcher.class);
     //having a static field here is ok because web applications are started in separate classloaders
+    private static final Log Log = LogFactory.getLog(SessionDispatcher.class);
     private final static List SessionDispatchers = new ArrayList();
     private Map sessionBoundServers = new HashMap();
 
@@ -28,14 +28,14 @@ public abstract class SessionDispatcher implements PseudoServlet {
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String sessionID = request.getSession(true).getId();
+        HttpSession session = request.getSession(true);
         //test if session is still around
-        if (sessionBoundServers.containsKey(sessionID)) {
-            PseudoServlet server = (PseudoServlet) sessionBoundServers.get(sessionID);
+        if (sessionBoundServers.containsKey(session.getId())) {
+            PseudoServlet server = (PseudoServlet) sessionBoundServers.get(session.getId());
             server.service(request, response);
         } else {
             //session has expired in the mean time, server removed by the session listener
-            throw new ServletException("Session expired or not yet created");
+            throw new ServletException("Session expired");
         }
     }
 
@@ -49,18 +49,19 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
     private void sessionCreated(HttpSession session) {
         try {
-            String sessionID = session.getId();
-            sessionBoundServers.put(sessionID, this.newServlet(session, Listener.lookupSessionMonitor(sessionID)));
+            sessionBoundServers.put(session.getId(), this.newServlet(session,Listener.lookupSessionMonitor(session)));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void sessionDestroyed(HttpSession session) {
-        String sessionID = session.getId();
-        PseudoServlet server = (PseudoServlet) sessionBoundServers.get(sessionID);
+    private void sessionShutdown(HttpSession session) {
+        PseudoServlet server = (PseudoServlet) sessionBoundServers.get(session.getId());
         server.shutdown();
-        sessionBoundServers.remove(sessionID);
+    }
+
+    private void sessionDestroyed(HttpSession session) {
+        sessionBoundServers.remove(session.getId());
     }
 
     protected abstract PseudoServlet newServlet(HttpSession session, Listener.Monitor sessionMonitor) throws Exception;
@@ -71,7 +72,7 @@ public abstract class SessionDispatcher implements PseudoServlet {
 
         public void sessionCreated(HttpSessionEvent event) {
             HttpSession session = event.getSession();
-            sessionMonitors.put(session.getId(), new Monitor(session));
+            sessionMonitors.put(session, new Monitor(session));
 
             Iterator i = SessionDispatchers.iterator();
             while (i.hasNext()) {
@@ -84,8 +85,22 @@ public abstract class SessionDispatcher implements PseudoServlet {
             }
         }
 
+        public void sessionShutdown(HttpSession session) {
+            Iterator i = SessionDispatchers.iterator();
+            while (i.hasNext()) {
+                try {
+                    SessionDispatcher sessionDispatcher = (SessionDispatcher) i.next();
+                    sessionDispatcher.sessionShutdown(session);
+                } catch (Exception e) {
+                    new RuntimeException(e);
+                }
+            }
+            session.invalidate();
+        }
+
         public void sessionDestroyed(HttpSessionEvent event) {
             HttpSession session = event.getSession();
+
             Iterator i = SessionDispatchers.iterator();
             while (i.hasNext()) {
                 try {
@@ -124,8 +139,8 @@ public abstract class SessionDispatcher implements PseudoServlet {
             run = false;
         }
 
-        public static Monitor lookupSessionMonitor(String sessionID) {
-            return (Monitor) sessionMonitors.get(sessionID);
+        public static Monitor lookupSessionMonitor(HttpSession session) {
+            return (Monitor) sessionMonitors.get(session);
         }
 
         public class Monitor {
@@ -151,13 +166,13 @@ public abstract class SessionDispatcher implements PseudoServlet {
             private void shutdownIfExpired() {
                 try {
                     if (isExpired()) {
-                        sessionMonitors.remove(session.getId());
-                        session.invalidate();
+                        sessionMonitors.remove(session);
+                        sessionShutdown(session);
                     }
                 } catch (IllegalStateException e) {
                     //session was already invalidated by the container
                 } catch (Throwable t) {
-                    //warn that something went wrong
+                    //just inform that something went wrong
                     Log.warn("Failed to monitor session expiry", t);
                 }
             }

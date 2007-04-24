@@ -35,7 +35,7 @@ package com.icesoft.faces.renderkit.dom_html_basic;
 
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.util.Debug;
-import com.icesoft.faces.renderkit.ApplicationBaseLocator;
+import com.icesoft.faces.renderkit.LocationUtil;
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIColumn;
@@ -408,7 +408,7 @@ public class TableRenderer extends DomBasicRenderer {
     protected Element scrollBarSpacer(DOMContext domContext, FacesContext facesContext) {
         Element spacer = domContext.createElement("th");
         //spacer.setAttribute("style", "width:20px;");
-        String base = ApplicationBaseLocator.locate(facesContext);
+        String base = LocationUtil.getAppBase(facesContext);
         Element spacerImg = domContext.createElement(HTML.IMG_ELEM);
         spacerImg.setAttribute(HTML.SRC_ATTR, base + "xmlhttp/css/xp/css-images/selection_spacer.gif");
         spacerImg.setAttribute(HTML.BORDER_ATTR,"0");

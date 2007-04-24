@@ -36,7 +36,8 @@ package com.icesoft.faces.context;
 import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.context.effects.JavascriptContext;
-import com.icesoft.faces.renderkit.ApplicationBaseLocator;
+import com.icesoft.faces.renderkit.LocationUtil;
+import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -363,16 +364,13 @@ public class DOMResponseWriter extends ResponseWriter {
                 .setAttribute("content", "0;url=./xmlhttp/javascript-blocked");
 
         //load libraries
-        String base = ApplicationBaseLocator.locate(context);
+        String base = LocationUtil.getAppBase(context);
         Collection libs = new ArrayList();
         if (context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null) {
             libs.add("xmlhttp/openajax.js");
         }
         libs.add("xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
-        //todo: refactor how extral libraries are loaded into the bridge; always include extra libraries for now
-        libs.add("xmlhttp" + StartupTime.getStartupInc() + "ice-extras.js");
-
-        if (context.getExternalContext().getRequestMap().get(BridgeExternalContext.INCLUDE_SERVLET_PATH) == null) {
+        if (context.getExternalContext().getRequestMap().get(Constants.INC_SERVLET_PATH) == null) {
             String[] componentLibs = JavascriptContext.getIncludedLibs(context);
             for (int i = 0; i < componentLibs.length; i++) {
                 String componentLib = componentLibs[i];

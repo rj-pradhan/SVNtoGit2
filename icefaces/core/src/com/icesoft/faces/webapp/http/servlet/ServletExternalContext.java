@@ -8,6 +8,7 @@ import com.icesoft.faces.webapp.command.SetCookie;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.SeamUtilities;
+import com.icesoft.jasper.Constants;
 
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -34,8 +35,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 //for now extend BridgeExternalContext since there are so many 'instanceof' tests
 public class ServletExternalContext extends BridgeExternalContext {
+
+    private static Log log = LogFactory.getLog(ServletExternalContext.class);
+
     private static String postBackKey;
 
     static {
@@ -215,11 +222,62 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public String getRequestPathInfo() {
-        return requestPathInfo == null ? request.getPathInfo() : requestPathInfo;
+
+        if( requestPathInfo != null && requestPathInfo.trim().length() > 0 ){
+            return requestPathInfo;
+        }
+
+        //If we start out null (because it hasn't been specifically set) then
+        //use the wrapped request value.
+        if( requestPathInfo == null ){
+            requestPathInfo = request.getPathInfo();
+            if( log.isInfoEnabled() ){
+                log.info( "using wrapped request path info" );
+            }
+        }
+
+        //We need to fix any occurrences of the "" (the empty String) because
+        //the JSF Lifecycle implementations won't be able to properly create
+        //a view ID otherwise because they check for null but not the empty
+        //String.
+        requestPathInfo = convertEmptyStringToNull(requestPathInfo);
+        return requestPathInfo;
+    }
+
+    /**
+     * Utility method that returns the original value of the supplied String
+     * unless it is emtpy (val.trim().length() == 0).  In that particlar case
+     * the value returned is null.
+     * 
+     * @param val
+     * @return
+     */
+    private static String convertEmptyStringToNull(String val){
+        if( val == null ){
+            return val;
+        }
+
+        if( val.trim().length() == 0 ){
+            if( log.isInfoEnabled() ){
+                log.info( "changing empty string to null" );
+            }
+            return null;
+        }
+
+        return val;
     }
 
     public String getRequestURI() {
-        return request.getRequestURI();
+
+        //If the attribute "javax.servlet.include.request_uri" has been set
+        //then we should use it.  This is typically done via dispatching.  It
+        //is the way the proper view ID is set with portlets.
+        String uri = (String)request.getAttribute(Constants.INC_REQUEST_URI);
+        if( uri == null || uri.trim().length() > 0 ){
+            uri = request.getRequestURI();
+        }
+
+        return uri;
     }
 
     public String getRequestContextPath() {
@@ -414,15 +472,14 @@ public class ServletExternalContext extends BridgeExternalContext {
      * the Request Map.  
      */
     public void resetRequestMap() {
-        
         if (standardScope) {
+
             Enumeration e = request.getAttributeNames();
-            String key;
+            Object key;
             while(e.hasMoreElements() ) {
-                key = (String) e.nextElement();
-                request.removeAttribute( key );
+                key = e.nextElement();
+                request.removeAttribute((String) key );
             }
-            requestMap.clear();
         }
     }
 

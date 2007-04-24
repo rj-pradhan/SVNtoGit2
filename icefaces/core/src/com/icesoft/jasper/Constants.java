@@ -115,10 +115,24 @@ public class Constants {
     /**
      * Servlet context and request attributes that the JSP engine uses.
      */
+    public static final String INC_CONTEXT_PATH =
+            "javax.servlet.include.context_path";
+    public static final String INC_PATH_INFO =
+            "javax.servlet.include.path_info";
+    public static final String INC_QUERY_STRING =
+            "javax.servlet.include.query_string";
     public static final String INC_REQUEST_URI =
             "javax.servlet.include.request_uri";
     public static final String INC_SERVLET_PATH =
             "javax.servlet.include.servlet_path";
+
+    public static final String[] INC_CONSTANTS =
+            {INC_CONTEXT_PATH,
+             INC_PATH_INFO,
+             INC_QUERY_STRING,
+             INC_REQUEST_URI,
+             INC_SERVLET_PATH};
+
     public static final String TMP_DIR = "javax.servlet.context.tempdir";
     public static final String FORWARD_SEEN = "javax.servlet.forward.seen";
 
