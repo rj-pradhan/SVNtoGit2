@@ -117,9 +117,18 @@ Ice.modal = {
 
             iframe.style.top = '0';
             iframe.style.left = '0';
-            iframe.style.width = document.body.clientWidth + 'px';
-            iframe.style.height = document.body.clientHeight + 'px';
             document.body.appendChild(iframe);
+            var resize = function() {
+                //lookup element again because 'resize' closure is registered only once
+                var frame = document.getElementById('iceModalFrame');
+                if (frame) {
+                    frame.style.width = document.documentElement.scrollWidth + 'px';
+                    frame.style.height = document.documentElement.scrollHeight + 'px';
+                }
+            };
+            resize();
+            window.onResize(resize);
+
             modal = document.getElementById(target);
 
             modal.style.zIndex = iframe.style.zIndex + 1;
