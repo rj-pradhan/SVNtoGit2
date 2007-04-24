@@ -186,7 +186,7 @@ public class DynamicPieChart{
     
     
     /**
-     * Mehtod to listen for the change in color in the graph
+     * Method to listen for the change in color in the graph
      *
      * @param event JSF value changed event
      */

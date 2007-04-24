@@ -166,7 +166,11 @@ public class ColumnsBean {
             // get the new column count
             columns = ((Integer) event.getNewValue()).intValue();
         }
-        int numberOfRows = columns * ROW_CONSTANT;
+        int numberOfRows=26;
+        if(columns>1){
+        numberOfRows = columns * ROW_CONSTANT;
+        }
+        
               
         ArrayList columnList = new ArrayList();
         ArrayList rowList = new ArrayList();
