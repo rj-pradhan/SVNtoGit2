@@ -33,134 +33,13 @@
 
 package com.icesoft.faces.webapp.xmlhttp;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.faces.FactoryFinder;
-import javax.faces.application.Application;
-import javax.faces.application.ApplicationFactory;
-import javax.faces.context.FacesContext;
-import javax.faces.context.FacesContextFactory;
-import javax.faces.lifecycle.Lifecycle;
-import javax.faces.lifecycle.LifecycleFactory;
-import javax.faces.webapp.FacesServlet;
-import javax.portlet.PortletConfig;
-import javax.servlet.ServletConfig;
-import java.util.HashMap;
-
-/**
- * This class is designed to hold all the common fields and methods of
- * PersistentFacesServlet and PersistentFacesPortlet.  Due to lack of multiple
- * inheritance in Java, we can't easily create a common superclass so instead,
- * the servlet and portlet will create an instance of this class and use it for
- * common stuff in a delegation-type way.
- */
+//todo: deprecate this class
 public class PersistentFacesCommonlet {
-    private static final Log log =
-            LogFactory.getLog(PersistentFacesCommonlet.class);
-    //FacesServlet stuff
-    private Application application;
-    private Lifecycle lifecycle;
-    private FacesContextFactory facesContextFactory;
     //ICEfaces stuff
     public static final String SERVLET_KEY = "servletkey";
-    public static final String REQUEST_PATH_KEY = "requestpathkey";
     public static final String PERSISTENT = "persistent";
-    public static final String CONCURRENT_DOM_VIEWS =
-            "com.icesoft.faces.concurrentDOMViews";
     public static final String REMOVE_SEAM_CONTEXTS =
             "com.icesoft.faces.removeSeamContexts";
     public static final String SEAM_LIFECYCLE_SHORTCUT =
             "com.icesoft.faces.shortcutLifecycle";
-    boolean concurrentDOMViews = false;
-
-
-    /**
-     * Make sure we do all of the normal setup that is usually accomplished in
-     * the standard FacesServlet - a concrete class that is part of the public
-     * API.
-     */
-    void init(HashMap params) {
-//
-        try {
-            //Get the FacesContextFactory implementation
-            facesContextFactory = (FacesContextFactory)
-                    FactoryFinder.getFactory
-                            (FactoryFinder.FACES_CONTEXT_FACTORY);
-
-            //Get the Application implementation
-            ApplicationFactory applicationFactory = (ApplicationFactory)
-                    FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
-            application = applicationFactory.getApplication();
-
-            //Get the Lifecycle implementation
-            LifecycleFactory lifecycleFactory = (LifecycleFactory)
-                    FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
-            String lifecycleId =
-                    (String) params.get(FacesServlet.LIFECYCLE_ID_ATTR);
-            if (lifecycleId == null) {
-                lifecycleId = LifecycleFactory.DEFAULT_LIFECYCLE;
-            }
-            lifecycle = lifecycleFactory.getLifecycle(lifecycleId);
-
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("ICEfaces could not initialize JavaServer Faces. "
-                          + "Please check that the JSF .jar files are "
-                          + "installed correctly." + e.getMessage(), e);
-            }
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    /**
-     * Release the various Faces resources
-     */
-    void destroy() {
-        facesContextFactory = null;
-        application = null;
-        lifecycle = null;
-    }
-
-    /**
-     * Another one of those lovely areas where the servlet and portlet APIs
-     * don't share anything in common so we end up having two methods that do
-     * pretty much the exact same thing but on a different object.
-     *
-     * @param config
-     * @return map of init params
-     */
-    HashMap getInitParams(ServletConfig config) {
-        HashMap initParams = new HashMap();
-        initParams.put(FacesServlet.LIFECYCLE_ID_ATTR,
-                       config.getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR));
-        return initParams;
-    }
-
-    HashMap getInitParams(PortletConfig config) {
-        HashMap initParams = new HashMap();
-        initParams.put(FacesServlet.LIFECYCLE_ID_ATTR,
-                       config.getInitParameter(FacesServlet.LIFECYCLE_ID_ATTR));
-        return initParams;
-    }
-
-    public Lifecycle getLifecycle() {
-        return lifecycle;
-    }
-
-    public Application getApplication() {
-        return application;
-    }
-
-    public FacesContextFactory getFacesContextFactory() {
-        return facesContextFactory;
-    }
-
-    public FacesContext getFacesContext(Object context, Object request,
-                                        Object response) {
-        return facesContextFactory
-                .getFacesContext(context, request, response, lifecycle);
-    }
-
 }
