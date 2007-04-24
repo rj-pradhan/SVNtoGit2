@@ -37,5 +37,4 @@ import com.icesoft.faces.webapp.http.servlet.MainServlet;
 
 //todo: deprecate this class
 public class PersistentFacesServlet extends MainServlet {
-    public static final String CURRENT_VIEW_NUMBER = "viewNumber";
 }

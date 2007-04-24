@@ -4,8 +4,6 @@ import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.PageServer;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
-import com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet;
-import com.icesoft.faces.webapp.xmlhttp.ResponseStateManager;
 import com.icesoft.util.IdGenerator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +22,8 @@ public class SingleViewServlet extends BasicAdaptingServlet {
 
     public SingleViewServlet(HttpSession session, SessionDispatcher.Listener.Monitor sessionMonitor, IdGenerator idGenerator, Map views, ViewQueue allUpdatedViews, Configuration configuration) {
         super(new PageServer());
-
         this.sessionID = idGenerator.newIdentifier();
-        //ContextEventRepeater needs this
-        session.setAttribute(ResponseStateManager.ICEFACES_ID_KEY, sessionID);
         ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
-        //FileUploadServlet needs this
-        session.setAttribute(PersistentFacesServlet.CURRENT_VIEW_NUMBER, viewNumber);
 
         this.session = session;
         this.sessionMonitor = sessionMonitor;
@@ -45,7 +38,7 @@ public class SingleViewServlet extends BasicAdaptingServlet {
         if (view == null || view.differentURI(request)) {
             view = new ServletView(viewNumber, sessionID, request, response, allUpdatedViews, configuration);
             views.put(viewNumber, view);
-            ContextEventRepeater.viewNumberRetrieved(session, Integer.parseInt(viewNumber));
+            ContextEventRepeater.viewNumberRetrieved(session, sessionID, Integer.parseInt(viewNumber));
         }
 
         view.setAsCurrentDuring(request, response);
