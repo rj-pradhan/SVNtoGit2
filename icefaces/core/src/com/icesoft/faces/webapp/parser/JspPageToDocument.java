@@ -387,6 +387,8 @@ public class JspPageToDocument {
         JarFile jarFile = null;
         String[] location = null;
 
+        namespaceURL = String.valueOf(namespaceURL);
+
         // "jsp" is only a placeholder for standard JSP tags that are
         // not supported, so just return null
 
@@ -408,6 +410,12 @@ public class JspPageToDocument {
             }
         }
 
+        if (null == location) {
+            if ( namespaceURL.startsWith("/") && 
+                 namespaceURL.endsWith(".tld") )  {
+                location = new String[] {namespaceURL};
+            }
+        }
 
         if (null == location) {
             location = scanJars(context, namespaceURL);
