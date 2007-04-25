@@ -42,7 +42,7 @@ import org.w3c.dom.Element;
 
 import com.icesoft.faces.component.ext.renderkit.FormRenderer;
 import com.icesoft.faces.context.DOMContext;
-import com.icesoft.faces.renderkit.LocationUtil;
+//import com.icesoft.faces.renderkit.LocationUtil;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 
@@ -78,10 +78,10 @@ public class OutputChartRenderer extends DomBasicRenderer {
         Element image = (Element) domContext.createElement(HTML.IMG_ELEM);
 
         //TODO: Convert to LocationUtil.getResourcePath call?
-        image.setAttribute(HTML.SRC_ATTR, LocationUtil.getAppBase(facesContext)
-                +((OutputChart) uiComponent).getFolder().getName()+"/" +
-                                          ((OutputChart) uiComponent)
-                                                  .getFileName());
+        //image.setAttribute(HTML.SRC_ATTR, LocationUtil.getAppBase(facesContext)
+        //        +((OutputChart) uiComponent).getFolder().getName()+"/" +
+       //                                   ((OutputChart) uiComponent)
+        //                                          .getFileName());
         td.appendChild(image);
         if (outputChart.isClientSideImageMap()) {
             Element map = (Element) domContext.createElement(HTML.MAP_ELEM);

@@ -1128,7 +1128,7 @@ em {
     width: 250px;
 }
 
-.accordion1Header{
+.accordion1Header accordion1Header_collapsed{
             border:1px solid black;
             font-family:tahoma,arial, san-serif;
             font-weight:bold;
@@ -1137,7 +1137,7 @@ em {
 
             background-color:#a4bdd2;
         }
-        .accordion1Content{
+        .accordion1Content accordion1Content_collapsed{
    background: url("../images/fruits.jpg");
    border-bottom: 1px solid black;
    border-left: 1px solid black;
@@ -1148,19 +1148,19 @@ em {
    font-weight: bold;
    
 }
-        .accordion1Container{
+        .accordion1Container accordion1Container_collapsed{
         width: 200px
         
         }
 
-.accordion2Header{
+.accordion2Header accordion2Header_collapsed{
             border:1px solid black;
             font-family:tahoma,arial, san-serif;
             font-weight:bold;
             font-size:12px;
             background-color:#a4bdd2;
         }
-        .accordion2Content{
+        .accordion2Content accordion2Content_collapsed{
             background :url("../images/veg.jpg") ;  
             border-bottom:1px solid black;
             border-left:1px solid black;
@@ -1171,20 +1171,20 @@ em {
 
             
         }
-        .accordion2Container{
+        .accordion2Container accordion2Container_collapsed{
 
         width: 200px
         
         }
 
-.accordionHeader{
+.accordionHeader accordionHeader_collapsed{
             border:1px solid black;
             font-family:tahoma,arial, san-serif;
             font-weight:bold;
             font-size:12px;
             background-color:#a4bdd2;
         }
-        .accordionContent{
+        .accordionContent accordionContent_collapsed{
               
             border-bottom:1px solid black;
             border-left:1px solid black;
@@ -1195,7 +1195,7 @@ em {
 
             
         }
-        .accordionContainer{
+        .accordionContainer accordionContainer_collapsed{
 
         width: 200px
         
