@@ -122,14 +122,26 @@ Ice.Accordion = {
         var ele = document.getElementById(eleId);
         try{
         if(Element.visible(ele)){
-            Effect.SlideUp(ele,{uploadCSS:true,submit:true,duration:0.5});
+            Ice.Accordion.collapse(eleId);
         }else{
-            Effect.SlideDown(ele,{uploadCSS:true,submit:true,duration:0.5});
+            Ice.Accordion.expand(eleId);
         }
             }catch(eee){
 
             console.log("Error in accordion [" + eee + "]");
         }
 
+    },
+    expand:function(eleId){
+        var ele = document.getElementById(eleId);
+        if(!Element.visible(ele)){
+            Effect.SlideDown(eleId,{uploadCSS:true,submit:true,duration:0.5});
+        }
+    },
+    collapse:function(eleId){
+        var ele = document.getElementById(eleId);
+        if(Element.visible(ele)){
+            Effect.SlideUp(eleId,{uploadCSS:true,submit:true,duration:0.5});
+        }
     }
 }

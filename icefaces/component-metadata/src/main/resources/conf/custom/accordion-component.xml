@@ -34,7 +34,15 @@
 
 <component>
 	<description>
-		<![CDATA[ Accordion Componenet ]]>
+		<![CDATA[ Accordion Componenet
+
+		Contains a header facet and a body. When the expanded value is changed the
+		panel will expand or collapse.
+
+		Setting toggleOnClick to true will expand or collapse the body when the head is clicked. (Default is true)
+
+
+		 ]]>
 	</description>
 	<display-name>panelAccordion</display-name>
 	<component-type>com.icesoft.faces.Accordion</component-type>
