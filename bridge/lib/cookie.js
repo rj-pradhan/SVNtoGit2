@@ -22,10 +22,10 @@
         },
 
         load: function() {
-            var tuple = This.Cookie.parse().detect(function(tuple) {
+            var foundTuple = This.Cookie.parse().detect(function(tuple) {
                 return this.name == tuple[0];
             }.bind(this));
-            this.value = tuple[1];
+            this.value = foundTuple[1];
             return this;
         },
 
@@ -43,11 +43,11 @@
     };
 
     This.Cookie.lookup = function(name) {
-        var tuple = This.Cookie.parse().detect(function(tuple) {
+        var foundTuple = This.Cookie.parse().detect(function(tuple) {
             return name == tuple[0];
         });
-        if (tuple) {
-            return new This.Cookie(tuple[0], tuple[1]);
+        if (foundTuple) {
+            return new This.Cookie(foundTuple[0], foundTuple[1]);
         } else {
             throw 'Cannot find cookie named: ' + name;
         }
@@ -56,7 +56,7 @@
     //private
     This.Cookie.parse = function() {
         return document.cookie.split('; ').collect(function(tupleDetails) {
-            return tupleDetails.split('=');
+            return tupleDetails.contains('=') ? tupleDetails.split('=') : [tupleDetails, ''];
         });
     };
 });
