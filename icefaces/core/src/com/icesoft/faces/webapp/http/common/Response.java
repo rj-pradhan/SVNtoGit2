@@ -18,9 +18,6 @@ public interface Response {
 
     void setHeader(String name, int value);
 
-    //todo: move this into HeaderWriter class
-    void addCookie(Cookie cookie);
-
     OutputStream writeBody() throws IOException;
 
     void writeBodyFrom(InputStream in) throws IOException;
