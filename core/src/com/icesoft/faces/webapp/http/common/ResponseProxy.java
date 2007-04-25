@@ -33,10 +33,6 @@ public class ResponseProxy implements Response {
         response.setHeader(name, value);
     }
 
-    public void addCookie(Cookie cookie) {
-        response.addCookie(cookie);
-    }
-
     public OutputStream writeBody() throws IOException {
         return response.writeBody();
     }
