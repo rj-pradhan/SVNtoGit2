@@ -14,7 +14,6 @@ import java.util.zip.GZIPOutputStream;
 
 public class CompressingServer implements Server {
     private Server server;
-    private GZIPOutputStream output;
 
     public CompressingServer(Server server) {
         this.server = server;
@@ -40,26 +39,34 @@ public class CompressingServer implements Server {
         public void respondWith(final ResponseHandler handler) throws Exception {
             request.respondWith(new ResponseHandler() {
                 public void respond(Response response) throws Exception {
-                    handler.respond(new CompressingResponse(response));
-                    output.finish();
+                    CompressingResponse compressingResponse = new CompressingResponse(response);
+                    handler.respond(compressingResponse);
+                    compressingResponse.finishCompression();
                 }
             });
         }
     }
 
     private class CompressingResponse extends ResponseProxy {
+        private GZIPOutputStream output;
+
         public CompressingResponse(Response response) {
             super(response);
             response.setHeader("Content-Encoding", "gzip");
         }
 
         public OutputStream writeBody() throws IOException {
-            output = new GZIPOutputStream(response.writeBody());
-            return output;
+            return output = new GZIPOutputStream(response.writeBody());
         }
 
         public void writeBodyFrom(InputStream in) throws IOException {
             copy(in, writeBody());
+        }
+
+        public void finishCompression() throws IOException {
+            if (output != null) {
+                output.finish();
+            }
         }
     }
 
