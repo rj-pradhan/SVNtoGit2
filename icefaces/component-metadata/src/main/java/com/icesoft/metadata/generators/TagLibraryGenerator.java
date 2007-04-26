@@ -140,11 +140,16 @@ public class TagLibraryGenerator extends AbstractGenerator {
         for (int i = 0; i < pbs.length; i++) {
             if ("id".equals(pbs[i].getPropertyName())
             || "rendered".equals(pbs[i].getPropertyName())
-            || set.contains(pbs[i].getPropertyName()))
+            || set.contains(pbs[i].getPropertyName())
+            )
                 continue;
             set.add(pbs[i].getPropertyName());
             PropertyBean pb = merge(pbs[i], rb.getAttribute(pbs[i]
                     .getPropertyName()));
+            if ("com.icesoft.faces.component.menubar.MenuBar".equals(cb.getComponentClass()) &&
+                    (pb.getPropertyName().equals("action") ||
+                            pb.getPropertyName().equals("actionListener"))) 
+                    continue;
             if (pb.isTagAttribute())
                 attribute(cb, pb);
         }
@@ -347,6 +352,12 @@ public class TagLibraryGenerator extends AbstractGenerator {
                     .getPropertyName()));
             if (pb.isSuppressed() || !pb.isTagAttribute())
                 continue;
+            
+            if ("com.icesoft.faces.component.menubar.MenuBar".equals(cb.getComponentClass()) && 
+                    (pb.getPropertyName().equals("action") ||
+                            pb.getPropertyName().equals("actionListener"))) {
+                continue;
+            }
             String name = pb.getPropertyName();
             String type = pb.getPropertyClass();
             String var = mangle(name);
@@ -805,6 +816,11 @@ public class TagLibraryGenerator extends AbstractGenerator {
             set.add(pbs[i].getPropertyName());
             PropertyBean pb = merge(pbs[i], rb.getAttribute(pbs[i]
                     .getPropertyName()));
+            if ("com.icesoft.faces.component.menubar.MenuBar".equals(cb.getComponentClass()) && 
+                    (pb.getPropertyName().equals("action") ||
+                            pb.getPropertyName().equals("actionListener"))) {
+                continue;
+            }
             if (pb.isTagAttribute())
                 writer.emitExpression(
                         mangle(pb.getPropertyName()) + " = null;", true);
