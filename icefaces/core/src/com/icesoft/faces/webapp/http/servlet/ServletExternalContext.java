@@ -231,9 +231,6 @@ public class ServletExternalContext extends BridgeExternalContext {
         //use the wrapped request value.
         if( requestPathInfo == null ){
             requestPathInfo = request.getPathInfo();
-            if( log.isInfoEnabled() ){
-                log.info( "using wrapped request path info" );
-            }
         }
 
         //We need to fix any occurrences of the "" (the empty String) because
@@ -258,9 +255,6 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
 
         if( val.trim().length() == 0 ){
-            if( log.isInfoEnabled() ){
-                log.info( "changing empty string to null" );
-            }
             return null;
         }
 

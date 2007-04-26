@@ -45,6 +45,8 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import com.icesoft.jasper.Constants;
+
 /**
  * A wrapper for HttpServletRequest.
  * <p/>
@@ -137,6 +139,22 @@ public class ServletEnvironmentRequest
             Object attribute = req.getAttribute(name);
             if ((null != name) && (null != attribute)) {
                 attributes.put(name, attribute);
+            }
+        }
+
+        // Warning:  For some reason, the various javax.include.* attributes are
+        // not available via the getAttributeNames() call.  This may be limited
+        // to a Liferay issue but when the MainPortlet dispatches the call to
+        // the MainServlet, all of the javax.include.* attributes can be
+        // retrieved using request.getAttribute() but they do NOT appear in
+        // the Enumeration of names returned by getAttributeNames().  So here
+        // we manually add them to our map to ensure we can find them later.
+        String[] incAttrKeys = Constants.INC_CONSTANTS;
+        for (int index = 0; index < incAttrKeys.length; index++) {
+            String incAttrKey = incAttrKeys[index];
+            Object incAttrVal = req.getAttribute(incAttrKey);
+            if( incAttrVal != null ){
+                attributes.put(incAttrKey,req.getAttribute(incAttrKey));
             }
         }
 

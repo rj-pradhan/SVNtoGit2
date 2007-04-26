@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,7 +52,7 @@ public class MainServlet extends HttpServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if( log.isTraceEnabled() ){
-            getIncludeInfo(request,"entering main servlet");
+            log.trace(getIncludeInfo(request,"entering main servlet"));
         }
 
         try {
@@ -102,6 +103,19 @@ public class MainServlet extends HttpServlet {
         buff.append(" - ");
         buff.append(req.getServletPath());
         
+        buff.append("\n\n");
+        buff.append("via getAttributeNames():\n");
+        Enumeration attrNames = req.getAttributeNames();
+        while (attrNames.hasMoreElements()) {
+            String key = (String)attrNames.nextElement();
+            Object val = req.getAttribute(key);
+            buff.append("\t");
+            buff.append(key);
+            buff.append(": ");
+            buff.append(val.toString());
+            buff.append("\n");
+        }
+
         return buff.toString();
     }
 
