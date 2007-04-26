@@ -142,6 +142,13 @@ input {
 /*margin:10px;*/
 }
 
+.iceCalIFrameFix {
+   z-index: -1;
+   position: absolute;
+   display: block;
+   filter: mask();
+} 
+
 .iceCalInput {
     width: 150px;
 }

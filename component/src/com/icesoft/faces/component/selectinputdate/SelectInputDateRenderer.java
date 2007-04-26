@@ -238,13 +238,14 @@ public class SelectInputDateRenderer
                 calendarDiv.setAttribute(HTML.NAME_ATTR,
                                          clientId + CALENDAR_POPUP);
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
-                                         "display:none;position:absolute; ");
+                                         "display:none;position:absolute;overflow:hidden;");
                 calendarDiv.setAttribute(HTML.TITLE_ATTR, "A Popup Calendar where a date can be selected.");
                 Element table = domContext.createElement(HTML.TABLE_ELEM);
                 table.setAttribute(HTML.ID_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.NAME_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.CLASS_ATTR,
                                    selectInputDate.getCalendarOutlineClass());
+                table.setAttribute(HTML.STYLE_ATTR, "position:absolute;");                 
                 table.setAttribute(HTML.CELLPADDING_ATTR, "0");
                 table.setAttribute(HTML.CELLSPACING_ATTR, "0");
                 // set mouse events on table bug 372
@@ -256,6 +257,9 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.ONMOUSEMOVE_ATTR, mouseMove);
                 table.setAttribute(HTML.SUMMARY_ATTR,"This table contains a Calendar where a date can be selected.");
                 calendarDiv.appendChild(table);
+                Text iframe = domContext.createTextNode("<!--[if lte IE"+
+                        " 6.5]><iframe class=\"iceCalIFrameFix\"></iframe><![endif]-->");
+                calendarDiv.appendChild(iframe);                 
                 root.appendChild(calendarDiv);
                 // render a hidden field to manage the popup state; visible || hidden
                 FormRenderer.addHiddenField(facesContext, getHiddenFieldName(
