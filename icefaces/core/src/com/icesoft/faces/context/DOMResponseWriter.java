@@ -319,6 +319,7 @@ public class DOMResponseWriter extends ResponseWriter {
         } else {
             frameURI = "about:blank";
         }
+        iframe.setAttribute("title", "Icefaces Redirect");
         iframe.setAttribute("src", frameURI);
         iframe.setAttribute("frameborder", "0");
         iframe.setAttribute("style",

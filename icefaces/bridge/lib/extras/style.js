@@ -102,6 +102,7 @@ Ice.modal = {
         var iframe = document.getElementById('iceModalFrame');
         if (!iframe) {
             iframe = document.createElement('iframe');
+            iframe.title = 'Ice Modal Frame';
             iframe.frameborder = "0";
             iframe.id = 'iceModalFrame';
             var context = configuration.connection.context;

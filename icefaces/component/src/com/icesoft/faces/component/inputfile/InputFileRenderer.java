@@ -60,6 +60,7 @@ public class InputFileRenderer extends Renderer {
         writer.writeAttribute("style", "overflow: hidden;", null);
         writer.writeAttribute("width", c.getWidth() + "px", null);
         writer.writeAttribute("height", c.getHeight() + "px", null);
+        writer.writeAttribute("title", "Input File Frame", null);
         writer.writeAttribute("frameborder", "0", null);
         writer.endElement("iframe");
 

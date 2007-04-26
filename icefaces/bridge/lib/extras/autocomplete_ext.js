@@ -110,7 +110,7 @@ Autocompleter.Base.prototype = {
       (navigator.userAgent.indexOf('Opera')<0) &&
       (Element.getStyle(this.update, 'position')=='absolute')) {
       new Insertion.After(this.update,
-       '<iframe id="' + this.update.id + '_iefix" '+
+       '<iframe id="' + this.update.id + '_iefix" title="IE6_Fix" '+
        'style="display:none;position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);" ' +
        'src="' + configuration.connection.context +'/xmlhttp/blank.iface" frameborder="0" scrolling="no"></iframe>');
       this.iefix = $(this.update.id+'_iefix');
