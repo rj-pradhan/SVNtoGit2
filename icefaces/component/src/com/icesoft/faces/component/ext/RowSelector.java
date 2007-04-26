@@ -52,6 +52,7 @@ import java.util.StringTokenizer;
  */
 public class RowSelector extends UIComponentBase {
     private Boolean value;
+    private Boolean toggleOnClick;
     // private Listener
     private Boolean multiple;
     private String mouseOverClass;
@@ -59,7 +60,7 @@ public class RowSelector extends UIComponentBase {
     private MethodBinding selectionListener;
     private MethodBinding selectionAction;
     private Integer clickedRow;
-
+    
 
     public static final String COMPONENT_TYPE = "com.icesoft.faces.RowSelector";
     public static final String RENDERER_TYPE =
@@ -130,6 +131,22 @@ public class RowSelector extends UIComponentBase {
     public void setMultiple(Boolean multiple) {
         this.multiple = multiple;
     }
+    
+    public Boolean getToggleOnClick() {
+        ValueBinding vb = getValueBinding("toggleOnClick");
+        if (vb != null) {
+            return (Boolean) vb.getValue(getFacesContext());
+        }
+        if (toggleOnClick != null) {
+            return toggleOnClick;
+        }
+        return Boolean.TRUE;
+    }
+
+    public void setToggleOnClick(Boolean toggleOnClick) {
+        this.toggleOnClick = toggleOnClick;
+    }
+    
 
     public String getMouseOverClass() {
         ValueBinding vb = getValueBinding("mouseOverClass");

@@ -133,3 +133,14 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+<property>
+	<description>
+		Disable row selection on mouse click. Default value is set to true.
+	</description>
+	<property-name>toggleOnClick</property-name>
+	<property-class>boolean</property-class>
+	<property-extension>
+		<category>ICE_COMPONENT</category>
+	</property-extension>
+</property>       

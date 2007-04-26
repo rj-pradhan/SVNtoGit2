@@ -307,10 +307,12 @@ public class TableRenderer
 
         RowSelector rowSelector = getRowSelector(uiComponent);
         boolean rowSelectorFound = rowSelector != null;
+        boolean toggleOnClick = false;
         String rowSelectionFunctionName = null;
         boolean rowSelectorCodeAdded = false; // Row selector code needs to be added to the first TD, adding it to the table body breaks safari
         Element scriptNode = null;
         if (rowSelectorFound) {
+            toggleOnClick = rowSelector.getToggleOnClick().booleanValue();
             Element rowSelectedField =
                     domContext.createElement(HTML.INPUT_ELEM);
             String tableId = uiComponent.getClientId(facesContext);
@@ -341,7 +343,7 @@ public class TableRenderer
            String selectedClass =null;
             Iterator childs = uiData.getChildren().iterator();
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
-            if (rowSelectorFound) {
+            if (rowSelectorFound && toggleOnClick) {
                 tr.setAttribute("onclick", rowSelectionFunctionName + "('" +
                                            uiData.getRowIndex() + "');");
             }
