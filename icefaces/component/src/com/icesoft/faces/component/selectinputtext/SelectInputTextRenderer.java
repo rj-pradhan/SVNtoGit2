@@ -91,9 +91,15 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
             input.setAttribute(HTML.STYLE_ATTR, component.getWidthAsStyle());
             input.setAttribute("autocomplete", "off");
             Element div = domContext.createElement(HTML.DIV_ELEM);
+            String listClass =  component.getListClass();
+
             div.setAttribute(HTML.ID_ATTR, divId);
-            div.setAttribute(HTML.STYLE_ATTR,
-                             "display:none;border:1px solid black;background-color:white;");
+            if(listClass == null){
+                div.setAttribute(HTML.STYLE_ATTR,
+                             "display:none;border:1px solid black;background-color:white;z-index:500;");
+            }else{
+                div.setAttribute(HTML.STYLE_CLASS_ATTR, listClass);
+            }
             root.appendChild(div);
             if (component.getStyle() != null && !component.getStyle().equals("")) {
             	root.setAttribute(HTML.STYLE_ATTR, component.getStyle());
