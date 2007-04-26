@@ -9,6 +9,7 @@ import com.icesoft.faces.webapp.http.core.ReceiveSendUpdates;
 import com.icesoft.faces.webapp.http.core.SendUpdatedViews;
 import com.icesoft.faces.webapp.http.core.SendUpdates;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
+import com.icesoft.faces.webapp.http.core.IDVerifier;
 import com.icesoft.util.IdGenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,7 +51,7 @@ public class MainSessionBoundServlet implements PseudoServlet {
         final PseudoServlet disposeViews;
         if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
             viewServlet = new MultiViewServlet(session, sessionMonitor, idGenerator, views, allUpdatedViews, configuration);
-            disposeViews = new BasicAdaptingServlet(new DisposeViews(views));
+            disposeViews = new BasicAdaptingServlet(new IDVerifier(new DisposeViews(views)));
         } else {
             viewServlet = new SingleViewServlet(session, sessionMonitor, idGenerator, views, allUpdatedViews, configuration);
             disposeViews = NOOPServlet;
@@ -67,13 +68,13 @@ public class MainSessionBoundServlet implements PseudoServlet {
             receivePing = NOOPServlet;
         } else {
             //setup blocking connection server
-            sendUpdatedViews = new EnvironmentAdaptingServlet(new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews), configuration);
-            sendUpdates = new BasicAdaptingServlet(new SendUpdates(views));
-            receivePing = new BasicAdaptingServlet(new ReceivePing(views));
+            sendUpdatedViews = new EnvironmentAdaptingServlet(new IDVerifier(new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews)), configuration);
+            sendUpdates = new BasicAdaptingServlet(new IDVerifier(new SendUpdates(views)));
+            receivePing = new BasicAdaptingServlet(new IDVerifier(new ReceivePing(views)));
         }
 
         PseudoServlet upload = new UploadServlet(views, configuration, session.getServletContext());
-        PseudoServlet receiveSendUpdates = new ViewBoundAdaptingServlet(new ReceiveSendUpdates(views, synchronouslyUpdatedViews), sessionMonitor, views);        
+        PseudoServlet receiveSendUpdates = new ViewBoundAdaptingServlet(new IDVerifier(new ReceiveSendUpdates(views, synchronouslyUpdatedViews)), sessionMonitor, views);
 
         dispatcher.dispatchOn(".*block\\/send\\-receive\\-updates$", receiveSendUpdates);
         dispatcher.dispatchOn(".*block\\/receive\\-updated\\-views$", sendUpdatedViews);

@@ -37,6 +37,10 @@ public class RequestProxy implements Request {
         return request.getHeaderAsInteger(name);
     }
 
+    public boolean containsParameter(String name) {
+        return request.containsParameter(name);
+    }
+
     public String getParameter(String name) {
         return request.getParameter(name);
     }
