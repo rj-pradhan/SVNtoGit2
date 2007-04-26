@@ -67,6 +67,10 @@ public class ServletRequestResponse implements Request, Response {
         return Integer.parseInt(request.getHeader(name));
     }
 
+    public boolean containsParameter(String name) {
+        return request.getParameter(name) != null;
+    }
+
     public String getParameter(String name) {
         checkExistenceOf(name);
         return (String) request.getParameter(name);

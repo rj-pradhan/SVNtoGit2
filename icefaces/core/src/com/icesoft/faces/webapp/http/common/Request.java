@@ -20,6 +20,8 @@ public interface Request {
 
     int getHeaderAsInteger(String name);
 
+    boolean containsParameter(String name);
+
     String getParameter(String name);
 
     String[] getParameterAsStrings(String name);
