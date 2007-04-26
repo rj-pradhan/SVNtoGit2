@@ -44,6 +44,7 @@ attributes
   <li><b>selectionListener</b> The listener method to call when a row is clicked</li>
   <li><b>selectedClass</b> The CSS style to apply when a row is selected</li>
   <li><b>mouseOverClass</b> The CSS style to apply when the mouse is over a row.</li>
+  <li><b>toggleOnClick</b> Disable row selection on mouse click.</li>  
 </ul>]]>
 	</description>
 	<component-family>
