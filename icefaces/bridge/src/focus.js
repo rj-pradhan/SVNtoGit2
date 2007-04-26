@@ -46,13 +46,25 @@ Ice.Focus.userInterupt = function (e){
 }
 
 Ice.Focus.setFocus = function(id){
+    // This delay is required for focusing newly rendered components on IE
+    // ICE-1247
+    window.setTimeout("Ice.Focus.setFocusNow('" + id + "');",100);
+};
+
+Ice.Focus.setFocusNow = function(id){
     if((Ice.Focus.userInterupt==false) && (id != '') && (id != 'undefined')){
         try{
             id.asExtendedElement().focus();
             setFocus(id);
+            var ele = document.getElementById(id);
+            if(ele){
+                ele.focus();
+            }else{
+                window.logger.debug('Focus Failed. No element for id [' + id + "]");
+            }
             window.logger.debug('Focus Set on [' + id + "]");
         }catch(e){
-            window.logger.error('Failed to set focus on [' + id +']',e);               
+            window.logger.error('Failed to set focus on [' + id +']',e);
         }
     }else{
         window.logger.debug('Focus interupted. Not Set on [' + id + ']');
