@@ -39,9 +39,10 @@ public class SingleViewServlet extends BasicAdaptingServlet {
             view = new ServletView(viewNumber, sessionID, request, response, allUpdatedViews, configuration);
             views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, sessionID, Integer.parseInt(viewNumber));
+        } else {
+            view.setAsCurrentDuring(request, response);            
         }
 
-        view.setAsCurrentDuring(request, response);
         view.switchToNormalMode();
         sessionMonitor.touchSession();
         super.service(request, response);

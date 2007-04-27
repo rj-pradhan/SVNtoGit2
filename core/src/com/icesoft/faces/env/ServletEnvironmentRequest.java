@@ -33,6 +33,7 @@
 
 package com.icesoft.faces.env;
 
+import com.icesoft.jasper.Constants;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,8 +45,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Vector;
-
-import com.icesoft.jasper.Constants;
 
 /**
  * A wrapper for HttpServletRequest.
@@ -106,16 +105,8 @@ public class ServletEnvironmentRequest
             }
         }
     }
-
-    public ServletEnvironmentRequest() {
-    }
-
-    public ServletEnvironmentRequest(HttpServletRequest servletRequest) {
-        copyServletRequestData(servletRequest);
-    }
-
-    private void copyServletRequestData(HttpServletRequest req) {
-
+    
+    public ServletEnvironmentRequest(HttpServletRequest req) {
         servletRequest = req;
 
         //Copy common data

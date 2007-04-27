@@ -15,10 +15,8 @@ import edu.emory.mathcs.backport.java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,21 +37,25 @@ public class ServletView implements CommandQueue {
     private String viewIdentifier;
     private Collection viewListeners = new ArrayList();
 
-
     public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
-        HttpSession session = request.getSession();
-        ServletContext servletContext = session.getServletContext();
         this.wrappedRequest = new ServletEnvironmentRequest(request);
         this.viewIdentifier = viewIdentifier;
         this.allServedViews = allServedViews;
-        this.externalContext = new ServletExternalContext(viewIdentifier, servletContext, wrappedRequest, response, this, configuration);
+        this.externalContext = new ServletExternalContext(viewIdentifier, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
         this.persistentFacesState = new PersistentFacesState(facesContext, viewListeners, configuration);
         this.notifyViewCreation();
     }
 
     public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
-        externalContext.update(request, response);
+        //is it a reload?
+        if (request.getRequestURI().equals(wrappedRequest.getRequestURI())) {
+            wrappedRequest = new ServletEnvironmentRequest(request);
+            externalContext.updateOnReload(wrappedRequest, response);
+        } else {
+            //must be a XMLHttpRequest
+            externalContext.update(request, response);
+        }
         externalContext.injectBundles(bundles);
         persistentFacesState.setCurrentInstance();
         facesContext.setCurrentInstance();
@@ -67,10 +69,9 @@ public class ServletView implements CommandQueue {
 
     public void switchToPushMode() {
         //collect bundles put by Tag components when the page is parsed
-        this.bundles = externalContext.collectBundles();
+        bundles = externalContext.collectBundles();
         facesContext.switchToPushMode();
         externalContext.switchToPushMode();
-        externalContext.resetRequestMap();
     }
 
     /**

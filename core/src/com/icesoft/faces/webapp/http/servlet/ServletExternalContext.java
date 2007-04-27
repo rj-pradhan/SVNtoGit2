@@ -7,8 +7,10 @@ import com.icesoft.faces.webapp.command.Redirect;
 import com.icesoft.faces.webapp.command.SetCookie;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
-import com.icesoft.util.SeamUtilities;
 import com.icesoft.jasper.Constants;
+import com.icesoft.util.SeamUtilities;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -34,9 +36,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 //for now extend BridgeExternalContext since there are so many 'instanceof' tests
 public class ServletExternalContext extends BridgeExternalContext {
@@ -74,30 +73,19 @@ public class ServletExternalContext extends BridgeExternalContext {
     private CommandQueue commandQueue;
     private Redirector redirector;
     private CookieTransporter cookieTransporter;
-    private RequestMapFactory requestMapFactory;
     private boolean standardScope;
 
-
-    public ServletExternalContext(String viewIdentifier, ServletContext context, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue, Configuration configuration) {
+    public ServletExternalContext(String viewIdentifier, HttpServletRequest request, HttpServletResponse response, CommandQueue commandQueue, Configuration configuration) {
         this.viewIdentifier = viewIdentifier;
-        this.context = context;
         this.request = request;
         this.response = response;
         this.commandQueue = commandQueue;
         this.session = this.request.getSession();
-
-        // todo: Iron out DirectRequestAttributeMap implementation
-        standardScope = configuration.getAttributeAsBoolean("standardRequestScope", false); 
-        this.requestMapFactory = new CustomRequestScopeFactory();
-
-//        if (configuration.getAttributeAsBoolean("standardRequestScope", false)) {
-//            this.requestMapFactory = new StandardRequestScopeFactory();
-//        } else {
-//            this.requestMapFactory = new CustomRequestScopeFactory();
-//        }
-
+        this.context = this.session.getServletContext();
+        this.standardScope = configuration.getAttributeAsBoolean("standardRequestScope", false);
         this.applicationMap = new ServletApplicationMap(this.context);
         this.sessionMap = new ServletSessionMap(this.session);
+        this.requestMap = new CopyingRequestAttributesMap(this.request);
         this.requestCookieMap = new HashMap();
         this.initParameterMap = new HashMap();
         Enumeration names = this.context.getInitParameterNames();
@@ -106,8 +94,8 @@ public class ServletExternalContext extends BridgeExternalContext {
             initParameterMap.put(key, this.context.getInitParameter(key));
         }
 
-        this.update(this.request, this.response);
-        this.setupSeamEnvironment();
+        this.update(request, response);
+        this.insertNewViewrootToken();
     }
 
     public Object getSession(boolean create) {
@@ -176,9 +164,16 @@ public class ServletExternalContext extends BridgeExternalContext {
         }
         responseCookieMap = new HashMap();
 
-        requestMap = requestMapFactory.create(request);
-
         this.response = response;
+    }
+
+    public void updateOnReload(HttpServletRequest request, HttpServletResponse response) {
+        Map previousRequestMap = this.requestMap;
+        this.requestMap = new CopyingRequestAttributesMap(request);
+        //propagate entries
+        this.requestMap.putAll(previousRequestMap);
+        this.request = request;
+        this.update(request, response);
     }
 
     public Map getRequestParameterMap() {
@@ -402,13 +397,6 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     /**
-     * Setup
-     */
-    public void setupSeamEnvironment() {
-        insertNewViewrootToken();
-    }
-
-    /**
      * Any GET request performed by the browser is a non-faces request to the framework.
      * (JSF-spec chapter 2, introduction). Given this, the framework must create a new
      * viewRoot for the request, even if the viewId has already been visited. (Spec
@@ -459,6 +447,8 @@ public class ServletExternalContext extends BridgeExternalContext {
                 commandQueue.put(new SetCookie(cookie));
             }
         };
+
+        resetRequestMap();
     }
 
     /**
@@ -467,13 +457,7 @@ public class ServletExternalContext extends BridgeExternalContext {
      */
     public void resetRequestMap() {
         if (standardScope) {
-
-            Enumeration e = request.getAttributeNames();
-            Object key;
-            while(e.hasMoreElements() ) {
-                key = e.nextElement();
-                request.removeAttribute((String) key );
-            }
+            requestMap.clear();
         }
     }
 
@@ -489,39 +473,10 @@ public class ServletExternalContext extends BridgeExternalContext {
         void send(Cookie cookie);
     }
 
-    private interface RequestMapFactory {
-        Map create(HttpServletRequest request);
-    }
-
     private void insertPostbackKey() {
         if (null != postBackKey) {
             requestParameterMap.put(postBackKey, "not reload");
             requestParameterValuesMap.put(postBackKey, new String[]{"not reload"});
-        }
-    }
-
-    private class CustomRequestScopeFactory implements RequestMapFactory {
-        private String lastRequestURI = "";
-        private CopyingRequestAttributesMap map;
-
-        public Map create(HttpServletRequest request) {
-            //test if request is a page reload
-            String requestURI = request.getRequestURI();
-            if (map == null) {
-                lastRequestURI = requestURI;
-                return map = new CopyingRequestAttributesMap(request);
-            } else if (lastRequestURI.equals(requestURI)) {
-                lastRequestURI = requestURI;
-                return map = map.cloneWith(request);
-            } else {
-                return map;
-            }
-        }
-    }
-
-    private class StandardRequestScopeFactory implements RequestMapFactory {
-        public Map create(HttpServletRequest request) {
-            return new DirectRequestAttributeMap(request);
         }
     }
 }
