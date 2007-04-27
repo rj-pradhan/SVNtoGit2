@@ -3,6 +3,7 @@ package com.icesoft.faces.webapp.command;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -12,6 +13,10 @@ public class Macro implements Command {
     public Macro(Command commandA, Command commandB) {
         commands.add(commandA);
         commands.add(commandB);
+    }
+
+    public Macro(Command[] commands) {
+        this.commands.addAll(Arrays.asList(commands));
     }
 
     public Command coalesceWith(Command command) {
