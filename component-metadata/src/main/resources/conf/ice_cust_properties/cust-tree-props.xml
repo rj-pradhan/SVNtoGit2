@@ -55,28 +55,6 @@
 </property>
 
 <property>
-    <property-name>folderOpenImage</property-name>
-    <property-extension>
-        <category>ICE_LAYOUT</category>
-        <editor-class>
-            &urlEditor;
-        </editor-class>
-    </property-extension>
-</property>
-
-<property>
-    <description>document image</description>
-
-    <property-name>documentImage</property-name>
-    <property-extension>
-        <category>ICE_LAYOUT</category>
-        <editor-class>
-            &urlEditor;
-        </editor-class>
-    </property-extension>
-</property>
-
-<property>
     <description>
         Name of the image that overrides the default image.
     </description>
@@ -108,20 +86,6 @@
         <category>ICE_LAYOUT</category>
         <editor-class>
             &stringEditor;
-        </editor-class>
-    </property-extension>
-</property>
-
-
-<property>
-    <description>
-        Name of the image that overrides the default image.
-    </description>
-    <property-name>folderImage</property-name>
-    <property-extension>
-        <category>ICE_LAYOUT</category>
-        <editor-class>
-            &urlEditor;
         </editor-class>
     </property-extension>
 </property>
