@@ -60,6 +60,14 @@
         throw 'Unknown message received: ' + messageName;
     };
 
+    This.ParsingError = function(message) {
+        logger.error('Parsing error');
+        var errorNode = message.firstChild;
+        logger.error(errorNode.data);
+        var sourceNode = errorNode.firstChild;
+        logger.error(sourceNode.data);
+    };
+
     This.register = function(messageName, command) {
         commands[messageName] = command;
     };
@@ -71,4 +79,5 @@
     This.register('server-error', This.ServerError);
     This.register('session-expired', This.SessionExpired);
     This.register('macro', This.Macro);
+    This.register('parsererror', This.ParsingError);
 });
