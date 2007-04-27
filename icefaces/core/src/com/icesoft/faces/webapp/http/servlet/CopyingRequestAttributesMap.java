@@ -1,9 +1,6 @@
 package com.icesoft.faces.webapp.http.servlet;
 
-import com.icesoft.faces.env.ServletEnvironmentRequest;
-
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,11 +44,5 @@ public class CopyingRequestAttributesMap extends HashMap {
             request.removeAttribute((String.valueOf(e.nextElement())));
         }
         super.clear();
-    }
-
-    public CopyingRequestAttributesMap cloneWith(HttpServletRequest request) {
-        CopyingRequestAttributesMap clone = new CopyingRequestAttributesMap(new ServletEnvironmentRequest(request));
-        clone.putAll(this);
-        return clone;
     }
 }

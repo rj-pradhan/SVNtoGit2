@@ -5,6 +5,7 @@ import com.icesoft.faces.context.AbstractAttributeMap;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
+// todo: Iron out DirectRequestAttributeMap implementation
 public class DirectRequestAttributeMap extends AbstractAttributeMap {
     private HttpServletRequest request;
 
