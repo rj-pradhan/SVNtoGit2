@@ -9,7 +9,13 @@ import com.icesoft.faces.webapp.http.common.Server;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class ReceivePing implements Server, ResponseHandler {
+
+    private static Log log = LogFactory.getLog(ReceivePing.class);
+
     private static final Pong PONG = new Pong();
     private Map commandQueues;
 
@@ -21,7 +27,13 @@ public class ReceivePing implements Server, ResponseHandler {
         String[] viewIdentifiers = request.getParameterAsStrings("viewNumber");
         for (int i = 0; i < viewIdentifiers.length; i++) {
             CommandQueue queue = (CommandQueue) commandQueues.get(viewIdentifiers[i]);
-            queue.put(PONG);
+            if( queue != null ){
+                queue.put(PONG);
+            } else {                              
+                if( log.isWarnEnabled() ){
+                    log.warn( "could not get a valid queue for " + viewIdentifiers[i] );
+                }
+            }
         }
         request.respondWith(this);        
     }
