@@ -51,6 +51,7 @@ import javax.faces.el.ValueBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ActionListener;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -140,7 +141,7 @@ public class OutputChart extends HtmlCommandButton {
      *clientSideImageMap or not.</p> 
      */
     public boolean isClientSideImageMap() {
-        if (getActionListener() != null &&
+        if (hasActionListener() &&
             (!getType().equalsIgnoreCase(AREA_CHART_TYPE) &&
              !getType().equalsIgnoreCase(AREA_STACKED_CHART_TYPE))) {
             return true;
@@ -148,7 +149,19 @@ public class OutputChart extends HtmlCommandButton {
             return false;
         }
     }
-
+    
+    protected boolean hasActionListener() {
+        MethodBinding actionListener = getActionListener();
+        if( actionListener != null ) {
+            return true;
+        }
+        ActionListener[] actionListeners = getActionListeners();
+        if( actionListeners != null && actionListeners.length > 0 ) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      *<p>Return the value of the <code>data</code> property.</p> 
      */
