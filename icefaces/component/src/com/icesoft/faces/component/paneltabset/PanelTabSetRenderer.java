@@ -171,7 +171,7 @@ public class PanelTabSetRenderer
             }
         }
 
-        table.removeAttribute(HTML.BGCOLOR_ATTR);
+//        table.removeAttribute(HTML.BGCOLOR_ATTR);
 
         // clean out children
         DOMContext.removeChildrenByTagName(table, HTML.TR_ELEM);
