@@ -39,6 +39,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
+import javax.faces.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 
@@ -191,6 +192,11 @@ public class MenuItem extends MenuItemBase {
      * <p>Return the value of the <code>action</code> property.</p>
      */
     public MethodBinding getAction() {
+        // Superclass getAction() is smart enough to handle JSF 1.1 and 1.2,
+        //  getting Action MethodBinding or MethodExpression
+        MethodBinding actionMB = super.getAction();
+        if(actionMB != null)
+            return actionMB;
         return action;
     }
 
@@ -213,6 +219,17 @@ public class MenuItem extends MenuItemBase {
      */
     public void setActionListener(MethodBinding actionListener) {
         this.actionListener = actionListener;
+    }
+    
+    public boolean hasActionOrActionListener() {
+        if( getAction() != null )
+            return true;
+        if( getActionListener() != null )
+            return true;
+        ActionListener[] actionListeners = getActionListeners();
+        if( actionListeners != null && actionListeners.length > 0 )
+            return true;
+        return false;
     }
 
 
