@@ -53,6 +53,8 @@ import javax.faces.component.UIParameter;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
+import javax.faces.el.MethodBinding;
 
 import java.beans.Beans;
 import java.io.IOException;
@@ -500,17 +502,25 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             ((nextSubMenuItem.getParent() instanceof MenuItems)
              && (nextSubMenuItem.getParent().getParent() instanceof MenuBar))) {
             // handle action/actionListeners if attached to top level menuItems
-            if (nextSubMenuItem.getAction() != null ||
-                nextSubMenuItem.getActionListener() != null) {
+            if (nextSubMenuItem.hasActionOrActionListener()) {
                 HtmlCommandLink link = new HtmlCommandLink();
                 if (nextSubMenuItem.isDisabled()) {
                     link.setDisabled(true);
                 } else { // only add action and actionlisteners on enabled menuItems
-                    if (nextSubMenuItem.getAction() != null) {
-                        link.setAction(nextSubMenuItem.getAction());
+                    MethodBinding action = nextSubMenuItem.getAction(); 
+                    if (action != null) {
+                        link.setAction(action);
                     }
-                    if (nextSubMenuItem.getActionListener() != null) {
-                        link.setActionListener(nextSubMenuItem.getActionListener());
+                    MethodBinding actionListener = nextSubMenuItem.getActionListener();
+                    if (actionListener != null) {
+                        link.setActionListener(actionListener);
+                    }
+                    ActionListener[] actionListeners = nextSubMenuItem.getActionListeners(); 
+                    if (actionListeners != null) {
+                        for(int i = 0; i < actionListeners.length; i++) {
+                            link.removeActionListener(actionListeners[i]);
+                            link.addActionListener(actionListeners[i]);
+                        }
                     }
                 }
                 link.setValue(nextSubMenuItem.getValue());
@@ -549,17 +559,25 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                 }
                 subMenuItemDiv.appendChild(anchor);
             }
-        } else if (nextSubMenuItem.getAction() != null ||
-                   nextSubMenuItem.getActionListener() != null) {
+        } else if (nextSubMenuItem.hasActionOrActionListener()) {
             HtmlCommandLink link = new HtmlCommandLink();
             if (nextSubMenuItem.isDisabled()){
                 link.setDisabled(true);
             } else { // only set action and actionListeners on enabled menuItems
-                if (nextSubMenuItem.getAction() != null) {
-                    link.setAction(nextSubMenuItem.getAction());
+                MethodBinding action = nextSubMenuItem.getAction();
+                if (action != null) {
+                    link.setAction(action);
                 }
-                if (nextSubMenuItem.getActionListener() != null) {
-                    link.setActionListener(nextSubMenuItem.getActionListener());
+                MethodBinding actionListener = nextSubMenuItem.getActionListener();
+                if (actionListener != null) {
+                    link.setActionListener(actionListener);
+                }
+                ActionListener[] actionListeners = nextSubMenuItem.getActionListeners();
+                if (actionListeners != null) {
+                    for(int i = 0; i < actionListeners.length; i++) {
+                        link.removeActionListener(actionListeners[i]);
+                        link.addActionListener(actionListeners[i]);
+                    }
                 }
             }
             link.setValue(nextSubMenuItem.getValue());
