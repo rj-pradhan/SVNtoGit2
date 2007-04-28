@@ -14,11 +14,7 @@
     This tag library contains tags for supporting jsp:include directly
     with JSF components. 
   </description>
-
-    <listener>
-        <listener-class>com.icesoft.faces.webapp.http.servlet.SessionDispatcher$Listener</listener-class>
-    </listener>
-
+    
   <tag>
 
     <name>include</name>

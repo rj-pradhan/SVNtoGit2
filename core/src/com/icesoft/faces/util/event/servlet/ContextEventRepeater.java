@@ -33,6 +33,7 @@
 
 package com.icesoft.faces.util.event.servlet;
 
+import com.icesoft.faces.webapp.http.servlet.SessionDispatcher;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -88,6 +89,12 @@ import java.util.WeakHashMap;
  */
 public class ContextEventRepeater
         implements HttpSessionListener, ServletContextListener {
+    //todo: fix it... this is just a temporary solution
+    private static SessionDispatcher.Listener SessionDispatcherListener;
+    static {
+        SessionDispatcherListener = new SessionDispatcher.Listener();
+    }
+
     private static final String ASYNC_SERVER_KEY =
             "com.icesoft.faces.async.server";
     private static final String MESSAGING_CONTEXT_EVENT_PUBLISHER_CLASS_NAME =
@@ -123,6 +130,8 @@ public class ContextEventRepeater
      * @param event the servlet context event.
      */
     public synchronized void contextDestroyed(ServletContextEvent event) {
+        SessionDispatcherListener.contextDestroyed(event);
+
         ContextDestroyedEvent contextDestroyedEvent =
                 new ContextDestroyedEvent(event);
         Iterator it = listeners.keySet().iterator();
@@ -146,6 +155,8 @@ public class ContextEventRepeater
     }
 
     public synchronized void contextInitialized(ServletContextEvent event) {
+        SessionDispatcherListener.contextInitialized(event);
+
         boolean _asyncServer;
         String _asyncServerValue =
                 event.getServletContext().getInitParameter(ASYNC_SERVER_KEY);
@@ -234,7 +245,7 @@ public class ContextEventRepeater
     }
 
     public synchronized void sessionCreated(HttpSessionEvent event) {
-        // do nothing.
+        SessionDispatcherListener.sessionCreated(event);
     }
 
     /**
@@ -244,6 +255,7 @@ public class ContextEventRepeater
      * @param event the HTTP session event.
      */
     public synchronized void sessionDestroyed(HttpSessionEvent event) {
+        SessionDispatcherListener.sessionDestroyed(event);
         //It's possible to have a valid session that does not contain an
         //icefacesID.  We should not bail out completely.  Simply log a message
         //and return quietly, but do not broadcast this to the listeners.  We
