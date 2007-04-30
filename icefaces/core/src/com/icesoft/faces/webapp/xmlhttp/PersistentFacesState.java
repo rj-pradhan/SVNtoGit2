@@ -143,7 +143,7 @@ public class PersistentFacesState implements Serializable {
         synchronized (facesContext) {
             try {
                 lifecycle.render(facesContext);
-                facesContext.resetRenderResponse();
+                facesContext.release();
             } catch (IllegalStateException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("fatal render failure for viewNumber "
