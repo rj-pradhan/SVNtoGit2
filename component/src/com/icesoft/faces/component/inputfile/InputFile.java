@@ -48,6 +48,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
+import javax.faces.event.FacesListener;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,6 +58,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.EventObject;
+import java.util.Iterator;
 
 
 /**
@@ -179,12 +183,19 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
     
     protected void notifyDone() {
+        //this is true for JSF 1.1 only
         MethodBinding actionListener = getActionListener();
         if(actionListener != null) {
             actionListener.invoke(
                 FacesContext.getCurrentInstance(),
                 new Object[] {new ActionEvent(this)} );
         }
+        
+        //this is true for JSF 1.2 only
+       ActionListener[] actionListeners = getActionListeners();
+       for (int i=0; i< actionListeners.length; i++) {
+                new ActionEvent(this).processListener(actionListeners[i]);
+       }
     }
     
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
