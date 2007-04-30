@@ -36,7 +36,6 @@
 <f:view>
     <html>
     <head><title>ICEfaces: TimeZone Sample Application</title></head>
-    <link rel="stylesheet" type="text/css" href="./timezone_style.css"/>
     <body>
     <h3>ICEfaces: TimeZone Sample Application</h3>
     <h:form>

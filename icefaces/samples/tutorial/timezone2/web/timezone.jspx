@@ -40,20 +40,17 @@
         <h:form>
             <h:panelGrid columns="2">
                 <h:outputText style="font-weight:600" value="Server Time Zone"/>
-                <h:outputText style="font-weight:600" value="Time Zone Selected from Map"/>
+                <h:outputText style="font-weight:600" 
+                              value="Time Zone Selected from Map"/>
                 <h:outputText value="#{timeZoneBean.serverTimeZoneName}"/>
                 <h:outputText value="#{timeZoneBean.selectedTimeZoneName}"/>
-                <h:outputText style="font-weight:800" value="#{timeZoneBean.serverTime}"/>
-                <h:outputText style="font-weight:800" value="#{timeZoneBean.selectedTime}"/>
+                <h:outputText style="font-weight:800" 
+                              value="#{timeZoneBean.serverTime}"/>
+                <h:outputText style="font-weight:800" 
+                              value="#{timeZoneBean.selectedTime}"/>
             </h:panelGrid>
-            <h:panelGrid columns="6" cellspacing="0" cellpadding="0">
-                <h:commandButton id="GMTminus10" image="images/hawaii.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus9" image="images/alaska.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus8" image="images/pacific.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus7" image="images/mountain.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus6" image="images/central.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus5" image="images/eastern.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-            </h:panelGrid>
+            <h:commandButton id="map" image="images/map.jpg"
+                                 actionListener="#{timeZoneBean.listen}"/>
         </h:form>        
     </body>
 </html>
