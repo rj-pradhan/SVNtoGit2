@@ -378,6 +378,8 @@ public class DOMResponseWriter extends ResponseWriter {
             libs.add("xmlhttp/openajax.js");
         }
         libs.add("xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
+        //todo: refactor how extral libraries are loaded into the bridge; always include extra libraries for now
+        libs.add("xmlhttp" + StartupTime.getStartupInc() + "ice-extras.js");
         if (context.getExternalContext().getRequestMap().get(Constants.INC_SERVLET_PATH) == null) {
             String[] componentLibs = JavascriptContext.getIncludedLibs(context);
             for (int i = 0; i < componentLibs.length; i++) {
