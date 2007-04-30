@@ -53,11 +53,6 @@ public class TimeZoneWrapper {
     private String id;
 
     /**
-     * The path to the appropriate image for this {@link TimeZone}
-     */
-    private String imagePath;
-
-    /**
      * The component id of the commandButton, in the map UI, corresponding to
      * this time zone.
      */
@@ -80,6 +75,17 @@ public class TimeZoneWrapper {
      * {@link TimeZone}
      */
     private DateFormat dateFormat;
+    
+    /**
+     * The abbreviaton for the {@link TimeZone}.
+     */
+    private String abbreviation;
+    
+    /**
+     * The background color used for the UI label of each
+     * selectBooleanCheckbox component
+     */
+    private String backgroundColor;
 
     /* Constructors */
     /**
@@ -88,12 +94,13 @@ public class TimeZoneWrapper {
      * @param mapId   map button component id in web page
      * @param checkId checkbox component id in web page
      */
-    public TimeZoneWrapper(String id, String imgPath, String mapId,
-                           String checkId) {
+    public TimeZoneWrapper(String id, String mapId, String checkId, 
+                                String abbreviation, String backgroundColor) {
         this.id = id;
-        this.imagePath = imgPath;
         this.mapCommandButtonId = mapId;
         this.checkboxId = checkId;
+        this.abbreviation = abbreviation;
+        this.backgroundColor = backgroundColor;
         this.currentlyShowing = false;
         this.dateFormat = TimeZoneBean.buildDateFormatForTimeZone(
                 TimeZone.getTimeZone(id));
@@ -174,15 +181,6 @@ public class TimeZoneWrapper {
     }
 
     /**
-     * Gets the path to the image used to represent this time zone.
-     *
-     * @return String
-     */
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    /**
      * Ascertains whether mapCommandButtonId or checkboxId are a part of
      * componentId. componentId might be a fully qualified id, with a prefix
      * corresponding to container component(s).
@@ -231,4 +229,19 @@ public class TimeZoneWrapper {
     public void setCurrentlyShowing(boolean showing) {
         currentlyShowing = showing;
     }
+    
+    /**
+     * Gets the abbreviation for the TimeZone to be displayed in the UI.
+     */
+    public String getAbbreviation(){
+        return abbreviation;
+    }
+    
+    /**
+     * Gets the backgroundColor for the corresponding time zone.
+     */
+    public String getBackgroundColor(){
+        return backgroundColor;
+    }
+    
 } // End of TimeZoneWrapper class

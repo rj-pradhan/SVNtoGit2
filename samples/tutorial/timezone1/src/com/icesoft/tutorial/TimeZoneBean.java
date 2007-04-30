@@ -85,18 +85,8 @@ public class TimeZoneBean {
     private Polygon mountain;
     private Polygon central;
     private Polygon eastern;
-
-    /**
-     * Secondary polygon objects that represent the colored tabs on the map
-     */
-    private Polygon hawaiiTab;
-    private Polygon alaskaTab;
-    private Polygon pacificTab;
-    private Polygon mountainTab;
-    private Polygon centralTab;
-    private Polygon easternTab;
-
-
+    private Polygon nfld;
+    
     /**
      * Constructor initializes time zones.
      */
@@ -108,6 +98,7 @@ public class TimeZoneBean {
      * Initializes this TimeZoneBean's properties.
      */
     private void init() {
+        
         serverTimeZone = TimeZone.getDefault();
         serverFormat = buildDateFormatForTimeZone(serverTimeZone);
         // selected time zone set to UTC as default
@@ -116,7 +107,7 @@ public class TimeZoneBean {
 
         // Entries in this list are hardcoded to match entries in
         // the timezone web file, so no parameters can be changed.
-        allTimeZoneList = new ArrayList(6);
+        allTimeZoneList = new ArrayList(7);
         allTimeZoneList
                 .add(new TimeZoneWrapper("Pacific/Honolulu", "GMTminus10"));
         allTimeZoneList
@@ -124,11 +115,13 @@ public class TimeZoneBean {
         allTimeZoneList
                 .add(new TimeZoneWrapper("America/Los_Angeles", "GMTminus8"));
         allTimeZoneList
-                .add(new TimeZoneWrapper("America/Phoenix", "GMTminus7"));
+                .add(new TimeZoneWrapper("America/Denver", "GMTminus7"));
         allTimeZoneList
                 .add(new TimeZoneWrapper("America/Chicago", "GMTminus6"));
         allTimeZoneList
                 .add(new TimeZoneWrapper("America/New_York", "GMTminus5"));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("Canada/Newfoundland","GMTminus4"));
 
         // create main timezone outlines
         hawaii = new Polygon(hawaiiXCoords, hawaiiYCoords, hawaiiXCoords.length);
@@ -141,14 +134,8 @@ public class TimeZoneBean {
                               centralXCoords.length);
         eastern = new Polygon(easternXCoords, easternYCoords,
                               easternXCoords.length);
-        // Create secondary polygon objects for the bottom tabs
-        hawaiiTab = new Polygon(hawaiiTabX, hawaiiTabY, hawaiiTabX.length);
-        alaskaTab = new Polygon(alaskaTabX, alaskaTabY, alaskaTabX.length);
-        pacificTab = new Polygon(pacificTabX, pacificTabY, pacificTabX.length);
-        mountainTab =
-                new Polygon(mountainTabX, mountainTabY, mountainTabX.length);
-        centralTab = new Polygon(centralTabX, centralTabY, centralTabX.length);
-        easternTab = new Polygon(easternTabX, easternTabY, easternTabX.length);
+        nfld = new Polygon(nfldXCoords, nfldYCoords, nfldXCoords.length);
+        
     }
 
     /**
@@ -257,7 +244,6 @@ public class TimeZoneBean {
         String clientId = event.getComponent().getClientId(context);
         Map requestParams =
                 context.getExternalContext().getRequestParameterMap();
-
         // get mouse coordinate of user click
         int x = new Integer((String) requestParams.get(clientId + ".x"))
                 .intValue();
@@ -265,28 +251,32 @@ public class TimeZoneBean {
                 .intValue();
 
         // compare mouse coordinate to know timzone polygons. 
-        if ((hawaii.contains(x, y)) || (hawaiiTab.contains(x, y))) {
+        if (hawaii.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus10");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if ((alaska.contains(x, y)) || (alaskaTab.contains(x, y))) {
+        } else if (alaska.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus9");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if ((pacific.contains(x, y)) || (pacificTab.contains(x, y))) {
+        } else if (pacific.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus8");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if ((mountain.contains(x, y)) || (mountainTab.contains(x, y))) {
+        } else if (mountain.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus7");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if ((central.contains(x, y)) || (centralTab.contains(x, y))) {
+        } else if (central.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus6");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if ((eastern.contains(x, y)) || (easternTab.contains(x, y))) {
+        } else if (eastern.contains(x, y)) {
             TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus5");
+            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
+            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
+        } else if (nfld.contains(x, y)) {
+            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus4");
             selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
             selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
         }
@@ -367,23 +357,12 @@ public class TimeZoneBean {
              50, 54, 66, 74, 78, 81, 83, 84, 91, 96, 209, 215,
              216, 226, 242, 255, 253, 241, 208, 154, 144, 136,
              127, 118, 114, 110, 92, 84, 78, 35, 29, 9};
-
-    // Create secondary polygon objects for the bottom tabs
-    private static int[] hawaiiTabX = {0, 61, 61, 0};
-    private static int[] hawaiiTabY = {242, 242, 254, 254};
-
-    private static int[] alaskaTabX = {61, 131, 131, 61};
-    private static int[] alaskaTabY = {242, 242, 254, 254};
-
-    private static int[] pacificTabX = {131, 210, 210, 131};
-    private static int[] pacificTabY = {242, 242, 254, 254};
-
-    private static int[] mountainTabX = {210, 292, 292, 210};
-    private static int[] mountainTabY = {242, 242, 254, 254};
-
-    private static int[] centralTabX = {292, 381, 381, 292};
-    private static int[] centralTabY = {242, 242, 254, 254};
-
-    private static int[] easternTabX = {381, 464, 464, 381};
-    private static int[] easternTabY = {242, 242, 254, 254};
+    private static int[] nfldXCoords = 
+            {448, 465, 465, 415, 416, 418, 434, 434, 434, 432, 433, 436, 452, 
+             452, 450, 453, 450, 447, 447, 444, 440, 440, 434, 440, 443, 450, 
+             453, 450, 451, 448, 450, 450, 448};
+    private static int[] nfldYCoords = 
+            {0, 0, 242, 242, 226, 217, 209, 95, 85, 83, 80, 82, 75, 56, 54, 51, 
+             50, 52, 56, 54, 55, 50, 45, 40, 42, 42, 37, 29, 23, 20, 17, 14, 14};
+   
 }

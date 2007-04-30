@@ -47,19 +47,22 @@
                 <h:outputText style="font-weight:800" value="#{timeZoneBean.serverTime}"/>
                 <h:outputText style="font-weight:800" value="#{timeZoneBean.selectedTime}"/>
             </h:panelGrid>
-            <h:panelGrid columns="6" cellspacing="0" cellpadding="0">
-                <h:commandButton id="GMTminus10" image="images/hawaii.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus9" image="images/alaska.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus8" image="images/pacific.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus7" image="images/mountain.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus6" image="images/central.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                <h:commandButton id="GMTminus5" image="images/eastern.jpg" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
+            <h:commandButton id="map" image="images/map.jpg" actionListener="#{timeZoneBean.listen}"/>
+            <h:panelGrid columns="14" cellspacing="2" cellpadding="2">
+                <ice:outputLabel value="HADT" style="background:#f16e28; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus10" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus10']}" autocomplete="off"/>
+                <ice:outputLabel value="AKST" style="background: #9566b6; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus9" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus9']}" autocomplete="off"/>
+                <ice:outputLabel value="PST" style="background: #fefc5a; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus8" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus8']}" autocomplete="off"/>
+                <ice:outputLabel value="MDT" style="background: #96b710; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus7" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus7']}" autocomplete="off"/>
+                <ice:outputLabel value="CDT" style="background: #f16e28; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus6" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus6']}" autocomplete="off"/>
+                <ice:outputLabel value="EST" style="background: #9566b6; border:1px solid #999999;"/>
                 <ice:selectBooleanCheckbox id="Cminus5" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus5']}" autocomplete="off"/>
+                <ice:outputLabel value="NST" style="background: #fefc5a; border:1px solid #999999;"/>
+                <ice:selectBooleanCheckbox id="Cminus4" required="false" immediate="true" valueChangeListener="#{timeZoneBean.timeZoneChanged}" value="#{timeZoneBean.checkboxStates['Cminus4']}" autocomplete="off"/>
             </h:panelGrid>
             <h:dataTable frame="box" value="#{timeZoneBean.checkedTimeZoneList}" var="checkedTimeZone">
                 <f:facet name="header"><h:outputText value="Checked Time Zones"/></f:facet>

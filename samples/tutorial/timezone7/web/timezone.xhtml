@@ -54,11 +54,10 @@
                 <h:outputText value="#{timeZoneBean.serverTime}"/>
                 <h:outputText value="#{timeZoneBean.selectedTime}"/>
             </h:panelGrid>
-            <h:panelGrid columns="#{fn:length(timeZoneBean.allTimeZoneList)}" width="100%" cellpadding="0" cellspacing="0">
+            <h:commandButton id="map" image="images/map.jpg" actionListener="#{timeZoneBean.listen}"/>
+            <h:panelGrid columns="#{fn:length(timeZoneBean.allTimeZoneList) + 7}" width="100%" cellpadding="0" cellspacing="0">
                 <c:forEach var="allTimeZone" items="#{timeZoneBean.allTimeZoneList}">
-                    <h:commandButton id="#{allTimeZone.mapCommandButtonId}" image="#{allTimeZone.imagePath}" actionListener="#{timeZoneBean.listen}" style="border: 0px;"/>
-                </c:forEach>
-                <c:forEach var="allTimeZone" items="#{timeZoneBean.allTimeZoneList}">
+                    <ice:outputLabel value="#{allTimeZone.abbreviation}" style="#{allTimeZone.backgroundColor}"/>
                     <ice:selectBooleanCheckbox id="#{allTimeZone.checkboxId}" required="false" immediate="true" value="#{allTimeZone.currentlyShowing}" valueChangeListener="#{timeZoneBean.timeZoneChanged}" autocomplete="off"/>
                 </c:forEach>
             </h:panelGrid>
