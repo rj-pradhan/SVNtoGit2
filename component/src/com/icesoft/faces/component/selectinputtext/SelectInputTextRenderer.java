@@ -201,7 +201,7 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
                             domContext.createElement(HTML.SPAN_ELEM);
                     spanToSelect.setAttribute(HTML.STYLE_ATTR,
                                               "visibility:hidden;display:none;");
-                    Text label = domContext.createTextNode(item.getLabel());
+                    Text label = domContext.createTextNode(DOMUtils.escapeAnsi(item.getLabel()));
                     spanToSelect.appendChild(label);
                     div.appendChild(spanToSelect);
                     component.resetId(facet);
