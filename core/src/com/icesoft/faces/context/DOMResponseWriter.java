@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -290,13 +291,19 @@ public class DOMResponseWriter extends ResponseWriter {
 
     private void enhanceAndFixDocument() {
         Element html = (Element) document.getDocumentElement();
-        html = "html".equals(html.getTagName()) ? html : fixHtml();
+        enhanceHtml(html = "html".equals(html.getTagName()) ? html : fixHtml());
 
         Element head = (Element) document.getElementsByTagName("head").item(0);
-        enhanceHead(head == null ? fixHead(html) : head);
+        enhanceHead(head == null ? fixHead() : head);
 
         Element body = (Element) document.getElementsByTagName("body").item(0);
-        enhanceBody(body == null ? fixBody(html) : body);
+        enhanceBody(body == null ? fixBody() : body);
+    }
+
+    private void enhanceHtml(Element html) {
+        //add lang attribute
+        Locale locale = context.getApplication().getViewHandler().calculateLocale(context);
+        html.setAttribute("lang", locale.getLanguage());
     }
 
     private void enhanceBody(Element body) {
@@ -407,7 +414,8 @@ public class DOMResponseWriter extends ResponseWriter {
         return html;
     }
 
-    private Element fixBody(Element html) {
+    private Element fixBody() {
+        Element html = document.getDocumentElement();
         Element body = document.createElement("body");
         NodeList children = html.getChildNodes();
         int length = children.getLength();
@@ -425,7 +433,8 @@ public class DOMResponseWriter extends ResponseWriter {
         return body;
     }
 
-    private Element fixHead(Element html) {
+    private Element fixHead() {
+        Element html = document.getDocumentElement();
         Element head = document.createElement("head");
         html.insertBefore(head, html.getFirstChild());
 
