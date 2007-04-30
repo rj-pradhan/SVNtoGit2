@@ -343,11 +343,6 @@ public class BridgeFacesContext extends FacesContext {
         faceMessages.clear();
         renderResponse = false;
         responseComplete = false;
-        //force MyFaces to send the javascript with every submit not just with the first one
-        //todo: find a better mechanism for this
-        Map requestMap = externalContext.getRequestMap();
-        requestMap.remove("org.apache.MyFaces.FIRST_SUBMIT_SCRIPT_ON_PAGE");
-        requestMap.remove("org.apache.myfaces.myFacesJavascript");
         setCurrentInstance(null);
     }
 
