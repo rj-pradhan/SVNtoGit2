@@ -113,7 +113,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         //header.appendChild(text);
 
         header.setAttribute(HTML.CLASS_ATTR, headerClass);
-        if(panelAccordion.getToogleOnClick().equals(Boolean.TRUE)){
+        if(panelAccordion.getToggleOnClick().equals(Boolean.TRUE)){
             if(!disabled)
                 header.setAttribute(HTML.ONCLICK_ATTR, "Ice.Accordion.fire('" + baseID + "_content');");
         }

@@ -19,7 +19,7 @@ public class PanelAccordion extends UIComponentBase {
     private Boolean expanded;
     private MethodBinding actionListener;
     private String styleClass;
-    private Boolean toogleOnClick;
+    private Boolean toggleOnClick;
     private Boolean disabled;
      /**
      * The current enabledOnUserRole state.
@@ -109,23 +109,23 @@ public class PanelAccordion extends UIComponentBase {
         }
     }
 
-    public Boolean getToogleOnClick() {
-         ValueBinding vb = getValueBinding("toogleOnClick");
+    public Boolean getToggleOnClick() {
+         ValueBinding vb = getValueBinding("toggleOnClick");
         if (vb != null) {
             return (Boolean) vb.getValue(getFacesContext());
         }
-        if (toogleOnClick!= null) {
-            return toogleOnClick;
+        if (toggleOnClick!= null) {
+            return toggleOnClick;
         }
         return Boolean.TRUE;
     }
 
-    public void setToogleOnClick(Boolean toogleOnClick) {
-        ValueBinding vb = getValueBinding("toogleOnClick");
+    public void setToggleOnClick(Boolean toggleOnClick) {
+        ValueBinding vb = getValueBinding("toggleOnClick");
         if (vb != null) {
-            vb.setValue(getFacesContext(), toogleOnClick);
+            vb.setValue(getFacesContext(), toggleOnClick);
         } else {
-            this.toogleOnClick= toogleOnClick;
+            this.toggleOnClick= toggleOnClick;
         }
     }
 
