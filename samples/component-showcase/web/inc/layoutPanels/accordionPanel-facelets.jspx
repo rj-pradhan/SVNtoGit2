@@ -58,7 +58,10 @@
 <ice:panelGrid styleClass="contentLayoutGridStyleProduce"
                style="width:210px; border:0px" columns="2" border="1">
     <ice:panelGroup>
-        <ice:panelAccordion label="Fruits" styleClass="accordion1">
+        <ice:panelAccordion styleClass="accordion1">
+            <f:facet name="header">
+	                <ice:outputText value="Fruits"/>
+            </f:facet>
             <ice:panelGroup>
                 <ice:commandLink value="Apples"
                                  actionListener="#{accordionBean.selectedPanelChangedAction}"
@@ -98,7 +101,11 @@
             </ice:panelGroup>
         </ice:panelAccordion>
         <br/>
-        <ice:panelAccordion label="Vegetables" styleClass="accordion2">
+        
+        <ice:panelAccordion styleClass="accordion2">
+             <f:facet name="header">
+                <ice:outputText value="Vegetables"/>
+            </f:facet>        
             <ice:panelGroup>
                 <ice:commandLink value="Carrots"
                                  actionListener="#{accordionBean.selectedPanelChangedAction}"
@@ -199,8 +206,11 @@
 <ice:panelGrid styleClass="contentLayoutGridStyleProduceLogin"
                style="width:210px; border:0px;" columns="2" rows="1" border="1">
     <ice:panelGroup>
-        <ice:panelAccordion label="Login" style="width:210px;"
+        <ice:panelAccordion style="width:210px;"
                             styleClass="accordion">
+              <f:facet name="header">
+                <ice:outputText value="Login"/>
+            </f:facet>                            
             <ice:panelGroup>
                 <ice:panelTabSet selectedIndex="1"
                                  styleClass="componentPanelTabSetLayout"
@@ -235,9 +245,13 @@
         </ice:panelAccordion>
     </ice:panelGroup>
     <ice:panelGroup>
-        <ice:panelAccordion label="User Info"
+        <ice:panelAccordion 
                             open="#{accordionBean.infoBoolean}"
                             style="width:500px;" styleClass="accordion">
+            <f:facet name="header">
+		<ice:outputText value="User Info"/>
+            </f:facet>
+                            
             <ice:panelGroup>
                 <ice:outputText value="Name: "/>
                 <ice:outputText value="#{accordionBean.name}"/>
