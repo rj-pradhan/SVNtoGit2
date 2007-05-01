@@ -190,18 +190,25 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
     protected void broadcastToActionListener(PaginatorActionEvent event) {
         FacesContext context = getFacesContext();
 
-        MethodBinding actionListenerBinding = getActionListener();
-        if (actionListenerBinding != null) {
-            try {
+        try {
+            MethodBinding actionListenerBinding = getActionListener();
+            if (actionListenerBinding != null) {
                 actionListenerBinding.invoke(context, new Object[]{event});
-            } catch (EvaluationException e) {
-                Throwable cause = e.getCause();
-                if (cause != null &&
-                    cause instanceof AbortProcessingException) {
-                    throw(AbortProcessingException) cause;
-                }
-                throw e;
             }
+            // super.broadcast(event) does this itself
+            //ActionListener[] actionListeners = getActionListeners();
+            //if(actionListeners != null) {
+            //    for(int i = 0; i < actionListeners.length; i++) {
+            //        actionListeners[i].processAction(event);
+            //    }
+            //}
+        } catch (EvaluationException e) {
+            Throwable cause = e.getCause();
+            if (cause != null &&
+                cause instanceof AbortProcessingException) {
+                throw(AbortProcessingException) cause;
+            }
+            throw e;
         }
     }
 
@@ -448,7 +455,7 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      */
     public void setAction(MethodBinding action) {
         throw new UnsupportedOperationException(
-                "defining an action is not supported. use an actionlistener");
+                "Defining an action is not supported. Use an actionListener");
     }
 
     /**
