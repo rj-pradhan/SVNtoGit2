@@ -29,8 +29,8 @@ public class NormalModeSerializer implements DOMSerializer {
         Map requestMap = context.getExternalContext().getRequestMap();
 
         if( isFragment(requestMap) ){
-            if( log.isInfoEnabled() ){
-                log.info( "treating request as a fragment" );
+            if( log.isDebugEnabled() ){
+                log.debug( "treating request as a fragment" );
             }
 
             Node body = DOMUtils.getChildByNodeName(
@@ -47,8 +47,8 @@ public class NormalModeSerializer implements DOMSerializer {
                 writer.write(DOMUtils.childrenToString(body));
             }
         } else {
-            if (log.isInfoEnabled()) {
-                log.info("treating request as a whole page (not a fragment)");
+            if (log.isDebugEnabled()) {
+                log.debug("treating request as a whole page (not a fragment)");
             }
 
             String publicID =
@@ -97,16 +97,16 @@ public class NormalModeSerializer implements DOMSerializer {
         //path.
 
         String frag = (String) requestMap.get(Constants.INC_REQUEST_URI);
-        if( log.isInfoEnabled() ){
-            log.info( Constants.INC_REQUEST_URI + " = " + frag );
+        if( log.isDebugEnabled() ){
+            log.debug( Constants.INC_REQUEST_URI + " = " + frag );
         }
         if( frag != null ){
             return true;
         }
 
         frag = (String)requestMap.get(Constants.INC_SERVLET_PATH);
-        if( log.isInfoEnabled() ){
-            log.info( Constants.INC_SERVLET_PATH + " = " + frag );
+        if( log.isDebugEnabled() ){
+            log.debug( Constants.INC_SERVLET_PATH + " = " + frag );
         }
         if( frag != null ){
             return true;
