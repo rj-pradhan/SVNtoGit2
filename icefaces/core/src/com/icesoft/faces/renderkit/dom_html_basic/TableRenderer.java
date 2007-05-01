@@ -209,7 +209,9 @@ public class TableRenderer extends DomBasicRenderer {
                     encodeParentAndChildren(facesContext, nextFacet);
                 }
             }
-            tr.appendChild(scrollBarSpacer(domContext, facesContext));
+            if (isScrollable(uiComponent)) {
+                tr.appendChild(scrollBarSpacer(domContext, facesContext));
+            }
         }
         domContext.setCursorParent(root);
     }
