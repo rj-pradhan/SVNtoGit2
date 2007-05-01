@@ -39,6 +39,7 @@ package com.icesoft.tutorial;
  * That ArrayList is used to create a DataTable of checked time zones in the UI.
  */
 
+import java.awt.Polygon;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -82,28 +83,30 @@ public class TimeZoneWrapper {
     private String abbreviation;
     
     /**
-     * The background color used for the UI label of each
-     * selectBooleanCheckbox component
+     * The Polygon object of each Time Zone on the Image map
      */
-    private String backgroundColor;
-
+    private Polygon mapPolygon;
+    
     /* Constructors */
     /**
      * @param id      id used to identify the time zone.
      * @param imgPath Path to the image to represent this time zone.
      * @param mapId   map button component id in web page
      * @param checkId checkbox component id in web page
+     * @param xCoords array of X-coordinates for the image map object.
+     * @param yCoords array of Y-coordinates for the image map object.
+     * @param coords number of corrdinates in the imagem map object.
      */
     public TimeZoneWrapper(String id, String mapId, String checkId, 
-                                String abbreviation, String backgroundColor) {
+               String abbreviation, int[] xCoords, int[] yCoords, int coords) {
         this.id = id;
         this.mapCommandButtonId = mapId;
         this.checkboxId = checkId;
         this.abbreviation = abbreviation;
-        this.backgroundColor = backgroundColor;
         this.currentlyShowing = false;
         this.dateFormat = TimeZoneBean.buildDateFormatForTimeZone(
                 TimeZone.getTimeZone(id));
+        mapPolygon = new Polygon(xCoords, yCoords, coords);
     }
 
     /* Getters */
@@ -238,10 +241,11 @@ public class TimeZoneWrapper {
     }
     
     /**
-     * Gets the backgroundColor for the corresponding time zone.
+     * Gets the Polygon object that represents the Time Zone on the 
+     * image map.
      */
-    public String getBackgroundColor(){
-        return backgroundColor;
+    public Polygon getMapPolygon(){
+        return mapPolygon;
     }
-    
+          
 } // End of TimeZoneWrapper class
