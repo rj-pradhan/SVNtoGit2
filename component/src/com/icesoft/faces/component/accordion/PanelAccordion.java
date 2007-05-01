@@ -8,12 +8,15 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ActionListener;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.ActionSource;
 
-public class PanelAccordion extends UIComponentBase {
+public class PanelAccordion extends UIComponentBase implements ActionSource {
     public static final String COMPONENET_TYPE = "com.icesoft.faces.Accordion";
     public static final String DEFAULT_RENDERER_TYPE = "com.icesoft.faces.AccordionRenderer";
     public static final String COMPONENT_FAMILY = "com.icesoft.faces.AccordionFamily";
+    private static final boolean DEFAULT_IMMEDIATE = false;
 
     private String label;
     private Boolean expanded;
@@ -21,6 +24,8 @@ public class PanelAccordion extends UIComponentBase {
     private String styleClass;
     private Boolean toggleOnClick;
     private Boolean disabled;
+    private Boolean immediate;
+    
      /**
      * The current enabledOnUserRole state.
      */
@@ -129,6 +134,15 @@ public class PanelAccordion extends UIComponentBase {
         }
     }
 
+    public MethodBinding getAction() {
+        return null;
+    }
+
+    public void setAction(MethodBinding methodBinding) {
+        throw new UnsupportedOperationException(
+                "Defining an action is not supported. Use an actionListener");
+    }
+
     public MethodBinding getActionListener() {
         return actionListener;
     }
@@ -137,13 +151,47 @@ public class PanelAccordion extends UIComponentBase {
         this.actionListener = actionListener;
     }
 
+    public boolean isImmediate() {
+        if (immediate != null) {
+            return immediate.booleanValue();
+        }
+        ValueBinding vb = getValueBinding("immediate");
+        Boolean v =
+                vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
+        return v != null ? v.booleanValue() : DEFAULT_IMMEDIATE;
+    }
+    
+    public void setImmediate(boolean immediate) {
+        this.immediate = Boolean.valueOf(immediate);
+    }
+    
+    public void addActionListener(ActionListener actionListener) {
+        addFacesListener(actionListener);
+    }
+
+    public ActionListener[] getActionListeners() {
+        return (ActionListener[]) getFacesListeners(ActionListener.class);
+    }
+
+    public void removeActionListener(ActionListener actionListener) {
+        removeFacesListener(actionListener);
+    }
+
     public void broadcast(FacesEvent event) {
         super.broadcast(event);
-        if (event instanceof ActionEvent && actionListener != null) {
-
-            actionListener.invoke(getFacesContext(),
-                                     new Object[]{(ActionEvent) event});
-
+        if (event instanceof ActionEvent) {
+            ActionEvent actionEvent = (ActionEvent) event;
+            if(actionListener != null) {
+                actionListener.invoke(
+                    getFacesContext(), new Object[]{actionEvent});
+            }
+            // super.broadcast(event) does this itself
+            //ActionListener[] actionListeners = getActionListeners();
+            //if(actionListeners != null) {
+            //    for(int i = 0; i < actionListeners.length; i++) {
+            //        actionListeners[i].processAction(actionEvent);
+            //    }
+            //}
         }
     }
 
@@ -215,15 +263,16 @@ public class PanelAccordion extends UIComponentBase {
 
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[12];
+        Object[] state = new Object[9];
         state[0] = super.saveState(context);
         state[1] = label;
         state[2] = expanded;
-        state[3] = actionListener;
+        state[3] = saveAttachedState(context, actionListener);
         state[4] = styleClass;
         state[5] = disabled;
         state[6] = enabledOnUserRole;
         state[7] = renderedOnUserRole;
+        state[8] = immediate;
         return state;
     }
 
@@ -233,12 +282,12 @@ public class PanelAccordion extends UIComponentBase {
         super.restoreState(context, state[0]);
         label = (String)state[1];
         expanded= (Boolean)state[2];
-        actionListener = (MethodBinding)state[3];
+        actionListener = (MethodBinding) restoreAttachedState(context, state[3]);
         styleClass = (String)state[4];
         disabled = (Boolean)state[5];
         enabledOnUserRole = (String)state[6];
         renderedOnUserRole = (String)state[7];
-
+        immediate = (Boolean)state[8];
     }
 
 

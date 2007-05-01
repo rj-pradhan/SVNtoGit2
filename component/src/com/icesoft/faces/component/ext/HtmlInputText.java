@@ -661,21 +661,29 @@ public class HtmlInputText
             //it interferes with subclass event processing
         }
         if ((event instanceof ActionEvent)) {
-            MethodBinding actionListenerBinding = getActionListener();
-            if (actionListenerBinding != null && event instanceof ActionEvent) {
-                try {
-                    Object[] args = {event};
-                    actionListenerBinding.invoke(getFacesContext(), args);
-                } catch (EvaluationException e) {
-                    Throwable cause = e.getCause();
-                    if (cause != null &&
-                        cause instanceof AbortProcessingException) {
-                        throw(AbortProcessingException) cause;
-                    } else {
-                        throw e;
-                    }
-                }//try
-            }//if
+            ActionEvent actionEvent = (ActionEvent) event;
+            try {
+                MethodBinding actionListenerBinding = getActionListener();
+                if (actionListenerBinding != null) {
+                    actionListenerBinding.invoke(
+                        getFacesContext(), new Object[]{actionEvent});
+                }
+                // super.broadcast(event) does this itself
+                //ActionListener[] actionListeners = getActionListeners();
+                //if(actionListeners != null) {
+                //    for(int i = 0; i < actionListeners.length; i++) {
+                //        actionListeners[i].processAction(actionEvent);
+                //    }
+                //}
+            } catch (EvaluationException e) {
+                Throwable cause = e.getCause();
+                if (cause != null &&
+                    cause instanceof AbortProcessingException) {
+                    throw(AbortProcessingException) cause;
+                } else {
+                    throw e;
+                }
+            }//try
 
             // Invoke the default ActionListener
             ActionListener listener =
