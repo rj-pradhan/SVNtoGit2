@@ -108,8 +108,16 @@ table {
 .checkedTime {
     width:20%
 }
-.iceOutputText {
-   border: 1px solid #999999;
-   color: black;
-   
+
+.orange, .purple, .yellow, .green{
+    border:1px solid #999999;
+  
 }
+.orange{background: #f16e28;}
+
+.purple{background: #9566b6;}
+
+.yellow{background: #fefc5a;}
+
+.green{background: #96b710;}
+

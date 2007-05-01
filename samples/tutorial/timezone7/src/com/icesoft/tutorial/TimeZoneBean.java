@@ -111,18 +111,6 @@ public class TimeZoneBean implements Renderable {
     private IntervalRenderer clock;
     
     /**
-     * Polygon objects that represent the Time Zone areas on the map.
-     */
-    private Polygon hawaii;
-    private Polygon alaska;
-    private Polygon pacific;
-    private Polygon mountain;
-    private Polygon central;
-    private Polygon eastern;
-    private Polygon nfld;
-
-
-    /**
      * Constructor initializes time zones.
      */
     public TimeZoneBean() {
@@ -144,33 +132,27 @@ public class TimeZoneBean implements Renderable {
         //  but all ids must be unique to each other
         allTimeZoneList = new ArrayList(7);
         allTimeZoneList.add(new TimeZoneWrapper("Pacific/Honolulu", 
-                "GMTminus10", "Cminus10", "HADT", "background:#f16e28;"));
+                "GMTminus10", "Cminus10", "HADT",
+                hawaiiXCoords, hawaiiYCoords, hawaiiXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("America/Anchorage", 
-                "GMTminus9", "Cminus9", "AKST", "background:#9566b6;"));
+                "GMTminus9", "Cminus9", "AKST",
+                alaskaXCoords, alaskaYCoords, alaskaXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("America/Los_Angeles", 
-                "GMTminus8", "Cminus8", "PST", "background:#fefc5a;"));
+                "GMTminus8", "Cminus8", "PST",
+                pacificXCoords, pacificYCoords, pacificXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("America/Denver", 
-                "GMTminus7", "Cminus7", "MDT", "background:#96b710;"));
+                "GMTminus7", "Cminus7", "MDT",
+                mountainXCoords, mountainYCoords, mountainXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("America/Chicago", 
-                "GMTminus6", "Cminus6", "CDT", "background:#f16e28;"));
+                "GMTminus6", "Cminus6", "CDT",
+                centralXCoords, centralYCoords, centralXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("America/New_York", 
-                "GMTminus5", "Cminus5", "EST", "background:#9566b6;"));
+                "GMTminus5", "Cminus5", "EST",
+                easternXCoords, easternYCoords, easternXCoords.length));
         allTimeZoneList.add(new TimeZoneWrapper("Canada/Newfoundland", 
-                "GMTminus4", "Cminus4", "NST", "background:#fefc5a;"));
+                "GMTminus4", "Cminus4", "NST",
+                nfldXCoords, nfldYCoords, nfldXCoords.length));
         
-         // create main timezone outlines
-        hawaii = new Polygon(hawaiiXCoords, hawaiiYCoords, hawaiiXCoords.length);
-        alaska = new Polygon(alaskaXCoords, alaskaYCoords, alaskaXCoords.length);
-        pacific = new Polygon(pacificXCoords, pacificYCoords,
-                              pacificXCoords.length);
-        mountain = new Polygon(mountainXCoords, mountainYCoords,
-                               mountainXCoords.length);
-        central = new Polygon(centralXCoords, centralYCoords,
-                              centralXCoords.length);
-        eastern = new Polygon(easternXCoords, easternYCoords,
-                              easternXCoords.length);
-        nfld = new Polygon(nfldXCoords, nfldYCoords, nfldXCoords.length);
-
         checkedTimeZoneList = new ArrayList();
 
         state = PersistentFacesState.getInstance();
@@ -355,34 +337,13 @@ public class TimeZoneBean implements Renderable {
         x = x - icefacesXOffset;
         y = y - icefacesYOffset;
         // compare mouse coordinate to know timzone polygons. 
-        if (hawaii.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus10");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (alaska.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus9");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (pacific.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus8");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (mountain.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus7");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (central.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus6");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (eastern.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus5");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
-        } else if (nfld.contains(x, y)) {
-            TimeZoneWrapper tzw = getTimeZoneWrapperByComponentId("GMTminus4");
-            selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
-            selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
+        for(int i = 0; i < allTimeZoneList.size();i++){
+            if(((TimeZoneWrapper)allTimeZoneList.get(i)).getMapPolygon()
+                                                            .contains(x,y)){
+                TimeZoneWrapper tzw = (TimeZoneWrapper)allTimeZoneList.get(i);
+                selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
+                selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
+            }
         }
     }
 
