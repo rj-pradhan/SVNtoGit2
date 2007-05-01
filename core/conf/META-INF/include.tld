@@ -14,6 +14,10 @@
     This tag library contains tags for supporting jsp:include directly
     with JSF components. 
   </description>
+
+  <listener>
+      <listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
+  </listener>
     
   <tag>
 
