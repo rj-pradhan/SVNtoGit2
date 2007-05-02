@@ -1,10 +1,10 @@
 <!--
   ~ Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
-  ~ �The contents of this file are subject to the Mozilla Public License
+  ~ ?The contents of this file are subject to the Mozilla Public License
   ~ Version 1.1 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
-  ~ http://www.mozilla.org/MPL/�
+  ~ http://www.mozilla.org/MPL/?
   ~
   ~ Software distributed under the License is distributed on an "AS IS"
   ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -19,13 +19,13 @@
   ~ Contributor(s): _____________________.
   ~
   ~ Alternatively, the contents of this file may be used under the terms of
-  ~ the GNU Lesser General Public License Version 2.1 or later� (the� �LGPL�
+  ~ the GNU Lesser General Public License Version 2.1 or later? (the? ?LGPL?
   ~ License), in which case the provisions of the LGPL License are
-  ~ applicable� instead of those above.� If you wish to allow use of your
+  ~ applicable? instead of those above.? If you wish to allow use of your
   ~ version of this file only under the terms of the LGPL License and not to
   ~ allow others to use your version of this file under the MPL, indicate
-  ~ your decision by deleting� the provisions above and replace them with
-  ~ the notice and other provisions required by the LGPL License.� If you do
+  ~ your decision by deleting? the provisions above and replace them with
+  ~ the notice and other provisions required by the LGPL License.? If you do
   ~ not delete the provisions above, a recipient may use your version of
   ~ this file under either the MPL or the LGPL License."
   ~
@@ -60,10 +60,11 @@
         <tr><td colspan="4"><ice:outputText value=" " /></td></tr>
             <tr class="formLabel">
             
-                <td>Title</td>
+                <td><ice:outputLabel for="title" value="Title"/></td>
     
                 <!-- Title -->
                 <td class="input"><ice:selectOneMenu id="title" style="width:55px;"
+                    accesskey="T"
                     styleClass="textFieldDynamic" tabindex="10"
                     value="#{address.elementContainer.title.value}"
                     partialSubmit="true"
@@ -71,10 +72,11 @@
                     <f:selectItems value="#{address.elementContainer.titles}" />
                 </ice:selectOneMenu></td>
                 
-                <td>City</td>
+                <td><ice:outputLabel for="city" value="City"/></td>
                 
                 <!-- City -->
                 <td class="input"><ice:inputText style="width:120px;" id="city"
+                    accesskey="C"
                     styleClass="textField" tabindex="40"
                     value="#{address.elementContainer.city.value}"
                     valueChangeListener="#{address.addressFormProcessor.cityChanged}"
@@ -92,25 +94,27 @@
                     <f:selectItems value="#{address.elementContainer.city.select}" />
                 </ice:selectOneMenu>
                 <ice:graphicImage
-                    url="images/#{address.elementContainer.city.image}" width="15" height="15" />
+                    url="images/#{address.elementContainer.city.image}" width="15" height="15" alt="incorrect city name"/>
                 </td>
             </tr>
 
             <tr class="formLabel">
-                <td>First Name</td>
+                <td><ice:outputLabel for="fistName" value="First Name"/></td>
                 
                 <!-- First Name -->
                 <td class="input"><ice:inputText style="width:120px;" id="firstName"
+                    accesskey="F"
                     styleClass="textField" tabindex="20"
                     value="#{address.elementContainer.firstName.value}" converter="fixCaps"
                     partialSubmit="true" 
                     binding="#{address.addressFormProcessor.firstNameText}"
                     /></td>
                     
-                <td>State</td>
+                <td><ice:outputLabel for="state" value="State"/></td>
                 
                 <!-- State -->
                 <td class="input"><ice:inputText style="width:50px;" id="state" maxlength="2"
+                    accesskey="S"
                     size="4" styleClass="textField" tabindex="50"
                     rendered="#{address.elementContainer.state.inputRendered}"
                     value="#{address.elementContainer.state.value}"
@@ -128,25 +132,28 @@
                     <f:selectItems value="#{address.elementContainer.state.select}" />
                 </ice:selectOneMenu>
                  <ice:graphicImage
-                    url="images/#{address.elementContainer.state.image}" width="15" height="15" />
+                    url="images/#{address.elementContainer.state.image}" width="15" height="15" alt="incorrect state name"/>
                 </td>           
             </tr>
 
             <tr class="formLabel">
-                <td>Last Name</td>
+                <td><ice:outputLabel for="lastName" value="Last Name"/></td>
                 
                 <!-- Last Name -->
                 <td class="input"><ice:inputText style="width:120px;"
-                    id="lastName" styleClass="textField" tabindex="30"
+                    id="lastName" 
+                    accesskey="L"
+                    styleClass="textField" tabindex="30"
                     value="#{address.elementContainer.lastName.value}" converter="fixCaps"
                     partialSubmit="true"
                     binding="#{address.addressFormProcessor.lastNameText}"/>
                 </td>
                  
-                <td>Zip</td>
+                <td><ice:outputLabel for="zip" value="Zip"/></td>
                 
                 <!-- Zip -->
                 <td class="input"><ice:inputText id="zip" maxlength="5"
+                    accesskey="Z"
                     size="5" styleClass="textField" tabindex="60"
                     rendered="#{address.elementContainer.zip.inputRendered}"
                     value="#{address.elementContainer.zip.value}"
@@ -164,19 +171,22 @@
                     <f:selectItems value="#{address.elementContainer.zip.select}" />
                 </ice:selectOneMenu>
                 <ice:graphicImage
-                    url="images/#{address.elementContainer.zip.image}" width="15" height="15" />  
+                    url="images/#{address.elementContainer.zip.image}" width="15" height="15" alt="incorrect zip code"/>  
                 </td>
             </tr>             <tr>
             <!-- Submit & Reset -->
                 <td colspan="4" style="text-align:right;">
                 <ice:commandButton tabindex="70"
                     type="button"  id="Reset"
+                    accesskey="R"
                     image="./images/reset-button.gif" action="#{address.reset}" alt="Reset"
                     /> 
                     <ice:commandButton
                     type="submit"  tabindex="80"
+                    title="Complete Address Form"
                     disabled="#{address.elementContainer.submit.disabled}"
                     image="#{address.elementContainer.submit.imageButton}" id="Submit"
+                    accesskey="E"
                     action="submit" value="submit" alt="Submit"
                     binding="#{address.addressFormProcessor.submitButton}"
                     />
