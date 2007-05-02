@@ -98,9 +98,9 @@ public class ChartMediator {
     private Highlight effectOutputText = new Highlight("#ffff99");
     
     //sets the chart type to bar for default
-    private static String chart = OutputChart.BAR_CHART_TYPE;
+    private String chart = OutputChart.BAR_CHART_TYPE;
     
-    public static Chart chartObject = new Chart(chart);
+    public Chart chartObject = new Chart(chart);
     
     //sets the string returned when the chart is clicked to the default value
     private String clickedValue = DEFAULT_STRING;
@@ -179,8 +179,6 @@ public class ChartMediator {
      */
     public void setChart(String chart) {
         
-        System.out.println("setChart called");
-        
         if (wasChanged != null) {
             this.chart = wasChanged;
             wasChanged = null;
@@ -189,8 +187,6 @@ public class ChartMediator {
         }
         
         chartObject.setType(chart);
-        
-        
         
         if (!chart.equals(OutputChart.PIE3D_CHART_TYPE)) {
             pie3D = false;
@@ -232,7 +228,6 @@ public class ChartMediator {
      *@param ValueChangeEvent event
      */
     public void chartChanged(ValueChangeEvent event) {
-        
         chartChangedFlag = true;
         wasChanged = (String) event.getNewValue();
         
