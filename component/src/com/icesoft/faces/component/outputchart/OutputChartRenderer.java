@@ -82,6 +82,9 @@ public class OutputChartRenderer extends DomBasicRenderer {
                 +((OutputChart) uiComponent).getFolder().getName()+"/" +
                                           ((OutputChart) uiComponent)
                                                   .getFileName());
+        image.setAttribute(HTML.WIDTH_ATTR, outputChart.getWidth());
+        image.setAttribute(HTML.HEIGHT_ATTR, outputChart.getHeight());
+        
         td.appendChild(image);
         if (outputChart.isClientSideImageMap()) {
             Element map = (Element) domContext.createElement(HTML.MAP_ELEM);
