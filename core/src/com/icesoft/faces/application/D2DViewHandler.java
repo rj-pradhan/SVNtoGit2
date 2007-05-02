@@ -369,24 +369,12 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public String getResourceURL(FacesContext context, String path) {
-
-        String resourcePath = path;
-
-        if ( path != null ){
-            int startIndex = 0;
             if (path.startsWith("/") ){
-                startIndex = 1;
+            return context.getExternalContext().getRequestContextPath() + path;
+        } else {
+            return path;
             }
-            resourcePath = LocationUtil.getAppBase(context) +
-                           path.substring(startIndex);
         }
-
-        if( log.isTraceEnabled() ){
-            log.trace( "\n  original path is " + path +
-                       "\n  new resource path " + resourcePath );
-        }
-        return resourcePath;
-    }
 
     protected long getTimeAttribute(UIComponent root, String key) {
         Long timeLong = (Long) root.getAttributes().get(key);

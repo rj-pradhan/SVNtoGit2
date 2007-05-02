@@ -40,23 +40,8 @@ import javax.faces.application.ViewHandler;
 public class LocationUtil {
 
     public static String getAppBase(FacesContext facesContext) {
-
         ExternalContext extCtxt = facesContext.getExternalContext();
-
-        //Don't believe that this is a useful strategy.  We should do it
-        //in a more JSF-approved way.
-        //String base = extCtxt.getInitParameter("war-name");
-//        if (base != null) {
-//            return base;
-//        }
-        
         String base = extCtxt.getRequestContextPath();
-
-        //This was the 1.5 version and is no longer valid
-//        if (base == null) {
-//            base = extCtxt.getRequestMap().get(PersistentFacesCommonlet.REQUEST_PATH_KEY) + "/";
-//        }
-
         return base + "/";
     }
 

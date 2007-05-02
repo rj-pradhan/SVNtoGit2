@@ -35,7 +35,6 @@ package com.icesoft.faces.renderkit.dom_html_basic;
 
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
-import com.icesoft.faces.renderkit.LocationUtil;
 import org.w3c.dom.Element;
 
 import javax.faces.component.UICommand;
@@ -140,12 +139,7 @@ public class ButtonRenderer extends DomBasicRenderer {
         if (imageAttribute != null) {
             typeAttribute = "image";
             root.setAttribute("type", typeAttribute);
-
-            //Paths to resources can be dependent on the environment so
-            //we should use proper JSF techniques to resolve them.
-            String pathToImage = LocationUtil.getResourcePath(facesContext, imageAttribute);
-            
-            root.setAttribute("src", pathToImage);
+            root.setAttribute("src", imageAttribute);
             root.removeAttribute("value");
         } else {
             root.setAttribute("type", typeAttribute);
