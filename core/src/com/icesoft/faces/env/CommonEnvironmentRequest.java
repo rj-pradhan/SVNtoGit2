@@ -102,7 +102,12 @@ public abstract class CommonEnvironmentRequest {
     }
 
     public String getParameter(String name) {
-        return (String) parameters.get(name);
+        Object o = parameters.get(name);
+        if (o instanceof String[]) {
+            return ((String[])o)[0];
+        } else {
+            return (String) o;
+        }
     }
 
     public Enumeration getParameterNames() {

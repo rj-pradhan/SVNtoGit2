@@ -166,7 +166,7 @@ public class ServletEnvironmentRequest
         items = req.getParameterNames();
         while (items.hasMoreElements()) {
             name = (String) items.nextElement();
-            attributes.put(name, req.getParameterValues(name));
+            parameters.put(name, req.getParameterValues(name));
         }
 
         scheme = req.getScheme();
