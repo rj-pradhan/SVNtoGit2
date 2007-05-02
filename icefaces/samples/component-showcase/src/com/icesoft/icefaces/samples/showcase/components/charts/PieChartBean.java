@@ -113,7 +113,6 @@ public class PieChartBean extends Chart{
      * @return list of sales items for charting.
      */
     public static ArrayList buildSales() {
-        
         ArrayList salesTemp = new ArrayList();
         salesMap = Sales.getSales();
         

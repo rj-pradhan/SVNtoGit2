@@ -180,8 +180,6 @@ public class ChartFactory {
     */
     public void setChart(String chart) {
         
-        System.out.println("setChart called");
-
         if (wasChanged != null) {
             this.chart = wasChanged;
             wasChanged = null;

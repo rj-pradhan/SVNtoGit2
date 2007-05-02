@@ -70,7 +70,6 @@ public class Chart {
         
         //sets the data for the chart depending on the type of type
         if(type.equals(OutputChart.PIE2D_CHART_TYPE)||type.equals(OutputChart.PIE3D_CHART_TYPE)) {
-            //PieChartBean.buildSales();
             data = PieChartBean.data;
             labels = PieChartBean.labels;
             
@@ -99,12 +98,8 @@ public class Chart {
         this.type = type;
         
         if(type.equals(OutputChart.PIE2D_CHART_TYPE)||type.equals(OutputChart.PIE3D_CHART_TYPE)) {
-            
-            PieChartBean.buildSales();
-            
             data = PieChartBean.data;
             labels = PieChartBean.labels;
-            
         } else {
             data = AXIS_DATA;
             labels = AXIS_LABELS;

@@ -357,7 +357,7 @@
   <managed-bean>
     <managed-bean-name>dynamicPieChart</managed-bean-name>
     <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.DynamicPieChart</managed-bean-class>
-    <managed-bean-scope>request</managed-bean-scope>
+    <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>pieChart</managed-bean-name>
