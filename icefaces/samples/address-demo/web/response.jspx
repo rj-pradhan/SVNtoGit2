@@ -61,35 +61,36 @@
 	<ice:form>
 		<table cellspacing="5" >
 			<tr>
-				<td class="resultLabel" >Title:</td>
-				<td class="resultValue" ><ice:outputText
+				<td class="resultLabel" ><ice:outputLabel for="title" value="Title:"/></td>
+				<td class="resultValue" ><ice:outputText id="title"
 					value="#{address.elementContainer.title.value}" /></td>
 				
 			</tr>
 			<tr>
-				<td class="resultLabel">First Name:</td>
-				<td class="resultValue"><ice:outputText
+				<td class="resultLabel"><ice:outputLabel for="firstname" value="First Name:"/></td>
+				<td class="resultValue"><ice:outputText id="firstname"
 					value="#{address.elementContainer.firstName.value}" /></td>
 			</tr>
 			<tr>
-				<td class="resultLabel">Last Name:</td>
-				<td class="resultValue"><ice:outputText value="#{address.elementContainer.lastName.value}" /></td>
+				<td class="resultLabel"><ice:outputLabel for="lastname" value="Last Name:"/></td>
+				<td class="resultValue"><ice:outputText id="lastname" value="#{address.elementContainer.lastName.value}" /></td>
 			</tr>
 			<tr>
-				<td class="resultLabel">City:</td>
-				<td class="resultValue"><ice:outputText value="#{address.elementContainer.city.value}" /></td>
+				<td class="resultLabel"><ice:outputLabel for="city" value="City:"/></td>
+				<td class="resultValue"><ice:outputText id="city" value="#{address.elementContainer.city.value}" /></td>
 			</tr>
 			<tr>
-				<td class="resultLabel">State:</td>
-				<td class="resultValue"><ice:outputText value="#{address.elementContainer.state.value}" /></td>
+				<td class="resultLabel"><ice:outputLabel for="state" value="State:"/></td>
+				<td class="resultValue"><ice:outputText id="state" value="#{address.elementContainer.state.value}" /></td>
 			</tr>
 			<tr>
-				<td class="resultLabel">Zip:</td>
-				<td class="resultValue"><ice:outputText value="#{address.elementContainer.zip.value}" /></td>
+				<td class="resultLabel"><ice:outputLabel for="zip" value="Zip:"/></td>
+				<td class="resultValue"><ice:outputText id="zip" value="#{address.elementContainer.zip.value}" /></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="text-align:right;"><ice:commandButton image="./images/new-address-button.gif"
-					id="Return" styleClass="buttons"
+				<td colspan="2" style="text-align:right;"><ice:commandButton title="enter new address" image="./images/new-address-button.gif"
+					accesskey="N"
+                                        id="Return" styleClass="buttons"
 					value="Enter New Address" action="#{address.reset}" /></td>
 			</tr>
 		</table>
