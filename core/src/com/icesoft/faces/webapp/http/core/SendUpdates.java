@@ -3,6 +3,7 @@ package com.icesoft.faces.webapp.http.core;
 import com.icesoft.faces.webapp.command.Command;
 import com.icesoft.faces.webapp.command.CommandQueue;
 import com.icesoft.faces.webapp.command.Macro;
+import com.icesoft.faces.webapp.command.NOOP;
 import com.icesoft.faces.webapp.http.common.Request;
 import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class SendUpdates implements Server {
+    private static final Command NOOP = new NOOP();
     private Map commandQueues;
 
     public SendUpdates(Map commandQueues) {
@@ -53,9 +55,11 @@ public class SendUpdates implements Server {
             if (commandList.size() > 1) {
                 Command[] commands = (Command[]) commandList.toArray(new Command[commandList.size()]);
                 new Macro(commands).serializeTo(writer);
-            } else {
+            } else if (commandList.size() == 1) {
                 Command command = (Command) commandList.get(0);
                 command.serializeTo(writer);
+            } else {
+                NOOP.serializeTo(writer);
             }
         }
     }
