@@ -171,7 +171,6 @@ public class UserBean implements Renderable {
         if (!leaving) {
             addMessage(pageMessage);
         }
-        leaving = false;
     }
 
     public void setNick(String nick) {
@@ -325,6 +324,7 @@ public class UserBean implements Renderable {
         minimized = false;
         position = bottom();
         inConversation = true;
+	  leaving = false;
     }
 
     /**
