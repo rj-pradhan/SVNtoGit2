@@ -125,7 +125,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         return "com.icesoft.faces.File";
     }
 
-    public void upload(FileItemStream stream, String defaultFolder, long maxSize) throws IOException {
+    public void upload(FileItemStream stream, String defaultFolder, long maxSize, BridgeFacesContext bfc) throws IOException {
         this.fileInfo.reset();
         this.uploadException = null;
         this.status = UPLOADING;
@@ -147,7 +147,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 Streams.copy(stream.openStream(), output, true);
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
-                notifyDone();
+                notifyDone(bfc);
             } else {
                 status = INVALID_NAME_PATTERN;
                 context.addMessage(null, MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, new Object[] { fileName, namePattern }));
@@ -167,7 +167,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
             }
             fileInfo.setException(uploadException);
             file.delete();
-            notifyDone();
+            notifyDone(bfc);
             throw uploadException;
         }
         catch(IOException e) { // Eg: If creating the saved file fails
@@ -175,16 +175,18 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
             status = INVALID;
             fileInfo.setException(e);
             file.delete();
-            notifyDone();
+            notifyDone(bfc);
             throw e;
         }
         
         PersistentFacesState.getInstance().renderLater();
     }
     
-    protected void notifyDone() {
+    protected void notifyDone(BridgeFacesContext bfc) {
         ActionEvent event = new ActionEvent(this);
-        
+
+        bfc.setCurrentInstance();
+
         //this is true for JSF 1.1 only
         MethodBinding actionListener = getActionListener();
         if(actionListener != null) {
@@ -669,6 +671,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
 
     public void setProgress(int i){
+
+        System.out.println("++ ICE COMPONENT SETTING PROGRESS! " + i);
         progress = i;
         fileInfo.setPercent(i);
         if( getProgressListener() != null )
