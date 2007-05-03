@@ -45,55 +45,10 @@ import javax.faces.event.ActionEvent;
 
 public class AccordionBean {
 
-    private List data = new ArrayList();
-    private boolean expanded = true;
     private Highlight effectOutputText = new Highlight("#a4bdd2");
-    private boolean infoBoolean = false;
-    private String name;
-    private String status;
     private String selectedPanel = "";
 
-    private boolean fruitAccordionExpanded = true;
-    private boolean vegetablesAccordionExpanded = false;
-
     public AccordionBean() {
-
-        data.add(new AccordionItem("Fruits"));
-        data.add(new AccordionItem("Vegetables"));
-
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List getData() {
-        return data;
-    }
-
-    public void setData(List data) {
-        this.data = data;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
     }
 
     public Effect getEffectOutputText() {
@@ -108,25 +63,6 @@ public class AccordionBean {
         this.effectOutputText = (Highlight) effectOutputText;
     }
 
-    public void setInfoBoolean(boolean bool) {
-        infoBoolean = bool;
-    }
-
-    public boolean getInfoBoolean() {
-        return infoBoolean;
-    }
-
-    public void loginActionListener(ActionEvent event) {
-        setInfoBoolean(true);
-        setStatus("Logged In");
-    }
-
-    public void registerActionListener(ActionEvent event) {
-        setInfoBoolean(true);
-        setStatus("Registered");
-
-    }
-
     /**
      * Used in the accordion panel example to change between the selected
      * panels.
@@ -139,15 +75,7 @@ public class AccordionBean {
         selectedPanel = (String) map.get("products");
 
     }
-
-    /**
-     * Toggles the expanded/contracted state of the accordion panel.
-     * @param event jsf action event.
-     */
-    public void toggleAccordionExpandedState(ActionEvent event){
-        expanded = !expanded;     
-    }
-
+    
     /**
      * Sets the selected panel name to the specified panel name.
      *
@@ -164,38 +92,5 @@ public class AccordionBean {
      */
     public String getSelectedPanel() {
         return selectedPanel;
-    }
-
-    /**
-     * Gets the expanded state of the fruit accordion panel.
-     * @return true if expanded, false otherwise.
-     */
-    public boolean isFruitAccordionExpanded() {
-        return fruitAccordionExpanded;
-    }
-
-    /**
-     * Sets the expanded state of the fruit accordion panel.
-     * @param fruitAccordionExpanded expanded state of the accordion menu.
-     */
-    public void setFruitAccordionExpanded(boolean fruitAccordionExpanded) {
-        this.fruitAccordionExpanded = fruitAccordionExpanded;
-    }
-
-    /**
-     * Gets the expanded state of the vegetables accordion panel.
-     * @return true if expanded, false otherwise.
-     */
-    public boolean isVegetablesAccordionExpanded() {
-        return vegetablesAccordionExpanded;
-    }
-
-    /**
-     * Sets the expanded state of the vegetables accordion panel.
-     * @param vegetablesAccordionExpanded expanded state of the accordion menu.
-     */
-    public void setVegetablesAccordionExpanded(
-            boolean vegetablesAccordionExpanded) {
-        this.vegetablesAccordionExpanded = vegetablesAccordionExpanded;
     }
 }
