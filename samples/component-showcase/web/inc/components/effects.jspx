@@ -512,7 +512,7 @@ content for the different effects -->
         <ice:panelGroup styleClass="effectDemoPanelGroupContainer">
             <ice:panelGroup effect="#{effects.panelGroupEffect}"
                             styleClass="effectDemoPanelGroup">
-                <ice:outputText
+                <ice:outputText 
                         value="Icefaces effects provide all sorts of ways to manipulate the user interface."/>
 
             </ice:panelGroup>
