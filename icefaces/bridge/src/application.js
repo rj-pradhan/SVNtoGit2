@@ -53,8 +53,7 @@
             });
 
             this.connection.onReceive(function(request) {
-                Ice.Command.deserializeAndExecute(request.contentAsDOM().documentElement);
-                Ice.RedirectFormSubmits();
+                Ice.Command.deserializeAndExecute(request.contentAsDOM().documentElement);                
             }.bind(this));
 
             this.connection.onReceive(function() {
@@ -79,6 +78,8 @@
             this.connection.onReceive(function(request) {
                 statusManager.busy.off();
             });
+
+            $element(document.body).captureAndRedirectSubmits();
 
             this.logger.info('page loaded!');
         },

@@ -73,6 +73,17 @@
             return this.element.id;
         },
 
+        captureAndRedirectSubmits: function() {
+            $enumerate(this.element.getElementsByTagName('form')).collect($element).each(function(form) {
+                form.captureOnSubmit();
+                form.redirectSubmit();
+            });
+            if ('form' == this.element.tagName.toLowerCase()) {
+                this.captureOnSubmit();
+                this.redirectSubmit();
+            }
+        },
+
         replaceHtml: function(html) {
             this.withTemporaryContainer(function(container) {
                 container.innerHTML = html;
@@ -80,10 +91,10 @@
                 this.disconnectAllListenersAndPeers();
                 this.replaceHostElementWith(newElement);
             });
+            this.captureAndRedirectSubmits();
         },
 
         withAllChildElements: function(iterator) {
-            //todo: use enumerables
             var elements = this.element.getElementsByTagName('*');
             for (var i = 0; i < elements.length; i++) {
                 var peer = elements[i].peer;
@@ -282,7 +293,7 @@
     });
 
     This.FormElement = This.Element.subclass({
-        FormListenerNames: [ 'onReset', 'onSubmit' ],
+        FormListenerNames: [ 'onReset', 'onSubmit', 'submit' ],
 
         formElements: /Safari/.test(navigator.userAgent) ? function() {
             //todo: find a more performant way to discard old form elements in Safari
@@ -296,9 +307,26 @@
 
             return filteredElements;
         } : function() {
-            return $enumerate(this.element.elements).collect(function(element) {
-                return This.Element.adaptToElement(element);
-            });
+            return $enumerate(this.element.elements).collect($element);
+        },
+
+        //captures normal form submit events and sends them through a XMLHttpRequest
+        captureOnSubmit: function() {
+            var previousOnSubmit = this.element.onsubmit;
+            this.element.onsubmit = function(event) {
+                if (previousOnSubmit) previousOnSubmit();
+                $event(event).cancelDefaultAction();
+                iceSubmit(this.element, null, event);
+            };
+        },
+
+        //redirect normal form submits through a XMLHttpRequest
+        redirectSubmit: function() {
+            var previousSubmit = this.element.submit;
+            this.element.submit = function() {
+                if (previousSubmit) previousSubmit();
+                iceSubmit(this.element, null, null);
+            };
         },
 
         serializeOn: function(query) {
@@ -324,6 +352,7 @@
         replaceHtml: function(html) {
             this.disconnectAllListenersAndPeers();
             this.element.innerHTML = html.substring(html.indexOf('>') + 1, html.lastIndexOf('<'));
+            this.captureAndRedirectSubmits();
         }
     });
 
@@ -395,6 +424,7 @@
                 this.disconnectAllListenersAndPeers();
                 this.replaceHostElementWith(newElement);
             });
+            this.captureAndRedirectSubmits();
         }
     });
 
