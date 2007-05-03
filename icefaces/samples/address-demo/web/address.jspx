@@ -176,21 +176,23 @@
             </tr>             <tr>
             <!-- Submit & Reset -->
                 <td colspan="4" style="text-align:right;">
-                <ice:commandButton tabindex="70"
-                    type="button"  id="Reset"
-                    label="reset"
-                    accesskey="R"
-                    image="./images/reset-button.gif" action="#{address.reset}" alt="Reset"
-                    /> 
-                    <ice:commandButton
-                    type="submit"  tabindex="80"
-                    label="Complete Address Form"
-                    disabled="#{address.elementContainer.submit.disabled}"
-                    image="#{address.elementContainer.submit.imageButton}" id="Submit"
-                    accesskey="E"
-                    action="submit" value="submit" alt="Submit"
-                    binding="#{address.addressFormProcessor.submitButton}"
-                    />
+                    <ice:outputLabel value="reset" for="Reset">
+                        <ice:commandButton tabindex="70"
+                                           type="button"  id="Reset"
+                                           title="reset"
+                                           accesskey="R"
+                                           image="./images/reset-button.gif" action="#{address.reset}" alt="Reset"
+                    /> </ice:outputLabel>
+                        <ice:outputLabel value="submit address form" for="Submit">
+                            <ice:commandButton
+                                type="submit"  tabindex="80"
+                                title="Complete Address Form"
+                                disabled="#{address.elementContainer.submit.disabled}"
+                                image="#{address.elementContainer.submit.imageButton}" id="Submit"
+                                accesskey="E"
+                                action="submit" value="submit" alt="Submit"
+                                binding="#{address.addressFormProcessor.submitButton}"
+                        /></ice:outputLabel>
                     </td>
             </tr>
         </table>
