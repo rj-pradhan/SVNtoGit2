@@ -21,6 +21,7 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
     private String label;
     private Boolean expanded;
     private MethodBinding actionListener;
+    private String style;
     private String styleClass;
     private Boolean toggleOnClick;
     private Boolean disabled;
@@ -51,26 +52,34 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
     }
 
 
+    public String getStyle() {
+        if (style != null) {
+            return style;
+        }
+        ValueBinding vb = getValueBinding("style");
+        if (vb != null) {
+            return (String) vb.getValue(getFacesContext());
+        }
+        return null;
+    }
+    
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
     public String getStyleClass() {
-        ValueBinding vb = getValueBinding("styleClass");
-       if (vb != null) {
-           return (String) vb.getValue(getFacesContext());
-       }
        if (styleClass != null) {
            return styleClass;
        }
+       ValueBinding vb = getValueBinding("styleClass");
+       if (vb != null) {
+           return (String) vb.getValue(getFacesContext());
+       }
        return null;
-
     }
 
     public void setStyleClass(String styleClass) {
-        ValueBinding vb = getValueBinding("styleClass");
-        if (vb != null) {
-            vb.setValue(getFacesContext(), styleClass);
-        } else {
-            this.styleClass = styleClass;
-        }
-
+        this.styleClass = styleClass;
     }
 
     public String getLabel() {
@@ -263,31 +272,32 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
 
 
     public Object saveState(FacesContext context) {
-        Object[] state = new Object[9];
+        Object[] state = new Object[10];
         state[0] = super.saveState(context);
         state[1] = label;
         state[2] = expanded;
         state[3] = saveAttachedState(context, actionListener);
-        state[4] = styleClass;
-        state[5] = disabled;
-        state[6] = enabledOnUserRole;
-        state[7] = renderedOnUserRole;
-        state[8] = immediate;
+        state[4] = style;
+        state[5] = styleClass;
+        state[6] = disabled;
+        state[7] = enabledOnUserRole;
+        state[8] = renderedOnUserRole;
+        state[9] = immediate;
         return state;
     }
 
     public void restoreState(FacesContext context, Object stateIn) {
-
         Object[] state = (Object[]) stateIn;
         super.restoreState(context, state[0]);
         label = (String)state[1];
         expanded= (Boolean)state[2];
         actionListener = (MethodBinding) restoreAttachedState(context, state[3]);
-        styleClass = (String)state[4];
-        disabled = (Boolean)state[5];
-        enabledOnUserRole = (String)state[6];
-        renderedOnUserRole = (String)state[7];
-        immediate = (Boolean)state[8];
+        style = (String)state[4];
+        styleClass = (String)state[5];
+        disabled = (Boolean)state[6];
+        enabledOnUserRole = (String)state[7];
+        renderedOnUserRole = (String)state[8];
+        immediate = (Boolean)state[9];
     }
 
 
