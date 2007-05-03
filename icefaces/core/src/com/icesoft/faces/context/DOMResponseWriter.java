@@ -650,7 +650,7 @@ public class DOMResponseWriter extends ResponseWriter {
         for (int i = 0; i < inputElementsLength; i++) {
             Element inputElement = (Element) inputElements.item(i);
             String id = inputElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
+            if (!"".equals(id) && parameters.containsKey(id)) {
                 String value = ((String[]) parameters.get(id))[0];
                 inputElement.setAttribute("value", value);
             }
@@ -661,7 +661,7 @@ public class DOMResponseWriter extends ResponseWriter {
         for (int i = 0; i < textareaElementsLength; i++) {
             Element textareaElement = (Element) textareaElements.item(i);
             String id = textareaElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
+            if (!"".equals(id) && parameters.containsKey(id)) {
                 String value = ((String[]) parameters.get(id))[0];
                 textareaElement.getFirstChild()
                         .setNodeValue(value);//set value on the Text node
@@ -673,7 +673,7 @@ public class DOMResponseWriter extends ResponseWriter {
         for (int i = 0; i < selectElementsLength; i++) {
             Element selectElement = (Element) selectElements.item(i);
             String id = selectElement.getAttribute("id");
-            if (parameters.containsKey(id)) {
+            if (!"".equals(id) && parameters.containsKey(id)) {
                 List values = Arrays.asList((String[]) parameters.get(id));
 
                 NodeList optionElements =
