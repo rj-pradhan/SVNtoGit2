@@ -27,7 +27,7 @@ public class UploadServlet implements PseudoServlet {
     public UploadServlet(Map views, Configuration configuration, ServletContext servletContext) {
         this.views = views;
         this.maxSize = configuration.getAttributeAsLong("uploadMaxFileSize", 3 * 1024 * 1024);//3Mb
-        this.defaultFolder = servletContext.getRealPath(configuration.getAttribute("uploadDirectory", "upload"));
+        this.defaultFolder = servletContext.getRealPath(configuration.getAttribute("uploadDirectory", ""));
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
