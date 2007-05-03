@@ -59,8 +59,10 @@ public class UploadServlet implements PseudoServlet {
                 //FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
                 FileUploadComponent component =  (FileUploadComponent)D2DViewHandler.findComponent(componentID, context.getViewRoot());
                 progressCalculator.listener = component;
+                progressCalculator.context = context;
                 try {
-                    component.upload(item, defaultFolder, maxSize);
+                    context.setCurrentInstance();
+                    component.upload(item, defaultFolder, maxSize, context);
                 } catch (IOException e) {
                     try {
                         progressCalculator.reset();
@@ -85,6 +87,7 @@ public class UploadServlet implements PseudoServlet {
         private int GRANULARITY = 10;
         private FileUploadComponent listener;
         private int stepCount = 0;
+        BridgeFacesContext context;
 
         public void progress(long read, long total) {
             if (listener != null) {
@@ -92,6 +95,7 @@ public class UploadServlet implements PseudoServlet {
                 if ((stepCount + 1) * step <= read) {
                     stepCount = (int) (read / step);
                     int percentage = stepCount * 100 / GRANULARITY;
+                    context.setCurrentInstance();
                     listener.setProgress(percentage);
                 }
             }
