@@ -50,6 +50,19 @@
 </property>
 <property>
     <description>
+        CSS style
+    </description>
+    <property-name>style</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
         Base Style class for componenet.
         So if styleClass is set to accordion then when the panel is expanded the
         following class names are applied
