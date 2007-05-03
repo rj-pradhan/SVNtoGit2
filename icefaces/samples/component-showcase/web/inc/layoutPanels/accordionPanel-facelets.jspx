@@ -53,214 +53,166 @@
 <ice:panelGrid
         styleClass="componentLayoutRootTable"
         columns="1">
-<ice:graphicImage value="images/producestore.jpg"/>
-<br/>
-<ice:panelGrid styleClass="contentLayoutGridStyleProduce"
-               style="width:210px; border:0px" columns="2" border="1">
-    <ice:panelGroup>
-        <ice:panelAccordion styleClass="accordion1">
-            <f:facet name="header">
-	                <ice:outputText value="Fruits"/>
-            </f:facet>
-            <ice:panelGroup>
-                <ice:commandLink value="Apples"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="apples" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Oranges"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="oranges" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Grapes"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="grapes" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Bananas"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="bananas" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Citrus"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="citrus" name="products"/>
-                </ice:commandLink>
-                <br/>
-            </ice:panelGroup>
-        </ice:panelAccordion>
-        <br/>
         
-        <ice:panelAccordion styleClass="accordion2">
-             <f:facet name="header">
-                <ice:outputText value="Vegetables"/>
-            </f:facet>        
-            <ice:panelGroup>
-                <ice:commandLink value="Carrots"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="carrots" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Peppers"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="peppers" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Tomatoes"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="tomatoes" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Cucumbers"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="cucumbers" name="products"/>
-                </ice:commandLink>
-                <br/>
-                <ice:commandLink value="Lettuce"
-                                 actionListener="#{accordionBean.selectedPanelChangedAction}"
-                                 style="font-weight: bold"
-                                 onmouseovereffect="#{accordionBean.effectOutputText}">
-                    <f:param value="lettuce" name="products"/>
-                </ice:commandLink>
-                <br/>
-            </ice:panelGroup>
-        </ice:panelAccordion>
-    </ice:panelGroup>
-    <ice:panelGroup>
-        <ice:panelStack selectedPanel="#{accordionBean.selectedPanel}"
-                        style="width:500px">
-            <ice:panelGroup id="home" styleClass="welcomePanel">
-                <h3>
-                    <ice:outputText value="Welcome"/>
-                </h3>
-                <br/>
-                <ice:outputText value="Welcome to the ICESoft Produce Store!"/>
-                <br/>
-                <ice:outputText
-                        value="Please feel free to browse our products by clicking on the expandable menus on the left. All of our produce is 100% organic and grown in ICESoft's own Ajax compatable greenery."/>
-            </ice:panelGroup>
-            <ice:panelGroup id="apples" styleClass="applesPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/apples.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="oranges" styleClass="orangesPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/oranges.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="grapes" styleClass="grapesPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/grapes.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="bananas" styleClass="bananasPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/bananas.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="citrus" styleClass="citrusPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/citrus.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="carrots" styleClass="carrotsPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/carrots.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="peppers" styleClass="peppersPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/peppers.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="tomatoes" styleClass="tomatoesPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/tomatoes.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="cucumbers" styleClass="cucumbersPanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/cucumber.html"/>
-            </ice:panelGroup>
-            <ice:panelGroup id="lettuce" styleClass="lettucePanel">
-                <ui:include
-                        src="/inc/layoutPanels/accordionContent/lettuce.html"/>
-            </ice:panelGroup>
-        </ice:panelStack>
-    </ice:panelGroup>
-</ice:panelGrid>
-<br/>
+<h3>
+    <ice:outputText value="#{msgs['component.accordion.title']}"/>
+</h3>
+<h4>
+    <ice:outputText
+            value="#{msgs['component.accordion.instructions']}"/>
+</h4>
 
-<ice:panelGrid styleClass="contentLayoutGridStyleProduceLogin"
-               style="width:210px; border:0px;" columns="2" rows="1" border="1">
-    <ice:panelGroup>
-        <ice:panelAccordion style="width:210px;"
-                            styleClass="accordion">
-              <f:facet name="header">
-                <ice:outputText value="Login"/>
-            </f:facet>                            
-            <ice:panelGroup>
-                <ice:panelTabSet selectedIndex="1"
-                                 styleClass="componentPanelTabSetLayout"
-                                 style="width:200px;">
-                    <ice:panelTab label="Login" style="width:200px;">
-                        <ice:outputText value="Name:"/>
-                        <ice:inputText value="#{accordionBean.name}"/>
-                        <br/>
-                        <ice:outputText value="Password:"/>
-                        <ice:inputSecret style="width:50px;"/>
-                        <br/>
-                        <ice:commandButton value="Submit" type="submit"
-                                           actionListener="#{accordionBean.loginActionListener}"/>
-                        <br/>
-                    </ice:panelTab>
-                    <ice:panelTab label="Register" style="width:200px;">
-                        <ice:outputText
-                                value="Enter your desired username and password."/>
-                        <br/>
-                        <ice:outputText value="Name:"/>
-                        <ice:inputText value="#{accordionBean.name}"/>
-                        <br/>
-                        <ice:outputText value="Password:"/>
-                        <ice:inputSecret style="width:50px;"/>
-                        <br/>
-                        <ice:commandButton value="Register"
-                                           actionListener="#{accordionBean.registerActionListener}"/>
-                    </ice:panelTab>
-                </ice:panelTabSet>
-                <br/>
-            </ice:panelGroup>
-        </ice:panelAccordion>
-    </ice:panelGroup>
-    <ice:panelGroup>
-        <ice:panelAccordion 
-                            open="#{accordionBean.infoBoolean}"
-                            style="width:500px;" styleClass="accordion">
-            <f:facet name="header">
-		<ice:outputText value="User Info"/>
-            </f:facet>
-                            
-            <ice:panelGroup>
-                <ice:outputText value="Name: "/>
-                <ice:outputText value="#{accordionBean.name}"/>
-                <br/>
-                <ice:outputText value="Status: "/>
-                <ice:outputText value="#{accordionBean.status}"/>
-            </ice:panelGroup>
-        </ice:panelAccordion>
-    </ice:panelGroup>
+<ice:panelGrid styleClass="contentLayoutGridStyleProduce"
+               columns="2" border="0" cellspacing="4" cellpadding="0"
+               columnClasses="accordionNavigation, accordionContent">
+<!-- Navigation menu defined by two accordion panels -->
+<ice:panelGroup>
+    <!-- Fruit navigation accordion panel-->
+    <ice:panelAccordion expanded="true"
+                        actionListener="#{accordionBean.toggleAccordionExpandedState}" >
+        <f:facet name="header">
+            <ice:outputText value="Fruits"/>
+        </f:facet>
+        <ice:panelGroup>
+            <ice:commandLink value="Apples"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="apples" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Oranges"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="oranges" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Grapes"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="grapes" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Bananas"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="bananas" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Citrus"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="citrus" name="products"/>
+            </ice:commandLink>
+            <br/>
+        </ice:panelGroup>
+    </ice:panelAccordion>
+
+    <!-- Vegetables navigation accordion panel -->
+    <ice:panelAccordion>
+        <f:facet name="header">
+            <ice:outputText value="Vegetables"/>
+        </f:facet>
+        <ice:panelGroup>
+            <ice:commandLink value="Carrots"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="carrots" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Peppers"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="peppers" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Tomatoes"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="tomatoes" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Cucumbers"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="cucumbers" name="products"/>
+            </ice:commandLink>
+            <br/>
+            <ice:commandLink value="Lettuce"
+                             actionListener="#{accordionBean.selectedPanelChangedAction}"
+                             style="font-weight: bold"
+                             onmouseovereffect="#{accordionBean.effectOutputText}">
+                <f:param value="lettuce" name="products"/>
+            </ice:commandLink>
+            <br/>
+        </ice:panelGroup>
+    </ice:panelAccordion>
+</ice:panelGroup>
+<!-- Main content includes for -->
+<ice:panelGroup >
+    <ice:panelStack
+            cellpadding="0" cellspacing="0"
+            selectedPanel="#{accordionBean.selectedPanel}" >
+        <ice:panelGroup id="home" styleClass="welcomePanel">
+            <h3>
+                <ice:outputText value="Welcome"/>
+            </h3>
+            <br/>
+            <ice:outputText value="Welcome to the ICESoft Produce Store!"/>
+            <br/>
+            <ice:outputText
+                    value="Please feel free to browse our products by clicking on the expandable menus on the left. All of our produce is 100% organic and grown in ICESoft's own Ajax compatable greenery."/>
+        </ice:panelGroup>
+        <ice:panelGroup id="apples" styleClass="applesPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/apples.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="oranges" styleClass="orangesPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/oranges.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="grapes" styleClass="grapesPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/grapes.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="bananas" styleClass="bananasPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/bananas.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="citrus" styleClass="citrusPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/citrus.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="carrots" styleClass="carrotsPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/carrots.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="peppers" styleClass="peppersPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/peppers.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="tomatoes" styleClass="tomatoesPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/tomatoes.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="cucumbers" styleClass="cucumbersPanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/cucumber.html"/>
+        </ice:panelGroup>
+        <ice:panelGroup id="lettuce" styleClass="lettucePanel">
+            <ui:include
+                    src="/inc/layoutPanels/accordionContent/lettuce.html"/>
+        </ice:panelGroup>
+    </ice:panelStack>
+</ice:panelGroup>
 </ice:panelGrid>
 
 </ice:panelGrid>
