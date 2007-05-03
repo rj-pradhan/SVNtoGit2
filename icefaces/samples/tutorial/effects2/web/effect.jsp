@@ -13,9 +13,10 @@
   <ice:outputText value="To invoke the effects:"/>  
      <ol>
         <li><ice:outputText value="Click the Invoke button."/></li>
-        <li><ice:outputText value="Mouse over the 'Effect Test' text to see the effect."/></li>
-        <li><ice:outputText value="To see a different effect click the invoke button."/></li>
-        <li><ice:outputText value="Mouse over the 'Effect Test' text to see the new effect."/></li>
+        <li><ice:outputText value="Mouse over the 'Effect Test' text to see the pulsate effect."/></li>
+        <li><ice:outputText value="To see a different effect click the Invoke button."/></li>
+        <li><ice:outputText value="Mouse over the 'Effect Test' text to see the highlight effect."/></li>
+	<li><ice:outputText value="Click the Invoke button to toggle between the two effects."/></li>
     </ol>
 </ice:form>
     </body>
