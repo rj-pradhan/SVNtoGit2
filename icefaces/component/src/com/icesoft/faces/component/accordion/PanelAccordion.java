@@ -104,23 +104,18 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
 
 
     public Boolean getExpanded() {
-         ValueBinding vb = getValueBinding("expanded");
-        if (vb != null) {
-            return (Boolean) vb.getValue(getFacesContext());
-        }
         if (expanded!= null) {
             return expanded;
+        }
+        ValueBinding vb = getValueBinding("expanded");
+        if (vb != null) {
+            return (Boolean) vb.getValue(getFacesContext());
         }
         return Boolean.FALSE;
     }
 
     public void setExpanded(Boolean expanded) {
-        ValueBinding vb = getValueBinding("expanded");
-        if (vb != null) {
-            vb.setValue(getFacesContext(), expanded);
-        } else {
-            this.expanded = expanded;
-        }
+        this.expanded = expanded;
     }
 
     public Boolean getToggleOnClick() {
