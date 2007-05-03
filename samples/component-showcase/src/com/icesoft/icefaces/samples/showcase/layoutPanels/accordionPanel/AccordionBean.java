@@ -43,7 +43,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
- *This class is the backing bean for the accordion panel example. It handles all the 
+ *This class is the backing bean for the accordionPanel example. It handles all the 
  *methods required to operate the accordion panel and its content.
  */
 public class AccordionBean {
