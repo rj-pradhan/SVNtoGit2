@@ -8,7 +8,7 @@ import java.io.Writer;
 
 public interface FileUploadComponent {
     
-    void upload(FileItemStream fileItemStream, String defaultFolder, long maxSize) throws IOException;
+    void upload(FileItemStream fileItemStream, String defaultFolder, long maxSize, BridgeFacesContext bfg) throws IOException;
 
     void setProgress(int percentage);
 

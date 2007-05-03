@@ -145,6 +145,11 @@ public class ServletExternalContext extends BridgeExternalContext {
             String name = (String) parameterNames.nextElement();
             Object value = request.getParameter(name);
             requestParameterMap.put(name, value);
+            if (value instanceof String[] ) {
+                System.out.println("+++ COPYING REQUEST PARAMETER: " + name + ", value[]: " + ((String[])value)[0]);
+            } else {
+                System.out.println("+++ COPYING REQUEST PARAMETER: " + name + ", value: " + value);
+            } 
             requestParameterValuesMap.put(name, request.getParameterValues(name));
         }
 
