@@ -68,7 +68,7 @@
 <!-- Navigation menu defined by two accordion panels -->
 <ice:panelGroup>
     <!-- Fruit navigation accordion panel-->
-    <ice:panelAccordion expanded="true"
+    <ice:panelAccordion expanded="#{accordionBean.fruitAccordionExpanded}"
                         actionListener="#{accordionBean.toggleAccordionExpandedState}" >
         <f:facet name="header">
             <ice:outputText value="Fruits"/>
@@ -113,7 +113,9 @@
     </ice:panelAccordion>
 
     <!-- Vegetables navigation accordion panel -->
-    <ice:panelAccordion>
+    <ice:panelAccordion
+            expanded="#{accordionBean.vegetablesAccordionExpanded}"
+            >
         <f:facet name="header">
             <ice:outputText value="Vegetables"/>
         </f:facet>
