@@ -304,5 +304,18 @@ public class CSS_DEFAULT {
     public static final String ROW_SELECTION_BASE = "iceRowSel";
     public static final String ROW_SELECTION_SELECTED = "Selected";
     public static final String ROW_SELECTION_MOUSE_OVER = "MouseOver";
-
+    
+    // PanelAccordion constants
+    public static final String PANEL_ACCORDION_DEFAULT_STYLE_CLASS =
+            "iceAccordion";
+    public static final String PANEL_ACCORDION_HEADER =
+            "Header";
+    public static final String PANEL_ACCORDION_CONTENT =
+            "Content";
+    public static final String PANEL_ACCORDION_CONTAINER =
+            "Container";
+    public static final String PANEL_ACCORDION_STATE_COLLAPSED =
+            "_collapsed";
+    public static final String PANEL_ACCORDION_STATE_DISABLED =
+            "_dis";
 }

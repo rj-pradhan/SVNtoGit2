@@ -6,6 +6,8 @@ import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 import com.icesoft.faces.component.util.CustomComponentUtils;
+import com.icesoft.faces.component.CSS_DEFAULT;
+import com.icesoft.faces.component.ext.taglib.Util;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,9 +25,6 @@ import org.apache.commons.logging.Log;
 public class PanelAccordionRenderer extends DomBasicRenderer {
 
     private static Log log = LogFactory.getLog(PanelAccordionRenderer.class);
-    private static final String HEADER = "Header";
-    private static final String CONTENT = "Content";
-    private static final String CONTAINER = "Container";
 
 
     public boolean getRendersChildren() {
@@ -73,21 +72,35 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         String base = panelAccordion.getStyleClass();
         boolean open = panelAccordion.getExpanded().booleanValue();
         boolean disabled = panelAccordion.isDisabled();
-
-        String headerClass = base + HEADER;
-        String containerClass = base + CONTAINER;
-        String contentClass = base + CONTENT;
+        StringBuffer classModeSuffix = new StringBuffer(16);
         if(!open){
-            headerClass += "_collapsed";
-            contentClass += "_collapsed";                
-            containerClass += "_collapsed";
+            classModeSuffix.append(
+                CSS_DEFAULT.PANEL_ACCORDION_STATE_COLLAPSED);
         }
         if(disabled){
-            headerClass += "_dis";
-            contentClass += "_dis";
-            containerClass += "_dis";
+            classModeSuffix.append(
+                CSS_DEFAULT.PANEL_ACCORDION_STATE_DISABLED);
         }
-
+        String headerClassSuffix =
+            CSS_DEFAULT.PANEL_ACCORDION_HEADER + classModeSuffix;
+        String contentClassSuffix =
+            CSS_DEFAULT.PANEL_ACCORDION_CONTENT + classModeSuffix;
+        String containerClassSuffix =
+            CSS_DEFAULT.PANEL_ACCORDION_CONTAINER + classModeSuffix;
+        
+        String headerClass = Util.appendNewStyleClass(
+            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
+            base,
+            headerClassSuffix);
+        String contentClass = Util.appendNewStyleClass(
+            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
+            base,
+            contentClassSuffix);
+        String containerClass = Util.appendNewStyleClass(
+            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
+            base,
+            containerClassSuffix);
+        
         boolean fireEffect = false;
 
 
