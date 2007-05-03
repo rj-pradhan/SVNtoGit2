@@ -35,7 +35,7 @@
  Permanently enable Scroll Bars for smoother page transitions
 */
 html {
-    overflow:scroll;
+    overflow: scroll;
 }
 
 /*
@@ -46,8 +46,8 @@ body {
     color: #666666;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 /*table{ font-size:1em; }*/
@@ -70,17 +70,15 @@ h2 {
 /* description of each component example */
 h3 {
     font-size: 1em;
-    margin-left: 10px; 
-    margin-bottom: 5px;
     font-weight: bold;
-    margin: 0px;
+    margin: 0;
 }
 
 /* sub-description used directly underneath h3 */
 h4 {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 10px;
-    padding: 0px;
+    padding: 0;
     font-size: 1em;
     font-weight: normal;
 }
@@ -88,16 +86,16 @@ h4 {
 /* table labels in examples */
 h5 {
     margin: 5px;
-    margin-left: 0px;
-    padding: 0px;
+    margin-left: 0;
+    padding: 0;
     font-weight: normal;
     font-size: 1em;
 }
 
 /* table header labels */
 h6 {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     margin-top: 10px;
     margin-bottom: 2px;
     font-size: 1em;
@@ -109,7 +107,7 @@ h6 {
 
 .componentPropertySelection td label {
     vertical-align: middle;
-    padding: 0px;
+    padding: 0;
 }
 
 /* backing bean labels */
@@ -123,11 +121,12 @@ h6 {
 .valueText {
     font-size: x-small;
 }
-.commentText{
-   font-family: Arial,Helvetica,sans-serif;
-  font-size :1em ;
- 
-  font-weight : normal;
+
+.commentText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+
+    font-weight: normal;
 }
 
 em {
@@ -141,7 +140,7 @@ em {
 }
 
 /* Component tabset labels */
-.componentPanelTabSetLayout .MiddleMiddle{
+.componentPanelTabSetLayout .MiddleMiddle {
     font-weight: bold;
     font-size: 12px;
 }
@@ -158,15 +157,15 @@ em {
 /* Direct to DOM logo (top right) */
 #logoD2D {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
 }
 
 /* Showcase logo */
 #logoShowcase {
     position: absolute;
     right: 119px;
-    top: 0px;
+    top: 0;
 }
 
 /*
@@ -179,8 +178,7 @@ em {
 
 .navThemeChange, .navTree {
     border: 1px solid #dedede;
-    margin: 5px;
-    /*padding: 5px;*/
+    margin: 5px; /*padding: 5px;*/
     margin-top: 0;
     width: 250px;
 }
@@ -188,7 +186,7 @@ em {
 .navConnectionStatus {
     position: absolute;
     top: 90px;
-    right: 0px;
+    right: 0;
 }
 
 .navThemeChange .themeSelector {
@@ -252,38 +250,6 @@ em {
     vertical-align: top;
 }
 
-
-.contentLayoutGridStyleProduce {
-    width: 210px; /* fixed height of content demos*/
-    height: 360px;
-}
-
-.contentLayoutGridStyleProduce td {
-    vertical-align: top;
-}
-
-.contentLayoutGridColumnProduce {
-
-    vertical-align: top;
-}
-
-.contentLayoutGridStyleProduceLogin {
-    width: 210px; /* fixed height of content demos*/
-    
-}
-
-.contentLayoutGridStyleProduceLogin td {
-
-    vertical-align: top;
-}
-
-.contentLayoutGridColumnProduceLogin {
-    width: 210px; /* fixed height of content demos*/
-    vertical-align: top;
-}
-
-
-
 .componentLayoutRootTable {
     table-layout: fixed;
     vertical-align: top;
@@ -331,7 +297,7 @@ em {
 
 /* Main border layout for template */
 .mainBorderLayout {
-    border: 0px;
+    border: 0;
     vertical-align: top;
     width: 100%;
 }
@@ -341,8 +307,8 @@ em {
     background-color: #FFFFFF;
     vertical-align: top;
     text-align: left;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border-collapse: collapse;
 }
 
@@ -381,7 +347,7 @@ em {
     background-color: red;
 }
 
-.treeNodeControlButtonsBorder{
+.treeNodeControlButtonsBorder {
     width: 100%;
 }
 
@@ -404,13 +370,14 @@ em {
 .selectionTagsColumn {
 }
 
-.selectTagMenu{
+.selectTagMenu {
     width: 115px;
-    font-size:12px;
+    font-size: 12px;
 }
-.selectManyMenu{
-  width :115px ;
-  height :90px ;
+
+.selectManyMenu {
+    width: 115px;
+    height: 90px;
 }
 
 /* IE bugfix - white background on radio and checkboxes */
@@ -464,7 +431,7 @@ em {
   Calendar Styles
  */
 
-.iceCalInput{
+.iceCalInput {
     width: 90px;
 }
 
@@ -493,7 +460,7 @@ em {
     text-align: left;
 }
 
-.progressSelectMenu{
+.progressSelectMenu {
     width: 120px;
 }
 
@@ -542,13 +509,14 @@ em {
 .cartDropZonText1 {
 
 }
+
 .dragDropImage {
 
 }
 
-.dragDropImageSrc{
+.dragDropImageSrc {
     cursor: move;
-    border:solid black 1px;
+    border: solid black 1px;
 }
 
 .dragDropImageSmall {
@@ -558,8 +526,8 @@ em {
 
 .cartDropWrapper {
     width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     padding-top: 50px;
 }
 
@@ -568,13 +536,14 @@ em {
 
 }
 
-.storeLayoutTable{
+.storeLayoutTable {
     width: 285px;
 }
 
-.cartLayoutTable{
+.cartLayoutTable {
     width: 350px;
 }
+
 .cartImageColumn, .cartNameColumn, .cartPriceColumn, .cartQuantityColumn,
     .cartCostColumn, .cartReturnColumn, .shoppingCartFooter, .triangleColumn {
     white-space: nowrap;
@@ -614,8 +583,8 @@ em {
 }
 
 .listDescriptor table {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 .listDescriptor td {
@@ -637,9 +606,9 @@ em {
 
 .popupButton {
     text-align: right;
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .popupTitle span {
@@ -680,7 +649,7 @@ em {
   Effects demo
 */
 /* label alignment */
-.effectsControlsBorder{
+.effectsControlsBorder {
     height: 130px;
 }
 
@@ -693,14 +662,13 @@ em {
     vertical-align: middle;
 }
 
-.effectsSelectMenu{
+.effectsSelectMenu {
     width: 130px;
 }
 
-.moveModeSelectMenu{
+.moveModeSelectMenu {
     width: 90px;
 }
-
 
 .effectDemoPanelGroup {
     width: 300px;
@@ -718,9 +686,7 @@ em {
 
     height: 150px;
 
-
 }
-
 
 .effectSpecContainer {
     width: 330px;
@@ -763,10 +729,9 @@ em {
 
 /* paragraph describing component */
 .connectionExplanation {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 5px; /*font-size:1.2em;*/
 }
-
 
 /*
   Panel Border example
@@ -856,12 +821,12 @@ em {
 
 /* Data Table sytles*/
 .iceCmdSrtHdr, .iceCmdSrtHdr:hover {
-   text-decoration: underline;
+    text-decoration: underline;
 }
 
 .iceCmdSrtHdr:hover {
-   color : #999999;
-   
+    color: #999999;
+
 }
 
 .dataScrollerTable {
@@ -922,7 +887,7 @@ em {
 }
 
 .dataPagingBorderHighlight table td {
-    border: 0px;
+    border: 0;
 }
 
 /* Panel stack example */
@@ -986,7 +951,7 @@ em {
 }
 
 .autoCompleteLayout table td {
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .selectInputTextCol {
@@ -995,7 +960,7 @@ em {
 }
 
 .beanCol {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .cityCol {
@@ -1005,7 +970,6 @@ em {
 
 .stateCol {
     width: 125px;
-
 
 }
 
@@ -1022,15 +986,15 @@ em {
 }
 
 .quantityLabel {
-   border: 1px solid silver;
-   height: 15px;
-   margin-top: 2px;
-   padding-top: 5px;
-   text-align: left;
-   width: 85px
+    border: 1px solid silver;
+    height: 15px;
+    margin-top: 2px;
+    padding-top: 5px;
+    text-align: left;
+    width: 85px
 }
 
-.columns1{
+.columns1 {
     white-space: nowrap;
     color: #000000;
     padding-left: 5px;
@@ -1044,7 +1008,7 @@ em {
     text-align: center;
 }
 
-.columnsColumn, .columnsNestedColumn, .columnsNestedBoldColumn{
+.columnsColumn, .columnsNestedColumn, .columnsNestedBoldColumn {
     white-space: nowrap;
     color: #000000;
     padding-left: 5px;
@@ -1054,20 +1018,20 @@ em {
     text-align: center;
 }
 
-.columnsColumn{
+.columnsColumn {
     border-left: 1px solid #CCCCCC;
     border-right: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
     width: 55px;
 }
 
-.columnsNestedColumn{
+.columnsNestedColumn {
     width: 15px;
     padding-left: 1px;
     padding-right: 1px;
 }
 
-.columnsNestedBoldColumn{
+.columnsNestedBoldColumn {
     width: 15px;
     font-weight: bold;
 }
@@ -1080,13 +1044,14 @@ em {
 }
 
 /* positioned Panel demo */
-.startcell{
-    z-index:1000;
+.startcell {
+    z-index: 1000;
 
-    background:#fff;
-    padding:5px;
+    background: #fff;
+    padding: 5px;
 }
-.starttitle{
+
+.starttitle {
     cursor: move;
     overflow: hidden;
     height: 1.5em;
@@ -1097,162 +1062,112 @@ em {
     font-weight: bold;
     text-decoration: none;
 }
-.startcolumn
-{
+
+.startcolumn {
     float: left;
 }
 
-.startheader{
-   font-family:arial,sans-serif;
-   font-size: 20px;
-   color:blue;
+.startheader {
+    font-family: arial, sans-serif;
+    font-size: 20px;
+    color: blue;
 }
 
-.droptargethover{
- background-color:#ffff99;   
+.droptargethover {
+    background-color: #ffff99;
 
 }
 
 /* position panels */
-.positionPanelContainer{
-    width:200px;
-    border-top:1px solid black;
+.positionPanelContainer {
+    width: 200px;
+    border-top: 1px solid black;
 }
-
 
 /* chart component */
 .addPieceColumn {
     width: 300px;
 }
-.removePieceColumn{
+
+.removePieceColumn {
     width: 250px;
 }
 
-.accordion1Header accordion1Header_collapsed{
-            border:1px solid black;
-            font-family:tahoma,arial, san-serif;
-            font-weight:bold;
-            font-size:12px;
-            font-weight : bold;
+/* Accordion Component Example */
+.accordionNavigation{
+    width: 145px;
+}
+.accordionContent{
+}
 
-            background-color:#a4bdd2;
-        }
-        .accordion1Content accordion1Content_collapsed{
-   background: url("../images/fruits.jpg");
-   border-bottom: 1px solid black;
-   border-left: 1px solid black;
-   border-right: 1px solid black;
-   color: #4C7EA7;
-   font-family: tahoma,arial, san-serif;
-   font-size: 12px;
-   font-weight: bold;
-   
+.applesPanel, .orangesPanel, .grapesPanel, .grapesPanel, .bananasPanel,
+    .citrusPanel, .carrotsPanel, .peppersPanel, .cucumbersPanel, .tomatoesPanel,
+    .lettucePanel {
+    border: 1px solid black;
+    width: 500px;
+    height: 400px;
 }
-        .accordion1Container accordion1Container_collapsed{
-        width: 200px
-        
-        }
+.applesPanel {
+    background-image: url( "../images/apples.jpg" );
+}
+.orangesPanel {
+    background-image: url( "../images/oranges.jpg" );
+}
+.grapesPanel {
+    background-image: url( "../images/grapes.jpg" );
+}
+.bananasPanel {
+    background-image: url( "../images/bananas.jpg" );
+}
+.citrusPanel {
+    background-image: url( "../images/citrus.jpg" );
+}
+.carrotsPanel {
+    background-image: url( "../images/carrots.jpg" );
+}
+.peppersPanel {
+    background-image: url( "../images/peppers.jpg" );
+}
+.cucumbersPanel {
+    background-image: url( "../images/cucumbers.jpg" );
+}
+.tomatoesPanel {
+    background-image: url( "../images/tomatoes.jpg" );
+}
+.lettucePanel {
+    background-image: url( "../images/lettuce.jpg" );
+}
 
-.accordion2Header accordion2Header_collapsed{
-            border:1px solid black;
-            font-family:tahoma,arial, san-serif;
-            font-weight:bold;
-            font-size:12px;
-            background-color:#a4bdd2;
-        }
-        .accordion2Content accordion2Content_collapsed{
-            background :url("../images/veg.jpg") ;  
-            border-bottom:1px solid black;
-            border-left:1px solid black;
-            border-right:1px solid black;
-            font-family:tahoma,arial, san-serif;
-            font-size:12px;
-  
+.accordionMenuLink{
+    font-weight: bold;
+}
 
-            
-        }
-        .accordion2Container accordion2Container_collapsed{
+.contentLayoutGridStyleProduce {
+    height: 375px;
+    width: 100%;
+    border: 1px solid #cccccc;
+}
 
-        width: 200px
-        
-        }
+.contentLayoutGridStyleProduce td {
+    vertical-align: top;
+}
 
-.accordionHeader accordionHeader_collapsed{
-            border:1px solid black;
-            font-family:tahoma,arial, san-serif;
-            font-weight:bold;
-            font-size:12px;
-            background-color:#a4bdd2;
-        }
-        .accordionContent accordionContent_collapsed{
-              
-            border-bottom:1px solid black;
-            border-left:1px solid black;
-            border-right:1px solid black;
-            font-family:tahoma,arial, san-serif;
-            font-size:12px;
-  
+.contentLayoutGridColumnProduce {
+    vertical-align: top;
+}
 
-            
-        }
-        .accordionContainer accordionContainer_collapsed{
+.contentLayoutGridStyleProduceLogin {
+    width: 210px; /* fixed height of content demos*/
 
-        width: 200px
-        
-        }
+}
 
-.welcomePanel{
-  background-image :url("../images/produce.jpg");
-border: 1px solid black;
-  height :350px ;
+.contentLayoutGridStyleProduceLogin td {
+    vertical-align: top;
 }
-.applesPanel{
-  background-image :url("../images/apples.jpg");
-border: 1px solid black;
-  height :350px ;
+
+.contentLayoutGridColumnProduceLogin {
+    width: 210px; /* fixed height of content demos*/
+    vertical-align: top;
 }
-.orangesPanel{
-  background-image :url("../images/oranges.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.grapesPanel{
-  background-image :url("../images/grapes.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.bananasPanel{
-  background-image :url("../images/bananas.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.citrusPanel{
-  background-image :url("../images/citrus.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.carrotsPanel{
-  background-image :url("../images/carrots.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.peppersPanel{
-  background-image :url("../images/peppers.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.cucumbersPanel{
-  background-image :url("../images/cucumbers.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.tomatoesPanel{
-  background-image :url("../images/tomatoes.jpg");
-border: 1px solid black;
-  height :350px ;
-}
-.lettucePanel{
-  background-image :url("../images/lettuce.jpg");
-border: 1px solid black;
-  height :350px ;
-}
+
+

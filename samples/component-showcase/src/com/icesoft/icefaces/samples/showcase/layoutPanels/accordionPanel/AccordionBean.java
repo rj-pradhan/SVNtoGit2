@@ -46,7 +46,7 @@ import javax.faces.event.ActionEvent;
 public class AccordionBean {
 
     private List data = new ArrayList();
-    private boolean open = true;
+    private boolean expanded = true;
     private Highlight effectOutputText = new Highlight("#a4bdd2");
     private boolean infoBoolean = false;
     private String name;
@@ -85,12 +85,12 @@ public class AccordionBean {
     }
 
 
-    public boolean isOpen() {
-        return open;
+    public boolean isExpanded() {
+        return expanded;
     }
 
-    public void setOpen(boolean open) {
-        this.open = open;
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     public Effect getEffectOutputText() {
@@ -135,6 +135,14 @@ public class AccordionBean {
         Map map = context.getExternalContext().getRequestParameterMap();
         selectedPanel = (String) map.get("products");
 
+    }
+
+    /**
+     * Toggles the expanded/contracted state of the accordion panel.
+     * @param event jsf action event.
+     */
+    public void toggleAccordionExpandedState(ActionEvent event){
+        expanded = !expanded;     
     }
 
     /**
