@@ -2265,6 +2265,7 @@ Disabled classes for the calendar controls
     padding-right: 5px;
     padding-top: 4px;
     padding-bottom: 4px;
+    cursor: pointer;
 }
 .iceAccordionHeader_dis, .iceAccordionHeader_collapsed_dis{
     color: #999999;
