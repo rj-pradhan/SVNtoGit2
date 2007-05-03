@@ -88,10 +88,13 @@
 				<td class="resultValue"><ice:outputText id="zip" value="#{address.elementContainer.zip.value}" /></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="text-align:right;"><ice:commandButton title="enter new address" image="./images/new-address-button.gif"
-					accesskey="N"
-                                        id="Return" styleClass="buttons"
-					value="Enter New Address" action="#{address.reset}" /></td>
+				<td colspan="2" style="text-align:right;">
+                                    <ice:outputLabel value="enter new address" for="Return">
+                                        <ice:commandButton title="enter new address" image="./images/new-address-button.gif"
+                                                           accesskey="N"
+                                                           id="Return" styleClass="buttons"
+                                                   value="Enter New Address" action="#{address.reset}" />
+                                    </ice:outputLabel></td>
 			</tr>
 		</table>
 	</ice:form></div>
