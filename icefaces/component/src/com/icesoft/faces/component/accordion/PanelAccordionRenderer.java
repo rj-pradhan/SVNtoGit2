@@ -100,6 +100,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
             CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
             base,
             containerClassSuffix);
+        String style = panelAccordion.getStyle();
         
         boolean fireEffect = false;
 
@@ -120,6 +121,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         }
         Element root = (Element) domContext.getRootNode();
         root.setAttribute(HTML.CLASS_ATTR, containerClass);
+        root.setAttribute(HTML.STYLE_ATTR, style);
 
         Element header = domContext.createElement(HTML.DIV_ELEM);
         //Text text = domContext.createTextNode(((PanelAccordion) uiComponent).getLabel());
