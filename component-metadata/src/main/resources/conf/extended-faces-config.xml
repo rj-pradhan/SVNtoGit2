@@ -401,8 +401,8 @@
 	&menu-component;
 	&menuitem-component;
 	&menuitems-component;
-	&menuitemcheckbox-component;
-	&menuitemRadio-component;
+	<!-- &menuitemcheckbox-component; -->
+	<!-- &menuitemRadio-component; -->
 	&menuitemSeparator-component;
 	&selectinputtext-component;
 	&panelSeries-component;
@@ -463,8 +463,8 @@
 		&menu-renderer;
 		&menuitem-renderer;
 		&menuitems-renderer;
-		&menuitemcheckbox-renderer;
-		&menuitemRadio-renderer;
+		<!-- &menuitemcheckbox-renderer; -->
+		<!-- &menuitemRadio-renderer; -->
 		&menuitemSeparator-renderer;
 		&selectinputtext-renderer;
 		&panelSeries-renderer;
