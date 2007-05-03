@@ -53,6 +53,9 @@ public class AccordionBean {
     private String status;
     private String selectedPanel = "";
 
+    private boolean fruitAccordionExpanded = true;
+    private boolean vegetablesAccordionExpanded = false;
+
     public AccordionBean() {
 
         data.add(new AccordionItem("Fruits"));
@@ -161,5 +164,38 @@ public class AccordionBean {
      */
     public String getSelectedPanel() {
         return selectedPanel;
+    }
+
+    /**
+     * Gets the expanded state of the fruit accordion panel.
+     * @return true if expanded, false otherwise.
+     */
+    public boolean isFruitAccordionExpanded() {
+        return fruitAccordionExpanded;
+    }
+
+    /**
+     * Sets the expanded state of the fruit accordion panel.
+     * @param fruitAccordionExpanded expanded state of the accordion menu.
+     */
+    public void setFruitAccordionExpanded(boolean fruitAccordionExpanded) {
+        this.fruitAccordionExpanded = fruitAccordionExpanded;
+    }
+
+    /**
+     * Gets the expanded state of the vegetables accordion panel.
+     * @return true if expanded, false otherwise.
+     */
+    public boolean isVegetablesAccordionExpanded() {
+        return vegetablesAccordionExpanded;
+    }
+
+    /**
+     * Sets the expanded state of the vegetables accordion panel.
+     * @param vegetablesAccordionExpanded expanded state of the accordion menu.
+     */
+    public void setVegetablesAccordionExpanded(
+            boolean vegetablesAccordionExpanded) {
+        this.vegetablesAccordionExpanded = vegetablesAccordionExpanded;
     }
 }
