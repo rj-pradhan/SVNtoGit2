@@ -102,6 +102,7 @@
           <renderer-class>com.icesoft.faces.component.menubar.MenuItemSeparatorRenderer</renderer-class>
        </renderer>
 
+       <!-- disable
        <renderer>
           <component-family>com.icesoft.faces.MenuNodeCheckbox</component-family>
           <renderer-type>com.icesoft.faces.View</renderer-type>
@@ -113,7 +114,7 @@
           <renderer-type>com.icesoft.faces.View</renderer-type>
           <renderer-class>com.icesoft.faces.component.menubar.MenuItemRadioRenderer</renderer-class>
        </renderer>
-
+-->
 
        <renderer>
           <component-family>com.icesoft.faces.Progress</component-family>
@@ -290,20 +291,24 @@
       <component-class>com.icesoft.faces.component.menubar.MenuItems</component-class>
   </component>
 
+  <!--
   <component>
       <component-type>com.icesoft.faces.MenuNodeCheckbox</component-type>
       <component-class>com.icesoft.faces.component.menubar.MenuItemCheckbox</component-class>
   </component>
-
+-->
+  
   <component>
       <component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
       <component-class>com.icesoft.faces.component.menubar.MenuItemSeparator</component-class>
   </component>
 
+  <!--
   <component>
       <component-type>com.icesoft.faces.MenuNodeRadio</component-type>
       <component-class>com.icesoft.faces.component.menubar.MenuItemRadio</component-class>
   </component>
+-->
 
   <component>
     <component-type>com.icesoft.faces.PanelTab</component-type>
