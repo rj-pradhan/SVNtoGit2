@@ -672,7 +672,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
 
     public void setProgress(int i){
 
-        System.out.println("++ ICE COMPONENT SETTING PROGRESS! " + i);
         progress = i;
         fileInfo.setPercent(i);
         if( getProgressListener() != null )
