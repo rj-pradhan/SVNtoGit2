@@ -84,25 +84,3 @@ function resetHiddenFieldsFor(aForm) {
         if (formElement.type == 'hidden' && formElement.name != 'viewNumber') formElement.value = '';
     });
 }
-
-[ Ice ].as(function(This) {
-
-    This.RedirectFormSubmits = function() {
-        $enumerate(document.forms).each(function(form) {
-            var previousOnSubmit = form.onsubmit;
-            form.onsubmit = function(event) {
-                if (previousOnSubmit) previousOnSubmit();
-                $event(event).cancelDefaultAction();
-                iceSubmit(form, null, event);
-            };
-
-            var previousSubmit = form.submit;
-            form.submit = function() {
-                if (previousSubmit) previousSubmit(); 
-                iceSubmit(form, null, null);
-            };
-        });
-    };
-
-    window.onLoad(This.RedirectFormSubmits);
-});
