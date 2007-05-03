@@ -444,11 +444,11 @@ em {
  Data scroller Styles
 */
 .leftDataControlColumn {
-    text-align: right;
+    text-align: left;
 }
 
 .rightDataControlcolumn {
-    text-align: left;
+    text-align: right;
 }
 
 /*
@@ -1100,7 +1100,7 @@ em {
 .accordionContent{
 }
 
-.applesPanel, .orangesPanel, .grapesPanel, .grapesPanel, .bananasPanel,
+.welcomePanel, .applesPanel, .orangesPanel, .grapesPanel, .grapesPanel, .bananasPanel,
     .citrusPanel, .carrotsPanel, .peppersPanel, .cucumbersPanel, .tomatoesPanel,
     .lettucePanel {
     border: 1px solid black;
@@ -1108,34 +1108,34 @@ em {
     height: 400px;
 }
 .applesPanel {
-    background-image: url( "../images/apples.jpg" );
+    background-image: url( "../images/accordion/apples.jpg" );
 }
 .orangesPanel {
-    background-image: url( "../images/oranges.jpg" );
+    background-image: url( "../images/accordion/oranges.jpg" );
 }
 .grapesPanel {
-    background-image: url( "../images/grapes.jpg" );
+    background-image: url( "../images/accordion/grapes.jpg" );
 }
 .bananasPanel {
-    background-image: url( "../images/bananas.jpg" );
+    background-image: url( "../images/accordion/bananas.jpg" );
 }
 .citrusPanel {
-    background-image: url( "../images/citrus.jpg" );
+    background-image: url( "../images/accordion/citrus.jpg" );
 }
 .carrotsPanel {
-    background-image: url( "../images/carrots.jpg" );
+    background-image: url( "../images/accordion/carrots.jpg" );
 }
 .peppersPanel {
-    background-image: url( "../images/peppers.jpg" );
+    background-image: url( "../images/accordion/peppers.jpg" );
 }
 .cucumbersPanel {
-    background-image: url( "../images/cucumbers.jpg" );
+    background-image: url( "../images/accordion/cucumbers.jpg" );
 }
 .tomatoesPanel {
-    background-image: url( "../images/tomatoes.jpg" );
+    background-image: url( "../images/accordion/tomatoes.jpg" );
 }
 .lettucePanel {
-    background-image: url( "../images/lettuce.jpg" );
+    background-image: url( "../images/accordion/lettuce.jpg" );
 }
 
 .accordionMenuLink{
