@@ -71,7 +71,7 @@
                     binding="#{address.addressFormProcessor.selectTitle}">
                     <f:selectItems value="#{address.elementContainer.titles}" />
                 </ice:selectOneMenu></td>
-                4
+                
                 <td><ice:outputLabel for="city" value="City"/></td>
                 
                 <!-- City -->
@@ -178,12 +178,13 @@
                 <td colspan="4" style="text-align:right;">
                 <ice:commandButton tabindex="70"
                     type="button"  id="Reset"
+                    label="reset"
                     accesskey="R"
                     image="./images/reset-button.gif" action="#{address.reset}" alt="Reset"
                     /> 
                     <ice:commandButton
                     type="submit"  tabindex="80"
-                    title="Complete Address Form"
+                    label="Complete Address Form"
                     disabled="#{address.elementContainer.submit.disabled}"
                     image="#{address.elementContainer.submit.imageButton}" id="Submit"
                     accesskey="E"
