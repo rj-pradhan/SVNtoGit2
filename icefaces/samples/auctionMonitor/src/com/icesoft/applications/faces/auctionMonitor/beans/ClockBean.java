@@ -38,6 +38,7 @@ import com.icesoft.faces.async.render.RenderManager;
 import com.icesoft.faces.async.render.Renderable;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
+import com.icesoft.faces.context.ViewListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -48,7 +49,7 @@ import org.apache.commons.logging.LogFactory;
  * class will help AuctionBean maintain a list of the number of users online
  * through incrementUsers and decrementUsers
  */
-public class ClockBean implements Renderable {
+public class ClockBean implements Renderable, ViewListener {
     private static Log log = LogFactory.getLog(ClockBean.class);
     private boolean isRunning = false;
     private IntervalRenderer clock;
@@ -57,12 +58,11 @@ public class ClockBean implements Renderable {
     private PersistentFacesState state = null;
 
     private static final String AUTO_LOAD = "ClockBean-Loaded";
-
-    private static final String INTERVAL_RENDERE_GROUP = "clock";
-
+    private static final String INTERVAL_RENDERER_GROUP = "clock";
 
     public ClockBean() {
         state = PersistentFacesState.getInstance();
+        state.addViewListener(this);
         AuctionBean.incrementUsers();
     }
 
@@ -87,7 +87,7 @@ public class ClockBean implements Renderable {
 
     public void setRenderManager(RenderManager manager) {
         if (manager != null) {
-            clock = manager.getIntervalRenderer(INTERVAL_RENDERE_GROUP);
+            clock = manager.getIntervalRenderer(INTERVAL_RENDERER_GROUP + "-" + System.currentTimeMillis() + "-" + this);
             if (clock.getInterval() != pollInterval) {
                 clock.setInterval(pollInterval);
             }
@@ -114,11 +114,39 @@ public class ClockBean implements Renderable {
                       renderingException);
         }
 
-        if (clock != null) {
-            clock.remove(this);
-            clock = null;
+        performCleanup();
+    }
+    
+    protected boolean performCleanup() {
+        try{
+            if (clock != null) {
+                clock.requestStop();
+                clock.remove(this);
+                clock.dispose();
+                clock = null;
+            }
+            
+            isRunning = false;
+            AuctionBean.decrementUsers();
+            
+            return true;
+        }catch (Exception failedCleanup) {
+            if (log.isErrorEnabled()) {
+                log.error("Failed to cleanup a clock bean", failedCleanup);
+            }
         }
-        isRunning = false;
-        AuctionBean.decrementUsers();
+        
+        return false;
+    }
+    
+    public void viewCreated() {
+    }
+    
+    public void viewDisposed() {
+        if (log.isInfoEnabled()) {
+            log.info("ViewListener of ClockBean fired for a user - cleaning up");
+        }
+        
+        performCleanup();
     }
 }
