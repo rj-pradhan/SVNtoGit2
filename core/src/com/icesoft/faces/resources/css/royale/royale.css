@@ -2170,3 +2170,55 @@ Disabeld classes for the calendar controls
 .iceRowSelMouseOver span{
     color: white;
 }
+
+/*
+----------- Panel Accordion --------
+*/
+
+/* opened accordion styles */
+.iceAccordionHeader, .iceAccordionContent, .iceAccordionContainer {
+}
+
+/* Closed */
+.iceAccordionHeader_collapsed, .iceAccordionContent_collapsed,
+    .iceAccordionContainer_collapsed {
+}
+
+/* Open and disabled */
+.iceAccordionHeader_dis, .iceAccordionContent_dis, .iceAccordionContainer_dis {
+}
+
+/* Closed and disabled */
+.iceAccordionHeader_collapsed_dis, .iceAccordionContent_collapsed_dis,
+    .iceAccordionContainer_collapsed_dis {
+}
+
+/* common accordion headers */
+.iceAccordionHeader, .iceAccordionHeader_dis, .iceAccordionHeader_collapsed,
+    .iceAccordionHeader_collapsed_dis {
+    background-color: #EFEFEF;
+    background-image: url( "./css-images/table_col_header.gif" );
+    background-position: bottom;
+    background-repeat: repeat-x;
+    font-weight: bold;
+    text-align: left;
+    color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-bottom: none;
+    padding-left: 2px;
+    padding-right: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.iceAccordionHeader_dis, .iceAccordionHeader_collapsed_dis{
+    color: #999999;
+}
+
+.iceAccordionContent, .iceAccordionContent_collapsed,
+    .iceAccordionContent_collapsed_dis, .iceAccordionContent_dis {
+    background-color: #EFEFEF;
+    border: 1px solid #CCCCCC;
+    border-top: none;
+    padding-left: 5px;
+    padding-right: 5px;
+}
