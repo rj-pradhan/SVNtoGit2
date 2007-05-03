@@ -78,19 +78,29 @@ class RunnableRender implements Runnable {
 
         PersistentFacesState state = renderable.getState();
 
+        //If the state is null, we can't render.  It likely means that the
+        //application has not properly updated the current state reference
+        //to something meaningful as far as the RenderManager is concerned.  This
+        //can be due to bean scoping or not updating the state in a "best
+        //practices" way (the constructor, a getter, etc.).  It's not fatal but
+        //the application does need to ensure that the supplied state is valid
+        //so we throw a TransientRenderException back to the application's
+        //Renderable implementation.
+        if (state == null) {
+            String msg = "unable to render, PersistentFacesState is null";
+            if (log.isWarnEnabled()) {
+                log.warn(msg);
+            }
+            renderable.renderingException(new TransientRenderingException(msg));
+            return;
+        }
+
         // This in response to an application with ServerInitiatedRendering coupled
         // with user interaction, and GET requests. If we don't update the thread
         // local, once user action creates a new ViewRoot, the Render thread's
         // version of state would forever be detached from the real view, resulting
-        // in no more updates 
+        // in no more updates
         state.setCurrentInstance();
-
-        if (state == null) {
-            if (log.isWarnEnabled()) {
-                log.warn("state is null");
-            }
-            return;
-        }
 
         //JIRA case ICE-1365
         //Server-side render calls can potentially be called from threads
