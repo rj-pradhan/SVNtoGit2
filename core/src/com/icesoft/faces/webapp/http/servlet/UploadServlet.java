@@ -69,6 +69,11 @@ public class UploadServlet implements PseudoServlet {
                         //ignore
                     }
                 } catch (Throwable t) {
+                    try {
+                        progressCalculator.reset();
+                    } catch (Throwable tr) {
+                        //ignore
+                    }
                     Log.warn("File upload failed", t);
                 } finally {
                     response.setContentType("text/html");
