@@ -504,7 +504,9 @@ em {
 
 .cartDropZonText1 {
     font-weight: bold;
+    text-align: left;
 }
+
 
 .cartDropZonText1 {
 
@@ -1106,6 +1108,7 @@ em {
     border: 1px solid black;
     width: 500px;
     height: 400px;
+background-image: url("../images/accordion/produce.jpg" );
 }
 .applesPanel {
     background-image: url( "../images/accordion/apples.jpg" );
