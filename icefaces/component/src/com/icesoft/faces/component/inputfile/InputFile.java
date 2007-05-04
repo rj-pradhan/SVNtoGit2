@@ -136,8 +136,10 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         String fileName = stream.getName();
         // IE gives us the whole path on the client, but we just
         //  want the client end file name, not the path
-        File tempFileName = new File(fileName);
-        fileName = tempFileName.getName();
+        if(fileName != null && fileName.length() > 0) {
+            File tempFileName = new File(fileName);
+            fileName = tempFileName.getName();
+        }
         fileInfo.setFileName(fileName);
         fileInfo.setContentType(stream.getContentType());
         try {
@@ -152,8 +154,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
                 notifyDone(bfc);
             } else {
+                fileInfo.reset();
+                file = null;
                 status = INVALID_NAME_PATTERN;
                 context.addMessage(null, MessageUtils.getMessage(context, INVALID_NAME_PATTERN_MESSAGE_ID, new Object[] { fileName, namePattern }));
+                notifyDone(bfc);
             }
         } catch (FileUploadBase.FileUploadIOException uploadException) {
             this.uploadException = uploadException.getCause();
@@ -207,6 +212,9 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         if(action != null) {
             action.invoke(FacesContext.getCurrentInstance(), null);
         }
+        
+        if(fileInfo != null)
+            fileInfo.reset();
     }
     
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
