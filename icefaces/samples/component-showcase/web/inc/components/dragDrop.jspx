@@ -196,15 +196,15 @@
                         hoverclass="droptargethover"
                         styleClass="cartDropZone">
 
-            <br/>
-            <ice:graphicImage value="images/shopping-cart.gif"
-                              alt="Shopping Cart"
-                              width="50" height="40"/>
-            <br/>
-            <ice:outputText
-                    styleClass="cartDropZonText2"
+          <ice:panelGrid columns="2">
+                <ice:graphicImage value="images/shopping-cart.gif"
+                                  alt="Shopping Cart"
+                                  width="50" height="50"/>
+                <br/>
+                <ice:outputText
+                    styleClass="cartDropZonText1"
                     value="#{msgs['component.dragDrop.cartZoneLabel2']}"/>
-
+	    </ice:panelGrid>
         </ice:panelGroup>
     </ice:panelGroup>
 
