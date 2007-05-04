@@ -134,6 +134,10 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         folder = folder == null ? defaultFolder : folder;
         String namePattern = getFileNamePattern().trim();
         String fileName = stream.getName();
+        // IE gives us the whole path on the client, but we just
+        //  want the client end file name, not the path
+        File tempFileName = new File(fileName);
+        fileName = tempFileName.getName();
         fileInfo.setFileName(fileName);
         fileInfo.setContentType(stream.getContentType());
         try {
