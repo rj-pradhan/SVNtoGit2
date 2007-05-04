@@ -349,10 +349,9 @@
   </managed-bean>
   <managed-bean>
     <managed-bean-name>contentBean</managed-bean-name>
-    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel.htmlContentBean</managed-bean-class>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel.HtmlContentBean</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
-
   <!-- Managed Beans for outputChart examples -->
   <managed-bean>
     <managed-bean-name>combinedChart</managed-bean-name>
