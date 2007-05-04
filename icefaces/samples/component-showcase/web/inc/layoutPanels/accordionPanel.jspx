@@ -171,34 +171,44 @@
                     value="Please feel free to browse our products by clicking on the expandable menus on the left. All of our produce is 100% organic and grown in ICESoft's own Ajax compatable greenery."/>
         </ice:panelGroup>
         <ice:panelGroup id="apples" styleClass="applesPanel">
-                <ice:outputText value="#{contentBean.apples}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/apples.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="oranges" styleClass="orangesPanel">
-                <ice:outputText value="#{contentBean.oranges}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/oranges.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="grapes" styleClass="grapesPanel">
-                <ice:outputText value="#{contentBean.grapes}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/grapes.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="bananas" styleClass="bananasPanel">
-               <ice:outputText value="#{contentBean.bananas}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/bananas.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="citrus" styleClass="citrusPanel">
-               <ice:outputText value="#{contentBean.citrus}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/citrus.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="carrots" styleClass="carrotsPanel">
-                <ice:outputText value="#{contentBean.carrots}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/carrots.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="peppers" styleClass="peppersPanel">
-               <ice:outputText value="#{contentBean.peppers}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/peppers.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="tomatoes" styleClass="tomatoesPanel">
-              <ice:outputText value="#{contentBean.tomatoes}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/tomatoes.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="cucumbers" styleClass="cucumbersPanel">
-                <ice:outputText value="#{contentBean.cucumbers}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/cucumber.html"/>
         </ice:panelGroup>
         <ice:panelGroup id="lettuce" styleClass="lettucePanel">
-               <ice:outputText value="#{contentBean.lettuce}" escape="false"/>
+                <jsp:directive.include
+                        file="./inc/layoutPanels/accordionContent/lettuce.html"/>
         </ice:panelGroup>
     </ice:panelStack>
 </ice:panelGroup>
