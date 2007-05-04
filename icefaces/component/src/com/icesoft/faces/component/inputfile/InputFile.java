@@ -126,7 +126,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
 
     public void upload(FileItemStream stream, String defaultFolder, long maxSize, BridgeFacesContext bfc) throws IOException {
-        this.fileInfo.reset();
         this.uploadException = null;
         this.status = UPLOADING;
         this.sizeMax = maxSize;
