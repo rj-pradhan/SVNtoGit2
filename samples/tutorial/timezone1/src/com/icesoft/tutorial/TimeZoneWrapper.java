@@ -35,15 +35,16 @@ package com.icesoft.tutorial;
 
 /**
  * Bean holding time zone specific information.
- * Checking a selectBooleanCheckbox in the UI will cause instances of this class to populate the checkedTimeZoneList ArrayList in <code>TimeZoneBean</code>.
+ * Checking a selectBooleanCheckbox in the UI will cause instances of this class
+ * to populate the checkedTimeZoneList ArrayList in <code>TimeZoneBean</code>.
  * That ArrayList is used to create a DataTable of checked time zones in the UI.
  */
 
-import java.awt.Polygon;
+import java.awt.*;
 import java.util.TimeZone;
 
 public class TimeZoneWrapper {
-    /* Variables */
+
     /**
      * {@link TimeZone} id used to identify the time zone. This id can be passed
      * to <code>TimeZone.getTimeZone(String)</code>, to get the appropriate
@@ -56,22 +57,21 @@ public class TimeZoneWrapper {
      * this time zone.
      */
     private String mapCommandButtonId;
-    
+
     /**
      * The Polygon object of each Time Zone on the Image map
      */
     private Polygon mapPolygon;
-    
-    /* Constructors */
+
     /**
-     * @param id    id used to identify the time zone.
-     * @param mapId map button component id in web page.
+     * @param id      id used to identify the time zone.
+     * @param mapId   map button component id in web page.
      * @param xCoords array of X-coordinates for the image map object.
      * @param yCoords array of Y-coordinates for the image map object.
-     * @param coords number of corrdinates in the imagem map object.
+     * @param coords  number of corrdinates in the imagem map object.
      */
-    public TimeZoneWrapper(String id, String mapId, int[] xCoords, 
-                                                int[] yCoords, int coords) {
+    public TimeZoneWrapper(String id, String mapId, int[] xCoords,
+                           int[] yCoords, int coords) {
         this.id = id;
         this.mapCommandButtonId = mapId;
         mapPolygon = new Polygon(xCoords, yCoords, coords);
@@ -94,25 +94,29 @@ public class TimeZoneWrapper {
      *
      * @param componentId Id of some component that may be related to this time
      *                    zone
+     * @return true if mapCommandButtonId is a part of componentId, false
+     *         otherwise.
      */
     public boolean isRelevantComponentId(String componentId) {
-        boolean relevant = componentId.endsWith(mapCommandButtonId);
-        return relevant;
+        return componentId.endsWith(mapCommandButtonId);
     }
 
     /**
      * Gets the component id of the commandButton, in the map UI, corresponding
      * to this time zone.
+     *
+     * @return componentId of command button.
      */
     public String getMapCommandButtonId() {
         return mapCommandButtonId;
     }
-    
+
     /**
-     * Gets the Polygon object that represents the Time Zone on the 
-     * image map.
+     * Gets the Polygon object that represents the Time Zone on the image map.
+     *
+     * @return polygon object representing the image map for this timezone.
      */
-    public Polygon getMapPolygon(){
+    public Polygon getMapPolygon() {
         return mapPolygon;
     }
-} // End of TimeZoneWrapper class
+}

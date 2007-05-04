@@ -38,7 +38,7 @@ import com.icesoft.faces.async.render.RenderManager;
 import com.icesoft.faces.async.render.Renderable;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
-import java.awt.Polygon;
+
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
@@ -94,6 +94,11 @@ public class TimeZoneBean implements Renderable {
     private ArrayList checkedTimeZoneList;
 
     /**
+     * a table mapping the checkbox id's to the checkbox states
+     */
+    private Hashtable checkboxStates;
+
+    /**
      * Time interval, in milliseconds, between renders.
      */
     private final int renderInterval = 1000;
@@ -111,11 +116,6 @@ public class TimeZoneBean implements Renderable {
      */
     private IntervalRenderer clock;
 
-    /**
-     * a table mapping the checkbox id's to the checkbox states
-     */
-    private Hashtable checkboxStates;
-    
     /**
      * Constructor initializes time zones.
      */
@@ -136,40 +136,49 @@ public class TimeZoneBean implements Renderable {
         // Entries in this list are hardcoded to match entries in
         //  the timezone web file, so no parameters can be changed.
         allTimeZoneList = new ArrayList(7);
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "Pacific/Honolulu", "GMTminus10", "Cminus10",
-                hawaiiXCoords, hawaiiYCoords, hawaiiXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "America/Anchorage", "GMTminus9", "Cminus9",
-                alaskaXCoords, alaskaYCoords, alaskaXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "America/Los_Angeles", "GMTminus8", "Cminus8",
-                pacificXCoords, pacificYCoords, pacificXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "America/Denver", "GMTminus7", "Cminus7",
-               mountainXCoords, mountainYCoords, mountainXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "America/Chicago", "GMTminus6", "Cminus6",
-                centralXCoords, centralYCoords, centralXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "America/New_York", "GMTminus5", "Cminus5",
-                easternXCoords, easternYCoords, easternXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper(
-                "Canada/Newfoundland","GMTminus4", "Cminus4",
-                nfldXCoords, nfldYCoords, nfldXCoords.length));
-                               
+        allTimeZoneList
+                .add(new TimeZoneWrapper("Pacific/Honolulu", "GMTminus10",
+                                         hawaiiXCoords, hawaiiYCoords,
+                                         hawaiiXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("America/Anchorage", "GMTminus9",
+                                         alaskaXCoords, alaskaYCoords,
+                                         alaskaXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("America/Los_Angeles", "GMTminus8",
+                                         pacificXCoords, pacificYCoords,
+                                         pacificXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("America/Denver", "GMTminus7",
+                                         mountainXCoords, mountainYCoords,
+                                         mountainXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("America/Chicago", "GMTminus6",
+                                         centralXCoords, centralYCoords,
+                                         centralXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("America/New_York", "GMTminus5",
+                                         easternXCoords, easternYCoords,
+                                         easternXCoords.length));
+        allTimeZoneList
+                .add(new TimeZoneWrapper("Canada/Newfoundland", "GMTminus4",
+                                         nfldXCoords, nfldYCoords,
+                                         nfldXCoords.length));
+
+        // create main timezone outlines
+
         checkedTimeZoneList = new ArrayList();
 
         state = PersistentFacesState.getInstance();
 
         checkboxStates = new Hashtable(6);
-        checkboxStates.put("Cminus10", "false");
-        checkboxStates.put("Cminus9", "false");
-        checkboxStates.put("Cminus8", "false");
-        checkboxStates.put("Cminus7", "false");
-        checkboxStates.put("Cminus6", "false");
-        checkboxStates.put("Cminus5", "false");
-        checkboxStates.put("Cminus4", "false");
+        checkboxStates.put("GMTminus10", "false");
+        checkboxStates.put("GMTminus9", "false");
+        checkboxStates.put("GMTminus8", "false");
+        checkboxStates.put("GMTminus7", "false");
+        checkboxStates.put("GMTminus6", "false");
+        checkboxStates.put("GMTminus5", "false");
+        checkboxStates.put("GMTminus4", "false");
     }
 
     /**
@@ -206,9 +215,7 @@ public class TimeZoneBean implements Renderable {
      * @return selectedTimeZone display name.
      */
     public String getSelectedTimeZoneName() {
-        synchronized (TimeZone.class) {
-            return displayNameTokenizer(selectedTimeZone.getDisplayName());
-        }
+        return displayNameTokenizer(selectedTimeZone.getDisplayName());
     }
 
     /**
@@ -263,8 +270,9 @@ public class TimeZoneBean implements Renderable {
      */
     private TimeZoneWrapper getTimeZoneWrapperByComponentId(
             String componentId) {
+        TimeZoneWrapper tzw;
         for (int i = 0; i < allTimeZoneList.size(); i++) {
-            TimeZoneWrapper tzw = (TimeZoneWrapper) allTimeZoneList.get(i);
+            tzw = (TimeZoneWrapper) allTimeZoneList.get(i);
             if (tzw.isRelevantComponentId(componentId)) {
                 return tzw;
             }
@@ -311,7 +319,7 @@ public class TimeZoneBean implements Renderable {
     /**
      * Callback to inform us that there was an Exception while rendering
      *
-     * @param renderingException
+     * @param renderingException rendering exception from framework
      */
     public void renderingException(RenderingException renderingException) {
         if (clock != null) {
@@ -335,17 +343,16 @@ public class TimeZoneBean implements Renderable {
         Map requestParams =
                 context.getExternalContext().getRequestParameterMap();
         // get mouse coordinate of user click
-        int x = new Integer((String) requestParams.get("ice.event.x"))
-                .intValue();
-        int y = new Integer((String) requestParams.get("ice.event.y"))
-                .intValue();
-        x = x - icefacesXOffset;
-        y = y - icefacesYOffset;
+        int x = Integer.parseInt((String) requestParams.get("ice.event.x"));
+        int y = Integer.parseInt((String) requestParams.get("ice.event.y"));
+        x -= icefacesXOffset;
+        y -= icefacesYOffset;
         // compare mouse coordinate to know timzone polygons. 
-        for(int i = 0; i < allTimeZoneList.size();i++){
-            if(((TimeZoneWrapper)allTimeZoneList.get(i)).getMapPolygon()
-                                                            .contains(x,y)){
-                TimeZoneWrapper tzw = (TimeZoneWrapper)allTimeZoneList.get(i);
+        TimeZoneWrapper tzw;
+        for (int i = 0; i < allTimeZoneList.size(); i++) {
+            if (((TimeZoneWrapper) allTimeZoneList.get(i)).getMapPolygon()
+                    .contains(x, y)) {
+                tzw = (TimeZoneWrapper) allTimeZoneList.get(i);
                 selectedTimeZone = TimeZone.getTimeZone(tzw.getId());
                 selectedFormat = buildDateFormatForTimeZone(selectedTimeZone);
             }
@@ -376,7 +383,7 @@ public class TimeZoneBean implements Renderable {
             else {
                 checkedTimeZoneList.remove(tzw);
             }
-            checkboxStates.put(tzw.getCheckboxId(), checked ? "true" : "false");
+            checkboxStates.put(tzw.getMapCommandButtonId(), checked ? "true" : "false");
         }
     }
 
@@ -398,7 +405,7 @@ public class TimeZoneBean implements Renderable {
     public void setCheckboxStates(Hashtable checkboxStates) {
         this.checkboxStates = checkboxStates;
     }
-    
+
     // ICEfaces image map integration needs offset values to calculate the 
     // correct coordinate values.
     private static int icefacesXOffset = 193;
@@ -477,12 +484,13 @@ public class TimeZoneBean implements Renderable {
              50, 54, 66, 74, 78, 81, 83, 84, 91, 96, 209, 215,
              216, 226, 242, 255, 253, 241, 208, 154, 144, 136,
              127, 118, 114, 110, 92, 84, 78, 35, 29, 9};
-    
-    private static int[] nfldXCoords = 
-            {448, 465, 465, 415, 416, 418, 434, 434, 434, 432, 433, 436, 452, 
-             452, 450, 453, 450, 447, 447, 444, 440, 440, 434, 440, 443, 450, 
+
+    private static int[] nfldXCoords =
+            {448, 465, 465, 415, 416, 418, 434, 434, 434, 432, 433, 436, 452,
+             452, 450, 453, 450, 447, 447, 444, 440, 440, 434, 440, 443, 450,
              453, 450, 451, 448, 450, 450, 448};
-    private static int[] nfldYCoords = 
-            {0, 0, 242, 242, 226, 217, 209, 95, 85, 83, 80, 82, 75, 56, 54, 51, 
-             50, 52, 56, 54, 55, 50, 45, 40, 42, 42, 37, 29, 23, 20, 17, 14, 14};
-} // End of TimeZoneBean class
+    private static int[] nfldYCoords =
+            {0, 0, 242, 242, 226, 217, 209, 95, 85, 83, 80, 82, 75, 56, 54, 51,
+             50, 52, 56, 54, 55, 50, 45, 40, 42, 42, 37, 29, 23, 20, 17, 14,
+             14};
+} 

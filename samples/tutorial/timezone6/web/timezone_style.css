@@ -108,6 +108,8 @@ table {
 .checkedTime {
     width:20%
 }
+
+
 .orange, .purple, .yellow, .green{
     border:1px solid #999999;
   
@@ -120,3 +122,4 @@ table {
 .yellow{background: #fefc5a;}
 
 .green{background: #96b710;}
+
