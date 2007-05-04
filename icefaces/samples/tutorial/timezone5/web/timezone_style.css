@@ -109,10 +109,13 @@ table {
     width:20%
 }
 
-
 .orange, .purple, .yellow, .green{
     border:1px solid #999999;
-  
+}
+
+.orange label, .purple label, .yellow label, .green label{
+    color: black;
+    font-weight:bold;
 }
 
 .orange{background: #f16e28;}
