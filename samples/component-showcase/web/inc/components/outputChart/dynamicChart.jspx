@@ -92,13 +92,17 @@
                             <!-- chart to remove -->
                             <ice:selectOneMenu
                                     valueChangeListener="#{dynamicPieChart.deleteListValueChangeListener}"
-                                    partialSubmit="true">
+                                    partialSubmit="true"
+                                    disabled="#{not dynamicPieChart.deleteAllowed}">
                                 <f:selectItems value="#{dynamicPieChart.deleteList}"/>
                             </ice:selectOneMenu>
 
                             <!-- remove command button -->
                             <ice:commandButton value="#{msgs['component.chart.removeChartCommand.label']}"
-                                               actionListener="#{dynamicPieChart.deleteChart}"/>
+                                               actionListener="#{dynamicPieChart.deleteChart}"
+                                               rendered="#{dynamicPieChart.deleteAllowed}"/>
+                            <ice:outputText value="Minimum 2 pieces of data"
+                                            rendered="#{not dynamicPieChart.deleteAllowed}"/>
                         </ice:panelGrid>
                     </ice:panelGrid>
                 </ice:panelGrid>
