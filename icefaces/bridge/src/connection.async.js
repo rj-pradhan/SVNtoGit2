@@ -130,6 +130,9 @@
                         this.sendChannel.postAsynchronously(this.getURI, this.defaultQuery().asURIEncodedString(), function(request) {
                             Connection.FormPost(request);
                             request.on(Connection.Receive, this.receiveCallback);
+                            request.on(Connection.Receive, function(response) {
+                                response.close();
+                            });
                         }.bind(this));
                         this.updatedViews.saveValue(views.complement(viewIdentifiers()).join(' '));
                     }
