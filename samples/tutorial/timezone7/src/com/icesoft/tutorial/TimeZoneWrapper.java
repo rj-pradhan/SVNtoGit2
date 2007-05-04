@@ -59,11 +59,6 @@ public class TimeZoneWrapper {
      */
     private String mapCommandButtonId;
 
-    /**
-     * The component id of the selectBooleanCheckbox, under the map UI,
-     * corresponding to this time zone.
-     */
-    private String checkboxId;
 
     /**
      * Whether this {@link TimeZone} has been checked, and so should be
@@ -90,7 +85,7 @@ public class TimeZoneWrapper {
     /**
      * @param id      id used to identify the time zone.
      * @param mapId   map button component id in web page
-     * @param abbreviation
+     * @param abbreviation timezone abbreviated label
      * @param xCoords array of X-coordinates for the image map object.
      * @param yCoords array of Y-coordinates for the image map object.
      * @param coords number of corrdinates in the imagem map object.
@@ -199,14 +194,6 @@ public class TimeZoneWrapper {
     }
 
     /**
-     * Gets the component id of the selectBooleanCheckbox, under the map UI,
-     * corresponding to this time zone.
-     */
-    public String getCheckboxId() {
-        return checkboxId;
-    }
-
-    /**
      * Gets whether this time zone has is checked, and so should be displayed in
      * the bottom table UI.
      *
@@ -228,14 +215,17 @@ public class TimeZoneWrapper {
     
     /**
      * Gets the abbreviation for the TimeZone to be displayed in the UI.
+     *
+     * @return abbreviated time zone name associated with this wrapper.
      */
     public String getAbbreviation(){
         return abbreviation;
     }
     
     /**
-     * Gets the Polygon object that represents the Time Zone on the 
-     * image map.
+     * Gets the Polygon object that represents the Time Zone on the image map.
+     *
+     * @return polygon object representing the image map for this timezone.
      */
     public Polygon getMapPolygon(){
         return mapPolygon;

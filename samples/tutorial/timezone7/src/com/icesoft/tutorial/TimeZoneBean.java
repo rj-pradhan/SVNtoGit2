@@ -38,7 +38,6 @@ import com.icesoft.faces.async.render.RenderManager;
 import com.icesoft.faces.async.render.Renderable;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
-import java.awt.Polygon;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
@@ -131,25 +130,25 @@ public class TimeZoneBean implements Renderable {
         //  the timezone web file, so should be modifiable,
         //  but all ids must be unique to each other
         allTimeZoneList = new ArrayList(7);
-        allTimeZoneList.add(new TimeZoneWrapper("Pacific/Honolulu", 
+        allTimeZoneList.add(new TimeZoneWrapper("Pacific/Honolulu",
                 "GMTminus10", "HADT",
                 hawaiiXCoords, hawaiiYCoords, hawaiiXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("America/Anchorage", 
+        allTimeZoneList.add(new TimeZoneWrapper("America/Anchorage",
                 "GMTminus9", "AKST",
                 alaskaXCoords, alaskaYCoords, alaskaXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("America/Los_Angeles", 
+        allTimeZoneList.add(new TimeZoneWrapper("America/Los_Angeles",
                 "GMTminus8", "PST",
                 pacificXCoords, pacificYCoords, pacificXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("America/Denver", 
+        allTimeZoneList.add(new TimeZoneWrapper("America/Denver",
                 "GMTminus7", "MDT",
                 mountainXCoords, mountainYCoords, mountainXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("America/Chicago", 
+        allTimeZoneList.add(new TimeZoneWrapper("America/Chicago",
                 "GMTminus6", "CDT",
                 centralXCoords, centralYCoords, centralXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("America/New_York", 
+        allTimeZoneList.add(new TimeZoneWrapper("America/New_York",
                 "GMTminus5", "EST",
                 easternXCoords, easternYCoords, easternXCoords.length));
-        allTimeZoneList.add(new TimeZoneWrapper("Canada/Newfoundland", 
+        allTimeZoneList.add(new TimeZoneWrapper("Canada/Newfoundland",
                 "GMTminus4", "NST",
                 nfldXCoords, nfldYCoords, nfldXCoords.length));
         
