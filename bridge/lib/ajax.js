@@ -221,7 +221,7 @@
             try {
                 //replace the callback to avoid infinit loop since the callback is
                 //executed also when the connection is aborted.
-                this.request.onreadystatechange = Function.NOOP;
+                this.request.onreadystatechange = null;
                 this.request.abort();
             } catch (e) {
                 //ignore, the request was discarded by the browser
