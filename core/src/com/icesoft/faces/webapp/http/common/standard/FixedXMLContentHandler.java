@@ -16,6 +16,9 @@ public abstract class FixedXMLContentHandler implements ResponseHandler {
         writeTo(writer);
         writer.write("\n\n");
         byte[] content = writer.getBuffer().toString().getBytes("UTF-8");
+        response.setHeader("Cache-Control", new String[]{"no-cache", "no-store", "must-revalidate"});//HTTP 1.1
+        response.setHeader("Pragma", "no-cache");//HTTP 1.0
+        response.setHeader("Expires", 0);//prevents proxy caching
         response.setHeader("Content-Type", "text/xml; charset=UTF-8");
         response.setHeader("Content-Length", content.length);
         response.writeBody().write(content);
