@@ -305,4 +305,13 @@ public class CSS_DEFAULT {
     public static final String ROW_SELECTION_SELECTED = "Selected";
     public static final String ROW_SELECTION_MOUSE_OVER = "MouseOver";
 
+    // EditableText
+    public static final String EDITABLE_TEXT_DEFAULT_STYLE_CLASS =
+            "iceEditText";
+    public static final String EDITABLE_TEXT_STATE_INPUT =
+            "_input";
+    public static final String EDITABLE_TEXT_STATE_OUTPUT =
+            "_output";
+    public static final String EDITABLE_TEXT_STATE_DISABLED =
+            "_dis";
 }

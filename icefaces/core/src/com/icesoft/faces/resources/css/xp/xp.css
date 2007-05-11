@@ -2178,3 +2178,44 @@ Disabled classes for the calendar controls
 .iceRowSelMouseOver span{
     color: white;
 }
+
+/*
+----------- Editable Text --------
+(derived from iceInputtext and iceOutputText)
+*/
+
+/* editable text when accepting user input */
+.iceEditText_input {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    border: 1px solid #ABABAB;
+    background-color: #FFFFFF;
+    margin: 2px;
+    padding: 2px;
+}
+/* editable text when wouble be accepting user input, but is disabled */
+.iceEditText_input_dis {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .95em;
+    color: #ABABAB;
+    border: 1px dotted #CCCCCC;
+    margin: 2px;
+    padding: 2px;
+    cursor: default;
+}
+/* editable text when just outputting data */
+.iceEditText_output {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000000;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+/* editable text when just outputting data, and disabled */
+.iceEditText_output_dis {
+    color: #ABABAB;
+    text-decoration: none;
+    border-bottom: 1px dotted #CCCCCC;
+    cursor: default;
+}
