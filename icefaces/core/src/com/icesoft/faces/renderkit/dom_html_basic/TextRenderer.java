@@ -60,13 +60,20 @@ public class TextRenderer extends DomBasicInputRenderer {
                              String currentValue)
             throws IOException {
         validateParameters(facesContext, uiComponent, null);
-        if (uiComponent instanceof UIInput) {
+        if (isRenderingAsInput(uiComponent)) {
             renderUIInput(facesContext, uiComponent, currentValue);
-        } else if (uiComponent instanceof UIOutput) {
+        } else if (isRenderingAsOutput(uiComponent)) {
             renderUIOutput(facesContext, uiComponent, currentValue);
         }
     }
 
+    protected boolean isRenderingAsInput(UIComponent uiComponent) {
+        return (uiComponent instanceof UIInput);
+    }
+    
+    protected boolean isRenderingAsOutput(UIComponent uiComponent) {
+        return (uiComponent instanceof UIOutput);
+    }
     /**
      * @param facesContext
      * @param uiComponent
@@ -154,8 +161,7 @@ public class TextRenderer extends DomBasicInputRenderer {
         setRootElementId(facesContext, rootSpan, uiComponent);
         // render styleClass as the value of the class attribute;
         // leave the style to be passed through
-        String styleClass =
-                (String) uiComponent.getAttributes().get("styleClass");
+        String styleClass = getComponentsStyleClass(uiComponent);
         if (styleClass != null) {
             ((Element) rootSpan).setAttribute("class", styleClass);
         }
@@ -232,8 +238,7 @@ public class TextRenderer extends DomBasicInputRenderer {
             root.removeAttribute("value");
         }
 
-        String styleClass =
-                (String) uiComponent.getAttributes().get("styleClass");
+        String styleClass = getComponentsStyleClass(uiComponent);
         if (styleClass != null) {
             root.setAttribute("class", styleClass);
         }
@@ -265,8 +270,7 @@ public class TextRenderer extends DomBasicInputRenderer {
         }
 
         String style = (String) uiComponent.getAttributes().get("style");
-        String styleClass =
-                (String) uiComponent.getAttributes().get("styleClass");
+        String styleClass = getComponentsStyleClass(uiComponent);
         String title = (String) uiComponent.getAttributes().get("title");
         if (styleClass != null
             || style != null
@@ -292,6 +296,12 @@ public class TextRenderer extends DomBasicInputRenderer {
                                  HashSet excludes) {
 
 
+    }
+    
+    protected String getComponentsStyleClass(UIComponent uiComponent) {
+        String styleClass =
+            (String) uiComponent.getAttributes().get("styleClass");
+        return styleClass;
     }
 }
 

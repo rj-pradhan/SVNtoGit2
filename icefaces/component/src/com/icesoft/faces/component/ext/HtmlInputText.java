@@ -791,4 +791,8 @@ public class HtmlInputText
         ValueBinding vb = getValueBinding("autocomplete");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
+    
+    protected String getStyleClassField() {
+        return styleClass;
+    }
 }
