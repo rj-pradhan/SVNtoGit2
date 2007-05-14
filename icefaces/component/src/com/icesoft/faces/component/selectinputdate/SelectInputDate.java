@@ -40,9 +40,15 @@ import com.icesoft.faces.context.DOMResponseWriter;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
+
+import org.krysalis.jcharts.properties.LegendProperties;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -166,6 +172,11 @@ public class SelectInputDate
         setRendererType(DEFAULT_RENDERER_TYPE);
     }
 
+    public void encodeBegin(FacesContext context) throws IOException {
+        super.encodeBegin(context);
+        buildHeighLightMap();
+    }
+    
     /**
      * <p/>
      * CSS style attribute. </p>
@@ -594,5 +605,221 @@ public class SelectInputDate
         }
     }
 
+    private String highlightClass;
+    /**
+     * <p>Set the value of the <code>highlightClass</code> property.</p>
+     *
+     * @param highlightClass
+     */
+    public void setHighlightClass(String highlightClass) {
+        this.highlightClass = highlightClass;
+    }
 
+    /**
+     * <p>Return the value of the <code>highlightClass</code> property.</p>
+     *
+     * @return String highlightClass, if never set returns a blank string not 
+     * null
+     */
+    public String getHighlightClass() {
+        if (highlightClass != null) {
+            return highlightClass;
+        }
+        ValueBinding vb = getValueBinding("highlightClass");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : "";
+    }
+    
+    private String highlightUnit;
+    /**
+     * <p>Set the value of the <code>highlightUnit</code> property.</p>
+     *
+     * @param highlightClass
+     */
+    public void setHighlightUnit(String highlightUnit) {
+        this.highlightUnit = highlightUnit;
+    }
+
+    /**
+     * <p>Return the value of the <code>highlightUnit</code> property.</p>
+     *
+     * @return String highlightUnit, if never set returns a blank string not 
+     * null
+     */
+    public String getHighlightUnit() {
+        if (highlightUnit != null) {
+            return highlightUnit;
+        }
+        ValueBinding vb = getValueBinding("highlightUnit");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : "";
+    }  
+    
+    private String highlightValue;
+    /**
+     * <p>Set the value of the <code>highlightValue</code> property.</p>
+     *
+     * @param highlightValue
+     */
+    public void setHighlightValue(String highlightValue) {
+        this.highlightValue = highlightValue;
+    }
+
+    /**
+     * <p>Return the value of the <code>highlightValue</code> property.</p>
+     *
+     * @return String highlightValue. if never set returns blank a string not 
+     * null
+     */
+    public String getHighlightValue() {
+        if (highlightValue != null) {
+            return highlightValue;
+        }
+        ValueBinding vb = getValueBinding("highlightValue");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : "";
+    }     
+    
+    private Map hightlightRules = new HashMap(); 
+    private Map unitMap = new UnitMap();
+    private void buildHeighLightMap() {
+        validateHighlight();
+        resetHighlightClasses(Calendar.YEAR); 
+    }
+
+    private boolean validateHighlight() {
+        hightlightRules.clear();
+        String highlightClassArray[] = getHighlightClass().split(":");
+        String highlightUnitArray[] = getHighlightUnit().split(":");
+        String highlightValueArray[] = getHighlightValue().split(":");
+        if ((highlightClassArray.length  < 1 ) ||
+                highlightClassArray[0].equals("") ||
+                highlightUnitArray[0].equals("") ||
+                highlightValueArray[0].equals("")) {
+            return false;
+        }
+        if (!(highlightClassArray.length == highlightUnitArray.length) ||
+                !(highlightUnitArray.length == highlightValueArray.length)) {
+            System.out.println("\n[SelectInputDate] The following attributes does not have corresponding values:" +
+                    "\n-highlightClass \n-highlightUnit \n-highlightValue \n" +
+                    "Note: When highlighting required, all above attributes " +
+                    "need to be used together and should have corresponding values.\n" +
+                    "Each entity can be separated using the : colon, e.g. \n" +
+                    "highlightClass=\"weekend: newyear\" \n" +
+                    "highlightUnit=\"DAY_OF_WEEK: DAY_OF_YEAR\" \n"+
+                    "highlightValue=\"1, 7: 1\" "
+                    );
+            return false;
+        }
+        
+        for(int i = 0; i < highlightUnitArray.length; i++) {
+            try {
+                int option = Integer.parseInt(highlightUnitArray[i].trim());
+                if (option <1 || option > 8) {
+                    System.out.println("[SelectInputDate:highlightUnit] \""+ highlightUnitArray[i].trim() +"\" " +
+                        "s not a valid unit value. Valid values are between 1 to 8");
+                    return false;
+                }
+            } catch (NumberFormatException exception) {
+                if (unitMap.containsKey(highlightUnitArray[i].trim())) {
+                    highlightUnitArray[i] = String.valueOf(unitMap.get(
+                            highlightUnitArray[i].trim()));
+                } else {
+                    System.out.println("[SelectInputDate:highlightUnit] \""+ highlightUnitArray[i] +"\" is " +
+                            "not a valid unit value, String representation " +
+                            "of unit must match with java.util.Calendar contants (e.g.)" +
+                            "\nYEAR, MONTH, WEEK_OF_YEAR, WEEK_OF_MONTH, DATE, DAY_OF_YEAR, " +
+                            "DAY_OF_WEEK and DAY_OF_WEEK_IN_MONTH");
+                    return false;
+                }
+            }
+            String[] value = highlightValueArray[i].replaceAll(" ", "").trim().split(",");
+            for (int j=0; j <value.length; j++ ) {
+                hightlightRules.put(highlightUnitArray[i].trim() + "$"+ value[j] , highlightClassArray[i]);
+            }
+        }
+
+        
+        return true;
+    }
+
+    Map getHightlightRules() {
+        return hightlightRules;
+    }
+
+    void setHightlightRules(Map hightlightRules) {
+        this.hightlightRules = hightlightRules;
+    }
+    
+    private String highlightYearClass = "";
+    private String highlightMonthClass ="";
+    private String highlightWeekClass =""; 
+    private String highlightDayClass ="";   
+    
+    String getHighlightDayCellClass() {
+        return highlightYearClass  + 
+        highlightMonthClass + 
+        highlightWeekClass + 
+        highlightDayClass;
+    }
+
+    String getHighlightMonthClass() {
+        return highlightMonthClass;
+    }
+
+    void setHighlightMonthClass(String highlightMonthClass) {
+        this.highlightMonthClass = highlightMonthClass;
+    }
+
+    String getHighlightYearClass() {
+        return highlightYearClass;
+    }
+
+    void setHighlightYearClass(String highlightYearClass) {
+        this.highlightYearClass = highlightYearClass;
+    }
+
+    String getHighlightWeekClass() {
+        return highlightWeekClass;
+    }
+
+    void addHighlightWeekClass(String highlightWeekClass) {
+        if (this.highlightWeekClass.indexOf(highlightWeekClass) == -1) {
+            this.highlightWeekClass += (highlightWeekClass + " ");
+        }
+    }
+
+    void addHighlightDayClass(String highlightDayClass) {
+        if (this.highlightDayClass.indexOf(highlightDayClass) == -1) {
+            this.highlightDayClass += (highlightDayClass + " ");
+        }
+    }
+
+    void resetHighlightClasses(int level)  {
+        if (level <= Calendar.MONTH) {
+            this.highlightMonthClass = "";
+            this.highlightYearClass = "";
+            this.highlightDayClass = "";
+        }
+        this.highlightDayClass = ""; 
+        this.highlightWeekClass = "";
+    }
 }
+
+class UnitMap extends HashMap {
+    public UnitMap() {
+        this.put("YEAR", new Integer(Calendar.YEAR));
+        this.put("MONTH", new Integer(Calendar.MONTH));
+        this.put("WEEK_OF_YEAR", new Integer(Calendar.WEEK_OF_YEAR));
+        this.put("WEEK_OF_MONTH", new Integer(Calendar.WEEK_OF_MONTH));
+        this.put("DATE", new Integer(Calendar.DATE));
+        this.put("DAY_OF_YEAR", new Integer(Calendar.DAY_OF_YEAR));
+        this.put("DAY_OF_WEEK", new Integer(Calendar.DAY_OF_WEEK));
+        this.put("DAY_OF_WEEK_IN_MONTH", new Integer(Calendar.DAY_OF_WEEK_IN_MONTH));
+    }
+    
+    public int getConstant(String key) {
+        if (!super.containsKey(key)) {
+            return 0;
+        }
+        return Integer.parseInt(super.get(key).toString());
+    }
+}
+

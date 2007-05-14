@@ -42,7 +42,38 @@
             inputText component, or optionally click a button beside the inputText component to display a popup
             dateSelect view. Selecting a date in the dateSelect closes  the popup dateSelect view and updates the
             selected date.<br>
-            The selectInputDate component can be used in cases where a date value must be displayed or entered. ]]>
+            The selectInputDate component can be used in cases where a date value must be displayed or entered. 
+            <p>
+             In order to highlight a day, following three attributes need to be 
+             set with corresponding values:
+            <ol>
+                <li> highlightClass
+            	<li> highlightUnit   
+            	<li> highlightValue
+            </ol>
+            (e.g.)
+            &lt;ice:selectInputDate highlighClass="newyear"
+            					 highlightUnit="DAY_OF_YEAR"
+            					 highlightValue="1" /&gt;
+            <p>					 	
+            To highlighting days in more granular fashion, above attributes can 
+            be set to defining more then one rules by separating them with : 
+            colon (e.g.)<br/>
+
+            &lt;ice:selectInputDate highlighClass="newyear: weekend"
+            					 highlightUnit="DAY_OF_YEAR: DAY_OF_WEEK"
+            					 highlightValue="1: 7" /&gt;
+            </p>
+            <p>					 	
+            A rule can be set to defining more then one values using comma "," (e.g.)<br/>
+            &lt;ice:selectInputDate highlighClass="newyear: weekend"
+            					 highlightUnit="DAY_OF_YEAR: DAY_OF_WEEK"
+            					 highlightValue="1: 1, 7" /&gt;	 <br/>
+            </p>            
+            
+			NOTE: all 3 highlight attributes should have a corresponding values.
+            </p>
+            ]]>
 	</description>
 	<component-family>javax.faces.Input</component-family>
 	<renderer-type>com.icesoft.faces.Calendar</renderer-type>
