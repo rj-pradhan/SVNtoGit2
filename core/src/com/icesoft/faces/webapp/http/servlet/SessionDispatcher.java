@@ -51,7 +51,10 @@ public abstract class SessionDispatcher implements PseudoServlet {
         try {
             sessionBoundServers.put(session.getId(), this.newServlet(session,Listener.lookupSessionMonitor(session)));
         } catch (Exception e) {
+            Log.warn(e);
             throw new RuntimeException(e);
+        } catch (Throwable t) {
+            Log.warn(t);
         }
     }
 
