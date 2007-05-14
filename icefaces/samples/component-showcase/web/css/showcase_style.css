@@ -435,6 +435,17 @@ em {
     width: 90px;
 }
 
+.weekend a{
+    background-color:#93AD90;
+}
+
+weekend{
+    background-color:#93AD90;
+}
+.august a{
+   font-weight: bold;
+}
+
 .progressBarColumn {
     vertical-align: top;
     text-align: left;

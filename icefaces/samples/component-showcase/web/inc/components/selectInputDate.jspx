@@ -76,8 +76,13 @@ the click of a button.
                         <!-- Calendar Component -->
                         <ice:selectInputDate
                                 imageDir="#{styleBean.imageDirectory}"
-                                value="#{dateSelect.date1}"/>
-
+                                value="#{dateSelect.date1}"
+                                highlightClass="weekend: august:"
+				highlightUnit="DAY_OF_WEEK: MONTH"
+                                highlightValue="1,7: 8"
+                                />
+			- Weekends are green <br/>
+			- August is bold
                     </ice:panelGroup>
 
 
