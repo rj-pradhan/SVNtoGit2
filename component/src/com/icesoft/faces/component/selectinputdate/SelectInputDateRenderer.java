@@ -79,6 +79,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -460,12 +461,14 @@ public class SelectInputDateRenderer
     private void writeMonthYearHeader(DOMContext domContext,
                                       FacesContext facesContext,
                                       ResponseWriter writer,
-                                      UIInput inputComponent,
+                                      SelectInputDate inputComponent,
                                       Calendar timeKeeper,
                                       int currentDay, String[] weekdays,
                                       String[] months, Element headerTr,
                                       String styleClass)
             throws IOException {
+
+        
         Element table = domContext.createElement(HTML.TABLE_ELEM);
         table.setAttribute(HTML.CELLPADDING_ATTR, "0");
         table.setAttribute(HTML.CELLSPACING_ATTR, "0");
@@ -483,7 +486,6 @@ public class SelectInputDateRenderer
 
         // first render month with navigation back and forward
         Calendar cal = shiftMonth(facesContext, timeKeeper, currentDay, -1);
-
         writeCell(domContext, facesContext, writer, inputComponent,
                   "<", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
@@ -499,7 +501,20 @@ public class SelectInputDateRenderer
         tr.appendChild(td);
 
         cal = shiftMonth(facesContext, timeKeeper, currentDay, 1);
+        int calYear = cal.get(Calendar.YEAR);
 
+        if (inputComponent.getHightlightRules().containsKey(Calendar.YEAR+"$"+calYear)) {
+            inputComponent.setHighlightYearClass(inputComponent.getHightlightRules().get(Calendar.YEAR+"$"+calYear) + " ");
+        } else {
+            inputComponent.setHighlightYearClass("");
+        }
+              
+        int calMonth = cal.get(Calendar.MONTH);
+        if (inputComponent.getHightlightRules().containsKey(Calendar.MONTH+"$"+calMonth)) {
+            inputComponent.setHighlightMonthClass(inputComponent.getHightlightRules().get(Calendar.MONTH+"$"+calMonth) + " ");
+        } else {
+            inputComponent.setHighlightMonthClass("");
+        }  
         writeCell(domContext, facesContext, writer, inputComponent,
                   ">", cal.getTime(), styleClass, tr,
                   ((SelectInputDate) inputComponent).getImageDir() +
@@ -556,7 +571,7 @@ public class SelectInputDateRenderer
     private Calendar shiftYear(FacesContext facesContext,
                                Calendar timeKeeper, int currentDay, int shift) {
         Calendar cal = copyCalendar(facesContext, timeKeeper);
-
+        
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + shift);
 
         if (currentDay > cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
@@ -651,16 +666,53 @@ public class SelectInputDateRenderer
                 Date currentDate = (Date) inputComponent.getValue();
                 Calendar current = Calendar.getInstance();
                 current.setTime(currentDate);
-
+                
                 day = current.get(Calendar.DAY_OF_MONTH); // starts with 1
                 month = current.get(Calendar.MONTH); // starts with 0
                 year = current.get(Calendar.YEAR);
             } catch (Exception e) {
                 // hmmm this should never happen
             }
-
-            String cellStyle = inputComponent.getDayCellClass();
-
+            
+           
+            if (inputComponent.getHightlightRules().size()>0) {
+                int weekOfYear = cal.get(Calendar.WEEK_OF_YEAR);
+                int weekOfMonth = cal.get(Calendar.WEEK_OF_MONTH);
+                int date =cal.get(Calendar.DATE);
+                int dayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+                int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                int dayOfWeekInMonth = cal.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+                
+                if (inputComponent.getHightlightRules().containsKey(Calendar.WEEK_OF_YEAR+"$"+weekOfYear)) {
+                    inputComponent.addHighlightWeekClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.WEEK_OF_YEAR+"$"+weekOfYear)));
+                }
+                if (inputComponent.getHightlightRules().containsKey(Calendar.WEEK_OF_MONTH+"$"+weekOfMonth)) {
+                    inputComponent.addHighlightWeekClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.WEEK_OF_MONTH+"$"+weekOfMonth)));
+                }
+                if (inputComponent.getHightlightRules().containsKey(Calendar.DATE+"$"+date)) {
+                    inputComponent.addHighlightDayClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.DATE+"$"+date)));
+                }  
+                if (inputComponent.getHightlightRules().containsKey(Calendar.DAY_OF_YEAR+"$"+dayOfYear)) {
+                    inputComponent.addHighlightDayClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.DAY_OF_YEAR+"$"+dayOfYear)));
+                } 
+                if (inputComponent.getHightlightRules().containsKey(Calendar.DAY_OF_WEEK+"$"+dayOfWeek)) {
+                    inputComponent.addHighlightDayClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.DAY_OF_WEEK+"$"+dayOfWeek)));
+                } 
+                if (inputComponent.getHightlightRules().containsKey(Calendar.DAY_OF_WEEK_IN_MONTH+"$"+dayOfWeekInMonth)) {
+                    inputComponent.addHighlightDayClass(String.valueOf(inputComponent.getHightlightRules().get(Calendar.DAY_OF_WEEK_IN_MONTH+"$"+dayOfWeekInMonth)));
+                }                
+            }
+            
+            String cellStyle = inputComponent.getHighlightDayCellClass() + inputComponent.getDayCellClass();            
+            
+            
+            if ((cal.get(Calendar.DAY_OF_MONTH) == day) &&
+                    (cal.get(Calendar.MONTH) == month) &&
+                    (cal.get(Calendar.YEAR) == year)) {
+                    cellStyle = inputComponent.getCurrentDayCellClass();
+                }
+             
+            
             // do not automatically select date when navigating by month
             if ((cal.get(Calendar.DAY_OF_MONTH) == day) &&
                 (cal.get(Calendar.MONTH) == month) &&
@@ -685,6 +737,7 @@ public class SelectInputDateRenderer
             if (columnIndexCounter == weekdays.length) {
                 columnIndexCounter = 0;
             }
+            inputComponent.resetHighlightClasses(Calendar.WEEK_OF_YEAR);
         }
 
         if ((columnIndexCounter != 0) && (tr2 != null)) {
@@ -692,8 +745,9 @@ public class SelectInputDateRenderer
                 writeCell(domContext, facesContext, writer,
                           inputComponent, "", null,
                           inputComponent.getDayCellClass(), tr2, null, i);
-            }
+             }
         }
+
     }
 
     private void writeCell(DOMContext domContext, FacesContext facesContext,
