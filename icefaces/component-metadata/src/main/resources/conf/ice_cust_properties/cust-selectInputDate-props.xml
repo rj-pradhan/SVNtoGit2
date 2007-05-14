@@ -98,7 +98,17 @@
 
 <property>
 	<description>
+		<![CDATA[<p>
+		This attribute defines class(s) for days to be highlighted.
 		
+		<br/>Note: In order to highlight a day, following three attributes need to be 
+             set with corresponding values:
+            <ol>
+                <li> highlightClass
+            	<li> highlightUnit   
+            	<li> highlightValue
+            </ol> 
+        </p>]]>	            
 	</description>
 	<property-name>highlightClass</property-name>
 	<property-class>java.lang.String</property-class>
@@ -112,6 +122,39 @@
 
 <property>
 	<description>
+		<![CDATA[<p>This attribute defines the level where highlight need to
+		be applied. The valid values can be set using the following 
+		java.util.Calendar constants:
+		<UL>
+			<LI>YEAR
+        	<LI>MONTH
+        	<LI>WEEK_OF_YEAR
+        	<LI>WEEK_OF_MONTH
+        	<LI>DATE
+        	<LI>DAY_OF_YEAR
+        	<LI>DAY_OF_WEEK
+        	<LI>DAY_OF_WEEK_IN_MONTH
+        </UL>
+		
+		Above units can be defined using String representation or as constant
+		as well (e.g.) <br/>
+		*.jsp<br/>
+		&lt;ice:selectInputDate highlightUnit="YEAR".. /&gt; <br/>
+		equivalent to <br/>
+		&lt;ice:selectInputDate highlightUnit="1".. /&gt; <br/>
+		bean </br>
+		public String getHighlightUnit() {
+			return String.valueOf(Calendar.YEAR); 
+		}		
+		<br/>
+		Note: In order to highlight a day, following three attributes need to be 
+             set with corresponding values:
+            <ol>
+                <li> highlightClass
+            	<li> highlightUnit   
+            	<li> highlightValue
+            </ol>
+        </p>]]>		
 	</description>
 	<property-name>highlightUnit</property-name>
 	<property-class>java.lang.String</property-class>
@@ -125,6 +168,22 @@
 
 <property>
 	<description>
+		<![CDATA[<p>
+		This attribute defines the value to be highlighted appropriate to 
+		the corresponding highlightUnit attribute.
+		(e.g.) <br/>
+		MONTH = 1 to 12<br/>
+		DAY_OF_WEEK = 1 to 7
+		
+		<br/>
+		Note: In order to highlight a day, following three attributes need to be 
+             set with corresponding values:		
+            <ol>
+                <li> highlightClass
+            	<li> highlightUnit   
+            	<li> highlightValue
+            </ol>             
+        </p>]]>				
 	</description>
 	<property-name>highlightValue</property-name>
 	<property-class>java.lang.String</property-class>
