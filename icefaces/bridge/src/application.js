@@ -38,11 +38,42 @@
             var logger = window.logger = this.logger = new Ice.Log.Logger([ 'window' ]);
             this.logHandler = window.console && window.console.firebug ? new Ice.Log.FirebugLogHandler(logger) : new Ice.Log.WindowLogHandler(logger, window);
             var documentSynchronizer = new Ice.Document.Synchronizer(logger);
-            window.statusManager = new Ice.Status.StatusManager(configuration);
-            window.scriptLoader = new Ice.Script.Loader(logger);
+            var statusManager = new Ice.Status.StatusManager(configuration);
+            var scriptLoader = new Ice.Script.Loader(logger);
+            var commandDispatcher = new Ice.Command.Dispatcher();
+
+            commandDispatcher.register('noop', Function.NOOP);
+            commandDispatcher.register('set-cookie', Ice.Command.SetCookie);
+            commandDispatcher.register('redirect', Ice.Command.Redirect);
+            commandDispatcher.register('macro', Ice.Command.Macro);
+            commandDispatcher.register('parsererror', Ice.Command.ParsingError);
+            commandDispatcher.register('updates', function(element) {
+                $enumerate(element.getElementsByTagName('update')).each(function(updateElement) {
+                    try {
+                        var address = updateElement.getAttribute('address');
+                        var html = updateElement.firstChild.data.replace(/<\!\#cdata\#/g, '<![CDATA[').replace(/\#\#>/g, ']]>');
+                        address.asExtendedElement().replaceHtml(html);
+                        logger.debug('applied update : ' + html);
+                        scriptLoader.searchAndEvaluateScripts(address.asElement());
+                    } catch (e) {
+                        logger.error('failed to insert element: ' + html, e);
+                    }
+                });
+            });
+            commandDispatcher.register('server-error', function(message) {
+                logger.error('Server side error');
+                logger.error(message.firstChild.data);
+                statusManager.serverError.on();
+                this.dispose();
+            }.bind(this));
+            commandDispatcher.register('session-expired', function() {
+                logger.warn('Session has expired');
+                statusManager.sessionExpired.on();
+                this.dispose();
+            }.bind(this));
 
             window.identifier = Math.round(Math.random() * 10000).toString();
-            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection, defaultParameters) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters);
+            window.connection = this.connection = configuration.synchronous ? new Ice.Connection.SyncConnection(logger, configuration.connection, defaultParameters) : new This.Connection.AsyncConnection(logger, configuration.connection, defaultParameters, commandDispatcher);
 
             window.onKeyPress(function(e) {
                 if (e.isEscKey()) e.cancelDefaultAction();
@@ -53,8 +84,8 @@
             });
 
             this.connection.onReceive(function(request) {
-                Ice.Command.deserializeAndExecute(request.contentAsDOM().documentElement);                
-            }.bind(this));
+                commandDispatcher.deserializeAndExecute(request.contentAsDOM().documentElement);
+            });
 
             this.connection.onReceive(function() {
                 documentSynchronizer.synchronize();
