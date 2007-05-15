@@ -34,7 +34,7 @@
 [ Ice.Community.Connection = new Object, Ice.Connection, Ice.Ajax, Ice.Reliability.Heartbeat, Ice.Command ].as(function(This, Connection, Ajax, Heartbeat, Command) {
 
     This.AsyncConnection = Object.subclass({
-        initialize: function(logger, configuration, defaultQuery) {
+        initialize: function(logger, configuration, defaultQuery, commandDispatcher) {
             this.logger = logger.child('async-connection');
             this.sendChannel = new Ajax.Client(this.logger.child('ui'));
             this.receiveChannel = new Ajax.Client(this.logger.child('blocking'));
@@ -80,7 +80,7 @@
             }
 
             //register command that handles the updated-views message
-            Command.register('updated-views', function(message) {
+            commandDispatcher.register('updated-views', function(message) {
                 this.updatedViews.saveValue(message.firstChild.data);
             }.bind(this));
             //monitor if the blocking connection needs to be started
@@ -104,7 +104,7 @@
 
                     this.heartbeat.onPing(function(ping) {
                         //re-register a pong command on every ping
-                        Command.register('pong', function() {
+                        commandDispatcher.register('pong', function() {
                             ping.pong();
                         });
                         this.sendChannel.postAsynchronously(this.pingURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);

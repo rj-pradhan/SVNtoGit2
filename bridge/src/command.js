@@ -1,18 +1,25 @@
 [ Ice.Command = new Object ].as(function(This) {
 
-    This.Updates = function(element) {
-        $enumerate(element.getElementsByTagName('update')).each(function(updateElement) {
-            try {
-                var address = updateElement.getAttribute('address');
-                var html = updateElement.firstChild.data.replace(/<\!\#cdata\#/g, '<![CDATA[').replace(/\#\#>/g, ']]>');
-                address.asExtendedElement().replaceHtml(html);
-                logger.debug('applied update : ' + html);
-                window.scriptLoader.searchAndEvaluateScripts(address.asElement());
-            } catch (e) {
-                logger.error('failed to insert element: ' + html, e);
+    This.Dispatcher = Object.subclass({
+        initialize: function() {
+            this.commands = new Object;
+        },
+
+        register: function(messageName, command) {
+            this.commands[messageName] = command;
+        },
+
+        deserializeAndExecute: function(message) {
+            var messageName = message.tagName;
+            for (name in this.commands) {
+                if (name == messageName) {
+                    this.commands[messageName](message); return;
+                }
             }
-        });
-    };
+
+            throw 'Unknown message received: ' + messageName;
+        }
+    });
 
     This.Redirect = function(element) {
         var url = element.getAttribute("url");
@@ -23,12 +30,6 @@
         logger.info('Redirecting to ' + url);
         var redirectViewNumber = url.contains('?') ? '&rvn=' : '?rvn=';
         window.location.href = url + redirectViewNumber + viewIdentifiers().first();
-    };
-
-    This.SessionExpired = function() {
-        logger.warn('Session has expired');
-        statusManager.sessionExpired.on();
-        application.dispose();
     };
 
     This.SetCookie = function(message) {
@@ -44,20 +45,8 @@
 
     This.Macro = function(message) {
         $enumerate(message.childNodes).each(function(subMessage) {
-            This.deserializeAndExecute(subMessage);
+            This.Dispatcher.deserializeAndExecute(subMessage);
         });
-    };
-
-    var commands = [];
-    This.deserializeAndExecute = function(message) {
-        var messageName = message.tagName;
-        for (name in commands) {
-            if (name == messageName) {
-                commands[messageName](message); return;
-            }
-        }
-        
-        throw 'Unknown message received: ' + messageName;
     };
 
     This.ParsingError = function(message) {
@@ -67,17 +56,4 @@
         var sourceNode = errorNode.firstChild;
         logger.error(sourceNode.data);
     };
-
-    This.register = function(messageName, command) {
-        commands[messageName] = command;
-    };
-
-    This.register('noop', Function.NOOP);
-    This.register('updates', This.Updates);
-    This.register('set-cookie', This.SetCookie);
-    This.register('redirect', This.Redirect);
-    This.register('server-error', This.ServerError);
-    This.register('session-expired', This.SessionExpired);
-    This.register('macro', This.Macro);
-    This.register('parsererror', This.ParsingError);
 });
