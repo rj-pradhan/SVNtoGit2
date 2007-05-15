@@ -180,7 +180,12 @@ public class TableRenderer
                 if (columnWitdths != null && columnWitdths.hasMoreTokens()) {
                     width = columnWitdths.nextToken();
                 } else {
-                    width = null;
+                    if (isScrollable(uiComponent)) {
+                        width = "150px";
+                    } else {
+                        width = null;
+                    }
+                    
                 }
                 if (nextColumn instanceof UIColumn) {
                     processUIColumnHeader(facesContext, uiComponent,
@@ -405,17 +410,17 @@ public class TableRenderer
                         }
                         writeColStyles(columnStyles, columnStylesMaxIndex,
                                        columnStyleIndex, td, colNumber++);
-                        if (isScrollable(uiComponent) &&
-                            columnWitdths != null &&
+                        
+                        if (isScrollable(uiComponent))  {
+                            String width = "150px";
+                            if( columnWitdths != null &&
                             columnWitdths.hasMoreTokens()) {
-                            String width = columnWitdths.nextToken();
-
+                                width = columnWitdths.nextToken();
+                            }
                             td.setAttribute("style", "width:" + width +
-                                                     ";overflow:hidden;");
-
-
+                            ";overflow:hidden;");                            
                         }
-                      
+                                                 
                         tr.appendChild(td);
                         // if column styles exist, then apply the appropriate one
 
