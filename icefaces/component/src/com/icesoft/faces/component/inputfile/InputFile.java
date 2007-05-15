@@ -45,6 +45,7 @@ import org.apache.commons.fileupload.util.Streams;
 
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ExternalContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
@@ -218,8 +219,9 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
     
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
+        String srv = getUploadServletPath(context);
         writer.write("<html><body>");
-        writer.write("<form method=\"post\" action=\"./uploadHtml\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
+        writer.write("<form method=\"post\" action=\""+srv+"\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
         writer.write("<input type=\"hidden\" name=\"componentID\" value=\"");
         writer.write(this.getClientId(context));
         writer.write("\"/>");
@@ -239,6 +241,20 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         writer.write("/>");
         writer.write("</form>");
         writer.write("</body></html>");
+    }
+    
+    private String getUploadServletPath(BridgeFacesContext context) {
+        String requestContextPath = null;
+        if(context != null) {
+            ExternalContext externalContext = context.getExternalContext();
+            if(externalContext != null) {
+                requestContextPath = externalContext.getRequestContextPath();
+            }
+        }
+        if(requestContextPath == null || requestContextPath.length() == 0)
+            return "./uploadHtml";
+        else
+            return requestContextPath + "/uploadHtml";
     }
 
     public Throwable getUploadException() {
