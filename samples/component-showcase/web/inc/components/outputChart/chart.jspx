@@ -78,6 +78,7 @@
                              data="#{chartMediator.chartObject.data}"
                              actionListener="#{chartMediator.imageClicked}"
                              renderOnSubmit="#{chartMediator.allCharts}"
+                             horizontal="true"                             
                              rendered="#{chartMediator.axis and !chartMediator.pie3D and !chartMediator.pie}"/>
             <!-- Pie charts require a different data model
             Axis charts have a 2 dimensional data model, Pie charts are 1 dimensional -->
