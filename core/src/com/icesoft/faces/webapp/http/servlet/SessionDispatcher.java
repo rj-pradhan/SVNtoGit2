@@ -55,6 +55,7 @@ public abstract class SessionDispatcher implements PseudoServlet {
             throw new RuntimeException(e);
         } catch (Throwable t) {
             Log.warn(t);
+            throw new RuntimeException(t);
         }
     }
 
