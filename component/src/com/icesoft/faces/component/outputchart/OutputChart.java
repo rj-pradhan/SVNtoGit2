@@ -110,7 +110,8 @@ public class OutputChart extends HtmlCommandButton {
     private String styleClass = null;
     private Object legendPlacement;
     private Object legendColumns;
-    
+    private boolean horizontal;
+    private boolean horizontalSet;
     File folder = null;
 
     public OutputChart() {
@@ -662,6 +663,27 @@ public class OutputChart extends HtmlCommandButton {
      */
     public void setLegendColumns(Object legendColumns) {
         this.legendColumns = legendColumns;
+    }
+
+
+    public boolean isHorizontal() {
+        if (this.horizontalSet) {
+            return (this.horizontal);
+        }
+        ValueBinding vb = getValueBinding("horizontal");
+        if (vb != null) {
+            return (Boolean.TRUE.equals(vb.getValue(getFacesContext())));
+        } else {
+            return (this.horizontal);
+        }
+    }
+
+
+    public void setHorizontal(boolean horizontal) {
+        if (horizontal != this.horizontal) {
+            this.horizontal = horizontal;
+        }
+        this.horizontalSet = true;        
     }
 }
 

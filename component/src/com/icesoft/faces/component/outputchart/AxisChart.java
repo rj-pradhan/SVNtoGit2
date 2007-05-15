@@ -146,10 +146,15 @@ public class AxisChart extends AbstractChart {
                 chartType,
                 chartTypeProperties);
 
+        AxisProperties axisProperties = ((chartType.equals(ChartType.BAR) || 
+                chartType.equals(ChartType.BAR_CLUSTERED)) && 
+                outputChart.isHorizontal())?
+                new AxisProperties(true): new AxisProperties();
+
         dataSeries.addIAxisPlotDataSet(axisChartDataSet);
         chart = new org.krysalis.jcharts.axisChart.AxisChart(dataSeries,
                                                              new ChartProperties(),
-                                                             new AxisProperties(),
+                                                             axisProperties,
                                                              getLegendProperties(),
                                                              new Integer(
                                                                      outputChart.getWidth()).intValue(),
