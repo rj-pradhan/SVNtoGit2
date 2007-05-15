@@ -83,12 +83,6 @@ public class PersistentFacesState implements Serializable {
         this.facesContext = facesContext;
         this.viewListeners = viewListeners;
         this.synchronousMode = configuration.getAttributeAsBoolean("synchronousUpdate", false);
-
-        //put this state in the session -- mainly for the fileupload
-        //todo: try to pass this state using object references
-        Map sessionMap = facesContext.getExternalContext().getSessionMap();
-        sessionMap.put(facesContext.getViewNumber() + "/" + PersistentFacesState.class, this);
-
         LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
         this.lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
         this.setCurrentInstance();
