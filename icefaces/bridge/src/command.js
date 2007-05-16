@@ -43,12 +43,6 @@
         application.dispose();
     };
 
-    This.Macro = function(message) {
-        $enumerate(message.childNodes).each(function(subMessage) {
-            This.Dispatcher.deserializeAndExecute(subMessage);
-        });
-    };
-
     This.ParsingError = function(message) {
         logger.error('Parsing error');
         var errorNode = message.firstChild;
