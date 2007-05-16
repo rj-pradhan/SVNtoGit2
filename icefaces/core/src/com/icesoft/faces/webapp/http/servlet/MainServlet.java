@@ -2,6 +2,7 @@ package com.icesoft.faces.webapp.http.servlet;
 
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.ResourceServer;
+import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.util.IdGenerator;
 import com.icesoft.jasper.Constants;
 
@@ -54,6 +55,11 @@ public class MainServlet extends HttpServlet {
         if( log.isTraceEnabled() ){
             log.trace(getIncludeInfo(request,"entering main servlet"));
         }
+
+        //set flag to indicate an ICEfaces request so that delegateNonIface
+        //will detect this and execute D2DViewHandler for it
+        request.setAttribute(PersistentFacesCommonlet.SERVLET_KEY,
+                             PersistentFacesCommonlet.PERSISTENT);
 
         try {
             dispatcher.service(request, response);
