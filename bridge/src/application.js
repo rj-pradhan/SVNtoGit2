@@ -45,8 +45,12 @@
             commandDispatcher.register('noop', Function.NOOP);
             commandDispatcher.register('set-cookie', Ice.Command.SetCookie);
             commandDispatcher.register('redirect', Ice.Command.Redirect);
-            commandDispatcher.register('macro', Ice.Command.Macro);
             commandDispatcher.register('parsererror', Ice.Command.ParsingError);
+            commandDispatcher.register('macro', function(message) {
+                $enumerate(message.childNodes).each(function(subMessage) {
+                    commandDispatcher.deserializeAndExecute(subMessage);
+                });
+            });
             commandDispatcher.register('updates', function(element) {
                 $enumerate(element.getElementsByTagName('update')).each(function(updateElement) {
                     try {
