@@ -262,7 +262,8 @@
             $enumerate(this.element.options).select(function(option) {
                 return option.selected;
             }).each(function(selectedOption) {
-                query.add(this.element.name, selectedOption.value || selectedOption.text);
+                var value = selectedOption.value || (selectedOption.value == '' ? '' : selectedOption.text);
+                query.add(this.element.name, value);
             }.bind(this));
         }
     });
