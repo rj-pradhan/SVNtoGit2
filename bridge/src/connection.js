@@ -62,8 +62,8 @@
             this.connectionDownListeners = [];
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
-            this.sendURI = configuration.context + '/block/send-receive-updates';
-            this.disposeViewsURI = configuration.context + '/block/dispose-views';
+            this.sendURI = configuration.context + 'block/send-receive-updates';
+            this.disposeViewsURI = configuration.context + 'block/dispose-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {

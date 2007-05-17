@@ -33,16 +33,18 @@
 
 package com.icesoft.faces.renderkit;
 
-import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
 import javax.faces.application.ViewHandler;
+import javax.faces.context.FacesContext;
 
 public class LocationUtil {
 
     public static String getAppBase(FacesContext facesContext) {
-        ExternalContext extCtxt = facesContext.getExternalContext();
-        String base = extCtxt.getRequestContextPath();
-        return base + "/";
+        //this works only in Servlet environments
+        String path = facesContext.getExternalContext().getRequestServletPath();
+        StringBuffer dir = new StringBuffer();
+        int atoms = path.split("/").length;
+        while (atoms-- > 2) dir.append("../");
+        return dir.toString();
     }
 
     public static String getResourcePath(FacesContext facesContext, String resource){

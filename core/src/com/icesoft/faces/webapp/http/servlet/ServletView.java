@@ -42,7 +42,7 @@ public class ServletView implements CommandQueue {
         this.viewIdentifier = viewIdentifier;
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, wrappedRequest, response, this, configuration);
-        this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this);
+        this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this, configuration);
         this.persistentFacesState = new PersistentFacesState(facesContext, viewListeners, configuration);
         this.notifyViewCreation();
     }

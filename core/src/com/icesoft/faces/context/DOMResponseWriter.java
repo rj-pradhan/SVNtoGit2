@@ -37,6 +37,7 @@ import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.renderkit.LocationUtil;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -105,9 +106,11 @@ public class DOMResponseWriter extends ResponseWriter {
     private Map contextServletTable;
     private BridgeFacesContext context;
     private DOMSerializer serializer;
+    private Configuration configuration;
 
-    public DOMResponseWriter(FacesContext context, DOMSerializer serializer) {
+    public DOMResponseWriter(FacesContext context, DOMSerializer serializer, Configuration configuration) {
         this.serializer = serializer;
+        this.configuration = configuration;
         try {
             this.context = (BridgeFacesContext) context;
         } catch (ClassCastException e) {
@@ -250,7 +253,7 @@ public class DOMResponseWriter extends ResponseWriter {
             }
         }
         try {
-            return new DOMResponseWriter(context, serializer);
+            return new DOMResponseWriter(context, serializer, configuration);
         } catch (FacesException e) {
             throw new IllegalStateException();
         }
@@ -348,11 +351,26 @@ public class DOMResponseWriter extends ResponseWriter {
         Map session = context.getExternalContext().getSessionMap();
         ElementController.from(session).addInto(body);
 
-        Element sessionID =
-                (Element) body.appendChild(document.createElement("script"));
-        sessionID.setAttribute("language", "javascript");
-        sessionID.appendChild(document.createTextNode("window.session='" + context.getIceFacesId() + "';"));
-        body.appendChild(sessionID);
+        String sessionIDScript = "window.session='" + context.getIceFacesId() + "'; ";
+        String configurationScript =
+            "window.configuration = {" +
+                "synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
+                "redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
+                "connection: {" +
+                    "context: '" + LocationUtil.getAppBase(context) + "'," +
+                    "timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
+                    "heartbeat: {" +
+                        "interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
+                        "timeout: " + configuration.getAttributeAsLong("heartbeatTimeout", 3000) + "," +
+                        "retries: " + configuration.getAttributeAsLong("heartbeatRetries", 3) +
+                    "}" +
+                "}" +
+            "};";
+
+        Element configurationElement = (Element) body.appendChild(document.createElement("script"));
+        configurationElement.setAttribute("language", "javascript");
+        configurationElement.appendChild(document.createTextNode(sessionIDScript + configurationScript));
+        body.appendChild(configurationElement);
     }
 
     private void enhanceHead(Element head) {

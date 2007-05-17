@@ -35,6 +35,7 @@ package com.icesoft.faces.context;
 import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.el.ELContextImpl;
 import com.icesoft.faces.webapp.command.CommandQueue;
+import com.icesoft.faces.webapp.http.common.Configuration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -78,13 +79,15 @@ public class BridgeFacesContext extends FacesContext {
     private String iceFacesId;
     private String viewNumber;
     private CommandQueue commandQueue;
+    private Configuration configuration;
 
-    public BridgeFacesContext(BridgeExternalContext externalContext, String view, String icefacesID, CommandQueue commandQueue) {
+    public BridgeFacesContext(BridgeExternalContext externalContext, String view, String icefacesID, CommandQueue commandQueue, Configuration configuration) {
         setCurrentInstance(this);
         this.externalContext = externalContext;
         this.viewNumber = view;
         this.iceFacesId = icefacesID;              
         this.commandQueue = commandQueue;
+        this.configuration = configuration;
         this.application = ((ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY)).getApplication();
         this.externalContext = externalContext;
         this.switchToNormalMode();
@@ -208,7 +211,7 @@ public class BridgeFacesContext extends FacesContext {
     }
 
     public ResponseWriter createAndSetResponseWriter() throws IOException {
-        return responseWriter = new DOMResponseWriter(this, domSerializer);
+        return responseWriter = new DOMResponseWriter(this, domSerializer, configuration);
     }
 
     public void switchToNormalMode() {

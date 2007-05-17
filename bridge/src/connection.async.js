@@ -48,11 +48,11 @@
             this.timeoutBomb = { cancel: Function.NOOP };
             this.heartbeat = { stop: Function.NOOP };
 
-            this.pingURI = configuration.context + '/block/ping';
-            this.getURI = configuration.context + '/block/receive-updates';
-            this.sendURI = configuration.context + '/block/send-receive-updates';
-            this.receiveURI = configuration.context + '/block/receive-updated-views';
-            this.disposeViewsURI = configuration.context + '/block/dispose-views';
+            this.pingURI = configuration.context + 'block/ping';
+            this.getURI = configuration.context + 'block/receive-updates';
+            this.sendURI = configuration.context + 'block/send-receive-updates';
+            this.receiveURI = configuration.context + 'block/receive-updated-views';
+            this.disposeViewsURI = configuration.context + 'block/dispose-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
             this.onSend(function() {
