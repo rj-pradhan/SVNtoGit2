@@ -28,8 +28,7 @@
         */
         url = url.replace(/&#38;/g,"&");
         logger.info('Redirecting to ' + url);
-        var redirectViewNumber = url.contains('?') ? '&rvn=' : '?rvn=';
-        window.location.href = url + redirectViewNumber + viewIdentifiers().first();
+        window.location.href = url;
     };
 
     This.SetCookie = function(message) {
