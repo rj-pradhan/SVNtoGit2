@@ -243,7 +243,7 @@ public class GridRenderer extends DomBasicRenderer {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
                 td.setAttribute("class",
-                                columnStyles[columnStyleIndex] + colNumber);
+                                columnStyles[columnStyleIndex]);
                 if (++columnStyleIndex > columnStylesMaxIndex) {
                     columnStyleIndex = 0;
                 }
