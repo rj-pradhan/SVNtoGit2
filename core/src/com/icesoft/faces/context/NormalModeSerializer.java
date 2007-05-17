@@ -1,7 +1,6 @@
 package com.icesoft.faces.context;
 
 import com.icesoft.faces.application.StartupTime;
-import com.icesoft.faces.renderkit.LocationUtil;
 import com.icesoft.faces.util.DOMUtils;
 import com.icesoft.jasper.Constants;
 import org.w3c.dom.Document;
@@ -9,6 +8,7 @@ import org.w3c.dom.Node;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.faces.context.ExternalContext;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
@@ -41,7 +41,8 @@ public class NormalModeSerializer implements DOMSerializer {
                 //viewNumber so that it is not set with cookies.  Cookie
                 //communication gives no way for multiple included
                 //views on one page
-                String base = LocationUtil.getAppBase(context);
+                ExternalContext extCtxt = context.getExternalContext();
+                String base = extCtxt.getRequestContextPath() + "/";
                 writer.write("<script language='javascript' src='" + base +
                         "xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js'></script>");
                 writer.write(DOMUtils.childrenToString(body));

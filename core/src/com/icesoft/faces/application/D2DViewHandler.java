@@ -37,10 +37,10 @@ import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
+import com.icesoft.faces.component.NamespacingViewRoot;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
-import com.icesoft.faces.renderkit.LocationUtil;
 import com.icesoft.util.SeamUtilities;
 import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
@@ -58,6 +58,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKitFactory;
+import javax.servlet.http.HttpServletRequest;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,6 +66,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -155,7 +159,7 @@ public class D2DViewHandler extends ViewHandler {
             // JSF 1.1 removes transient components here, but I don't think that 1.2 does
         }
 
-       // This has been moved to the ServletView 
+       // This has been moved to the ServletView
 
     }
 
@@ -174,7 +178,8 @@ public class D2DViewHandler extends ViewHandler {
             return delegate.createView(context, viewId);
         }
 
-        UIViewRoot root = new UIViewRoot();
+        UIViewRoot root = new NamespacingViewRoot(context);
+//        UIViewRoot root = new UIViewRoot();
         root.setRenderKitId(RenderKitFactory.HTML_BASIC_RENDER_KIT);
 
         Map contextServletTable =
@@ -369,12 +374,59 @@ public class D2DViewHandler extends ViewHandler {
     }
 
     public String getResourceURL(FacesContext context, String path) {
-            if (path.startsWith("/") ){
-            return context.getExternalContext().getRequestContextPath() + path;
-        } else {
-            return path;
-            }
+        //Context and resource must be non-null
+        if (context == null) {
+            throw new NullPointerException("context cannot be null");
         }
+
+        if (path == null) {
+            throw new NullPointerException("path cannot be null");
+        }
+
+        ExternalContext extCtxt = context.getExternalContext();
+
+        // Components that render out links to resources like images, CSS,
+        // JavaScript, etc. must do it correctly.  In a normal web app, there
+        // may not be much to do but in a portlet environment, we have to
+        // resolve these correctly.
+        if (isPortlet(extCtxt)) {
+            path = resolveFully(extCtxt, path);
+        }
+
+        //Encoding may or may not be strictly necessary but we'll do it to
+        //be safe.
+        return extCtxt.encodeResourceURL(path);
+    }
+
+    private boolean isPortlet(ExternalContext extCtxt) {
+        return extCtxt.getRequestMap().get(Constants.PORTLET_KEY) != null;
+    }
+
+    /**
+     * Resolves references fragements to the full resource reference including
+     * the context path and the servlet path.
+     */
+    private String resolveFully(ExternalContext extCtxt, String resource) {
+
+        String base = extCtxt.getRequestContextPath() +
+                              extCtxt.getRequestServletPath();
+
+        try {
+            URI baseURI = new URI(base);
+            URI resourceURI = new URI(resource);
+            URI resolvedURI = baseURI.resolve(resourceURI);
+            return resolvedURI.toString();
+
+        } catch (URISyntaxException e) {
+            if( log.isWarnEnabled() ){
+                log.warn( "could not resolve URI's based on" +
+                          "\n  context : " + extCtxt.getRequestContextPath() +
+                          "\n  path    : " + extCtxt.getRequestServletPath() +
+                          "\n  resource: " + resource, e );
+            }
+            return resource;
+        }
+    }    
 
     protected long getTimeAttribute(UIComponent root, String key) {
         Long timeLong = (Long) root.getAttributes().get(key);
