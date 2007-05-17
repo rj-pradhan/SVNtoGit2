@@ -329,7 +329,14 @@ public class ServletExternalContext extends BridgeExternalContext {
 
     public void redirect(String requestURI) throws IOException {
         URI uri = URI.create(SeamUtilities.encodeSeamConversationId(requestURI, viewIdentifier));
-        redirector.redirect(uri + (uri.getQuery() == null ? "?" : "&") + "rvn=" + viewIdentifier);
+        String query = uri.getQuery();
+        if (query == null) {
+            redirector.redirect(uri + "?rvn=" + viewIdentifier);
+        } else if (query.matches(".*rvn=.*")) {
+            redirector.redirect(uri.toString());
+        } else {
+            redirector.redirect(uri + "&rvn=" + viewIdentifier);
+        }
         FacesContext.getCurrentInstance().responseComplete();
     }
 
