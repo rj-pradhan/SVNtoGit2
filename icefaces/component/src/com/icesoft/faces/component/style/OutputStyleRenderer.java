@@ -45,7 +45,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import java.beans.Beans;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA. User: rmayhew Date: May 30, 2006 Time: 3:59:37 PM
@@ -75,11 +74,11 @@ public class OutputStyleRenderer extends DomBasicRenderer {
             if (!domContext.isInitialized()) {
                 OutputStyle outputStyle = (OutputStyle) uiComponent;
                 Element styleEle = buildCssElement(domContext);
-                styleEle.setAttribute(HTML.HREF_ATTR, outputStyle.getHref());
+                String href = outputStyle.getHref();
+                styleEle.setAttribute(HTML.HREF_ATTR, getResourceURL(facesContext,href));
                 domContext.setRootNode(styleEle);
                 int browserType = browserType(facesContext, uiComponent);
                 if (browserType != DEFAULT_TYPE) {
-                    String href = outputStyle.getHref();
                     if (href.endsWith(CSS_EXTENTION)) {
                         int i = href.indexOf(CSS_EXTENTION);
                         if (i > 0) {
@@ -110,8 +109,6 @@ public class OutputStyleRenderer extends DomBasicRenderer {
                                 "OutputStyle file attribute must end in .css. " +
                                 "Current Value is [" + href + "]");
                     }
-
-
                 }
 
             }

@@ -316,6 +316,17 @@ public class ServletExternalContext extends BridgeExternalContext {
     }
 
     public String encodeNamespace(String name) {
+
+        //The portlet environment should provide a namespace for encoding.  This
+        //is request specific so we need to check each time.  In the future, we
+        //may want to consider using our own internal view number since it's
+        //purpose is to encapsulate this concept.
+        String ns = (String)request.getAttribute(Constants.NAMESPACE_KEY);
+
+        if( ns != null ){
+            return ns + name;
+        }
+        
         return name;
     }
 
