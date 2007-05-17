@@ -80,7 +80,7 @@
         <filter token="taglib-prefix" value="${project.taglib.prefix}" />
         <filter token="taglib-uri" value="${project.taglib.uri}" />
         <mkdir dir="${maven.build.output}" />
-        <javac destdir="${maven.build.output}" excludes="**/package.html, com/icesoft/jsfmeta/util/EclipseMetadataParserHelper.java" debug="true" deprecation="true" optimize="false">
+        <javac destdir="${maven.build.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
             <src>
                 <pathelement location="src/main/java" />
             </src>
