@@ -8,11 +8,11 @@ import com.icesoft.faces.webapp.http.common.standard.NotFoundHandler;
 
 import java.io.InputStream;
 
-public class ServeExtraJSCode implements Server {
+public class ServeJSCode implements Server {
     private static final String Package = "com/icesoft/faces/webapp/xmlhttp/";
     private ClassLoader loader;
 
-    public ServeExtraJSCode() {
+    public ServeJSCode() {
         loader = this.getClass().getClassLoader();
     }
 

@@ -22,7 +22,7 @@ public class ProductInfo {
     /**
      * The release type of the product (alpha, beta, production).
      */
-    public static String RELEASE_TYPE = "";
+    public static String RELEASE_TYPE = "x";
 
     /**
      * The build number.  Typically this would be tracked and maintained

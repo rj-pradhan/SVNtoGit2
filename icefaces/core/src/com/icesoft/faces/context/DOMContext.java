@@ -37,6 +37,8 @@
 package com.icesoft.faces.context;
 
 import com.icesoft.faces.util.HalterDump;
+import com.icesoft.faces.webapp.http.common.Configuration;
+import com.icesoft.faces.webapp.http.common.ConfigurationException;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -133,7 +135,27 @@ public class DOMContext implements java.io.Serializable {
     private static DOMResponseWriter createTemporaryDOMResponseWriter(
             ResponseWriter responseWriter, FacesContext facesContext) {
         DOMResponseWriter domWriter;
-        domWriter = new DOMResponseWriter(facesContext, null);
+        domWriter = new DOMResponseWriter(facesContext, null, new Configuration() {
+            public String getName() {
+                return "noop configuration";
+            }
+
+            public Configuration getChild(String child) throws ConfigurationException {
+                throw new ConfigurationException("child not available");
+            }
+
+            public Configuration[] getChildren(String name) throws ConfigurationException {
+                throw new ConfigurationException("children not available");
+            }
+
+            public String getAttribute(String paramName) throws ConfigurationException {
+                throw new ConfigurationException("attribute not available");
+            }
+
+            public String getValue() throws ConfigurationException {
+                throw new ConfigurationException("value not available");
+            }
+        });
         Document doc = domWriter.getDocument();
         Element html = doc.createElement("html");
         doc.appendChild(html);
