@@ -110,10 +110,7 @@ public class FacesConfigParserHelper {
     }
     
     
-    
-        /*
-         * return Javascript attribute property for example: onclick
-         */
+
     public RendererBean[] getRendererBeans() {
         
         RendererBean[] rd = null;
