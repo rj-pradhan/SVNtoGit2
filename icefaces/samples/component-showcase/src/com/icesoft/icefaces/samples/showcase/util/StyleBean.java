@@ -64,7 +64,7 @@ public class StyleBean {
     private ArrayList styleList;
 
     // default theme image directory for selectinputdate and theme.
-    private String imageDirectory = "./xmlhttp/css/xp/css-images/";
+    private String imageDirectory = "/xmlhttp/css/xp/css-images/";
 
     // navigation tree reference for updating folder icons
     TreeNavigation treeNav;
