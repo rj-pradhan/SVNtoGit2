@@ -842,7 +842,7 @@ public class PanelTabSetRenderer
 
         // create a dummy image to load into given td
         Element img = domContext.createElement(HTML.IMG_ELEM);
-        img.setAttribute(HTML.SRC_ATTR, Util.getApplicationBase(
+        img.setAttribute(HTML.SRC_ATTR, getAppBase(
                 FacesContext.getCurrentInstance()) + SPACER_IMG);
         img.setAttribute(HTML.HEIGHT_ATTR, "1");
         img.setAttribute(HTML.WIDTH_ATTR, "4");

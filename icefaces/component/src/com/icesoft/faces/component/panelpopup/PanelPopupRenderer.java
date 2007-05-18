@@ -209,8 +209,7 @@ public class PanelPopupRenderer extends GroupRenderer {
             Element footerTd = domContext.createElement(HTML.TD_ELEM);
             footerTd.setAttribute(HTML.STYLE_CLASS_ATTR, "panelPopupFooter");
             Element img = domContext.createElement(HTML.IMG_ELEM);
-            img.setAttribute(HTML.SRC_ATTR, Util
-                    .getApplicationBase(facesContext) +
+            img.setAttribute(HTML.SRC_ATTR, getAppBase(facesContext) +
                                                       "xmlhttp/css/xp/css-images/resize.gif");
             img.setAttribute(HTML.STYLE_ATTR, "cursor: se-resize");
             footerTd.appendChild(img);
