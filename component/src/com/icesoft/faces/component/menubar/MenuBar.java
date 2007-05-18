@@ -199,7 +199,7 @@ public class MenuBar extends UICommand implements NamingContainer {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return Util.getApplicationBase(getFacesContext()) + DEFAULT_IMAGEDIR;
+        return DEFAULT_IMAGEDIR;
     }
 
     /**

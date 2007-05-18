@@ -246,12 +246,12 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // only render icons if noIcons is false
         if ((!menuBar.getNoIcons().equalsIgnoreCase("true")) &&
-            (getIcon(menuItem) != null)) {
+            (getIcon(facesContext, menuItem) != null)) {
             // do not render icon if it is the default blank image
             // this only applies to horizontal top level menu items
-            if (!getIcon(menuItem).endsWith(MenuItem.DEFAULT_ICON)) {
+            if (!getIcon(facesContext, menuItem).endsWith(MenuItem.DEFAULT_ICON)) {
                 Element iconImg = domContext.createElement(HTML.IMG_ELEM);
-                iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
+                iconImg.setAttribute(HTML.SRC_ATTR,getIcon(facesContext, menuItem));
                 iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
                 iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
                 div.appendChild(iconImg);
@@ -296,7 +296,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         if (menuItem.getChildCount() > 0) {
             Element subImg = domContext.createElement(HTML.IMG_ELEM);
-            subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(menuBar));
+            subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(facesContext, menuBar));
             subImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             subImg.setAttribute(HTML.CLASS_ATTR,
                                 "iceSubMenuRowSubMenuIndicator");
@@ -305,9 +305,9 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // only render icons if noIcons is false
         if ((!menuBar.getNoIcons().equalsIgnoreCase("true")) &&
-            (getIcon(menuItem) != null)) {
+            (getIcon(facesContext, menuItem) != null)) {
             Element iconImg = domContext.createElement(HTML.IMG_ELEM);
-            iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
+            iconImg.setAttribute(HTML.SRC_ATTR, getIcon(facesContext, menuItem));
             iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
             div.appendChild(iconImg);
@@ -347,7 +347,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         if (menuItem.getChildCount() > 0) {
             Element subImg = domContext.createElement(HTML.IMG_ELEM);
-            subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(menuBar));
+            subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(facesContext, menuBar));
             subImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             subImg.setAttribute(HTML.CLASS_ATTR,
                                 "iceSubMenuRowSubMenuIndicator");
@@ -356,9 +356,9 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
         // only render icons if noIcons is false
         if ((!menuBar.getNoIcons().equalsIgnoreCase("true")) &&
-            (getIcon(menuItem) != null)) {
+            (getIcon(facesContext, menuItem) != null)) {
             Element iconImg = domContext.createElement(HTML.IMG_ELEM);
-            iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
+            iconImg.setAttribute(HTML.SRC_ATTR, getIcon(facesContext, menuItem));
             iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
             div.appendChild(iconImg);
@@ -530,9 +530,9 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                 Node lastCursorParent = domContext.getCursorParent();
                 domContext.setCursorParent(subMenuItemDiv);
                 if (vertical) {
-                    addChildren(link, nextSubMenuItem, menuComponent);
+                    addChildren(facesContext, link, nextSubMenuItem, menuComponent);
                 } else {
-                    addTopLevelChildren(link, nextSubMenuItem, menuComponent);
+                    addTopLevelChildren(facesContext, link, nextSubMenuItem, menuComponent);
                 }
 
                 ((MenuItem) nextSubMenuItem).addParameter(link);
@@ -586,7 +586,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
             Node lastCursorParent = domContext.getCursorParent();
             domContext.setCursorParent(subMenuItemDiv);
-            addChildren(link, nextSubMenuItem, menuComponent);
+            addChildren(facesContext, link, nextSubMenuItem, menuComponent);
             ((MenuItem) nextSubMenuItem).addParameter(link);
             try {
                 link.encodeBegin(facesContext);
@@ -608,15 +608,16 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
     // this method is used to add icon and label
     // to top level horizontal menu items
-    private void addTopLevelChildren(HtmlCommandLink link,
+    private void addTopLevelChildren(FacesContext facesContext,
+                                     HtmlCommandLink link,
                                      MenuItem nextSubMenuItem,
                                      MenuBar menuComponent) {
         HtmlPanelGroup div = new HtmlPanelGroup();
 
         if ((!menuComponent.getNoIcons().equalsIgnoreCase("true"))
-            && (getIcon(nextSubMenuItem) != null)) {
+            && (getIcon(facesContext, nextSubMenuItem) != null)) {
             HtmlGraphicImage image = new HtmlGraphicImage();
-            image.setUrl(getIcon(nextSubMenuItem));
+            image.setUrl(getIcon(facesContext, nextSubMenuItem));
             image.setStyle("border:none;");
             image.setStyleClass("iceSubMenuRowImage");
             div.getChildren().add(image);
@@ -637,22 +638,22 @@ public class MenuItemRenderer extends MenuItemRendererBase {
 
     // this method is used to add icon, label and indicator
     // to top level vertical menu items
-    void addChildren(HtmlCommandLink link, MenuItem nextSubMenuItem,
-                     MenuBar menuComponent) {
+    void addChildren(FacesContext facesContext, HtmlCommandLink link, 
+            MenuItem nextSubMenuItem, MenuBar menuComponent) {
         HtmlPanelGroup div = new HtmlPanelGroup();
         if (nextSubMenuItem.getChildCount() > 0 &&
             nextSubMenuItem.isChildrenMenuItem()) {
             HtmlGraphicImage image = new HtmlGraphicImage();
-            image.setUrl(getSubMenuImage(menuComponent));
+            image.setUrl(getSubMenuImage(facesContext, menuComponent));
             image.setStyle("border:none;");
             image.setStyleClass("iceSubMenuRowSubMenuIndicator");
             div.getChildren().add(image);
         }
 
         if ((!menuComponent.getNoIcons().equalsIgnoreCase("true"))
-            && (getIcon(nextSubMenuItem) != null)) {
+            && (getIcon(facesContext, nextSubMenuItem) != null)) {
             HtmlGraphicImage image = new HtmlGraphicImage();
-            image.setUrl(getIcon(nextSubMenuItem));
+            image.setUrl(getIcon(facesContext, nextSubMenuItem));
             image.setStyle("border:none;");
             image.setStyleClass("iceSubMenuRowImage");
             div.getChildren().add(image);
@@ -680,12 +681,12 @@ public class MenuItemRenderer extends MenuItemRendererBase {
     /**
      * @return SubMenuImage url
      */
-    private String getSubMenuImage(MenuBar menuComponent) {
+    private String getSubMenuImage(FacesContext facesContext, MenuBar menuComponent) {
         String customPath = null;
-        if ((customPath = menuComponent.getImageDir()) != null) {
+        if ((customPath = getAppBase(facesContext)+ menuComponent.getImageDir()) != null) {
             return customPath + SUBMENU_IMAGE;
         }
-        return Util.getApplicationBase(FacesContext.getCurrentInstance()) +
+        return getAppBase(facesContext)+
                DEFAULT_IMAGEDIR + SUBMENU_IMAGE;
     }
 
@@ -696,9 +697,9 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         return null;
     }
 
-    protected String getIcon(UIComponent component) {
+    protected String getIcon(FacesContext facesContext, UIComponent component) {
         if (component instanceof MenuItem) {
-            return ((MenuItem) component).getIcon();
+            return getAppBase(facesContext) + ((MenuItem) component).getIcon();
         }
         return null;
     }

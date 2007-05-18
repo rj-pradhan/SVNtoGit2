@@ -115,7 +115,7 @@ public class MenuItem extends MenuItemBase {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return Util.getApplicationBase(getFacesContext()) + DEFAULT_ICON;
+        return DEFAULT_ICON;
     }
 
     /**
