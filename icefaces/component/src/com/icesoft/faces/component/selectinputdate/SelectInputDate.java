@@ -454,8 +454,7 @@ public class SelectInputDate
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         } else {
-            String appBase = Util.getApplicationBase(getFacesContext());
-            return appBase + this.DEFAULT_IMAGEDIR;
+            return this.DEFAULT_IMAGEDIR;
         }
     }
 
