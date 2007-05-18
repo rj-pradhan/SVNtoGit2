@@ -391,6 +391,11 @@ public class D2DViewHandler extends ViewHandler {
         // resolve these correctly.
         if (isPortlet(extCtxt)) {
             path = resolveFully(extCtxt, path);
+        } else {
+            StringBuffer dir = new StringBuffer();
+            int atoms = extCtxt.getRequestServletPath().split("/").length;
+            while (atoms-- > 2) dir.append("../");
+            path = URI.create(dir+path).normalize().toString();
         }
 
         //Encoding may or may not be strictly necessary but we'll do it to
