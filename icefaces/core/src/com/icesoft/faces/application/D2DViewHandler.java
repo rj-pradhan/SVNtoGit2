@@ -67,6 +67,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -381,6 +382,10 @@ public class D2DViewHandler extends ViewHandler {
             throw new NullPointerException("path cannot be null");
         }
 
+        //The URI class doesn't like resource with illegal characters so
+        //we need to do our own encoding.
+        path = encode(path);
+
         ExternalContext extCtxt = context.getExternalContext();
 
         // Components that render out links to resources like images, CSS,
@@ -401,9 +406,11 @@ public class D2DViewHandler extends ViewHandler {
             //else don't resolve (see: ViewHandler.getResourceURL javadocs) 
         }
 
-        //Encoding may or may not be strictly necessary but we'll do it to
-        //be safe.
         return path;
+    }
+
+    private String encode(String path){
+        return path.trim().replaceAll(" ","%20");
     }
 
     private boolean isPortlet(ExternalContext extCtxt) {
@@ -416,9 +423,16 @@ public class D2DViewHandler extends ViewHandler {
      */
     private String resolveFully(ExternalContext extCtxt, String resource) {
 
-        String base = extCtxt.getRequestContextPath() +
-                              extCtxt.getRequestServletPath();
+        String context = extCtxt.getRequestContextPath();
 
+        //Absolute references are handled differently.  For portlets, we just
+        //need to stick the context in front.
+        if( resource.startsWith("/") ){
+            return context + resource;
+        }
+
+        //For relative paths, we need to resolve them to the full path
+        String base = context + extCtxt.getRequestServletPath();
         try {
             URI baseURI = new URI(base);
             URI resourceURI = new URI(resource);
