@@ -167,14 +167,13 @@ public class SelectInputDateRenderer
             log.error("SelectInputDate::must be in a FORM");
             return;
         }
-
+        String appBase = getAppBase(facesContext);
         String clientId;
         if (!domContext.isInitialized()) {
             Element root = domContext.createRootElement(HTML.DIV_ELEM);
 
             setRootElementId(facesContext, root, uiComponent);
             clientId = uiComponent.getClientId(facesContext);
-
             if (selectInputDate.isRenderAsPopup()) {
                 if (log.isTraceEnabled()) {
                     log.trace("Render as popup");
@@ -209,7 +208,7 @@ public class SelectInputDateRenderer
                 calendarButton.setAttribute(HTML.NAME_ATTR,
                                             clientId + CALENDAR_BUTTON);
                 calendarButton.setAttribute(HTML.TYPE_ATTR, "image");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
+                calendarButton.setAttribute(HTML.SRC_ATTR, appBase + selectInputDate
                         .getImageDir() + selectInputDate.getOpenPopupImage());
                 calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar");
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
@@ -373,14 +372,14 @@ public class SelectInputDateRenderer
             if (popupState) {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:block;position:absolute;");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
+                calendarButton.setAttribute(HTML.SRC_ATTR, appBase + selectInputDate
                         .getImageDir() + selectInputDate.getClosePopupImage());
                 calendarButton.setAttribute(HTML.ALT_ATTR, "Close Popup Calendar");
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Close Popup Calendar");                
             } else {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:none;position:absolute;");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
+                calendarButton.setAttribute(HTML.SRC_ATTR, appBase + selectInputDate
                         .getImageDir() + selectInputDate.getOpenPopupImage());
                 calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar"); 
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
@@ -468,7 +467,7 @@ public class SelectInputDateRenderer
                                       String styleClass)
             throws IOException {
 
-        
+        String appBase = getAppBase(facesContext);
         Element table = domContext.createElement(HTML.TABLE_ELEM);
         table.setAttribute(HTML.CELLPADDING_ATTR, "0");
         table.setAttribute(HTML.CELLSPACING_ATTR, "0");
@@ -487,7 +486,7 @@ public class SelectInputDateRenderer
         // first render month with navigation back and forward
         Calendar cal = shiftMonth(facesContext, timeKeeper, currentDay, -1);
         writeCell(domContext, facesContext, writer, inputComponent,
-                  "<", cal.getTime(), styleClass, tr,
+                  "<", cal.getTime(), styleClass, tr, appBase + 
                   ((SelectInputDate) inputComponent).getImageDir() +
                   ((SelectInputDate) inputComponent).getMovePreviousImage(), -1);
 
@@ -516,7 +515,7 @@ public class SelectInputDateRenderer
             inputComponent.setHighlightMonthClass("");
         }  
         writeCell(domContext, facesContext, writer, inputComponent,
-                  ">", cal.getTime(), styleClass, tr,
+                  ">", cal.getTime(), styleClass, tr, appBase + 
                   ((SelectInputDate) inputComponent).getImageDir() +
                   ((SelectInputDate) inputComponent).getMoveNextImage(), -1);
 
@@ -532,7 +531,7 @@ public class SelectInputDateRenderer
         cal = shiftYear(facesContext, timeKeeper, currentDay, -1);
 
         writeCell(domContext, facesContext, writer, inputComponent,
-                  "<<", cal.getTime(), styleClass, tr,
+                  "<<", cal.getTime(), styleClass, tr, appBase + 
                   ((SelectInputDate) inputComponent).getImageDir() +
                   ((SelectInputDate) inputComponent).getMovePreviousImage(), -1);
 
@@ -547,7 +546,7 @@ public class SelectInputDateRenderer
         cal = shiftYear(facesContext, timeKeeper, currentDay, 1);
 
         writeCell(domContext, facesContext, writer, inputComponent,
-                  ">>", cal.getTime(), styleClass, tr,
+                  ">>", cal.getTime(), styleClass, tr, appBase + 
                   ((SelectInputDate) inputComponent).getImageDir() +
                   ((SelectInputDate) inputComponent).getMoveNextImage(), -1);
 
