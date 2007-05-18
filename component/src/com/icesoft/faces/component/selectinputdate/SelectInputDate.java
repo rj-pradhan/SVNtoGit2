@@ -139,7 +139,7 @@ public class SelectInputDate
      * found. This directory and its contents are included in the icefaces.jar
      * file.
      */
-    private final String DEFAULT_IMAGEDIR = "./xmlhttp/css/xp/css-images/";
+    private final String DEFAULT_IMAGEDIR = "/xmlhttp/css/xp/css-images/";
     /**
      * The default move next image name.
      */
