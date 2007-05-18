@@ -137,6 +137,21 @@
         </replace>
     </target>
 
+    <target name="testJDK">
+       <condition property="isJDK15">
+           <equals arg1="${ant.java.version}" arg2="1.5"/>
+       </condition>
+    </target>
+
+    <target name="compile15" depends="testJDK" if="isJDK15">
+        <javac destdir="${build.classes.dir}" sourcepath=""
+               debug="${compile.debug}" source="1.5" target="1.5">
+            <classpath refid="compile.run.classpath"/>
+            <src location="${src.dir}"/>
+            <include name="com/icesoft/faces/webapp/http/servlet/TomcatPushServlet.java"/>
+        </javac>
+    </target>
+
     <target name="compile" depends="update.product.info">
         <delete dir="${build.classes.dir}"/>
         <mkdir dir="${build.classes.dir}"/>
@@ -149,6 +164,8 @@
             <exclude name="com/icesoft/faces/webapp/parser/ELSetPropertiesRule.java"/>
             <exclude name="com/icesoft/faces/webapp/http/servlet/TomcatPushServlet.java"/>
         </javac>
+
+        <antcall target="compile15" />
 
         <copy todir="${build.classes.dir}">
             <fileset dir="${src.dir}" includes="**/*.dtd"/>
