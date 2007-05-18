@@ -303,8 +303,7 @@ public class Tree extends UICommand implements NamingContainer {
         }
         ValueBinding vb = getValueBinding("imageDir");
         return vb != null ? (String) vb.getValue(getFacesContext())
-               :
-               Util.getApplicationBase(getFacesContext()) + DEFAULT_CSSIMAGEDIR;
+               : DEFAULT_CSSIMAGEDIR;
     }
 
     /**

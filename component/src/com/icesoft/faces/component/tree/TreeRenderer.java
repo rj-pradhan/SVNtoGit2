@@ -368,7 +368,7 @@ public class TreeRenderer extends DomBasicRenderer {
 
         String pathToCurrentRoot =
                 getPathAsString(currentNode, treeComponentRootNode);
-
+        String appBase = getAppBase(facesContext);
         boolean hideRootNode = isHideRootNode(treeComponent);
         boolean hideNavigation = isHideNavigation(treeComponent);
 
@@ -423,16 +423,16 @@ public class TreeRenderer extends DomBasicRenderer {
             }
 
             if (renderBlank) {
-                verticalLine.setAttribute(HTML.SRC_ATTR,
+                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
                                           treeComponent.getLineBlankImage());
             } else if ((i == 0) && (!hideRootNode)) {
-                verticalLine.setAttribute(HTML.SRC_ATTR,
+                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
                                           treeComponent.getLineBlankImage());
             } else if (isLastChild || isCollapsedAndFinalBranch) {
-                verticalLine.setAttribute(HTML.SRC_ATTR,
+                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
                                           treeComponent.getLineBottomImage());
             } else {
-                verticalLine.setAttribute(HTML.SRC_ATTR,
+                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
                                           treeComponent.getLineVerticalImage());
             }
 
@@ -491,33 +491,33 @@ public class TreeRenderer extends DomBasicRenderer {
                 && currentNode.getNextSibling() == null
                 && currentNode == treeComponentRootNode.getFirstChild()
                     ) {
-                iconImage.setAttribute(HTML.SRC_ATTR,
+                iconImage.setAttribute(HTML.SRC_ATTR,  appBase +
                                        treeComponent.getNavOpenTopNoSiblingsImage());
             } else if (currentNode.isRoot() ||
                        hideRootNode &&
                        treeComponentRootNode.getFirstChild() == currentNode) {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavCloseTopNoSiblingsImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavOpenTopNoSiblingsImage());
                 }
             } else if (currentNode.getNextSibling() == null
                        && currentNode.getChildCount() > 0) {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavCloseBottomImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavOpenBottomImage());
                 }
             } else {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavCloseMiddleImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR,
+                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
                                            treeComponent.getNavOpenMiddleImage());
                 }
             }
@@ -543,11 +543,11 @@ public class TreeRenderer extends DomBasicRenderer {
 
             if (currentNode.getNextSibling() == null) {
                 // use lineBottomNode image
-                lineImage.setAttribute(HTML.SRC_ATTR,
+                lineImage.setAttribute(HTML.SRC_ATTR, appBase +
                                        treeComponent.getLineBottomImage());
             } else {
                 // use lineMiddleNode image
-                lineImage.setAttribute(HTML.SRC_ATTR,
+                lineImage.setAttribute(HTML.SRC_ATTR, appBase +
                                        treeComponent.getLineMiddleImage());
             }
 
@@ -627,7 +627,7 @@ public class TreeRenderer extends DomBasicRenderer {
         Element tree_nav_bottom_open = domContext.createElement(HTML.IMG_ELEM);
         Element tree_nav_top_close = domContext.createElement(HTML.IMG_ELEM);
 
-        String appBase = Util.getApplicationBase(facesContext);
+        String appBase = getAppBase(facesContext);
 
         tree_document.setAttribute(HTML.SRC_ATTR, appBase +
                                                   "xmlhttp/css/xp/css-images/tree_document.gif");
