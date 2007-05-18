@@ -68,6 +68,16 @@ public abstract class SessionDispatcher implements PseudoServlet {
         sessionBoundServers.remove(session.getId());
     }
 
+    //Exposing MainSessionBoundServlet for Tomcat 6 Ajax Push
+    public static PseudoServlet getSingletonSessionServlet(HttpSession session)  {
+        return ((SessionDispatcher) SessionDispatchers.get(0))
+                    .getSessionServlet(session);
+    }
+
+    public PseudoServlet getSessionServlet(HttpSession session)  {
+        return (PseudoServlet) sessionBoundServers.get(session.getId());
+    }
+
     protected abstract PseudoServlet newServlet(HttpSession session, Listener.Monitor sessionMonitor) throws Exception;
 
     public static class Listener implements HttpSessionListener, ServletContextListener {
