@@ -268,22 +268,6 @@
 		</component>
 	</tag>
 	<tag>
-		<tag-name>menuItemCheckbox</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.MenuNodeCheckbox</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-			<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
-		</component>
-	</tag>
-	<tag>
-		<tag-name>menuItemRadio</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.MenuNodeRadio</component-type>
-			<renderer-type>com.icesoft.faces.View</renderer-type>
-			<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
-		</component>
-	</tag>
-	<tag>
 		<tag-name>menuItemSeparator</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.MenuNodeSeparator</component-type>
