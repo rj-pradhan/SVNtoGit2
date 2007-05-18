@@ -46,10 +46,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.faces.FacesException;
+import javax.faces.application.ViewHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.context.ExternalContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -357,7 +357,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 "synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
                 "redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
                 "connection: {" +
-                    "context: '" + getAppBase() + "'," +
+                    "context: '" + context.getApplication().getViewHandler().getResourceURL(context, ".") + "'," +
                     "timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
                     "heartbeat: {" +
                         "interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
@@ -390,7 +390,6 @@ public class DOMResponseWriter extends ResponseWriter {
                 .setAttribute("content", "0;url=./xmlhttp/javascript-blocked");
 
         //load libraries
-        String base = getAppBase();
         Collection libs = new ArrayList();
         if (context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null) {
             libs.add("xmlhttp/openajax.js");
@@ -408,13 +407,14 @@ public class DOMResponseWriter extends ResponseWriter {
             }
         }
 
+        ViewHandler handler = context.getApplication().getViewHandler();
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
             String lib = (String) iterator.next();
             Element script = (Element) head
                     .appendChild(document.createElement("script"));
             script.setAttribute("language", "javascript");
-            script.setAttribute("src", base + lib);
+            script.setAttribute("src", handler.getResourceURL(context, lib));
         }
 
         String sessionIdentifier = context.getIceFacesId();
@@ -423,11 +423,6 @@ public class DOMResponseWriter extends ResponseWriter {
         viewAndSessionScript.appendChild(document.createTextNode(
                 "window.session = '" + sessionIdentifier + "';"
         ));
-    }
-
-    private String getAppBase() {
-        ExternalContext extCtxt = context.getExternalContext();
-        return extCtxt.getRequestContextPath() + "/";
     }
 
     private Element fixHtml() {
