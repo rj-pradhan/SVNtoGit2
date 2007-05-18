@@ -54,7 +54,7 @@
 <property>
     <description>
         <![CDATA[Set directory for location of the tree images.
-            Default directory is xmlhttp/css/xp/css-images/ which is include in the icefaces.jar.]]>
+            Default directory is /xmlhttp/css/xp/css-images/ which is include in the icefaces.jar.]]>
     </description>
     <property-name>imageDir</property-name>
     <property-class>java.lang.String</property-class>
