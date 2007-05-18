@@ -75,7 +75,7 @@ public class Tree extends UICommand implements NamingContainer {
 
     // default style classes
     private static final String DEFAULT_CSSIMAGEDIR =
-            "xmlhttp/css/xp/css-images/";
+            "/xmlhttp/css/xp/css-images/";
 
     private static final String DEFAULT_NAV_OPEN_TOP_GIF =
             "tree_nav_top_open.gif";
@@ -302,8 +302,8 @@ public class Tree extends UICommand implements NamingContainer {
             return imageDir;
         }
         ValueBinding vb = getValueBinding("imageDir");
-        return vb != null ? (String) vb.getValue(getFacesContext())
-               : DEFAULT_CSSIMAGEDIR;
+        return Util.resolveResourceURL(getFacesContext(),
+                vb != null ? (String) vb.getValue(getFacesContext()) : DEFAULT_CSSIMAGEDIR);
     }
 
     /**

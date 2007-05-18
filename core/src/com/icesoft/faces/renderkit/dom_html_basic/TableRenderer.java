@@ -409,9 +409,9 @@ public class TableRenderer extends DomBasicRenderer {
     protected Element scrollBarSpacer(DOMContext domContext, FacesContext facesContext) {
         Element spacer = domContext.createElement("th");
         //spacer.setAttribute("style", "width:20px;");
-        String base = getAppBase(facesContext);
+        String url = getResourceURL(facesContext, "/xmlhttp/css/xp/css-images/selection_spacer.gif");
         Element spacerImg = domContext.createElement(HTML.IMG_ELEM);
-        spacerImg.setAttribute(HTML.SRC_ATTR, base + "xmlhttp/css/xp/css-images/selection_spacer.gif");
+        spacerImg.setAttribute(HTML.SRC_ATTR, url);
         spacerImg.setAttribute(HTML.BORDER_ATTR,"0");
         spacer.appendChild(spacerImg);
         return spacer;

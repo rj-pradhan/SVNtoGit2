@@ -76,7 +76,7 @@ public class MenuItem extends MenuItemBase {
      * String constant defining default menu icon img
      */
     public static final String DEFAULT_ICON =
-            "./xmlhttp/css/xp/css-images/menu_blank_icon.gif";
+            "/xmlhttp/css/xp/css-images/menu_blank_icon.gif";
     private static final String DEFAULT_VALUE = "menu item default";
     private static final String DEFAULT_LINK = "#";
 
@@ -115,7 +115,7 @@ public class MenuItem extends MenuItemBase {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return DEFAULT_ICON;
+        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON);
     }
 
     /**

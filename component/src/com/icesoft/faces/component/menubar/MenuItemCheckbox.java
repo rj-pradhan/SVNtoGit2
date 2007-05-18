@@ -43,9 +43,9 @@ public class MenuItemCheckbox extends MenuItem {
 
 
     protected static String DEFAULT_ICON_CHECKED =
-            "xmlhttp/css/xp/css-images/menu_checkbox_selected.gif";
+            "/xmlhttp/css/xp/css-images/menu_checkbox_selected.gif";
     protected static String DEFAULT_ICON_UNCHECKED =
-            "xmlhttp/css/xp/css-images/menu_checkbox.gif";
+            "/xmlhttp/css/xp/css-images/menu_checkbox.gif";
 
     private boolean selected = false;
 
@@ -76,15 +76,13 @@ public class MenuItemCheckbox extends MenuItem {
      * <p>Return the value of the <code>unselectedIcon</code> property.</p>
      */
     public String getUnselectedIcon() {
-        return Util.getApplicationBase(getFacesContext()) +
-               DEFAULT_ICON_UNCHECKED;
+        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON_UNCHECKED);
     }
 
     /**
      * <p>Return the value of the <code>selectedIcon</code> property.</p>
      */
     public String getSelectedIcon() {
-        return Util.getApplicationBase(getFacesContext()) +
-               DEFAULT_ICON_CHECKED;
+        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON_CHECKED);
     }
 }

@@ -357,7 +357,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 "synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
                 "redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
                 "connection: {" +
-                    "context: '" + context.getApplication().getViewHandler().getResourceURL(context, ".") + "'," +
+                    "context: '" + context.getApplication().getViewHandler().getResourceURL(context, "/") + "'," +
                     "timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
                     "heartbeat: {" +
                         "interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
@@ -392,11 +392,11 @@ public class DOMResponseWriter extends ResponseWriter {
         //load libraries
         Collection libs = new ArrayList();
         if (context.getExternalContext().getInitParameter(D2DViewHandler.INCLUDE_OPEN_AJAX_HUB) != null) {
-            libs.add("xmlhttp/openajax.js");
+            libs.add("/xmlhttp/openajax.js");
         }
-        libs.add("xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
+        libs.add("/xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js");
         //todo: refactor how extral libraries are loaded into the bridge; always include extra libraries for now
-        libs.add("xmlhttp" + StartupTime.getStartupInc() + "ice-extras.js");
+        libs.add("/xmlhttp" + StartupTime.getStartupInc() + "ice-extras.js");
         if (context.getExternalContext().getRequestMap().get(Constants.INC_SERVLET_PATH) == null) {
             String[] componentLibs = JavascriptContext.getIncludedLibs(context);
             for (int i = 0; i < componentLibs.length; i++) {

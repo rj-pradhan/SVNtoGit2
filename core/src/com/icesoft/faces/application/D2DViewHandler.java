@@ -33,16 +33,16 @@
 
 package com.icesoft.faces.application;
 
+import com.icesoft.faces.component.NamespacingViewRoot;
 import com.icesoft.faces.context.BridgeExternalContext;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
-import com.icesoft.faces.component.NamespacingViewRoot;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
-import com.icesoft.util.SeamUtilities;
 import com.icesoft.jasper.Constants;
+import com.icesoft.util.SeamUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -58,22 +58,20 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.RenderKitFactory;
-import javax.servlet.http.HttpServletRequest;
 import java.beans.Beans;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Arrays;
 
 /**
  * <B>D2DViewHandler</B> is the ICEfaces ViewHandler implementation
@@ -392,15 +390,20 @@ public class D2DViewHandler extends ViewHandler {
         if (isPortlet(extCtxt)) {
             path = resolveFully(extCtxt, path);
         } else {
-            StringBuffer dir = new StringBuffer();
-            int atoms = extCtxt.getRequestServletPath().split("/").length;
-            while (atoms-- > 2) dir.append("../");
-            path = URI.create(dir+path).normalize().toString();
+            //is it an absolute path?
+            if (path.startsWith("/")) {
+                //resolve the path to the application's context
+                StringBuffer dir = new StringBuffer();
+                int atoms = extCtxt.getRequestServletPath().split("/").length;
+                while (atoms-- > 2) dir.append("../");
+                path = URI.create(dir + "." + path).normalize().toString();                
+            }
+            //else don't resolve (see: ViewHandler.getResourceURL javadocs) 
         }
 
         //Encoding may or may not be strictly necessary but we'll do it to
         //be safe.
-        return extCtxt.encodeResourceURL(path);
+        return path;
     }
 
     private boolean isPortlet(ExternalContext extCtxt) {
