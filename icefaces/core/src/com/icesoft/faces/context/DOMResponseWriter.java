@@ -374,6 +374,7 @@ public class DOMResponseWriter extends ResponseWriter {
     }
 
     private void enhanceHead(Element head) {
+        ViewHandler handler = context.getApplication().getViewHandler();
         //id required for forwarded (server-side) redirects
         head.setAttribute("id", "head");
         Element meta =
@@ -387,7 +388,7 @@ public class DOMResponseWriter extends ResponseWriter {
                 (Element) noscript.appendChild(document.createElement("meta"));
         noscriptMeta.setAttribute("http-equiv", "refresh");
         noscriptMeta
-                .setAttribute("content", "0;url=./xmlhttp/javascript-blocked");
+                .setAttribute("content", "0;url=" + handler.getResourceURL(context, "/xmlhttp/javascript-blocked"));
 
         //load libraries
         Collection libs = new ArrayList();
@@ -407,7 +408,6 @@ public class DOMResponseWriter extends ResponseWriter {
             }
         }
 
-        ViewHandler handler = context.getApplication().getViewHandler();
         Iterator iterator = libs.iterator();
         while (iterator.hasNext()) {
             String lib = (String) iterator.next();
