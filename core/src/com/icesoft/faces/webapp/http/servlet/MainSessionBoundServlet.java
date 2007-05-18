@@ -111,4 +111,13 @@ public class MainSessionBoundServlet implements PseudoServlet {
             view.dispose();
         }
     }
+
+    //Exposing queues for Tomcat 6 Ajax Push
+    public ViewQueue getAllUpdatedViews()  {
+        return allUpdatedViews;
+    }
+
+    public Collection getSynchronouslyUpdatedViews()  {
+        return synchronouslyUpdatedViews;
+    }
 }
