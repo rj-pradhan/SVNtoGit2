@@ -147,6 +147,7 @@
             <src location="${src.dir}"/>
             <include name="**/*.java"/>
             <exclude name="com/icesoft/faces/webapp/parser/ELSetPropertiesRule.java"/>
+            <exclude name="com/icesoft/faces/webapp/http/servlet/TomcatPushServlet.java"/>
         </javac>
 
         <copy todir="${build.classes.dir}">
