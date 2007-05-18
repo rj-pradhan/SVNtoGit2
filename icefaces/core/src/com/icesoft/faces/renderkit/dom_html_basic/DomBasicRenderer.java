@@ -755,15 +755,6 @@ public abstract class DomBasicRenderer extends Renderer {
         }
     }
 
-    /**
-     * Convenience method for getting 
-     * @param facesContext
-     * @return
-     */
-    public static String getAppBase(FacesContext facesContext) {
-        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, ".");
-    }
-
     public static String getResourceURL(FacesContext context, String path) {
         return context.getApplication().getViewHandler()
                 .getResourceURL(context, path);

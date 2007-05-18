@@ -42,7 +42,6 @@ import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.FormRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 import com.icesoft.faces.util.DOMUtils;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -56,7 +55,6 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIParameter;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-
 import java.beans.Beans;
 import java.io.IOException;
 import java.util.HashMap;
@@ -77,7 +75,7 @@ public class PanelTabSetRenderer
 
     private static final Log log = LogFactory.getLog(PanelTabSetRenderer.class);
     private static final String SPACER_IMG =
-            "xmlhttp/css/xp/css-images/spacer.gif";
+            "/xmlhttp/css/xp/css-images/spacer.gif";
 
     /* (non-Javadoc)
      * @see javax.faces.render.Renderer#encodeBegin(javax.faces.context.FacesContext, javax.faces.component.UIComponent)
@@ -520,9 +518,9 @@ public class PanelTabSetRenderer
         if (label == null || label.length() == 0) {
             label = "Tab " + tabIndex;
         }
-        
+
         label = DOMUtils.escapeAnsi(label);
- 
+
         String tabPlacement = "";
         if (tabSet.getTabPlacement()
                 .equalsIgnoreCase(CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM)) {
@@ -707,7 +705,7 @@ public class PanelTabSetRenderer
             return parentClientId
                    + NamingContainer.SEPARATOR_CHAR
                    + UIViewRoot.UNIQUE_ID_PREFIX
-                   + HIDDEN_FIELD_NAME;            
+                   + HIDDEN_FIELD_NAME;
         } catch (NullPointerException e) {
             throw new RuntimeException("Panel Tab Set must be in a <ice:form>",
                                        e);
@@ -842,8 +840,8 @@ public class PanelTabSetRenderer
 
         // create a dummy image to load into given td
         Element img = domContext.createElement(HTML.IMG_ELEM);
-        img.setAttribute(HTML.SRC_ATTR, getAppBase(
-                FacesContext.getCurrentInstance()) + SPACER_IMG);
+        img.setAttribute(HTML.SRC_ATTR, Util.resolveResourceURL(
+                FacesContext.getCurrentInstance(), SPACER_IMG));
         img.setAttribute(HTML.HEIGHT_ATTR, "1");
         img.setAttribute(HTML.WIDTH_ATTR, "4");
         img.setAttribute(HTML.ALT_ATTR, "");

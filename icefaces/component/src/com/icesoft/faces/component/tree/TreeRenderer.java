@@ -368,7 +368,6 @@ public class TreeRenderer extends DomBasicRenderer {
 
         String pathToCurrentRoot =
                 getPathAsString(currentNode, treeComponentRootNode);
-        String appBase = getAppBase(facesContext);
         boolean hideRootNode = isHideRootNode(treeComponent);
         boolean hideNavigation = isHideNavigation(treeComponent);
 
@@ -423,16 +422,16 @@ public class TreeRenderer extends DomBasicRenderer {
             }
 
             if (renderBlank) {
-                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
+                verticalLine.setAttribute(HTML.SRC_ATTR,
                                           treeComponent.getLineBlankImage());
             } else if ((i == 0) && (!hideRootNode)) {
-                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
+                verticalLine.setAttribute(HTML.SRC_ATTR,
                                           treeComponent.getLineBlankImage());
             } else if (isLastChild || isCollapsedAndFinalBranch) {
-                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
+                verticalLine.setAttribute(HTML.SRC_ATTR,
                                           treeComponent.getLineBottomImage());
             } else {
-                verticalLine.setAttribute(HTML.SRC_ATTR, appBase +
+                verticalLine.setAttribute(HTML.SRC_ATTR,
                                           treeComponent.getLineVerticalImage());
             }
 
@@ -491,33 +490,33 @@ public class TreeRenderer extends DomBasicRenderer {
                 && currentNode.getNextSibling() == null
                 && currentNode == treeComponentRootNode.getFirstChild()
                     ) {
-                iconImage.setAttribute(HTML.SRC_ATTR,  appBase +
+                iconImage.setAttribute(HTML.SRC_ATTR,
                                        treeComponent.getNavOpenTopNoSiblingsImage());
             } else if (currentNode.isRoot() ||
                        hideRootNode &&
                        treeComponentRootNode.getFirstChild() == currentNode) {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavCloseTopNoSiblingsImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavOpenTopNoSiblingsImage());
                 }
             } else if (currentNode.getNextSibling() == null
                        && currentNode.getChildCount() > 0) {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavCloseBottomImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavOpenBottomImage());
                 }
             } else {
                 if (isExpanded) {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavCloseMiddleImage());
                 } else {
-                    iconImage.setAttribute(HTML.SRC_ATTR, appBase +
+                    iconImage.setAttribute(HTML.SRC_ATTR,
                                            treeComponent.getNavOpenMiddleImage());
                 }
             }
@@ -535,7 +534,7 @@ public class TreeRenderer extends DomBasicRenderer {
                 ioe.printStackTrace();
             }
 
-        } else { // this is a leaf node 
+        } else { // this is a leaf node
             Element lineImage = domContext.createElement(HTML.IMG_ELEM);
             treeNodeDiv.appendChild(lineImage);
             lineImage.setAttribute(HTML.BORDER_ATTR, "0");
@@ -543,15 +542,15 @@ public class TreeRenderer extends DomBasicRenderer {
 
             if (currentNode.getNextSibling() == null) {
                 // use lineBottomNode image
-                lineImage.setAttribute(HTML.SRC_ATTR, appBase +
+                lineImage.setAttribute(HTML.SRC_ATTR,
                                        treeComponent.getLineBottomImage());
             } else {
                 // use lineMiddleNode image
-                lineImage.setAttribute(HTML.SRC_ATTR, appBase +
+                lineImage.setAttribute(HTML.SRC_ATTR,
                                        treeComponent.getLineMiddleImage());
             }
 
-            // use startNode and endNode as an alternative to streamWrite method            
+            // use startNode and endNode as an alternative to streamWrite method
             try {
                 domContext.startNode(facesContext, treeComponent, lineImage);
                 domContext.endNode(facesContext, treeComponent, lineImage);
@@ -572,7 +571,7 @@ public class TreeRenderer extends DomBasicRenderer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // use endNode as an alternative to streamWrite method        
+        // use endNode as an alternative to streamWrite method
         try {
             domContext.endNode(facesContext, treeComponent, treeNodeDiv);
         } catch (IOException ioe) {
@@ -627,36 +626,29 @@ public class TreeRenderer extends DomBasicRenderer {
         Element tree_nav_bottom_open = domContext.createElement(HTML.IMG_ELEM);
         Element tree_nav_top_close = domContext.createElement(HTML.IMG_ELEM);
 
-        String appBase = getAppBase(facesContext);
+        String appBase = Util.resolveResourceURL(facesContext, "/xmlhttp/css/xp/css-images/");
 
-        tree_document.setAttribute(HTML.SRC_ATTR, appBase +
-                                                  "xmlhttp/css/xp/css-images/tree_document.gif");
-        tree_line_blank.setAttribute(HTML.SRC_ATTR, appBase +
-                                                    "xmlhttp/css/xp/css-images/tree_line_blank.gif");
-        tree_line_vertical.setAttribute(HTML.SRC_ATTR, appBase +
-                                                       "xmlhttp/css/xp/css-images/tree_line_vertical.gif");
-        tree_nav_middle_close.setAttribute(HTML.SRC_ATTR, appBase +
-                                                          "xmlhttp/css/xp/css-images/tree_nav_middle_close.gif");
-        tree_nav_top_open.setAttribute(HTML.SRC_ATTR, appBase +
-                                                      "xmlhttp/css/xp/css-images/tree_nav_top_open.gif");
-        tree_folder_close.setAttribute(HTML.SRC_ATTR, appBase +
-                                                      "xmlhttp/css/xp/css-images/tree_folder_close.gif");
-        tree_line_last_node.setAttribute(HTML.SRC_ATTR, appBase +
-                                                        "xmlhttp/css/xp/css-images/tree_line_last_node.gif");
+        tree_document.setAttribute(HTML.SRC_ATTR, appBase + "tree_document.gif");
+        tree_line_blank.setAttribute(HTML.SRC_ATTR, appBase + "tree_line_blank.gif");
+        tree_line_vertical.setAttribute(HTML.SRC_ATTR, appBase + "tree_line_vertical.gif");
+        tree_nav_middle_close.setAttribute(HTML.SRC_ATTR, appBase + "tree_nav_middle_close.gif");
+        tree_nav_top_open.setAttribute(HTML.SRC_ATTR, appBase + "tree_nav_top_open.gif");
+        tree_folder_close.setAttribute(HTML.SRC_ATTR, appBase + "tree_folder_close.gif");
+        tree_line_last_node.setAttribute(HTML.SRC_ATTR, appBase + "tree_line_last_node.gif");
         tree_nav_bottom_close.setAttribute(HTML.SRC_ATTR, appBase +
-                                                          "xmlhttp/css/xp/css-images/tree_nav_bottom_close.gif");
+                                                          "tree_nav_bottom_close.gif");
         tree_nav_middle_open.setAttribute(HTML.SRC_ATTR, appBase +
-                                                         "xmlhttp/css/xp/css-images/tree_nav_middle_open.gif");
+                                                         "tree_nav_middle_open.gif");
         tree_nav_top_open_no_siblings.setAttribute(HTML.SRC_ATTR, appBase +
-                                                                  "xmlhttp/css/xp/css-images/tree_nav_top_open_no_siblings.gif");
+                                                                  "tree_nav_top_open_no_siblings.gif");
         tree_folder_open.setAttribute(HTML.SRC_ATTR, appBase +
-                                                     "xmlhttp/css/xp/css-images/tree_folder_open.gif");
+                                                     "tree_folder_open.gif");
         tree_line_middle_node.setAttribute(HTML.SRC_ATTR, appBase +
-                                                          "xmlhttp/css/xp/css-images/tree_line_middle_node.gif");
+                                                          "tree_line_middle_node.gif");
         tree_nav_bottom_open.setAttribute(HTML.SRC_ATTR, appBase +
-                                                         "xmlhttp/css/xp/css-images/tree_nav_bottom_open.gif");
+                                                         "tree_nav_bottom_open.gif");
         tree_nav_top_close.setAttribute(HTML.SRC_ATTR, appBase +
-                                                       "xmlhttp/css/xp/css-images/tree_nav_top_close.gif");
+                                                       "tree_nav_top_close.gif");
 
         imageLoaderDiv.appendChild(tree_document);
         imageLoaderDiv.appendChild(tree_line_blank);

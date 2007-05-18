@@ -34,9 +34,9 @@
 package com.icesoft.faces.context.effects;
 
 
-import com.icesoft.faces.context.BridgeFacesContext;
-import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.application.D2DViewHandler;
+import com.icesoft.faces.application.StartupTime;
+import com.icesoft.faces.context.BridgeFacesContext;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -48,7 +48,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.lang.reflect.Method;
 
 /**
  *
@@ -89,7 +88,7 @@ public class JavascriptContext {
     /**
      * URL of the ICE Extras lib
      */
-    public static final String ICE_EXTRAS = "xmlhttp"  + StartupTime.getStartupInc() + "ice-extras.js";
+    public static final String ICE_EXTRAS = "/xmlhttp"  + StartupTime.getStartupInc() + "ice-extras.js";
 
     /**
      * Include a script tag in the &lt;head&gt; section of the page with the src

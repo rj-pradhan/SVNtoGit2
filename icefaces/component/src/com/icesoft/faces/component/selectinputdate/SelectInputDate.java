@@ -37,17 +37,14 @@ import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.DOMResponseWriter;
+import org.krysalis.jcharts.properties.LegendProperties;
 
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
-
-import org.krysalis.jcharts.properties.LegendProperties;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -176,7 +173,7 @@ public class SelectInputDate
         super.encodeBegin(context);
         buildHeighLightMap();
     }
-    
+
     /**
      * <p/>
      * CSS style attribute. </p>
@@ -452,9 +449,9 @@ public class SelectInputDate
 
         ValueBinding vb = getValueBinding("imageDir");
         if (vb != null) {
-            return (String) vb.getValue(getFacesContext());
+            return Util.resolveResourceURL(getFacesContext(), (String) vb.getValue(getFacesContext()));
         } else {
-            return this.DEFAULT_IMAGEDIR;
+            return Util.resolveResourceURL(getFacesContext(), this.DEFAULT_IMAGEDIR);
         }
     }
 

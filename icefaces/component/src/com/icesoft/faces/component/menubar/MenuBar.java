@@ -76,7 +76,7 @@ import javax.faces.event.FacesEvent;
 public class MenuBar extends UICommand implements NamingContainer {
 
     // default style classes
-    private static final String DEFAULT_IMAGEDIR = "xmlhttp/css/xp/css-images/";
+    private static final String DEFAULT_IMAGEDIR = "/xmlhttp/css/xp/css-images/";
     /**
      * String constant vertical orientation
      */
@@ -95,7 +95,7 @@ public class MenuBar extends UICommand implements NamingContainer {
     public static final String ID_PREFIX = "menu-";
 
     private String imageDir;
-    private String orientation; // horizontal | vertical ; default = horizontal   
+    private String orientation; // horizontal | vertical ; default = horizontal
     private String style;
     private String renderedOnUserRole = null;
     private Boolean noIcons;
@@ -199,7 +199,7 @@ public class MenuBar extends UICommand implements NamingContainer {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return DEFAULT_IMAGEDIR;
+        return Util.resolveResourceURL(getFacesContext(), DEFAULT_IMAGEDIR);
     }
 
     /**

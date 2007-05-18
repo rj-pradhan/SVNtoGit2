@@ -336,8 +336,8 @@ public class Util extends Object {
                defaultStyleClass;
     }
 
-    public static String getApplicationBase(FacesContext facesContext) {
-        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, ".");
+    public static String resolveResourceURL(FacesContext facesContext, String path) {
+        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, path);
     }
 
     /**

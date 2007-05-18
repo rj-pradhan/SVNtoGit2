@@ -33,17 +33,15 @@
 
 package com.icesoft.faces.component.outputchart;
 
-import java.io.IOException;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-
-import org.w3c.dom.Element;
-
 import com.icesoft.faces.component.ext.renderkit.FormRenderer;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import org.w3c.dom.Element;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 
 public class OutputChartRenderer extends DomBasicRenderer {
 
@@ -76,10 +74,10 @@ public class OutputChartRenderer extends DomBasicRenderer {
         td.setAttribute(HTML.HEIGHT_ATTR, outputChart.getHeight());
         Element image = (Element) domContext.createElement(HTML.IMG_ELEM);
 
-        image.setAttribute(HTML.SRC_ATTR, getAppBase(facesContext)
-                +((OutputChart) uiComponent).getFolder().getName()+"/" +
+        image.setAttribute(HTML.SRC_ATTR, getResourceURL(facesContext,
+                ((OutputChart) uiComponent).getFolder().getName()+"/" +
                                           ((OutputChart) uiComponent)
-                                                  .getFileName());
+                                                  .getFileName()));
 //        image.setAttribute(HTML.WIDTH_ATTR, outputChart.getWidth());
 //        image.setAttribute(HTML.HEIGHT_ATTR, outputChart.getHeight());
         

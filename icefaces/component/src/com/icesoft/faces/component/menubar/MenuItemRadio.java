@@ -42,9 +42,9 @@ import com.icesoft.faces.component.ext.taglib.Util;
 public class MenuItemRadio extends MenuItem {
 
     private static final String DEFAULT_ICON_UNSELECTED =
-            "xmlhttp/css/xp/css-images/menu_radio.gif";
+            "/xmlhttp/css/xp/css-images/menu_radio.gif";
     private static final String DEFAULT_ICON_SELECTED =
-            "xmlhttp/css/xp/css-images/menu_radio_selected.gif";
+            "/xmlhttp/css/xp/css-images/menu_radio_selected.gif";
 
     private boolean selected;
 
@@ -82,16 +82,16 @@ public class MenuItemRadio extends MenuItem {
      * <p>Return the value of the <code>unselectedIcon</code> property.</p>
      */
     public String getUnselectedIcon() {
-        return Util.getApplicationBase(getFacesContext()) +
-               DEFAULT_ICON_UNSELECTED;
+        return Util.resolveResourceURL(getFacesContext(),
+               DEFAULT_ICON_UNSELECTED);
     }
 
     /**
      * <p>Return the value of the <code>selectedIcon</code> property.</p>
      */
     public String getSelectedIcon() {
-        return Util.getApplicationBase(getFacesContext()) +
-               DEFAULT_ICON_SELECTED;
+        return Util.resolveResourceURL(getFacesContext(),
+               DEFAULT_ICON_SELECTED);
     }
 
 
