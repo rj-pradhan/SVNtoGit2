@@ -49,8 +49,8 @@
 package com.icesoft.faces.component.ext.taglib;
 
 import com.icesoft.faces.component.IceExtended;
-import com.icesoft.faces.component.ext.renderkit.FormRenderer;
 import com.icesoft.faces.component.ext.HtmlInputText;
+import com.icesoft.faces.component.ext.renderkit.FormRenderer;
 import com.icesoft.faces.context.effects.Effect;
 import com.icesoft.faces.context.effects.EffectBuilder;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
@@ -63,7 +63,6 @@ import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -338,49 +337,7 @@ public class Util extends Object {
     }
 
     public static String getApplicationBase(FacesContext facesContext) {
-        Object sessionBase = facesContext.getExternalContext().getSession(true);
-        Object requestBase = facesContext.getExternalContext().getRequest();
-        String base =
-                facesContext.getExternalContext().getInitParameter("war-name");
-        if (base == null) {
-            if (requestBase instanceof HttpServletRequest) {
-                HttpServletRequest request = (HttpServletRequest) requestBase;
-                String context = request.getContextPath();
-                String uri = request.getRequestURI();
-                if (log.isTraceEnabled()) {
-                    log.trace("Context [" + context + "] URI [" + uri + "]");
-                }
-                if (null == uri)  {
-                    //must be a portlet request
-                    //TODO implement this for portlets with subfolder pages
-                    return "/";
-                }
-                int i = uri.indexOf(context);
-                i += context.length() + 1;
-                // Get Path as relitive so that images will cache in IE.
-                base = "./";
-                if (i < uri.length()) {
-                    String remain = uri.substring(i);
-                    if (log.isTraceEnabled()) {
-                        log.trace("Remain [" + remain + "]");
-                    }
-                    char[] ar = remain.toCharArray();
-                    for (int c = 0; c < ar.length; c++) {
-                        if (ar[c] == '/') {
-                            base += "../";
-                        }
-                    }
-                }
-            } else {
-                //must be a portlet request
-                //TODO implement this for portlets with subfolder pages
-                base = "/";
-            }
-        }
-        if (log.isTraceEnabled()) {
-            log.trace("Returning URL [" + base + "]");
-        }
-        return base;
+        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, ".");
     }
 
     /**

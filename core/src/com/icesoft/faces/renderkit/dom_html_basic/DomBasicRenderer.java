@@ -55,7 +55,6 @@ import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.component.html.HtmlMessages;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ExternalContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.render.Renderer;
@@ -762,9 +761,7 @@ public abstract class DomBasicRenderer extends Renderer {
      * @return
      */
     public static String getAppBase(FacesContext facesContext) {
-        ExternalContext extCtxt = facesContext.getExternalContext();
-        String base = extCtxt.getRequestContextPath();
-        return base + "/";
+        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, ".");
     }
 
     public static String getResourceURL(FacesContext context, String path) {
