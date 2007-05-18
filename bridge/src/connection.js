@@ -62,7 +62,7 @@
             this.connectionDownListeners = [];
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
-            this.sendURI = configuration.context + 'block/send-receive-updates';
+            this.sendURI = configuration.context + '/block/send-receive-updates';
             this.disposeViewsURI = configuration.context + 'block/dispose-views';
 
             var timeout = configuration.timeout ? configuration.timeout : 5000;
@@ -120,7 +120,7 @@
         shutdown: function() {
             this.send = Function.NOOP;
             try {
-                this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
+                this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), This.FormPost);
             } finally {
                 [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
                     f.clear();
