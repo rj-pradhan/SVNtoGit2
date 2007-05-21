@@ -57,6 +57,7 @@ import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicInputRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
+import com.icesoft.faces.util.CoreUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -206,8 +207,11 @@ public class SelectInputDateRenderer
                 calendarButton.setAttribute(HTML.NAME_ATTR,
                                             clientId + CALENDAR_BUTTON);
                 calendarButton.setAttribute(HTML.TYPE_ATTR, "image");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
-                        .getImageDir() + selectInputDate.getOpenPopupImage());
+                String resolvedSrc =
+                        CoreUtils.resolveResourceURL( facesContext,
+                                                      selectInputDate.getImageDir() +
+                                                      selectInputDate.getOpenPopupImage() );
+                calendarButton.setAttribute(HTML.SRC_ATTR, resolvedSrc );
                 calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar");
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
                 calendarButton.setAttribute(HTML.ONFOCUS_ATTR, "setFocus('');");
@@ -370,16 +374,22 @@ public class SelectInputDateRenderer
             if (popupState) {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:block;position:absolute;");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
-                        .getImageDir() + selectInputDate.getClosePopupImage());
+                String resolvedSrc =
+                        CoreUtils.resolveResourceURL( facesContext,
+                                                      selectInputDate.getImageDir() +
+                                                      selectInputDate.getClosePopupImage() );
+                calendarButton.setAttribute(HTML.SRC_ATTR, resolvedSrc );
                 calendarButton.setAttribute(HTML.ALT_ATTR, "Close Popup Calendar");
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Close Popup Calendar");                
             } else {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
                                          "display:none;position:absolute;");
-                calendarButton.setAttribute(HTML.SRC_ATTR, selectInputDate
-                        .getImageDir() + selectInputDate.getOpenPopupImage());
-                calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar"); 
+                String resolvedSrc =
+                        CoreUtils.resolveResourceURL( facesContext,
+                                                      selectInputDate.getImageDir() +
+                                                      selectInputDate.getOpenPopupImage() );
+                calendarButton.setAttribute(HTML.SRC_ATTR, resolvedSrc );
+                calendarButton.setAttribute(HTML.ALT_ATTR, "Open Popup Calendar");
                 calendarButton.setAttribute(HTML.TITLE_ATTR , "Open Popup Calendar");
             }
 

@@ -451,10 +451,11 @@ public class SelectInputDate
 
         ValueBinding vb = getValueBinding("imageDir");
         if (vb != null) {
-            return CoreUtils.resolveResourceURL(getFacesContext(), (String) vb.getValue(getFacesContext()));
+            _imageDir = (String) vb.getValue(getFacesContext());
         } else {
-            return CoreUtils.resolveResourceURL(getFacesContext(), this.DEFAULT_IMAGEDIR);
+            _imageDir = DEFAULT_IMAGEDIR;
         }
+        return _imageDir;
     }
 
     /**
