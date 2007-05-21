@@ -64,7 +64,7 @@ public class PanelTabSetBean implements TabChangeListener {
     private boolean tabbedPane2Visible;
     private boolean tabbedPane3Visible;
     private HtmlSelectOneRadio selectedTabObject;
-
+    
     private int tabIndex = 0;
     private String newTabLabel = "";
     private String newTabContent = "";
@@ -107,6 +107,11 @@ public class PanelTabSetBean implements TabChangeListener {
      * Binding used by example to listen
      */
     private PanelTabSet tabSet;
+
+    /**
+     * Binding used by example to listen
+     */
+    private PanelTabSet dynamicTabSet;
 
     /**
      * Return the visibility of tab panel 1.
@@ -200,12 +205,17 @@ public class PanelTabSetBean implements TabChangeListener {
      * @param event
      */
     public void removeTab(ActionEvent event) {
-
+        int selectedIndex =  dynamicTabSet.getSelectedIndex();
         //remove from tabs
         for (int i = 0; i < tabs.size(); i++) {
             if (((Tab) tabs.get(i)).getIndex() ==
                 Integer.parseInt(removedTab)) {
                 tabs.remove(i);
+                if (selectedIndex  > i) {
+                    dynamicTabSet.setSelectedIndex((selectedIndex > 0)? (selectedIndex -1) : selectedIndex);
+                } else if (tabs.size() ==1) {
+                    dynamicTabSet.setSelectedIndex(0);
+                }
                 break;
             }
         }
@@ -410,4 +420,13 @@ public class PanelTabSetBean implements TabChangeListener {
     public void setTabs(List tabs) {
         this.tabs = tabs;
     }
+
+    public PanelTabSet getDynamicTabSet() {
+        return dynamicTabSet;
+    }
+
+    public void setDynamicTabSet(PanelTabSet dynamicTabSet) {
+        this.dynamicTabSet = dynamicTabSet;
+    }
+
 }

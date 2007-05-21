@@ -227,10 +227,12 @@ to show how visibility, focus and tab placement can be dynamically changed.
         styleClass="contentLayoutGridColumn"
         style="margin-bottom:5px;margin-top:10px; width:350px;">
     <h3>&#160;</h3>
-    <ice:panelTabSet var="tab"
+    <ice:panelTabSet binding="#{tabbedPaneExample.dynamicTabSet}" 
+    				 var="tab"
                      value="#{tabbedPaneExample.tabs}"
                      tabPlacement="bottom"
-                     styleClass="myTab">
+                     styleClass="myTab"
+                     >
         <ice:panelTab label="#{tab.label}">
             <ice:outputText value="#{tab.content}"/>
         </ice:panelTab>
