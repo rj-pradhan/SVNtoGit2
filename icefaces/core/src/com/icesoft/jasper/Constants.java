@@ -1,12 +1,12 @@
 /*
  * Copyright 1999,2004 The Apache Software Foundation.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -135,6 +135,8 @@ public class Constants {
 
     public static final String PORTLET_KEY = "com.icesoft.faces.PORTLET";
     public static final String VIEW_KEY = "com.icesoft.faces.VIEW";
+    public static final String EDIT_KEY = "com.icesoft.faces.EDIT";
+    public static final String HELP_KEY = "com.icesoft.faces.HELP";
     public static final String NAMESPACE_KEY = "com.icesoft.faces.NAMESPACE";
 
     public static final String TMP_DIR = "javax.servlet.context.tempdir";
