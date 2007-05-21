@@ -34,6 +34,7 @@
 package com.icesoft.faces.component.menubar;
 
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.util.CoreUtils;
 
 
 /**
@@ -82,7 +83,7 @@ public class MenuItemRadio extends MenuItem {
      * <p>Return the value of the <code>unselectedIcon</code> property.</p>
      */
     public String getUnselectedIcon() {
-        return Util.resolveResourceURL(getFacesContext(),
+        return CoreUtils.resolveResourceURL(getFacesContext(),
                DEFAULT_ICON_UNSELECTED);
     }
 
@@ -90,7 +91,7 @@ public class MenuItemRadio extends MenuItem {
      * <p>Return the value of the <code>selectedIcon</code> property.</p>
      */
     public String getSelectedIcon() {
-        return Util.resolveResourceURL(getFacesContext(),
+        return CoreUtils.resolveResourceURL(getFacesContext(),
                DEFAULT_ICON_SELECTED);
     }
 

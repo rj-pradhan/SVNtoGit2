@@ -34,6 +34,7 @@
 package com.icesoft.faces.component.menubar;
 
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.util.CoreUtils;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
@@ -115,7 +116,7 @@ public class MenuItem extends MenuItemBase {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON);
+        return CoreUtils.resolveResourceURL(getFacesContext(), DEFAULT_ICON);
     }
 
     /**

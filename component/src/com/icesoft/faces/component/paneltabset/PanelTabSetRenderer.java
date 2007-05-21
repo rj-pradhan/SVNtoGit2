@@ -41,6 +41,7 @@ import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.FormRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import com.icesoft.faces.util.CoreUtils;
 import com.icesoft.faces.util.DOMUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -840,7 +841,7 @@ public class PanelTabSetRenderer
 
         // create a dummy image to load into given td
         Element img = domContext.createElement(HTML.IMG_ELEM);
-        img.setAttribute(HTML.SRC_ATTR, Util.resolveResourceURL(
+        img.setAttribute(HTML.SRC_ATTR, CoreUtils.resolveResourceURL(
                 FacesContext.getCurrentInstance(), SPACER_IMG));
         img.setAttribute(HTML.HEIGHT_ATTR, "1");
         img.setAttribute(HTML.WIDTH_ATTR, "4");

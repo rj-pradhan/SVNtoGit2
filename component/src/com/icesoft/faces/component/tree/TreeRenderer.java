@@ -42,6 +42,8 @@ import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.FormRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
 import com.icesoft.faces.renderkit.dom_html_basic.PassThruAttributeRenderer;
+import com.icesoft.faces.util.CoreUtils;
+
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
@@ -626,7 +628,7 @@ public class TreeRenderer extends DomBasicRenderer {
         Element tree_nav_bottom_open = domContext.createElement(HTML.IMG_ELEM);
         Element tree_nav_top_close = domContext.createElement(HTML.IMG_ELEM);
 
-        String appBase = Util.resolveResourceURL(facesContext, "/xmlhttp/css/xp/css-images/");
+        String appBase = CoreUtils.resolveResourceURL(facesContext, "/xmlhttp/css/xp/css-images/");
 
         tree_document.setAttribute(HTML.SRC_ATTR, appBase + "tree_document.gif");
         tree_line_blank.setAttribute(HTML.SRC_ATTR, appBase + "tree_line_blank.gif");

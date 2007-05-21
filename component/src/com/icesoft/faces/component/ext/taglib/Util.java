@@ -336,10 +336,6 @@ public class Util extends Object {
                defaultStyleClass;
     }
 
-    public static String resolveResourceURL(FacesContext facesContext, String path) {
-        return facesContext.getApplication().getViewHandler().getResourceURL(facesContext, path);
-    }
-
     /**
      * Used to append a second style class into a class attrubute to overddided
      * the default

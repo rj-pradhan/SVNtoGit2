@@ -37,6 +37,8 @@ import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.DOMResponseWriter;
+import com.icesoft.faces.util.CoreUtils;
+
 import org.krysalis.jcharts.properties.LegendProperties;
 
 import javax.faces.context.FacesContext;
@@ -449,9 +451,9 @@ public class SelectInputDate
 
         ValueBinding vb = getValueBinding("imageDir");
         if (vb != null) {
-            return Util.resolveResourceURL(getFacesContext(), (String) vb.getValue(getFacesContext()));
+            return CoreUtils.resolveResourceURL(getFacesContext(), (String) vb.getValue(getFacesContext()));
         } else {
-            return Util.resolveResourceURL(getFacesContext(), this.DEFAULT_IMAGEDIR);
+            return CoreUtils.resolveResourceURL(getFacesContext(), this.DEFAULT_IMAGEDIR);
         }
     }
 
