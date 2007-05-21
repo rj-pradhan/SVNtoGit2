@@ -36,6 +36,7 @@ package com.icesoft.faces.context;
 import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.context.effects.JavascriptContext;
+import com.icesoft.faces.util.CoreUtils;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.jasper.Constants;
 import org.apache.commons.logging.Log;
@@ -324,7 +325,8 @@ public class DOMResponseWriter extends ResponseWriter {
             if (httpRequest.getRequestURI() == null) {
                 frameURI = "about:blank";
             } else {
-                frameURI = httpRequest.getContextPath() + "/xmlhttp/blank.iface";
+                frameURI = CoreUtils.resolveResourceURL(FacesContext.getCurrentInstance(),
+                        "/xmlhttp/blank.iface");
             }
         } else {
             frameURI = "about:blank";
