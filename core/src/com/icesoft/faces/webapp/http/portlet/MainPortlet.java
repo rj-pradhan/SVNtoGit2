@@ -9,6 +9,7 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
@@ -91,22 +92,42 @@ public class MainPortlet implements Portlet {
         addAttribute(renderRequest,Constants.PORTLET_KEY, PORTLET_MARKER);
 
         //Get the inital view that is configured in the portlet.xml file
-        String defaultView = portletConfig.getInitParameter(Constants.VIEW_KEY);
-        if(defaultView == null){
-            if( log.isErrorEnabled() ){
-                log.error(Constants.VIEW_KEY + " is not properly configured");
+        PortletMode portletMode = portletMode = renderRequest.getPortletMode();
+        String viewId = null;
+        if (portletMode == PortletMode.VIEW) {
+            viewId = portletConfig.getInitParameter(Constants.VIEW_KEY);
+            if(viewId == null){
+                if( log.isErrorEnabled() ){
+                    log.error(Constants.VIEW_KEY + " is not properly configured");
+                }
+                throw new PortletException(Constants.VIEW_KEY + " is not properly configured");
             }
-            throw new PortletException(Constants.VIEW_KEY + " is not properly configured");
+        } else if (portletMode == PortletMode.EDIT) {
+            viewId = portletConfig.getInitParameter(Constants.EDIT_KEY);
+            if(viewId == null){
+                if( log.isErrorEnabled() ){
+                    log.error(Constants.EDIT_KEY + " is not properly configured");
+                }
+                throw new PortletException(Constants.EDIT_KEY + " is not properly configured");
+            }
+        } else if (portletMode == PortletMode.HELP) {
+            viewId = portletConfig.getInitParameter(Constants.HELP_KEY);
+            if(viewId == null){
+                if( log.isErrorEnabled() ){
+                    log.error(Constants.HELP_KEY + " is not properly configured");
+                }
+                throw new PortletException(Constants.HELP_KEY + " is not properly configured");
+            }
         }
 
         //We request a dispatcher for the actual resource which is typically
         //an .iface.  This maps to the proper handler, typically the ICEfaces
         //MainServlet which takes over the processing.
         PortletContext ctxt = portletConfig.getPortletContext();
-        PortletRequestDispatcher disp = ctxt.getRequestDispatcher(defaultView);
+        PortletRequestDispatcher disp = ctxt.getRequestDispatcher(viewId);
 
         if(disp == null){
-            throw new PortletException("could not find dispatcher for " + defaultView);
+            throw new PortletException("could not find dispatcher for " + viewId);
         }
 
         // Jack: This is a temporary fix for JBoss Portal. We should come up
