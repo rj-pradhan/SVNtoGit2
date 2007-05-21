@@ -42,6 +42,7 @@ import com.icesoft.faces.component.ext.HtmlPanelGroup;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import com.icesoft.faces.util.CoreUtils;
 import com.icesoft.faces.util.DOMUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -683,7 +684,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         if ((customPath = menuComponent.getImageDir()) != null) {
             return customPath + SUBMENU_IMAGE;
         }
-        return Util.resolveResourceURL(FacesContext.getCurrentInstance(),
+        return CoreUtils.resolveResourceURL(FacesContext.getCurrentInstance(),
                DEFAULT_IMAGEDIR + SUBMENU_IMAGE);
     }
 

@@ -34,6 +34,7 @@
 package com.icesoft.faces.component.menubar;
 
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.util.CoreUtils;
 
 
 /**
@@ -76,13 +77,13 @@ public class MenuItemCheckbox extends MenuItem {
      * <p>Return the value of the <code>unselectedIcon</code> property.</p>
      */
     public String getUnselectedIcon() {
-        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON_UNCHECKED);
+        return CoreUtils.resolveResourceURL(getFacesContext(), DEFAULT_ICON_UNCHECKED);
     }
 
     /**
      * <p>Return the value of the <code>selectedIcon</code> property.</p>
      */
     public String getSelectedIcon() {
-        return Util.resolveResourceURL(getFacesContext(), DEFAULT_ICON_CHECKED);
+        return CoreUtils.resolveResourceURL(getFacesContext(), DEFAULT_ICON_CHECKED);
     }
 }

@@ -35,6 +35,7 @@ package com.icesoft.faces.component.tree;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.util.CoreUtils;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
@@ -302,7 +303,7 @@ public class Tree extends UICommand implements NamingContainer {
             return imageDir;
         }
         ValueBinding vb = getValueBinding("imageDir");
-        return Util.resolveResourceURL(getFacesContext(),
+        return CoreUtils.resolveResourceURL(getFacesContext(),
                 vb != null ? (String) vb.getValue(getFacesContext()) : DEFAULT_CSSIMAGEDIR);
     }
 

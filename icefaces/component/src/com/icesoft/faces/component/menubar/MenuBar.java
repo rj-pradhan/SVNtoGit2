@@ -35,6 +35,7 @@ package com.icesoft.faces.component.menubar;
 
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.effects.JavascriptContext;
+import com.icesoft.faces.util.CoreUtils;
 
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UICommand;
@@ -199,7 +200,7 @@ public class MenuBar extends UICommand implements NamingContainer {
         if (vb != null) {
             return (String) vb.getValue(getFacesContext());
         }
-        return Util.resolveResourceURL(getFacesContext(), DEFAULT_IMAGEDIR);
+        return CoreUtils.resolveResourceURL(getFacesContext(), DEFAULT_IMAGEDIR);
     }
 
     /**
