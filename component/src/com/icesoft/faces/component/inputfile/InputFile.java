@@ -42,6 +42,8 @@ import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
@@ -66,6 +68,8 @@ import java.util.Iterator;
  * InputFile is a JSF component class representing an ICEfaces inputFile.
  */
 public class InputFile extends UICommand implements Serializable, FileUploadComponent {
+    private static final Log log = LogFactory.getLog(InputFile.class);
+    
     public static final int DEFAULT = 0;
     public static final int UPLOADING = 1;
     public static final int SAVED = 2;
@@ -153,6 +157,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 Streams.copy(stream.openStream(), output, true);
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
+                updateFileValueBinding();
                 notifyDone(bfc);
             } else {
                 fileInfo.reset();
@@ -642,6 +647,23 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         //do nothing
     }
 
+    /**
+     * In the 1.5.3 codebase, there was a writeable ValueBinding named "file"
+     *  that would be updated when a new file was saved. This provides
+     *  backwards compatibility with that.
+     * Thanks to ngriffin@liferay.com for noticing the regression
+     */
+    protected void updateFileValueBinding() {
+        try {
+            ValueBinding vb = getValueBinding("file");
+            if(vb != null)
+                vb.setValue( FacesContext.getCurrentInstance(), getFile() );
+        }
+        catch(Exception e) {
+            log.warn("The InputFile's file attribute has a ValueBinding, whose value could not be set",e);
+        }
+    }
+    
     public int getStatus() {
         return status;
     }
