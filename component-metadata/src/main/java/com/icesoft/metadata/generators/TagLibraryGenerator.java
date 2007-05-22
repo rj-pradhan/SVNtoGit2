@@ -178,6 +178,11 @@ public class TagLibraryGenerator extends AbstractGenerator {
     }
     
     private void generate(ComponentBean cb) throws IOException {
+        if(cb.getComponentClass() == null){
+            System.err.println("Please check the following component metadata:" );
+            System.err.println("component type :"+cb.getComponentType()+" does not have component class assigned");
+        }
+        
         if (cb.getComponentClass().startsWith("javax.faces.component."))
             return;
         if (cb.isSuppressed())
