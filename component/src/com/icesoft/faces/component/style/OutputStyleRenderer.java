@@ -36,6 +36,8 @@ package com.icesoft.faces.component.style;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
+import com.icesoft.faces.util.CoreUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -94,9 +96,8 @@ public class OutputStyleRenderer extends DomBasicRenderer {
                             if(browserType == IE_7){
                                 extention = IE_7_EXTENTION;
                             }
-                            ieStyleEle.setAttribute(HTML.HREF_ATTR, start +
-                                                                    extention +
-                                                                    CSS_EXTENTION);
+                            String hrefURL = CoreUtils.resolveResourceURL(facesContext, start + extention + CSS_EXTENTION);
+                            ieStyleEle.setAttribute(HTML.HREF_ATTR, hrefURL);
                             styleEle.getParentNode().appendChild(ieStyleEle);
                         } else {
                             throw new RuntimeException(
