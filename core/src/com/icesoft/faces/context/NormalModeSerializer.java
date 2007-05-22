@@ -2,6 +2,8 @@ package com.icesoft.faces.context;
 
 import com.icesoft.faces.application.StartupTime;
 import com.icesoft.faces.util.DOMUtils;
+import com.icesoft.faces.util.CoreUtils;
+import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.jasper.Constants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -36,15 +38,12 @@ public class NormalModeSerializer implements DOMSerializer {
             Node body = DOMUtils.getChildByNodeName(
                     document.getDocumentElement(), "body");
             if (null != body) {
-                //TODO This should not be done here, we need to manage
-                //it with the form renderer.  But we also need to fix
-                //viewNumber so that it is not set with cookies.  Cookie
-                //communication gives no way for multiple included
-                //views on one page
-                ExternalContext extCtxt = context.getExternalContext();
-                String base = extCtxt.getRequestContextPath() + "/";
-                writer.write("<script language='javascript' src='" + base +
-                        "xmlhttp" + StartupTime.getStartupInc() + "icefaces-d2d.js'></script>");
+
+                //We need to include, for now, ICE_EXTRAS all the time to
+                //ensure that it is available.
+                writer.write( makeScriptEntry(JavascriptContext.ICE_BRIDGE));
+                writer.write( makeScriptEntry(JavascriptContext.ICE_EXTRAS));
+
                 writer.write(DOMUtils.childrenToString(body));
             }
         } else {
@@ -89,6 +88,12 @@ public class NormalModeSerializer implements DOMSerializer {
         }
 
         writer.flush();
+    }
+
+    private String makeScriptEntry(String src) {
+        return "<script language='javascript' src='" +
+               CoreUtils.resolveResourceURL(context, src) +
+               "'></script>";
     }
 
     private boolean isFragment(Map requestMap){
