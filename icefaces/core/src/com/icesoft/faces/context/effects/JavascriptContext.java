@@ -86,6 +86,11 @@ public class JavascriptContext {
     public static final String DYNAMIC_CODE_ID = "dynamic-code";
 
     /**
+     * URL of the ICE Bridge lib
+     */
+    public static final String ICE_BRIDGE = "/xmlhttp"  + StartupTime.getStartupInc() + "icefaces-d2d.js";
+
+    /**
      * URL of the ICE Extras lib
      */
     public static final String ICE_EXTRAS = "/xmlhttp"  + StartupTime.getStartupInc() + "ice-extras.js";
