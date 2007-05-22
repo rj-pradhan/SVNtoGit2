@@ -30,32 +30,26 @@
  * this file under either the MPL or the LGPL License."
  *
  */
-
 package com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel;
 
 import com.icesoft.faces.component.paneltabset.PanelTabSet;
 import com.icesoft.faces.component.paneltabset.TabChangeEvent;
 import com.icesoft.faces.component.paneltabset.TabChangeListener;
-
 import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * <p>The PanelTabSetBean class is a backing bean for the TabbedPane showcase
+ * The StaticTabSetBean class is a backing bean for the TabbedPane showcase
  * demonstration and is used to store the various states of the the
  * ice:panelTabSet component.  These states are visibility, tab selection and
- * tab placement. </p>
+ * tab placement. 
  *
  * @since 0.3.0
  */
-public class PanelTabSetBean implements TabChangeListener {
-
+public class StaticTabSetBean implements TabChangeListener{
+    
     /**
      * The demo contains three tabs and thus we need three variables to store
      * their respective rendered states.
@@ -65,35 +59,6 @@ public class PanelTabSetBean implements TabChangeListener {
     private boolean tabbedPane3Visible;
     private HtmlSelectOneRadio selectedTabObject;
     
-    private int tabIndex = 0;
-    private String newTabLabel = "";
-    private String newTabContent = "";
-    private List tabs = new ArrayList();
-    private String removedTab;
-    private List tabItems = new ArrayList();
-
-    public PanelTabSetBean() {
-
-        //pre-defined two tabs into the panelTabSet
-        Tab newTab1 = new Tab();
-        newTab1.setLabel("Label1");
-        newTab1.setContent("Content1");
-        newTab1.setIndex(tabIndex++);
-
-        Tab newTab2 = new Tab();
-        newTab2.setLabel("Label2");
-        newTab2.setContent("Content2");
-        newTab2.setIndex(tabIndex++);
-
-        tabItems.add(
-                new SelectItem(Integer.toString(newTab1.index), newTab1.label));
-        tabItems.add(
-                new SelectItem(Integer.toString(newTab2.index), newTab2.label));
-
-        tabs.add(newTab1);
-        tabs.add(newTab2);
-    }
-
     /**
      * Tabbed placement, possible values are "top" and "bottom", the default is
      * "bottom".
@@ -107,12 +72,7 @@ public class PanelTabSetBean implements TabChangeListener {
      * Binding used by example to listen
      */
     private PanelTabSet tabSet;
-
-    /**
-     * Binding used by example to listen
-     */
-    private PanelTabSet dynamicTabSet;
-
+    
     /**
      * Return the visibility of tab panel 1.
      *
@@ -169,95 +129,25 @@ public class PanelTabSetBean implements TabChangeListener {
     public void setTabbedPane3Visible(boolean tabbedPane3Visible) {
         this.tabbedPane3Visible = tabbedPane3Visible;
     }
-
+    
     /**
      * Gets the tabbed pane object bound to this bean.
      *
-     * @return bound tabbed pane
+     * @return bound tabbed pane.
      */
     public PanelTabSet getTabSet() {
         return tabSet;
     }
-
+    
     /**
      * Set a tabbed pane object which will be bound to this object
      *
-     * @param tabSet
+     * @param tabSet new PanelTabSet object.
      */
     public void setTabSet(PanelTabSet tabSet) {
-        // remove tab change listener
-        if (this.tabSet != null) {
-            this.tabSet.removeTabChangeListener(this);
-        }
-
-        // assign the new binding
         this.tabSet = tabSet;
-
-        // add a new listener
-        if (this.tabSet != null) {
-            this.tabSet.addTabChangeListener(this);
-        }
     }
-
-    /**
-     * remove a tab from panelTabSet
-     *
-     * @param event
-     */
-    public void removeTab(ActionEvent event) {
-        int selectedIndex =  dynamicTabSet.getSelectedIndex();
-        //remove from tabs
-        for (int i = 0; i < tabs.size(); i++) {
-            if (((Tab) tabs.get(i)).getIndex() ==
-                Integer.parseInt(removedTab)) {
-                tabs.remove(i);
-                if (selectedIndex  > i) {
-                    dynamicTabSet.setSelectedIndex((selectedIndex > 0)? (selectedIndex -1) : selectedIndex);
-                } else if (tabs.size() ==1) {
-                    dynamicTabSet.setSelectedIndex(0);
-                }
-                break;
-            }
-        }
-
-        //remove select option from selectRadiobox
-        for (int i = 0; i < tabItems.size(); i++) {
-            if (((String) ((SelectItem) tabItems.get(i)).getValue())
-                    .equals(removedTab)) {
-                tabItems.remove(i);
-                break;
-            }
-        }
-    }
-
-    /**
-     * add a new tab to the panelTabSet
-     *
-     * @param event
-     */
-    public void addTab(ActionEvent event) {
-
-        //assign default label if it's blank
-        if (newTabLabel.equals("")) {
-            newTabLabel = "Tab " + (tabIndex + 1);
-        }
-
-        //set the new tab from the input
-        Tab newTab = new Tab();
-        newTab.setContent(newTabContent);
-        newTab.setLabel(newTabLabel);
-        newTab.setIndex(tabIndex++);
-
-        //add to both tabs and select options of selectRadiobox
-        tabs.add(newTab);
-        tabItems.add(
-                new SelectItem(Integer.toString(newTab.index), newTabLabel));
-
-        //clean up input field
-        newTabLabel = "";
-        newTabContent = "";
-    }
-
+    
     /**
      * Called when the tab pane focus is to be changed.
      *
@@ -267,12 +157,18 @@ public class PanelTabSetBean implements TabChangeListener {
         int index = Integer.parseInt((String) event.getNewValue());
         tabSet.setSelectedIndex(index);
     }
-
+    
+    /**
+     * Called when a tab is selected.
+     *
+     * @param event value is the selected tab.
+     */
     public void selectTab(ValueChangeEvent event) {
         UIInput component = (UIInput) event.getComponent();
         int index = 1;
         try {
-            index = new Integer(component.getValue().toString()).intValue();
+            //index = new Integer(component.getValue().toString()).intValue();
+            index = Integer.parseInt(component.getValue().toString());
         } catch (NumberFormatException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -280,7 +176,7 @@ public class PanelTabSetBean implements TabChangeListener {
         }
         tabSet.setSelectedIndex(index);
     }
-
+    
     /**
      * Gets the tab placement, either top or bottom.
      *
@@ -309,12 +205,13 @@ public class PanelTabSetBean implements TabChangeListener {
     public void selectTabPlacement(ValueChangeEvent event) {
         tabPlacement = (String) event.getNewValue();
     }
-
-    /**
+    
+     /**
      * Called when the table binding's tab focus changes.
      *
-     * @param tabChangeEvent
-     * @throws AbortProcessingException
+     * @param tabChangeEvent used to set the tab focus.
+     * @throws AbortProcessingException An exception that may be thrown by event
+      * listeners to terminate the processing of the current event.
      */
     public void processTabChange(TabChangeEvent tabChangeEvent)
             throws AbortProcessingException {
@@ -323,11 +220,11 @@ public class PanelTabSetBean implements TabChangeListener {
             selectedTabObject.setSubmittedValue(selectedTabFocus);
         }
     }
-
+    
     /**
-     * Gets the currently selected tab
+     * Gets the currently selected tab.
      *
-     * @return
+     * @return selectedTabFocus of the currently selected tab.
      */
     public String getSelectedTabFocus() {
         return selectedTabFocus;
@@ -336,97 +233,28 @@ public class PanelTabSetBean implements TabChangeListener {
     /**
      * Sets the currently selected tab.
      *
-     * @param selectedTabFocus
+     * @param selectedTabFocus new selected tab.
      */
     public void setSelectedTabFocus(String selectedTabFocus) {
         this.selectedTabFocus = selectedTabFocus;
     }
-
+    
+    /**
+     * Gets the currently selected tab object.
+     *
+     * @return selectedTabObject of the currently selected tab.
+     */
     public HtmlSelectOneRadio getBindSelectedTabObject() {
         return selectedTabObject;
     }
-
+    
+    /**
+     * Sets the cuurently selected tab object.
+     *
+     * @param selectedTabObject new HtmlSelectOneRadia object.
+     */
     public void setBindSelectedTabObject(HtmlSelectOneRadio selectedTabObject) {
         this.selectedTabObject = selectedTabObject;
     }
-
-    public String getNewTabLabel() {
-        return newTabLabel;
-    }
-
-    public void setNewTabLabel(String newTabLabel) {
-        this.newTabLabel = newTabLabel;
-    }
-
-    public String getNewTabContent() {
-        return newTabContent;
-    }
-
-    public void setNewTabContent(String newTabContent) {
-        this.newTabContent = newTabContent;
-    }
-
-    public class Tab {
-        String label;
-        String content;
-        int index;
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-
-    }
-
-    public String getRemovedTab() {
-        return removedTab;
-    }
-
-    public void setRemovedTab(String removedTab) {
-        this.removedTab = removedTab;
-    }
-
-    public List getTabItems() {
-        return tabItems;
-    }
-
-    public void setTabItems(List tabItems) {
-        this.tabItems = tabItems;
-    }
-
-    public List getTabs() {
-        return tabs;
-    }
-
-    public void setTabs(List tabs) {
-        this.tabs = tabs;
-    }
-
-    public PanelTabSet getDynamicTabSet() {
-        return dynamicTabSet;
-    }
-
-    public void setDynamicTabSet(PanelTabSet dynamicTabSet) {
-        this.dynamicTabSet = dynamicTabSet;
-    }
-
+    
 }

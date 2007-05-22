@@ -89,9 +89,9 @@
     <description>
             Backing bean for tabbed pane example.
         </description>
-    <managed-bean-name>tabbedPaneExample</managed-bean-name>
+    <managed-bean-name>staticTabbedPaneExample</managed-bean-name>
     <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.PanelTabSetBean
+            com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.StaticTabSetBean
         </managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
     <managed-property>
@@ -106,6 +106,16 @@
       <property-name>tabbedPane3Visible</property-name>
       <value>true</value>
     </managed-property>
+  </managed-bean>
+  <managed-bean>
+      <description>
+          Backing bean for tabbed pane example.
+      </description>
+      <managed-bean-name>dynamicTabbedPaneExample</managed-bean-name>
+      <managed-bean-class>
+          com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.DynamicTabSetBean
+      </managed-bean-class>
+      <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <description>
