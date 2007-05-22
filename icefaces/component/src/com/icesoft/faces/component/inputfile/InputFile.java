@@ -220,7 +220,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
         String srv = getUploadServletPath(context);
-        writer.write("<html><body>");
+        writer.write("<html><body style=\"background-color:transparent\">");
         writer.write("<form method=\"post\" action=\""+srv+"\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
         writer.write("<input type=\"hidden\" name=\"componentID\" value=\"");
         writer.write(this.getClientId(context));

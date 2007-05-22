@@ -64,7 +64,11 @@ public class InputFileRenderer extends Renderer {
         writer.writeAttribute("frameborder", "0", null);
         writer.writeAttribute("marginwidth", "0", null);
         writer.writeAttribute("marginheight", "0", null);
-        writer.writeAttribute("scrolling", "no", null);        
+        writer.writeAttribute("scrolling", "no", null);
+        // Need to set allowtransparency="true" on the IFRAME element tag so that,
+        // along with InputFile.renderIFrame()'s <body style="background-color: transparent;">, the IFRAME
+        // will be transparent, allowing background colors to show through.
+        writer.writeAttribute("allowtransparency", "true", null);        
         writer.endElement("iframe");
 
         Throwable uploadException = c.getUploadException();
