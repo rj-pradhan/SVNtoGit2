@@ -167,7 +167,6 @@ public class StaticTabSetBean implements TabChangeListener{
         UIInput component = (UIInput) event.getComponent();
         int index = 1;
         try {
-            //index = new Integer(component.getValue().toString()).intValue();
             index = Integer.parseInt(component.getValue().toString());
         } catch (NumberFormatException e) {
             e.printStackTrace();
