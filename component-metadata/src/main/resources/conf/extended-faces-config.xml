@@ -349,6 +349,10 @@
   <!ENTITY effect-component SYSTEM "custom/effect-component.xml">
   <!ENTITY effect-renderer SYSTEM "custom/effect-renderer.xml">          
   
+  <!ENTITY ice-cust-googlemap-props SYSTEM "ice_cust_properties/cust-googlemap-props.xml">
+  <!ENTITY googlemap-component SYSTEM "custom/googlemap-component.xml">
+  <!ENTITY googlemap-renderer SYSTEM "custom/googlemap-renderer.xml">    
+  
   <!ENTITY % property-editors SYSTEM "dtd/property-editors.dtd">
   %property-editors;
     
@@ -414,7 +418,7 @@
     &uiseries-component;
     &accordion-component;
     &effect-component;
-  
+    <!-- &googlemap-component; -->
     
     <render-kit>
 
@@ -476,6 +480,7 @@
         &uiseries-renderer;
         &accordion-renderer;
         &effect-renderer;
+        <!-- &googlemap-renderer; -->
     </render-kit>
 
 </faces-config>
