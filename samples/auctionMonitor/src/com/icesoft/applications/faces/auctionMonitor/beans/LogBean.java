@@ -74,7 +74,10 @@ public class LogBean {
     public LogBean() {
         externalContext =
                 FacesContext.getCurrentInstance().getExternalContext();
-        timedReset();
+        //Disabling the reset functionality as it causes a PermGen memory
+        //leak through the TimerThread ContextClassLoader keeping references
+        //to all ICEfaces classes
+        //timedReset();
     }
 
     public long getFreeMemory() {
