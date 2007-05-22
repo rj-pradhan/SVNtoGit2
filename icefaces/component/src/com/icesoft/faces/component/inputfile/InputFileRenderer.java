@@ -62,6 +62,9 @@ public class InputFileRenderer extends Renderer {
         writer.writeAttribute("height", c.getHeight() + "px", null);
         writer.writeAttribute("title", "Input File Frame", null);
         writer.writeAttribute("frameborder", "0", null);
+        writer.writeAttribute("marginwidth", "0", null);
+        writer.writeAttribute("marginheight", "0", null);
+        writer.writeAttribute("scrolling", "no", null);        
         writer.endElement("iframe");
 
         Throwable uploadException = c.getUploadException();
