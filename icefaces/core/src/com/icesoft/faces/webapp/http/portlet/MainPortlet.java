@@ -130,6 +130,11 @@ public class MainPortlet implements Portlet {
             throw new PortletException("could not find dispatcher for " + viewId);
         }
 
+        //IMPORTANT: See the JavaDoc for this class
+        PortletArtifactHack hack = new PortletArtifactHack(portletConfig,
+                                                           renderRequest);
+        addAttribute(renderRequest,PortletArtifactHack.PORTLET_HACK_KEY, hack);
+
         // Jack: This is a temporary fix for JBoss Portal. We should come up
         //       with a better fix in our framework that makes sure the
         //       Content-Type is set either before or when the
@@ -141,7 +146,7 @@ public class MainPortlet implements Portlet {
     }
 
 
-    private static void addAttribute(RenderRequest req, String key, String value){
+    private static void addAttribute(RenderRequest req, String key, Object value){
         if (key != null && value != null) {
             req.setAttribute(key, value);
         }
