@@ -105,6 +105,19 @@ public class ChartMediator {
     //sets the string returned when the chart is clicked to the default value
     private String clickedValue = DEFAULT_STRING;
     
+    // Used for bar and barclustered horizontal attribute
+    private boolean horizontal = false;
+    
+    // Used to show the orientation radio buttons
+    private boolean orientationChange = true;
+    
+    //Title for the x-axis
+    private String titleX = "Years";
+    
+    //Title for the y-axis
+    private String titleY = "Problems";
+    
+    
     /*
      * Returns the list of charts to choose from
      * @return list of possible charts.
@@ -239,6 +252,23 @@ public class ChartMediator {
         } else {
             setClickedValue(DEFAULT_STRING);
         }
+        //if it is a bar chart then show the orientation radio buttons
+        if(event.getNewValue().equals(OutputChart.BAR_CHART_TYPE) || 
+              event.getNewValue().equals(OutputChart.BAR_CLUSTERED_CHART_TYPE)){
+            orientationChange = true;
+            if(horizontal == true){
+                //align labels to the proper axis
+                titleX = "Problems";
+                titleY = "Years";
+            }
+        }
+        else {
+            orientationChange = false;
+            //align labels to the proper axis
+            titleX = "Years";
+            titleY = "Problems";
+        }
+            
     }
     
     
@@ -319,6 +349,105 @@ public class ChartMediator {
             }
         }
         
+    }
+    /**
+     * Sets the horizontal, true the chart will be displayed in a 
+     * horizontal orientation, false the chart will be in a vertical 
+     * orientation.
+     *
+     * @param horizontal true for horizontal, false for vertical.
+     */
+    public void setHorizontal(boolean horizontal){
+        this.horizontal = horizontal;
+    }
+    
+    /**
+     * Gets the horizontal boolean value for the charts orientation.
+     *
+     * @return horizontal boolean value for chart orientation.
+     */
+    public boolean getHorizontal(){
+        return horizontal;
+    }
+    
+    /**
+     * Gets the orientationChange value.  True is for when it is a bar or
+     * barclustered chart.  False is all other charts.  Used to display the
+     * radio button group for changing chart orientation.
+     *
+     * @return orientationChange true for visible, false is not visible.
+     */
+    public boolean getOrientationChange() {
+        return orientationChange;
+    }
+    
+    /**
+     * Sets the orientationChange value, true, radio button group is visivble,
+     * false, the radio button group is not visible.
+     *
+     * @param orientationChange true for visible, false is not.  
+     */
+    public void setOrientationChange(boolean orientationChange) {
+        this.orientationChange = orientationChange;
+    }
+
+    /**
+     * Method called when the orientation is change by the user.
+     *
+     * @param event contains new orientation value.
+     */
+    public void selectOrientation(ValueChangeEvent event){
+        String temp = titleX;
+        if(event.getNewValue().equals("true")){
+            //set the orientation and reverse the axis labels
+            horizontal = true;
+            titleX = titleY;
+            titleY = temp;
+        }
+        else{
+            //set the orientation and reverse the axis labels
+            horizontal = false;
+            titleX = titleY;
+            titleY = temp;
+        }
+        //render the chart
+        chartChangedFlag = true;
+    }
+    
+    /**
+     * Gets the title of the x-axis.
+     *
+     * @return titleX name for the x-axis.
+     */
+    public String getTitleX(){
+        return titleX;
+    }
+    
+    /**
+     * Sets the title of the x-axis.
+     *
+     * @param titleX new title of the x-axis.
+     */
+    public void setTitleX(String titleX){
+        this.titleX = titleX;
+    }
+    
+    /**
+     * Gets the title of the y-axis.
+     *
+     * @return titleY name for the y-axis.
+     */
+    public String getTitleY(){
+        return titleY;
+    }
+    
+    /**
+     * Sets the title of the y-axis.
+     *
+     * @param titleY new title of the y-axis.
+     */
+    public void setTitleY(String titleY){
+        this.titleY = titleY;
     }
     
 }
