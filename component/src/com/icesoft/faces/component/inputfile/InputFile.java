@@ -35,7 +35,9 @@ package com.icesoft.faces.component.inputfile;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
+import com.icesoft.faces.component.style.OutputStyle;
 import com.icesoft.faces.context.BridgeFacesContext;
+import com.icesoft.faces.util.CoreUtils;
 import com.icesoft.faces.utils.MessageUtils;
 import com.icesoft.faces.webapp.http.servlet.FileUploadComponent;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
@@ -46,13 +48,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.faces.component.UICommand;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ExternalContext;
 import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
-import javax.faces.event.FacesListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,6 +62,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.Iterator;
 
@@ -226,6 +229,22 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
         String srv = getUploadServletPath(context);
         writer.write("<html><body style=\"background-color:transparent\">");
+        ArrayList outputStyleComponents = findOutputStyleComponents(context.getViewRoot());
+        if (outputStyleComponents != null)
+        {
+            writer.write("<head>");
+            for (int i = 0; i < outputStyleComponents.size(); i++)
+            {
+                OutputStyle outputStyle = (OutputStyle) outputStyleComponents.get(i);
+                String href = outputStyle.getHref();
+                if ((href != null) && (href.length() > 0))
+                {
+                    href = CoreUtils.resolveResourceURL(context, href);
+                    writer.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + href + "\">");
+                }
+            }
+            writer.write("</head>");
+        }        
         writer.write("<form method=\"post\" action=\""+srv+"\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
         writer.write("<input type=\"hidden\" name=\"componentID\" value=\"");
         writer.write(this.getClientId(context));
@@ -757,4 +776,37 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private String getTitleAsString(){
     	return null;
     }
+    
+    private static ArrayList findOutputStyleComponents(UIComponent parent) {
+        ArrayList returnValue = null;
+        Iterator children = parent.getChildren().iterator();
+        UIComponent childComponent = null;
+        while (children.hasNext()) {
+            childComponent = (UIComponent) children.next();
+            if (childComponent instanceof OutputStyle) {
+                if (returnValue == null)
+                {
+                    returnValue = new ArrayList();
+                }
+                returnValue.add(childComponent);
+            }
+            else
+            {
+                ArrayList outputStyleComponents = findOutputStyleComponents(childComponent);
+                if (outputStyleComponents != null)
+                {
+                    if (returnValue == null)
+                    {
+                        returnValue = outputStyleComponents;
+                    }
+                    else
+                    {
+                        returnValue.add(outputStyleComponents);
+                    }
+                }
+            }
+        }
+        return returnValue;
+    }
+        
 }
