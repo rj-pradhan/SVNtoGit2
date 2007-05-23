@@ -110,6 +110,7 @@
 			<tr><td>True</td><td>/application-context/uploadDirectory/sessionid/</td><td>/application-context/sessionid/</td></tr>
 			<tr><td>False</td><td>/application-context/uploadDirectory/</td><td>/application-context/</td></tr>
 		</table>
+		Note: The default value is true.
 		]]>
     </description>
     <property-name>uniqueFolder</property-name>
