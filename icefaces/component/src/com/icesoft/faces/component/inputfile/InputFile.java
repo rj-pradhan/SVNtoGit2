@@ -145,13 +145,17 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         String fileName = stream.getName();
         // IE gives us the whole path on the client, but we just
         //  want the client end file name, not the path
-        if(fileName != null && fileName.length() > 0) {
-            File tempFileName = new File(fileName);
-            fileName = tempFileName.getName();
-        }
-        fileInfo.setFileName(fileName);
-        fileInfo.setContentType(stream.getContentType());
         try {
+            if(fileName != null && fileName.length() > 0) {
+                File tempFileName = new File(fileName);
+                fileName = tempFileName.getName();
+            } else {
+                throw new FileUploadBase.FileUploadIOException(
+                        new FileUploadBase.InvalidContentTypeException());
+            }
+            
+            fileInfo.setFileName(fileName);
+            fileInfo.setContentType(stream.getContentType());
             if (fileName != null && fileName.trim().matches(namePattern)) {
                 File folderFile = new File(folder);
                 if(!folderFile.exists())
@@ -159,6 +163,12 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 file = new File(folder, fileName);
                 OutputStream output = new FileOutputStream(file);
                 Streams.copy(stream.openStream(), output, true);
+                if (file.length() ==0 ) {
+                    setProgress(0);
+                    file.delete();
+                    throw new FileUploadBase.FileUploadIOException(
+                            new FileUploadBase.InvalidContentTypeException());
+                }
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
                 updateFileValueBinding();
