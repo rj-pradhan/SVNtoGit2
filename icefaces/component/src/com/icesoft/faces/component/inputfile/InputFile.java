@@ -100,6 +100,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private String inputTextClass;
     private String fileNamePattern;
     private boolean uniqueFolder = true;
+    private boolean uniqueFolderSet = false;
     private String downloadFolder;
     private Throwable uploadException;
     private int status = DEFAULT;
@@ -301,6 +302,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         if (uniqueFolder != this.uniqueFolder) {
             this.uniqueFolder = uniqueFolder;
         }
+        this.uniqueFolderSet = true;
     }
 
     /**
@@ -308,14 +310,16 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * Return the value of the <code>uniqueFolder</code> property. </p>
      */
     public boolean isUniqueFolder() {
+        if (this.uniqueFolderSet) {
+            return (this.uniqueFolder);
+        }
         ValueBinding vb = getValueBinding("uniqueFolder");
         if (vb != null) {
             return (Boolean.TRUE.equals(vb.getValue(getFacesContext())));
         }
         return true;
     }
-
-
+    
     /**
      * <p/>
      * Return the value of the <code>label</code> property. </p>

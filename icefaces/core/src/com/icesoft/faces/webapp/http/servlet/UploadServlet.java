@@ -61,7 +61,7 @@ public class UploadServlet implements PseudoServlet {
                 progressCalculator.setListenerAndContext(component, context);
                 try {
                     context.setCurrentInstance();
-                    component.upload(item, defaultFolder, maxSize, context);
+                    component.upload(item, getDefaultFolder(request, component), maxSize, context);
                 } catch (IOException e) {
                     try {
                         progressCalculator.reset();
@@ -87,6 +87,17 @@ public class UploadServlet implements PseudoServlet {
     public void shutdown() {
     }
 
+    private String getDefaultFolder(HttpServletRequest request, FileUploadComponent component) {
+        boolean isUniqueFolder = Boolean.valueOf(((UIComponent)component)
+                .getAttributes().get("uniqueFolder").toString()).booleanValue();
+        if (isUniqueFolder) {
+            String sessionId = request.getRequestedSessionId();
+            String FILE_SEPARATOR = System.getProperty("file.separator");
+            return defaultFolder + FILE_SEPARATOR + sessionId;
+        }
+        return defaultFolder;
+    }
+    
     private static class ProgressCalculator {
         private final int GRANULARITY = 10;
         private FileUploadComponent listener;
