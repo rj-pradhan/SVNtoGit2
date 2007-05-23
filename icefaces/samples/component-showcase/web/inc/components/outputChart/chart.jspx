@@ -57,6 +57,26 @@
                 <f:selectItems value="#{chartMediator.chartList}"/>
             </ice:selectOneMenu>
             <br/>
+            <!-- 
+                panelGroup displayed when chart type is bar or barclustered to 
+                toggle horizontal or vertical chart orientation.
+            -->
+            <ice:panelGroup rendered="#{chartMediator.orientationChange}">
+                <h3>
+                    <ice:outputText value="Chart Orientation:"/>
+                </h3>
+                <br/>
+                <ice:selectOneRadio value="false"
+                                    valueChangeListener="#{chartMediator.selectOrientation}"
+                                    partialSubmit="true">
+                    <f:selectItem itemValue="true"
+                                  itemLabel="Horizontal"/>
+                    <f:selectItem itemValue="false"
+                                  itemLabel="Vertical"/>
+                </ice:selectOneRadio>
+                
+            </ice:panelGroup>          
+            <br/>
             <ice:outputText effect="#{chartMediator.effectOutputText}"
                             value="#{chartMediator.clickedValue}"
                             rendered="#{chartMediator.axis and !chartMediator.pie3D}"/>
@@ -71,14 +91,14 @@
             <ice:outputChart id="axisOutputChart"
                              type="#{chartMediator.chartObject.type}"
                              chartTitle="#{chartMediator.chartObject.type} Chart"
-                             yaxisTitle="Problems"
-                             xaxisTitle="Years"
+                             yaxisTitle="#{chartMediator.titleY}"
+                             xaxisTitle="#{chartMediator.titleX}"
                              xaxisLabels="#{chartMediator.chartObject.labels}"
                              labels="#{axisChart.legendLabels}"
                              data="#{chartMediator.chartObject.data}"
                              actionListener="#{chartMediator.imageClicked}"
                              renderOnSubmit="#{chartMediator.allCharts}"
-                             horizontal="true"                             
+                             horizontal="#{chartMediator.horizontal}"                             
                              rendered="#{chartMediator.axis and !chartMediator.pie3D and !chartMediator.pie}"/>
             <!-- Pie charts require a different data model
             Axis charts have a 2 dimensional data model, Pie charts are 1 dimensional -->
