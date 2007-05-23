@@ -273,6 +273,10 @@ input {
     margin: 10px;
 }
 
+.iceDataTblOutline table{
+	border-collapse:collapse;
+}
+
 .iceTblHeader {
 /*the header of a data tables */
     background-color: #EFEFEF;
@@ -300,7 +304,7 @@ input {
 }
 
 /* set the common attributes for the column classes */
-.column1, .column2, .column3 {
+.column1, .column2, .column3, .column {
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;

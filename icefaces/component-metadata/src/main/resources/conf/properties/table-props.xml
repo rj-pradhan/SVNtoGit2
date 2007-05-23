@@ -86,6 +86,8 @@
 
 <property>
     <description>
+        <![CDATA[
+        <p>
         Comma-delimited list of CSS style classes that will be applied to the 
         columns of this table. A space separated list of classes may also be 
         specified for any individual column. If the number of elements in this 
@@ -95,6 +97,22 @@
         list is greater than the number of columns specified in the "columns" 
         attribute, the elements at the posisiton in the list after the value 
         of the "columns" attribute are ignored.	
+        </p>
+        <p>
+        If the value of this attribute is not being set, the tableRenderer would 
+        render the default classes using the following pattern (e.g.) <br/>
+        &lt;td class="column column1" /&gt; <br/>
+        &lt;td class="column column2" /&gt; <br/>
+		&lt;td class="column column3" /&gt; <br/>
+	    &lt;td class="column column4" /&gt; <br/>
+		....              
+        </p>
+        <p>
+        The above class pattern would allow you to define the base style in the 
+        "column" class and if you want to customize any of the specific column 
+        you can override the column+index class.
+        </p>		
+     ]]>        
     </description>			
     <property-name>columnClasses</property-name>
     <property-extension>

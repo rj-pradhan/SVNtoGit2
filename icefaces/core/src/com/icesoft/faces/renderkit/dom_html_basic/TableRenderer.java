@@ -65,12 +65,7 @@ public class TableRenderer extends DomBasicRenderer {
 
         if (!domContext.isInitialized()) {
             Element root = null;
-            if (isScrollable(uiComponent)) {
-                root = domContext.createElement("div");
-            } else {
-                root = domContext.createElement("table");
-            }
-            domContext.setRootNode(root);
+            root = domContext.createRootElement("table");
             setRootElementId(facesContext, root, uiComponent);
             PassThruAttributeRenderer.renderAttributes(
                     facesContext, uiComponent, null);
@@ -83,10 +78,17 @@ public class TableRenderer extends DomBasicRenderer {
         }
         root.setAttribute(HTML.CELLSPACING_ATTR, "0");
         if (isScrollable(uiComponent)) {
+            Element tr = domContext.createElement("tr");  
+            root.appendChild(tr);
+            Element td = domContext.createElement("td");                
+            tr.appendChild(td); 
+            Element mainDiv = domContext.createElement("div");
+            td.appendChild(mainDiv);
             Element headerDiv = domContext.createElement("div");
             Element headerTable = domContext.createElement("table");
             headerDiv.appendChild(headerTable);
-            root.appendChild(headerDiv);
+
+            mainDiv.appendChild(headerDiv);
             Element bodyDiv = domContext.createElement("div");
             String height =
                     (String) uiComponent.getAttributes().get("scrollHeight");
@@ -95,7 +97,7 @@ public class TableRenderer extends DomBasicRenderer {
 
             Element bodytable = domContext.createElement("table");
             bodyDiv.appendChild(bodytable);
-            root.appendChild(bodyDiv);
+            mainDiv.appendChild(bodyDiv);
         }
         renderFacet(facesContext, uiComponent, domContext, true); //header facet
         renderFacet(facesContext, uiComponent, domContext,
@@ -135,7 +137,7 @@ public class TableRenderer extends DomBasicRenderer {
                 Element headerDiv = domContext.createElement("div");
                 Element headerTable = domContext.createElement("table");
                 headerDiv.appendChild(headerTable);
-                root.appendChild(headerDiv);
+                root.getFirstChild().getFirstChild().appendChild(headerDiv);
                 root = headerTable;
             } else {
                 // Get the table in the second div
@@ -423,5 +425,15 @@ public class TableRenderer extends DomBasicRenderer {
             return new StringTokenizer(o.toString(), ",");
         }
         return null;
+    }
+    
+    protected Element getScrollableHeaderTableElement(Element root) {
+        // First table in first div path : table/tr/td/div/div0/table
+        return (Element) root.getFirstChild().getFirstChild().getFirstChild().getFirstChild().getFirstChild();
+    }
+    
+    protected Element getScrollableBodyTableElement(Element root) {
+        // First table in second div path table/tr/td/div/div1/table
+        return (Element) root.getFirstChild().getFirstChild().getFirstChild().getFirstChild().getNextSibling().getFirstChild();
     }
 }

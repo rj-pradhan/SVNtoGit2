@@ -104,7 +104,8 @@ public class TableRenderer
             }
         } else {
             td.setAttribute("class",
-                            CSS_DEFAULT.TABLE_COLUMN_CLASSES + colNumber++);
+                    CSS_DEFAULT.TABLE_COLUMN_CLASSES +  " " +
+                    CSS_DEFAULT.TABLE_COLUMN_CLASSES + colNumber++);
         }
     }
 
@@ -130,12 +131,12 @@ public class TableRenderer
         if (isScrollable(uiComponent)) {
             
             if (header) {
-                // First table in first div
-                root = (Element) root.getFirstChild().getFirstChild();
+                // First table in first div path : table/tr/td/div/div0/table
+                root = getScrollableHeaderTableElement(root);
 
             } else {
-                // First table in second div
-                root = (Element) root.getChildNodes().item(1).getFirstChild();
+                // First table in second div path table/tr/td/div/div1/table
+                root = getScrollableBodyTableElement(root);
             }
         }
         UIComponent headerFacet = getFacetByName(uiData, facet);
@@ -291,7 +292,7 @@ public class TableRenderer
         Element root = (Element) domContext.getRootNode();
 
         if (isScrollable(uiComponent)) {
-            root = (Element) root.getChildNodes().item(1).getFirstChild();
+            root = getScrollableBodyTableElement(root);
         }
         DOMContext.removeChildrenByTagName(root, HTML.TBODY_ELEM);
         Element tBody = (Element) domContext.createElement(HTML.TBODY_ELEM);
@@ -596,4 +597,6 @@ public class TableRenderer
         }
         return size;
     }
+    
+
 }
