@@ -55,6 +55,7 @@ import javax.faces.el.MethodBinding;
 import javax.faces.el.ValueBinding;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.servlet.ServletContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -101,7 +102,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     private String fileNamePattern;
     private boolean uniqueFolder = true;
     private boolean uniqueFolderSet = false;
-    private String downloadFolder;
+    private String uploadDirectory;
+    private Boolean uploadDirectoryAbsolute;
     private Throwable uploadException;
     private int status = DEFAULT;
     private FileInfo fileInfo = new FileInfo();
@@ -134,13 +136,42 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         return "com.icesoft.faces.File";
     }
 
-    public void upload(FileItemStream stream, String defaultFolder, long maxSize, BridgeFacesContext bfc) throws IOException {
+    public void upload(
+            FileItemStream stream,
+            String uploadDirectory,
+            boolean uploadDirectoryAbsolute,
+            long maxSize,
+            BridgeFacesContext bfc,
+            ServletContext servletContext,
+            String sessionId)
+            throws IOException
+    {
         this.uploadException = null;
         this.status = UPLOADING;
         this.sizeMax = maxSize;
         FacesContext context = FacesContext.getCurrentInstance();
-        String folder = getDownloadFolder();
-        folder = folder == null ? defaultFolder : folder;
+        // InputFile uploadDirectory attribute takes precedence,
+        //  but if it's not given, then default to the
+        //  com.icesoft.faces.uploadDirectory context-param
+        String folder = getUploadDirectory();
+        if(folder == null) {
+            folder = uploadDirectory;
+        }
+        // InputFile uploadDirectoryAbsolute attribute takes precedence,
+        //  but if it's not given, then default to the
+        //  com.icesoft.faces.uploadDirectoryAbsolute context-param
+        Boolean folderAbs = getUploadDirectoryAbsolute();
+        if(folderAbs == null) {
+            folderAbs = uploadDirectoryAbsolute ? Boolean.TRUE : Boolean.FALSE;
+        }
+        if(!folderAbs.booleanValue()) {
+            folder = servletContext.getRealPath(folder);
+        }
+        if(isUniqueFolder()) {
+            String FILE_SEPARATOR = System.getProperty("file.separator");
+            folder = folder + FILE_SEPARATOR + sessionId;
+        }
+        
         String namePattern = getFileNamePattern().trim();
         String fileName = stream.getName();
         // IE gives us the whole path on the client, but we just
@@ -238,7 +269,6 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
     
     public void renderIFrame(Writer writer, BridgeFacesContext context) throws IOException {
-        String srv = getUploadServletPath(context);
         writer.write("<html><body style=\"background-color:transparent\">");
         ArrayList outputStyleComponents = findOutputStyleComponents(context.getViewRoot());
         if (outputStyleComponents != null)
@@ -256,6 +286,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
             }
             writer.write("</head>");
         }        
+        String srv = getUploadServletPath(context);
         writer.write("<form method=\"post\" action=\""+srv+"\" enctype=\"multipart/form-data\" id=\"fileUploadForm\">");
         writer.write("<input type=\"hidden\" name=\"componentID\" value=\"");
         writer.write(this.getClientId(context));
@@ -386,17 +417,30 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
 
-    public void setDownloadFolder(String downloadFolder) {
-        this.downloadFolder = downloadFolder;
+
+    public void setUploadDirectory(String uploadDirectory) {
+        this.uploadDirectory = uploadDirectory;
     }
 
-    public String getDownloadFolder() {
-        if (downloadFolder != null) {
-            return downloadFolder;
+    public String getUploadDirectory() {
+        if (uploadDirectory != null) {
+            return uploadDirectory;
         }
-        ValueBinding vb = getValueBinding("downloadFolder");
+        ValueBinding vb = getValueBinding("uploadDirectory");
         return vb != null ? (String) vb.getValue(getFacesContext()) : null;
     }
+    
+    public void setUploadDirectoryAbsolute(Boolean uploadDirectoryAbsolute) {
+        this.uploadDirectoryAbsolute = uploadDirectoryAbsolute;
+    }
+    
+    public Boolean getUploadDirectoryAbsolute() {
+        if (uploadDirectoryAbsolute != null) {
+            return uploadDirectoryAbsolute;
+        }
+        ValueBinding vb = getValueBinding("uploadDirectoryAbsolute");
+        return vb != null ? (Boolean) vb.getValue(getFacesContext()) : null;
+    } 
 
     /**
      * <p>Set the value of the <code>renderedOnUserRole</code> property.</p>
@@ -466,14 +510,31 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * Object.</p>
      */
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[26];
+        Object values[] = new Object[24];
         values[0] = super.saveState(context);
-        values[6] = disabled;
-        values[8] = style;
-        values[9] = styleClass;
-        values[10] = label;
-        values[13] = enabledOnUserRole;
-        values[14] = renderedOnUserRole;
+        values[1] = disabled;
+        values[2] = style;
+        values[3] = styleClass;
+        values[4] = label;
+        values[5] = enabledOnUserRole;
+        values[6] = renderedOnUserRole;
+        values[7] = title;
+        values[8] = new Integer(height);
+        values[9] = new Integer(width);
+        values[10] = new Integer(inputTextSize);
+        values[11] = inputTextClass;
+        values[12] = fileNamePattern;
+        values[13] = uniqueFolder ? Boolean.TRUE : Boolean.FALSE;
+        values[14] = uniqueFolderSet ? Boolean.TRUE : Boolean.FALSE;
+        values[15] = uploadDirectory;
+        values[16] = uploadDirectoryAbsolute;
+        values[17] = uploadException;
+        values[18] = new Integer(status);
+        values[19] = fileInfo;
+        values[20] = new Integer(progress);
+        values[21] = file;
+        values[22] = new Long(sizeMax);
+        values[23] = saveAttachedState(context, progressListener);
         return ((Object) (values));
     }
 
@@ -484,12 +545,29 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     public void restoreState(FacesContext context, Object state) {
         Object values[] = (Object[]) state;
         super.restoreState(context, values[0]);
-        disabled = (Boolean) values[6];
-        style = (String) values[8];
-        styleClass = (String) values[9];
-        label = (String) values[10];
-        enabledOnUserRole = (String) values[13];
-        renderedOnUserRole = (String) values[14];
+        disabled = (Boolean) values[1];
+        style = (String) values[2];
+        styleClass = (String) values[3];
+        label = (String) values[4];
+        enabledOnUserRole = (String) values[5];
+        renderedOnUserRole = (String) values[6];
+        title = (String) values[7];
+        height = ((Integer) values[8]).intValue();
+        width = ((Integer) values[9]).intValue();
+        inputTextSize = ((Integer) values[10]).intValue();
+        inputTextClass = (String) values[11];
+        fileNamePattern = (String) values[12];
+        uniqueFolder = ((Boolean) values[13]).booleanValue();
+        uniqueFolderSet = ((Boolean) values[14]).booleanValue();
+        uploadDirectory = (String) values[15];
+        uploadDirectoryAbsolute = (Boolean) values[16];
+        uploadException = (Throwable) values[17];
+        status = ((Integer) values[18]).intValue();
+        fileInfo = (FileInfo) values[19];
+        progress = ((Integer) values[20]).intValue();
+        file = (File) values[21];
+        sizeMax = ((Long) values[22]).longValue();
+        progressListener = (MethodBinding) restoreAttachedState(context, values[23]);
     }
 
     /**
@@ -798,23 +876,18 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         while (children.hasNext()) {
             childComponent = (UIComponent) children.next();
             if (childComponent instanceof OutputStyle) {
-                if (returnValue == null)
-                {
+                if (returnValue == null) {
                     returnValue = new ArrayList();
                 }
                 returnValue.add(childComponent);
             }
-            else
-            {
+            else {
                 ArrayList outputStyleComponents = findOutputStyleComponents(childComponent);
-                if (outputStyleComponents != null)
-                {
-                    if (returnValue == null)
-                    {
+                if (outputStyleComponents != null) {
+                    if (returnValue == null) {
                         returnValue = outputStyleComponents;
                     }
-                    else
-                    {
+                    else {
                         returnValue.add(outputStyleComponents);
                     }
                 }
@@ -822,5 +895,4 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         }
         return returnValue;
     }
-        
 }

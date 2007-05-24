@@ -79,6 +79,10 @@
 <property>
     <description>
         Bean property that will be a reference to the uploaded file.
+        Note: This is deprecated. Instead you should use actionListener,
+        and when in the callback method, call InputFile.getFileInfo(),
+        which will give you information on both successful and failed
+        file upload attempts.
     </description>
     <property-name>file</property-name>
     <property-class>java.lang.Object</property-class>
@@ -217,5 +221,33 @@
         <editor-class>
             &stringEditor;
         </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+        Describes the directory where any uploaded files should be placed.  
+        Overrides the com.icesoft.faces.uploadDirectory context-param 
+        for this specific inputFile.
+    </description>
+    <property-name>uploadDirectory</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+<property>
+    <description>
+        If the uploadDirectory should be interpretted as an absolute 
+        path into the filesystem, or as a relative path from the deployment directory.
+        Overrides the com.icesoft.faces.uploadDirectoryAbsolute context-param 
+        for this specific inputFile.
+    </description>
+    <property-name>uploadDirectoryAbsolute</property-name>
+    <property-class>boolean</property-class>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
     </property-extension>
 </property>

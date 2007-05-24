@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.faces.component.UIComponent;
 import java.io.IOException;
 import java.util.Map;
 
@@ -22,12 +21,17 @@ public class UploadServlet implements PseudoServlet {
     private static final Log Log = LogFactory.getLog(UploadServlet.class);
     private Map views;
     private long maxSize;
-    private String defaultFolder;
+    private String uploadDirectory;
+    private boolean uploadDirectoryAbsolute;
+    private ServletContext servletContext;
 
     public UploadServlet(Map views, Configuration configuration, ServletContext servletContext) {
         this.views = views;
         this.maxSize = configuration.getAttributeAsLong("uploadMaxFileSize", 3 * 1024 * 1024);//3Mb
-        this.defaultFolder = servletContext.getRealPath(configuration.getAttribute("uploadDirectory", ""));
+        // ngriffin@liferay.com: Partial fix for http://jira.icefaces.org/browse/ICE-1600
+        this.uploadDirectory = configuration.getAttribute("uploadDirectory", "");
+        this.uploadDirectoryAbsolute = configuration.getAttributeAsBoolean("uploadDirectoryAbsolute", false);
+        this.servletContext = servletContext;
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -61,7 +65,14 @@ public class UploadServlet implements PseudoServlet {
                 progressCalculator.setListenerAndContext(component, context);
                 try {
                     context.setCurrentInstance();
-                    component.upload(item, getDefaultFolder(request, component), maxSize, context);
+                    component.upload(
+                            item,
+                            uploadDirectory,
+                            uploadDirectoryAbsolute,
+                            maxSize,
+                            context,
+                            servletContext,
+                            request.getRequestedSessionId());
                 } catch (IOException e) {
                     try {
                         progressCalculator.reset();
@@ -87,17 +98,6 @@ public class UploadServlet implements PseudoServlet {
     public void shutdown() {
     }
 
-    private String getDefaultFolder(HttpServletRequest request, FileUploadComponent component) {
-        boolean isUniqueFolder = Boolean.valueOf(((UIComponent)component)
-                .getAttributes().get("uniqueFolder").toString()).booleanValue();
-        if (isUniqueFolder) {
-            String sessionId = request.getRequestedSessionId();
-            String FILE_SEPARATOR = System.getProperty("file.separator");
-            return defaultFolder + FILE_SEPARATOR + sessionId;
-        }
-        return defaultFolder;
-    }
-    
     private static class ProgressCalculator {
         private final int GRANULARITY = 10;
         private FileUploadComponent listener;
