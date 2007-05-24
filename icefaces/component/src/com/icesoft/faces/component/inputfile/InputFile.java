@@ -202,7 +202,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 }
                 status = SAVED;
                 fileInfo.setPhysicalPath(file.getAbsolutePath());
-                updateFileValueBinding();
+                updateFileValueBinding(context);
                 notifyDone(bfc);
             } else {
                 fileInfo.reset();
@@ -764,11 +764,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      *  backwards compatibility with that.
      * Thanks to ngriffin@liferay.com for noticing the regression
      */
-    protected void updateFileValueBinding() {
+    protected void updateFileValueBinding(FacesContext context) {
         try {
             ValueBinding vb = getValueBinding("file");
             if(vb != null)
-                vb.setValue( FacesContext.getCurrentInstance(), getFile() );
+                vb.setValue(context, getFile());
         }
         catch(Exception e) {
             log.warn("The InputFile's file attribute has a ValueBinding, whose value could not be set",e);
