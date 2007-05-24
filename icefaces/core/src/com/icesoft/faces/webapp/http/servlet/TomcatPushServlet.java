@@ -87,6 +87,7 @@ public class TomcatPushServlet
     protected void service(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         // Not used by Tomcat6
+        throw new ServletException("service() not supported by TomcatPushServlet");
     }
     
 
