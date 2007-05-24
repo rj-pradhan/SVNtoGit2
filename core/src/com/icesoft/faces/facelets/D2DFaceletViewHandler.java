@@ -359,7 +359,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     protected static void verifyUniqueComponentIds(
         FacesContext context, UIComponent comp)
     {
-        if (!log.isErrorEnabled())
+        if (!log.isDebugEnabled())
             return;
         
         HashMap ids = new HashMap(512);
@@ -390,7 +390,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
     {
         String id = comp.getId();
         if (id == null) {
-            log.error("UIComponent has null id: " + comp);
+            log.debug("UIComponent has null id: " + comp);
         } else {
             if (ids.containsKey(id)) {
                 if(!duplicateIds.contains(id))
@@ -457,7 +457,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
         //  component tree, and thus in the source .xhtml file.
         
         int numDuplicateIds = duplicateIds.size();
-        log.error("There were " + numDuplicateIds + " ids found which are duplicates, meaning that multiple UIComponents share that same id");
+        log.debug("There were " + numDuplicateIds + " ids found which are duplicates, meaning that multiple UIComponents share that same id");
         for(int i = 0; i < numDuplicateIds; i++) {
             String id = (String) duplicateIds.get(i);
             ArrayList duplicateComps = (ArrayList) duplicateIds2comps.get(id);
@@ -476,7 +476,7 @@ public class D2DFaceletViewHandler extends D2DViewHandler {
                 sb.append(".  component: ");
                 sb.append(comp.toString());
             }
-            log.error(sb.toString());
+            log.debug(sb.toString());
         }
     }
 }
