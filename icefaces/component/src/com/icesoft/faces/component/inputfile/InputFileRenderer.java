@@ -43,6 +43,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.File;
 
 public class InputFileRenderer extends Renderer {
 
@@ -80,7 +81,15 @@ public class InputFileRenderer extends Renderer {
             } catch (FileUploadBase.UnknownSizeException e) {
                 context.addMessage(null, MessageUtils.getMessage(context, InputFile.UNKNOWN_SIZE_MESSAGE_ID));
             } catch (FileUploadBase.InvalidContentTypeException e) {
-                context.addMessage(null, MessageUtils.getMessage(context, InputFile.INVALID_FILE_MESSAGE_ID));
+                String fileName = c.getFileInfo().getFileName();
+                if(fileName == null) {
+                    File file = c.getFile();
+                    if(file != null)
+                        fileName = file.getName();
+                }
+                if(fileName == null)
+                    fileName = "";
+                context.addMessage(null, MessageUtils.getMessage(context, InputFile.INVALID_FILE_MESSAGE_ID, new Object[] { fileName }));
             } catch (Throwable t) {
                 //ignore
             }

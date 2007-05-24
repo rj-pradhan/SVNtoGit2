@@ -174,10 +174,10 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         
         String namePattern = getFileNamePattern().trim();
         String fileName = stream.getName();
-        // IE gives us the whole path on the client, but we just
-        //  want the client end file name, not the path
         try {
             if(fileName != null && fileName.length() > 0) {
+                // IE gives us the whole path on the client, but we just
+                //  want the client end file name, not the path
                 File tempFileName = new File(fileName);
                 fileName = tempFileName.getName();
             } else {
@@ -194,7 +194,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 file = new File(folder, fileName);
                 OutputStream output = new FileOutputStream(file);
                 Streams.copy(stream.openStream(), output, true);
-                if (file.length() ==0 ) {
+                if (file.length() == 0 ) {
                     setProgress(0);
                     file.delete();
                     throw new FileUploadBase.FileUploadIOException(
@@ -225,7 +225,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
                 status = INVALID;
             }
             fileInfo.setException(uploadException);
-            file.delete();
+            if(file != null)
+                file.delete();
             notifyDone(bfc);
             throw uploadException;
         }
@@ -233,7 +234,8 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
             this.uploadException = e;
             status = INVALID;
             fileInfo.setException(e);
-            file.delete();
+            if(file != null)
+                file.delete();
             notifyDone(bfc);
             throw e;
         }
