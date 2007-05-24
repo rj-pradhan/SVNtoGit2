@@ -120,7 +120,7 @@
         shutdown: function() {
             this.send = Function.NOOP;
             try {
-                this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), This.FormPost);
+                this.channel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), This.FormPost);
             } finally {
                 [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
                     f.clear();
