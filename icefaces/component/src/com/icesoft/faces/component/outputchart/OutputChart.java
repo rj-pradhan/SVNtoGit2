@@ -61,10 +61,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
-public class OutputChart extends HtmlCommandButton {
+public class OutputChart extends HtmlCommandButton implements Serializable {
 
     public static String AREA_CHART_TYPE = "area";
     public static String AREA_STACKED_CHART_TYPE = "areastacked";
@@ -684,6 +685,67 @@ public class OutputChart extends HtmlCommandButton {
             this.horizontal = horizontal;
         }
         this.horizontalSet = true;        
+    }
+    
+    /**
+     * <p>Gets the state of the instance as a <code>Serializable</code>
+     * Object.</p>
+     */
+    public Object saveState(FacesContext context) {
+        Object values[] = new Object[22];
+        values[0] = super.saveState(context);
+        values[1] = new Integer(imageCounter);
+        values[2] = abstractChart;
+        values[3] = width;
+        values[4] = height;
+        values[5] = render ? Boolean.TRUE : Boolean.FALSE;
+        values[6] = chartTitle;
+        values[7] = data;
+        values[8] = labels;
+        values[9] = colors;
+        values[10] = shapes;
+        values[11] = xaxisLabels;
+        values[12] = xaxisTitle;
+        values[13] = yaxisTitle;
+        values[14] = style;
+        values[15] = styleClass;
+        values[16] = legendPlacement;
+        values[17] = legendColumns;
+        values[18] = horizontal ? Boolean.TRUE : Boolean.FALSE;
+        values[19] = horizontalSet ? Boolean.TRUE : Boolean.FALSE;
+        values[20] = type;
+        values[21] = saveAttachedState(context, renderOnSubmitMethodBinding);
+        return ((Object) (values));
+    }
+
+    /**
+     * <p>Perform any processing required to restore the state from the entries
+     * in the state Object.</p>
+     */
+    public void restoreState(FacesContext context, Object state) {
+        Object values[] = (Object[]) state;
+        super.restoreState(context, values[0]);
+        imageCounter = ((Integer) values[1]).intValue();
+        abstractChart = (AbstractChart) values[2];
+        width = (String) values[3];
+        height = (String) values[4];
+        render = ((Boolean) values[5]).booleanValue();
+        chartTitle = (String) values[6];
+        data = values[7];
+        labels = values[8];
+        colors = values[9];
+        shapes = values[10];
+        xaxisLabels = values[11];
+        xaxisTitle = (String) values[12];
+        yaxisTitle = (String) values[13];
+        style = (String) values[14];
+        styleClass = (String) values[15];
+        legendPlacement = values[16];
+        legendColumns = values[17];
+        horizontal = ((Boolean) values[18]).booleanValue();
+        horizontalSet = ((Boolean) values[19]).booleanValue();
+        type = (String) values[20];
+        renderOnSubmitMethodBinding = (MethodBinding) restoreAttachedState(context, values[21]);
     }
 }
 

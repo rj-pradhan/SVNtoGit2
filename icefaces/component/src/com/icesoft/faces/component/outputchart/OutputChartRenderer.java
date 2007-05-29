@@ -59,9 +59,11 @@ public class OutputChartRenderer extends DomBasicRenderer {
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
             Element td = (Element) domContext.createElement(HTML.TD_ELEM);
             table.setAttribute(HTML.CLASS_ATTR, outputChart.getStyleClass());
-            if (outputChart.getStyle() != null) {
-                table.setAttribute(HTML.STYLE_ATTR, outputChart.getStyle());
-            }
+            String style = outputChart.getStyle();
+            if(style != null && style.length() > 0)
+                table.setAttribute(HTML.STYLE_ATTR, style);
+            else
+                table.removeAttribute(HTML.STYLE_ATTR);
             table.appendChild(tr);
             tr.appendChild(td);
         }
@@ -75,9 +77,8 @@ public class OutputChartRenderer extends DomBasicRenderer {
         Element image = (Element) domContext.createElement(HTML.IMG_ELEM);
 
         image.setAttribute(HTML.SRC_ATTR, getResourceURL(facesContext,
-                ((OutputChart) uiComponent).getFolder().getName()+"/" +
-                                          ((OutputChart) uiComponent)
-                                                  .getFileName()));
+                outputChart.getFolder().getName()+ "/" +
+                outputChart.getFileName()));
 //        image.setAttribute(HTML.WIDTH_ATTR, outputChart.getWidth());
 //        image.setAttribute(HTML.HEIGHT_ATTR, outputChart.getHeight());
         

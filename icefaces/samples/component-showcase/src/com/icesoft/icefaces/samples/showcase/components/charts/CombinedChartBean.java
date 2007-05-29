@@ -103,6 +103,9 @@ public class CombinedChartBean {
     private static AxisChart axisChart;
 
     public CombinedChartBean() {
+    }
+
+    private void buildAxisChart() {
         try {
             String[] xAxisLabels =
                     {"1998", "1999", "2000", "2001", "2002", "2003", "2004"};
@@ -164,8 +167,8 @@ public class CombinedChartBean {
      * @return boolean true if OutputChart should be re-rendered; otherwise, false.
      */
     public boolean renderOnSubmit(OutputChart component) {
-
-
+        if(axisChart == null || component.getChart() == null)
+            buildAxisChart();
         component.setChart(axisChart);
 
         return !initialzed && (initialzed = true);
