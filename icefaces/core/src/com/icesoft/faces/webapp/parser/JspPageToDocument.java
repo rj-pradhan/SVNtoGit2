@@ -246,11 +246,18 @@ public class JspPageToDocument {
                 matchFound = true;
                 String args = staticIncludeMatcher.group(1);
                 try {
+                    if (!args.startsWith("/"))  {
+                        String servletPath = FacesContext.getCurrentInstance()
+                                .getExternalContext().getRequestServletPath();
+                        String workingDir = servletPath.substring( 0,
+                                servletPath.lastIndexOf("/") );
+                        args = workingDir + "/" + args;
+                    }
                     String includeString = getInputAsString(
                             new InputStreamReader(
                                     FacesContext.getCurrentInstance()
                                             .getExternalContext()
-                                            .getResource("/" + args)
+                                            .getResource(args)
                                             .openConnection()
                                             .getInputStream()));
                     //Strip xml declarations from included files
