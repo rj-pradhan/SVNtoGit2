@@ -44,7 +44,7 @@
              ]]>
 	</description>
 	<property-name>multiple</property-name>
-	<property-class>java.lang.Object</property-class>
+	<property-class>boolean</property-class>	
 	<property-extension>
 		<category>ICE_LAYOUT</category>
 	</property-extension>
