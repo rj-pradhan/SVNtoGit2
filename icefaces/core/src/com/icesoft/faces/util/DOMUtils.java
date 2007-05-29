@@ -430,7 +430,7 @@ public class DOMUtils {
 
     /**
      * from http://www.w3.org/TR/REC-html40/sgml/entities.html
-     Portions © International Organization for Standardization 1986
+     Portions Copyright International Organization for Standardization 1986
      Permission to copy in any form is granted for use with
      conforming SGML systems and applications as defined in
      ISO 8879, provided this notice is included in all copies.

@@ -382,7 +382,7 @@ public class DOMResponseWriter extends ResponseWriter {
         Element meta =
                 (Element) head.appendChild(document.createElement("meta"));
         meta.setAttribute("name", "icefaces");
-        meta.setAttribute("content", "Rendered by ICEFaces™ D2D");
+        meta.setAttribute("content", "Rendered by ICEFaces D2D");
 
         Element noscript =
                 (Element) head.appendChild(document.createElement("noscript"));
