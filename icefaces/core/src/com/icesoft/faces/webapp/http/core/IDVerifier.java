@@ -1,22 +1,25 @@
 package com.icesoft.faces.webapp.http.core;
 
-import com.icesoft.faces.webapp.http.common.Server;
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Response;
+import com.icesoft.faces.webapp.http.common.ResponseHandler;
+import com.icesoft.faces.webapp.http.common.Server;
 
 public class IDVerifier implements Server, ResponseHandler {
+    private String sessionID;
     private Server server;
 
-    public IDVerifier(Server server) {
+    public IDVerifier(String sessionID, Server server) {
+        this.sessionID = sessionID;
         this.server = server;
     }
 
     public void service(Request request) throws Exception {
-        if (!request.containsParameter("icefacesID") || request.getParameter("icefacesID").equals("")) {
-            request.respondWith(this);
-        } else {
+        String id = request.getParameter("icefacesID");
+        if (id != null && sessionID.equals(id)) {
             server.service(request);
+        } else {
+            request.respondWith(this);
         }
     }
 

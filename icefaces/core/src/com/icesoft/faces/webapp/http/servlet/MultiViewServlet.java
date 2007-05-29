@@ -4,7 +4,6 @@ import com.icesoft.faces.util.event.servlet.ContextEventRepeater;
 import com.icesoft.faces.webapp.http.common.Configuration;
 import com.icesoft.faces.webapp.http.core.PageServer;
 import com.icesoft.faces.webapp.http.core.ViewQueue;
-import com.icesoft.util.IdGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +19,9 @@ public class MultiViewServlet extends BasicAdaptingServlet {
     private Configuration configuration;
     private SessionDispatcher.Listener.Monitor sessionMonitor;
 
-    public MultiViewServlet(HttpSession session, SessionDispatcher.Listener.Monitor sessionMonitor, IdGenerator idGenerator, Map views, ViewQueue asynchronouslyUpdatedViews, Configuration configuration) {
+    public MultiViewServlet(HttpSession session, String sessionID, SessionDispatcher.Listener.Monitor sessionMonitor, Map views, ViewQueue asynchronouslyUpdatedViews, Configuration configuration) {
         super(new PageServer());
-        this.sessionID = idGenerator.newIdentifier();
-        ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
-
+        this.sessionID = sessionID;
         this.session = session;
         this.sessionMonitor = sessionMonitor;
         this.views = views;
