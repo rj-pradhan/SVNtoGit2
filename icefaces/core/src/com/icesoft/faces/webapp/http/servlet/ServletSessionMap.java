@@ -3,6 +3,10 @@ package com.icesoft.faces.webapp.http.servlet;
 import com.icesoft.faces.context.AbstractAttributeMap;
 
 import javax.servlet.http.HttpSession;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.Enumeration;
 
 public class ServletSessionMap extends AbstractAttributeMap {
@@ -16,14 +20,16 @@ public class ServletSessionMap extends AbstractAttributeMap {
       * @see com.icesoft.faces.context.AbstractAttributeMap#getAttribute(java.lang.String)
       */
     protected Object getAttribute(String key) {
-        return httpSession.getAttribute(key);
+        Slot slot = (Slot) httpSession.getAttribute(key);
+        return slot == null ? null : slot.value;
     }
 
     /*
       * @see com.icesoft.faces.context.AbstractAttributeMap#setAttribute(java.lang.String, java.lang.Object)
       */
     protected void setAttribute(String key, Object value) {
-        httpSession.setAttribute(key, value);
+        //wrap values to avoid Tomcat serialization warnings
+        httpSession.setAttribute(key, new Slot(value));
     }
 
     /*
@@ -40,4 +46,19 @@ public class ServletSessionMap extends AbstractAttributeMap {
         return httpSession.getAttributeNames();
     }
 
+    private static class Slot implements Externalizable {
+        private Object value;
+
+        public Slot(Object value) {
+            this.value = value;
+        }
+
+        public void writeExternal(ObjectOutput objectOutput) throws IOException {
+            //do nothing
+        }
+
+        public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
+            //do nothing
+        }
+    }
 }
