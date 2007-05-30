@@ -128,9 +128,9 @@
             }
         },
 
-        isUnavailable: function() {
+        isServerError: function() {
             try {
-                return this.request.status == 503;
+                return this.request.status == 500;
             } catch (e) {
                 return false;
             }
@@ -138,10 +138,6 @@
 
         isOkAndComplete: function() {
             return this.isComplete() && this.isOk();
-        },
-
-        isUnavailableAndComplete: function() {
-            return this.isComplete() && this.isUnavailable();
         },
 
         getAsynchronously: function(path, query, requestConfigurator) {

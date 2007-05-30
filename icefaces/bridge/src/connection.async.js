@@ -41,6 +41,7 @@
             this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
+            this.onServerErrorListeners = [];
             this.connectionDownListeners = [];
             this.connectionTroubleListeners = [];
 
@@ -64,6 +65,8 @@
                 this.timeoutBomb.cancel();
             }.bind(this));
 
+            this.badResponseCallback = this.connectionDownListeners.broadcaster();
+            this.serverErrorCallback = this.onServerErrorListeners.broadcaster();
             this.receiveCallback = function(response) {
                 try {
                     this.onReceiveListeners.broadcast(response);
@@ -149,7 +152,8 @@
             this.listener.close();
             this.logger.debug("connect...");
             this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
-                request.on(Connection.BadResponse, this.connectionDownListeners.broadcaster());
+                request.on(Connection.BadResponse, this.badResponseCallback);
+                request.on(Connection.ServerError, this.serverErrorCallback);
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.Receive, this.connect.bind(this).delayFor(150));
             }.bind(this));
@@ -162,6 +166,7 @@
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
                 Connection.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
+                request.on(Connection.ServerError, this.serverErrorCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },
@@ -172,6 +177,10 @@
 
         onReceive: function(callback) {
             this.onReceiveListeners.push(callback);
+        },
+
+        onServerError: function(callback) {
+            this.onServerErrorListeners.push(callback);
         },
 
         whenDown: function(callback) {
@@ -197,7 +206,7 @@
             } catch (e) {
                 //ignore, we really need to shutdown
             } finally {
-                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(listeners) {
+                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners, this.onServerErrorListeners ].eachWithGuard(function(listeners) {
                     listeners.clear();
                 });
 

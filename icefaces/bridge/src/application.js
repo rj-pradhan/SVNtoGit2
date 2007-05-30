@@ -95,6 +95,12 @@
                 documentSynchronizer.synchronize();
             });
 
+            this.connection.onServerError(function (response) {
+                document.open();
+                document.write(response.content());
+                document.close();                
+            });
+
             this.connection.whenDown(function() {
                 logger.warn('connection to server was lost');
                 statusManager.connectionLost.on();

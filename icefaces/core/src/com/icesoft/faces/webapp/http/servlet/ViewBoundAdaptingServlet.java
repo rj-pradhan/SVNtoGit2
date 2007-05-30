@@ -4,8 +4,6 @@ import com.icesoft.faces.webapp.http.common.Server;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Map;
 
 public class ViewBoundAdaptingServlet extends BasicAdaptingServlet {
@@ -28,12 +26,6 @@ public class ViewBoundAdaptingServlet extends BasicAdaptingServlet {
                 view.setAsCurrentDuring(request, response);
                 sessionMonitor.touchSession();
                 super.service(request, response);
-            } catch (Exception e) {
-                //todo: queue a 'server-error' command instead 
-                Writer writer = response.getWriter();
-                writer.write("<server-error><![CDATA[");
-                e.printStackTrace(new PrintWriter(writer, true));
-                writer.write("]]></server-error>");
             } finally {
                 view.release();
             }

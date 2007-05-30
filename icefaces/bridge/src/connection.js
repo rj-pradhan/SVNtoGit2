@@ -40,16 +40,16 @@
         return request.isComplete() && !request.isResponseValid();
     }
 
+    This.ServerError = function(request) {
+        return request.isComplete() && request.isServerError();
+    }
+
     This.Receive = function(request) {
         return request.isOkAndComplete();
     }
 
     This.Ok = function(request) {
         return request.isOkAndComplete();
-    }
-
-    This.Unavailable = function(request) {
-        return request.isUnavailableAndComplete();
     }
 
     This.SyncConnection = Object.subclass({
@@ -59,6 +59,7 @@
             this.defaultQuery = defaultQuery;
             this.onSendListeners = [];
             this.onReceiveListeners = [];
+            this.onServerErrorListeners = [];
             this.connectionDownListeners = [];
             this.timeoutBomb = { cancel: Function.NOOP };
             this.logger.info('synchronous mode');
@@ -88,6 +89,7 @@
             }.bind(this);
 
             this.badResponseCallback = this.connectionDownListeners.broadcaster();
+            this.serverErrorCallback = this.onServerErrorListeners.broadcaster();
         },
 
         send: function(query) {
@@ -97,6 +99,7 @@
                 This.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.BadResponse, this.badResponseCallback);
+                request.on(Connection.ServerError, this.serverErrorCallback);
                 this.onSendListeners.broadcast(request);
             }.bind(this));
         },
@@ -107,6 +110,10 @@
 
         onReceive: function(callback) {
             this.onReceiveListeners.push(callback);
+        },
+
+        onServerError: function(callback) {
+            this.onServerErrorListeners.push(callback);
         },
 
         whenDown: function(callback) {
@@ -122,7 +129,7 @@
             try {
                 this.channel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), This.FormPost);
             } finally {
-                [ this.onSendListeners, this.onReceiveListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
+                [ this.onSendListeners, this.onReceiveListeners, this.onServerErrorListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
                     f.clear();
                 });
             }
