@@ -1118,7 +1118,7 @@ weekend{
     .lettucePanel {
     border: 1px solid black;
     width: 500px;
-    height: 400px;
+    height: 200px;
 background-image: url("../images/accordion/produce.jpg" );
 }
 .applesPanel {
@@ -1157,7 +1157,7 @@ background-image: url("../images/accordion/produce.jpg" );
 }
 
 .contentLayoutGridStyleProduce {
-    height: 375px;
+    height: 200px;
     width: 100%;
     border: 1px solid #cccccc;
 }
@@ -1182,6 +1182,9 @@ background-image: url("../images/accordion/produce.jpg" );
 .contentLayoutGridColumnProduceLogin {
     width: 210px; /* fixed height of content demos*/
     vertical-align: top;
+}
+.accordionVeggieHeader h3{
+  font-size :1.2em ;
 }
 
 

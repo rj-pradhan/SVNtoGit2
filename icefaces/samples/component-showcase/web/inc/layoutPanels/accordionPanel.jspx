@@ -70,7 +70,9 @@
     <!-- Fruit navigation accordion panel-->
     <ice:panelAccordion expanded="#{true}">
         <f:facet name="header">
-            <ice:outputText value="Fruits"/>
+            <ice:panelGroup>
+                <ice:outputText value="Fruits"/>
+            </ice:panelGroup>
         </f:facet>
         <ice:panelGroup>
             <ice:commandLink value="Apples"
@@ -114,7 +116,9 @@
     <!-- Vegetables navigation accordion panel -->
     <ice:panelAccordion>
         <f:facet name="header">
-            <ice:outputText value="Vegetables"/>
+            <ice:panelGroup>
+                <ice:outputText value="Vegetables"/>
+            </ice:panelGroup>
         </f:facet>
         <ice:panelGroup>
             <ice:commandLink value="Carrots"
@@ -155,7 +159,7 @@
         </ice:panelGroup>
     </ice:panelAccordion>
 </ice:panelGroup>
-<!-- Main content includes for -->
+<!-- html content is streamed into the panelGroups from the htmlContentBean -->
 <ice:panelGroup >
     <ice:panelStack
             cellpadding="0" cellspacing="0"
@@ -165,55 +169,91 @@
                 <ice:outputText value="Welcome"/>
             </h3>
             <br/>
-            <ice:outputText value="Welcome to the ICESoft Produce Store!"/>
+            <ice:outputText value="#{msgs['component.accordion.intro']}"/>
             <br/>
             <ice:outputText
-                    value="Please feel free to browse our products by clicking on the expandable menus on the left. All of our produce is 100% organic and grown in ICESoft's own Ajax compatable greenery."/>
+                    value="#{msgs['component.accordion.greeting']}"/>
         </ice:panelGroup>
         <ice:panelGroup id="apples" styleClass="applesPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/apples.html"/>
+               <ice:outputText value="#{contentBean.apples}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="oranges" styleClass="orangesPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/oranges.html"/>
+               <ice:outputText value="#{contentBean.oranges}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="grapes" styleClass="grapesPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/grapes.html"/>
+                <ice:outputText value="#{contentBean.grapes}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="bananas" styleClass="bananasPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/bananas.html"/>
+                <ice:outputText value="#{contentBean.bananas}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="citrus" styleClass="citrusPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/citrus.html"/>
+                <ice:outputText value="#{contentBean.citrus}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="carrots" styleClass="carrotsPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/carrots.html"/>
+                <ice:outputText value="#{contentBean.carrots}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="peppers" styleClass="peppersPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/peppers.html"/>
+               <ice:outputText value="#{contentBean.peppers}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="tomatoes" styleClass="tomatoesPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/tomatoes.html"/>
+               <ice:outputText value="#{contentBean.tomatoes}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="cucumbers" styleClass="cucumbersPanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/cucumber.html"/>
+                 <ice:outputText value="#{contentBean.cucumbers}" escape="false"/>
         </ice:panelGroup>
         <ice:panelGroup id="lettuce" styleClass="lettucePanel">
-                <jsp:directive.include
-                        file="./inc/layoutPanels/accordionContent/lettuce.html"/>
+               <ice:outputText value="#{contentBean.lettuce}" escape="false"/>
         </ice:panelGroup>
     </ice:panelStack>
 </ice:panelGroup>
 </ice:panelGrid>
-
+<br/>
+<!-- login section-->
+    <ice:panelGrid style="width:210px; border:0px" columns="2" rows="1" border="1">
+        <ice:panelGroup style="width:200px">
+            <ice:panelAccordion>
+                <f:facet name="header">
+                    <ice:panelGroup>
+                        <ice:outputText value="Login"/>
+                    </ice:panelGroup>
+                </f:facet>
+                <ice:panelGroup>
+                    <ice:panelTabSet selectedIndex="1">
+                        <ice:panelTab label="Login">
+                            <ice:outputText value="Name: "/>
+                            <ice:inputText value="#{accordionLoginBean.name}"/><br/>
+                            <ice:outputText value="Password: "/>
+                            <ice:inputSecret value="#{accordionLoginBean.password}"/><br/>
+                            <ice:commandButton value="Submit" type="submit" actionListener="#{accordionLoginBean.loginActionListener}"/>
+                        </ice:panelTab>
+                        <ice:panelTab label="Register">
+                            <ice:outputText value="Enter your desired username and password."/><br/>
+                            <ice:outputText value="Username: "/>
+                            <ice:inputText value="#{accordionLoginBean.name}"/><br/>
+                            <ice:outputText value="Password: "/>
+                            <ice:inputSecret value="#{accordionLoginBean.password}"/><br/>
+                            <ice:commandButton value="Register" type="submit" actionListener="#{accordionLoginBean.registerActionListener}"/>
+                        </ice:panelTab>
+                    </ice:panelTabSet>
+                </ice:panelGroup>
+            </ice:panelAccordion>
+        </ice:panelGroup>
+        <ice:panelGroup style="width:200px">
+            <ice:panelAccordion expanded="#{accordionLoginBean.isLoggedIn}">
+                <f:facet name="header">
+                    <ice:panelGroup>
+                        <ice:outputText value="User Info/Status"/>
+                    </ice:panelGroup>
+                </f:facet>
+                <ice:panelGroup>
+                    <ice:outputText value="Username: "/>
+                    <ice:outputText value="#{accordionLoginBean.name}"/><br/>
+                    <ice:outputText value="Status: "/>
+                    <ice:outputText value="#{accordionLoginBean.status}"/>
+                </ice:panelGroup>
+            </ice:panelAccordion>
+        </ice:panelGroup>
+    </ice:panelGrid>
 </ice:panelGrid>
 
 </ice:panelTab>

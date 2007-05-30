@@ -31,68 +31,79 @@
  *
  */
 
+
 package com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel;
 
-import com.icesoft.faces.context.effects.Effect;
-import com.icesoft.faces.context.effects.Highlight;
-import java.util.Map;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
- * This class is the backing bean for the accordionPanel example. It handles all the 
- * methods required to operate the accordion panel and its content.
+ * This class controls the ability of a user to login or register
+ * on the page. Also demos the ablity to add custom components to the
+ * accordion panel component.
  *
- *
+ *@since May 18 2007
+ * @author dnorthcott
  */
-public class AccordionBean {
-
-    private Highlight effectOutputText = new Highlight("#a4bdd2");
-    private String selectedPanel = "";
-
-    public AccordionBean() {
+public class AccordionLoginBean {
+    // boolean to determine if the user has logged in or registered
+    private boolean isLoggedIn;
+    // status of the user
+    private String status;
+    //username
+    private String name;
+    //password
+    private String password;
+    
+        
+    public void setIsLoggedIn(boolean bool){
+        isLoggedIn = bool;
     }
-
-    public Effect getEffectOutputText() {
-        return effectOutputText;
+    public boolean getIsLoggedIn(){
+        return isLoggedIn;
     }
-
-    /*
-    * Sets the output text effect
-    *@param effectOutputText highlight effect for command links
-    */
-    public void setEffectOutputText(Effect effectOutputText) {
-        this.effectOutputText = (Highlight) effectOutputText;
-    }
-
     /**
-     * Used in the accordion panel example to change between the selected
-     * panels.
-     *
-     * @param event from the action listener.
+     * Method to listen for any action from the login area of the jspx page
+     *@param event jsp event listener
      */
-    public void selectedPanelChangedAction(ActionEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map map = context.getExternalContext().getRequestParameterMap();
-        selectedPanel = (String) map.get("products");
+    public void loginActionListener(ActionEvent event){
+        setIsLoggedIn(true);
+        setStatus("Logged In");
+        
+        setPassword("");
+    }
+    /**
+     * Method to listen for any action from the register area of the jspx page
+     *@param event jsp event listener
+     */
+    public void registerActionListener(ActionEvent event){
+        setIsLoggedIn(true);
+        setStatus("Registered");
+        
+        setPassword("");
+    }
 
+     public void setStatus(String status){
+        this.status = status;
+    }
+     
+     public String getStatus(){
+         return status;
+     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
-    /**
-     * Sets the selected panel name to the specified panel name.
-     *
-     * @param selectedPanel panel name to be set as selected.
-     */
-    public void setSelectedPanel(String selectedPanel) {
-        this.selectedPanel = selectedPanel;
-    }
-
-    /**
-     * Gets the selected panel name.
-     *
-     * @return currently selected panel.
-     */
-    public String getSelectedPanel() {
-        return selectedPanel;
-    }
 }
