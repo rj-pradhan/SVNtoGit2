@@ -33,6 +33,10 @@
 
 package com.icesoft.icefaces.samples.showcase.components.expandableTable;
 
+import com.icesoft.icefaces.samples.showcase.util.StyleBean;
+
+import javax.faces.application.Application;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -63,10 +67,8 @@ public class SalesRecordsManager {
     public static final String CHILD_INDENT_STYLE_CLASS = "childRowIndentStyle";
     public static final String CHILD_ROW_STYLE_CLASS = "childRowStyle";
     // toggle for expand contract
-    public static final String CONTRACT_IMAGE =
-            "images/tableExpandable/contract.gif";
-    public static final String EXPAND_IMAGE =
-            "images/tableExpandable/expand.gif";
+    public static final String CONTRACT_IMAGE = "tree_nav_top_close_no_siblings.gif";
+    public static final String EXPAND_IMAGE = "tree_nav_top_open_no_siblings.gif";
 
     public SalesRecordsManager() {
         init();
@@ -86,6 +88,12 @@ public class SalesRecordsManager {
         } else {
             inventoryGroupItemBeans = new ArrayList(10);
         }
+        
+        Application application =
+                FacesContext.getCurrentInstance().getApplication();
+        StyleBean styleBean =
+                ((StyleBean) application.createValueBinding("#{styleBean}").
+                        getValue(FacesContext.getCurrentInstance()));
 
         /**
          * Build the array list group items.  Currently static but could be easily
@@ -96,6 +104,7 @@ public class SalesRecordsManager {
         SalesGroupRecordBean salesRecordGroup =
                 new SalesGroupRecordBean(GROUP_INDENT_STYLE_CLASS,
                                          GROUP_ROW_STYLE_CLASS,
+                                         styleBean,
                                          EXPAND_IMAGE, CONTRACT_IMAGE,
                                          inventoryGroupItemBeans, false);
         salesRecordGroup.setDescription("Tuesday's Items");
@@ -123,6 +132,7 @@ public class SalesRecordsManager {
         salesRecordGroup =
                 new SalesGroupRecordBean(GROUP_INDENT_STYLE_CLASS,
                                          GROUP_ROW_STYLE_CLASS,
+                                         styleBean,
                                          EXPAND_IMAGE, CONTRACT_IMAGE,
                                          inventoryGroupItemBeans, true);
         salesRecordGroup.setDescription("Wednesday's Items");
@@ -158,6 +168,7 @@ public class SalesRecordsManager {
         salesRecordGroup =
                 new SalesGroupRecordBean(GROUP_INDENT_STYLE_CLASS,
                                          GROUP_ROW_STYLE_CLASS,
+                                         styleBean,
                                          EXPAND_IMAGE, CONTRACT_IMAGE,
                                          inventoryGroupItemBeans, false);
         salesRecordGroup.setDescription("Thursday's Items");

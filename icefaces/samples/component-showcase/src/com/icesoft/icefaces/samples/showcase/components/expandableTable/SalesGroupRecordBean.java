@@ -34,6 +34,8 @@
 package com.icesoft.icefaces.samples.showcase.components.expandableTable;
 
 
+import com.icesoft.icefaces.samples.showcase.util.StyleBean;
+
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
 
@@ -47,9 +49,10 @@ import java.util.ArrayList;
  * the view (jspx) page behaves.</p>
  */
 public class SalesGroupRecordBean extends SalesGroupRecord {
-
-    public static final String SPACER_IMAGE =
-            "images/tableExpandable/spacer.gif";
+    protected static final String DEFAULT_IMAGE_DIR =
+            "./xmlhttp/css/xp/css-images/";
+    protected static final String SPACER_IMAGE =
+            "tree_line_blank.gif";
 
     // style for column that holds expand/contract image toggle, in the sales
     // record row.
@@ -57,13 +60,12 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
 
     // style for all other columns in the sales record row.
     protected String rowStyleClass = "";
-
+    
+    protected StyleBean styleBean;
+    
     // Images used to represent expand/contract, spacer by default
-    protected String expandImage = SPACER_IMAGE;  // arrow points right
-    protected String contractImage = SPACER_IMAGE; // arrow point down
-
-    // image which will be drawn to screen
-    protected String expandContractImage = SPACER_IMAGE;
+    protected String expandImage;   // + or >
+    protected String contractImage; // - or v
 
     // callback to list which contains all data in the dataTable.  This callback
     // is needed so that a node can be set in the expanded state at construction time.
@@ -82,6 +84,7 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
      */
     public SalesGroupRecordBean(String indentStyleClass,
                                 String rowStyleClass,
+                                StyleBean styleBean,
                                 String expandImage,
                                 String contractImage,
                                 ArrayList parentInventoryList,
@@ -89,6 +92,7 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
 
         this.indentStyleClass = indentStyleClass;
         this.rowStyleClass = rowStyleClass;
+        this.styleBean = styleBean;
         this.expandImage = expandImage;
         this.contractImage = contractImage;
         this.parentInventoryList = parentInventoryList;
@@ -96,10 +100,7 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
         this.isExpanded = isExpanded;
         // update the default state of the node.
         if (this.isExpanded) {
-            expandContractImage = contractImage;
             expandNodeAction();
-        } else {
-            expandContractImage = expandImage;
         }
     }
 
@@ -140,12 +141,10 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
 
         // add sub elements to list
         if (isExpanded) {
-            expandContractImage = contractImage;
             expandNodeAction();
         }
         // remove items from list
         else {
-            expandContractImage = expandImage;
             contractNodeAction();
         }
     }
@@ -244,6 +243,11 @@ public class SalesGroupRecordBean extends SalesGroupRecord {
      * @return name of image to draw
      */
     public String getExpandContractImage() {
-        return expandContractImage;
+        if(styleBean != null) {
+            String dir = styleBean.getImageDirectory();
+            String img = isExpanded ? contractImage : expandImage;
+            return dir + img;
+        }
+        return DEFAULT_IMAGE_DIR + SPACER_IMAGE;
     }
 }
