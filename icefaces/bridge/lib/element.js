@@ -132,11 +132,15 @@
             }
         },
 
-        replaceHostElementWith: function(newElement) {
+        defaultReplaceHostElementWith: function(newElement) {
             this.displayOff();
             this.element.parentNode.replaceChild(newElement, this.element);
             this.element = newElement;
             this.element.peer = this;
+        },
+
+        replaceHostElementWith: function(newElement) {
+            this.defaultReplaceHostElementWith(newElement);
         },
 
         //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
@@ -200,29 +204,34 @@
             this.element.onfocus = onFocusListener;
         },
 
-        replaceHtml: function(html) {
-            this.withTemporaryContainer(function(container) {
-                container.innerHTML = html;
-                var newElement = container.firstChild;
-                this.element.className = newElement.className;
-                this.element.disabled = newElement.disabled;
-                this.element.src = newElement.src;
-                this.element.value = newElement.value;
-                this.element.readOnly = newElement.readOnly;
-                if (newElement.style.display)this.element.style.display = 'none';
-                else this.element.style.display = '';
+        replaceHostElementWith: function(newElement) {
+            this.eachAttributeName(function(attributeName) {
+                var value = newElement[attributeName];
+                this.element[attributeName] = value ? value : null;
+            }.bind(this));
 
+            //'style' attribute special case
+            var newStyle = newElement.getAttribute('style');
+            var oldStyle = this.element.getAttribute('style');
+            if (newElement != oldStyle) {
+                this.element.setAttribute('style', newStyle);
+            }
 
-                this.element.title = newElement.title;
-                if (this.element.checked != newElement.checked) this.element.checked = newElement.checked;
+            //overwrite listeners and bind them to the existing element
+            this.eachListenerName(function(listenerName) {
+                var name = listenerName.toLowerCase();
+                this.element[name] = newElement[name] ? newElement[name].bind(this.element) : null;
+                newElement[name] = null;
+            }.bind(this));
+        },
 
-                //overwrite listeners and bind them to the existing input element
-                this.eachListenerName(function(listenerName) {
-                    var name = listenerName.toLowerCase();
-                    this.element[name] = newElement[name] ? newElement[name].bind(this.element) : null;
-                    newElement[name] = null;
-                }.bind(this));
-            });
+        eachAttributeName: function(iterator) {
+            //core and i18n attributes (except 'id' and 'style' attributes)
+            ['className', 'title', 'lang', 'dir'].each(iterator);
+            //input element attributes
+            ['type', 'name', 'value', 'checked', 'disabled', 'readonly',
+             'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap', 'tabIndex',
+             'accessKey', 'accept'].each(iterator);
         },
 
         serializeOn: function(query) {
@@ -250,13 +259,8 @@
             return false;
         },
 
-        replaceHtml: function(html) {
-            this.withTemporaryContainer(function(container) {
-                container.innerHTML = html;
-                var newElement = container.firstChild;
-                this.disconnectAllListenersAndPeers();
-                this.replaceHostElementWith(newElement);
-            });
+        replaceHostElementWith: function(newElement) {
+            this.defaultReplaceHostElementWith(newElement);
         },
 
         serializeOn: function(query) {
@@ -280,13 +284,8 @@
             return this.isSubmitElement;
         },
 
-        replaceHtml: function(html) {
-            this.withTemporaryContainer(function(container) {
-                container.innerHTML = html;
-                var newElement = container.firstChild;
-                this.disconnectAllListenersAndPeers();
-                this.replaceHostElementWith(newElement);
-            });
+        replaceHostElementWith: function(newElement) {
+            this.defaultReplaceHostElementWith(newElement);
         },
 
         serializeOn: function(query) {
