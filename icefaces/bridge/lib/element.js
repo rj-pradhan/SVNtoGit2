@@ -139,7 +139,7 @@
             this.element.peer = this;
         },
 
-    //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
+        //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
         displayOff: /Safari/.test(navigator.userAgent) ? Function.NOOP : function() {
             this.element.style.display = 'none';
         },
@@ -169,6 +169,7 @@
             case 'a': e.peer = new This.AnchorElement(e); break;
             case 'fieldset': e.peer = new This.FieldSetElement(e); break;
             case 'object': e.peer = new This.ObjectElement(e); break;
+            case 'iframe': e.peer = new This.IFrameElement(e); break;
             default : e.peer = new This.Element(e); break;
         }
 
@@ -426,6 +427,39 @@
                 this.replaceHostElementWith(newElement);
             });
             this.captureAndRedirectSubmits();
+        }
+    });
+
+    This.IFrameElement = This.Element.subclass({
+        replaceHostElementWith: function(newElement) {
+            this.eachAttributeName(function(attributeName) {
+                var value = newElement.getAttribute(attributeName);
+                if (value == null) {
+                    this.element.removeAttribute(attributeName);
+                } else {
+                    this.element.setAttribute(attributeName, value);
+                }
+            });
+
+            //special case for the 'src' attribute (Safari bug?)
+            var oldLocation = this.element.contentWindow.location.href;
+            var newLocation = newElement.contentWindow.location.href;
+            if (oldLocation != newLocation) {
+                this.element.contentWindow.location = newLocation;
+            }
+
+            //overwrite listeners and bind them to the existing element
+            this.eachListenerName(function(listenerName) {
+                var name = listenerName.toLowerCase();
+                this.element[name] = newElement[name] ? newElement[name].bind(this.element) : null;
+                newElement[name] = null;
+            }.bind(this));
+        },
+
+        eachAttributeName: function(iterator) {
+            ['title', 'lang', 'dir', 'class', 'style', 'align', 'frameborder',
+             'width', 'height', 'hspace', 'ismap', 'longdesc', 'marginwidth',
+             'marginheight', 'name', 'scrolling'].each(iterator);
         }
     });
 
