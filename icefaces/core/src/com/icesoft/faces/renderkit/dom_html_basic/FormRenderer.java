@@ -161,6 +161,28 @@ public class FormRenderer extends DomBasicRenderer {
 
         }
 
+        String flowId = SeamUtilities.getSpringFlowId();
+        if (flowId != null) {
+            String flowParamName =
+                    SeamUtilities.getFlowIdParameterName();
+
+            Element flowIDElement =
+                    domContext.createElement(HTML.INPUT_ELEM);
+            if (log.isDebugEnabled()) {
+                log.debug("Embedding Spring Param - name: " + flowParamName +
+                          ", value: " + flowId);
+            }
+            flowIDElement
+                    .setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN);
+            flowIDElement
+                    .setAttribute(HTML.NAME_ATTR, flowParamName);
+
+            flowIDElement.setAttribute(HTML.VALUE_ATTR, flowId);
+            root.appendChild(flowIDElement);
+
+        }
+
+
         String contextClass = facesContext.getClass().toString();
         root.setAttribute("context_type", contextClass);
 

@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 
 import javax.faces.event.PhaseListener;
 import javax.faces.lifecycle.Lifecycle;
+import javax.faces.context.FacesContext;
 
 /**
  * @author ICEsoft Technologies, Inc.
@@ -58,9 +59,15 @@ public class SeamUtilities {
     private static String conversationIdParameter;
     private static String conversationParentParameter = "parentConversationId";
     private static String conversationLongRunningParameter;
+    
+    private static String SPRING_CLASS_NAME = 
+            "org.springframework.webflow.executor.jsf.FlowVariableResolver";
+
+    private static boolean isSpringLoaded;
 
     static {
         loadSeamEnvironment();
+        loadSpringEnvironment();
     }
 
 
@@ -434,4 +441,65 @@ public class SeamUtilities {
     }
     
     private static ClassLoader seamDebugPhaseListenerClassLoader;
+    
+
+    
+    /**
+     * Perform any needed Spring initialization.
+     */
+    private static void loadSpringEnvironment() {
+        Class flowVariableResolver = null;
+        try {
+            flowVariableResolver = Class.forName(SPRING_CLASS_NAME);
+        } catch (Throwable t)  {
+            if (log.isDebugEnabled()) {
+                log.debug("Spring webflow not detected: " + t);
+            }
+        }
+        if (null != flowVariableResolver) {
+            isSpringLoaded = true;
+            if (log.isDebugEnabled()) {
+                log.debug("Spring webflow detected: " + flowVariableResolver);
+            }
+        }
+
+    }
+
+    /**
+     * Utility method to determine if Spring WebFlow is active.
+     *
+     * @return true if Spring WebFlow is enabled
+     */
+    public static boolean isSpringEnvironment() {
+        return isSpringLoaded;
+    }
+
+    /**
+     * Retrieve the current Spring flowId (if any).
+     *
+     * @return The current Spring flowId.
+     */
+    public static String getSpringFlowId() {
+        if ( !isSpringEnvironment()) {
+            return null;
+        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        //obtain key by evaluating expression with Spring VariableResolver
+        Object value = facesContext.getApplication()
+                .createValueBinding("#{flowExecutionKey}").getValue(facesContext);
+        if (null == value) {
+            return null;
+        }
+        
+        return value.toString();
+    }
+    /**
+     * Return the parameter name for the Spring Flow Id
+     *
+     * @return the appropriate parameter name for the application
+     */
+    public static String getFlowIdParameterName() {
+        return "_flowExecutionKey";
+    }
+
 }
