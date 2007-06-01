@@ -31,7 +31,7 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-  
+&base-props; 
 &value-props;
 
 <property>
@@ -58,6 +58,7 @@
 		exposed.
 	</description>
 	<property-name>var</property-name>
+	<property-class>java.lang.String</property-class>	
 	<property-extension>
 		<category>DATA</category>		
 		<editor-class>

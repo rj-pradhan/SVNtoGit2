@@ -31,12 +31,12 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
+&core-props;
 &value-props;
-
+&base-props;
 <property>
 	<description>
-		TODO:
+		Listener, called when list is changed
 	</description>
 	
 	<property-name>listener</property-name>
@@ -54,7 +54,14 @@
 
 <property>
     <description>
-        TODO
+         <![CDATA[
+ 		 <p>
+              Space-separated list of CSS style class(es) to be applied when
+              this element is rendered.  This value must be passed through
+              as the "class" attribute on generated markup.
+              <br/> The default class would be rendered as <b>icePosPnl</b>
+         </p>
+		]]>         
     </description>
     <property-name>styleClass</property-name>
     <property-class>java.lang.String</property-class>
@@ -68,21 +75,7 @@
 
 <property>
     <description>
-        TODO
-    </description>
-    <property-name>style</property-name>
-    <property-class>java.lang.String</property-class>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &stringEditor;
-        </editor-class>
-    </property-extension>
-</property>
-
-<property>
-    <description>
-        TODO
+        The class of the list item being hovered over
     </description>
     <property-name>overlap</property-name>
     <property-class>java.lang.String</property-class>
@@ -96,7 +89,8 @@
 
 <property>
     <description>
-        TODO
+        If set to horizontal or vertical the drag will be constrained to 
+        take place only horizontally or vertically. default is vertical
     </description>
     <property-name>constraint</property-name>
     <property-class>java.lang.String</property-class>
@@ -110,7 +104,7 @@
 
 <property>
     <description>
-        TODO
+        	The css class of a child node that is used to drag the item
     </description>
     <property-name>handle</property-name>
     <property-class>java.lang.String</property-class>
@@ -124,7 +118,7 @@
 
 <property>
     <description>
-        TODO
+        The class of the list item being hovered over
     </description>
     <property-name>hoverclass</property-name>
     <property-class>java.lang.String</property-class>

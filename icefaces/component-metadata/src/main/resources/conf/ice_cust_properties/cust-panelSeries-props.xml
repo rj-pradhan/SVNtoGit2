@@ -37,3 +37,24 @@
 
 &core-props;
 &uidata-props;
+
+<property>
+    <description>
+        <![CDATA[
+			<p>
+              Space-separated list of CSS style class(es) to be applied when
+              this element is rendered.  This value must be passed through
+              as the "class" attribute on generated markup.
+              <br/> The default class would be rendered as <b>icePnlSeries</b>
+            </p>      
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

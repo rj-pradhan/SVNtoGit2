@@ -153,12 +153,15 @@ public class TagLibraryGenerator extends AbstractGenerator {
             if (pb.isTagAttribute())
                 attribute(cb, pb);
         }
-        
-        String baseComponentType = cb.getBaseComponentType();
-        if (baseComponentType != null) {
-            ComponentBean bcb = getConfig().getComponent(baseComponentType);
-            attributes(bcb, rb, set);
-        }
+
+//The following block of code gets all visible methods from the super class
+//and creates attribute in the tag class. This is not desired behavior
+// http://jira.icefaces.org/browse/ICE-1649       
+//        String baseComponentType = cb.getBaseComponentType();
+//        if (baseComponentType != null) {
+//            ComponentBean bcb = getConfig().getComponent(baseComponentType);
+//            attributes(bcb, rb, set);
+//        }
     }
     
     private void footer(ComponentBean cb) throws IOException {
@@ -786,12 +789,14 @@ public class TagLibraryGenerator extends AbstractGenerator {
             writer.outdent();
             writer.emitExpression("}", true);
         }
-        
-        String baseComponentType = cb.getBaseComponentType();
-        if (baseComponentType != null) {
-            ComponentBean bcb = getConfig().getComponent(baseComponentType);
-            properties(bcb, rb, set);
-        }
+//       The following block of code gets all visible methods from the super class
+//       and creates attribute in the tag class. This is not desired behavior
+//       http://jira.icefaces.org/browse/ICE-1649          
+//        String baseComponentType = cb.getBaseComponentType();
+//        if (baseComponentType != null) {
+//            ComponentBean bcb = getConfig().getComponent(baseComponentType);
+//            properties(bcb, rb, set);
+//        }
     }
     
     private void release(ComponentBean cb, RendererBean rb) throws IOException {
@@ -830,12 +835,15 @@ public class TagLibraryGenerator extends AbstractGenerator {
                 writer.emitExpression(
                         mangle(pb.getPropertyName()) + " = null;", true);
         }
-        
-        String baseComponentType = cb.getBaseComponentType();
-        if (baseComponentType != null) {
-            ComponentBean bcb = getConfig().getComponent(baseComponentType);
-            release(bcb, rb, set);
-        }
+
+//        The following block of code gets all visible methods from the super class
+//        and creates attribute in the tag class. This is not desired behavior
+//        http://jira.icefaces.org/browse/ICE-1649          
+//        String baseComponentType = cb.getBaseComponentType();
+//        if (baseComponentType != null) {
+//            ComponentBean bcb = getConfig().getComponent(baseComponentType);
+//            release(bcb, rb, set);
+//        }
     }
     
     private void required(ComponentBean cb) throws IOException {

@@ -31,8 +31,105 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-  
+&base-props;  
 &ice-ext-core-styled-props;
 &panel-grid-props;
+&table-props;  
+&events-props; 
+&pass-thru-lang-props; 
+&pass-thru-title-props; 
+<property>
+    <description>
+        <![CDATA[
+        <p>      
+        Comma-delimited list of CSS style classes that will be applied to the 
+        rows of this table. A space separated list of classes may also be 
+        specified for any individual row. Thes styles are applied, in turn, 
+        to each row in the table. For example, if the list has two elements, 
+        the first style class in the list is applied to the first row, the 
+        second to the second row, the first to the third row, the second to 
+        the fourth row, etc. In other words, we keep iterating through the 
+        list until we reach the end, and then we start at the beginning again.
+        <br/>	
+        The default classes rendered as <b>icePnlGrdRow1, icePnlGrdRow2</b> 
+        alternatively.
+        </p>		
+     	]]>        		
+    </description>			
+    <property-name>rowClasses</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
 
+<property>
+    <description>
+        <![CDATA[
+        <p>  
+        Space-separated list of CSS style class(es) that will be applied to any 
+        header generated for this table.	
+        <br/>
+        	The default header class would be rendered as <b>icePnlGrdHeader</b>.	
+        </p>		
+     	]]> 	
+    </description>			
+    <property-name>headerClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
 
+<property>
+    <description>
+        <![CDATA[
+        <p>    
+		Space-separated list of CSS style class(es) that will be applied to any
+		footer generated for this table.
+		<br/>
+		The default footer class would be rendered as <b>icePnlGrdFooter</b>.
+		</p>		
+     	]]>  		
+    </description>			
+    <property-name>footerClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+        <p>
+        Comma-delimited list of CSS style classes that will be applied to the 
+        columns of this table. A space separated list of classes may also be 
+        specified for any individual column. If the number of elements in this 
+        list is less than the number of columns specified in the "columns" 
+        attribute, no "class" attribute is output for each column greater than 
+        the number of elements in the list. If the number of elements in the 
+        list is greater than the number of columns specified in the "columns" 
+        attribute, the elements at the posisiton in the list after the value 
+        of the "columns" attribute are ignored.	
+        </p>
+        <p>
+ 		The default column classes would be rendered as : <b>icePnlGrdColumn1, 
+ 		icePnlGrdColumn2, icePnlGrdColumn3, ....</b>
+        </p>		
+     ]]>        
+    </description>			
+    <property-name>columnClasses</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

@@ -31,7 +31,7 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-  
+&base-props;
 &core-props;
 &actionsource-props;
 

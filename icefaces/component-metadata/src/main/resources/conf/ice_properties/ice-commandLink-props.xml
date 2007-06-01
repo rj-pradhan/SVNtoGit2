@@ -31,24 +31,23 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-&ice-ext-core-styled-props;
-&ice-effects-props;
+
 &uicommand-props;
 &ice-att-partialsubmit-props;
-&ice-att-userrole-enabled-props;
-
-
-
+&link-props;
 <property>
-	<description>
-			The character encoding of the resource designated by this hyperlink.
-	</description>
-	<property-name>charset</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_COMPONENT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
+    <description>
+        <![CDATA[
+		The base name for all style classes. Default value is <b>iceLink<b> if enabled
+		and <b>iceLink-dis</b> if disabled.
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>

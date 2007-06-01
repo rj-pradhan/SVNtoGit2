@@ -32,97 +32,28 @@
   ~
   -->
 
+&ice-ext-core-styled-props;
+&ice-effects-props;
+&ice-att-userrole-enabled-props;
+&pass-thru-accesskey-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
+&pass-thru-onblur-props;
+&pass-thru-onfocus-props;
+&pass-thru-rel-props;
+&pass-thru-coords-props;
+&pass-thru-hreflang-props;
+&pass-thru-charset-props;
+&pass-thru-rev-props;
+&pass-thru-shape-props;
+&pass-thru-tabindex-props;
+&pass-thru-title-props;
+&events-props;
 <property>
-    <property-name>charset</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-                com.sun.jsfcl.std.reference.ReferenceDataManager.CHARACTER_SETS
-            </expression>
-        </named-value>
-    </property-extension>
-</property>
-
-<property>
-    <property-name>coords</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &stringEditorWithShortDescription;
-        </editor-class>
-    </property-extension>
-</property>
-
-<property>
-    <property-name>hreflang</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-                com.sun.jsfcl.std.reference.ReferenceDataManager.LANGUAGE_CODES
-            </expression>
-        </named-value>
-    </property-extension>
-</property>
-
-<property>
-    <property-name>rel</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-                com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
-            </expression>
-        </named-value>
-    </property-extension>
-</property>
-
-<property>
-    <property-name>rev</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-                com.sun.jsfcl.std.reference.ReferenceDataManager.LINK_TYPES
-            </expression>
-        </named-value>
-    </property-extension>
-</property>
-
-<property>
-    <property-name>shape</property-name>
-    <property-extension>
-        <category>ADVANCED</category>
-        <editor-class>
-            &chooseOneReferenceDataEditor;
-        </editor-class>
-        <named-value>
-            <name>referenceDataDefiner</name>
-            <expression>
-                com.sun.jsfcl.std.reference.ReferenceDataManager.REGION_SHAPES
-            </expression>
-        </named-value>
-    </property-extension>
-</property>
-
-<property>
+    <description>
+		Name of a frame where the resource retrieved via this hyperlink is to 
+		be displayed.
+    </description>
     <property-name>target</property-name>
     <property-extension>
         <editor-class>
@@ -139,6 +70,9 @@
 
 
 <property>
+    <description>
+		The content type of the resource designated by this hyperlink.
+    </description>
     <property-name>type</property-name>
     <property-extension>
         <category>ADVANCED</category>

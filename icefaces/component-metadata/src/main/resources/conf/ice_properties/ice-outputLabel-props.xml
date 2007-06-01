@@ -36,7 +36,14 @@
 
 &ice-ext-core-styled-props;
 &value-props;
-
+&base-props;
+&events-props;
+&pass-thru-accesskey-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
+&pass-thru-tabindex-props;
+&pass-thru-title-props;
+&converter-props;
 <property>
 	<description>The Javascript Effect</description>
 	<property-name>effect</property-name>	
@@ -48,3 +55,15 @@
 	</property-extension>
 </property>
 
+<property>
+    <description>
+	     Client identifier of the component for which this element is a label. 
+    </description>
+    <property-name>for</property-name>
+    <property-extension>
+        <category>ICE_COMPONENT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

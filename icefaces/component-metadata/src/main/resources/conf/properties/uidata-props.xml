@@ -35,6 +35,11 @@
 &uicomponent-props;
 
 <property>
+	<description>
+		Zero-relative row number of the first row to be displayed. If this 
+		property is set to zero, rendering will begin with the first row of the 
+		underlying data.
+	</description>
 	<property-name>first</property-name>
 	<property-class>int</property-class>
 	<property-extension>

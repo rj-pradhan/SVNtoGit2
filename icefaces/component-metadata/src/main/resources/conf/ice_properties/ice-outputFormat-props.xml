@@ -31,4 +31,10 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
+&base-props;
+&converter-props;
+&value-props;
+&core-props;
+&pass-thru-title-props;
+&ice-att-userrole-rendered-props;
+&escape-props;

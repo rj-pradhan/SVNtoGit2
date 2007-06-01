@@ -33,7 +33,7 @@
   -->
 
 &core-props;
-&uicommand-props;
+&actionsource-props;
 
 <property>
     <description>
@@ -153,5 +153,44 @@
             &stringEditor;
         </editor-class>
         <is-bindable>true</is-bindable>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+
+    </description>
+    <property-name>documentImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+
+    </description>
+    <property-name>folderOpenImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+
+    </description>
+    <property-name>folderImage</property-name>
+    <property-extension>
+        <category>ICE_LAYOUT</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
     </property-extension>
 </property>

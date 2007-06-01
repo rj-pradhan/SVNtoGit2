@@ -31,24 +31,21 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
-&ice-ext-core-styled-props;
-&ice-effects-props;
 &uioutput-props;
-&ice-att-userrole-enabled-props;
-
-
-
+&link-props;
+&converter-props;
 <property>
-	<description>
-			The character encoding of the resource designated by this hyperlink.
-	</description>
-	<property-name>charset</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_COMPONENT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
+    <description>
+        <![CDATA[
+			Default value is <b>iceOutputLink</b>.
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>

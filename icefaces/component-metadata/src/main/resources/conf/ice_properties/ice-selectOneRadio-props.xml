@@ -32,29 +32,23 @@
   ~
   -->
   
-&ice-ext-core-styled-props;
-&ice-effects-props;
-
 &uiselectone-props;
-&ice-att-autoComplete-props;
-&ice-att-userrole-enabled-props;
-&ice-att-partialsubmit-props;
-
+&select-common-props;
 <property>
-	<description>Effect invoked on onchange event</description>
-	<property-name>onchangeeffect</property-name>
-	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<is-hidden>true</is-hidden>
-	</property-extension>
+    <description>
+        <![CDATA[
+         <p>The base name for all style classes. Default is 
+         <b>iceRadioBtn</b> if enabled and <b>iceRadioBtn-dis</b> 
+         if disabled.
+         </p>
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>
-<property>
-	<description>The Javascript Effect</description>
-	<property-name>effect</property-name>
-	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>		
-	</property-extension>
-</property>
-

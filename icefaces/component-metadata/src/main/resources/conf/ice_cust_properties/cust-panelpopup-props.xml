@@ -35,6 +35,7 @@
 
 &ice-ext-core-styled-props;
 &ice-att-title-props;
+&base-props;
 
 <property>
 <description>Used to render a resizable popup.</description>
@@ -72,5 +73,34 @@
 		<editor-class>
 			&stringEditor;
 		</editor-class>
+	</property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+              <p>The base name for all style classes. Default is icePanelPopup</p>
+              <ul>
+               <li>icePanelPopupHeader</li>
+               <li>icePanelPopupHeaderBody</li>
+              </ul>
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+	<description>The Javascript Effect</description>
+	<property-name>effect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>		
 	</property-extension>
 </property>

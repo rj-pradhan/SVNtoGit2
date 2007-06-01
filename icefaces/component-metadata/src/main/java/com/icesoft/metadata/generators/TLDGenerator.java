@@ -231,13 +231,13 @@ public class TLDGenerator extends AbstractGenerator {
             }
         }
         
-        String baseComponentType = cb.getBaseComponentType();
-        if (baseComponentType != null) {
-            ComponentBean bcb = getConfig().getComponent(baseComponentType);
-            if (bcb != null){
-                attributes(bcb, rb, set);
-            }
-        }
+//        String baseComponentType = cb.getBaseComponentType();
+//        if (baseComponentType != null) {
+//            ComponentBean bcb = getConfig().getComponent(baseComponentType);
+//            if (bcb != null){
+//                attributes(bcb, rb, set);
+//            }
+//        }
     }
     
     private void component(ComponentBean cb) throws IOException {

@@ -33,20 +33,38 @@
   -->
 
   
-&ice-ext-core-styled-props;
-&ice-effects-props;
-&ice-att-autoComplete-props;
 &actionsource-props;
-&ice-att-userrole-enabled-props;
-&ice-att-partialsubmit-props;
-
+&input-common-props;
 
 <property>
-	<description>Effect invoked on onchange event</description>
-	<property-name>onchangeeffect</property-name>
-	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<is-hidden>true</is-hidden>
-	</property-extension>
+	<description>
+		The number of characters used to determine the width of this field.
+	</description>  
+    <property-name>size</property-name>
+    <property-class>int</property-class>
+    <property-extension>
+        <category>JAVASCRIPT</category>
+        <editor-class>
+            &javascriptEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+	   <![CDATA[
+	 	Space-separated list of CSS style class(es) to be applied when this 
+	 	element is rendered. This value must be passed through as the "class" 
+	 	attribute on generated markup. <br/>	   
+		The base name for all style classes. Default value is <b>iceInputtext</b>
+		if enabled and <b>iceInputtext-dis</b> if disabled.
+		]]>		
+	</description>  
+    <property-name>styleClass</property-name>
+    <property-extension>
+        <category>JAVASCRIPT</category>
+        <editor-class>
+            &javascriptEditor;
+        </editor-class>
+    </property-extension>
 </property>

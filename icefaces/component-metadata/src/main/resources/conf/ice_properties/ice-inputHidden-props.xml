@@ -33,4 +33,14 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
+&base-props;
+&ice-att-immediate-props;  
+&validator-props;
+&required-props;  
+&value-props;
+&converter-props;
+&valuechangelistener-props;
+
+
+
 

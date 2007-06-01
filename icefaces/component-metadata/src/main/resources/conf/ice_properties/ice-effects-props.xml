@@ -138,3 +138,33 @@
 		<is-hidden>true</is-hidden>
 	</property-extension>
 </property>
+
+<property>
+    <description>Effect invoked on onchange event</description>	
+	<property-name>onchangeeffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+    <description>Effect invoked on onreseteffect event</description>	
+	<property-name>onreseteffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>
+
+<property>
+    <description>Effect invoked on onsubmiteffect event</description>	
+	<property-name>onsubmiteffect</property-name>
+	<property-class>com.icesoft.faces.context.effects.Effect</property-class>	
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<is-hidden>true</is-hidden>
+	</property-extension>
+</property>

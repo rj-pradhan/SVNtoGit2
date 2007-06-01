@@ -125,8 +125,14 @@
 
 <property>
     <description>
-        Space-separated list of CSS style class(es) that will be applied to any 
-        footer generated for this table.			
+        <![CDATA[
+        <p>    
+		Space-separated list of CSS style class(es) that will be applied to any
+		footer generated for this table.
+		<br/>
+		The default classe rendered as <b>iceTblFooter</b>.
+		</p>		
+     	]]>  		
     </description>			
     <property-name>footerClass</property-name>
     <property-extension>
@@ -160,35 +166,16 @@
         </named-value>
     </property-extension>
 </property>
-
 <property>
     <description>
-        Zero-relative row number of the first row to be displayed. If this 
-        property is set to zero, rendering will begin with the first row of the 
-        underlying data.			
-    </description>			
-    <property-name>first</property-name>
-    <property-class>int</property-class>		
-    <property-extension>
-        <category>DATA</category>
-        <editor-class>
-            &integerEditor;
-        </editor-class>
-        <named-value>
-            <name>minValue</name>
-            <expression>new Integer(0)</expression>
-        </named-value>
-        <named-value>
-            <name>unsetValue</name>
-            <expression>new Integer(Integer.MIN_VALUE)</expression>
-        </named-value>       
-    </property-extension>      	
-</property>
-
-<property>
-    <description>
+        <![CDATA[
+        <p>  
         Space-separated list of CSS style class(es) that will be applied to any 
-        header generated for this table.			
+        header generated for this table.	
+        <br/>
+        	The default class would rendered as <b>iceTblHeader</b>.	
+        </p>		
+     	]]> 	
     </description>			
     <property-name>headerClass</property-name>
     <property-extension>
@@ -201,6 +188,8 @@
 
 <property>
     <description>
+        <![CDATA[
+        <p>      
         Comma-delimited list of CSS style classes that will be applied to the 
         rows of this table. A space separated list of classes may also be 
         specified for any individual row. Thes styles are applied, in turn, 
@@ -208,7 +197,11 @@
         the first style class in the list is applied to the first row, the 
         second to the second row, the first to the third row, the second to 
         the fourth row, etc. In other words, we keep iterating through the 
-        list until we reach the end, and then we start at the beginning again.			
+        list until we reach the end, and then we start at the beginning again.
+        <br/>	
+        The default classes rendered as <b>iceTblRow1, iceTblRow2</b>  alternatively.
+        </p>		
+     	]]>        		
     </description>			
     <property-name>rowClasses</property-name>
     <property-extension>
@@ -259,6 +252,19 @@
         Width of the entire table, for visual user agents.
     </description>			
     <property-name>width</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &lengthValueEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        Name or code of the background color for this table.
+    </description>			
+    <property-name>bgcolor</property-name>
     <property-extension>
         <category>APPEARANCE</category>
         <editor-class>

@@ -32,11 +32,135 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
-<!--
-&message-message-props;
- -->
+&base-props;
+&message-common-props;
 &ice-ext-core-styled-props;
+&pass-thru-title-props;
+<property>
+    <description>
+		Flag indicating whether the detail portion of displayed messages should 
+		be included. Default value is "true".    
+    </description>
+    <property-name>showDetail</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+		Flag indicating whether the summary portion of displayed messages should
+		be included. Default value is "false".   
+    </description>
+    <property-name>showSummary</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+		Client identifier of the component for which to display messages.  
+    </description>
+    <property-name>for</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+		CSS style class to apply to any message with a severity class of "ERROR".
+		<br/>The default class rendered as <b>iceMsgError</b>. 
+		]]>
+    </description>
+    <property-name>errorClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+		CSS style class to apply to any message with a severity class of "FATAL".
+		<br/>The default class rendered as <b>iceMsgFatal</b>.  
+		]]>
+    </description>
+    <property-name>fatalClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[    
+		CSS style class to apply to any message with a severity class of "INFO".
+		<br/>The default class rendered as <b>iceMsgInfo</b>. 
+		]]>		
+    </description>
+    <property-name>infoClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[ 
+        <p>
+		Space-separated list of CSS style class(es) to be applied when this 
+		element is rendered. This value must be passed through as the "class" 
+		attribute on generated markup.<br/>
+		The default class rendered as <b>iceMsg</b>. 
+		</p> 
+		]]>			
+    </description>
+    <property-name>styleClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[ 
+		CSS style class to apply to any message with a severity class of "WARN".
+		<br/>The default class rendered as <b>iceMsgWarn</b>.
+		]]>	 
+    </description>
+    <property-name>warnClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
 <property>
 	<description>The Javascript Effect</description>
 	<property-name>effect</property-name>

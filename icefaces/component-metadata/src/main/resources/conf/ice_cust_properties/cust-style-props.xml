@@ -32,7 +32,7 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
+&base-props;
 <property>
 	<description>
 		<![CDATA[<p>

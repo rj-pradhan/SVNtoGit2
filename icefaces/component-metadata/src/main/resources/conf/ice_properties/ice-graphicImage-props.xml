@@ -34,8 +34,12 @@
   
 &ice-ext-core-styled-props;
 &ice-effects-props;
-
-
+&base-props;
+&events-props;
+&value-props;
+&pass-thru-alt-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
 <property>
           <description>
 
@@ -52,3 +56,81 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+<property>
+	<description>
+		Override for the height of this image.
+	</description>
+    <property-name>height</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		Override for the width of this image.
+	</description>
+    <property-name>width</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		Flag indicating that this image is to be used as a server side image 
+		map. Such an image must be enclosed within a hyperlink ("a").
+	</description>
+    <property-name>ismap</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		URI to a long description of the image represented by this element.
+	</description>
+    <property-name>longdesc</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+
+  <property>
+    <description>
+        <![CDATA[    
+		Space-separated list of CSS style class(es) to be applied when this 
+		element is rendered. This value must be passed through as the "class" 
+		attribute on generated markup.<br/>
+		The default class rendered as <b>iceGphImg</b>
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		The name of a client side image map (an HTML "map" element) for which 
+		this element provides the image.
+	</description>
+    <property-name>usemap</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+

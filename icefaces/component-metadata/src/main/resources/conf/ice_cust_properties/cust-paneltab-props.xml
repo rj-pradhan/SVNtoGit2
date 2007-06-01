@@ -32,7 +32,7 @@
   ~
   -->
   
-
+&base-props;
 &ice-att-userrole-rendered-props;
 &core-props;
 &ice-att-userrole-enabled-props;
@@ -72,6 +72,27 @@
     <property-name>iconAlignRight</property-name>
     <property-class>boolean</property-class>
     <property-extension>
-        <tag-attribute>false</tag-attribute>
+        <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+             <p>
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+			  Default value is <b>icePanelTab</b> .    
+			 </p>                   
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
     </property-extension>
 </property>

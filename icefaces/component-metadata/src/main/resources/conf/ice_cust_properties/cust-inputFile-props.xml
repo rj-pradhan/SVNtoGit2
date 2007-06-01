@@ -33,7 +33,19 @@
 -->
 &ice-att-userrole-rendered-props;
 &core-props;
+&base-props;
 &ice-att-userrole-enabled-props;
+&pass-thru-readonly-props;
+&pass-thru-accept-props;
+&pass-thru-accesskey-props;
+&pass-thru-alt-props;
+&pass-thru-onfocus-props;
+&pass-thru-onblur-props;
+&pass-thru-onchange-props;
+&pass-thru-onselect-props;
+&pass-thru-tabindex-props;
+
+&actionsource-props;
 <property>
     <description>
         <![CDATA[
@@ -249,5 +261,31 @@
     <property-class>boolean</property-class>
     <property-extension>
         <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+                <p>
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+                Default value is iceFileUpload:<br/>        
+               Style Classes Used:
+                     <ul>
+                       <li>iceFileUploadButton</li>
+                       <li>iceFileUploadText</li>                      
+                     </ul>  
+              </p>       
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
     </property-extension>
 </property>

@@ -32,22 +32,26 @@
   ~
   -->
   
-&ice-ext-core-styled-props;
+&input-common-props;
 &input-textarea-props;
-&ice-effects-props;
-
-
-&ice-att-autoComplete-props;
-&ice-att-userrole-enabled-props;
-&ice-att-partialsubmit-props;
-
+&ice-att-immediate-props; 
 
 <property>
-	<description>Effect invoked on onchange event</description>
-	<property-name>onchangeeffect</property-name>
-	<property-class>com.icesoft.faces.context.effects.Effect</property-class>
-	<property-extension>
-		<category>ICE_LAYOUT</category>
-		<is-hidden>true</is-hidden>
-	</property-extension>
+	<description>
+	   <![CDATA[
+	 	Space-separated list of CSS style class(es) to be applied when this 
+	 	element is rendered. This value must be passed through as the "class" 
+	 	attribute on generated markup. <br/>
+	 	   
+	 	The base name for all style classes. Default value is <b>iceTextarea</b>
+	 	if enabled and <b>iceTextarea-dis</b> if disabled.
+		]]>		
+	</description>  
+    <property-name>styleClass</property-name>
+    <property-extension>
+        <category>JAVASCRIPT</category>
+        <editor-class>
+            &javascriptEditor;
+        </editor-class>
+    </property-extension>
 </property>

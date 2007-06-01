@@ -31,5 +31,7 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
+&base-props;
+&actionsource-props;
 &value-props;
+&ice-att-immediate-props;

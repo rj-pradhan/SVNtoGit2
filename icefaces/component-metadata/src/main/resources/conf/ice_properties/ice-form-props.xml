@@ -36,5 +36,75 @@
 &core-props;
 &ice-att-userrole-rendered-props;
 &uiform-props;
+&events-props;
 &ice-att-autoComplete-props;
 &ice-att-partialsubmit-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
+&pass-thru-title-props;
+<property>
+	<description>
+		List of content types that a server processing this form will handle 
+		correctly
+	</description>
+    <property-name>accept</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		List of character encodings for input data that are accepted by the 
+		server processing this form.
+	</description>
+    <property-name>acceptcharset</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		 Content type used to submit the form to the server. If not 
+		 specified, the default value is "application/x-www-form-urlencoded".
+	</description>
+    <property-name>enctype</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>
+
+  <property>
+    <description>
+        <![CDATA[    
+		Space-separated list of CSS style class(es) to be applied when this 
+		element is rendered. This value must be passed through as the "class" 
+		attribute on generated markup.<br/>
+		The default class would be rendered as <b>iceForm</b>
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+<property>
+	<description>
+		Name of a frame where the response retrieved after this form submit is 
+		to be displayed.
+	</description>
+    <property-name>target</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+      <category>ICE_LAYOUT</category>
+    </property-extension>
+</property>

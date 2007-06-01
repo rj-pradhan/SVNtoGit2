@@ -49,3 +49,24 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+<property>
+    <description>
+        <![CDATA[
+         <p>Defines the base class name for all style classes used in panelStack. Default value is icePnlStk.</p>
+		 <p>Style Classes Used:</p>
+         <ul>
+         	<li>icePnlStkRow</li>
+            <li>icePnlStkCol</li>                       
+         </ul>
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

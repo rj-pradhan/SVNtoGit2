@@ -31,10 +31,29 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-
+&base-props;
 &ice-ext-core-styled-props;
 &ice-effects-props;
 &value-props;
+&converter-props;
+&escape-props;
+&pass-thru-title-props;
+<property>
+    <description>
+        <![CDATA[
+			The base name for all style classes. Default value is 
+			<b>iceOutputText.</b>.
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
 
 
 

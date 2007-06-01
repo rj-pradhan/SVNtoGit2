@@ -223,3 +223,39 @@
 		</editor-class>
 	</property-extension>
 </property>
+
+<property>
+    <description>
+        <![CDATA[
+             <p>
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+              Default value is <b>iceDtdPgr<b/></p>
+              if enabled
+              <ul>
+                <li>iceDtdPgrScrBtn</li>
+                <li>iceDtdPgrScrOut</li>
+                <li>iceDtdPgrSrcCol</li>
+                <li>iceDtdPgrCol</li>
+                <li>iceDtdPgrTbl</li>                
+              </ul>   
+              if disabled
+              <ul>
+                <li>iceDtdPgrScrBtn-dis</li>
+                <li>iceDtdPgrScrOut-dis</li>
+                <li>iceDtdPgrSrcCol-dis</li>
+                <li>iceDtdPgrCol-dis</li>
+                <li>iceDtdPgrTbl-dis</li>                
+              </ul>                          
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

@@ -31,14 +31,15 @@
   ~  this file under either the MPL or the LGPL License."
   ~
   -->
-    <property>
-      <property-name>alt</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-      </property-extension>
-    </property>
+&pass-thru-alt-props;
 
     <property>
+    <description>
+		Absolute or relative URL of the image to be displayed for this button. 
+		If specified, this "input" element will be of type "image". Otherwise, 
+		it will be of the type specified by the "type" property with a label 
+		specified by the "value" property.
+	</description> 
       <property-name>image</property-name>
       <property-extension>
           <category>APPEARANCE</category>
@@ -48,9 +49,11 @@
       </property-extension>
     </property>
 
- 
-
-<property>
+ <property>
+    <description>
+		Type of button to create. Valid values are "submit" and "reset". If not 
+		specified, or not a valid value, the default value is "submit".
+	</description>  
       <property-name>type</property-name>
       <property-extension>
           <category>ADVANCED</category>
@@ -64,4 +67,6 @@
             </expression>
           </named-value>
       </property-extension>
-    </property>
+</property>
+
+

@@ -33,6 +33,7 @@
   -->
 
 <!-- The disabled & enabledOnUserRole attributes works together -->
+&pass-thru-disabled-props;
 <property>
 	<description>
 		If user is in given role, this component will be rendered
@@ -46,17 +47,5 @@
 		<editor-class>
 			&stringEditor;
 		</editor-class>
-	</property-extension>
-</property>
-
-<property>
-	<description>
-		Flag indicating that this element must never receive focus or be included 
-		in a subsequent submit.
-	</description>
-	<property-name>disabled</property-name>
-	<property-class>boolean</property-class>
-	<property-extension>
-		<category>ICE_COMPONENT</category>
 	</property-extension>
 </property>

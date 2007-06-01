@@ -104,3 +104,30 @@
 	</property-extension>
 </property>
 
+<property>
+    <description>
+        <![CDATA[
+              <p>Base name for the style classes. Deafult is iceSelInp.</p>
+                <ul>
+                    <li>iceSelInpText</li>
+                    <li>iceSelInpList</li>
+                    <li>iceSelInpRow</li>
+                    <li>iceSelInpSelRow</li>
+                </ul>
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>
+
+          
+          
+
+                
+          

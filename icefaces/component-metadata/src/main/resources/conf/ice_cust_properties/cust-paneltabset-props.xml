@@ -37,8 +37,8 @@
 &i18n-props;
 &value-props;
 &ice-att-title-props;
-
-
+&base-props;
+&events-props;
 <property>
 	<description>
 		Sets or retrieves which field of a given data source, as
@@ -174,4 +174,205 @@
 			&numberEditor;
 		</editor-class>
 	</property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+             <p>
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+				<p>Defines the base class name for all style classes used in tabbed panes.</p>
+                 <p>Default value for the base class name is <b>iceTabSet</b>. The base class name
+                 is used as a prefix for the style classes that will be applied to the elements that make up
+                 the panelTabset. The default style classes are defined in the xp.css and royale.css that are included
+                 with ICEfaces.</p>
+                 <p>Style Classes Used:</p>
+                     <ul>
+                       <li>iceTabSet</li>
+
+                       <li>iceTabSetTabOn .LeftTop</li>
+                       <li>iceTabSetTabOn .MiddleTop</li>
+                       <li>iceTabSetTabOn .RightTop</li>
+                       <li>iceTabSetTabOn .LeftMiddle</li>
+                       <li>iceTabSetTabOn .MiddleMiddle</li>
+                       <li>iceTabSetTabOn .MiddleMiddle a</li>
+                       <li>iceTabSetTabOn .RightMiddle</li>
+                       <li>iceTabSetTabOn .LeftBottom</li>
+                       <li>iceTabSetTabOn .MiddleBottom</li>
+                       <li>iceTabSetTabOn .RightBottom</li>
+
+                       <li>iceTabSetTabOff .LeftTop</li>
+                       <li>iceTabSetTabOff .MiddleTop</li>
+                       <li>iceTabSetTabOff .RightTop</li>
+                       <li>iceTabSetTabOff .LeftMiddle</li>
+                       <li>iceTabSetTabOff .MiddleMiddle</li>
+                       <li>iceTabSetTabOff .MiddleMiddle a</li>
+                       <li>iceTabSetTabOff .RightMiddle</li>
+                       <li>iceTabSetTabOff .LeftBottom</li>
+                       <li>iceTabSetTabOff .MiddleBottom</li>
+                       <li>iceTabSetTabOff .RightBottom</li>
+
+                       <li>iceTabSetTabOver .LeftTop</li>
+                       <li>iceTabSetTabOver .MiddleTop</li>
+                       <li>iceTabSetTabOver .RightTop</li>
+                       <li>iceTabSetTabOver .LeftMiddle</li>
+                       <li>iceTabSetTabOver .MiddleMiddle</li>
+                       <li>iceTabSetTabOver .MiddleMiddle a</li>
+                       <li>iceTabSetTabOver .RightMiddle</li>
+                       <li>iceTabSetTabOver .LeftBottom</li>
+                       <li>iceTabSetTabOver .MiddleBottom</li>
+                       <li>iceTabSetTabOver .RightBottom</li>
+
+                       <li>iceTabSetTabOnBottom .LeftTop</li>
+                       <li>iceTabSetTabOnBottom .MiddleTop</li>
+                       <li>iceTabSetTabOnBottom .RightTop</li>
+                       <li>iceTabSetTabOnBottom .LeftMiddle</li>
+                       <li>iceTabSetTabOnBottom .MiddleMiddle</li>
+                       <li>iceTabSetTabOnBottom .MiddleMiddle a</li>
+                       <li>iceTabSetTabOnBottom .RightMiddle</li>
+                       <li>iceTabSetTabOnBottom .LeftBottom</li>
+                       <li>iceTabSetTabOnBottom .MiddleBottom</li>
+                       <li>iceTabSetTabOnBottom .RightBottom</li>
+
+                       <li>iceTabSetTabOffBottom .LeftTop</li>
+                       <li>iceTabSetTabOffBottom .MiddleTop</li>
+                       <li>iceTabSetTabOffBottom .RightTop</li>
+                       <li>iceTabSetTabOffBottom .LeftMiddle</li>
+                       <li>iceTabSetTabOffBottom .MiddleMiddle</li>
+                       <li>iceTabSetTabOffBottom .MiddleMiddle a</li>
+                       <li>iceTabSetTabOffBottom .RightMiddle</li>
+                       <li>iceTabSetTabOffBottom .LeftBottom</li>
+                       <li>iceTabSetTabOffBottom .MiddleBottom</li>
+                       <li>iceTabSetTabOffBottom .RightBottom</li>
+
+                       <li>iceTabSetTabOverBottom .LeftTop</li>
+                       <li>iceTabSetTabOverBottom .MiddleTop</li>
+                       <li>iceTabSetTabOverBottom .RightTop</li>
+                       <li>iceTabSetTabOverBottom .LeftMiddle</li>
+                       <li>iceTabSetTabOverBottom .MiddleMiddle</li>
+                       <li>iceTabSetTabOverBottom .MiddleMiddle a</li>
+                       <li>iceTabSetTabOverBottom .RightMiddle</li>
+                       <li>iceTabSetTabOverBottom .LeftBottom</li>
+                       <li>iceTabSetTabOverBottom .MiddleBottom</li>
+                       <li>iceTabSetTabOverBottom .RightBottom</li>
+
+                       <li>iceTabSetTabSpacer</li>
+                       <li>iceTabSetTabSpacerBottom</li>
+                       
+                       <li>disabled style classes</li>
+                       
+                       <li>iceTabSetTabOff .LeftTop-dis</li>
+                       <li>iceTabSetTabOff .MiddleTop-dis</li>
+                       <li>iceTabSetTabOff .RightTop-dis</li>
+                       <li>iceTabSetTabOff .LeftMiddle-dis</li>
+                       <li>iceTabSetTabOff .MiddleMiddle-dis</li>
+                       <li>iceTabSetTabOff .MiddleMiddle-dis a</li>
+                       <li>iceTabSetTabOff .RightMiddle-dis</li>
+                       <li>iceTabSetTabOff .LeftBottom-dis</li>
+                       <li>iceTabSetTabOff .MiddleBottom-dis</li>
+                       <li>iceTabSetTabOff .RightBottom-dis</li>
+
+                     </ul>
+                 <p/>                 
+                 <p>To override the defaults with a base class name of <b>myTabSet</b> the developer 
+                 will need to define the following styleclasses in their web applications css.</p>
+                     <ul>
+                       <li>myTabSet</li>
+
+                       <li>myTabSetTabOn .LeftTop</li>
+                       <li>myTabSetTabOn .MiddleTop</li>
+                       <li>myTabSetTabOn .RightTop</li>
+                       <li>myTabSetTabOn .LeftMiddle</li>
+                       <li>myTabSetTabOn .MiddleMiddle</li>
+                       <li>myTabSetTabOn .MiddleMiddle a</li>
+                       <li>myTabSetTabOn .RightMiddle</li>
+                       <li>myTabSetTabOn .LeftBottom</li>
+                       <li>myTabSetTabOn .MiddleBottom</li>
+                       <li>myTabSetTabOn .RightBottom</li>
+
+                       <li>myTabSetTabOff .LeftTop</li>
+                       <li>myTabSetTabOff .MiddleTop</li>
+                       <li>myTabSetTabOff .RightTop</li>
+                       <li>myTabSetTabOff .LeftMiddle</li>
+                       <li>myTabSetTabOff .MiddleMiddle</li>
+                       <li>myTabSetTabOff .MiddleMiddle a</li>
+                       <li>myTabSetTabOff .RightMiddle</li>
+                       <li>myTabSetTabOff .LeftBottom</li>
+                       <li>myTabSetTabOff .MiddleBottom</li>
+                       <li>myTabSetTabOff .RightBottom</li>
+
+                       <li>myTabSetTabOver .LeftTop</li>
+                       <li>myTabSetTabOver .MiddleTop</li>
+                       <li>myTabSetTabOver .RightTop</li>
+                       <li>myTabSetTabOver .LeftMiddle</li>
+                       <li>myTabSetTabOver .MiddleMiddle</li>
+                       <li>myTabSetTabOver .MiddleMiddle a</li>
+                       <li>myTabSetTabOver .RightMiddle</li>
+                       <li>myTabSetTabOver .LeftBottom</li>
+                       <li>myTabSetTabOver .MiddleBottom</li>
+                       <li>myTabSetTabOver .RightBottom</li>
+
+                       <li>myTabSetTabOnBottom .LeftTop</li>
+                       <li>myTabSetTabOnBottom .MiddleTop</li>
+                       <li>myTabSetTabOnBottom .RightTop</li>
+                       <li>myTabSetTabOnBottom .LeftMiddle</li>
+                       <li>myTabSetTabOnBottom .MiddleMiddle</li>
+                       <li>myTabSetTabOnBottom .MiddleMiddle a</li>
+                       <li>myTabSetTabOnBottom .RightMiddle</li>
+                       <li>myTabSetTabOnBottom .LeftBottom</li>
+                       <li>myTabSetTabOnBottom .MiddleBottom</li>
+                       <li>myTabSetTabOnBottom .RightBottom</li>
+
+                       <li>myTabSetTabOffBottom .LeftTop</li>
+                       <li>myTabSetTabOffBottom .MiddleTop</li>
+                       <li>myTabSetTabOffBottom .RightTop</li>
+                       <li>myTabSetTabOffBottom .LeftMiddle</li>
+                       <li>myTabSetTabOffBottom .MiddleMiddle</li>
+                       <li>myTabSetTabOffBottom .MiddleMiddle a</li>
+                       <li>myTabSetTabOffBottom .RightMiddle</li>
+                       <li>myTabSetTabOffBottom .LeftBottom</li>
+                       <li>myTabSetTabOffBottom .MiddleBottom</li>
+                       <li>myTabSetTabOffBottom .RightBottom</li>
+
+                       <li>myTabSetTabOverBottom .LeftTop</li>
+                       <li>myTabSetTabOverBottom .MiddleTop</li>
+                       <li>myTabSetTabOverBottom .RightTop</li>
+                       <li>myTabSetTabOverBottom .LeftMiddle</li>
+                       <li>myTabSetTabOverBottom .MiddleMiddle</li>
+                       <li>myTabSetTabOverBottom .MiddleMiddle a</li>
+                       <li>myTabSetTabOverBottom .RightMiddle</li>
+                       <li>myTabSetTabOverBottom .LeftBottom</li>
+                       <li>myTabSetTabOverBottom .MiddleBottom</li>
+                       <li>myTabSetTabOverBottom .RightBottom</li>
+
+                       <li>myTabSetTabSpacer</li>
+                       <li>myTabSetTabSpacerBottom</li>
+                       
+                       <li>disabled style classes</li>
+                       
+                       <li>myTabSetTabOff .LeftTop-dis</li>
+                       <li>myTabSetTabOff .MiddleTop-dis</li>
+                       <li>myTabSetTabOff .RightTop-dis</li>
+                       <li>myTabSetTabOff .LeftMiddle-dis</li>
+                       <li>myTabSetTabOff .MiddleMiddle-dis</li>
+                       <li>myTabSetTabOff .MiddleMiddle-dis a</li>
+                       <li>myTabSetTabOff .RightMiddle-dis</li>
+                       <li>myTabSetTabOff .LeftBottom-dis</li>
+                       <li>myTabSetTabOff .MiddleBottom-dis</li>
+                       <li>myTabSetTabOff .RightBottom-dis</li>
+
+                     </ul>
+                 <p/>                        
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>

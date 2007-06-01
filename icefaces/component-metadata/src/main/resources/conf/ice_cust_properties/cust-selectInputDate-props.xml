@@ -32,10 +32,20 @@
   ~
   -->
 
-
+&base-props;
+&value-props;
 &ice-ext-core-styled-props;
 &ice-att-autoComplete-props;
 &ice-att-userrole-enabled-props;
+&value-props;
+&converter-props;
+&ice-att-immediate-props;
+&required-props;
+&validator-props;
+&valuechangelistener-props;
+&events-props;
+&pass-thru-dir-props;
+&pass-thru-lang-props;
 
 <property>
 	<description>
@@ -193,4 +203,28 @@
 			&stringEditor;
 		</editor-class>
 	</property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[
+              <p>Defines the base class name for all style classes used in selectInputDate. Default value is iceCal</p>
+              <ul>
+                <li>iceCalMonthYear</li>
+                <li>iceCalWeek</li>
+                <li>iceCalCur</li>
+                <li>iceCalDay</li>
+                <li>iceCalOutline</li>
+                <li>iceCalInput</li>                                
+              </ul>              
+		]]>		
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>

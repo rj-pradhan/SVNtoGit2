@@ -34,10 +34,9 @@
   ~
   -->
 
-
-<!--  todo:  -->
-&ice-ext-core-props;
+&base-props;
 &ice-att-userrole-enabled-props;
+&ice-att-userrole-rendered-props;
 &value-props;
   <property>
 	<description>
@@ -65,3 +64,20 @@
       <editor-class>&stringEditor;</editor-class>
     </property-extension>
   </property>
+  
+  <property>
+    <description>
+        <![CDATA[    
+		The base name for all style classes. Default value is <b>iceCmdSrtHdr</b> 
+		if enabled and <b>iceCmdSrtHdr-dis</b> if disabled.
+		]]>
+    </description>
+    <property-name>styleClass</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
+</property>

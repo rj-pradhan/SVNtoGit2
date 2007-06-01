@@ -48,6 +48,15 @@
   <!ENTITY editable-props           SYSTEM "properties/editable-props.xml">
   <!ENTITY uicomponent-props        SYSTEM "properties/uicomponent-props.xml">
 
+  <!ENTITY converter-props        SYSTEM "properties/converter-props.xml">
+  <!ENTITY required-props        SYSTEM "properties/required-props.xml">
+  <!ENTITY validator-props        SYSTEM "properties/validator-props.xml">
+  <!ENTITY valuechangelistener-props        SYSTEM "properties/valuechangelistener-props.xml">
+  <!ENTITY input-common-props       SYSTEM "properties/input-common-props.xml">
+  <!ENTITY message-common-props     SYSTEM "properties/message-common-props.xml">    
+  <!ENTITY escape-props        		SYSTEM "properties/escape-props.xml"> 
+  <!ENTITY select-common-props      SYSTEM "properties/select-common-props.xml">     
+
   <!ENTITY uicolumn-props           SYSTEM "properties/uicolumn-props.xml">
   <!ENTITY uicommand-props          SYSTEM "properties/uicommand-props.xml">
   <!ENTITY uidata-props             SYSTEM "properties/uidata-props.xml">
@@ -96,8 +105,28 @@
   <!ENTITY selectmany-checkbox-props SYSTEM "properties/selectmany-checkbox-props.xml">
   <!ENTITY selectone-radio-props    SYSTEM "properties/selectone-radio-props.xml">
   
+    <!-- pass thru properties  -->  
+  <!ENTITY pass-thru-accesskey-props	SYSTEM "properties/pass-thru/accesskey-props.xml">
+  <!ENTITY pass-thru-alt-props      	SYSTEM "properties/pass-thru/alt-props.xml">
+  <!ENTITY pass-thru-dir-props      	SYSTEM "properties/pass-thru/dir-props.xml">
+  <!ENTITY pass-thru-lang-props 		SYSTEM "properties/pass-thru/lang-props.xml">
+  <!ENTITY pass-thru-tabindex-props    	SYSTEM "properties/pass-thru/tabindex-props.xml">
+  <!ENTITY pass-thru-title-props    	SYSTEM "properties/pass-thru/title-props.xml">
+  <!ENTITY pass-thru-disabled-props    	SYSTEM "properties/pass-thru/disabled-props.xml">
+  <!ENTITY pass-thru-onblur-props    	SYSTEM "properties/pass-thru/onblur-props.xml">
+  <!ENTITY pass-thru-onchange-props    	SYSTEM "properties/pass-thru/onchange-props.xml">
+  <!ENTITY pass-thru-onfocus-props    	SYSTEM "properties/pass-thru/onfocus-props.xml">
+  <!ENTITY pass-thru-onselect-props    	SYSTEM "properties/pass-thru/onselect-props.xml">    
+  <!ENTITY pass-thru-readonly-props    	SYSTEM "properties/pass-thru/readonly-props.xml">    
+  <!ENTITY pass-thru-accept-props    	SYSTEM "properties/pass-thru/accept-props.xml">      
+  <!ENTITY pass-thru-maxlength-props    SYSTEM "properties/pass-thru/maxlength-props.xml">      
+  <!ENTITY pass-thru-rel-props    		SYSTEM "properties/pass-thru/rel-props.xml">      
+  <!ENTITY pass-thru-coords-props    	SYSTEM "properties/pass-thru/coords-props.xml">      
+  <!ENTITY pass-thru-hreflang-props    	SYSTEM "properties/pass-thru/hreflang-props.xml">      
+  <!ENTITY pass-thru-charset-props    	SYSTEM "properties/pass-thru/charset-props.xml">      
+  <!ENTITY pass-thru-rev-props    		SYSTEM "properties/pass-thru/rev-props.xml">      
+  <!ENTITY pass-thru-shape-props    	SYSTEM "properties/pass-thru/shape-props.xml">        
   
- 
   <!-- properties -->
   <!ENTITY panelBorder-core-props    SYSTEM "properties/panelBorder-core-props.xml">
   <!ENTITY panelstack-core-props    SYSTEM "properties/panelstack-core-props.xml">
@@ -119,7 +148,7 @@
   <!ENTITY ice-effects-noeffect-props SYSTEM "ice_properties/ice-effects-noeffect-props.xml">
   <!ENTITY ice-ext-core-props SYSTEM "ice_properties/ice-ext-core-props.xml">
   <!ENTITY ice-ext-core-styled-props SYSTEM "ice_properties/ice-ext-core-styled-props.xml">
-  
+
   <!-- extended components properties-->
   
   <!ENTITY ice-commandButton-props SYSTEM "ice_properties/ice-commandButton-props.xml">

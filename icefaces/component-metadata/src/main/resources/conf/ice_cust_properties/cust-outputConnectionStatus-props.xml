@@ -34,7 +34,7 @@
   
 &ice-att-userrole-rendered-props;
 &core-props;
-
+&base-props;
 <property>
 	<description>
 		The connection status component would show this label, when The
@@ -98,4 +98,31 @@
 			&stringEditor;
 		</editor-class>
 	</property-extension>
+</property>
+
+<property>
+    <description>
+        <![CDATA[ 
+        <p>
+		Space-separated list of CSS style class(es) to be applied when this 
+		element is rendered. This value must be passed through as the "class" 
+		attribute on generated markup.
+		</p>
+        <p>Defines the base class name for all style classes used in outputConnectionStatus.
+        Default value is iceOutConStat</p>
+              </p><ul>
+                <li>iceOutConStatInactive</li>
+                <li>iceOutConStatActive</li>
+                <li>iceOutConStatCaution</li>
+                <li>iceOutConStatDisconnect</li>
+              </ul>              
+		]]>			
+    </description>
+    <property-name>styleClass</property-name>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>
+            &stringEditor;
+        </editor-class>
+    </property-extension>
 </property>
