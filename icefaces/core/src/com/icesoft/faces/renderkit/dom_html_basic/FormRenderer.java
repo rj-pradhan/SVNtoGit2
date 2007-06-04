@@ -107,6 +107,12 @@ public class FormRenderer extends DomBasicRenderer {
             if (acceptcharset != null) {
                 root.setAttribute("accept-charset", acceptcharset);
             }
+            //redirect form submits
+            String redirectScript = "'" + formClientId +"'.asExtendedElement().captureAndRedirectSubmit();";
+            Element scriptElement = (Element) root.appendChild(domContext.createElement("script"));
+            scriptElement.setAttribute("language", "javascript");
+            scriptElement.appendChild(domContext.createTextNode(redirectScript));
+            root.appendChild(scriptElement);
 
             // this hidden field will be checked in the decode method to
             // determine if this form has been submitted.

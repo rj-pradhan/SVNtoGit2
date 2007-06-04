@@ -73,17 +73,6 @@
             return this.element.id;
         },
 
-        captureAndRedirectSubmits: function() {
-            $enumerate(this.element.getElementsByTagName('form')).collect($element).each(function(form) {
-                form.captureOnSubmit();
-                form.redirectSubmit();
-            });
-            if ('form' == this.element.tagName.toLowerCase()) {
-                this.captureOnSubmit();
-                this.redirectSubmit();
-            }
-        },
-
         replaceHtml: function(html) {
             this.withTemporaryContainer(function(container) {
                 container.innerHTML = html;
@@ -91,7 +80,6 @@
                 this.disconnectAllListenersAndPeers();
                 this.replaceHostElementWith(newElement);
             });
-            this.captureAndRedirectSubmits();
         },
 
         withAllChildElements: function(iterator) {
@@ -330,6 +318,11 @@
             };
         },
 
+        captureAndRedirectSubmit: function() {
+            this.captureOnSubmit();
+            this.redirectSubmit();
+        },
+
         serializeOn: function(query) {
             this.formElements().each(function(formElement) {
                 if (!formElement.isSubmit()) formElement.serializeOn(query);
@@ -353,7 +346,6 @@
         replaceHtml: function(html) {
             this.disconnectAllListenersAndPeers();
             this.element.innerHTML = html.substring(html.indexOf('>') + 1, html.lastIndexOf('<'));
-            this.captureAndRedirectSubmits();
         }
     });
 
@@ -425,7 +417,6 @@
                 this.disconnectAllListenersAndPeers();
                 this.replaceHostElementWith(newElement);
             });
-            this.captureAndRedirectSubmits();
         }
     });
 

@@ -120,8 +120,6 @@
                 statusManager.busy.off();
             });
 
-            $element(document.body).captureAndRedirectSubmits();
-
             this.logger.info('page loaded!');
         },
 
