@@ -43,7 +43,7 @@ An text entry or popup calendar date-input control
 	&ice-cust-selectInputDate-props;
 
 	<component-extension>
-		<base-component-type>javax.faces.HtmlInputText</base-component-type>
+		<base-component-type>javax.faces.Input</base-component-type>
 		<component-family>javax.faces.Input</component-family>
 		<renderer-type>com.icesoft.faces.Calendar</renderer-type>
 	</component-extension>

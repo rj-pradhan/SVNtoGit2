@@ -35,14 +35,11 @@
 &core-props;
 &base-props;
 &ice-att-userrole-enabled-props;
-&pass-thru-readonly-props;
 &pass-thru-accept-props;
 &pass-thru-accesskey-props;
-&pass-thru-alt-props;
 &pass-thru-onfocus-props;
 &pass-thru-onblur-props;
 &pass-thru-onchange-props;
-&pass-thru-onselect-props;
 &pass-thru-tabindex-props;
 
 &actionsource-props;

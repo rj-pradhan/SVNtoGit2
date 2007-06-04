@@ -47,7 +47,6 @@
 &pass-thru-onblur-props;
 &pass-thru-onchange-props;
 &pass-thru-onfocus-props;
-&ice-att-autoComplete-props;
 &ice-att-userrole-enabled-props;
 &ice-att-partialsubmit-props;
 

@@ -47,21 +47,6 @@
 		</editor-class>
 	</property-extension>
   </property>
-  
-  <property>
-  	<description>
-  			The value binding expression linking this component to a property 
-  			in a backing bean
-  	</description>
-    <property-name>binding</property-name>
-	<property-class>java.lang.String</property-class>
-	<property-extension>
-		<category>ICE_COMPONENT</category>
-		<editor-class>
-			&stringEditor;
-		</editor-class>
-	</property-extension>
-  </property>
   <property>
   	<description>
   			Flag indicating whether or not this component should be rendered 

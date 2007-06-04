@@ -42,6 +42,7 @@
 		be included. Default value is "true".    
     </description>
     <property-name>showDetail</property-name>
+    <property-class>boolean</property-class>    
     <property-extension>
         <category>APPEARANCE</category>
         <editor-class>
@@ -56,6 +57,7 @@
 		be included. Default value is "false".   
     </description>
     <property-name>showSummary</property-name>
+    <property-class>boolean</property-class>        
     <property-extension>
         <category>APPEARANCE</category>
         <editor-class>

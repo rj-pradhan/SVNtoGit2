@@ -45,11 +45,9 @@
 &validator-props;
 &value-props;
 &valuechangelistener-props;
-&pass-thru-alt-props;
 &pass-thru-dir-props;
 &pass-thru-accesskey-props;
 &pass-thru-lang-props;
-&pass-thru-maxlength-props;
 &events-props;
 &pass-thru-readonly-props;
 &pass-thru-title-props;

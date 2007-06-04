@@ -41,7 +41,7 @@
 	&ice-uicolumn-props;
 
 	<component-extension>
-		<base-component-type>com.icesoft.faces.series</base-component-type>
+		<base-component-type>javax.faces.Data</base-component-type>
 		<component-family>javax.faces.Columns</component-family>
 		<renderer-type>null</renderer-type>
 	</component-extension>

@@ -36,5 +36,4 @@
 &value-props;
 &core-props;
 &pass-thru-title-props;
-&ice-att-userrole-rendered-props;
 &escape-props;

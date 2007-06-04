@@ -897,4 +897,88 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         }
         return returnValue;
     }
+    
+    private String onfocus;
+    
+    public void setOnfocus(String onfocus) {
+        this.onfocus = onfocus;
+    }
+    
+    public String getOnfocus() {
+        if (onfocus != null) {
+            return onfocus;
+        }
+        ValueBinding vb = getValueBinding("onfocus");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    private String onchange;
+    
+    public void setOnchange(String onchange) {
+        this.onchange = onchange;
+    }
+    
+    public String getOnchange() {
+        if (onchange != null) {
+            return onchange;
+        }
+        ValueBinding vb = getValueBinding("onchange");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    private String accept;
+    
+    public void setAccept(String accept) {
+        this.accept = accept;
+    }
+    
+    public String getAccept() {
+        if (accept != null) {
+            return accept;
+        }
+        ValueBinding vb = getValueBinding("accept");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    private String accesskey;
+    
+    public void setAccesskey(String accesskey) {
+        this.accesskey = accesskey;
+    }
+    
+    public String getAccesskey() {
+        if (accesskey != null) {
+            return accesskey;
+        }
+        ValueBinding vb = getValueBinding("accesskey");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    private String onblur;
+    
+    public void setOnblur(String onblur) {
+        this.onblur = onblur;
+    }
+    
+    public String getOnblur() {
+        if (onblur != null) {
+            return onblur;
+        }
+        ValueBinding vb = getValueBinding("onblur");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
+    
+    private String tabindex;
+    
+    public void setTabindex(String tabindex) {
+        this.tabindex = tabindex;
+    }
+    
+    public String getTabindex() {
+        if (tabindex != null) {
+            return tabindex;
+        }
+        ValueBinding vb = getValueBinding("tabindex");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }    
 }

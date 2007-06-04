@@ -45,7 +45,7 @@
 
 	<component-extension>
 		<base-component-type>
-			com.icesoft.faces.HtmlPanelGroup
+			javax.faces.Panel
 		</base-component-type>
 		<component-family>javax.faces.Panel</component-family>
 		<renderer-type>com.icesoft.faces.PanelPopup</renderer-type>

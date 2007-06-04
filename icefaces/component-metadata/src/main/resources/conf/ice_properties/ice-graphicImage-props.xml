@@ -79,17 +79,6 @@
     </property-extension>
 </property>
 
-<property>
-	<description>
-		Flag indicating that this image is to be used as a server side image 
-		map. Such an image must be enclosed within a hyperlink ("a").
-	</description>
-    <property-name>ismap</property-name>
-    <property-class>java.lang.String</property-class>
-    <property-extension>
-      <category>ICE_LAYOUT</category>
-    </property-extension>
-</property>
 
 <property>
 	<description>
