@@ -33,6 +33,7 @@
   -->
 <property>
     <property-name>border</property-name>
+    <property-class>int</property-class>    
     <property-extension>
         <category>APPEARANCE</category>
         <editor-class>
