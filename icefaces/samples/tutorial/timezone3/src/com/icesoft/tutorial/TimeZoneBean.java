@@ -36,6 +36,7 @@ package com.icesoft.tutorial;
 import com.icesoft.faces.async.render.IntervalRenderer;
 import com.icesoft.faces.async.render.RenderManager;
 import com.icesoft.faces.async.render.Renderable;
+import com.icesoft.faces.context.ViewListener;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
 
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.TimeZone;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Bean backing the Time Zone application. This bean uses the RenderManager to
@@ -54,7 +57,8 @@ import java.util.TimeZone;
  * during the session.
  */
 
-public class TimeZoneBean implements Renderable {
+public class TimeZoneBean implements Renderable, ViewListener {
+    private static Log log = LogFactory.getLog(TimeZoneBean.class);
     /**
      * The default {@link TimeZone} for this host server.
      */
@@ -105,6 +109,7 @@ public class TimeZoneBean implements Renderable {
      * Constructor initializes time zones.
      */
     public TimeZoneBean() {
+       
         init();
     }
 
@@ -151,6 +156,7 @@ public class TimeZoneBean implements Renderable {
                                          nfldXCoords.length));
 
         state = PersistentFacesState.getInstance();
+        state.addViewListener(this);
     }
 
     /**
@@ -284,10 +290,55 @@ public class TimeZoneBean implements Renderable {
      * @param renderingException render exception passed in frome framework.
      */
     public void renderingException(RenderingException renderingException) {
-        if (clock != null) {
-            clock.remove(this);
-            clock = null;
+        if (log.isDebugEnabled()) {
+            log.debug("Rendering exception called because of " +
+                      renderingException);
         }
+        performCleanup();
+    }
+    
+    /**
+     * Used to properly shut-off the ticking clock.
+     *
+     * @return true if properly shut-off, false if not.
+     */
+    protected boolean performCleanup(){
+        try{
+            if(clock != null){
+                clock.requestStop();
+                clock.remove(this);
+                clock.dispose();
+                clock = null;
+            }
+            return true;
+        } catch (Exception failedCleanup){
+            if (log.isErrorEnabled()) {
+                log.error("Failed to cleanup a clock bean", failedCleanup);
+            }
+
+        }
+        return false;
+    }
+    
+    //
+    // ViewListener interface
+    //
+    
+    /**
+     * New view has been created.
+     */
+    public void viewCreated() {
+    }
+    
+    /**
+     * Disposes a view either due to a window closing 
+     * or a timeout.
+     */
+    public void viewDisposed() {
+        if (log.isInfoEnabled()) {
+            log.info("ViewListener of TimeZoneBean fired for a user - cleaning up");
+        }
+        performCleanup();
     }
 
     //
@@ -320,6 +371,8 @@ public class TimeZoneBean implements Renderable {
             }
         }
     }
+
+    
 
     // ICEfaces image map integration needs offset values to calculate the
     // correct coordinate values.
