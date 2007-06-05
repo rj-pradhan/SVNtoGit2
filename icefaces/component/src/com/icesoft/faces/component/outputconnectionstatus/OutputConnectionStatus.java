@@ -93,10 +93,7 @@ public class OutputConnectionStatus extends HtmlPanelGroup {
      * <p>Return the value of the <code>activeClass</code> property.</p>
      */
     public String getActiveClass() {
-        String base = getStyleClass();
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS,
-                base,
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_ACTIVE_CLASS);
     }
 
@@ -123,10 +120,7 @@ public class OutputConnectionStatus extends HtmlPanelGroup {
      * <p>Return the value of the <code>cautionClass</code> property.</p>
      */
     public String getCautionClass() {
-        String base = getStyleClass();
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS,
-                base,
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_CAUTION_CLASS);
     }
 
@@ -153,10 +147,7 @@ public class OutputConnectionStatus extends HtmlPanelGroup {
      * <p>Return the value of the <code>disconnectedClass</code> property.</p>
      */
     public String getDisconnectedClass() {
-        String base = getStyleClass();
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS,
-                base,
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_DISCONNECT_CLASS);
     }
 
@@ -183,10 +174,7 @@ public class OutputConnectionStatus extends HtmlPanelGroup {
      * <p>Return the value of the <code>inactiveClass</code> property.</p>
      */
     public String getInactiveClass() {
-        String base = getStyleClass();
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS,
-                base,
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_INACTIVE_CLASS);
     }
 
@@ -238,13 +226,10 @@ public class OutputConnectionStatus extends HtmlPanelGroup {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS;
-
+        return Util.getQualifiedStyleClass(this, 
+                        styleClass, 
+                        CSS_DEFAULT.OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS, 
+                        "styleClass");
     }
 
 

@@ -133,12 +133,10 @@ public class PanelStack extends HtmlPanelGroup {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.PANEL_STACK_BASE;
+        return Util.getQualifiedStyleClass(this, 
+                        styleClass, 
+                        CSS_DEFAULT.PANEL_STACK_BASE, 
+                        "styleClass");
     }
 
     /**
@@ -163,18 +161,14 @@ public class PanelStack extends HtmlPanelGroup {
      * <p>Return the value of the <code>rowClass</code> property.</p>
      */
     public String getRowClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_STACK_BASE,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_STACK_ROW);
+        return Util.getQualifiedStyleClass(this, CSS_DEFAULT.PANEL_STACK_ROW);
     }
 
     /**
      * <p>Return the value of the <code>columnName</code> property.</p>
      */
     public String getColumnClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_STACK_BASE,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_STACK_COL);
+        return Util.getQualifiedStyleClass(this, CSS_DEFAULT.PANEL_STACK_COL);
     }
 
     /**
