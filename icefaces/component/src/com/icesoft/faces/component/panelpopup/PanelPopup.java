@@ -141,10 +141,7 @@ public class PanelPopup
      * @return the headerClass style class name.
      */
     public String getHeaderClass() {
-
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.POPUP_BASE,
-                getStyleClass(),
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.POPUP_DEFAULT_HEADER_CLASS);
     }
 
@@ -153,9 +150,7 @@ public class PanelPopup
      * @return the bodyClass style class name.
      */
     public String getBodyClass() {
-        return Util.appendNewStyleClass(
-                CSS_DEFAULT.POPUP_BASE,
-                getStyleClass(),
+        return Util.getQualifiedStyleClass(this, 
                 CSS_DEFAULT.POPUP_DEFAULT_BODY_CLASS);
     }
 
@@ -171,12 +166,10 @@ public class PanelPopup
     * @see javax.faces.component.html.HtmlPanelGroup#getStyleClass()
     */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.POPUP_BASE;
+        return Util.getQualifiedStyleClass(this, 
+                    styleClass,
+                    CSS_DEFAULT.POPUP_BASE,
+                    "styleClass");
     }
 
     /* (non-Javadoc)
