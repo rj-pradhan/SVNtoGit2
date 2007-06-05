@@ -145,9 +145,10 @@ public class CommandSortHeader
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        return Util.getDisaledOREnabledClass(this, isDisabled(), styleClass,
-                                             "styleClass",
-                                             CSS_DEFAULT.COMMAND_SORT_HEADER_STYLE_CLASS);
+        return Util.getQualifiedStyleClass(this, styleClass,
+                                             CSS_DEFAULT.COMMAND_SORT_HEADER_STYLE_CLASS
+                                             , "styleClass", 
+                                             isDisabled());
     }
 
     public static final String COMPONENT_TYPE = "com.icesoft.faces.SortHeader";
