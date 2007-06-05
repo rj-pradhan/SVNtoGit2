@@ -711,14 +711,15 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        return Util.getDisaledOREnabledClass(this, isDisabled(), _styleClass,
-                                             "styleClass",
-                                             CSS_DEFAULT.OUTLINE_CLASS);
+        return Util.getQualifiedStyleClass(this, 
+                                    _styleClass,
+                                    CSS_DEFAULT.DATA_PAGINATOR_BASE, 
+                                    "styleClass",
+                                    isDisabled());
     }
 
     public String getBaseStyleClass() {
-        return Util.getClassName(this, _styleClass, "styleClass",
-                                 CSS_DEFAULT.DATA_PAGINATOR_BASE);
+        return CSS_DEFAULT.DATA_PAGINATOR_BASE;
     }
 
     /**
@@ -767,17 +768,8 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      * property.</p>
      */
     public String getPaginatorTableClass() {
-        String base = getBaseStyleClass();
-        String name = CSS_DEFAULT.PAGINATOR_TABLE_CLASS;
-        if (isDisabled()) {
-            name += "-dis";
-        }
-        String result = Util.appendNewStyleClass(
-                CSS_DEFAULT.DATA_PAGINATOR_BASE,
-                base,
-                name
-        );
-        return result;
+        return Util.getQualifiedStyleClass(this,CSS_DEFAULT.PAGINATOR_TABLE_CLASS, isDisabled());
+
     }
 
     /**
@@ -785,17 +777,7 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      * property.</p>
      */
     public String getPaginatorColumnClass() {
-        String base = getBaseStyleClass();
-        String name = CSS_DEFAULT.PAGINATOR_COLUMN_CLASS;
-        if (isDisabled()) {
-            name += "-dis";
-        }
-        String result = Util.appendNewStyleClass(
-                CSS_DEFAULT.DATA_PAGINATOR_BASE,
-                base,
-                name
-        );
-        return result;
+        return Util.getQualifiedStyleClass(this,CSS_DEFAULT.PAGINATOR_COLUMN_CLASS, isDisabled());
     }
 
     /**
@@ -803,17 +785,7 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      * property.</p>
      */
     public String getscrollButtonCellClass() {
-        String base = getBaseStyleClass();
-        String name = CSS_DEFAULT.DATA_PAGINATOR_SCROLL_BUTTON_CELL_CLASS;
-        if (isDisabled()) {
-            name += "-dis";
-        }
-        String result = Util.appendNewStyleClass(
-                CSS_DEFAULT.DATA_PAGINATOR_BASE,
-                base,
-                name
-        );
-        return result;
+        return Util.getQualifiedStyleClass(this,CSS_DEFAULT.DATA_PAGINATOR_SCROLL_BUTTON_CELL_CLASS, isDisabled());
     }
 
 
@@ -822,22 +794,10 @@ public class DataPaginator extends HtmlPanelGroup implements ActionSource {
      * property.</p>
      */
     public String getPaginatorActiveColumnClass() {
-        String base = getBaseStyleClass();
-        String name = CSS_DEFAULT.PAGINATOR_ACTIVE_COLUMN_CLASS;
-        if (isDisabled()) {
-            name += "-dis";
-        }
-        String result = Util.appendNewStyleClass(
-                CSS_DEFAULT.DATA_PAGINATOR_BASE,
-                base,
-                name
-        );
-        return result;
-
-
+        return Util.getQualifiedStyleClass(this, CSS_DEFAULT.PAGINATOR_ACTIVE_COLUMN_CLASS, isDisabled());
     }
 
-    /**
+    /** 
      * <p>Set the value of the <code>renderFacetsIfSinglePage</code>
      * property.</p>
      */
