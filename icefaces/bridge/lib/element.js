@@ -91,13 +91,13 @@
         },
 
         disconnectAllListenersAndPeers: /MSIE/.test(navigator.userAgent) ?
-            function() {
-                //cleanup in a different (pseudo) thread
-                This.DisconnectAllListenersAndPeers.delayFor(100)(this.element);
-            } :
-            function() {
-                This.DisconnectAllListenersAndPeers(this.element);
-            },
+                                        function() {
+                                            //cleanup in a different (pseudo) thread
+                                            This.DisconnectAllListenersAndPeers.delayFor(100)(this.element);
+                                        } :
+                                        function() {
+                                            This.DisconnectAllListenersAndPeers(this.element);
+                                        },
 
         serializeOn: function(query) {
         },
@@ -131,7 +131,7 @@
             this.defaultReplaceHostElementWith(newElement);
         },
 
-        //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
+    //hide deleted elements -- Firefox 1.0.x renders tables after they are removed from the document.
         displayOff: /Safari/.test(navigator.userAgent) ? Function.NOOP : function() {
             this.element.style.display = 'none';
         },
@@ -218,8 +218,8 @@
             ['className', 'title', 'lang', 'dir'].each(iterator);
             //input element attributes
             ['type', 'name', 'value', 'checked', 'disabled', 'readonly',
-             'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap', 'tabIndex',
-             'accessKey', 'accept'].each(iterator);
+                    'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap', 'tabIndex',
+                    'accessKey', 'accept'].each(iterator);
         },
 
         serializeOn: function(query) {
@@ -299,7 +299,7 @@
             return $enumerate(this.element.elements).collect($element);
         },
 
-        //captures normal form submit events and sends them through a XMLHttpRequest
+    //captures normal form submit events and sends them through a XMLHttpRequest
         captureOnSubmit: function() {
             var previousOnSubmit = this.element.onsubmit;
             this.element.onsubmit = function(event) {
@@ -309,7 +309,7 @@
             };
         },
 
-        //redirect normal form submits through a XMLHttpRequest
+    //redirect normal form submits through a XMLHttpRequest
         redirectSubmit: function() {
             var previousSubmit = this.element.submit;
             this.element.submit = function() {
@@ -391,7 +391,7 @@
         },
 
         serializeOn: function(query) {
-            query.add(this.element.name, this.element.name);
+            if (this.element.name) query.add(this.element.name, this.element.name);
         },
 
         form: function() {
@@ -448,8 +448,8 @@
 
         eachAttributeName: function(iterator) {
             ['title', 'lang', 'dir', 'class', 'style', 'align', 'frameborder',
-             'width', 'height', 'hspace', 'ismap', 'longdesc', 'marginwidth',
-             'marginheight', 'name', 'scrolling'].each(iterator);
+                    'width', 'height', 'hspace', 'ismap', 'longdesc', 'marginwidth',
+                    'marginheight', 'name', 'scrolling'].each(iterator);
         }
     });
 
