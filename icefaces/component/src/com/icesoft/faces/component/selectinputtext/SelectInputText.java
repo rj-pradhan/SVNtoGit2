@@ -384,25 +384,19 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.DEFAULT_SELECT_INPUT;
+        return Util.getQualifiedStyleClass(this,
+                            styleClass,
+                            CSS_DEFAULT.DEFAULT_SELECT_INPUT,
+                            "styleClass",
+                            isDisabled());
     }
 
     /**
      * <p>Return the value of the <code>inputTextClass</code> property.</p>
      */
     public String getInputTextClass() {
-        String base = getStyleClass();
-        String className = CSS_DEFAULT.DEFAULT_SELECT_INPUT_TEXT_CLASS;
-        if (isDisabled()) {
-            className += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_SELECT_INPUT, base,
-                                        className);
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.DEFAULT_SELECT_INPUT_TEXT_CLASS, isDisabled());
     }
 
 
@@ -410,13 +404,8 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      * <p>Return the value of the <code>listClass</code> property.</p>
      */
     public String getListClass() {
-        String base = getStyleClass();
-        String className = CSS_DEFAULT.DEFAULT_SELECT_INPUT_LIST_CLASS;
-        if (isDisabled()) {
-            className += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_SELECT_INPUT, base,
-                                        className);
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.DEFAULT_SELECT_INPUT_LIST_CLASS, isDisabled());
     }
 
 
@@ -424,13 +413,8 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      * <p>Return the value of the <code>rowClass</code> property.</p>
      */
     public String getRowClass() {
-        String base = getStyleClass();
-        String className = CSS_DEFAULT.DEFAULT_SELECT_INPUT_ROW_CLASS;
-        if (isDisabled()) {
-            className += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_SELECT_INPUT, base,
-                                        className);
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.DEFAULT_SELECT_INPUT_ROW_CLASS, isDisabled());
     }
 
 
@@ -438,13 +422,8 @@ public class SelectInputText extends HtmlInputText implements NamingContainer {
      * <p>Return the value of the <code>selectedRowClass</code> property.</p>
      */
     public String getSelectedRowClass() {
-        String base = getStyleClass();
-        String className = CSS_DEFAULT.DEFAULT_SELECT_INPUT_SELECTED_ROW_CLASS;
-        if (isDisabled()) {
-            className += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_SELECT_INPUT, base,
-                                        className);
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.DEFAULT_SELECT_INPUT_SELECTED_ROW_CLASS, isDisabled());
     }
 
     public String getOptions() {
