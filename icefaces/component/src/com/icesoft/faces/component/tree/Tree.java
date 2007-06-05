@@ -313,12 +313,10 @@ public class Tree extends UICommand implements NamingContainer {
      * @return String style class property value.
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.TREE_DEFAULT_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass, 
+                CSS_DEFAULT.TREE_DEFAULT_STYLE_CLASS, 
+                "styleClass");
     }
 
     /**
@@ -352,6 +350,10 @@ public class Tree extends UICommand implements NamingContainer {
         this.style = style;
     }
 
+    String getTreeRowStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.STYLE_TREEROW);        
+    }
     /**
      * @param imageProperty
      * @param bindingName

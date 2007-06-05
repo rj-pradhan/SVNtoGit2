@@ -273,7 +273,7 @@ public class TreeRenderer extends DomBasicRenderer {
 
             treeNodeDiv.setAttribute(HTML.NAME_ATTR, "treeNodeDiv");
             treeNodeDiv
-                    .setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.STYLE_TREEROW);
+                    .setAttribute(HTML.CLASS_ATTR, treeComponent.getTreeRowStyleClass());
             parentDOMNode.appendChild(treeNodeDiv);
             domContext.setCursorParent(treeNodeDiv);
             // startNode is used in conjunction with endNode as an alternative to streamWrite method
@@ -297,7 +297,7 @@ public class TreeRenderer extends DomBasicRenderer {
 
             treeNodeDiv.setAttribute(HTML.NAME_ATTR, "treeNodeDiv");
             treeNodeDiv
-                    .setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.STYLE_TREEROW);
+                    .setAttribute(HTML.CLASS_ATTR, treeComponent.getTreeRowStyleClass());
             // treeNodeDiv id is assigned here when roo node is hidden
             treeNodeDiv.setAttribute(HTML.ID_ATTR, treeComponent
                     .getClientId(facesContext) + "-div-root");

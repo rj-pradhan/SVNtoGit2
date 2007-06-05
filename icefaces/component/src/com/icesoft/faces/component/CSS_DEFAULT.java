@@ -216,7 +216,7 @@ public class CSS_DEFAULT {
     public static String SUBMENU_INDICATOR_STYLE =
             "iceSubMenuIndicator"; // Originally was "submenuIndicator"
     public static final String STYLE_TREEROW =
-            "iceTreeRow";// Originally was "treerow"
+            "Row";// Originally was "treerow"
     public static final String TREE_DEFAULT_STYLE_CLASS = "iceTree";
     /**
      * Calendar Constants. Now based on calendar style name
