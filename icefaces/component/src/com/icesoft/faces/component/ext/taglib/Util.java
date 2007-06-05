@@ -304,6 +304,177 @@ public class Util extends Object {
         return s;
     }
 
+
+    /**
+     * This method should be used by the component/renderer class to 
+     * get the qualifiedStyleClass for a class which has been used
+     * internally. This would return a qualifiedStyleClass string using the 
+     * following pattern.
+     *      componentDefaultClass + noneAttributeClass
+     * @param uiComponent
+     * @param noneAttributeClass
+     * @return qualifiedStyleClass string
+     */
+    public static String getQualifiedStyleClass(UIComponent uiComponent,
+                                          String noneAttributeClass) {
+        return getQualifiedStyleClass(uiComponent, 
+                                noneAttributeClass, 
+                                null,
+                                null,
+                                false,
+                                true);
+        
+    }
+
+    /**
+     * This method should be used by the renderer/component class that 
+     * can be disabled, to get the qualifiedStyleClass for a class which has 
+     * been used internally. This would return a qualifiedStyleClass string 
+     * using the following pattern.
+     *      defaulStyleClass + noneAttributeClass[-dis]
+     * @param uiComponent
+     * @param noneAttributeClass
+     * @return qualifiedStyleClass string
+     */    
+    public static String getQualifiedStyleClass(UIComponent uiComponent,
+                                          String noneAttributeClass,
+                                          boolean disabled) {
+        return getQualifiedStyleClass(uiComponent, 
+                                noneAttributeClass, 
+                                null,
+                                null,
+                                disabled,
+                                true);
+        
+    }
+
+    /**
+     * This method should be used by the renderer/component class to get the 
+     * qualifiedStyleClass for a "styleClass" or any other class related attribute
+     * on the component (e.g.) inputText on inputFile component.
+     * This would return a qualifiedStyleClass string using the following pattern.
+     *      defaulStyleClass  [userDefinedStyleClass]
+     * @param uiComponent
+     * @param userDefinedStyleClass
+     * @param defaulStyleClass
+     * @param classAttributeName
+     * @return qualifiedStyleClass string
+     */    
+    
+    public static String getQualifiedStyleClass(UIComponent uiComponent,
+                                          String userDefinedStyleClass,
+                                          String defaulStyleClass, 
+                                          String classAttributeName) {
+        return getQualifiedStyleClass(uiComponent, 
+                userDefinedStyleClass, 
+                defaulStyleClass, 
+                classAttributeName, 
+                false,
+                false);
+        
+    }
+
+    /**
+     * This method should be used by the renderer/component class that can be
+     * disabled, to get the qualifiedStyleClass for a "styleClass" or any other 
+     * class related attribute on the component (e.g.) "inputText" attribute on 
+     * "inputFile" component. This methods returns a qualifiedStyleClass string 
+     * using the following pattern.
+     *      defaulStyleClass[-dis]  [userDefinedStyleClass[-dis]]
+     * @param uiComponent
+     * @param userDefinedStyleClass
+     * @param defaulStyleClass
+     * @param classAttributeName
+     * @return qualifiedStyleClass string
+     */    
+    public static String getQualifiedStyleClass(UIComponent uiComponent,
+                                          String userDefinedStyleClass,
+                                          String defaulStyleClass, 
+                                          String classAttributeName,
+                                          boolean disabled) {
+        return getQualifiedStyleClass(uiComponent, 
+                userDefinedStyleClass, 
+                defaulStyleClass, 
+                classAttributeName, 
+                disabled,
+                false);
+        
+    }
+
+      private static String getQualifiedStyleClass(UIComponent uiComponent,
+                                          String userDefinedStyleClass,
+                                          String defaulStyleClass, 
+                                          String classAttributeName,
+                                          boolean disabled,
+                                          boolean isNoneAttributeClass) {
+          if (isNoneAttributeClass) {
+              //1- This requested class is used internally by the component and
+              //not visible to the developer (or can not be set using an attribute)
+              return appendLocalClassToStyleClass(uiComponent, userDefinedStyleClass);
+          }
+
+          String disabledSuffix = disabled ? "-dis": "";
+          String styleClass = null;
+          
+          if ("styleClass".equalsIgnoreCase(classAttributeName)) {
+              //2- The following code is responsible to assembled the qualified 
+              //value for "styleClass" attribute using the following syntax: 
+              //         defaultStyleClass[-dis] [userDefinedStyleClass[-dis]]
+              styleClass = getValue(uiComponent,
+                      userDefinedStyleClass,
+                      "styleClass");
+              styleClass = defaulStyleClass + 
+              disabledSuffix+
+              " " + ((styleClass!=null)? styleClass + disabledSuffix :"");
+              return styleClass;
+          } else {
+              //3- the following code is to deal with other style class 
+              //attributes that has been defined on the components (e.g.) 
+              // "inputTextClass" attribute on "inputFile" component.  
+              styleClass = String.valueOf(uiComponent.getAttributes()
+                      .get("styleClass"));
+              String subClass = getValue(uiComponent,
+                      userDefinedStyleClass,
+                      classAttributeName);
+              
+              String newClass = appendLocalClassToStyleClass(uiComponent, 
+                                      defaulStyleClass);
+              if (subClass != null) {
+                  newClass += " " + subClass + disabledSuffix;
+              }
+              return newClass;
+          }
+       }
+
+    private static String getValue(UIComponent uiComponent, 
+                                    String value, 
+                                    String attributeName) {
+        if (value != null) {
+            return value;
+        }
+        ValueBinding vb = uiComponent.getValueBinding(attributeName);
+        return vb != null ?
+               (String) vb.getValue(FacesContext.getCurrentInstance()) :
+               null;
+    }
+    
+    private static String appendLocalClassToStyleClass(UIComponent uiComponent,
+                                        String localClass) {
+        String styleClass = String.valueOf(uiComponent.getAttributes()
+                .get("styleClass")).trim();
+        String[] classes = styleClass.split(" ");
+        StringBuffer name = new StringBuffer();
+        for (int i =0; i <classes.length; i++) {
+            if (classes[i] != null && classes[i].endsWith("-dis")) {
+                name.append(classes[i].replaceAll("-dis", localClass+"-dis"));
+            } else {
+                name.append(classes[i]+ localClass);
+            }
+            name.append(" ");
+        }
+       return name.toString().trim();
+    }
+    
     public static String getDisaledOREnabledClass(UIComponent uiComponent,
                                                   boolean disabled,
                                                   String styleClass,
