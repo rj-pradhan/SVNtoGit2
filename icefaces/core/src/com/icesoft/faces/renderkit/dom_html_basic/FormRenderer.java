@@ -83,12 +83,12 @@ public class FormRenderer extends DomBasicRenderer {
         validateNestingForm(uiComponent);
         DOMContext domContext =
                 DOMContext.attachDOMContext(facesContext, uiComponent);
+        String formClientId = uiComponent.getClientId(facesContext);
 
         if (!domContext.isInitialized()) {
             Element root = domContext.createElement("form");
 
             domContext.setRootNode(root);
-            String formClientId = uiComponent.getClientId(facesContext);
             root.setAttribute("id", formClientId);
             root.setAttribute("method", "post");
             String action = null;
@@ -178,10 +178,13 @@ public class FormRenderer extends DomBasicRenderer {
                 log.debug("Embedding Spring Param - name: " + flowParamName +
                           ", value: " + flowId);
             }
+            String flowParamId = formClientId + ":" + flowParamName;
             flowIDElement
                     .setAttribute(HTML.TYPE_ATTR, HTML.INPUT_TYPE_HIDDEN);
             flowIDElement
                     .setAttribute(HTML.NAME_ATTR, flowParamName);
+            flowIDElement
+                    .setAttribute(HTML.ID_ATTR, flowParamId);
 
             flowIDElement.setAttribute(HTML.VALUE_ATTR, flowId);
             root.appendChild(flowIDElement);
