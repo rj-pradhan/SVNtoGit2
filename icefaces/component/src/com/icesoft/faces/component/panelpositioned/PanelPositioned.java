@@ -35,6 +35,7 @@ package com.icesoft.faces.component.panelpositioned;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.dragdrop.DndEvent;
+import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.panelseries.UISeries;
 import com.icesoft.faces.context.effects.JavascriptContext;
 
@@ -84,12 +85,10 @@ public class PanelPositioned extends UISeries {
     }
 
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.POSITIONED_PANEL_DEFAULT_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                                styleClass,
+                                CSS_DEFAULT.POSITIONED_PANEL_DEFAULT_CLASS,
+                                "styleClass");
     }
 
     public void setStyleClass(String styleClass) {
