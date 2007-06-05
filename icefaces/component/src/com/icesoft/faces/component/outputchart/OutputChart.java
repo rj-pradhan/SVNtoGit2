@@ -36,6 +36,7 @@ package com.icesoft.faces.component.outputchart;
 import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.HtmlCommandButton;
 import com.icesoft.faces.component.ext.renderkit.FormRenderer;
+import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.DOMResponseWriter;
 import org.krysalis.jcharts.Chart;
@@ -604,12 +605,10 @@ public class OutputChart extends HtmlCommandButton implements Serializable {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.OUTPUT_CHART_DEFAULT_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this,
+                styleClass, 
+                CSS_DEFAULT.OUTPUT_CHART_DEFAULT_STYLE_CLASS,
+                "styleClass");
     }
 
     /**
