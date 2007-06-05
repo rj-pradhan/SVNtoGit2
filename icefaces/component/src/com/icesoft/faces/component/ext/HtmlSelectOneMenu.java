@@ -600,7 +600,25 @@ public class HtmlSelectOneMenu
         return vb != null ? (Effect) vb.getValue(getFacesContext()) : null;
     }
 
+    private String autocomplete;
 
+    /**
+     * <p>Set the value of the <code>autocomplete</code> property.</p>
+     */
+    public void setAutocomplete(String autocomplete) {
+        this.autocomplete = autocomplete;
+    }
+
+    /**
+     * <p>Return the value of the <code>autocomplete</code> property.</p>
+     */
+    public String getAutocomplete() {
+        if (autocomplete != null) {
+            return autocomplete;
+        }
+        ValueBinding vb = getValueBinding("autocomplete");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
 
 
     /**

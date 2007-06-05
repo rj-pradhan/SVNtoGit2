@@ -492,7 +492,25 @@ public class HtmlSelectManyMenu
     }
 
 
+    private String autocomplete;
 
+    /**
+     * <p>Set the value of the <code>autocomplete</code> property.</p>
+     */
+    public void setAutocomplete(String autocomplete) {
+        this.autocomplete = autocomplete;
+    }
+
+    /**
+     * <p>Return the value of the <code>autocomplete</code> property.</p>
+     */
+    public String getAutocomplete() {
+        if (autocomplete != null) {
+            return autocomplete;
+        }
+        ValueBinding vb = getValueBinding("autocomplete");
+        return vb != null ? (String) vb.getValue(getFacesContext()) : null;
+    }
     /**
      * <p>Gets the state of the instance as a <code>Serializable</code>
      * Object.</p>

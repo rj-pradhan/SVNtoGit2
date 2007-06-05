@@ -35,7 +35,8 @@
   
 &actionsource-props;
 &input-common-props;
-
+&pass-thru-alt-props;
+&pass-thru-maxlength-props;
 <property>
 	<description>
 		The number of characters used to determine the width of this field.

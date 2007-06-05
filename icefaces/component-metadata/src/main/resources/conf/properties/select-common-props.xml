@@ -49,7 +49,7 @@
 &pass-thru-onfocus-props;
 &ice-att-userrole-enabled-props;
 &ice-att-partialsubmit-props;
-
+&ice-att-autoComplete-props;
 <property>
 	<description>The Javascript Effect</description>
 	<property-name>effect</property-name>
