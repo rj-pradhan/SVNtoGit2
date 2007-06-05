@@ -502,9 +502,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        return Util.getDisaledOREnabledClass(this, isDisabled(), styleClass,
-                                             "styleClass",
-                                             CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS);
+        return Util.getQualifiedStyleClass(this, 
+                            styleClass, 
+                            CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS, 
+                            "styleClass",
+                            isDisabled());
     }
 
     /**
@@ -681,22 +683,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
     
     public String getInputTextClass() {
-        String result = CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS;
-        if (inputTextClass != null) {
-            result = inputTextClass;
-        }
-        if (isDisabled()) {
-            result += "-dis";
-        }
-
-        // Append the style if it is still the default
-        if (result.equals(CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS)) {
-            return Util.appendNewStyleClass(
-                    CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS, styleClass, result);
-        }
-
-        // Otherwise return the user specified override class
-        return result;
+        return Util.getQualifiedStyleClass(this, 
+                inputTextClass, 
+                CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS, 
+                "inputTextClass",
+                isDisabled());
     }
 
     private String buttonClass = null;
@@ -706,22 +697,11 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
     }
 
     public String getButtonClass() {
-        String result = CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_BUTTON_CLASS;
-        if (buttonClass != null) {
-            result = buttonClass;
-        }
-        if (isDisabled()) {
-            result += "-dis";
-        }
-
-        // Append the style if it is still the default
-        if (result.equals(CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_BUTTON_CLASS)) {
-            return Util.appendNewStyleClass(
-                    CSS_DEFAULT.ICE_FILE_UPLOAD_BASE_CLASS, styleClass, result);
-        }
-
-        // Otherwise return the user specified override class
-        return result;
+        return Util.getQualifiedStyleClass(this, 
+                buttonClass, 
+                CSS_DEFAULT.ICE_FILE_UPLOAD_DEFAULT_BUTTON_CLASS, 
+                "buttonClass",
+                isDisabled());
     }
 
     boolean isRegister() {
