@@ -94,12 +94,10 @@ public class PanelSeries extends UISeries {
      * @return style class property value.
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.PANEL_SERIES_DEFAULT_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass, 
+                CSS_DEFAULT.PANEL_SERIES_DEFAULT_CLASS, 
+                "styleClass");
     }
 
     /**
