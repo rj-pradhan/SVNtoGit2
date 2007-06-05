@@ -309,13 +309,9 @@ public class SelectInputDate
      *         used.
      */
     public String getMonthYearRowClass() {
-
-        String result = CSS_DEFAULT.DEFAULT_YEARMONTHHEADER_CLASS;
-        if (isDisabled()) {
-            result += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass, result);
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.DEFAULT_YEARMONTHHEADER_CLASS, 
+                isDisabled());
     }
 
 
@@ -327,22 +323,18 @@ public class SelectInputDate
      *         attribute has not been set the default will be used.
      */
     public String getWeekRowClass() {
-
-        String result = CSS_DEFAULT.DEFAULT_WEEKHEADER_CLASS;
-        if (isDisabled()) {
-            result += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass, result);
+        return Util.getQualifiedStyleClass(this,
+                        CSS_DEFAULT.DEFAULT_WEEKHEADER_CLASS, 
+                        isDisabled());
     }
 
     /**
      * @return the style class name used for the input text of the calendar.
      */
     public String getCalendarInputClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass,
-                                        CSS_DEFAULT.DEFAULT_CALENDARINPUT_CLASS);
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.DEFAULT_CALENDARINPUT_CLASS, 
+                                isDisabled());
     }
 
     /**
@@ -353,12 +345,9 @@ public class SelectInputDate
      *         cells
      */
     public String getDayCellClass() {
-        String result = CSS_DEFAULT.DEFAULT_DAYCELL_CLASS;
-        if (isDisabled()) {
-            result += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass, result);
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.DEFAULT_DAYCELL_CLASS, 
+                                isDisabled()); 
     }
 
     /* (non-Javadoc)
@@ -374,12 +363,10 @@ public class SelectInputDate
      * @return styleClass
      */
     public String getStyleClass() {
-        String s = Util.getDisaledOREnabledClass(this,
-                                                 isDisabled(),
-                                                 styleClass,
-                                                 "styleClass",
-                                                 CSS_DEFAULT.DEFAULT_CALENDAR);
-        return s;
+        return Util.getQualifiedStyleClass(this, 
+                                    styleClass,
+                                    CSS_DEFAULT.DEFAULT_CALENDAR, 
+                                    "styleClass", isDisabled());
     }
 
     /**
@@ -388,12 +375,9 @@ public class SelectInputDate
      * @return style class name used for the current day cell
      */
     public String getCurrentDayCellClass() {
-        String result = CSS_DEFAULT.DEFAULT_CURRENTDAYCELL_CLASS;
-        if (isDisabled()) {
-            result += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass, result);
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.DEFAULT_CURRENTDAYCELL_CLASS, 
+                                isDisabled());
     }
 
 
@@ -422,12 +406,9 @@ public class SelectInputDate
      * @return the style class name used for the outline of the calendar.
      */
     public String getCalendarOutlineClass() {
-        String result = CSS_DEFAULT.DEFAULT_CALENDAROUTLINE_CLASS;
-        if (isDisabled()) {
-            result += "-dis";
-        }
-        return Util.appendNewStyleClass(CSS_DEFAULT.DEFAULT_CALENDAR,
-                                        styleClass, result);
+        return Util.getQualifiedStyleClass(this, 
+                            CSS_DEFAULT.DEFAULT_CALENDAROUTLINE_CLASS, 
+                            isDisabled());
     }
 
     /**
