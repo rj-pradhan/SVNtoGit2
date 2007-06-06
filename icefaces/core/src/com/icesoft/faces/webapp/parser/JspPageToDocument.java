@@ -78,12 +78,15 @@ public class JspPageToDocument {
     static String ATTRIBUTE_PATTERN = "\\s*([^=]*)\\s*=\\s*\"([^\"]*)\"";
     static String HTML_TAG_PATTERN = "<\\s*html";
     static String P_TAG_PATTERN = "<\\s*/*(p)([^>]*?)/*>";
+    static String IMG_TAG_PATTERN = "<\\s*(img)([^>]*?)/*>";
     static String JSP_INCLUDE_PATTERN = "<\\s*jsp:include([^>]*?)/>";
     static String BR_TAG_PATTERN = "<\\s*br\\s*>";
     static String HR_TAG_PATTERN = "<\\s*hr\\s*>";
     static String LINK_TAG_PATTERN = "<\\s*(link)([^>]*?)/*>";
     static String META_TAG_PATTERN = "<\\s*(meta)([^>]*?)/*>";
+    static String INPUT_TAG_PATTERN = "<\\s*(input)([^>]*?)/*>";
     static String NBSP_ENTITY_PATTERN = "&nbsp";
+    static String COPY_ENTITY_PATTERN = "&copy;";
     static String DOC_DECL_PATTERN = "<!DOCTYPE [^>]*>";
     static String XML_DECL_PATTERN = "<\\?xml [^>]*\\?>";
 
@@ -191,6 +194,8 @@ public class JspPageToDocument {
         result = toSingletonTag(P_TAG_PATTERN, result);
         result = toSingletonTag(LINK_TAG_PATTERN, result);
         result = toSingletonTag(META_TAG_PATTERN, result);
+        result = toSingletonTag(IMG_TAG_PATTERN, result);
+        result = toSingletonTag(INPUT_TAG_PATTERN, result);
 
         Pattern brTagPattern = Pattern.compile(BR_TAG_PATTERN);
         Matcher brTagMatcher = brTagPattern.matcher(result);
@@ -204,6 +209,10 @@ public class JspPageToDocument {
         Matcher nbspEntityMatcher = nbspEntityPattern.matcher(result);
         //  result = nbspEntityMatcher.replaceAll("&nbsp;");
         result = nbspEntityMatcher.replaceAll("&amp;nbsp");
+
+        Pattern copyEntityPattern = Pattern.compile(COPY_ENTITY_PATTERN);
+        Matcher copyEntityMatcher = copyEntityPattern.matcher(result);
+        result = copyEntityMatcher.replaceAll("&#169;");
 
         Pattern docDeclPattern = Pattern.compile(DOC_DECL_PATTERN);
         Matcher docDeclMatcher = docDeclPattern.matcher(result);
