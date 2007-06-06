@@ -175,37 +175,32 @@ public class PanelBorder
      * <p>Return the value of the <code>northClass</code> property.</p>
      */
     public String getNorthClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_BORDER_DEFAULT,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_BORDER_DEFAULT_NORTH_CLASS);
+        return Util.getQualifiedStyleClass(this,
+                              CSS_DEFAULT.PANEL_BORDER_DEFAULT_NORTH_CLASS);
     }
 
     /**
      * <p>Return the value of the <code>westClass</code> property.</p>
      */
     public String getWestClass() {
-
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_BORDER_DEFAULT,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_BORDER_DEFAULT_WEST_CLASS);
+        return Util.getQualifiedStyleClass(this,
+                               CSS_DEFAULT.PANEL_BORDER_DEFAULT_WEST_CLASS);
     }
 
     /**
      * <p>Return the value of the <code>eastClass</code> property.</p>
      */
     public String getEastClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_BORDER_DEFAULT,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_BORDER_DEFAULT_EAST_CLASS);
+        return Util.getQualifiedStyleClass(this,
+                               CSS_DEFAULT.PANEL_BORDER_DEFAULT_EAST_CLASS);
     }
 
     /**
      * <p>Return the value of the <code>centerClass</code> property.</p>
      */
     public String getCenterClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_BORDER_DEFAULT,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_BORDER_DEFAULT_CENTER_CLASS);
+        return Util.getQualifiedStyleClass(this,
+                               CSS_DEFAULT.PANEL_BORDER_DEFAULT_CENTER_CLASS);
     }
 
 
@@ -213,9 +208,8 @@ public class PanelBorder
      * <p>Return the value of the <code>southClass</code> property.</p>
      */
     public String getSouthClass() {
-        return Util.appendNewStyleClass(CSS_DEFAULT.PANEL_BORDER_DEFAULT,
-                                        getStyleClass(),
-                                        CSS_DEFAULT.PANEL_BORDER_DEFAULT_SOUTH_CLASS);
+        return Util.getQualifiedStyleClass(this,
+                               CSS_DEFAULT.PANEL_BORDER_DEFAULT_SOUTH_CLASS);
     }
 
     /**
@@ -229,12 +223,11 @@ public class PanelBorder
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.PANEL_BORDER_DEFAULT;
+        return Util.getQualifiedStyleClass(this,
+                        styleClass, 
+                        CSS_DEFAULT.PANEL_BORDER_DEFAULT,
+                        "styleClass");
+        
     }
 
     /**
