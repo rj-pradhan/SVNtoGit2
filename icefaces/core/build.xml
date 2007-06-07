@@ -143,12 +143,29 @@
        </condition>
     </target>
 
+    <target name="testJSF12">
+       <available property="isJSF12" file="${lib.dir}/javaee.jar" />
+    </target>
+
     <target name="compile15" depends="testJDK" if="isJDK15">
         <javac destdir="${build.classes.dir}" sourcepath=""
                debug="${compile.debug}" source="1.5" target="1.5">
             <classpath refid="compile.run.classpath"/>
             <src location="${src.dir}"/>
             <include name="com/icesoft/faces/webapp/http/servlet/TomcatPushServlet.java"/>
+        </javac>
+
+        <antcall target="jsf12" />
+
+    </target>
+
+    <target name="jsf12" depends="testJSF12" if="isJSF12" >
+        <javac destdir="${build.classes.dir}" sourcepath=""
+               debug="${compile.debug}" source="1.5" target="1.5">
+            <classpath location="${lib.dir}/javaee.jar"/>
+            <classpath refid="compile.run.classpath"/>
+            <src location="${src.dir}"/>
+            <include name="com/icesoft/faces/webapp/parser/ELSetPropertiesRule.java"/>
         </javac>
     </target>
 

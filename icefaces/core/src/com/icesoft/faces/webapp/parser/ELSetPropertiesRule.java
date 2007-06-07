@@ -70,23 +70,22 @@ public class ELSetPropertiesRule extends Rule {
                     //must be a JSF 1.1 tag
                     values.put(name, value);
                 } else if ("action".equals(name)) {
-                    MethodExpression methodExpression =
-                            facesContext.getApplication().getExpressionFactory()
-                                    .
-                                            createMethodExpression(
-                                                    facesContext.getELContext(),
-                                                    value, String.class,
-                                                    new Class[]{});
-                    values.put(name, methodExpression);
+                    values.put(name, 
+                            getMethodExpression(facesContext, name, value));
                 } else {
-                    ValueExpression valueExpression =
-                            facesContext.getApplication().getExpressionFactory()
-                                    .
-                                            createValueExpression(
-                                                    facesContext.getELContext(),
-                                                    value, Object.class);
-                    values.put(name, valueExpression);
+                    values.put(name, 
+                            getValueExpression(facesContext, name, value));
                 }
+                if (top instanceof javax.faces.webapp.UIComponentELTag) {
+                    //special case for 
+                    //com.sun.faces.taglib.jsf_core.ParameterTag
+                    //and potentially others
+                    if ("name".equals(name))  {
+                        values.put(name, 
+                                getValueExpression(facesContext, name, value));
+                    }
+                }
+
             }
         }
 
@@ -94,4 +93,25 @@ public class ELSetPropertiesRule extends Rule {
         BeanUtils.populate(top, values);
     }
 
+    private ValueExpression getValueExpression(FacesContext facesContext,
+                                               String name, String value)  {
+        ValueExpression valueExpression =
+                facesContext.getApplication().getExpressionFactory()
+                        .createValueExpression(
+                                facesContext.getELContext(),
+                                value, Object.class );
+        return valueExpression;
+    }
+
+    private MethodExpression getMethodExpression(FacesContext facesContext,
+                                                 String name, String value)  {
+        MethodExpression methodExpression =
+                facesContext.getApplication().getExpressionFactory()
+                        .createMethodExpression(
+                                                facesContext.getELContext(),
+                                                value, String.class,
+                                                new Class[]{});
+        return methodExpression;
+    }
+    
 }
