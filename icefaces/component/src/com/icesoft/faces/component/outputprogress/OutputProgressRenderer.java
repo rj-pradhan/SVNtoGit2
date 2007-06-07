@@ -97,10 +97,6 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
         }
 
         OutputProgress progressBar = (OutputProgress) uiComponent;
-        String base = progressBar.getStyleClass();
-        if (base == null) {
-            base = CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS;
-        }
 
         Text percentageText = progressBar.getTextNode();
         Element bgBar = progressBar.getBarNode();
@@ -127,18 +123,12 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
             //following if block is for Indeterminate mode only
             if (progressBar.getIndeterminate()) {
                 if (percentValue < 1) {
-                    String className = Util.appendNewStyleClass(
-                            CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                            base,
-                            CSS_DEFAULT.OUTPUT_PROGRESS_INDEREMINATE_INACTIVE_CLASS);
-                    fillBar.setAttribute(HTML.CLASS_ATTR, className);
+                    fillBar.setAttribute(HTML.CLASS_ATTR, 
+                            progressBar.getIndeterminateInactiveClass());
                     percentageText.setData(space);
                 } else {
-                    String className = Util.appendNewStyleClass(
-                            CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                            base,
-                            CSS_DEFAULT.OUTPUT_PROGRESS_INDERERMINATE_ACTIVE_CLASS);
-                    fillBar.setAttribute(HTML.CLASS_ATTR, className);
+                    fillBar.setAttribute(HTML.CLASS_ATTR, 
+                            progressBar.getIndeterminateActiveClass());
                     fillBar.setAttribute(HTML.STYLE_ATTR,
                                          "position:absolute;width:100%");
 
@@ -152,11 +142,8 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
 
         } else {
             if (progressBar.getIndeterminate()) {
-                String className = Util.appendNewStyleClass(
-                        CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                        base,
-                        CSS_DEFAULT.OUTPUT_PROGRESS_INDEREMINATE_INACTIVE_CLASS);
-                fillBar.setAttribute(HTML.CLASS_ATTR, className);
+                fillBar.setAttribute(HTML.CLASS_ATTR, 
+                        progressBar.getIndeterminateInactiveClass());
                 fillBar.setAttribute(HTML.STYLE_ATTR,
                                      "position:absolute;width:100%;");
             }
@@ -207,27 +194,11 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
 
 
         OutputProgress progressBar = (OutputProgress) uiComponent;
-        String base = progressBar.getStyleClass();
-        if (base == null) {
-            base = CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS;
-        }
         table.setAttribute(HTML.CLASS_ATTR, progressBar.getStyleClass());
 
-        String textStyleClass =
-                Util.appendNewStyleClass(CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                                         base,
-                                         CSS_DEFAULT.OUTPUT_PROGRESS_TEXT_STYLE_CLASS);
-        String bgStyleClass =
-                Util.appendNewStyleClass(CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                                         base,
-                                         CSS_DEFAULT.OUTPUT_PROGRESS_BG_STYLE_CLASS);
-        String fillStyleClass =
-                Util.appendNewStyleClass(CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                                         base,
-                                         CSS_DEFAULT.OUTPUT_PROGRESS_FILL_STYLE_CLASS);
         Element row = domContext.createElement(HTML.TR_ELEM);
         Element textTd = domContext.createElement(HTML.TD_ELEM);
-        textTd.setAttribute(HTML.CLASS_ATTR, textStyleClass);
+        textTd.setAttribute(HTML.CLASS_ATTR, progressBar.getTextClass());
 
         Element barTd = domContext.createElement(HTML.TD_ELEM);
         tbody.appendChild(row);
@@ -245,7 +216,7 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
                                                                 "percentageText");
 
         Element bgBar = domContext.createElement(HTML.DIV_ELEM);
-        bgBar.setAttribute(HTML.CLASS_ATTR, bgStyleClass);
+        bgBar.setAttribute(HTML.CLASS_ATTR, progressBar.getBackgroundClass());
         bgBar.setAttribute(HTML.STYLE_ATTR, "position:relative;");
 
         Element fillBar = domContext.createElement(HTML.DIV_ELEM);
@@ -253,16 +224,11 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
                 .getClientId(FacesContext.getCurrentInstance()) + "bar");
 
         if (progressBar.getIndeterminate() == false) { //determinate mode
-            fillBar.setAttribute(HTML.CLASS_ATTR, fillStyleClass);
+            fillBar.setAttribute(HTML.CLASS_ATTR, progressBar.getFillClass());
             fillBar.setAttribute(HTML.STYLE_ATTR, "position:absolute;width:0%");
         } else {// indeterminate mode
-            fillBar.setAttribute(HTML.CLASS_ATTR,
-                                 Util.appendNewStyleClass(
-                                         CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
-                                         base,
-                                         CSS_DEFAULT.OUTPUT_PROGRESS_INDEREMINATE_INACTIVE_CLASS
-                                 )
-            );
+            fillBar.setAttribute(HTML.CLASS_ATTR, 
+                    progressBar.getIndeterminateInactiveClass());
             fillBar.setAttribute(HTML.STYLE_ATTR,
                                  "position:absolute;width:100%;");
         }
@@ -322,7 +288,8 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
 
         if (textPosition.toString().equalsIgnoreCase("embed")) {
             Element embedDiv = domContext.createElement(HTML.DIV_ELEM);
-            embedDiv.setAttribute(HTML.CLASS_ATTR, textStyleClass);
+            embedDiv.setAttribute(HTML.CLASS_ATTR, 
+                    progressBar.getTextClass());
             embedDiv.setAttribute(HTML.STYLE_ATTR,
                                   "text-align:center;position:relative;background-color:transparent;width:100%;z-index:1;");
             embedDiv.appendChild(percentageText);

@@ -171,9 +171,9 @@ public class CSS_DEFAULT {
             "iceFileUpload";  // Originally was "fileUpload"
     public static final String OUTPUT_PROGRESS_BASE_CLASS =
             "iceOutputProgress"; // Originally was "outputProgress"
-    public static final String OUTPUT_PROGRESS_INDERERMINATE_ACTIVE_CLASS =
+    public static final String OUTPUT_PROGRESS_INDETERMINATE_ACTIVE_CLASS =
             "IndeterminateActiveClass"; // Originally was "IndeterminateActiveClass"
-    public static final String OUTPUT_PROGRESS_INDEREMINATE_INACTIVE_CLASS =
+    public static final String OUTPUT_PROGRESS_INDETERMINATE_INACTIVE_CLASS =
             "IndeterminateInactiveClass"; // Originally was "IndeterminateInactiveClass"
     public static final String OUTPUT_PROGRESS_TEXT_STYLE_CLASS =
             "Text";   // Originally was "Text"

@@ -286,14 +286,36 @@ public class OutputProgress extends UIComponentBase {
      * Return the value of the <code>styleClass</code> property. </p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext())
-               : CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                    styleClass,
+                    CSS_DEFAULT.OUTPUT_PROGRESS_BASE_CLASS,
+                    "styleClass");
+    }
+    
+    public String getTextClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.OUTPUT_PROGRESS_TEXT_STYLE_CLASS);
     }
 
+    public String getBackgroundClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.OUTPUT_PROGRESS_BG_STYLE_CLASS);        
+    }
+    
+    public String getFillClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.OUTPUT_PROGRESS_FILL_STYLE_CLASS);          
+    }
+    
+    public String getIndeterminateActiveClass() {
+        return Util.getQualifiedStyleClass(this,                             
+                CSS_DEFAULT.OUTPUT_PROGRESS_INDETERMINATE_ACTIVE_CLASS);           
+    }
+    
+    public String getIndeterminateInactiveClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.OUTPUT_PROGRESS_INDETERMINATE_INACTIVE_CLASS);         
+    }
     /**
      * <p>
      * Return the value of the <code>rendered</code> property. </p>
