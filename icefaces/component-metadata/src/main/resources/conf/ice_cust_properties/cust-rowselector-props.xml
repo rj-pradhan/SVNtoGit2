@@ -53,12 +53,12 @@
 <property>
 	<description>
 		<![CDATA[<p>
-           The row of the table that was last clicked.
+           The row of the table that was last clicked. Setting this to some value will have no effect.
                 </p>
              ]]>
 	</description>
 	<property-name>clickedRow</property-name>
-	<property-class>java.lang.Integer</property-class>
+	<property-class>int</property-class>
 	<property-extension>
 		<category>ICE_LAYOUT</category>
 	</property-extension>

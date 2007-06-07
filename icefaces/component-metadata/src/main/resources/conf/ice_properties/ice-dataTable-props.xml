@@ -89,7 +89,7 @@
 		(Note: you will also need to set columnWidths, and scrollHeight)
 	</description>
     <property-name>scrollable</property-name>
-    <property-class>java.lang.Boolean</property-class>
+    <property-class>boolean</property-class>
     <property-extension>
       <category>ICE_LAYOUT</category>
     </property-extension>
