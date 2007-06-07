@@ -710,7 +710,6 @@ public class HtmlPanelGroup extends javax.faces.component.html.HtmlPanelGroup {
      */
     public void queueEvent(FacesEvent event) {
         if (event instanceof DndEvent) {
-
             event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
         }
         super.queueEvent(event);
@@ -756,10 +755,10 @@ public class HtmlPanelGroup extends javax.faces.component.html.HtmlPanelGroup {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (super.getStyleClass() != null) {
-            return super.getStyleClass();
-        }
-        return CSS_DEFAULT.PANEL_GROUP_DEFAULT_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                    super.getStyleClass(),
+                    CSS_DEFAULT.PANEL_GROUP_DEFAULT_STYLE_CLASS,
+                    "styleClass");
     }
 
 }
