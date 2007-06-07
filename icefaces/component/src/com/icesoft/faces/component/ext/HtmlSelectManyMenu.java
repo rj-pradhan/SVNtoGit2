@@ -228,9 +228,11 @@ public class HtmlSelectManyMenu
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        return Util.getDisaledOREnabledClass(this, isDisabled(), styleClass,
-                                             "styleClass",
-                                             CSS_DEFAULT.SELECT_MANY_MENU_DEFAULT_STYLE_CLASS);
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.SELECT_MANY_MENU_DEFAULT_STYLE_CLASS,
+                "styleClass",
+                isDisabled());  
     }
 
     /**

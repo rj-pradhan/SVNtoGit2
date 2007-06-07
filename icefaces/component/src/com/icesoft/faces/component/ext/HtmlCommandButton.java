@@ -268,9 +268,11 @@ public class HtmlCommandButton
      * @return String styleClass
      */
     public String getStyleClass() {
-        return Util.getDisaledOREnabledClass(this, isDisabled(), styleClass,
-                                             "styleClass",
-                                             CSS_DEFAULT.COMMAND_BTN_DEFAULT_STYLE_CLASS);
+        return Util.getQualifiedStyleClass(this, 
+                                styleClass,
+                                CSS_DEFAULT.COMMAND_BTN_DEFAULT_STYLE_CLASS,
+                                "styleClass",
+                                isDisabled());
     }
 
     /**

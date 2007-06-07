@@ -198,12 +198,10 @@ public class HtmlMessages extends javax.faces.component.html.HtmlMessages {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.MESSAGES_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.MESSAGES_STYLE_CLASS,
+                "styleClass");  
     }
 
 

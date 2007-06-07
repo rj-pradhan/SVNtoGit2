@@ -34,6 +34,7 @@
 package com.icesoft.faces.component.ext;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
+import com.icesoft.faces.component.ext.taglib.Util;
 
 import javax.faces.el.ValueBinding;
 
@@ -71,12 +72,10 @@ public class HtmlOutputFormat
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.OUTPUT_FORMAT_DEFAULT_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.OUTPUT_FORMAT_DEFAULT_STYLE_CLASS,
+                "styleClass"); 
     }
 
 }
