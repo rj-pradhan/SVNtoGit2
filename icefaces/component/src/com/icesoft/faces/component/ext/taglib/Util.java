@@ -426,7 +426,7 @@ public class Util extends Object {
               styleClass = defaulStyleClass + 
               disabledSuffix+
               " " + ((styleClass!=null)? styleClass + disabledSuffix :"");
-              return styleClass;
+              return styleClass.trim();
           } else {
               //3- the following code is to deal with other style class 
               //attributes that has been defined on the components (e.g.) 
@@ -442,7 +442,7 @@ public class Util extends Object {
               if (subClass != null) {
                   newClass += " " + subClass + disabledSuffix;
               }
-              return newClass;
+              return newClass.trim();
           }
        }
 
