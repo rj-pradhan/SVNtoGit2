@@ -73,33 +73,6 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         boolean open = panelAccordion.getExpanded().booleanValue();
         boolean disabled = panelAccordion.isDisabled();
         StringBuffer classModeSuffix = new StringBuffer(16);
-        if(!open){
-            classModeSuffix.append(
-                CSS_DEFAULT.PANEL_ACCORDION_STATE_COLLAPSED);
-        }
-        if(disabled){
-            classModeSuffix.append(
-                CSS_DEFAULT.PANEL_ACCORDION_STATE_DISABLED);
-        }
-        String headerClassSuffix =
-            CSS_DEFAULT.PANEL_ACCORDION_HEADER + classModeSuffix;
-        String contentClassSuffix =
-            CSS_DEFAULT.PANEL_ACCORDION_CONTENT + classModeSuffix;
-        String containerClassSuffix =
-            CSS_DEFAULT.PANEL_ACCORDION_CONTAINER + classModeSuffix;
-        
-        String headerClass = Util.appendNewStyleClass(
-            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
-            base,
-            headerClassSuffix);
-        String contentClass = Util.appendNewStyleClass(
-            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
-            base,
-            contentClassSuffix);
-        String containerClass = Util.appendNewStyleClass(
-            CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
-            base,
-            containerClassSuffix);
         String style = panelAccordion.getStyle();
         
         boolean fireEffect = false;
@@ -120,14 +93,14 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
             setRootElementId(facesContext, rootSpan, uiComponent);
         }
         Element root = (Element) domContext.getRootNode();
-        root.setAttribute(HTML.CLASS_ATTR, containerClass);
+        root.setAttribute(HTML.CLASS_ATTR, panelAccordion.getContainerClass());
         root.setAttribute(HTML.STYLE_ATTR, style);
 
         Element header = domContext.createElement(HTML.DIV_ELEM);
         //Text text = domContext.createTextNode(((PanelAccordion) uiComponent).getLabel());
         //header.appendChild(text);
 
-        header.setAttribute(HTML.CLASS_ATTR, headerClass);
+        header.setAttribute(HTML.CLASS_ATTR, panelAccordion.getHeaderClass());
         if(panelAccordion.getToggleOnClick().equals(Boolean.TRUE)){
             if(!disabled)
                 header.setAttribute(HTML.ONCLICK_ATTR, "Ice.Accordion.fire('" + baseID + "_content');");
@@ -169,7 +142,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
         Element container = domContext.createElement(HTML.DIV_ELEM);
         container.setAttribute(HTML.ID_ATTR, baseID + "_content");
         root.appendChild(container);
-        container.setAttribute(HTML.CLASS_ATTR, contentClass);
+        container.setAttribute(HTML.CLASS_ATTR, panelAccordion.getContentClass());
 
 
         if(fireEffect){

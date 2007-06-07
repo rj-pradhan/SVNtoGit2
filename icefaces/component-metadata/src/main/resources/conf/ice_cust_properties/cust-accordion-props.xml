@@ -63,32 +63,36 @@
 </property>
 <property>
     <description>
+        <![CDATA[
+		<p>
         Base Style class for component.
         So if styleClass is set to accordion then when the panel is expanded the
-        following class names are applied
-
-        accordionHeader
-        accordionContent
-        accordionContainer
-
+        following class names are applied <br>
+		<ul>
+        <li>iceAccordionHeader</li>
+        <li>iceAccordionContent</li>
+        <li>iceAccordionContainer</li>
+		</ul>
         And when closed
-
-        accordionHeader_collapsed
-        accordionContent_collapsed
-        accordionContainer_collapsed
-
+		<ul>
+        <li>iceAccordionHeaderCollapsed</li>
+        <li>iceAccordionContentCollapsed</li>
+        <li>iceAccordionContainerCollapsed</li>
+		</ul>
         Open and disabled
-
-        accordionHeader_dis
-        accordionContent_dis
-        accordionContainer_dis
-
+		<ul>
+        <li>iceAccordionHeader-dis</li>
+        <li>iceAccordionContent-dis</li>
+        <li>iceAccordionContainer-dis</li>
+		</ul>
         Closed and disabled
-
-        accordionHeader_collapsed_dis
-        accordionContent_collapsed_dis
-        accordionContainer_collapsed_dis
-
+		<ul>
+        <li>iceAccordionHeaderCollapsed-dis</li>
+        <li>iceAccordionContentCollapsed-dis</li>
+        <li>iceAccordionContainerCollapsed-dis</li>
+        </ul>
+		</p>
+		]]>
 
     </description>
     <property-name>styleClass</property-name>

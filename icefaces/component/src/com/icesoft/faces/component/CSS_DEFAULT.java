@@ -315,7 +315,7 @@ public class CSS_DEFAULT {
     public static final String PANEL_ACCORDION_CONTAINER =
             "Container";
     public static final String PANEL_ACCORDION_STATE_COLLAPSED =
-            "_collapsed";
-    public static final String PANEL_ACCORDION_STATE_DISABLED =
-            "_dis";
+            "Collapsed";
+    public static final String DIS_SUFFIX =
+            "-dis";
 }

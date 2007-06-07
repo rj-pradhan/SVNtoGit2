@@ -1,6 +1,7 @@
 package com.icesoft.faces.component.accordion;
 
 import com.icesoft.faces.context.effects.JavascriptContext;
+import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
 
 import javax.faces.context.FacesContext;
@@ -68,16 +69,39 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
     }
 
     public String getStyleClass() {
-       if (styleClass != null) {
-           return styleClass;
-       }
-       ValueBinding vb = getValueBinding("styleClass");
-       if (vb != null) {
-           return (String) vb.getValue(getFacesContext());
-       }
-       return null;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS,
+                "styleClass",
+                isDisabled());
     }
 
+    public String getHeaderClass() {
+        return Util.getQualifiedStyleClass(this, 
+                getCollapsedStyle(CSS_DEFAULT.PANEL_ACCORDION_HEADER), 
+                isDisabled());
+    }
+    
+    public String getContentClass() {
+        return Util.getQualifiedStyleClass(this, 
+                getCollapsedStyle(CSS_DEFAULT.PANEL_ACCORDION_CONTENT), 
+                isDisabled());        
+    }
+    
+    public String getContainerClass() {
+
+        return Util.getQualifiedStyleClass(this, 
+                getCollapsedStyle(CSS_DEFAULT.PANEL_ACCORDION_CONTAINER), 
+                isDisabled());          
+    }
+    
+    private String getCollapsedStyle(String style) {
+        if (!getExpanded().booleanValue()) {
+            style += CSS_DEFAULT.PANEL_ACCORDION_STATE_COLLAPSED;
+        }
+        return style;
+    }
+    
     public void setStyleClass(String styleClass) {
         this.styleClass = styleClass;
     }

@@ -48,6 +48,7 @@
 
 package com.icesoft.faces.component.ext.taglib;
 
+import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.IceExtended;
 import com.icesoft.faces.component.ext.HtmlInputText;
 import com.icesoft.faces.component.ext.renderkit.FormRenderer;
@@ -413,7 +414,7 @@ public class Util extends Object {
               return appendLocalClassToStyleClass(uiComponent, userDefinedStyleClass);
           }
 
-          String disabledSuffix = disabled ? "-dis": "";
+          String disabledSuffix = disabled ? CSS_DEFAULT.DIS_SUFFIX: "";
           String styleClass = null;
           
           if ("styleClass".equalsIgnoreCase(classAttributeName)) {
@@ -465,8 +466,9 @@ public class Util extends Object {
         String[] classes = styleClass.split(" ");
         StringBuffer name = new StringBuffer();
         for (int i =0; i <classes.length; i++) {
-            if (classes[i] != null && classes[i].endsWith("-dis")) {
-                name.append(classes[i].replaceAll("-dis", localClass+"-dis"));
+            if (classes[i] != null && classes[i].endsWith(CSS_DEFAULT.DIS_SUFFIX)) {
+                name.append(classes[i].replaceAll(CSS_DEFAULT.DIS_SUFFIX, 
+                        localClass + CSS_DEFAULT.DIS_SUFFIX));
             } else {
                 name.append(classes[i]+ localClass);
             }
@@ -487,7 +489,7 @@ public class Util extends Object {
         }*/
         if (disabled) {
             return getClassName(uiComponent, styleClass, styleClassAsString,
-                                defaultStyleClass) + "-dis";
+                                defaultStyleClass) + CSS_DEFAULT.DIS_SUFFIX;
         } else {
             return getClassName(uiComponent, styleClass, styleClassAsString,
                                 defaultStyleClass);

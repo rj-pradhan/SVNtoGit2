@@ -2240,22 +2240,22 @@ Disabled classes for the calendar controls
 }
 
 /* Closed */
-.iceAccordionHeader_collapsed, .iceAccordionContent_collapsed,
-    .iceAccordionContainer_collapsed {
+.iceAccordionHeaderCollapsed, .iceAccordionContentCollapsed,
+    .iceAccordionContainerCollapsed {
 }
 
 /* Open and disabled */
-.iceAccordionHeader_dis, .iceAccordionContent_dis, .iceAccordionContainer_dis {
+.iceAccordionHeader-dis, .iceAccordionContent-dis, .iceAccordionContainer-dis {
 }
 
 /* Closed and disabled */
-.iceAccordionHeader_collapsed_dis, .iceAccordionContent_collapsed_dis,
-    .iceAccordionContainer_collapsed_dis {
+.iceAccordionHeaderCollapsed-dis, .iceAccordionContentCollapsed-dis,
+    .iceAccordionContainerCollapsed-dis {
 }
 
 /* common accordion headers */
-.iceAccordionHeader, .iceAccordionHeader_dis, .iceAccordionHeader_collapsed,
-    .iceAccordionHeader_collapsed_dis {
+.iceAccordionHeader, .iceAccordionHeader-dis, .iceAccordionHeaderCollapsed,
+    .iceAccordionHeaderCollapsed-dis {
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;
@@ -2271,12 +2271,12 @@ Disabled classes for the calendar controls
     padding-bottom: 4px;
     cursor: pointer;
 }
-.iceAccordionHeader_dis, .iceAccordionHeader_collapsed_dis{
+.iceAccordionHeader-dis, .iceAccordionHeaderCollapsed-dis{
     color: #999999;
 }
 
-.iceAccordionContent, .iceAccordionContent_collapsed,
-    .iceAccordionContent_collapsed_dis, .iceAccordionContent_dis {
+.iceAccordionContent, .iceAccordionContentCollapsed,
+    .iceAccordionContentCollapsed-dis, .iceAccordionContent-dis {
     background-color: #EFEFEF;
     border: 1px solid #CCCCCC;
     border-top: none;
