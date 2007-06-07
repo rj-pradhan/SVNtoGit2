@@ -20,8 +20,14 @@ public class ServletSessionMap extends AbstractAttributeMap {
       * @see com.icesoft.faces.context.AbstractAttributeMap#getAttribute(java.lang.String)
       */
     protected Object getAttribute(String key) {
-        Slot slot = (Slot) httpSession.getAttribute(key);
-        return slot == null ? null : slot.value;
+        Object value = httpSession.getAttribute(key);
+        if (value == null) {
+            return null;
+        } else if (value instanceof Slot) {
+            return ((Slot) value).value;
+        } else {
+            return value;
+        }
     }
 
     /*

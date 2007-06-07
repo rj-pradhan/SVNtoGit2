@@ -124,15 +124,23 @@
             //do nothing
         },
 
+        cancelDisposeViews: function() {
+            this.sendDisposeViews = Function.NOOP;
+        },
+
+        sendDisposeViews: function() {
+            try {
+                this.channel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
+            } catch (e) {
+                this.logger.warn('Failed to notify view disposal', e);
+            }
+        },
+
         shutdown: function() {
             this.send = Function.NOOP;
-            try {
-                this.channel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), This.FormPost);
-            } finally {
-                [ this.onSendListeners, this.onReceiveListeners, this.onServerErrorListeners, this.connectionDownListeners ].eachWithGuard(function(f) {
-                    f.clear();
-                });
-            }
+            [ this.onSendListeners, this.onReceiveListeners, this.onServerErrorListeners, this.connectionDownListeners ].eachWithGuard(function(listeners) {
+                listeners.clear();
+            });
         }
     });
 });

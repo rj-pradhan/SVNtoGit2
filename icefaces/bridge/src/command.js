@@ -13,7 +13,8 @@
             var messageName = message.tagName;
             for (name in this.commands) {
                 if (name == messageName) {
-                    this.commands[messageName](message); return;
+                    this.commands[messageName](message);
+                    return;
                 }
             }
 
@@ -26,8 +27,12 @@
         /* the following replaces ampersand entities incorrectly decoded
            by Safari 2.0.4.  It appears to be fixed in nightly Safari builds 
         */
-        url = url.replace(/&#38;/g,"&");
+        url = url.replace(/&#38;/g, "&");
         logger.info('Redirecting to ' + url);
+        //avoid view disposal on navigation rules
+        if (url.contains('rvn=')) {
+            connection.cancelDisposeViews();
+        }
         window.location.href = url;
     };
 

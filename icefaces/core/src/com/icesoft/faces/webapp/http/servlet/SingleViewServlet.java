@@ -32,12 +32,12 @@ public class SingleViewServlet extends BasicAdaptingServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         //create single view or re-create view if the request is the result of a redirect 
         ServletView view = (ServletView) views.get(viewNumber);
-        if (view == null || view.differentURI(request)) {
+        if (view == null) {
             view = new ServletView(viewNumber, sessionID, request, response, allUpdatedViews, configuration);
             views.put(viewNumber, view);
             ContextEventRepeater.viewNumberRetrieved(session, sessionID, Integer.parseInt(viewNumber));
         } else {
-            view.setAsCurrentDuring(request, response);            
+            view.updateOnRequest(request, response);
         }
 
         view.switchToNormalMode();

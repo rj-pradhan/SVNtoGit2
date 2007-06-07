@@ -98,7 +98,7 @@
             this.connection.onServerError(function (response) {
                 document.open();
                 document.write(response.content());
-                document.close();                
+                document.close();
             });
 
             this.connection.whenDown(function() {
@@ -124,6 +124,7 @@
         },
 
         dispose: function() {
+            this.connection.sendDisposeViews();
             this.connection.shutdown();
             this.logger.info('page unloaded!');
             this.logHandler.disable();

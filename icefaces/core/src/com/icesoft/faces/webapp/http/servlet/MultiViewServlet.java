@@ -40,12 +40,12 @@ public class MultiViewServlet extends BasicAdaptingServlet {
             ContextEventRepeater.viewNumberRetrieved(session, sessionID, Integer.parseInt(viewNumber));
         } else {
             view = (ServletView) views.get(redirectViewNumber);
-            if (view == null || view.differentURI(request)) {
+            if (view == null) {
                 view = new ServletView(redirectViewNumber, sessionID, request, response, asynchronouslyUpdatedViews, configuration);
                 views.put(redirectViewNumber, view);
                 ContextEventRepeater.viewNumberRetrieved(session, sessionID, Integer.parseInt(redirectViewNumber));
             } else {
-                view.setAsCurrentDuring(request, response);
+                view.updateOnRequest(request, response);
                 view.switchToNormalMode();
             }
         }

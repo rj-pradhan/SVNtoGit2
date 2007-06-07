@@ -126,6 +126,11 @@ public class PersistentFacesState implements Serializable {
         return facesContext;
     }
 
+    //todo: try to remove this method in the future
+    public void setFacesContext(BridgeFacesContext facesContext) {
+        this.facesContext = facesContext;
+    }
+
     /**
      * Render the view associated with this <code>PersistentFacesState</code>.
      * The user's browser will be immediately updated with any changes.
@@ -208,15 +213,6 @@ public class PersistentFacesState implements Serializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * <p>Return a String representation of this <code> PersistentFacesState</code>
-     * instance.</p>
-     */
-    public String toString() {
-        return "com.icesoft.faces.webapp.xmlhttp.PersistentFacesState@" +
-                hashCode() + "[" + facesContext + "]";
     }
 
     /**

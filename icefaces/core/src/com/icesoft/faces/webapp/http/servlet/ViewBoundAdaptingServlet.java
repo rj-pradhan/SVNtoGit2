@@ -23,7 +23,7 @@ public class ViewBoundAdaptingServlet extends BasicAdaptingServlet {
         } else {
             ServletView view = (ServletView) views.get(viewNumber);
             try {
-                view.setAsCurrentDuring(request, response);
+                view.updateOnXMLHttpRequest(request, response);
                 sessionMonitor.touchSession();
                 super.service(request, response);
             } finally {

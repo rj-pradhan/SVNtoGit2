@@ -191,12 +191,19 @@
             this.connectionTroubleListeners.push(callback);
         },
 
-        shutdown: function() {
+        cancelDisposeViews: function() {
+            this.sendDisposeViews = Function.NOOP;
+        },
+
+        sendDisposeViews: function() {
             try {
                 this.sendChannel.postAsynchronously(this.disposeViewsURI, this.defaultQuery().asURIEncodedString(), Connection.FormPost);
             } catch (e) {
-                //ignore, we really need to shutdown
+                this.logger.warn('Failed to notify view disposal', e);
             }
+        },
+
+        shutdown: function() {
             try {
                 //avoid sending XMLHTTP requests that might create new sessions on the server
                 this.send = Function.NOOP;

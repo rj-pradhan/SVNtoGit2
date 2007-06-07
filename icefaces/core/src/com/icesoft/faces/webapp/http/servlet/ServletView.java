@@ -36,9 +36,13 @@ public class ServletView implements CommandQueue {
     private Command currentCommand = NOOP;
     private String viewIdentifier;
     private Collection viewListeners = new ArrayList();
+    private String sessionID;
+    private Configuration configuration;
 
     public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
         this.wrappedRequest = new ServletEnvironmentRequest(request);
+        this.sessionID = sessionID;
+        this.configuration = configuration;
         this.viewIdentifier = viewIdentifier;
         this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, wrappedRequest, response, this, configuration);
@@ -47,19 +51,18 @@ public class ServletView implements CommandQueue {
         this.notifyViewCreation();
     }
 
-    public void setAsCurrentDuring(HttpServletRequest request, HttpServletResponse response) {
-        //is it a reload?
+    public void updateOnXMLHttpRequest(HttpServletRequest request, HttpServletResponse response) {
+        externalContext.update(request, response);
+        makeCurrent();
+    }
+
+    public void updateOnRequest(HttpServletRequest request, HttpServletResponse response) {
         if (request.getRequestURI().equals(wrappedRequest.getRequestURI())) {
-            wrappedRequest = new ServletEnvironmentRequest(request);
-            externalContext.updateOnReload(wrappedRequest, response);
+            reloadPage(request, response);
         } else {
-            //must be a XMLHttpRequest
-            externalContext.update(request, response);
+            redirectPage(request, response);
         }
-        externalContext.injectBundles(bundles);
-        persistentFacesState.setCurrentInstance();
-        facesContext.setCurrentInstance();
-        facesContext.applyBrowserDOMChanges();
+        makeCurrent();
     }
 
     public void switchToNormalMode() {
@@ -110,7 +113,7 @@ public class ServletView implements CommandQueue {
     public void release() {
         facesContext.release();
         persistentFacesState.release();
-        externalContext.resetRequestMap();        
+        externalContext.resetRequestMap();
     }
 
     public BridgeFacesContext getFacesContext() {
@@ -120,6 +123,26 @@ public class ServletView implements CommandQueue {
     public void dispose() {
         this.notifyViewDisposal();
         this.release();
+    }
+
+    //this method was introduced to reuse the PersistentFacesState instance when page redirects occur
+    private void redirectPage(HttpServletRequest request, HttpServletResponse response) {
+        this.wrappedRequest = new ServletEnvironmentRequest(request);
+        this.externalContext = new ServletExternalContext(viewIdentifier, wrappedRequest, response, this, configuration);
+        this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this, configuration);
+        this.persistentFacesState.setFacesContext(this.facesContext);
+    }
+
+    private void reloadPage(HttpServletRequest request, HttpServletResponse response) {
+        wrappedRequest = new ServletEnvironmentRequest(request);
+        externalContext.updateOnReload(wrappedRequest, response);
+    }
+
+    private void makeCurrent() {
+        externalContext.injectBundles(bundles);
+        persistentFacesState.setCurrentInstance();
+        facesContext.setCurrentInstance();
+        facesContext.applyBrowserDOMChanges();
     }
 
     private void notifyViewCreation() {

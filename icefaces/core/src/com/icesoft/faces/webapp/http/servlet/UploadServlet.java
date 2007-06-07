@@ -1,8 +1,8 @@
 package com.icesoft.faces.webapp.http.servlet;
 
+import com.icesoft.faces.application.D2DViewHandler;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.webapp.http.common.Configuration;
-import com.icesoft.faces.application.D2DViewHandler;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.ProgressListener;
@@ -58,10 +58,10 @@ public class UploadServlet implements PseudoServlet {
                 }
             } else {
                 ServletView view = (ServletView) views.get(viewIdentifier);
-                view.setAsCurrentDuring(request, response);
+                view.updateOnRequest(request, response);
                 BridgeFacesContext context = view.getFacesContext();
                 //FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
-                FileUploadComponent component =  (FileUploadComponent)D2DViewHandler.findComponent(componentID, context.getViewRoot());
+                FileUploadComponent component = (FileUploadComponent) D2DViewHandler.findComponent(componentID, context.getViewRoot());
                 progressCalculator.setListenerAndContext(component, context);
                 try {
                     context.setCurrentInstance();
@@ -105,38 +105,37 @@ public class UploadServlet implements PseudoServlet {
         private int lastGranularlyNotifiablePercent = -1;
 
         public void progress(long read, long total) {
-            if(total > 0) {
+            if (total > 0) {
                 int percentage = (int) ((read * 100L) / total);
                 int percentageAboveGranularity = percentage % GRANULARITY;
                 int granularNotifiablePercentage = percentage - percentageAboveGranularity;
                 boolean shouldNotify = granularNotifiablePercentage > lastGranularlyNotifiablePercent;
                 lastGranularlyNotifiablePercent = granularNotifiablePercentage;
-                if(shouldNotify)
+                if (shouldNotify)
                     potentiallyNotify();
             }
         }
-        
+
         public void setListenerAndContext(
-            FileUploadComponent listener, BridgeFacesContext context)
-        {
+                FileUploadComponent listener, BridgeFacesContext context) {
             this.listener = listener;
             this.context = context;
             potentiallyNotify();
         }
-        
+
         public void reset() {
             BridgeFacesContext ctx = context;
             FileUploadComponent component = listener;
             context = null;
             listener = null;
-            if(ctx != null && component != null) {
+            if (ctx != null && component != null) {
                 ctx.setCurrentInstance();
                 component.setProgress(0);
             }
         }
-        
+
         protected void potentiallyNotify() {
-            if(listener != null && lastGranularlyNotifiablePercent >= 0) {
+            if (listener != null && lastGranularlyNotifiablePercent >= 0) {
                 context.setCurrentInstance();
                 listener.setProgress(lastGranularlyNotifiablePercent);
             }
