@@ -168,7 +168,8 @@ public class GridRenderer extends DomBasicRenderer {
                     tbody.appendChild(tr);
                     if (numberOfRowStyles > 0) {
                         tr.setAttribute("class",
-                                        rowStyleClasses[rowStyleIndex++]);
+                                        getRowStyle(uiComponent,
+                                                rowStyleClasses[rowStyleIndex++]));
                         if (rowStyleIndex >= numberOfRowStyles) {
                             rowStyleIndex = 0;
                         }
@@ -186,7 +187,7 @@ public class GridRenderer extends DomBasicRenderer {
                                                          rowIndex));
            
                 writeColStyles(columnStyleClasses, numberOfColumnStyles,
-                               columnStyleIndex, td, columnIndex + 1);
+                               columnStyleIndex, td, columnIndex + 1, uiComponent);
                 if (++columnStyleIndex > numberOfColumnStyles) {
                     columnStyleIndex = 0;
                 }
@@ -239,7 +240,7 @@ public class GridRenderer extends DomBasicRenderer {
     // this method is overridden in the subclass
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
-                               int colNumber) {
+                               int colNumber, UIComponent uiComponent) {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
                 td.setAttribute("class",
@@ -250,4 +251,10 @@ public class GridRenderer extends DomBasicRenderer {
             }
         }
     }
+    
+    protected String getRowStyle(UIComponent uiComponent, String style) {
+        return style;
+    }
+   
+
 }

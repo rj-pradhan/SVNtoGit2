@@ -169,29 +169,30 @@ public class HtmlPanelGrid extends javax.faces.component.html.HtmlPanelGrid {
      * <p>Return the value of the <code>styleClass</code> property.</p>
      */
     public String getStyleClass() {
-        if (super.getStyleClass() != null) {
-            return super.getStyleClass();
-        }
-        return CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                super.getStyleClass(), 
+                CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS, 
+                "styleClass");
+        
     }
 
     /**
      * <p>Return the value of the <code>headerClass</code> property.</p>
      */
     public String getHeaderClass() {
-        if (super.getHeaderClass() != null) {
-            return super.getHeaderClass();
-        }
-        return CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS + CSS_DEFAULT.HEADER;
+        return Util.getQualifiedStyleClass(this, 
+                super.getHeaderClass(), 
+                CSS_DEFAULT.HEADER, 
+                "headerClass");
     }
 
     /**
      * <p>Return the value of the <code>footerClass</code> property.</p>
      */
     public String getFooterClass() {
-        if (super.getFooterClass() != null) {
-            return super.getFooterClass();
-        }
-        return CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS + CSS_DEFAULT.FOOTER;
+        return Util.getQualifiedStyleClass(this, 
+                super.getFooterClass(), 
+                CSS_DEFAULT.FOOTER, 
+                "footerClass");
     }
 }

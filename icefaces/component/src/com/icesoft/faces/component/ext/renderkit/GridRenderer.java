@@ -34,6 +34,8 @@
 package com.icesoft.faces.component.ext.renderkit;
 
 import com.icesoft.faces.component.CSS_DEFAULT;
+import com.icesoft.faces.component.ext.taglib.Util;
+
 import org.w3c.dom.Element;
 
 import javax.faces.component.UIComponent;
@@ -45,10 +47,8 @@ public class GridRenderer
     public String[] getRowStyles(UIComponent uiComponent) {
         if (((String[]) getRowStyleClasses(uiComponent)).length <= 0) {
             String[] rowStyles = new String[2];
-            rowStyles[0] = CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS +
-                           CSS_DEFAULT.ROW + 1;
-            rowStyles[1] = CSS_DEFAULT.PANEL_GRID_DEFAULT_STYLE_CLASS +
-                           CSS_DEFAULT.ROW + 2;
+            rowStyles[0] =  CSS_DEFAULT.ROW + 1;
+            rowStyles[1] =  CSS_DEFAULT.ROW + 2;
             return rowStyles;
         } else {
             return getRowStyleClasses(uiComponent);
@@ -57,15 +57,25 @@ public class GridRenderer
 
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
-                               int colNumber) {
+                               int colNumber, UIComponent uiComponent) {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
-                td.setAttribute("class", columnStyles[columnStyleIndex]);
+                td.setAttribute("class",getColumnStyle(uiComponent, 
+                        columnStyles[columnStyleIndex]));
             }
         } else {
-            td.setAttribute("class", CSS_DEFAULT
-                    .PANEL_GRID_DEFAULT_STYLE_CLASS + CSS_DEFAULT.COLUMN +
-                                                    colNumber++);
+            td.setAttribute("class", getColumnStyle(uiComponent, CSS_DEFAULT.COLUMN +
+                                                    colNumber++));
         }
+    }
+    
+    protected String getRowStyle(UIComponent uiComponent, String style) {
+        return Util.getQualifiedStyleClass(uiComponent, 
+                                            style);
+    }
+    
+    protected String getColumnStyle(UIComponent uiComponent, String style) {
+        return Util.getQualifiedStyleClass(uiComponent, 
+                                            style);
     }
 }
