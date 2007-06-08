@@ -346,7 +346,11 @@ public class TableRenderer
         int columnStylesMaxIndex = columnStyles.length - 1;
         while (uiData.isRowAvailable()) {
 
-           String selectedClass =null;
+            String selectedClass = null;
+            if (rowStylesMaxIndex >= 0) {
+               selectedClass = rowStyles[rowStyleIndex];
+            }
+            
             Iterator childs = uiData.getChildren().iterator();
             Element tr = (Element) domContext.createElement(HTML.TR_ELEM);
             if (rowSelectorFound && toggleOnClick) {
@@ -357,18 +361,12 @@ public class TableRenderer
             tr.setAttribute(HTML.ID_ATTR, id);
             if (rowSelectorFound) {
                 if (Boolean.TRUE.equals(rowSelector.getValue())){
-
-                    if(rowSelector.getSelectedClass() != null){
-                        selectedClass  = rowSelector.getSelectedClass();
-                    }else{
-                        selectedClass = "iceRowSelSelected";    
-                    }
+                    selectedClass  += " "+ rowSelector.getSelectedClass();
+                } else {
+                    selectedClass  += " "+ rowSelector.getStyleClass();
                 }
-                String mouseOverClass = "iceRowSelMouseOver";
-                if(rowSelector.getMouseOverClass() != null)
-                    mouseOverClass = rowSelector.getMouseOverClass();
-
-                StringTokenizer st = new StringTokenizer(mouseOverClass);
+                StringTokenizer st = new StringTokenizer(
+                                            rowSelector.getMouseOverClass());
                 StringBuffer omov = new StringBuffer();
                 StringBuffer omot = new StringBuffer();
                 while(st.hasMoreTokens()){
@@ -385,14 +383,8 @@ public class TableRenderer
             domContext.setCursorParent(tBody);
             tBody.appendChild(tr);
 
-           if (selectedClass != null) {
-                   tr.setAttribute(HTML.CLASS_ATTR, selectedClass);
-
-            } else if (rowStylesMaxIndex >= 0) {
-                // if row styles exist, then render the appropriate one
-                tr.setAttribute(HTML.CLASS_ATTR, rowStyles[rowStyleIndex]);
-            }
-
+            tr.setAttribute(HTML.CLASS_ATTR, selectedClass);
+           
             if(rowStylesMaxIndex >= 0){ // Thanks denis tsyplakov
                if (++rowStyleIndex > rowStylesMaxIndex) {
                     rowStyleIndex = 0;

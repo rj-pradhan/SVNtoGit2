@@ -67,7 +67,8 @@
 <property>
 	<description>
 		<![CDATA[<p>
-                 mouseOverClass
+				 This method has been depricated in 1.6. Please use the styleClass
+				 instead.
                 </p>
              ]]>
 	</description>
@@ -84,7 +85,8 @@
 <property>
 	<description>
 		<![CDATA[<p>
-                 selectedClass
+				 This method has been depricated in 1.6. Please use the styleClass
+				 instead.
                 </p>
              ]]>
 	</description>
@@ -117,7 +119,32 @@
 	</property-extension>
 </property>
 
-        <property>
+<property>
+	<description>
+		<![CDATA[<p>
+              Space-separated list of CSS style class(es) to be applied when this
+              element is rendered. This value must be passed through as the 
+              "class" attribute on generated markup.<br/>
+                Default value is iceRowSel:<br/>        
+               Style Classes Used:
+                     <ul>
+                       <li>iceRowSelMouseOver</li>
+                       <li>iceRowSelSelected</li>                      
+                     </ul>  
+                </p>
+             ]]>
+	</description>
+	<property-name>styleClass</property-name>
+	<property-class>java.lang.String</property-class>
+	<property-extension>
+		<category>ICE_LAYOUT</category>
+		<editor-class>
+			&stringEditor;
+		</editor-class>
+	</property-extension>
+</property>
+
+<property>
 	<description>
 		<![CDATA[<p>
              Action method to call when a row is clicked

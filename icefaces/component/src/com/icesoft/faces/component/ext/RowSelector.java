@@ -34,7 +34,9 @@
 package com.icesoft.faces.component.ext;
 
 import com.icesoft.faces.context.effects.JavascriptContext;
+import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.renderkit.TableRenderer;
+import com.icesoft.faces.component.ext.taglib.Util;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIComponent;
@@ -149,11 +151,10 @@ public class RowSelector extends UIComponentBase {
     
 
     public String getMouseOverClass() {
-        ValueBinding vb = getValueBinding("mouseOverClass");
-        if (vb != null) {
-            return (String) vb.getValue(getFacesContext());
-        }
-        return mouseOverClass;
+        return Util.getQualifiedStyleClass(this, 
+                mouseOverClass,
+                CSS_DEFAULT.ROW_SELECTION_MOUSE_OVER,
+                "mouseOverClass");
     }
 
     public void setMouseOverClass(String mouseOverClass) {
@@ -161,11 +162,10 @@ public class RowSelector extends UIComponentBase {
     }
 
     public String getSelectedClass() {
-        ValueBinding vb = getValueBinding("selectedClass");
-        if (vb != null) {
-            return (String) vb.getValue(getFacesContext());
-        }
-        return selectedClass;
+        return Util.getQualifiedStyleClass(this, 
+                selectedClass,
+                CSS_DEFAULT.ROW_SELECTION_SELECTED,
+                "selectedClass");
     }
 
     public void setSelectedClass(String selectedClass) {
@@ -306,5 +306,23 @@ public class RowSelector extends UIComponentBase {
         mouseOverClass = (String) state[3];
         selectedClass = (String) state[4];
         selectionListener = (MethodBinding) state[5];
+    }
+    
+    String styleClass;
+    /**
+     * <p>Set the value of the <code>styleClass</code> property.</p>
+     */
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    /**
+     * <p>Return the value of the <code>styleClass</code> property.</p>
+     */
+    public String getStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.ROW_SELECTION_BASE,
+                "styleClass");
     }
 }
