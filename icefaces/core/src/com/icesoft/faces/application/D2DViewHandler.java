@@ -40,6 +40,7 @@ import com.icesoft.faces.context.DOMResponseWriter;
 import com.icesoft.faces.webapp.http.servlet.ServletExternalContext;
 import com.icesoft.faces.webapp.parser.JspPageToDocument;
 import com.icesoft.faces.webapp.parser.Parser;
+import com.icesoft.faces.webapp.parser.ImplementationUtil;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesCommonlet;
 import com.icesoft.jasper.Constants;
 import com.icesoft.util.SeamUtilities;
@@ -562,6 +563,17 @@ public class D2DViewHandler extends ViewHandler {
                 throw new FacesException("Can't parse stream for " + viewId +
                         " " + e.getMessage(), e);
             }
+
+            if (ImplementationUtil.isJSF12())  {
+                if (log.isDebugEnabled()) {
+                    log.debug("Rendering outside ViewTag for JSF 1.2");
+                }
+                //JSF 1.2 ViewTag does not invoke rendering
+                responseWriter.startDocument();
+                renderResponse(context, root);
+                responseWriter.endDocument();
+            }
+
         } else {
             responseWriter.startDocument();
             renderResponse(context, root);

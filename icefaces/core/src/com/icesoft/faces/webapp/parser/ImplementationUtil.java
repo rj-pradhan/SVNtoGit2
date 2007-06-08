@@ -41,6 +41,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.jsp.PageContext;
 import java.util.List;
 
+import com.icesoft.faces.webapp.parser.ComponentRuleSet;
+
 /**
  * For ICEfaces to support JSF-RI, MyFaces, or any other future JSF
  * implementations, it may require some logic specific to the implementation.
@@ -124,6 +126,16 @@ public class ImplementationUtil {
     public static boolean isMyFaces() {
         return isMyFaces;
     }
+
+    /**
+     * Identifies if the JSF implementation we are running in is JSF 1.2
+     *
+     * @return true if the JSF implementation is JSF 1.2
+     */
+    public static boolean isJSF12() {
+        return ComponentRuleSet.isJSF12();
+    }
+
 
     /**
      * Returns the key used to get the component stack from the PageContext. The

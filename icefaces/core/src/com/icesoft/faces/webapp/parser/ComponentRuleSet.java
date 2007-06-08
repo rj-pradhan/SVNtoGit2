@@ -64,6 +64,7 @@ public class ComponentRuleSet extends RuleSetBase {
     private String ruleNamespace;
     private static String TAG_NEST = "*/";
     private Class setPropertiesRuleClass = null;
+    private static boolean isJSF12 = false;
 
     private static final Log log = LogFactory.getLog(ComponentRuleSet.class);
 
@@ -84,12 +85,22 @@ public class ComponentRuleSet extends RuleSetBase {
             setPropertiesRuleClass =
                     Class.forName(
                             "com.icesoft.faces.webapp.parser.ELSetPropertiesRule");
+            isJSF12 = true;
         } catch (ClassNotFoundException e) {
             if (log.isDebugEnabled()) {
                 log.debug(
                         "No JSF 1.2 classes found. Running in JSF 1.1 environment");
             }
         }
+    }
+
+    /**
+     * Detect JSF 1.2 for special cases
+     *
+     * @return true if JSF 1.2 is being used
+     */
+    public static boolean isJSF12() {
+        return isJSF12;
     }
 
     /**
