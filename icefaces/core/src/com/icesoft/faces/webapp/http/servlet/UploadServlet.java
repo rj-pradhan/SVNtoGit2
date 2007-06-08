@@ -58,13 +58,11 @@ public class UploadServlet implements PseudoServlet {
                 }
             } else {
                 ServletView view = (ServletView) views.get(viewIdentifier);
-                view.updateOnRequest(request, response);
                 BridgeFacesContext context = view.getFacesContext();
-                //FileUploadComponent component = (FileUploadComponent) context.getViewRoot().findComponent(componentID);
                 FileUploadComponent component = (FileUploadComponent) D2DViewHandler.findComponent(componentID, context.getViewRoot());
                 progressCalculator.setListenerAndContext(component, context);
                 try {
-                    context.setCurrentInstance();
+                    view.makeCurrent();
                     component.upload(
                             item,
                             uploadDirectory,

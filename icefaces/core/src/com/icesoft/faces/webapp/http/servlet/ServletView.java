@@ -138,7 +138,7 @@ public class ServletView implements CommandQueue {
         externalContext.updateOnReload(wrappedRequest, response);
     }
 
-    private void makeCurrent() {
+    public void makeCurrent() {
         externalContext.injectBundles(bundles);
         persistentFacesState.setCurrentInstance();
         facesContext.setCurrentInstance();
