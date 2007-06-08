@@ -201,7 +201,7 @@
             //'style' attribute special case
             var newStyle = newElement.getAttribute('style');
             var oldStyle = this.element.getAttribute('style');
-            if (newElement != oldStyle) {
+            if (newStyle != oldStyle) {
                 this.element.setAttribute('style', newStyle);
             }
 
@@ -217,9 +217,10 @@
             //core and i18n attributes (except 'id' and 'style' attributes)
             ['className', 'title', 'lang', 'dir'].each(iterator);
             //input element attributes
-            ['type', 'name', 'value', 'checked', 'disabled', 'readonly',
-                    'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap', 'tabIndex',
-                    'accessKey', 'accept'].each(iterator);
+            ['name', 'value', 'checked', 'disabled', 'readOnly',
+                    'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap',
+                    'tabIndex', 'accessKey', 'accept'].each(iterator);
+            //'type' attribute cannot be updated dynamically in Firefox 2.0
         },
 
         serializeOn: function(query) {
