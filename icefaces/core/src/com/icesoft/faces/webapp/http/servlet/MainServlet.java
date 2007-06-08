@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.net.URL;
+import java.net.MalformedURLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +37,7 @@ public class MainServlet extends HttpServlet {
                 System.setProperty(AWT_HEADLESS, "true");
             }
             final Configuration configuration = new ServletContextConfiguration("com.icesoft.faces", servletContext);
-            final IdGenerator idGenerator = new IdGenerator(servletContext.getResource("/").getPath());
+            final IdGenerator idGenerator = getIdGenerator(servletContext);
 
             PseudoServlet sessionServer = new SessionDispatcher() {
                 protected PseudoServlet newServlet(HttpSession session, Listener.Monitor sessionMonitor) {
@@ -49,6 +51,24 @@ public class MainServlet extends HttpServlet {
         } catch (Exception e) {
             throw new ServletException(e);
         }
+    }
+
+    private IdGenerator getIdGenerator(ServletContext servletContext)
+            throws MalformedURLException {
+        URL res = servletContext.getResource("/");
+        //ICE-985: Some app servers will return null when you ask for a
+        //directory as a resource.  Those special circumstances where
+        //it doesn't work, we'll try to locate a known resource.
+        if( res == null ){
+            res = servletContext.getResource("/WEB-INF/web.xml");
+            if( res == null ){
+                if( log.isErrorEnabled() ){
+                    log.error( "invalid resource path" );
+                }
+                throw new NullPointerException("invalid resource path");
+            }
+        }
+        return new IdGenerator(res.getPath());
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
