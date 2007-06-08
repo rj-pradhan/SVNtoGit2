@@ -215,11 +215,12 @@
 
         eachAttributeName: function(iterator) {
             //core and i18n attributes (except 'id' and 'style' attributes)
-            ['className', 'title', 'lang', 'dir'].each(iterator);
+            ['className', 'title', 'lang'].each(iterator);
             //input element attributes
             ['name', 'value', 'checked', 'disabled', 'readOnly',
                     'size', 'maxLength', 'src', 'alt', 'useMap', 'isMap',
                     'tabIndex', 'accessKey', 'accept'].each(iterator);
+            //'dir' attribute cannot be updated dynamically in IE 7
             //'type' attribute cannot be updated dynamically in Firefox 2.0
         },
 
