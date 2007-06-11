@@ -33,6 +33,7 @@
 
 package com.icesoft.faces.component.menubar;
 
+import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.util.CoreUtils;
@@ -317,6 +318,53 @@ public class MenuBar extends UICommand implements NamingContainer {
             return false;
         }
         return super.isRendered();
+    }
+    
+    private String styleClass;
+    /**
+     * <p>Set the value of the <code>styleClass</code> property.</p>
+     *
+     * @param styleClass
+     */
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    /**
+     * <p>Return the value of the <code>styleClass</code> property.</p>
+     *
+     * @return String styleClass
+     */
+    public String getStyleClass() {
+        String defaultStyle = CSS_DEFAULT.MENU_BAR_STYLE;
+        if (MenuBar.ORIENTATION_VERTICAL.equalsIgnoreCase(
+                getOrientation())){
+                defaultStyle+=CSS_DEFAULT.MENU_BAR_VERTICAL_SUFFIX_STYLE;
+        }
+        return Util.getQualifiedStyleClass(this, 
+                styleClass, 
+                defaultStyle, 
+                "styleClass");
+    }
+    
+    public String getItemStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.MENU_BAR_ITEM_STYLE);
+    }
+    
+    public String getItemLabelStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.MENU_BAR_ITEM_LABEL_STYLE);
+    }
+    
+    public String getSubMenuStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.MENU_BAR_SUB_MENU_STYLE);
+    }
+    
+    public String getSubMenuIndicatorStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                                CSS_DEFAULT.MENU_BAR_SUB_MENU_INDICATOR_STYLE);
     }
 }
 

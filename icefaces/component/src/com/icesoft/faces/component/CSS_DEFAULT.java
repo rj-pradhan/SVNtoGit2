@@ -181,34 +181,20 @@ public class CSS_DEFAULT {
             "Background"; // Originally was "Background"
     public static final String OUTPUT_PROGRESS_FILL_STYLE_CLASS =
             "Fill";  // Originally was "Fill"
-    public static String MENU_BAR_STYLE =
-            "iceMenuBar";// Originally was "menuBar" // currently unused
-    public static String MENU_HORIZONTAL_STYLE =
-            "iceMenu"; // Originally was "menu"
-    public static String SUBMENU_STYLE =
-            "iceSubMenu"; // Originally was "submenu"
-    public static String SUBMENU_ROW_STYLE =
-            "iceSubMenuRow"; // Originally was "submenuRow"
-    public static String SUBMENU_ROW_STYLE_DISABLED =
-            "iceSubMenuRow-dis"; // Originally was "submenuRow-dis"
-    public static String SUBMENU_ITEM_STYLE =
-            "iceSubMenuItem";// Originally was "submenuItem" // currently unused
-    public static String SUBMENU_ITEM2_STYLE =
-            "iceSubMenuItem2"; // Originally was "submenuItem2"// currently unused
-    public static String MENU_VERTICAL_STYLE =
-            "iceMenu_vertical"; // Originally was "menu_vertical"
-    public static String MENU_VERTICAL_ITEM_STYLE =
-            "iceMenu_verticalItem"; // Originally was "menu_verticalItem"
-    public static String MENU_VERTICAL_ITEM_2_STYLE =
-            "iceMenu_verticalItem2";// Originally was "menu_verticalItem2"
-    public static String SUBMENU_VERTICAL_STYLE =
-            "iceSubMenu_vertical";// Originally was "submenu_vertical"
-    public static String MENU_VERTICAL_SUBITEM_STYLE =
-            "iceMenu_vertical_subItem"; // Originally was "menu_vertical_subItem"
-    public static final String MENU_VERTICAL_SUBITEM_STYLE_DISABLED =
-            "iceMenu_vertical_subItem-dis";// Originally was "menu_vertical_subItem-dis"
-    public static String MENU_VERTICAL_SUBITEM2_STYLE =
-            "iceMenu_vertical_subItem2";// Originally was "menu_vertical_subItem2"
+    public static String MENU_BAR_STYLE = "iceMenuBar";
+    public static String MENU_BAR_ITEM_STYLE = "Item";
+    public static String MENU_BAR_ITEM_LABEL_STYLE = "ItemLabel";
+    public static String MENU_BAR_SUB_MENU_STYLE = "SubMenu";
+    public static String MENU_BAR_SUB_MENU_INDICATOR_STYLE = "SubMenuIndicator";
+    public static String MENU_BAR_VERTICAL_SUFFIX_STYLE = "Vrt";
+    
+    public static String MENU_ITEM_STYLE = "iceMenuItem";
+    public static String MENU_ITEM_LABEL_STYLE = "Label";
+    public static String MENU_ITEM_IMAGE_STYLE = "Image";
+    
+    public static String MENU_ITEM_SEPARATOR_STYLE = "iceMenuItemSeparator";
+    
+    
     public static String SUBMENU_DIVIDER_VERTICAL_STYLE =
             "iceSubMenuDividerVert";  // Originally was "submenuDividerVert"
     public static String SUBMENU_DIVIDER_STYLE =

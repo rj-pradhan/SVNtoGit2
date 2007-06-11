@@ -1331,20 +1331,21 @@ input {
     padding: 0px;
 }
 
-/* ---------------------Menu Classes
+/* ------------ Menu Classes --
 */
-.iceMenuBar {
+
+.iceMenuBar { /*no change*/
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenu {
+.iceMenuBarItem { /* was iceMenu */
     float: left;
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenu a {
+.iceMenuBarItem a { /* was iceMenu */
     background-color: #DDDDDD;
     height: auto;
     padding-left: 10px;
@@ -1361,13 +1362,13 @@ input {
     text-decoration: none;
 }
 
-.iceMenu a:hover {
+.iceMenuBarItem a:hover { /* was iceMenu */
     background-color: #2A6CC2;
     color: #FFFFFF;
     border-right: 1px solid #FFFFFF;
 }
 
-.iceMenu hr, .subiceMenu hr {
+.iceMenuBarItem hr { /* was iceMenu */
     border: none 0;
     border-top: 1px solid #999999;
     width: 100%;
@@ -1377,19 +1378,74 @@ input {
     text-align: left;
 }
 
+.iceMenuBarItemLabel {} /*newly added class*/
+
+.iceMenuBarSubMenu { /* was iceSubMenu */
+    position: absolute;
+    background-color: #EFEFEF;
+    width: 160px;
+    border-top: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    border-right: 1px solid #999999;
+    padding: 1px;
+    height: auto;
+    display: block;
+}
+
+.iceMenuItem { /* was iceSubMenuRow*/
+    padding: 0px;
+    display: block;
+    height: auto;
+}
+
+.iceMenuItem a { /* was iceSubMenuRow*/
+    color: #333333;
+    display: block;
+    text-decoration: none;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;    
+}
+
+.iceMenuItem a:hover { /* was iceSubMenuRow*/
+    background-color: #2A6CC2;
+    color: #FFFFFF;
+}
+
+.iceMenuItemLabel { /* was iceSubMenuRowLabel */
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 4px;
+    font-size: 1.0em;
+    display: inline;
+}
+
+.iceMenuItemImage {  /* was iceSubMenuRowImage */
+    display:inline;
+    vertical-align: top;    
+}
+
+.iceMenuBarSubMenuIndicator { /* was iceSubMenuRowSubMenuIndicator */
+    display:inline;
+    float:right;
+    padding-top: 3px;
+    padding-right: 1px;    
+}
+
 /* classes for the vertical version of the iceMenu*/
-.iceMenu_vertical {
+.iceMenuBarVrt { /* was iceMenu_vertical */
     float: left;
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenu_verticalItem {
+.iceMenuBarVrtItem { /* was iceMenu_verticalItem */
     width: 160px;
     display: block;
 }
 
-.iceMenu_verticalItem a {
+.iceMenuBarVrtItem a { /* was iceMenu_verticalItem */
     background-color: #DDDDDD;
     height: auto;
     padding-left: 3px;
@@ -1406,67 +1462,13 @@ input {
     width: 100%;
 }
 
-.iceMenu_verticalItem a:hover {
+.iceMenuBarVrtItem a:hover { /* was iceMenu_verticalItem */
     background-color: #2A6CC2;
     color: #FFFFFF;
     text-decoration: none;
 }
 
-
-.iceSubMenu {
-    position: absolute;
-    background-color: #EFEFEF;
-    width: 160px;
-    border-top: 1px solid #999999;
-    border-left: 1px solid #999999;
-    border-bottom: 1px solid #999999;
-    border-right: 1px solid #999999;
-    padding: 1px;
-    height: auto;
-    display: block;
-}
-
-.iceSubMenuRow {
-    padding: 0px;
-    display: block;
-    height: auto;
-}
-
-.iceSubMenuRow a {
-    color: #333333;
-    display: block;
-    text-decoration: none;
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 3px;
-    padding-bottom: 3px;    
-}
-
-.iceSubMenuRow a:hover {
-    background-color: #2A6CC2;
-    color: #FFFFFF;
-}
-
-.iceSubMenuRowImage {
-    display:inline;
-    vertical-align: top;    
-}
-
-.iceSubMenuRowLabel {
-    font-family: Arial, Helvetica, sans-serif;
-    padding-top: 4px;
-    font-size: 1.0em;
-    display: inline;
-}
-
-.iceSubMenuRowSubMenuIndicator {
-    display:inline;
-    float:right;
-    padding-top: 3px;
-    padding-right: 1px;    
-}
-
-.iceSubMenu_vertical {
+.iceMenuBarVrtSubMenu { /* was iceSubMenu_vertical*/
     padding: 1px;
     width: 160px;
     background-color: #EFEFEF;
@@ -1479,7 +1481,7 @@ input {
     display: block;
 }
 
-.iceMenu_vertical_subItem a {
+.iceMenuItemVrt a { /* was iceMenu_vertical_subItem */
     background-color: #EFEFEF; 
     font-family: Arial, Helvetica, sans-serif;
     color: #333333;
@@ -1493,18 +1495,18 @@ input {
     padding-bottom: 3px;    
 }
 
-.iceMenu_vertical_subItem a:hover {
+.iceMenuItemVrt a:hover { /* was iceMenu_vertical_subItem */
     background-color: #2A6CC2;
     color: #FFFFFF;
     text-decoration: none;
 }
 
-.iceSubMenuDividerVert {
-    height: auto;
-    float: left;
-    width: 100%;
+.iceMenuBarVrtSubMenuIndicator { /* was iceSubMenuDividerVert */
+    display:inline;
+    float:right;
+    padding-top: 3px;
+    padding-right: 1px;    
 }
-
 /*
 ----------- PanelPopup ----------
 */

@@ -33,6 +33,7 @@
 
 package com.icesoft.faces.component.menubar;
 
+import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.util.CoreUtils;
 
@@ -348,5 +349,46 @@ public class MenuItem extends MenuItemBase {
         }
         return super.isRendered();
     }
-   
+    
+    private String styleClass;
+    /**
+     * <p>Set the value of the <code>styleClass</code> property.</p>
+     *
+     * @param styleClass
+     */
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    /**
+     * <p>Return the value of the <code>styleClass</code> property.</p>
+     *
+     * @return String styleClass
+     */
+    public String getStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                styleClass, 
+                CSS_DEFAULT.MENU_ITEM_STYLE, 
+                "styleClass",
+                isDisabled());
+    }
+    
+    public String getLabelStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                    CSS_DEFAULT.MENU_ITEM_LABEL_STYLE, isDisabled());
+    }
+    
+    public String getImageStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.MENU_ITEM_IMAGE_STYLE);
+    }
+    
+    String getUserDefinedStyleClass(String parentClass) {
+        String disSuffix = isDisabled()? "-dis" : "";
+        
+        if (styleClass != null) {
+            return parentClass + disSuffix + " " +styleClass + disSuffix; 
+        }
+        return parentClass + disSuffix;
+    }
 }

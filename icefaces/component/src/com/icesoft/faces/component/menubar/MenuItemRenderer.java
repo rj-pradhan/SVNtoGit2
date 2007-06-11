@@ -149,13 +149,9 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         Element topLevelDiv = (Element) domContext.getRootNode();
         topLevelDiv.setAttribute(HTML.NAME_ATTR, "TOP_LEVEL");
 
-        if (vertical) {
-            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
-                                     CSS_DEFAULT.MENU_VERTICAL_ITEM_STYLE);
-        } else {
-            topLevelDiv.setAttribute(HTML.CLASS_ATTR,
-                                     CSS_DEFAULT.MENU_HORIZONTAL_STYLE);
-        }
+        topLevelDiv.setAttribute(HTML.CLASS_ATTR,
+                ((MenuItem) uiComponent).
+                getUserDefinedStyleClass(menuComponent.getItemStyleClass()));
 
         if (uiComponent.getChildCount() > 0) {
             String displayEvent = HTML.ONMOUSEOVER_ATTR;
@@ -252,7 +248,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                 Element iconImg = domContext.createElement(HTML.IMG_ELEM);
                 iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
                 iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
-                iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
+                iconImg.setAttribute(HTML.CLASS_ATTR, menuItem.getImageStyleClass());
                 div.appendChild(iconImg);
             }
         }
@@ -260,12 +256,11 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
         if (!menuItem.isDisabled()) {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR, "iceLink");
         } else {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR, "iceLink-dis");
         }
+        span.setAttribute(HTML.CLASS_ATTR, menuItem.getLabelStyleClass());
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -298,7 +293,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(menuBar));
             subImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             subImg.setAttribute(HTML.CLASS_ATTR,
-                                "iceSubMenuRowSubMenuIndicator");
+                                menuBar.getSubMenuIndicatorStyleClass());
             div.appendChild(subImg);
         }
 
@@ -308,19 +303,19 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             Element iconImg = domContext.createElement(HTML.IMG_ELEM);
             iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
             iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
-            iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
+            iconImg.setAttribute(HTML.CLASS_ATTR, menuItem.getImageStyleClass());
             div.appendChild(iconImg);
         }
 
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
         if (!menuItem.isDisabled()) {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink");
         } else {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink-dis");
         }
+        span.setAttribute(HTML.CLASS_ATTR, menuItem.getLabelStyleClass());
+
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -349,7 +344,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             subImg.setAttribute(HTML.SRC_ATTR, getSubMenuImage(menuBar));
             subImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
             subImg.setAttribute(HTML.CLASS_ATTR,
-                                "iceSubMenuRowSubMenuIndicator");
+                                menuBar.getSubMenuIndicatorStyleClass());
             div.appendChild(subImg);
         }
 
@@ -359,19 +354,19 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             Element iconImg = domContext.createElement(HTML.IMG_ELEM);
             iconImg.setAttribute(HTML.SRC_ATTR, getIcon(menuItem));
             iconImg.setAttribute(HTML.STYLE_ATTR, "border:none;");
-            iconImg.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowImage ");
+            iconImg.setAttribute(HTML.CLASS_ATTR, menuItem.getImageStyleClass());
             div.appendChild(iconImg);
         }
 
         // create a span for text
         Element span = domContext.createElement(HTML.SPAN_ELEM);
         if (!menuItem.isDisabled()) {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink");
         } else {
-            span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel-dis");
             anchor.setAttribute(HTML.STYLE_CLASS_ATTR,"iceLink-dis");
         }
+        span.setAttribute(HTML.CLASS_ATTR, "iceSubMenuRowLabel");
+
         div.appendChild(span);
         // create text
         Node text = domContext.createTextNode(DOMUtils.escapeAnsi(menuItem.getValue().toString()));
@@ -392,12 +387,13 @@ public class MenuItemRenderer extends MenuItemRendererBase {
         String subMenuDivId = uiComponent.getClientId(facesContext) + SUB;
         submenuDiv.setAttribute(HTML.ID_ATTR, subMenuDivId);
 
-        if (vertical) {
-            submenuDiv.setAttribute(HTML.CLASS_ATTR,
-                                    CSS_DEFAULT.SUBMENU_VERTICAL_STYLE);
-        } else {
-            submenuDiv.setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.SUBMENU_STYLE);
-        }
+//        if (vertical) {
+//            submenuDiv.setAttribute(HTML.CLASS_ATTR,
+//                                    CSS_DEFAULT.SUBMENU_VERTICAL_STYLE);
+//        } else {
+//            submenuDiv.setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.SUBMENU_STYLE);
+//        }
+        submenuDiv.setAttribute(HTML.CLASS_ATTR, menuComponent.getSubMenuStyleClass());
         submenuDiv.setAttribute(HTML.STYLE_ATTR, "display:none");
         masterDiv.appendChild(submenuDiv);
         // check if this menuItem is disabled, if it is lets disable the  children
@@ -412,26 +408,11 @@ public class MenuItemRenderer extends MenuItemRendererBase {
                         domContext.createElement(HTML.DIV_ELEM);
                 submenuDiv.appendChild(subMenuItemDiv);
                 if (nextSubMenuItem instanceof MenuItemSeparator) {
-                    renderSeparatorDiv(domContext, subMenuItemDiv);
+                    renderSeparatorDiv(domContext, subMenuItemDiv, (MenuItemSeparator)nextSubMenuItem);
                     continue;
                 }
-                if (vertical) {
-                    if (((MenuItem) nextSubMenuItem).isDisabled()) {
-                        subMenuItemDiv.setAttribute(HTML.CLASS_ATTR,
-                                                    CSS_DEFAULT.MENU_VERTICAL_SUBITEM_STYLE_DISABLED);
-                    } else {
-                        subMenuItemDiv.setAttribute(HTML.CLASS_ATTR,
-                                                    CSS_DEFAULT.MENU_VERTICAL_SUBITEM_STYLE);
-                    }
-                } else {
-                    if (((MenuItem) nextSubMenuItem).isDisabled()) {
-                        subMenuItemDiv.setAttribute(HTML.CLASS_ATTR,
-                                                    CSS_DEFAULT.SUBMENU_ROW_STYLE_DISABLED);
-                    } else {
-                        subMenuItemDiv.setAttribute(HTML.CLASS_ATTR,
-                                                    CSS_DEFAULT.SUBMENU_ROW_STYLE);
-                    }
-                }
+                subMenuItemDiv.setAttribute(HTML.CLASS_ATTR,
+                        ((MenuItem) nextSubMenuItem).getStyleClass());
                 subMenuItemDiv.setAttribute(HTML.NAME_ATTR, "ITEM");
                 String subMenuItemClientId =
                         nextSubMenuItem.getClientId(facesContext);
@@ -617,17 +598,18 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             HtmlGraphicImage image = new HtmlGraphicImage();
             image.setUrl(getIcon(nextSubMenuItem));
             image.setStyle("border:none;");
-            image.setStyleClass("iceSubMenuRowImage");
+            image.setStyleClass(nextSubMenuItem.getImageStyleClass());
             div.getChildren().add(image);
         }
 
         HtmlOutputText outputText = new HtmlOutputText();
         outputText.setValue(link.getValue());
-        if (!nextSubMenuItem.isDisabled()) {
-            outputText.setStyleClass("iceSubMenuRowLabel");
-        } else {
-            outputText.setStyleClass("iceSubMenuRowLabel-dis");
-        }
+//        if (!nextSubMenuItem.isDisabled()) {
+//            outputText.setStyleClass("iceSubMenuRowLabel");
+//        } else {
+//            outputText.setStyleClass("iceSubMenuRowLabel-dis");
+//        }
+        outputText.setStyleClass(nextSubMenuItem.getLabelStyleClass());
         link.setValue("");
         div.getChildren().add(outputText);
 
@@ -644,7 +626,7 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             HtmlGraphicImage image = new HtmlGraphicImage();
             image.setUrl(getSubMenuImage(menuComponent));
             image.setStyle("border:none;");
-            image.setStyleClass("iceSubMenuRowSubMenuIndicator");
+            image.setStyleClass(menuComponent.getSubMenuIndicatorStyleClass());
             div.getChildren().add(image);
         }
 
@@ -653,26 +635,28 @@ public class MenuItemRenderer extends MenuItemRendererBase {
             HtmlGraphicImage image = new HtmlGraphicImage();
             image.setUrl(getIcon(nextSubMenuItem));
             image.setStyle("border:none;");
-            image.setStyleClass("iceSubMenuRowImage");
+            image.setStyleClass(nextSubMenuItem.getImageStyleClass());
             div.getChildren().add(image);
         }
 
         HtmlOutputText outputText = new HtmlOutputText();
         outputText.setValue(link.getValue());
-        if (!nextSubMenuItem.isDisabled()) {
-            outputText.setStyleClass("iceSubMenuRowLabel");
-        } else {
-            outputText.setStyleClass("iceSubMenuRowLabel-dis");
-        }
+//        if (!nextSubMenuItem.isDisabled()) {
+//            outputText.setStyleClass("iceSubMenuRowLabel");
+//        } else {
+//            outputText.setStyleClass("iceSubMenuRowLabel-dis");
+//        }
+        outputText.setStyleClass(nextSubMenuItem.getLabelStyleClass());
         link.setValue("");
         div.getChildren().add(outputText);
 
         link.getChildren().add(div);
     }
 
-    private void renderSeparatorDiv(DOMContext domContext, Element parent) {
+    private void renderSeparatorDiv(DOMContext domContext, Element parent, 
+            MenuItemSeparator menuItemSeparator) {
         Element hr = domContext.createElement("hr");
-        parent.setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.SUBMENU_DIVIDER_STYLE);
+        parent.setAttribute(HTML.CLASS_ATTR, menuItemSeparator.getStyleClass());
         parent.appendChild(hr);
     }
 

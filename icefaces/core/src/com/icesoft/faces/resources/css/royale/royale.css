@@ -1275,20 +1275,20 @@ input {
     border: 0px;
 }
 
-/* ---------------------Menu
+/* ---------------------New Menu
 */
-.iceMenuBar {
+.iceMenuBar { /* no change*/
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenu {
+.iceMenuBarItem { /* was iceMenu */
     float: left;
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenu a {
+.iceMenuBarItem a { /* was iceMenu */
     background-color: #2A6CC2;
     height: auto;
     padding-left: 10px;
@@ -1305,13 +1305,13 @@ input {
     text-decoration: none;
 }
 
-.iceMenu a:hover {
+.iceMenuBarItem a:hover { /* was iceMenu */
     border: 1px solid #0056EA;
     background-color: #FFFFFF;
     color: #000000;
 }
 
-.iceMenu hr, .subiceMenu hr {
+.iceMenuBarItem hr, .subiceMenu hr { /* was iceMenu */
     border: none 0;
     border-top: 1px solid #FFFFFF;
     width: 100%;
@@ -1321,7 +1321,9 @@ input {
     text-align: left;
 }
 
-.iceSubMenu {
+.iceMenuBarItemLabel {} /*newly added class*/
+
+.iceMenuBarSubMenu { /* was iceSubMenu */
     position: absolute;
     background-color: #D0D4EE;
     width: 160px;
@@ -1334,13 +1336,13 @@ input {
     display: block;
 }
 
-.iceSubMenuRow {
+.iceMenuItem { /* was iceSubMenuRow*/
     padding: 0px;
     display: block;
     height: auto;
 }
 
-.iceSubMenuRow a {
+.iceMenuItem a { /* was iceSubMenuRow*/
     color: #333333;
     display: block;
     text-decoration: none;
@@ -1350,24 +1352,24 @@ input {
     padding-bottom: 3px;        
 }
 
-.iceSubMenuRow a:hover {
+.iceMenuItem a:hover { /* was iceSubMenuRow*/
     background-color: #2A6CC2;
     color: #FFFFFF;
 }
 
-.iceSubMenuRowImage {
+.iceMenuItemImage { /* was iceSubMenuRowImage */
     display:inline;
     vertical-align: top;
 }
 
-.iceSubMenuRowLabel {
+.iceMenuItemLabel { /*was iceSubMenuRowLabel */
     font-family: Arial, Helvetica, sans-serif;
     padding-top: 4px;
     font-size: 1.0em;
     display: inline;
 }
 
-.iceSubMenuRowSubMenuIndicator {
+.iceMenuBarSubMenuIndicator { /* was iceSubMenuRowSubMenuIndicator */
     padding-top: 3px;
     padding-right: 1px;
     display:inline;
@@ -1375,19 +1377,19 @@ input {
 }
 
 /* classes for the vertical version of the iceMenu*/
-.iceMenu_vertical {
+.iceMenuBarVrt { /* was iceMenu_vertical */
     float: left;
     padding: 0px;
     white-space: nowrap;
     border: 10px solid #AAAAAA;
 }
 
-.iceMenu_verticalItem {
+.iceMenuBarVrtItem { /* was iceMenu_verticalItem */
     width: 160px;
     display: block;
 }
 
-.iceMenu_verticalItem a {
+.iceMenuBarVrtItem a { /* was iceMenu_verticalItem */
     background-color: #2A6CC2;
     height: auto;
     padding-left: 3px;
@@ -1405,14 +1407,14 @@ input {
     width: 100%;
 }
 
-.iceMenu_verticalItem a:hover {
+.iceMenuBarVrtItem a:hover { /* was iceMenu_verticalItem */
     background-color: #FFFFFF;
     color: #000000;
     text-decoration: none;
     border: 1px solid #0056EA;
 }
 
-.iceSubMenu_vertical {
+.iceMenuBarVrtSubMenu { /* was iceSubMenu_vertical*/
     padding: 1px;
     width: 160px;
     background-color: #D0D4EE;
@@ -1422,7 +1424,7 @@ input {
     display: block;
 }
 
-.iceMenu_vertical_subItem a {
+.iceMenuItemVrt a { /* was iceMenu_vertical_subItem */
     background-color: #D0D4EE; 
     padding-left: 3px;
     padding-right: 3px;
@@ -1437,14 +1439,14 @@ input {
     border: 0px;
 }
 
-.iceMenu_vertical_subItem a:hover {
+.iceMenuItemVrt a:hover { /* was iceMenu_vertical_subItem */
     background-color: #2A6CC2;
     color: #FFFFFF;
     text-decoration: none;
     border: 0px;
 }
 
-.iceSubMenuDividerVert {
+.iceMenuBarVrtSubMenuIndicator { /* was iceSubMenuDividerVert */
     height: auto;
     float: left;
     width: 100%;

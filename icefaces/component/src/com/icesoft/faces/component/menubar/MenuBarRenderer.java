@@ -33,7 +33,6 @@
 
 package com.icesoft.faces.component.menubar;
 
-import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.renderkit.dom_html_basic.DomBasicRenderer;
 import com.icesoft.faces.renderkit.dom_html_basic.HTML;
@@ -67,14 +66,7 @@ public class MenuBarRenderer extends DomBasicRenderer {
                              uiComponent.getClientId(facesContext));
 
         MenuBar menuComponent = (MenuBar) uiComponent;
-        boolean vertical = menuComponent.getOrientation().equalsIgnoreCase(
-                MenuBar.ORIENTATION_VERTICAL);
-        if (vertical) {
-            menuDiv.setAttribute(HTML.CLASS_ATTR,
-                                 CSS_DEFAULT.MENU_VERTICAL_ITEM_STYLE);
-        } else {
-            menuDiv.setAttribute(HTML.CLASS_ATTR, CSS_DEFAULT.MENU_BAR_STYLE);
-        }
+            menuDiv.setAttribute(HTML.CLASS_ATTR, menuComponent.getStyleClass());
         menuDiv.setAttribute(HTML.STYLE_ATTR, menuComponent.getStyle());
         DOMContext.removeChildren(menuDiv);
 
