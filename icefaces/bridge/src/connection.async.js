@@ -151,7 +151,8 @@
             this.logger.debug("closing previous connection...");
             this.listener.close();
             this.logger.debug("connect...");
-            this.listener = this.receiveChannel.getAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
+            this.listener = this.receiveChannel.postAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
+                Connection.FormPost(request);
                 request.on(Connection.BadResponse, this.badResponseCallback);
                 request.on(Connection.ServerError, this.serverErrorCallback);
                 request.on(Connection.Receive, this.receiveCallback);
