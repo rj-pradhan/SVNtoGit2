@@ -57,10 +57,10 @@ public class ServletView implements CommandQueue {
     }
 
     public void updateOnRequest(HttpServletRequest request, HttpServletResponse response) {
-        if (request.getRequestURI().equals(wrappedRequest.getRequestURI())) {
-            reloadPage(request, response);
-        } else {
+        if (differentURI(request) ) {
             redirectPage(request, response);
+        } else {
+            reloadPage(request, response);
         }
         makeCurrent();
     }
