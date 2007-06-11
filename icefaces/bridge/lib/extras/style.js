@@ -55,15 +55,15 @@ Ice.DnD.StyleReader = {
         return y;
     },
 
-    findCssField:function(ele, f){
-        if(!f)
+    findCssField:function(ele, f) {
+        if (!f)
             f = Ice.util.findForm(ele);
         var fe = f.getElementsByTagName('input');
         var cssUpdate = null;
-        var i =0;
+        var i = 0;
         // We only want hidden fields.
-        for(i=0;i<fe.length;i++){
-            if(fe[i].type=='hidden' && fe[i].name == 'icefacesCssUpdates'){
+        for (i = 0; i < fe.length; i++) {
+            if (fe[i].type == 'hidden' && fe[i].name == 'icefacesCssUpdates') {
                 cssUpdate = fe[i];
                 break;
             }
@@ -88,7 +88,6 @@ Ice.DnD.StyleReader = {
 }
 
 
-
 Ice.modal = Class.create();
 Ice.modal = {
     running:false,
@@ -97,7 +96,9 @@ Ice.modal = {
     id:null,
     start:function(target) {
         Ice.modal.oldListener = window.document.documentElement.onkeypress;
-        window.document.documentElement.onkeypress = function(e){return Ice.modal.keypress(e);}
+        window.document.documentElement.onkeypress = function(e) {
+            return Ice.modal.keypress(e);
+        }
 
         var iframe = document.getElementById('iceModalFrame');
         if (!iframe) {
@@ -106,7 +107,7 @@ Ice.modal = {
             iframe.frameborder = "0";
             iframe.id = 'iceModalFrame';
             var context = configuration.connection.context;
-            var dest =    context + 'xmlhttp/blank.iface';
+            var dest = context + 'xmlhttp/blank.iface';
             iframe.src = dest;
             iframe.style.zIndex = 25000;
             iframe.style.opacity = 0.5;
@@ -123,8 +124,12 @@ Ice.modal = {
                 //lookup element again because 'resize' closure is registered only once
                 var frame = document.getElementById('iceModalFrame');
                 if (frame) {
-                    frame.style.width = document.documentElement.scrollWidth + 'px';
-                    frame.style.height = document.documentElement.scrollHeight + 'px';
+                    var documentWidth = document.documentElement.scrollWidth;
+                    var bodyWidth = document.body.scrollWidth;
+                    var documentHeight = document.documentElement.scrollHeight;
+                    var bodyHeight = document.body.scrollHeight;
+                    frame.style.width = (bodyWidth > documentWidth ? bodyWidth : documentWidth) + 'px';
+                    frame.style.height = (bodyHeight > documentHeight ? bodyHeight : documentHeight) + 'px';
                 }
             };
             resize();
@@ -143,46 +148,48 @@ Ice.modal = {
         if (Ice.modal.id == target) {
             window.document.documentElement.onkeypress = Ice.modal.oldListener;
             var iframe = document.getElementById('iceModalFrame');
-            if (iframe) {                
+            if (iframe) {
                 iframe.parentNode.removeChild(iframe);
                 logger.debug('removed modal iframe for : ' + target);
             }
             Ice.modal.running = false;
         }
     },
-    keypress:function(event){
-        if(!Ice.modal.running){return true;}
+    keypress:function(event) {
+        if (!Ice.modal.running) {
+            return true;
+        }
         var cancel = true;
         var src = null;
         var IEEvent = null;
-        if(event){
+        if (event) {
             src = event.target;
-        }else{
+        } else {
             IEEvent = window.event;
             src = IEEvent.srcElement;
         }
-        if(Ice.modal.containedInId(src, Ice.modal.target.id)){
+        if (Ice.modal.containedInId(src, Ice.modal.target.id)) {
             cancel = false;
         }
 
-        if(cancel){
+        if (cancel) {
 
-            if(event){
+            if (event) {
                 event.stopPropagation();
             }
-            if(IEEvent){
+            if (IEEvent) {
                 IEEvent.returnValue = false;
                 IEEvent.cancelBubble = true;
             }
         }
         return !cancel;
     },
-    containedInId:function(node, id){
-        if(node.id == id){            
+    containedInId:function(node, id) {
+        if (node.id == id) {
             return true;
         }
         var parent = node.parentNode;
-        if(parent){
+        if (parent) {
             return Ice.modal.containedInId(parent, id);
         }
         return false;

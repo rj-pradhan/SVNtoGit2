@@ -198,8 +198,12 @@
             panelContainer.style.left = '0';
 
             var resize = function() {
-                panelContainer.style.width = document.documentElement.scrollWidth + 'px';
-                panelContainer.style.height = document.documentElement.scrollHeight + 'px';
+                var documentWidth = document.documentElement.scrollWidth;
+                var bodyWidth = document.body.scrollWidth;
+                var documentHeight = document.documentElement.scrollHeight;
+                var bodyHeight = document.body.scrollHeight;
+                panelContainer.style.width = (bodyWidth > documentWidth ? bodyWidth : documentWidth) + 'px';
+                panelContainer.style.height = (bodyHeight > documentHeight ? bodyHeight : documentHeight) + 'px';
             };
             resize();
             window.onResize(resize);
