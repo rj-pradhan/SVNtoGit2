@@ -64,7 +64,7 @@
 
     <path id="compile.run.classpath">
         <pathelement location="${build.classes.dir}"/>
-        <fileset dir="${lib.dir}" includes="*.jar" excludes="${ant.project.name}.jar"/>
+        <fileset dir="${lib.dir}" includes="*.jar" excludes="jsf-api-1.2.jar,${ant.project.name}.jar"/>
     </path>
     <path id="compile.test.classpath">
         <pathelement location="${build.classes.dir}"/>

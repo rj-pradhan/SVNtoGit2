@@ -81,6 +81,7 @@
             <exclude name="${ant.project.name}.jar"/>
             <exclude name="just-ice.jar"/>
             <exclude name="icefaces-comps.jar"/>
+            <exclude name="jsf-api-1.2.jar"/>
         </fileset>
     </path>
 
@@ -143,10 +144,6 @@
        </condition>
     </target>
 
-    <target name="testJSF12">
-       <available property="isJSF12" file="${lib.dir}/javaee.jar" />
-    </target>
-
     <target name="compile15" depends="testJDK" if="isJDK15">
         <javac destdir="${build.classes.dir}" sourcepath=""
                debug="${compile.debug}" source="1.5" target="1.5">
@@ -155,17 +152,17 @@
             <include name="com/icesoft/faces/webapp/http/servlet/TomcatPushServlet.java"/>
         </javac>
 
-        <antcall target="jsf12" />
+        <antcall target="jsf12" /> 
 
     </target>
 
-    <target name="jsf12" depends="testJSF12" if="isJSF12" >
+    <target name="jsf12" >
         <javac destdir="${build.classes.dir}" sourcepath=""
                debug="${compile.debug}" source="1.5" target="1.5">
-            <classpath location="${lib.dir}/javaee.jar"/>
+            <classpath location="${lib.dir}/jsf-api-1.2.jar"/>
             <classpath refid="compile.run.classpath"/>
             <src location="${src.dir}"/>
-            <include name="com/icesoft/faces/webapp/parser/ELSetPropertiesRule.java"/>
+            <include name="com/icesoft/faces/webapp/parser/ELSetPropertiesRule.java"/> 
         </javac>
     </target>
 

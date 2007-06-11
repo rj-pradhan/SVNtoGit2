@@ -41,10 +41,13 @@ import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 import javax.faces.webapp.UIComponentTag;
+import javax.faces.webapp.UIComponentELTag;
 import java.util.HashMap;
 
 
 public class ELSetPropertiesRule extends Rule {
+    //marker class to detect JSF 1.2 JSP tags
+    static Class elTagClass = UIComponentELTag.class;
 
     public void begin(Attributes attributes) throws Exception {
         FacesContext facesContext = FacesContext.getCurrentInstance();

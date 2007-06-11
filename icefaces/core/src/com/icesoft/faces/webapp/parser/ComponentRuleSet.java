@@ -63,10 +63,32 @@ public class ComponentRuleSet extends RuleSetBase {
     private String viewTagClass;
     private String ruleNamespace;
     private static String TAG_NEST = "*/";
-    private Class setPropertiesRuleClass = null;
+    private static Class setPropertiesRuleClass = null;
     private static boolean isJSF12 = false;
 
     private static final Log log = LogFactory.getLog(ComponentRuleSet.class);
+
+    static {
+        try {
+            setPropertiesRuleClass =
+                    Class.forName(
+                            "org.apache.commons.digester.SetPropertiesRule");
+            setPropertiesRuleClass =
+                    Class.forName(
+                            "com.icesoft.faces.webapp.parser.ELSetPropertiesRule");
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        "ICEfaces using JSF 1.2 JSP tags.");
+            }
+            isJSF12 = true;
+        } catch (Throwable t) {
+            //many different throwables besides ClassNotFoundException
+            if (log.isDebugEnabled()) {
+                log.debug(
+                        "No JSF 1.2 classes found. Running in JSF 1.1 environment");
+            }
+        }
+    }
 
     /**
      * Constructor
@@ -78,20 +100,6 @@ public class ComponentRuleSet extends RuleSetBase {
         super();
         map = mp;
         ruleNamespace = namespaceURI;
-        try {
-            setPropertiesRuleClass =
-                    Class.forName(
-                            "org.apache.commons.digester.SetPropertiesRule");
-            setPropertiesRuleClass =
-                    Class.forName(
-                            "com.icesoft.faces.webapp.parser.ELSetPropertiesRule");
-            isJSF12 = true;
-        } catch (ClassNotFoundException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(
-                        "No JSF 1.2 classes found. Running in JSF 1.1 environment");
-            }
-        }
     }
 
     /**
