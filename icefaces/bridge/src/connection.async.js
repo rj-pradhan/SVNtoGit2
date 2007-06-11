@@ -74,6 +74,15 @@
                     this.logger.error('receive broadcast failed', e);
                 }
             }.bind(this);
+            this.sendXWindowCookie = Function.NOOP;
+            this.receiveXWindowCookie = function (response) {
+                var xWindowCookie = response.getResponseHeader("X-Set-Window-Cookie");
+                if (xWindowCookie) {
+                    this.sendXWindowCookie = function(request) {
+                        request.setRequestHeader("X-Window-Cookie", xWindowCookie);
+                    };
+                }
+            }.bind(this);
 
             //read/create cookie that contains the updated views
             try {
@@ -156,6 +165,7 @@
                 request.on(Connection.BadResponse, this.badResponseCallback);
                 request.on(Connection.ServerError, this.serverErrorCallback);
                 request.on(Connection.Receive, this.receiveCallback);
+                request.on(Connection.Receive, this.receiveXWindowCookie);
                 request.on(Connection.Receive, this.connect.bind(this).delayFor(150));
             }.bind(this));
         },
@@ -165,6 +175,7 @@
             this.logger.debug('send > ' + compoundQuery.asString());
 
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
+                this.sendXWindowCookie(request);
                 Connection.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.ServerError, this.serverErrorCallback);
