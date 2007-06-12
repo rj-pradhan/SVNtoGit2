@@ -364,7 +364,10 @@ public class HtmlDataTable
         }
         ValueBinding vb = getValueBinding("headerClasses");
         return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.HEADER.toLowerCase();
+            CSS_DEFAULT.TABLE_STYLE_CLASS+ 
+            CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS+ "1," + 
+            CSS_DEFAULT.TABLE_STYLE_CLASS+
+            CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS+ "2";
     }
 
     String[] headerClassesArray = null;
@@ -374,12 +377,12 @@ public class HtmlDataTable
             headerClassesArray = getHeaderClasses().split(",");
         }
         if (headerClassesArray.length == 1) {
-            return headerClassesArray[0] + index;
+            return headerClassesArray[0];
         }
         try {
-            return headerClassesArray[index - 1];
+            return headerClassesArray[index];
         } catch (ArrayIndexOutOfBoundsException e) {
-            return headerClassesArray[0] + index;
+            return headerClassesArray[0];
         }
     }
 
@@ -402,6 +405,28 @@ public class HtmlDataTable
             savedChildren.put(clientId, ((UIData) uiComponent).getValue());
         }
     }
+    
+    public String getStyleClass() {
+        return Util.getQualifiedStyleClass(this, 
+                super.getStyleClass(),
+                CSS_DEFAULT.TABLE_STYLE_CLASS,
+                "styleClass");
+    }
+    
+    public String getHeaderClass() {
+        return Util.getQualifiedStyleClass(this, 
+                super.getHeaderClass(),
+                CSS_DEFAULT.TABLE_HEADER_CLASS,
+                "headerClass");
+    }
+
+    public String getFooterClass() {
+        return Util.getQualifiedStyleClass(this, 
+                super.getFooterClass(),
+                CSS_DEFAULT.TABLE_FOOTER_CLASS,
+                "footerClass");
+    }
+
 }
    
 

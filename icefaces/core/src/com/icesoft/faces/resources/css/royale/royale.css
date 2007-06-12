@@ -223,17 +223,17 @@ input {
 /*
 ----------- Data Table Component classes
 */
-.iceDataTblOutline {
+.iceDataTbl { /* was iceDataTblOutline */
     background-color: #FFFFFF;
     border: 2px solid #0056EA;
     margin: 10px;
 }
 
-.iceDataTblOutline table{
+.iceDataTbl table{
 	border-collapse:collapse;
 }
 
-.iceTblHeader {
+.iceDataTblColumnHeader { /* was iceTblHeader */
 /*the header of a data tables */
     background-color: #026AFF;
     background-image: url( "./css-images/table_col_header.gif" );
@@ -249,7 +249,7 @@ input {
     border-top: 1px solid #0056EA; /*border-right:1px solid #CCCCCC;*/
 }
 
-.iceTblHeader .iceOutputText {
+.iceDataTblColumnHeader .iceOutputText {
     color: #FFFFFF;
 }
 
@@ -258,16 +258,17 @@ input {
 }
 
 /* data tables are rendered with alternating row colors */
-.iceTblRow1 {
+.iceDataTblRow1 { /* was iceTblRow1 */
     background-color: #DEDEDE;
 }
 
-.iceTblRow2 {
+.iceDataTblRow2 { /* was iceTblRow2 */
     background-color: #FFFFFF;
 }
 
 /* set the common attributes for the column classes */
-.column1, .column2, .column3, column {
+.iceDataTblColumn, .iceDataTblColumn1, .iceDataTblColumn2{
+/*was column, column1, column2, column3*/
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;
@@ -278,7 +279,7 @@ input {
 }
 
 /* now you can add or override any attributes for the specific columns */
-.column1 {
+.iceDataTblColumn1 { /*was column1 */
     text-align: center;
 }
 

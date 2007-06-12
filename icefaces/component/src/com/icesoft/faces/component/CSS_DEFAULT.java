@@ -76,18 +76,30 @@ public class CSS_DEFAULT {
             "iceSelect"; // Originally was "iceSelect"
     public static final String SELECT_ONE_RADIO_DEFAULT_STYLE_CLASS =
             "iceRadioBtn"; // Originally was "iceRadiobutton"
-    public static final String TABLE_OUTLINE_CLASS =
-            "iceDataTblOutline"; // Originally was "dataTableOutlineClass"
+    public static final String TABLE_STYLE_CLASS =
+            "iceDataTbl"; // Originally was "dataTableOutlineClass"
     public static final String TABLE_HEADER_CLASS =
-            "iceTblHeader";   // Originally was "headerClass"
+        "Header";   // Originally was "headerClass"
+    public static final String TABLE_HEADER_CLASS1 =
+            "Header1";   // Originally was "headerClass"
+    public static final String TABLE_HEADER_CLASS2 =
+        "Header2";   // Originally was "headerClass"
     public static final String TABLE_FOOTER_CLASS =
-            "iceTblFooter";   // Originally was "headerClass"
+            "Footer";   // Originally was "headerClass"
+    public static final String TABLE_ROW_CLASS =
+        "Row"; // Originally was "rowClasses1"    
     public static final String TABLE_ROW_CLASS1 =
-            "iceTblRow1"; // Originally was "rowClasses1"
+            "Row1"; // Originally was "rowClasses1"
     public static final String TABLE_ROW_CLASS2 =
-            "iceTblRow2"; // Originally was "rowClasses2"
-    public static final String TABLE_COLUMN_CLASSES =
-            "column";  // Originally was "columnClasses"
+            "Row2"; // Originally was "rowClasses2"
+    public static final String TABLE_COLUMN_CLASS1 =
+        "Column1";
+    public static final String TABLE_COLUMN_CLASS2 =
+        "Column2";    
+    public static final String TABLE_COLUMN_CLASS =
+            "Column";  // Originally was "columnClasses"
+    public static final String TABLE_COLUMN_HEADER_CLASS =
+        "ColumnHeader";  // Originally was "columnClasses"    
     public static final String PANEL_GROUP_DEFAULT_STYLE_CLASS = "icePnlGrp";
     public static final String PANEL_GRID_DEFAULT_STYLE_CLASS = "icePnlGrd";
     public static final String ROW = "Row";

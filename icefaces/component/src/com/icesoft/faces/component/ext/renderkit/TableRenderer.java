@@ -37,6 +37,7 @@ import com.icesoft.faces.component.CSS_DEFAULT;
 import com.icesoft.faces.component.ext.HtmlDataTable;
 import com.icesoft.faces.component.ext.RowSelector;
 import com.icesoft.faces.component.ext.UIColumns;
+import com.icesoft.faces.component.ext.taglib.Util;
 import com.icesoft.faces.component.panelseries.UISeries;
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.JavascriptContext;
@@ -57,38 +58,26 @@ public class TableRenderer
     private static final String SELECTED_ROWS = "sel_rows";
 
     public String getComponentStyleClass(UIComponent uiComponent) {
-        String styleClass =
-                (String) uiComponent.getAttributes().get("styleClass");
-        if (styleClass == null) {
-            styleClass = CSS_DEFAULT.TABLE_OUTLINE_CLASS;
-        }
-        return styleClass;
+        return (String) uiComponent.getAttributes().get("styleClass");
+
     }
 
     public String getHeaderClass(UIComponent component) {
-        String headerClass =
-                (String) component.getAttributes().get("headerClass");
-        if (headerClass == null) {
-            headerClass = CSS_DEFAULT.TABLE_HEADER_CLASS;
-        }
-        return headerClass;
+        return (String) component.getAttributes().get("headerClass");
     }
 
     public String getFooterClass(UIComponent component) {
-        String footerClass =
-                (String) component.getAttributes().get("footerClass");
-        if (footerClass == null) {
-            footerClass = CSS_DEFAULT.TABLE_FOOTER_CLASS;
-        }
-        return footerClass;
+        return (String) component.getAttributes().get("footerClass");
     }
 
     // row styles are returned by reference
     public String[] getRowStyles(UIComponent uiComponent) {
         if (((String[]) getRowStyleClasses(uiComponent)).length <= 0) {
             String[] rowStyles = new String[2];
-            rowStyles[0] = CSS_DEFAULT.TABLE_ROW_CLASS1;
-            rowStyles[1] = CSS_DEFAULT.TABLE_ROW_CLASS2;
+            rowStyles[0] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_ROW_CLASS1);
+            rowStyles[1] =Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_ROW_CLASS2);
             return rowStyles;
         } else {
             return getRowStyleClasses(uiComponent);
@@ -97,15 +86,13 @@ public class TableRenderer
 
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
-                               int colNumber) {
+                               int colNumber, 
+                               UIComponent uiComponent
+                                ) {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
                 td.setAttribute("class", columnStyles[columnStyleIndex]);
             }
-        } else {
-            td.setAttribute("class",
-                    CSS_DEFAULT.TABLE_COLUMN_CLASSES +  " " +
-                    CSS_DEFAULT.TABLE_COLUMN_CLASSES + colNumber++);
         }
     }
 
@@ -175,6 +162,9 @@ public class TableRenderer
             Iterator childColumns = childList.iterator();
             String width = null;
             int columnIndex = 1;
+            int headerStyleLength = ((HtmlDataTable)uiComponent).
+                                getHeaderClasses().split(",").length;
+            int styleIndex = 0;
             while (childColumns.hasNext()) {
 
                 UIComponent nextColumn = (UIComponent) childColumns.next();
@@ -191,16 +181,22 @@ public class TableRenderer
                 if (nextColumn instanceof UIColumn) {
                     processUIColumnHeader(facesContext, uiComponent,
                                           (UIColumn) nextColumn, tr, domContext,
-                                          facet, element, facetClass, width,
-                                          columnIndex);
+                                          facet, element, width,
+                                          columnIndex,
+                                          styleIndex);
                     columnIndex++;
                 } else if (nextColumn instanceof UIColumns) {
                     columnIndex = processUIColumnsHeader(facesContext,
                                                          uiComponent,
                                                          (UIColumns) nextColumn,
                                                          tr, domContext, facet,
-                                                         element, facetClass,
-                                                         width, columnIndex);
+                                                         element, width, columnIndex,
+                                                         styleIndex,
+                                                         headerStyleLength);
+                }
+                
+                if (styleIndex++ == (headerStyleLength-1)) {
+                    styleIndex = 0;
                 }
             }
             if (header && isScrollable(uiComponent)) {
@@ -215,18 +211,18 @@ public class TableRenderer
                                        UIComponent uiComponent,
                                        UIColumn nextColumn, Element tr,
                                        DOMContext domContext, String facet,
-                                       String element, String facetClass,
-                                       String width, int columnIndex)
+                                       String element, String width, int columnIndex,
+                                       int styleIndex)
             throws IOException {
         HtmlDataTable htmlDataTable = (HtmlDataTable) uiComponent;
         Element th = domContext.createElement(element);
         tr.appendChild(th);
-        if (facet.equalsIgnoreCase("header")) {
-            facetClass = facetClass + " " +
-                         htmlDataTable.getHeaderClassAtIndex(columnIndex);
-        }
 
-        th.setAttribute("class", facetClass);
+        th.setAttribute("class",Util.getQualifiedStyleClass(uiComponent, 
+                htmlDataTable.getHeaderClassAtIndex(styleIndex),
+                CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS,
+                "headerClasses"));
+      
         if (width != null) {
             th.setAttribute("style", "width:" + width + ";overflow:hidden;");
         }
@@ -245,11 +241,13 @@ public class TableRenderer
                                        UIComponent uiComponent,
                                        UIColumns nextColumn, Element tr,
                                        DOMContext domContext, String facet,
-                                       String element, String facetClass,
-                                       String width, int columnIndex)
+                                       String element, String width, int columnIndex,
+                                       int styleIndex,
+                                       int headerStyleLength)
             throws IOException {
         HtmlDataTable htmlDataTable = (HtmlDataTable) uiComponent;
         int rowIndex = nextColumn.getFirst();
+        //syleIndex should be increment here
         nextColumn.setRowIndex(rowIndex);
         while (nextColumn.isRowAvailable()) {
             UIComponent headerFacet = getFacetByName(nextColumn, facet);
@@ -258,12 +256,10 @@ public class TableRenderer
                 Node oldParent = domContext.getCursorParent();
                 Element th = domContext.createElement(element);
                 tr.appendChild(th);
-                if (facet.equalsIgnoreCase("header")) {
-                    th.setAttribute("class", facetClass + " " + htmlDataTable
-                            .getHeaderClassAtIndex(columnIndex));
-                } else {
-                    th.setAttribute("class", facetClass);
-                }
+                th.setAttribute("class",Util.getQualifiedStyleClass(uiComponent, 
+                        htmlDataTable.getHeaderClassAtIndex(styleIndex),
+                        CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS,
+                        "headerClasses"));
                 if (width != null) {
                     th.setAttribute("style", "width:" + width + ";");
                 }
@@ -274,6 +270,9 @@ public class TableRenderer
 
                 encodeParentAndChildren(facesContext, headerFacet);
                 domContext.setCursorParent(oldParent);
+            }
+            if (styleIndex++ == (headerStyleLength-1)) {
+                styleIndex = 0;
             }
             rowIndex++;
             columnIndex++;
@@ -402,7 +401,8 @@ public class TableRenderer
                             td.appendChild(scriptNode);
                         }
                         writeColStyles(columnStyles, columnStylesMaxIndex,
-                                       columnStyleIndex, td, colNumber++);
+                                       columnStyleIndex, td, colNumber++,
+                                       uiComponent);
                         
                         if (isScrollable(uiComponent))  {
                             String width = "150px";
@@ -493,7 +493,8 @@ public class TableRenderer
                 if (nextChild.isRendered()) {
                     domContext.setCursorParent(td);
                     writeColStyles(columnStyles, columnStylesMaxIndex,
-                                   columnStyleIndex, td, colNumber++);
+                                   columnStyleIndex, td, colNumber++,
+                                   columns.getParent());
                     if (++columnStyleIndex > columnStylesMaxIndex) {
                         columnStyleIndex = 0;
                     }
@@ -590,5 +591,35 @@ public class TableRenderer
         return size;
     }
     
+    protected String[] getColumnStyleClasses(UIComponent uiComponent) {
+        String[] columnStyles = super.getColumnStyleClasses(uiComponent);
+        if (columnStyles.length == 0) {
+            columnStyles = new String[2];
+            columnStyles[0] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_CLASS1); 
+            columnStyles[1] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_CLASS2);   
+        } else {
+            for (int i=0; i < columnStyles.length; i++) {
+                columnStyles[i] = Util.getQualifiedStyleClass(uiComponent,
+                              columnStyles[i],
+                              CSS_DEFAULT.TABLE_COLUMN_CLASS,
+                              "columnClasses"                            
+                                           ); 
+            }
+        }
+        return columnStyles;
+    }
 
+    public String[] getRowStyleClasses(UIComponent uiComponent) {
+        String[] rowClasses = super.getRowStyleClasses(uiComponent);
+        for (int i=0; i < rowClasses.length; i++) {
+            rowClasses[i] = Util.getQualifiedStyleClass(uiComponent,
+                            rowClasses[i],
+                          CSS_DEFAULT.TABLE_ROW_CLASS,
+                          "rowClasses"                            
+                                       ); 
+        }
+        return rowClasses;
+    }
 }

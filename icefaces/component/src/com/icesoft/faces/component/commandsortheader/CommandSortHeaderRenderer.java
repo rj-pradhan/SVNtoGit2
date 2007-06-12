@@ -63,7 +63,7 @@ public class CommandSortHeaderRenderer extends CommandLinkRenderer {
             DOMContext domContext =
                     DOMContext.getDOMContext(facesContext, uiComponent);
             Element root = (Element) domContext.getRootNode();
-            String headerClass = dataTable.getHeaderClass();
+            String headerClass = sortHeader.getStyleClass();
             if (headerClass != null) {
                 root.setAttribute(HTML.CLASS_ATTR, headerClass);
             }

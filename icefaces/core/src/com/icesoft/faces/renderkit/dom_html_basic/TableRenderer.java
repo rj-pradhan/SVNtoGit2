@@ -318,7 +318,8 @@ public class TableRenderer extends DomBasicRenderer {
 
                 // if column styles exist, then apply the appropriate one
                 writeColStyles(columnStyles, columnStylesMaxIndex,
-                               columnStyleIndex, td, colNumber++);
+                               columnStyleIndex, td, colNumber++,
+                               uiComponent);
                 if (++columnStyleIndex > columnStylesMaxIndex) {
                     columnStyleIndex = 0;
                 }
@@ -356,7 +357,8 @@ public class TableRenderer extends DomBasicRenderer {
     // this method is overridden in the subclass
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
-                               int colNumber) {
+                               int colNumber,
+                                UIComponent uiComponent) {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
                 td.setAttribute("class", columnStyles[columnStyleIndex]);
