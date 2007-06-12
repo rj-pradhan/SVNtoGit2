@@ -37,8 +37,13 @@ import com.icesoft.faces.webapp.xmlhttp.FatalRenderingException;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
 import com.icesoft.faces.webapp.xmlhttp.TransientRenderingException;
+import com.icesoft.util.SeamUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.portlet.PortletSession;
 
 /**
  * RunnableRender implements Runnable and is designed to wrap up a {@link
@@ -122,8 +127,23 @@ class RunnableRender implements Runnable {
         }
 
         try {
+
+            // If the user has logged out via some Seam Identity object, then we
+            // can't try to execute() the lifecycle, because the restoreView phase
+            // will throw an exception, and Seam's restoreView phase listener
+            // will catch it, meaning we're completely out of the loop.
+            // Instead, try to discover if the Session is valid at this point
+            // in time ourselves. Naturally, this isn't perfect, since we're not
+            // synchronized with user interaction. 
+            if (SeamUtilities.isSeamEnvironment() ) {
+                testSession(state);
+            }
             state.execute();
             state.render();
+             
+        } catch (IllegalStateException ise) {
+            renderable.renderingException( new TransientRenderingException( ise ));
+
         } catch (RenderingException ex) {
             renderable.renderingException(ex);
             if (ex instanceof TransientRenderingException) {
@@ -141,6 +161,30 @@ class RunnableRender implements Runnable {
             }
         }
     }
+
+    /**
+     * See note above in run method. Just fiddle with the session to try to cause
+     * IllegalStateExceptions before Seam takes over.
+     * 
+     * @param state PersistentFacesState used in rendering
+     * @throws IllegalStateException If logged out. 
+     */
+    private void testSession(PersistentFacesState state) throws IllegalStateException {
+        FacesContext fc = state.getFacesContext();
+        Object o = fc.getExternalContext().getSession(false);
+        if (o == null) {
+            renderable.renderingException( new FatalRenderingException("Session has ended (User Logout?)") );
+        } else {
+            if (o instanceof HttpSession) {
+                HttpSession session = (HttpSession) o;
+                session.getAttributeNames();
+            } else if (o instanceof PortletSession)  {
+                PortletSession ps = (PortletSession) o;
+                ps.getAttributeNames();
+            }
+        }
+    } 
+
 
     /**
      * We override the equals method of Object so that we can compare
