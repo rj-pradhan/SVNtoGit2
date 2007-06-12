@@ -161,6 +161,7 @@
             this.listener.close();
             this.logger.debug("connect...");
             this.listener = this.receiveChannel.postAsynchronously(this.receiveURI, this.defaultQuery().asURIEncodedString(), function(request) {
+                this.sendXWindowCookie(request);
                 Connection.FormPost(request);
                 request.on(Connection.BadResponse, this.badResponseCallback);
                 request.on(Connection.ServerError, this.serverErrorCallback);
@@ -175,7 +176,6 @@
             this.logger.debug('send > ' + compoundQuery.asString());
 
             this.sendChannel.postAsynchronously(this.sendURI, compoundQuery.asURIEncodedString(), function(request) {
-                this.sendXWindowCookie(request);
                 Connection.FormPost(request);
                 request.on(Connection.Receive, this.receiveCallback);
                 request.on(Connection.ServerError, this.serverErrorCallback);
