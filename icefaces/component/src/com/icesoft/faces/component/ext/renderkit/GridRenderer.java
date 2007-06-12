@@ -47,21 +47,34 @@ public class GridRenderer
     public String[] getRowStyles(UIComponent uiComponent) {
         if (((String[]) getRowStyleClasses(uiComponent)).length <= 0) {
             String[] rowStyles = new String[2];
-            rowStyles[0] =  CSS_DEFAULT.ROW + 1;
-            rowStyles[1] =  CSS_DEFAULT.ROW + 2;
+            rowStyles[0] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_ROW_CLASS1);
+            rowStyles[1] =Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_ROW_CLASS2);
             return rowStyles;
         } else {
             return getRowStyleClasses(uiComponent);
         }
     }
 
+    public String[] getRowStyleClasses(UIComponent uiComponent) {
+        String[] rowClasses = super.getRowStyleClasses(uiComponent);
+        for (int i=0; i < rowClasses.length; i++) {
+            rowClasses[i] = Util.getQualifiedStyleClass(uiComponent,
+                            rowClasses[i],
+                          CSS_DEFAULT.TABLE_ROW_CLASS,
+                          "rowClasses"                            
+                                       ); 
+        }
+        return rowClasses;
+    }
+    
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
                                int colNumber, UIComponent uiComponent) {
         if (columnStyles.length > 0) {
             if (columnStylesMaxIndex >= 0) {
-                td.setAttribute("class",getColumnStyle(uiComponent, 
-                        columnStyles[columnStyleIndex]));
+                td.setAttribute("class", columnStyles[columnStyleIndex]);
             }
         } else {
             td.setAttribute("class", getColumnStyle(uiComponent, CSS_DEFAULT.COLUMN +
@@ -70,12 +83,34 @@ public class GridRenderer
     }
     
     protected String getRowStyle(UIComponent uiComponent, String style) {
-        return Util.getQualifiedStyleClass(uiComponent, 
-                                            style);
+        return Util.getQualifiedStyleClass(uiComponent,
+                                            style,
+                                            CSS_DEFAULT.TABLE_ROW_CLASS,
+                                            "rowClasses"); 
     }
     
     protected String getColumnStyle(UIComponent uiComponent, String style) {
         return Util.getQualifiedStyleClass(uiComponent, 
                                             style);
+    }
+    
+    protected String[] getColumnStyleClasses(UIComponent uiComponent) {
+        String[] columnStyles = super.getColumnStyleClasses(uiComponent);
+        if (columnStyles.length == 0) {
+            columnStyles = new String[2];
+            columnStyles[0] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_CLASS1); 
+            columnStyles[1] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_CLASS2);   
+        } else {
+            for (int i=0; i < columnStyles.length; i++) {
+                columnStyles[i] = Util.getQualifiedStyleClass(uiComponent,
+                              columnStyles[i],
+                              CSS_DEFAULT.TABLE_COLUMN_CLASS,
+                              "columnClasses"                            
+                                           ); 
+            }
+        }
+        return columnStyles;
     }
 }

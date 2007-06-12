@@ -167,9 +167,7 @@ public class GridRenderer extends DomBasicRenderer {
                     tr = domContext.createElement("tr");
                     tbody.appendChild(tr);
                     if (numberOfRowStyles > 0) {
-                        tr.setAttribute("class",
-                                        getRowStyle(uiComponent,
-                                                rowStyleClasses[rowStyleIndex++]));
+                        tr.setAttribute("class",rowStyleClasses[rowStyleIndex++]);
                         if (rowStyleIndex >= numberOfRowStyles) {
                             rowStyleIndex = 0;
                         }
