@@ -283,6 +283,8 @@ input {
     text-align: center;
 }
 
+.iceDataTblHeader{} /*was iceTblHeader */
+.iceDataTblFooter{} /*was iceTblFooter */
 /* etc */
 
 /*

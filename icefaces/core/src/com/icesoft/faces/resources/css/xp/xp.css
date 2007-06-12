@@ -320,9 +320,8 @@ input {
     text-align: center;
 }
 
-.iceTblFooter {
-
-}
+.iceDataTblHeader{} /*was iceTblHeader */
+.iceDataTblFooter{} /*was iceTblFooter */
 
 /* etc */
 
