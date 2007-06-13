@@ -100,6 +100,10 @@ public class CSS_DEFAULT {
             "Column";  // Originally was "columnClasses"
     public static final String TABLE_COLUMN_HEADER_CLASS =
         "ColumnHeader";  // Originally was "columnClasses"    
+    public static final String TABLE_COLUMN_HEADER_CLASS1 =
+        "ColumnHeader1";  // Originally was "columnClasses" 
+    public static final String TABLE_COLUMN_HEADER_CLASS2 =
+        "ColumnHeader2";  // Originally was "columnClasses"     
     public static final String PANEL_GROUP_DEFAULT_STYLE_CLASS = "icePnlGrp";
     public static final String PANEL_GRID_DEFAULT_STYLE_CLASS = "icePnlGrd";
     public static final String ROW = "Row";

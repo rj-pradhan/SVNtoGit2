@@ -613,7 +613,7 @@ public abstract class DomBasicRenderer extends Renderer {
         return getStyleClasses(uiComponent, "rowClasses");
     }
 
-    private String[] getStyleClasses(UIComponent uiComponent,
+    public String[] getStyleClasses(UIComponent uiComponent,
                                      String styleClassAttributeName) {
         String allStyleClasses = (String) uiComponent.getAttributes()
                 .get(styleClassAttributeName);

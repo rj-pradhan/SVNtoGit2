@@ -84,6 +84,19 @@ public class TableRenderer
         }
     }
 
+    public String[] getHeaderStyles(UIComponent uiComponent) {
+        if (((String[]) getHeaderStyleClasses(uiComponent)).length <= 0) {
+            String[] headerStyles = new String[2];
+            headerStyles[0] = Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS1);
+            headerStyles[1] =Util.getQualifiedStyleClass(uiComponent, 
+                    CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS2);
+            return headerStyles;
+        } else {
+            return getHeaderStyleClasses(uiComponent);
+        }
+    }
+    
     public void writeColStyles(String[] columnStyles, int columnStylesMaxIndex,
                                int columnStyleIndex, Element td,
                                int colNumber, 
@@ -162,8 +175,7 @@ public class TableRenderer
             Iterator childColumns = childList.iterator();
             String width = null;
             int columnIndex = 1;
-            int headerStyleLength = ((HtmlDataTable)uiComponent).
-                                getHeaderClasses().split(",").length;
+            int headerStyleLength = getHeaderStyles(uiComponent).length;
             int styleIndex = 0;
             while (childColumns.hasNext()) {
 
@@ -218,10 +230,7 @@ public class TableRenderer
         Element th = domContext.createElement(element);
         tr.appendChild(th);
 
-        th.setAttribute("class",Util.getQualifiedStyleClass(uiComponent, 
-                htmlDataTable.getHeaderClassAtIndex(styleIndex),
-                CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS,
-                "headerClasses"));
+        th.setAttribute("class",getHeaderStyles(uiComponent)[styleIndex]);
       
         if (width != null) {
             th.setAttribute("style", "width:" + width + ";overflow:hidden;");
@@ -256,10 +265,7 @@ public class TableRenderer
                 Node oldParent = domContext.getCursorParent();
                 Element th = domContext.createElement(element);
                 tr.appendChild(th);
-                th.setAttribute("class",Util.getQualifiedStyleClass(uiComponent, 
-                        htmlDataTable.getHeaderClassAtIndex(styleIndex),
-                        CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS,
-                        "headerClasses"));
+                th.setAttribute("class",getHeaderStyles(uiComponent)[styleIndex]);
                 if (width != null) {
                     th.setAttribute("style", "width:" + width + ";");
                 }
@@ -622,4 +628,18 @@ public class TableRenderer
         }
         return rowClasses;
     }
+    
+    public String[] getHeaderStyleClasses(UIComponent uiComponent) {
+       String[] headerClasses = getStyleClasses(uiComponent, "headerClasses");
+       for (int i=0; i < headerClasses.length; i++) {
+           headerClasses[i] = Util.getQualifiedStyleClass(uiComponent,
+                   headerClasses[i],
+                         CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS,
+                         "headerClasses"                            
+                                      ); 
+       }
+       return headerClasses;       
+    }
+    
+    
 }

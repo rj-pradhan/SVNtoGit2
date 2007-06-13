@@ -277,8 +277,8 @@ input {
 	border-collapse:collapse;
 }
 
-.iceDataTblColumnHeader { /* was iceTblHeader */
-/*the header of a data tables */
+.iceDataTblColumnHeader , .iceDataTblColumnHeader1, .iceDataTblColumnHeader2{ 
+/* was iceTblHeader */
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;

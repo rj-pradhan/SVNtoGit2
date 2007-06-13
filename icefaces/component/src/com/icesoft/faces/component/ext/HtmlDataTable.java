@@ -363,11 +363,7 @@ public class HtmlDataTable
             return headerClasses;
         }
         ValueBinding vb = getValueBinding("headerClasses");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-            CSS_DEFAULT.TABLE_STYLE_CLASS+ 
-            CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS+ "1," + 
-            CSS_DEFAULT.TABLE_STYLE_CLASS+
-            CSS_DEFAULT.TABLE_COLUMN_HEADER_CLASS+ "2";
+        return vb != null ? (String) vb.getValue(getFacesContext()) :null;
     }
 
     String[] headerClassesArray = null;
