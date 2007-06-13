@@ -194,8 +194,11 @@
 
         replaceHostElementWith: function(newElement) {
             this.eachAttributeName(function(attributeName) {
-                var value = newElement[attributeName];
-                this.element[attributeName] = value ? value : null;
+                var newValue = newElement[attributeName]
+                var oldValue = this.element[attributeName];
+                if (oldValue != newValue) {
+                    this.element[attributeName] = newValue;
+                }
             }.bind(this));
 
             //'style' attribute special case
