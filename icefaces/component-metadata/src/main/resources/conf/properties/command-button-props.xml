@@ -1,5 +1,5 @@
 <?xml encoding='UTF-8'?>
-   <!--
+<!--
   ~  Version: MPL 1.1/GPL 2.0/LGPL 2.1
   ~
   ~  "The contents of this file are subject to the Mozilla Public License
@@ -30,43 +30,45 @@
   ~  not delete the provisions above, a recipient may use your version of
   ~  this file under either the MPL or the LGPL License."
   ~
-  -->
+-->
 &pass-thru-alt-props;
 
-    <property>
+<property>
     <description>
-		Absolute or relative URL of the image to be displayed for this button. 
-		If specified, this "input" element will be of type "image". Otherwise, 
-		it will be of the type specified by the "type" property with a label 
-		specified by the "value" property.
-	</description> 
-      <property-name>image</property-name>
-      <property-extension>
-          <category>APPEARANCE</category>
-          <editor-class>            
+        Absolute or relative URL of the image to be displayed for this button. 
+        If specified, this "input" element will be of type "image". Otherwise, 
+        it will be of the type specified by the "type" property with a label 
+        specified by the "value" property.
+    </description> 
+    <property-name>image</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>APPEARANCE</category>
+        <editor-class>            
             &urlEditor;
-          </editor-class>
-      </property-extension>
-    </property>
+        </editor-class>
+    </property-extension>
+</property>
 
- <property>
+<property>
     <description>
-		Type of button to create. Valid values are "submit" and "reset". If not 
-		specified, or not a valid value, the default value is "submit".
-	</description>  
-      <property-name>type</property-name>
-      <property-extension>
-          <category>ADVANCED</category>
-          <editor-class>
+        Type of button to create. Valid values are "submit" and "reset". If not 
+        specified, or not a valid value, the default value is "submit".
+    </description>  
+    <property-name>type</property-name>
+    <property-class>java.lang.String</property-class>
+    <property-extension>
+        <category>ADVANCED</category>
+        <editor-class>
             &chooseOneReferenceDataEditor;
-          </editor-class>
-          <named-value>
+        </editor-class>
+        <named-value>
             <name>referenceDataDefiner</name>
             <expression>
-              com.sun.jsfcl.std.reference.ReferenceDataManager.COMMAND_BUTTON_TYPES
+                com.sun.jsfcl.std.reference.ReferenceDataManager.COMMAND_BUTTON_TYPES
             </expression>
-          </named-value>
-      </property-extension>
+        </named-value>
+    </property-extension>
 </property>
 
 

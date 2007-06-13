@@ -37,6 +37,7 @@
 		CSS style(s) to be applied when this component is rendered.
 	</description>
 	<property-name>style</property-name>
+        <property-class>java.lang.String</property-class>
 	<property-extension>
 		<category>APPEARANCE</category>
 		<editor-class>
@@ -53,7 +54,8 @@
 		this element is rendered. This value must be passed through as
 		the "class" attribute on generated markup.
 	</description>
-	<property-name>styleClass</property-name>
+	<property-name>styleClass</property-name>        
+        <property-class>java.lang.String</property-class>
 	<property-extension>
 		<category>APPEARANCE</category>
 		<editor-class>

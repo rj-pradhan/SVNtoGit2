@@ -34,6 +34,7 @@
 
 <property>
     <property-name>alt</property-name>
+    <property-class>java.lang.String</property-class>
     <property-extension>
         <category>APPEARANCE</category>
     </property-extension>

@@ -81,6 +81,7 @@
 
     <property>
       <property-name>onreset</property-name>
+      <property-class>java.lang.String</property-class>
       <property-extension>
           <category>JAVASCRIPT</category>
           <editor-class>
@@ -91,6 +92,7 @@
 
     <property>
       <property-name>onsubmit</property-name>
+      <property-class>java.lang.String</property-class>
       <property-extension>
           <category>JAVASCRIPT</category>
           <editor-class>

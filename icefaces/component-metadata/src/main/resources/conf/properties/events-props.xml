@@ -33,6 +33,7 @@
   -->
       <property>
         <property-name>onclick</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -44,6 +45,7 @@
 
       <property>
         <property-name>ondblclick</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -55,6 +57,7 @@
 
       <property>
         <property-name>onmousedown</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -66,6 +69,7 @@
 
       <property>
         <property-name>onmouseup</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -77,6 +81,7 @@
 
       <property>
         <property-name>onmouseover</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -88,6 +93,7 @@
 
       <property>
         <property-name>onmousemove</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -99,6 +105,7 @@
 
       <property>
         <property-name>onmouseout</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -110,6 +117,7 @@
 
       <property>
         <property-name>onkeypress</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -121,6 +129,7 @@
 
       <property>
         <property-name>onkeydown</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>
@@ -133,6 +142,7 @@
 
 <property>
         <property-name>onkeyup</property-name>
+        <property-class>java.lang.String</property-class>
         <property-extension>
           <category>JAVASCRIPT</category>
           <is-hidden>true</is-hidden>

@@ -37,6 +37,7 @@
 
 <property>
     <property-name>onfocus</property-name>
+    <property-class>java.lang.String</property-class>
     <property-extension>
         <category>JAVASCRIPT</category>
         <editor-class>
