@@ -492,12 +492,10 @@ public class PanelTabSet
      * @see javax.faces.component.html.HtmlPanelGroup#getStyleClass()
      */
     public String getStyleClass() {
-        if (_styleClass != null) {
-            return _styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET;
+        return Util.getQualifiedStyleClass(this, 
+                _styleClass,
+                CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
+                "styleClass");                
     }
 
     /**
@@ -1046,16 +1044,9 @@ public class PanelTabSet
         return boolVal != null ? boolVal.booleanValue() : DEFAULT_VISIBLE;
     }
 
-    String getTabClass() {
-        if (getTabPlacement()
-                .equalsIgnoreCase(CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM)) {
-            return Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET, getStyleClass(),
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM);
-        } else {
-            return Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET, getStyleClass(),
-                    "");
-        }
+   
+    String getContentClass() {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.PANEL_TAB_CONTENTS_CLASS);    
     }
 }

@@ -141,12 +141,10 @@ public class PanelTab
      * @see javax.faces.component.html.HtmlPanelGroup#getStyleClass()
      */
     public String getStyleClass() {
-        if (styleClass != null) {
-            return styleClass;
-        }
-        ValueBinding vb = getValueBinding("styleClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.PANEL_TAB_DEFAULT_STYLECLASS;
+        return Util.getQualifiedStyleClass(this, 
+                styleClass,
+                CSS_DEFAULT.PANEL_TAB_DEFAULT_STYLECLASS,
+                "styleClass");
     }
 
     /**
@@ -642,10 +640,25 @@ public class PanelTab
             tr.appendChild(labelTd);
             iconClass += "Left";
         }
-        iconClass = Util.appendNewStyleClass(
-                CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
-                tabSet.getStyleClass(), iconClass);
+        iconClass = Util.getQualifiedStyleClass(tabSet,iconClass);
         icon.setAttribute(HTML.CLASS_ATTR, iconClass);
     }
 
+    String getTabOnClass(String placement) {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABONCLASS +
+                placement);
+    }
+    
+    String getTabOffClass(String placement) {
+        return Util.getQualifiedStyleClass(this, 
+        CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABOFFCLASS +
+        placement);
+    }
+    
+    String getTabOverClass(String placement) {
+        return Util.getQualifiedStyleClass(this, 
+                CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABOVERCLASS +
+                placement);    
+    }
 }

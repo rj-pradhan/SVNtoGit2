@@ -150,20 +150,22 @@ public class CSS_DEFAULT {
             "Body"; // Originally was "panelPopupBody"
 
     public static final String PANEL_TAB_DEFAULT_STYLECLASS =
-            "icePanelTab"; // Originally was "panelTabClass"
+            "icePnlTab"; // Originally was "panelTabClass"
 
     public static final String PANEL_TAB_SET_DEFAULT_TAB_SET =
-            "iceTabSet";  // Originally was "tabSet"
+            "icePnlTabSet";  // Originally was "tabSet"
     public static final String PANEL_TAB_SET_DEFAULT_TABONCLASS =
-            "TabOn";// Originally was "TabOnClass"
+            "On";// Originally was "TabOnClass"
     public static final String PANEL_TAB_SET_DEFAULT_TABOVERCLASS =
-            "TabOver";// Originally was "tabOverClass"
+            "Over";// Originally was "tabOverClass"
     public static final String PANEL_TAB_SET_DEFAULT_TABOFFCLASS =
-            "TabOff";// Originally was "TabOffClass"
+            "Off";// Originally was "TabOffClass"
     public static final String PANEL_TAB_SET_DEFAULT_TABSPACER =
-            "TabSpacer";// Originally was "TabSpacer"
+            "Spacer";// Originally was "TabSpacer"
     public static final String PANEL_TAB_SET_DEFAULT_TABPANEL =
             "TabPnl";// Originally was "TabPanel"
+    public static final String PANEL_TAB_CONTENTS_CLASS =
+        "Contents";// Originally was "TabPanel"    
     public static final String PANEL_TAB_HEADER_ICON_DEFAULT_CLASS = "HdrIcon";
     public static final String PANEL_TAB_HEADER_LABEL_DEFAULT_CLASS =
             "HdrLabel";

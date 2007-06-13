@@ -291,10 +291,8 @@ public class PanelTabSetRenderer
             // Empty tab cell on the right for better look
             // create a new table data for the empty TextNode
             Element td = domContext.createElement(HTML.TD_ELEM);
-            String className = Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET, baseClass,
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER + CSS_DEFAULT
-                            .PANEL_TAB_SET_DEFAULT_BOTTOM);
+            String className =Util.getQualifiedStyleClass(tabSet, 
+                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER);
             td.setAttribute(HTML.CLASS_ATTR, className);
             Text text = null;
             if (domContext.isStreamWriting()) {
@@ -379,8 +377,7 @@ public class PanelTabSetRenderer
             // create a new table data for the empty TextNode
             Element td = domContext.createElement(HTML.TD_ELEM);
 
-            String className = Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET, baseClass,
+            String className = Util.getQualifiedStyleClass(tabSet, 
                     CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER);
             td.setAttribute(HTML.CLASS_ATTR, className);
             Text text;
@@ -510,9 +507,7 @@ public class PanelTabSetRenderer
         // append the td to the tr
         tr.appendChild(td);
 
-        String styleClass = Util.appendNewStyleClass(
-                CSS_DEFAULT.PANEL_TAB_DEFAULT_STYLECLASS, tab.getStyleClass(),
-                "");
+        String styleClass = tab.getStyleClass();
 
         String label = tab.getLabel();
 
@@ -595,38 +590,20 @@ public class PanelTabSetRenderer
             }
 
         }
+        String tabStyleClass;
         // set style class attributes
         if (active) {
-            String className = Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
-                    baseClass,
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABONCLASS +
-                    tabPlacement);
-            table.setAttribute(HTML.CLASS_ATTR, className);
+            tabStyleClass = tab.getTabOnClass(tabPlacement);
+            table.setAttribute(HTML.CLASS_ATTR, tabStyleClass);
         } else // inactive style with mouse over and out
         {
-            String className = Util.appendNewStyleClass(
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
-                    baseClass,
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABOFFCLASS +
-                    tabPlacement);
-            table.setAttribute(HTML.CLASS_ATTR, className);
-
+            tabStyleClass = tab.getTabOffClass(tabPlacement);
+            table.setAttribute(HTML.CLASS_ATTR, tabStyleClass);
             if (!disabled) {
-                className = Util.appendNewStyleClass(
-                        CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
-                        baseClass,
-                        CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABOVERCLASS +
-                        tabPlacement);
                 table.setAttribute(HTML.ONMOUSEOVER_ATTR,
-                                   "this.className='" + className + "';");
-                className = Util.appendNewStyleClass(
-                        CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TAB_SET,
-                        baseClass,
-                        CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABOFFCLASS +
-                        tabPlacement);
+                                   "this.className='" + tab.getTabOverClass(tabPlacement) + "';");
                 table.setAttribute(HTML.ONMOUSEOUT_ATTR,
-                                   "this.className='" + className + "';");
+                                   "this.className='" + tab.getTabOffClass(tabPlacement) + "';");
             } else {
                 table.removeAttribute(HTML.ONMOUSEOVER_ATTR);
                 table.removeAttribute(HTML.ONMOUSEOUT_ATTR);
@@ -881,7 +858,7 @@ public class PanelTabSetRenderer
 
         // set the table data attributes
         td.setAttribute(HTML.COLSPAN_ATTR, Integer.toString(tabCount + 1));
-        td.setAttribute(HTML.CLASS_ATTR, tabSet.getTabClass());
+        td.setAttribute(HTML.CLASS_ATTR, tabSet.getContentClass());
 
         // set the cursor parent to the new table data Element
         // this will cause the renderChild method to append the child nodes

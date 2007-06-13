@@ -408,11 +408,11 @@ input {
 
 /* tabOn style classes */
 
-.iceTabSetTabOn {
+.icePnlTabOn { /* was iceTabSetTabOn */
 
 }
 
-.iceTabSetTabOn .LeftTop {
+.icePnlTabOn .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/on-left-top.gif" );
     background-repeat: no-repeat;
@@ -421,7 +421,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .MiddleTop {
+.icePnlTabOn .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-top.gif" );
     background-repeat: repeat-x;
@@ -430,7 +430,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .RightTop {
+.icePnlTabOn .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/on-right-top.gif" );
     background-repeat: no-repeat;
@@ -439,7 +439,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .LeftMiddle {
+.icePnlTabOn .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-left-mid.gif" );
     background-repeat: repeat-y;
@@ -448,7 +448,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .MiddleMiddle {
+.icePnlTabOn .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-mid.gif" );
     background-repeat: repeat;
@@ -457,7 +457,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOn .MiddleMiddle a {
+.icePnlTabOn .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -469,11 +469,11 @@ input {
 }
 
 
-* html .iceTabSetTabOn .MiddleMiddle a {
+* html .icePnlTabOn .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOn .RightMiddle {
+.icePnlTabOn .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-right-mid.gif" );
     background-repeat: repeat-y;
@@ -482,21 +482,21 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .LeftBottom {
+.icePnlTabOn .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/on-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.iceTabSetTabOn .MiddleBottom {
+.icePnlTabOn .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.iceTabSetTabOn .RightBottom {
+.icePnlTabOn .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/on-right-bot.gif" );
     background-repeat: no-repeat;
@@ -505,11 +505,11 @@ input {
 
 /* tabOff style classes */
 
-.iceTabSetTabOff {
+.icePnlTabOff { /* was iceTabSetTabOff*/
 
 }
 
-.iceTabSetTabOff .LeftTop {
+.icePnlTabOff .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top.gif" );
     background-repeat: no-repeat;
@@ -518,7 +518,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .MiddleTop {
+.icePnlTabOff .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-top.gif" );
     background-repeat: repeat-x;
@@ -527,7 +527,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .RightTop {
+.icePnlTabOff .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top.gif" );
     background-repeat: no-repeat;
@@ -536,7 +536,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .LeftMiddle {
+.icePnlTabOff .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-left-mid.gif" );
     background-repeat: no-repeat;
@@ -545,7 +545,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .MiddleMiddle {
+.icePnlTabOff .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-mid.gif" );
     background-repeat: repeat-x;
@@ -554,7 +554,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOff .MiddleMiddle a {
+.icePnlTabOff .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -564,11 +564,11 @@ input {
     padding-left: 15px;
 }
 
-* html .iceTabSetTabOff .MiddleMiddle a {
+* html .icePnlTabOff .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOff .RightMiddle {
+.icePnlTabOff .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-right-mid.gif" );
     background-repeat: no-repeat;
@@ -577,21 +577,21 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .LeftBottom {
+.icePnlTabOff .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.iceTabSetTabOff .MiddleBottom {
+.icePnlTabOff .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.iceTabSetTabOff .RightBottom {
+.icePnlTabOff .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -600,11 +600,11 @@ input {
 
 /* tabOver style classes */
 
-.iceTabSetTabOver {
+.icePnlTabOver { /* was iceTabSetTabOver */
 
 }
 
-.iceTabSetTabOver .LeftTop {
+.icePnlTabOver .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/over-left-top.gif" );
     background-repeat: no-repeat;
@@ -613,7 +613,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOver .MiddleTop {
+.icePnlTabOver .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-top.gif" );
     background-repeat: repeat-x;
@@ -622,7 +622,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOver .RightTop {
+.icePnlTabOver .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/over-right-top.gif" );
     background-repeat: no-repeat;
@@ -631,7 +631,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOver .LeftMiddle {
+.icePnlTabOver .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-left-mid.gif" );
     background-repeat: repeat-y;
@@ -640,7 +640,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOver .MiddleMiddle {
+.icePnlTabOver .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-mid.gif" );
     background-repeat: repeat;
@@ -649,7 +649,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOver .MiddleMiddle a {
+.icePnlTabOver .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -659,11 +659,11 @@ input {
     padding-left: 15px;
 }
 
-* html .iceTabSetTabOver .MiddleMiddle a {
+* html .icePnlTabOver .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOver .RightMiddle {
+.icePnlTabOver .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-right-mid.gif" );
     background-repeat: repeat-y;
@@ -672,21 +672,21 @@ input {
     border: none;
 }
 
-.iceTabSetTabOver .LeftBottom {
+.icePnlTabOver .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/over-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.iceTabSetTabOver .MiddleBottom {
+.icePnlTabOver .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.iceTabSetTabOver .RightBottom {
+.icePnlTabOver .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/over-right-bot.gif" );
     background-repeat: no-repeat;
@@ -695,14 +695,17 @@ input {
 
 /* tabSpacer */
 
-.iceTabSetTabSpacer {
+.icePnlTabSetSpacer {
     width: 100%;
     border-bottom: 1px solid #ABABAB;
 }
 
 /* tabPanel */
+.icePnlTabSet { /* was iceTabSet*/
 
-.iceTabSet {
+}
+
+.icePnlTabSetContents { /*newly added class*/
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -716,11 +719,11 @@ input {
 /* TABS ON BOTTOM STYLE CLASSES */
 /* tabOn style classes */
 
-.iceTabSetTabOnBottom {
+.icePnlTabOnBottom {
 
 }
 
-.iceTabSetTabOnBottom .LeftTop {
+.icePnlTabOnBottom .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-left-top.gif" );
     background-repeat: no-repeat;
@@ -728,7 +731,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .MiddleTop {
+.icePnlTabOnBottom .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-mid-top.gif" );
     background-repeat: repeat-x;
@@ -736,7 +739,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .RightTop {
+.icePnlTabOnBottom .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-right-top.gif" );
     background-repeat: no-repeat;
@@ -744,7 +747,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .LeftMiddle {
+.icePnlTabOnBottom .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-left-mid.gif" );
     background-repeat: repeat-y;
@@ -753,7 +756,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .MiddleMiddle {
+.icePnlTabOnBottom .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-mid.gif" );
     background-repeat: repeat;
@@ -762,7 +765,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOnBottom .MiddleMiddle a {
+.icePnlTabOnBottom .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -772,11 +775,11 @@ input {
     padding-left: 15px;
 }
 
-* html .iceTabSetTabOnBottom .MiddleMiddle a {
+* html .icePnlTabOnBottom .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOnBottom .RightMiddle {
+.icePnlTabOnBottom .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/on-right-mid.gif" );
     background-repeat: repeat-y;
@@ -785,7 +788,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .LeftBottom {
+.icePnlTabOnBottom .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-left-bot.gif" );
     background-repeat: no-repeat;
@@ -793,7 +796,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .MiddleBottom {
+.icePnlTabOnBottom .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -801,7 +804,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOnBottom .RightBottom {
+.icePnlTabOnBottom .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-right-bot.gif" );
     background-repeat: no-repeat;
@@ -811,11 +814,11 @@ input {
 
 /* tabOff style classes */
 
-.iceTabSetTabOffBottom {
+.icePnlTabOffBottom { /* was iceTabSetTabOffBottom*/
 
 }
 
-.iceTabSetTabOffBottom .LeftTop {
+.icePnlTabOffBottom .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-left-top.gif" );
     background-repeat: no-repeat;
@@ -823,7 +826,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .MiddleTop {
+.icePnlTabOffBottom .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-mid-top.gif" );
     background-repeat: repeat-x;
@@ -831,7 +834,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .RightTop {
+.icePnlTabOffBottom .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-right-top.gif" );
     background-repeat: no-repeat;
@@ -839,7 +842,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .LeftMiddle {
+.icePnlTabOffBottom .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-left-mid.gif" );
     background-repeat: no-repeat;
@@ -848,7 +851,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .MiddleMiddle {
+.icePnlTabOffBottom .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-mid.gif" );
     background-repeat: repeat-x;
@@ -857,7 +860,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOffBottom .MiddleMiddle a {
+.icePnlTabOffBottom .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -867,11 +870,11 @@ input {
     padding-left: 15px;
 }
 
-* html .iceTabSetTabOffBottom .MiddleMiddle a {
+* html .icePnlTabOffBottom .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOffBottom .RightMiddle {
+.icePnlTabOffBottom .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/off-right-mid.gif" );
     background-repeat: no-repeat;
@@ -880,7 +883,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .LeftBottom {
+.icePnlTabOffBottom .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-left-bot.gif" );
     background-repeat: no-repeat;
@@ -888,7 +891,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .MiddleBottom {
+.icePnlTabOffBottom .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -896,7 +899,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOffBottom .RightBottom {
+.icePnlTabOffBottom .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -906,11 +909,11 @@ input {
 
 /* tabOver style classes */
 
-.iceTabSetTabOverBottom {
+.icePnlTabOverBottom { /* was iceTabSetTabOverBottom*/
 
 }
 
-.iceTabSetTabOverBottom .LeftTop {
+.icePnlTabOverBottom .LeftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-left-top.gif" );
     background-repeat: no-repeat;
@@ -918,7 +921,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .MiddleTop {
+.icePnlTabOverBottom .MiddleTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-mid-top.gif" );
     background-repeat: repeat-x;
@@ -926,7 +929,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .RightTop {
+.icePnlTabOverBottom .RightTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-right-top.gif" );
     background-repeat: no-repeat;
@@ -934,7 +937,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .LeftMiddle {
+.icePnlTabOverBottom .LeftMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-left-mid.gif" );
     background-repeat: repeat-y;
@@ -943,7 +946,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .MiddleMiddle {
+.icePnlTabOverBottom .MiddleMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-mid.gif" );
     background-repeat: repeat;
@@ -952,7 +955,7 @@ input {
     white-space: nowrap;
 }
 
-.iceTabSetTabOverBottom .MiddleMiddle a {
+.icePnlTabOverBottom .MiddleMiddle a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -962,11 +965,11 @@ input {
     padding-left: 15px;
 }
 
-* html .iceTabSetTabOverBottom .MiddleMiddle a {
+* html .icePnlTabOverBottom .MiddleMiddle a {
     width: 1%;
 }
 
-.iceTabSetTabOverBottom .RightMiddle {
+.icePnlTabOverBottom .RightMiddle {
     background-color: transparent;
     background-image: url( "./css-images/over-right-mid.gif" );
     background-repeat: repeat-y;
@@ -975,7 +978,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .LeftBottom {
+.icePnlTabOverBottom .LeftBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-left-bot.gif" );
     background-repeat: no-repeat;
@@ -983,7 +986,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .MiddleBottom {
+.icePnlTabOverBottom .MiddleBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -991,7 +994,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOverBottom .RightBottom {
+.icePnlTabOverBottom .RightBottom {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-right-bot.gif" );
     background-repeat: no-repeat;
@@ -1000,14 +1003,14 @@ input {
 }
 
 /* tabSpacer */
-.iceTabSetTabSpacerBottom {
+.icePnlTabSetSpacerBottom {
     width: 100%;
     border-top: 1px solid #ABABAB;
 }
 
 /* tabPanel */
 
-.iceTabSetBottom {
+.icePnlTabSetBottom {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -1731,11 +1734,11 @@ input {
 
 /* panel tabs disabled style classes */
 
-.iceTabSetTabOff {
+.icePnlTabOff { /* was iceTabSetTabOff*/
 
 }
 
-.iceTabSetTabOff .LeftTop-dis {
+.icePnlTabOff .LeftTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1746,7 +1749,7 @@ input {
     height: 4px;
 }
 
-.iceTabSetTabOff .MiddleTop-dis {
+.icePnlTabOff .MiddleTop-dis {
     background-color: #DEDEDE;
     background-image: url( './css-images/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
@@ -1755,7 +1758,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .RightTop-dis {
+.icePnlTabOff .RightTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1765,7 +1768,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .LeftMiddle-dis {
+.icePnlTabOff .LeftMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-left-mid.gif");
     background-repeat:no-repeat;*/
@@ -1774,7 +1777,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .MiddleMiddle-dis {
+.icePnlTabOff .MiddleMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-mid-mid.gif");
     background-repeat:repeat-x;*/
@@ -1787,13 +1790,13 @@ input {
     color: #ABABAB;
 }
 
-.iceTabSetTabOff .MiddleMiddle-dis a {
+.icePnlTabOff .MiddleMiddle-dis a {
     text-decoration: none;
     color: #ABABAB;
     cursor: default;
 }
 
-.iceTabSetTabOff .RightMiddle-dis {
+.icePnlTabOff .RightMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-right-mid.gif");
     background-repeat:no-repeat;*/
@@ -1802,21 +1805,21 @@ input {
     border: none;
 }
 
-.iceTabSetTabOff .LeftBottom-dis {
+.icePnlTabOff .LeftBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.iceTabSetTabOff .MiddleBottom-dis {
+.icePnlTabOff .MiddleBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.iceTabSetTabOff .RightBottom-dis {
+.icePnlTabOff .RightBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -1824,11 +1827,11 @@ input {
 }
 
 /* tab on disabled */
-.iceTabSetTabOn {
+.icePnlTabOn {
 
 }
 
-.iceTabSetTabOn .LeftTop-dis {
+.icePnlTabOn .LeftTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1839,7 +1842,7 @@ input {
     height: 4px;
 }
 
-.iceTabSetTabOn .MiddleTop-dis {
+.icePnlTabOn .MiddleTop-dis {
     background-color: #DEDEDE;
     background-image: url( './css-images/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
@@ -1848,7 +1851,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .RightTop-dis {
+.icePnlTabOn .RightTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1858,7 +1861,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .LeftMiddle-dis {
+.icePnlTabOn .LeftMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-left-mid.gif");
     background-repeat:no-repeat;*/
@@ -1867,7 +1870,7 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .MiddleMiddle-dis {
+.icePnlTabOn .MiddleMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-mid-mid.gif");
     background-repeat:repeat-x;*/
@@ -1880,13 +1883,13 @@ input {
     color: #ABABAB;
 }
 
-.iceTabSetTabOn .MiddleMiddle-dis a {
+.icePnlTabOn .MiddleMiddle-dis a {
     text-decoration: none;
     color: #ABABAB;
     cursor: default;
 }
 
-.iceTabSetTabOn .RightMiddle-dis {
+.icePnlTabOn .RightMiddle-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-right-mid.gif");
     background-repeat:no-repeat;*/
@@ -1895,21 +1898,21 @@ input {
     border: none;
 }
 
-.iceTabSetTabOn .LeftBottom-dis {
+.icePnlTabOn .LeftBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.iceTabSetTabOn .MiddleBottom-dis {
+.icePnlTabOn .MiddleBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.iceTabSetTabOn .RightBottom-dis {
+.icePnlTabOn .RightBottom-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -2197,18 +2200,18 @@ Disabled classes for the calendar controls
 /*
 ----------- panelTab header ----------
 */
-.iceTabSetHdrIconLeft {
+.icePnlTabSetHdrIconLeft {
     width: 14px;
     height: 14px;
 
 }
 
-.iceTabSetHdrIconRight {
+.icePnlTabSetHdrIconRight {
     width: 14px;
     height: 14px;
 }
 
-.iceTabSetHdrLabel {
+.icePnlTabSetHdrLabel {
     padding-top: 2px;
     padding-bottom: 2px;
     white-space: nowrap;

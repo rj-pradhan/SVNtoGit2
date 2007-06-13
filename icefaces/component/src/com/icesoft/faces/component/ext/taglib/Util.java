@@ -477,25 +477,6 @@ public class Util extends Object {
        return name.toString().trim();
     }
     
-    public static String getDisaledOREnabledClass(UIComponent uiComponent,
-                                                  boolean disabled,
-                                                  String styleClass,
-                                                  String styleClassAsString,
-                                                  String defaultStyleClass) {
-        /* if(Beans.isDesignTime()){
-            if (styleClass != null) return styleClass;
-            ValueBinding vb = uiComponent.getValueBinding(styleClassAsString);
-            return vb != null ? (String) vb.getValue(FacesContext.getCurrentInstance()) : null;
-        }*/
-        if (disabled) {
-            return getClassName(uiComponent, styleClass, styleClassAsString,
-                                defaultStyleClass) + CSS_DEFAULT.DIS_SUFFIX;
-        } else {
-            return getClassName(uiComponent, styleClass, styleClassAsString,
-                                defaultStyleClass);
-        }
-    }
-
     public static String getClassName(UIComponent uiComponent,
                                       String styleClass,
                                       String styleClassAsString,
@@ -507,42 +488,6 @@ public class Util extends Object {
         return vb != null ?
                (String) vb.getValue(FacesContext.getCurrentInstance()) :
                defaultStyleClass;
-    }
-
-    /**
-     * Used to append a second style class into a class attrubute to overddided
-     * the default
-     *
-     * @param baseDefault
-     * @param base
-     * @param styleClass
-     * @return
-     */
-    public static String appendNewStyleClass(String baseDefault, String base,
-                                             String styleClass) {
-
-        String result = baseDefault + styleClass;
-        if (log.isTraceEnabled()) {
-            log.trace("baseDefault [" + baseDefault + "] base [" + base +
-                      "] styleClass [" + styleClass + "]");
-            log.trace("Base Result is [" + result + "]");
-        }
-        if (base == null) {
-            return result;
-        }
-        if (!baseDefault.equals(base)) {
-
-
-            result += " " + base + styleClass;
-            if (log.isTraceEnabled()) {
-                log.trace("new Base, Appending Style [" + result + "]");
-            }
-        } else {
-            if (log.isTraceEnabled()) {
-                log.trace("Original Base, result [" + result + "]");
-            }
-        }
-        return result;
     }
 
     public static ValueBinding getValueBinding(String valueRef) {
