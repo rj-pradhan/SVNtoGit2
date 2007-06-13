@@ -94,8 +94,5 @@
     <property-class>boolean</property-class>    
     <property-extension>
         <category>APPEARANCE</category>
-        <editor-class>
-            &stringEditor;
-        </editor-class>
     </property-extension>
 </property>
