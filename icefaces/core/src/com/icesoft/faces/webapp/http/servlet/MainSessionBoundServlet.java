@@ -72,7 +72,7 @@ public class MainSessionBoundServlet implements PseudoServlet {
             receivePing = NOOPServlet;
         } else {
             //setup blocking connection server
-            sendUpdatedViews = new EnvironmentAdaptingServlet(new IDVerifier(sessionID, new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews)), configuration);
+            sendUpdatedViews = new EnvironmentAdaptingServlet(new IDVerifier(sessionID, new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews)), configuration, sessionID, synchronouslyUpdatedViews, allUpdatedViews, session.getServletContext());
             sendUpdates = new BasicAdaptingServlet(new IDVerifier(sessionID, new SendUpdates(views)));
             receivePing = new BasicAdaptingServlet(new IDVerifier(sessionID, new ReceivePing(views)));
         }
