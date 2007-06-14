@@ -41,6 +41,7 @@
     <patternset id="additional.icefaces.lib.jars.to.include"
                 includes="
                 krysalis-jCharts-1.0.0-alpha-1.jar
+                servlet-api.jar
                 "
             />
     
