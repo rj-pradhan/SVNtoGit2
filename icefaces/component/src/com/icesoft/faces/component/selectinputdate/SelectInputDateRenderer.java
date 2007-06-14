@@ -246,7 +246,7 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.ID_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.NAME_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.CLASS_ATTR,
-                                   selectInputDate.getCalendarOutlineClass());
+                                   selectInputDate.getStyleClass());
                 table.setAttribute(HTML.STYLE_ATTR, "position:absolute;");                 
                 table.setAttribute(HTML.CELLPADDING_ATTR, "0");
                 table.setAttribute(HTML.CELLSPACING_ATTR, "0");
@@ -274,7 +274,7 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.ID_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.NAME_ATTR, clientId + CALENDAR_TABLE);
                 table.setAttribute(HTML.CLASS_ATTR,
-                                   selectInputDate.getCalendarOutlineClass());
+                                   selectInputDate.getStyleClass());
                 table.setAttribute(HTML.CELLPADDING_ATTR, "0");
                 table.setAttribute(HTML.CELLSPACING_ATTR, "0");
                 // set mouse events on table bug 372

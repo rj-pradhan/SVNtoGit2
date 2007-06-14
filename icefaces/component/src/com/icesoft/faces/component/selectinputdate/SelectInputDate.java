@@ -401,16 +401,6 @@ public class SelectInputDate
         _renderAsPopup = new Boolean(b);
     }
 
-
-    /**
-     * @return the style class name used for the outline of the calendar.
-     */
-    public String getCalendarOutlineClass() {
-        return Util.getQualifiedStyleClass(this, 
-                            CSS_DEFAULT.DEFAULT_CALENDAROUTLINE_CLASS, 
-                            isDisabled());
-    }
-
     /**
      * Sets the directory where the images used by this component are located.
      *
