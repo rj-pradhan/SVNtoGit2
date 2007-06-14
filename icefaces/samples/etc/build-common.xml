@@ -42,6 +42,8 @@
 
 <patternset id="additional.icefaces.lib.jars.to.include"/>
 
+<patternset id="additional.compile.lib.jars"/>
+
 <patternset id="jsf.compile.jars" >
     <include name="myfaces-api.jar"  if="myfaces" />
     <include name="myfaces-impl.jar" if="myfaces" />
@@ -97,6 +99,7 @@
                 <fileset dir="${icefaces.lib.dir}" >
                   <patternset refid="common.icefaces.lib.jars.to.include"/>
                   <patternset refid="additional.icefaces.lib.jars.to.include"/>
+                  <patternset refid="additional.compile.lib.jars"/>
                   <patternset refid="jsf.compile.jars" />
                 </fileset>
             </classpath>

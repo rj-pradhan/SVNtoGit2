@@ -41,9 +41,16 @@
     <patternset id="additional.icefaces.lib.jars.to.include"
                 includes="
                 krysalis-jCharts-1.0.0-alpha-1.jar
+                "
+            />
+
+
+    <patternset id="additional.compile.lib.jars"
+                includes="
                 servlet-api.jar
                 "
             />
+
     
     <!-- jars needed for form Facelets -->
     <patternset id="faclets.jars"
