@@ -366,6 +366,11 @@ input {
 ----------- Tabbed Pane Component classes
 */
 
+.icePnlTab {
+    width: 1px;
+}
+
+
 /* tabOn style classes */
 
 .icePnlTabOn { /*was iceTabSetTabOn*/

@@ -857,7 +857,8 @@ public class PanelTabSetRenderer
         tr.appendChild(td);
 
         // set the table data attributes
-        td.setAttribute(HTML.COLSPAN_ATTR, Integer.toString(tabCount + 1));
+        //extra column for Safari table bug
+        td.setAttribute(HTML.COLSPAN_ATTR, Integer.toString(tabCount + 2 ));
         td.setAttribute(HTML.CLASS_ATTR, tabSet.getContentClass());
 
         // set the cursor parent to the new table data Element
