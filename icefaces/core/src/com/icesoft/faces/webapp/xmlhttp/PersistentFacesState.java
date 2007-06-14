@@ -235,7 +235,11 @@ public class PersistentFacesState implements Serializable {
         facesContext.setCurrentInstance();
         synchronized (facesContext) {
             try {
-                facesContext.renderResponse();
+                //facesContext.renderResponse() skips phase listeners
+                //in JSF 1.2, so do a full execute with no stale input
+                //instead
+                facesContext.getExternalContext()
+                        .getRequestParameterMap().clear();
                 lifecycle.execute(facesContext);
             } catch (IllegalStateException e) {
                 if (log.isDebugEnabled()) {
