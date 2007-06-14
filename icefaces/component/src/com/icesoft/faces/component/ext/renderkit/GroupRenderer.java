@@ -139,7 +139,7 @@ public class GroupRenderer
             }
 
 
-            CurrentStyle.apply(uiComponent, facesContext, extraStyle);
+            CurrentStyle.apply(facesContext, uiComponent, null, extraStyle);
             domContext.streamWrite(facesContext, uiComponent,
                                    domContext.getRootNode(), rootSpan);
             domContext.stepInto(uiComponent);

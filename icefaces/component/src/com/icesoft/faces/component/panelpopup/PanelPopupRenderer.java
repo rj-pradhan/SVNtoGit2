@@ -137,8 +137,11 @@ public class PanelPopupRenderer extends GroupRenderer {
         }
 
         Element root = (Element) domContext.getRootNode();
-        root.setAttribute(HTML.STYLE_ATTR,
-                          ((PanelPopup) uiComponent).getStyle());
+        String style = ((PanelPopup) uiComponent).getStyle();
+        if(style != null && style.length() > 0)
+            root.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            root.removeAttribute(HTML.STYLE_ATTR);
         try {
             root.setAttribute(HTML.CLASS_ATTR, styleClass);
             String script =
@@ -222,7 +225,7 @@ public class PanelPopupRenderer extends GroupRenderer {
 
         domContext.stepOver();
         domContext.streamWrite(facesContext, uiComponent);
-        CurrentStyle.apply(uiComponent, facesContext);
+        CurrentStyle.apply(facesContext, uiComponent);
         // Rebroadcast Javascript to survive refresh
         if (dndType != null) {
             addJavascriptCalls(uiComponent, "DRAG", handleId, facesContext);
