@@ -136,7 +136,7 @@ public class MenuRenderer extends DomBasicInputRenderer {
                                      Object newSubmittedValue)
             throws ConverterException {
         if (uiComponent instanceof UISelectOne) {
-            if (newSubmittedValue == null || newSubmittedValue == "") {
+            if (newSubmittedValue == null || "".equals(newSubmittedValue)) {
                 return null;
             } else {
                 return super.getConvertedValue(facesContext,

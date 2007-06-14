@@ -40,6 +40,7 @@ import org.w3c.dom.Element;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,17 +140,43 @@ public class PassThruAttributeRenderer {
     public static void renderAttributes(FacesContext facesContext,
                                         UIComponent uiComponent,
                                         String[] excludedAttributes) {
-        renderNonBooleanAttributes(facesContext, uiComponent,
-                                   excludedAttributes);
-        renderBooleanAttributes(facesContext, uiComponent, excludedAttributes);
-        CurrentStyle.apply(uiComponent, facesContext);
-        DOMContext domContext =
-                DOMContext.getDOMContext(facesContext, uiComponent);
-        Element rootElement = (Element) domContext.getRootNode();
+        renderAttributes(
+                facesContext, uiComponent, null, null, excludedAttributes);
+    }
+    
+    /**
+     * Render pass thru attributes to the attributeElement (instead of root) 
+     * associated with the UIComponent parameter. The excludedAttributes
+     * argument is a String array of the names of attributes to omit. Do not
+     * render attributes contained in the excludedAttributes argument.
+     *
+     * @param facesContext
+     * @param uiComponent
+     * @param attributeElement
+     * @param styleElement The Element to apply styling on
+     * @param excludedAttributes attributes to exclude
+     */
+    public static void renderAttributes(FacesContext facesContext,
+                                        UIComponent uiComponent,
+                                        Element attributeElement,
+                                        Element styleElement,
+                                        String[] excludedAttributes) {
+        renderNonBooleanAttributes(
+                facesContext, uiComponent, attributeElement, excludedAttributes);
+        renderBooleanAttributes(
+                facesContext, uiComponent, attributeElement, excludedAttributes);
+        CurrentStyle.apply(facesContext, uiComponent, styleElement, null);
+        
+        if(attributeElement == null) {
+            DOMContext domContext =
+                    DOMContext.getDOMContext(facesContext, uiComponent);
+            Element rootElement = (Element) domContext.getRootNode();
+            attributeElement = rootElement;
+        }
         LocalEffectEncoder
-                .encodeLocalEffects(uiComponent, rootElement, facesContext);
-        renderOnFocus(uiComponent, rootElement);
-        renderOnBlur(rootElement);
+                .encodeLocalEffects(uiComponent, attributeElement, facesContext);
+        renderOnFocus(uiComponent, attributeElement);
+        renderOnBlur(attributeElement);
     }
 
     /**
@@ -203,6 +230,7 @@ public class PassThruAttributeRenderer {
 
     private static void renderBooleanAttributes(
             FacesContext facesContext, UIComponent uiComponent,
+            Element targetElement,
             String[] excludedAttributes) {
 
         if (facesContext == null) {
@@ -211,12 +239,15 @@ public class PassThruAttributeRenderer {
         if (uiComponent == null) {
             throw new FacesException("Null pointer exception");
         }
-
-        DOMContext domContext =
-                DOMContext.getDOMContext(facesContext, uiComponent);
-        Element rootElement = (Element) domContext.getRootNode();
-        if (rootElement == null) {
-            throw new FacesException("DOMContext is null");
+        
+        if(targetElement == null) {
+            DOMContext domContext =
+                    DOMContext.getDOMContext(facesContext, uiComponent);
+            Element rootElement = (Element) domContext.getRootNode();
+            if (rootElement == null) {
+                throw new FacesException("DOMContext is null");
+            }
+            targetElement = rootElement;
         }
 
         List excludedAttributesList = null;
@@ -253,37 +284,41 @@ public class PassThruAttributeRenderer {
                             nextPassThruAttributeValue)).booleanValue();
                 }
                 if (primitiveAttributeValue) {
-                    rootElement
-                            .setAttribute(nextPassThruAttributeName.toString(),
-                                          nextPassThruAttributeName.toString());
+                    targetElement.setAttribute(
+                            nextPassThruAttributeName.toString(),
+                            nextPassThruAttributeName.toString());
                 } else {
-                    rootElement.removeAttribute(
+                    targetElement.removeAttribute(
                             nextPassThruAttributeName.toString());
                 }
 
             } else {
-                rootElement
-                        .removeAttribute(nextPassThruAttributeName.toString());
+                targetElement.removeAttribute(
+                        nextPassThruAttributeName.toString());
             }
         }
     }
 
     private static void renderNonBooleanAttributes(
             FacesContext facesContext, UIComponent uiComponent,
+            Element targetElement,
             String[] excludedAttributes) {
 
         if (uiComponent == null) {
             throw new FacesException("Component instance is null");
         }
-
-        DOMContext domContext =
-                DOMContext.getDOMContext(facesContext, uiComponent);
-
-        Element rootElement = (Element) domContext.getRootNode();
-        if (rootElement == null) {
-            throw new FacesException("DOMContext is not initialized");
+        
+        if(targetElement == null) {
+            DOMContext domContext =
+                    DOMContext.getDOMContext(facesContext, uiComponent);
+            
+            Element rootElement = (Element) domContext.getRootNode();
+            if (rootElement == null) {
+                throw new FacesException("DOMContext is not initialized");
+            }
+            targetElement = rootElement;
         }
-
+        
         List excludedAttributesList = null;
         if (excludedAttributes != null && excludedAttributes.length > 0) {
             excludedAttributesList = Arrays.asList(excludedAttributes);
@@ -308,12 +343,12 @@ public class PassThruAttributeRenderer {
             // an attribute with this sentinel value.
             if (nextPassThruAttributeValue != null &&
                 !attributeValueIsSentinel(nextPassThruAttributeValue)) {
-                rootElement.setAttribute(
+                targetElement.setAttribute(
                         nextPassThruAttributeName.toString(),
                         nextPassThruAttributeValue.toString());
             } else {
-                rootElement
-                        .removeAttribute(nextPassThruAttributeName.toString());
+                targetElement.removeAttribute(
+                        nextPassThruAttributeName.toString());
             }
         }
     }

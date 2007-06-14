@@ -100,29 +100,34 @@ public class CurrentStyle {
     /**
      * Apply CSS changes to the rendered componenent
      *
-     * @param uiComponent
      * @param facesContext
+     * @param uiComponent
      */
-    public static void apply(UIComponent uiComponent,
-                             FacesContext facesContext) {
-        apply(uiComponent, facesContext, null);
+    public static void apply(FacesContext facesContext,
+                             UIComponent uiComponent) {
+        apply(facesContext, uiComponent, null, null);
     }
 
     /**
      * Apply css changes to rendered component
      *
-     * @param uiComponent
      * @param facesContext
+     * @param uiComponent
+     * @param targetElement
+     * @param style
      */
-    public static void apply(UIComponent uiComponent, FacesContext facesContext,
-                             String style) {
-        DOMContext domContext =
-                DOMContext.getDOMContext(facesContext, uiComponent);
-        Object node = domContext.getRootNode();
-        if (node == null || !(node instanceof Element)) {
-            return;
+    public static void apply(FacesContext facesContext, UIComponent uiComponent, 
+                             Element targetElement, String style) {
+        if(targetElement == null) {
+            DOMContext domContext =
+                    DOMContext.getDOMContext(facesContext, uiComponent);
+            Object node = domContext.getRootNode();
+            if (node == null || !(node instanceof Element)) {
+                return;
+            }
+            Element root = (Element) node;
+            targetElement = root;
         }
-        Element root = (Element) node;
         String jspStyle = (String) uiComponent.getAttributes().get("style");
         if (log.isTraceEnabled()) {
             if (jspStyle != null) {
@@ -189,8 +194,11 @@ public class CurrentStyle {
                 log.trace("JSP Style [" + jspStyle + "]");
             }
         }
-        if (root != null) {
-            root.setAttribute(HTML.STYLE_ATTR, jspStyle);
+        if (targetElement != null) {
+            if(jspStyle != null && jspStyle.length() > 0)
+                targetElement.setAttribute(HTML.STYLE_ATTR, jspStyle);
+            else
+                targetElement.removeAttribute(HTML.STYLE_ATTR);
         }
     }
 
