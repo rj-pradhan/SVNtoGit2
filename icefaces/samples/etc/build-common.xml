@@ -94,7 +94,8 @@
             <include name="**/*.java"/>
             <classpath>
                 <fileset dir="${app.lib.dir}" includes="*.jar"/>
-                <fileset dir="${icefaces.lib.dir}" includes="*.jar">
+                <fileset dir="${icefaces.lib.dir}" >
+                  <patternset refid="common.icefaces.lib.jars.to.include"/>
                   <patternset refid="jsf.compile.jars" />
                 </fileset>
             </classpath>
