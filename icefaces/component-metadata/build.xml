@@ -54,7 +54,7 @@
     <property name="project.tld.fileName" value="icefaces_component" />
     <path id="build.classpath">
         <pathelement location="${maven.build.output}" />
-        <fileset dir="${lib.dir}" includes="*.jar">
+        <fileset dir="${lib.dir}" includes="*.jar" excludes="jsf-api-1.2.jar,jsf-impl-1.2.jar" >
         </fileset>
     </path>
     <target name="clean" description="Clean the output directory">
