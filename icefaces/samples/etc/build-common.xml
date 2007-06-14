@@ -54,6 +54,10 @@
     <include name="myfaces-impl.jar" if="myfaces" />
     <include name="jsf-api.jar"  unless="myfaces" />
     <include name="jsf-impl.jar" unless="myfaces" />
+    <exclude name="jsf-api.jar"      if="jsf12" />
+    <exclude name="jsf-impl.jar"     if="jsf12" />
+    <include name="jsf-api-1.2.jar"  if="jsf12" />
+    <include name="jsf-impl-1.2.jar" if="jsf12" />
     <exclude name="*.jar" if="glassfish" />
 </patternset>
 
