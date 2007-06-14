@@ -27,30 +27,35 @@
         commons-el.jar
         commons-fileupload.jar
         commons-logging.jar
-        el-api.jar
         icefaces.jar
         icefaces-comps.jar
+        el-api.jar
         jstl.jar
         xercesImpl.jar
         xml-apis.jar
-    "
-/>
+    " >
+    <exclude name="el-api.jar"     if="jsf12" />
+    <exclude name="jstl.jar"       if="jsf12" />
+    <exclude name="xercesImpl.jar" if="jsf12" />
+    <exclude name="xml-apis.jar"   if="jsf12" />
+</patternset>
 
 <patternset id="additional.icefaces.lib.jars.to.include"/>
 
-<selector id="myfaces.jars">
-    <or>
-        <filename name="myfaces-api.jar"/>
-        <filename name="myfaces-impl.jar"/>
-    </or>
-</selector>
+<patternset id="jsf.compile.jars" >
+    <include name="myfaces-api.jar"  if="myfaces" />
+    <include name="myfaces-impl.jar" if="myfaces" />
+    <include name="jsf-api.jar"  unless="myfaces" />
+    <include name="jsf-impl.jar" unless="myfaces" />
+</patternset>
 
-<selector id="sunri.jars">
-    <or>
-        <filename name="jsf-api.jar"/>
-        <filename name="jsf-impl.jar"/>
-    </or>
-</selector>
+<patternset id="jsf.deploy.jars" >
+    <include name="myfaces-api.jar"  if="myfaces" />
+    <include name="myfaces-impl.jar" if="myfaces" />
+    <include name="jsf-api.jar"  unless="myfaces" />
+    <include name="jsf-impl.jar" unless="myfaces" />
+    <exclude name="*.jar" if="glassfish" />
+</patternset>
 
 <macrodef name="clean">
     <sequential>
@@ -63,10 +68,7 @@
                 <patternset refid="additional.icefaces.lib.jars.to.include"/>
             </fileset>
             <fileset dir="${app.lib.dir}">
-                <or>
-                    <selector refid="myfaces.jars"/>
-                    <selector refid="sunri.jars"/>
-                </or>
+                <patternset refid="jsf.deploy.jars" />
             </fileset>
         </delete>
     </sequential>
@@ -89,14 +91,7 @@
             <classpath>
                 <fileset dir="${app.lib.dir}" includes="*.jar"/>
                 <fileset dir="${icefaces.lib.dir}" includes="*.jar">
-                    <or>
-                        <selector if="myfaces">
-                            <not><selector refid="sunri.jars"/></not>
-                        </selector>
-                        <selector unless="myfaces">
-                            <not><selector refid="myfaces.jars"/></not>
-                        </selector>
-                    </or>
+                  <patternset refid="jsf.compile.jars" />
                 </fileset>
             </classpath>
             <add.javac.elements/>
@@ -130,10 +125,7 @@
                 <patternset refid="additional.icefaces.lib.jars.to.include"/>
             </fileset>
             <fileset dir="${icefaces.lib.dir}">
-                <or>
-                    <selector refid="myfaces.jars" if="myfaces"/>
-                    <selector refid="sunri.jars" unless="myfaces"/>
-                </or>
+                <patternset refid="jsf.deploy.jars" />
             </fileset>
         </copy>
 
