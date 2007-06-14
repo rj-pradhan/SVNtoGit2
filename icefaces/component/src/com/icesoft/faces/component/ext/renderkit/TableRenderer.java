@@ -229,14 +229,18 @@ public class TableRenderer
         HtmlDataTable htmlDataTable = (HtmlDataTable) uiComponent;
         Element th = domContext.createElement(element);
         tr.appendChild(th);
-
-        th.setAttribute("class",getHeaderStyles(uiComponent)[styleIndex]);
+        if ("header".equalsIgnoreCase(facet) ){
+            th.setAttribute("class",getHeaderStyles(uiComponent)[styleIndex]);
+        } else {
+            th.setAttribute("class",getFooterClass(htmlDataTable));
+        }
       
         if (width != null) {
             th.setAttribute("style", "width:" + width + ";overflow:hidden;");
         }
         th.setAttribute("colgroup", "col");
         UIComponent nextFacet = getFacetByName(nextColumn, facet);
+
         if (nextFacet != null) {
             resetFacetChildId(nextFacet);
             domContext.setCursorParent(th);
