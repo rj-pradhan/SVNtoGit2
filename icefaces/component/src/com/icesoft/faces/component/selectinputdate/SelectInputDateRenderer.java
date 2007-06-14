@@ -240,7 +240,7 @@ public class SelectInputDateRenderer
                 calendarDiv.setAttribute(HTML.NAME_ATTR,
                                          clientId + CALENDAR_POPUP);
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
-                                         "display:none;position:absolute;overflow:hidden;");
+                          "display:none;position:absolute;overflow:hidden;z-index:10;");
                 calendarDiv.setAttribute(HTML.TITLE_ATTR, "A Popup Calendar where a date can be selected.");
                 Element table = domContext.createElement(HTML.TABLE_ELEM);
                 table.setAttribute(HTML.ID_ATTR, clientId + CALENDAR_TABLE);
@@ -373,7 +373,7 @@ public class SelectInputDateRenderer
 
             if (popupState) {
                 calendarDiv.setAttribute(HTML.STYLE_ELEM,
-                                         "display:block;position:absolute;");
+                                         "z-index:10;display:block;position:absolute;");
                 String resolvedSrc =
                         CoreUtils.resolveResourceURL( facesContext,
                                                       selectInputDate.getImageDir() +
