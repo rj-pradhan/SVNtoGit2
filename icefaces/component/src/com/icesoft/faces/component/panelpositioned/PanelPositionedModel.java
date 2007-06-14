@@ -35,6 +35,7 @@ package com.icesoft.faces.component.panelpositioned;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ import java.util.Map;
 /**
  * Used to track changes to positioned panel instances
  */
-public class PanelPositionedModel {
+public class PanelPositionedModel implements Serializable {
 
     private List column;
     private Map idIndex = new HashMap();
@@ -69,7 +70,7 @@ public class PanelPositionedModel {
 
     private static String getName(FacesContext context, UIComponent component) {
         return PanelPositionedModel.class.getName() + ":" +
-               component.getClientId(context);
+                component.getClientId(context);
     }
 
     public static PanelPositionedModel getInstance(FacesContext context,

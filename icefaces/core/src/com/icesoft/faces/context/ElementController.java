@@ -1,15 +1,17 @@
 package com.icesoft.faces.context;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
-import java.util.Random;
-import java.util.Map;
+import org.w3c.dom.Element;
 
-public class ElementController {
-    private final static Random RANDOM = new Random();
-    private String focusCode = "";
-    private String selectCode = "";
-    private String clickCode = "";
+import java.io.Serializable;
+import java.util.Map;
+import java.util.Random;
+
+public class ElementController implements Serializable {
+    private transient final static Random RANDOM = new Random();
+    private transient String focusCode = "";
+    private transient String selectCode = "";
+    private transient String clickCode = "";
 
     public static ElementController from(Map session) {
         String key = ElementController.class.toString();
