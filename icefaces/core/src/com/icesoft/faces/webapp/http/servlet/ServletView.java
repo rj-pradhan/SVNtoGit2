@@ -29,25 +29,34 @@ public class ServletView implements CommandQueue {
     private Lock lock = new ReentrantLock();
     private ServletExternalContext externalContext;
     private BridgeFacesContext facesContext;
-    private ViewQueue allServedViews;
     private PersistentFacesState persistentFacesState;
     private Map bundles = Collections.EMPTY_MAP;
     private ServletEnvironmentRequest wrappedRequest;
     private Command currentCommand = NOOP;
     private String viewIdentifier;
+    private ArrayList onPutListeners = new ArrayList();
+    private ArrayList onTakeListeners = new ArrayList();
     private Collection viewListeners = new ArrayList();
     private String sessionID;
     private Configuration configuration;
 
-    public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, ViewQueue allServedViews, Configuration configuration) {
+    public ServletView(final String viewIdentifier, String sessionID, HttpServletRequest request, HttpServletResponse response, final ViewQueue allServedViews, Configuration configuration) {
         this.wrappedRequest = new ServletEnvironmentRequest(request);
         this.sessionID = sessionID;
         this.configuration = configuration;
         this.viewIdentifier = viewIdentifier;
-        this.allServedViews = allServedViews;
         this.externalContext = new ServletExternalContext(viewIdentifier, wrappedRequest, response, this, configuration);
         this.facesContext = new BridgeFacesContext(externalContext, viewIdentifier, sessionID, this, configuration);
         this.persistentFacesState = new PersistentFacesState(facesContext, viewListeners, configuration);
+        this.onPut(new Runnable() {
+            public void run() {
+                try {
+                    allServedViews.put(viewIdentifier);
+                } catch (InterruptedException e) {
+                    Log.warn("Failed to queue updated view", e);
+                }
+            }
+        });
         this.notifyViewCreation();
     }
 
@@ -57,7 +66,7 @@ public class ServletView implements CommandQueue {
     }
 
     public void updateOnRequest(HttpServletRequest request, HttpServletResponse response) {
-        if (differentURI(request) ) {
+        if (differentURI(request)) {
             redirectPage(request, response);
         } else {
             reloadPage(request, response);
@@ -94,11 +103,7 @@ public class ServletView implements CommandQueue {
         lock.lock();
         currentCommand = currentCommand.coalesceWith(command);
         lock.unlock();
-        try {
-            allServedViews.put(viewIdentifier);
-        } catch (InterruptedException e) {
-            Log.warn("Failed to queue updated view", e);
-        }
+        broadcastTo(onPutListeners);
     }
 
     public Command take() {
@@ -106,8 +111,28 @@ public class ServletView implements CommandQueue {
         Command command = currentCommand;
         currentCommand = NOOP;
         lock.unlock();
-
+        broadcastTo(onTakeListeners);
         return command;
+    }
+
+    public void onPut(Runnable listener) {
+        onPutListeners.add(listener);
+    }
+
+    public void onTake(Runnable listener) {
+        onTakeListeners.add(listener);
+    }
+
+    private void broadcastTo(Collection listeners) {
+        Iterator i = listeners.iterator();
+        while (i.hasNext()) {
+            Runnable listener = (Runnable) i.next();
+            try {
+                listener.run();
+            } catch (Exception e) {
+                Log.error("Failed to notify listener: " + listener, e);
+            }
+        }
     }
 
     public void release() {
