@@ -60,7 +60,7 @@
     <exclude name="jsf-impl.jar"     if="jsf12" />
     <include name="jsf-api-1.2.jar"  if="jsf12" />
     <include name="jsf-impl-1.2.jar" if="jsf12" />
-    <exclude name="*.jar" if="glassfish" />
+    <exclude name="*.jar" if="serverjsf" />
 </patternset>
 
 <macrodef name="clean">
