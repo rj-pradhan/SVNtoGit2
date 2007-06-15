@@ -87,12 +87,14 @@ public class PanelPositionedRenderer extends DomBasicRenderer {
                 String style = ((PanelPositioned) uiComponent).getStyle();
                 String styleClass =
                         ((PanelPositioned) uiComponent).getStyleClass();
-                if (style != null) {
+                if(style != null && style.length() > 0)
                     root.setAttribute(HTML.STYLE_ATTR, style);
-                }
-                if (styleClass != null) {
+                else
+                    root.removeAttribute(HTML.STYLE_ATTR);
+                if (styleClass != null && styleClass.length() > 0)
                     root.setAttribute(HTML.CLASS_ATTR, styleClass);
-                }
+                else
+                    root.removeAttribute(HTML.CLASS_ATTR);
                 Element orderField = domContext.createElement(HTML.INPUT_ELEM);
                 String orderFieldId =
                         getHiddenFieldName(facesContext, uiComponent, INPUT_ID);

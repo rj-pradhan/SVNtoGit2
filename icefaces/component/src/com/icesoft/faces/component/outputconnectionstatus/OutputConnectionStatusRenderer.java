@@ -60,7 +60,11 @@ public class OutputConnectionStatusRenderer extends DomBasicRenderer {
 
             root.setAttribute(HTML.ID_ATTR, "connection-status");
             root.setAttribute(HTML.CLASS_ATTR, component.getStyleClass());
-            root.setAttribute(HTML.STYLE_ATTR, component.getStyle());
+            String style = component.getStyle();
+            if(style != null && style.length() > 0)
+                root.setAttribute(HTML.STYLE_ATTR, style);
+            else
+                root.removeAttribute(HTML.STYLE_ATTR);
 
             root.appendChild(getNextNode(domContext,
                                          component.getInactiveClass(),
@@ -79,8 +83,6 @@ public class OutputConnectionStatusRenderer extends DomBasicRenderer {
                                          "connection-lost", false));
         }
 
-        ((Element) domContext.getRootNode())
-                .setAttribute(HTML.STYLE_ATTR, component.getStyle());
         domContext.stepOver();
         domContext.streamWrite(facesContext, uiComponent);
     }

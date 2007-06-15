@@ -88,7 +88,11 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
             root.appendChild(input);
             input.setAttribute(HTML.NAME_ATTR, clientId);
             input.setAttribute(HTML.CLASS_ATTR, component.getInputTextClass());
-            input.setAttribute(HTML.STYLE_ATTR, component.getWidthAsStyle());
+            String inputStyle = component.getWidthAsStyle();
+            if(inputStyle != null && inputStyle.length() > 0)
+                input.setAttribute(HTML.STYLE_ATTR, inputStyle);
+            else
+                input.removeAttribute(HTML.STYLE_ATTR);
             input.setAttribute("autocomplete", "off");
             Element div = domContext.createElement(HTML.DIV_ELEM);
             String listClass =  component.getListClass();
@@ -101,9 +105,11 @@ public class SelectInputTextRenderer extends DomBasicInputRenderer {
                 div.setAttribute(HTML.CLASS_ATTR, listClass);
             }
             root.appendChild(div);
-            if (component.getStyle() != null && !component.getStyle().equals("")) {
-            	root.setAttribute(HTML.STYLE_ATTR, component.getStyle());
-            }
+            String rootStyle = component.getStyle();
+            if(rootStyle != null && rootStyle.length() > 0)
+                root.setAttribute(HTML.STYLE_ATTR, rootStyle);
+            else
+                root.removeAttribute(HTML.STYLE_ATTR);
             root.setAttribute(HTML.CLASS_ATTR, component.getStyleClass());
             
           //  Element script = domContext.createElement(HTML.SCRIPT_ELEM);

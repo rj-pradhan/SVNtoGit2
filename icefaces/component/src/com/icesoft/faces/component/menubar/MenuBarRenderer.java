@@ -67,7 +67,11 @@ public class MenuBarRenderer extends DomBasicRenderer {
 
         MenuBar menuComponent = (MenuBar) uiComponent;
             menuDiv.setAttribute(HTML.CLASS_ATTR, menuComponent.getStyleClass());
-        menuDiv.setAttribute(HTML.STYLE_ATTR, menuComponent.getStyle());
+        String style = menuComponent.getStyle();
+        if(style != null && style.length() > 0)
+            menuDiv.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            menuDiv.removeAttribute(HTML.STYLE_ATTR);
         DOMContext.removeChildren(menuDiv);
 
         if (PassThruAttributeRenderer.passThruAttributeExists(uiComponent)) {

@@ -72,8 +72,11 @@ public class GroupRenderer extends DomBasicRenderer {
             if (styleClass != null) {
                 rootSpan.setAttribute("class", styleClass);
             }
-            if (style != null) {
+            if (style != null && style.length() > 0) {
                 rootSpan.setAttribute("style", style);
+            }
+            else {
+                rootSpan.removeAttribute("style");
             }
         }
         Element rootSpan = (Element) domContext.getRootNode();

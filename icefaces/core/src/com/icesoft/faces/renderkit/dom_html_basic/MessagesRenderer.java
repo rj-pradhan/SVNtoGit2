@@ -148,8 +148,11 @@ public class MessagesRenderer extends DomBasicRenderer {
             if (null != styleClass) {
                 nextMessageSpan.setAttribute("class", styleClass);
             }
-            if (style != null) {
+            if (style != null && style.length() > 0) {
                 nextMessageSpan.setAttribute("style", style);
+            }
+            else {
+                nextMessageSpan.removeAttribute("style");
             }
 
             boolean tooltip = getToolTipAttribute(uiComponent);
@@ -183,8 +186,12 @@ public class MessagesRenderer extends DomBasicRenderer {
         Element root = domContext.createRootElement(HTML.SPAN_ELEM);
         Text text = domContext.createTextNode("List of Messages");
         Object style = uiComponent.getAttributes().get("style");
-        if (style != null) {
-            root.setAttribute(HTML.STYLE_ATTR, style.toString());
+        String sstyle = ( (style == null) ? null : style.toString() );
+        if (sstyle != null && sstyle.length() > 0) {
+            root.setAttribute(HTML.STYLE_ATTR, sstyle);
+        }
+        else {
+            root.removeAttribute(HTML.STYLE_ATTR);
         }
         root.appendChild(text);
         domContext.streamWrite(facesContext, uiComponent);

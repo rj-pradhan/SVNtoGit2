@@ -70,8 +70,11 @@ public class PanelStackRenderer extends DomBasicRenderer {
         DOMContext.removeChildren(panelStackTable);
         panelStackTable.setAttribute(HTML.CLASS_ATTR,
                                      ((PanelStack) uiComponent).getStyleClass());
-        panelStackTable.setAttribute(HTML.STYLE_ATTR,
-                                     ((PanelStack) uiComponent).getStyle());
+        String style = ((PanelStack) uiComponent).getStyle();
+        if(style != null && style.length() > 0)
+            panelStackTable.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            panelStackTable.removeAttribute(HTML.STYLE_ATTR);
         Element tr = domContext.createElement(HTML.TR_ELEM);
         panelStackTable.appendChild(tr);
         tr.setAttribute(HTML.CLASS_ATTR,

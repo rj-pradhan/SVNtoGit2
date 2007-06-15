@@ -61,9 +61,10 @@ public class PanelSeriesRenderer extends DomBasicRenderer {
         }
         Element root = (Element) domContext.getRootNode();
         String style = ((PanelSeries) uiComponent).getStyle();
-        if (style != null) {
+        if(style != null && style.length() > 0)
             root.setAttribute(HTML.STYLE_ATTR, style);
-        }
+        else
+            root.removeAttribute(HTML.STYLE_ATTR);
         root.setAttribute(HTML.CLASS_ATTR,
                           ((PanelSeries) uiComponent).getStyleClass());
         domContext.stepInto(uiComponent);

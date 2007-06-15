@@ -179,7 +179,11 @@ public class TreeRenderer extends DomBasicRenderer {
         // Apply  default styleClass and style to the root node.
         rootDomNode
                 .setAttribute(HTML.CLASS_ATTR, treeComponent.getStyleClass());
-        rootDomNode.setAttribute(HTML.STYLE_ATTR, treeComponent.getStyle());
+        String style = treeComponent.getStyle();
+        if(style != null && style.length() > 0)
+            rootDomNode.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            rootDomNode.removeAttribute(HTML.STYLE_ATTR);
 
         // clean up, and remove nodes
         DOMContext.removeChildren(rootDomNode);

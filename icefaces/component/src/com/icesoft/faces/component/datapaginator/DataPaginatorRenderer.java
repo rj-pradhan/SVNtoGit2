@@ -265,9 +265,10 @@ public class DataPaginatorRenderer extends DomBasicRenderer {
         table.setAttribute(HTML.CLASS_ATTR, styleClass);
 
         String style = scroller.getStyle();
-        if (style != null) {
+        if(style != null && style.length() > 0)
             table.setAttribute(HTML.STYLE_ATTR, style);
-        }
+        else
+            table.removeAttribute(HTML.STYLE_ATTR);
         String scrollButtonCellClass = scroller.getscrollButtonCellClass();
 
         UIComponent facetComp = scroller.getFirst();

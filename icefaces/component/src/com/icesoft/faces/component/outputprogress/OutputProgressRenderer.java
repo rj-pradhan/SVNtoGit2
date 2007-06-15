@@ -69,8 +69,11 @@ public class OutputProgressRenderer extends DomBasicInputRenderer {
             table.setAttribute(HTML.BORDER_ATTR, "0");
         }
         Element table = (Element) domContext.getRootNode();
-        table.setAttribute(HTML.STYLE_ATTR,
-                           ((OutputProgress) uiComponent).getStyle());
+        String style = ((OutputProgress) uiComponent).getStyle();
+        if(style != null && style.length() > 0)
+            table.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            table.removeAttribute(HTML.STYLE_ATTR);
         //In order to fix IRAPtor Bug 291, we took out buildLayout() from the intialized block, 
         //Because of variouse text position, layout could have different combination of tr and td
         //therefore we are storing nodes to the component itself.

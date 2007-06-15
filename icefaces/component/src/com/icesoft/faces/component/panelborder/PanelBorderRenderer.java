@@ -96,9 +96,11 @@ public class PanelBorderRenderer extends DomBasicRenderer {
         PassThruAttributeRenderer
                 .renderAttributes(facesContext, uiComponent, null);
         table.setAttribute(HTML.CLASS_ATTR, borderLayout.getStyleClass());
-        if (borderLayout.getStyle() != null) {
-            table.setAttribute(HTML.STYLE_ATTR, borderLayout.getStyle());
-        }
+        String style = borderLayout.getStyle();
+        if(style != null && style.length() > 0)
+            table.setAttribute(HTML.STYLE_ATTR, style);
+        else
+            table.removeAttribute(HTML.STYLE_ATTR);
 
         DOMContext.removeChildren(table);
 
@@ -300,11 +302,20 @@ public class PanelBorderRenderer extends DomBasicRenderer {
         if (colspan > 0) {
             td.setAttribute(HTML.COLSPAN_ATTR, Integer.toString(colspan));
         }
-        if (styleClass != null) {
+        else {
+            td.removeAttribute(HTML.COLSPAN_ATTR);
+        }
+        if (styleClass != null && styleClass.length() > 0) {
             td.setAttribute(HTML.CLASS_ATTR, styleClass);
         }
-        if (style != null) {
+        else {
+            td.removeAttribute(HTML.CLASS_ATTR);
+        }
+        if (style != null && style.length() > 0) {
             td.setAttribute(HTML.STYLE_ATTR, style);
+        }
+        else {
+            td.removeAttribute(HTML.STYLE_ATTR);
         }
 
         DOMContext domContext =
