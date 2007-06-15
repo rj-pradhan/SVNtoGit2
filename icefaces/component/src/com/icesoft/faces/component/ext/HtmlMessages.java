@@ -216,12 +216,10 @@ public class HtmlMessages extends javax.faces.component.html.HtmlMessages {
      * <p>Return the value of the <code>errorClass</code> property.</p>
      */
     public String getErrorClass() {
-        if (errorClass != null) {
-            return errorClass;
-        }
-        ValueBinding vb = getValueBinding("errorClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.MESSAGES_STYLE_CLASS + CSS_DEFAULT.ERROR_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                errorClass,
+                CSS_DEFAULT.ERROR_STYLE_CLASS,
+                "errorClass");  
     }
 
 
@@ -236,12 +234,10 @@ public class HtmlMessages extends javax.faces.component.html.HtmlMessages {
      * <p>Return the value of the <code>fataClass</code> property.</p>
      */
     public String getFatalClass() {
-        if (fatalClass != null) {
-            return fatalClass;
-        }
-        ValueBinding vb = getValueBinding("fatalClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.MESSAGES_STYLE_CLASS + CSS_DEFAULT.FATAL_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                fatalClass,
+                CSS_DEFAULT.FATAL_STYLE_CLASS,
+                "fatalClass"); 
     }
 
 
@@ -256,12 +252,10 @@ public class HtmlMessages extends javax.faces.component.html.HtmlMessages {
      * <p>Return the value of the <code>infoClass</code> property.</p>
      */
     public String getInfoClass() {
-        if (infoClass != null) {
-            return infoClass;
-        }
-        ValueBinding vb = getValueBinding("infoClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.MESSAGES_STYLE_CLASS + CSS_DEFAULT.INFO_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                infoClass,
+                CSS_DEFAULT.INFO_STYLE_CLASS,
+                "infoClass"); 
     }
 
     /**
@@ -275,11 +269,9 @@ public class HtmlMessages extends javax.faces.component.html.HtmlMessages {
      * <p>Return the value of the <code>warnClass</code> property.</p>
      */
     public String getWarnClass() {
-        if (warnClass != null) {
-            return warnClass;
-        }
-        ValueBinding vb = getValueBinding("warnClass");
-        return vb != null ? (String) vb.getValue(getFacesContext()) :
-               CSS_DEFAULT.MESSAGES_STYLE_CLASS + CSS_DEFAULT.WARN_STYLE_CLASS;
+        return Util.getQualifiedStyleClass(this, 
+                warnClass,
+                CSS_DEFAULT.WARN_STYLE_CLASS,
+                "warnClass");  
     }
 }
