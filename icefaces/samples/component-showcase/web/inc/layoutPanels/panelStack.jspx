@@ -40,10 +40,6 @@ to show how the selected panel can be dynamically changed.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 
 <!--
@@ -80,6 +76,9 @@ to show how the selected panel can be dynamically changed.
 
             <!-- Panel Stack declaration - three panels, fruit, color and minerals. -->
             <ice:panelStack
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
                     selectedPanel="#{panelStack.selectedPanel}"
                     styleClass="">
                 <!-- Fruit Panel -->
@@ -176,5 +175,4 @@ to show how the selected panel can be dynamically changed.
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

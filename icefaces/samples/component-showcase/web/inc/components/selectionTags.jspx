@@ -42,11 +42,6 @@ clicks a selection or tabs out of a field.
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
   Example include, also see source code include.
@@ -209,7 +204,5 @@ clicks a selection or tabs out of a field.
 </ice:panelTab>
 
 </ice:panelTabSet>
-
-</ice:panelGrid>
 
 </ice:form>

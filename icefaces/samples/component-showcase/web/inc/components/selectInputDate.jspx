@@ -41,19 +41,11 @@ the click of a button.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-    <ice:panelGrid
-            styleClass="contentLayoutGridStyle"
-            columns="1" border="0">
-
         <ice:panelTabSet styleClass="componentPanelTabSetLayout">
             <!--
               Example include, also see source code include.
             -->
             <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
-
-                <ice:panelGrid
-                        styleClass="componentLayoutRootTable"
-                        columns="2">
 
                     <!-- Standard Calendar -->
                     <ice:panelGroup styleClass="calBorderHighlight">
@@ -78,16 +70,18 @@ the click of a button.
                                 imageDir="#{styleBean.imageDirectory}"
                                 value="#{dateSelect.date1}"
                                 highlightClass="weekend: august:"
-				highlightUnit="DAY_OF_WEEK: MONTH"
+                                highlightUnit="DAY_OF_WEEK: MONTH"
                                 highlightValue="1,7: 8"
                                 />
-			- Weekends are green <br/>
-			- August is bold
+                        <ul>
+                            <li>Weekends have dark gray backgrounds</li>
+                            <li>August days are bold</li>
+                        </ul>
                     </ice:panelGroup>
 
 
                     <!-- Popup Calendar -->
-                    <ice:panelGroup styleClass="calBorderHighlight">
+                    <ice:panelGroup styleClass="calBorderHighlight" >
 
                         <h3>
                             <ice:outputText
@@ -111,7 +105,6 @@ the click of a button.
 
                     </ice:panelGroup>
 
-                </ice:panelGrid>
             </ice:panelTab>
 
             <!--
@@ -135,5 +128,4 @@ the click of a button.
             </ice:panelTab>
         </ice:panelTabSet>
 
-    </ice:panelGrid>
 </ice:form>

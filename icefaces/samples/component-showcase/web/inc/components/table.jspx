@@ -39,16 +39,11 @@ a control on the data to hide/show the table columns.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
     <!--
       Controls to show/hide the table columns
     -->
     <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
-        <ice:panelGroup style="width:730px;">
         <ice:panelGrid
                 styleClass="componentLayoutRootTable"
                 columns="1">
@@ -64,10 +59,6 @@ a control on the data to hide/show the table columns.
                     <ice:outputText
                             value="#{msgs['component.table.column1']} "/>
                     <ice:selectBooleanCheckbox value="#{table.renderLastName}"
-                                               partialSubmit="true"/>
-                    <ice:outputText
-                            value="#{msgs['component.table.column2']} "/>
-                    <ice:selectBooleanCheckbox value="#{table.renderPhone}"
                                                partialSubmit="true"/>
                     <ice:outputText
                             value="#{msgs['component.table.column3']} "/>
@@ -99,61 +90,48 @@ a control on the data to hide/show the table columns.
                 <!--
                     Basic table
                 -->
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td>
-                            <ice:dataTable var="person"
-                                           value="#{scrollerList.persons}"
-                                           columnClasses="tableCol"
-                                           scrollable="#{table.scrollable}"
-                                           scrollHeight="#{table.scrollableHeight}"
-                                           columnWidths="150px,150px,150px,150px"
-                                    >
-                                <ice:column rendered="#{table.renderFirstName}">
-                                    <f:facet name="header">
-                                        <ice:outputText
-                                                value="#{msgs['component.table.column1']}"/>
-                                    </f:facet>
-                                    <ice:outputText
-                                            value="#{person.firstName}"/>
-                                </ice:column>
+                <div style="width: 600px">
+                <ice:dataTable var="person"
+                               value="#{scrollerList.persons}"
+                               columnClasses="tableCol"
+                               scrollable="#{table.scrollable}"
+                               scrollHeight="#{table.scrollableHeight}"
+                               columnWidths="150px,150px,150px"
+                        >
+                    <ice:column rendered="#{table.renderFirstName}">
+                        <f:facet name="header">
+                            <ice:outputText
+                                    value="#{msgs['component.table.column1']}"/>
+                        </f:facet>
+                        <ice:outputText
+                                value="#{person.firstName}"/>
+                    </ice:column>
 
-                                <ice:column rendered="#{table.renderLastName}">
-                                    <f:facet name="header">
-                                        <ice:outputText
-                                                value="#{msgs['component.table.column2']}"/>
-                                    </f:facet>
-                                    <ice:outputText value="#{person.lastName}"/>
-                                </ice:column>
+                    <ice:column rendered="#{table.renderLastName}">
+                        <f:facet name="header">
+                            <ice:outputText
+                                    value="#{msgs['component.table.column2']}"/>
+                        </f:facet>
+                        <ice:outputText value="#{person.lastName}"/>
+                    </ice:column>
 
-                                <ice:column rendered="#{table.renderPhone}">
-                                    <f:facet name="header">
-                                        <ice:outputText
-                                                value="#{msgs['component.table.column3']}"/>
-                                    </f:facet>
-                                    <ice:outputText value="#{person.phoneNo}"/>
-                                </ice:column>
-
-                                <ice:column rendered="#{table.renderEmail}">
-                                    <f:facet name="header">
-                                        <ice:outputText
-                                                value="#{msgs['component.table.column4']}"/>
-                                    </f:facet>
-                                    <ice:outputLink
-                                            value="mailto:#{person.email}">
-                                        <ice:outputText
-                                                value="#{person.email}"/>
-                                    </ice:outputLink>
-                                </ice:column>
-                            </ice:dataTable>
-                        </td>
-                    </tr>
-                </table>
+                    <ice:column rendered="#{table.renderEmail}">
+                        <f:facet name="header">
+                            <ice:outputText
+                                    value="#{msgs['component.table.column4']}"/>
+                        </f:facet>
+                        <ice:outputLink
+                                value="mailto:#{person.email}">
+                            <ice:outputText
+                                    value="#{person.email}"/>
+                        </ice:outputLink>
+                    </ice:column>
+                </ice:dataTable>
+                </div>
             </ice:panelGrid>
 
 
         </ice:panelGrid>
-    </ice:panelGroup>
     </ice:panelTab>
 
     <!--
@@ -178,5 +156,4 @@ a control on the data to hide/show the table columns.
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

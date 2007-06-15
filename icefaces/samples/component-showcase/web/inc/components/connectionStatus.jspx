@@ -38,10 +38,6 @@ In this demonstration ice:connectionStatus different icons are displayed.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-    <ice:panelGrid
-            styleClass="contentLayoutGridStyle"
-            columns="1" border="0">
-
         <ice:panelTabSet styleClass="componentPanelTabSetLayout">
             <!--
             Example include, also see source code include.
@@ -121,5 +117,4 @@ In this demonstration ice:connectionStatus different icons are displayed.
 
         </ice:panelTabSet>
 
-    </ice:panelGrid>
 </ice:form>

@@ -41,9 +41,6 @@ dynamically changed.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid styleClass="contentLayoutGridStyle"
-               columnClasses="contentLayoutGridColumn" columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
   Controls to show/hide the table columns
@@ -221,5 +218,4 @@ dynamically changed.
 </ice:panelTab>
 
 </ice:panelTabSet>
-</ice:panelGrid>
 </ice:form>

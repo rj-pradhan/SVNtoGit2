@@ -40,10 +40,6 @@ Once the file is uploaded, information about the file is displayed.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-    <ice:panelGrid
-            styleClass="contentLayoutGridStyle"
-            columns="1" border="0">
-
         <ice:panelTabSet styleClass="componentPanelTabSetLayout">
             <!--
               Controls to show/hide the table columns
@@ -92,7 +88,5 @@ Once the file is uploaded, information about the file is displayed.
             </ice:panelTab>
 
         </ice:panelTabSet>
-
-    </ice:panelGrid>
 </ice:form>
 

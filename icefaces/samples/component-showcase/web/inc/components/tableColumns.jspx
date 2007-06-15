@@ -35,8 +35,6 @@
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-    <ice:panelGrid id="columnsLayoutGrid" styleClass="contentLayoutGridStyle"
-                   columns="1" border="0">
         <ice:panelTabSet styleClass="componentPanelTabSetLayout">
             
             <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
@@ -113,5 +111,4 @@
             </ice:panelTab>
 
         </ice:panelTabSet>
-    </ice:panelGrid>
 </ice:form>

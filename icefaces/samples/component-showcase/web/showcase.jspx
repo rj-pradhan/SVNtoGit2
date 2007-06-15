@@ -45,7 +45,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
         <title><ice:outputText value="#{msgs.showCasetitle}" /></title>
-        <ice:outputText style="padding-top:0px; padding-bottom:0px;" value="#{styleBean.style}" escape="false" />
+        <h:outputText style="padding-top:0px; padding-bottom:0px;" value="#{styleBean.style}" escape="false" />
         <ice:outputStyle href="css/showcase_style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -74,23 +74,21 @@
         <f:facet name="center">
             <ice:panelGroup>
                 <!--
-                       Main Component content;
-                       controls which content to display for the respective navigation
-                    -->
+                   Main Component content;
+                   controls which content to display for the respective navigation
+                -->
 
                 <ice:panelGrid styleClass="navConnectionStatus" columnClasses="statusLeft, statusRight" columns="2">
                     <!-- Connection Status -->
                     <ice:outputConnectionStatus />
                 </ice:panelGrid>
 
-                       <!-- Demo Title -->
-                       <h2>
-                            <ice:outputText
-                                value="#{navigation.selectedPanel.menuContentTitle}"/>
-                        </h2>
+                   <!-- Demo Title -->
+                   <h2>
+                        <ice:outputText
+                            value="#{navigation.selectedPanel.menuContentTitle}"/>
+                    </h2>
 
-
-                <div class="demoWindow">
                     <ice:panelStack id="templatePanelStack"
                         styleClass="componentContentPanelStack"
                         selectedPanel="#{navigation.selectedPanel.templateName}">
@@ -313,7 +311,7 @@
                         </f:subview>
                     </ice:panelGroup>
 
-                </ice:panelStack></div>
+                </ice:panelStack>
                 <br />
             </ice:panelGroup>
         </f:facet>

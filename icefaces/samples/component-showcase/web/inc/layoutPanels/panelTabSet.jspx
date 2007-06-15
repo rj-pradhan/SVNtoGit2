@@ -39,9 +39,6 @@ to show how visibility, focus and tab placement can be dynamically changed.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
 
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
@@ -129,7 +126,6 @@ to show how visibility, focus and tab placement can be dynamically changed.
     <ice:panelTabSet binding="#{staticTabbedPaneExample.tabSet}"
                      selectedIndex="1"
                      tabPlacement="#{staticTabbedPaneExample.tabPlacement}"
-                     styleClass="myTab"
                      tabChangeListener="#{staticTabbedPaneExample.processTabChange}">
 
         <!-- Panel tab 1 defined with some basic content -->
@@ -288,6 +284,5 @@ to show how visibility, focus and tab placement can be dynamically changed.
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>
 

@@ -40,9 +40,7 @@ is used to specify the columns that can be sorted by clicking the column header.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
+
 
     <ice:panelTabSet styleClass="componentPanelTabSetLayout">
         <!--
@@ -143,5 +141,4 @@ is used to specify the columns that can be sorted by clicking the column header.
 
     </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

@@ -40,59 +40,47 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
- * This class is the backing bean for the accordionPanel example. It handles all the 
- * methods required to operate the accordion panel and its content.
- *
- *
+ * This class is the backing bean for the accordionPanel example. It store
+ * the values of a simple form, first name, lastname, phone and email.
  */
 public class AccordionBean {
 
-    private Highlight effectOutputText = new Highlight("#a4bdd2");
-    private String selectedPanel = "";
+    // simple form input values.
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String email;
 
-    public AccordionBean() {
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Effect getEffectOutputText() {
-        return effectOutputText;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    /*
-    * Sets the output text effect
-    *@param effectOutputText highlight effect for command links
-    */
-    public void setEffectOutputText(Effect effectOutputText) {
-        this.effectOutputText = (Highlight) effectOutputText;
+    public String getLastName() {
+        return lastName;
     }
 
-    /**
-     * Used in the accordion panel example to change between the selected
-     * panels.
-     *
-     * @param event from the action listener.
-     */
-    public void selectedPanelChangedAction(ActionEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map map = context.getExternalContext().getRequestParameterMap();
-        selectedPanel = (String) map.get("products");
-
-    }
-    
-    /**
-     * Sets the selected panel name to the specified panel name.
-     *
-     * @param selectedPanel panel name to be set as selected.
-     */
-    public void setSelectedPanel(String selectedPanel) {
-        this.selectedPanel = selectedPanel;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    /**
-     * Gets the selected panel name.
-     *
-     * @return currently selected panel.
-     */
-    public String getSelectedPanel() {
-        return selectedPanel;
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

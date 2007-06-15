@@ -39,8 +39,7 @@ selects a node, the respective tree node name is displayed in an output field.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
-<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
-               border="0">
+
 
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
@@ -165,5 +164,4 @@ selects a node, the respective tree node name is displayed in an output field.
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

@@ -40,10 +40,6 @@ The content of the list is filled by iterating over a variable.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
   Example include, also see source code include.
@@ -55,121 +51,109 @@ The content of the list is filled by iterating over a variable.
         styleClass="componentLayoutRootTable"
         columns="1">
 
-    <ice:panelGrid styleClass="formBorderHighlight">
+    <ice:panelGroup styleClass="formBorderHighlight">
 
         <!-- List Description -->
-        <ice:panelGrid>
 
-            <h3>
-                <ice:outputText
-                        value="#{msgs['component.panelSeries.instructions']}"/>
-            </h3>
-            <h4>
-                <ice:outputText
-                        value="#{msgs['component.panelSeries.subInstructions']}"/>
-            </h4>
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.panelSeries.instructions']}"/>
+        </h3>
+        <h4>
+            <ice:outputText
+                    value="#{msgs['component.panelSeries.subInstructions']}"/>
+        </h4>
 
-        </ice:panelGrid>
 
-        <!-- Container for list items and the shopping list-->
-        <ice:panelGrid columns="2" style="width:550px;">
-
-            <!-- Item list -->
-            <ice:panelGrid styleClass="formBorderHighlight"
-                           style="width:250px;">
-                <h3>
-                    <ice:outputText value="Item List"/>
-                </h3>
-                <ice:panelSeries value="#{cashier.itemTable}" var="item1">
-                    <ice:panelGrid style="border:1px solid silver;"
-                                   styleClass="itemTable"
-                                   columnClasses="listItemIcon, listDescriptor"
-                                   columns="2">
-                        <ice:graphicImage width="100" height="100"
-                                          url="images/panelSeries/#{item1.name}.jpg"/>
-                        <ice:panelGrid columns="1">
-                            <ice:panelGrid columns="2">
-                                <ice:outputText
-                                        value="#{msgs['component.panelSeries.productLabel.name']}"
-                                        styleClass="propertyLabel"/>
-                                <ice:outputText value="#{item1.name}"/>
-
-                                <ice:outputText
-                                        value="#{msgs['component.panelSeries.productLabel.unitPrice']}"
-                                        styleClass="propertyLabel"/>
-                                <ice:outputText value="#{item1.unitPrice}">
-                                    <f:convertNumber type="currency"/>
-                                </ice:outputText>
-
-                            </ice:panelGrid>
-
-                            <ice:outputText
-                                    value="#{msgs['component.panelSeries.productSelection.quantityLabel']}"
-                                    styleClass="propertyLabel"/>
-
-                            <ice:panelGrid columns="3">
-
-                                <div class="quantityLabel">
-
-                                    <ice:outputText value="#{item1.quantity}"/>
-
-                                </div>
-
-                                <ice:commandButton
-                                        image="images/increase_quantity.gif"
-                                        style="height: 25px; width: 15px;"
-                                        actionListener="#{item1.incQuan}"
-                                        title="Buy #{item1.name}"/>
-
-                                <ice:commandButton
-                                        image="images/decrease_quantity.gif"
-                                        style="height: 25px; width: 15px;"
-                                        actionListener="#{item1.decQuan}"
-                                        title="Return #{item1.name}"
-                                        disabled="#{item1.quanMinusDisabled}"/>
-                            </ice:panelGrid>
-                            <ice:outputText style="text-align:center;"
-                                            value="#{item1.subtotal}">
-                                <f:convertNumber type="currency"/>
-                            </ice:outputText>
-
-                        </ice:panelGrid>
-
-                    </ice:panelGrid>
-                    <br/>
-                </ice:panelSeries>
-            </ice:panelGrid>
-
-            <!-- Receipt -->
-            <ice:panelGrid styleClass="formBorderHighlight"
-                           style="width:250px;">
-                <h3>
+     </ice:panelGroup>
+     <h3>
+        <ice:outputText value="Item List"/>
+    </h3>
+     <ice:panelGrid styleClass="formBorderHighlight" width="100%">
+        <ice:panelSeries value="#{cashier.itemTable}" var="item1">
+            <ice:panelGroup style="float: left;margin: 2px; padding: 5px; margin-right: 20px; border: 1px solid #999999;" >
+                <ice:graphicImage width="100" height="100"
+                                  url="images/panelSeries/#{item1.name}.jpg"/>
+                <br />
+                <ice:panelGrid columns="2" width="110px">
                     <ice:outputText
-                            value="#{msgs['component.panelSeries.shoppingListTitle']}"/>
-                </h3>
-                <ice:panelSeries value="#{cashier.shoppingList}" var="item2">
-                    <ice:panelGrid columns="3" styleClass="listReceipt">
+                            value="#{msgs['component.panelSeries.productLabel.name']}"
+                            styleClass="propertyLabel"/>
+                    <ice:outputText value="#{item1.name}"/>
 
-                        <ice:outputText value="#{item2.name}"/>
-                        <ice:outputText value="#{item2.quantity}"/>
-                        <ice:outputText value="#{item2.subtotal}">
-                            <f:convertNumber type="currency"/>
-                        </ice:outputText>
-
-                    </ice:panelGrid>
-                </ice:panelSeries>
-                <hr/>
-                <ice:panelGroup>
                     <ice:outputText
-                            value="#{msgs['component.panelSeries.totalLabel']}"/>
-                    <ice:outputText value="#{cashier.total}">
+                            value="#{msgs['component.panelSeries.productLabel.unitPrice']}"
+                            styleClass="propertyLabel"/>
+                    <ice:outputText value="#{item1.unitPrice}">
                         <f:convertNumber type="currency"/>
                     </ice:outputText>
-                </ice:panelGroup>
-            </ice:panelGrid>
-        </ice:panelGrid>
+
+                </ice:panelGrid>
+
+                <ice:outputText
+                        value="#{msgs['component.panelSeries.productSelection.quantityLabel']}"
+                        styleClass="propertyLabel"/>
+
+                <ice:panelGrid columns="3">
+
+                    <div class="quantityLabel">
+                        <ice:outputText value="#{item1.quantity}"/>
+                    </div>
+
+                    <ice:commandButton
+                            image="images/increase_quantity.gif"
+                            style="height: 25px; width: 15px;"
+                            actionListener="#{item1.incQuan}"
+                            title="Buy #{item1.name}"/>
+
+                    <ice:commandButton
+                            image="images/decrease_quantity.gif"
+                            style="height: 25px; width: 15px;"
+                            actionListener="#{item1.decQuan}"
+                            title="Return #{item1.name}"
+                            disabled="#{item1.quanMinusDisabled}"/>
+                </ice:panelGrid>
+                <ice:outputText style="text-align:center;"
+                                value="#{item1.subtotal}">
+                    <f:convertNumber type="currency"/>
+                </ice:outputText>
+
+            </ice:panelGroup>
+        </ice:panelSeries>
     </ice:panelGrid>
-</ice:panelGrid>
+
+    <div style="clear: left" />
+
+    <!-- Receipt -->
+    <h3>
+        <ice:outputText
+                value="#{msgs['component.panelSeries.shoppingListTitle']}"/>
+    </h3>
+    <ice:panelGroup styleClass="formBorderHighlight" >
+        <ice:panelSeries value="#{cashier.shoppingList}" var="item2">
+            <ice:panelGrid columns="3" border="0"
+                           styleClass="listReceipt"
+                    columnClasses="shoppingListItemName, shoppingListItemQuantity, shoppingListValue">
+
+                <ice:outputText value="#{item2.name}"/>
+                <ice:outputText value="#{item2.quantity}"/>
+                <ice:outputText value="#{item2.subtotal}">
+                    <f:convertNumber type="currency"/>
+                </ice:outputText>
+
+            </ice:panelGrid>
+        </ice:panelSeries>
+        <hr/>
+        <ice:panelGroup style="text-align: right">
+            <ice:outputText
+                    value="#{msgs['component.panelSeries.totalLabel']}"/>
+            <ice:outputText value="#{cashier.total}">
+                <f:convertNumber type="currency"/>
+            </ice:outputText>
+        </ice:panelGroup>
+    </ice:panelGroup>
+
+    </ice:panelGrid>
 </ice:panelTab>
 
 <!--
@@ -192,5 +176,4 @@ this placeholder
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

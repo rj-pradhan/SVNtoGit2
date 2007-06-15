@@ -673,7 +673,7 @@ public class TreeNavigation {
                         "submenuDisplayText.accordionPanelItem");
                 branchObject.setMenuContentTitle(
                         "submenuContentTitle.accordionPanelItem");
-                branchObject.setMenuContentInclusionFile("./layoutPanels/accordionPanel-facelets.jspx");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/accordionPanel.jspx");
                 branchObject.setTemplateName("accordionPanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);

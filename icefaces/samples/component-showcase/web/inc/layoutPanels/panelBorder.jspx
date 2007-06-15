@@ -40,9 +40,6 @@ change the border layout dynamically.
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
 
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
     <!--
@@ -50,96 +47,82 @@ change the border layout dynamically.
     -->
     <ice:panelTab label="#{msgs['tabbedHeadings.demo']}">
 
-        <ice:panelGrid
-                styleClass="componentLayoutRootTable"
-                columns="1">
+        <!-- Panel Visibility Control -->
+        <h3>
+            <ice:outputText
+                    value="#{msgs['component.panelLayout.placement']}"/>
+        </h3>
+        <ice:panelGroup
+                styleClass="formBorderHighlight">
 
-            <ice:panelGrid
-                    columnClasses="contentLayoutGridColumn"
-                    columns="1">
-                <!-- Panel Visibility Control -->
-                <ice:panelGrid
-                        styleClass="formBorderHighlight"
-                        columnClasses="contentLayoutGridColumn"
-                        columns="1">
-                    <h3>
-                        <ice:outputText
-                                value="#{msgs['component.panelLayout.placement']}"/>
-                    </h3>
-
-                    <ice:panelGrid columns="5">
-                        <ice:selectBooleanCheckbox partialSubmit="true"
-                                                   value="true"
-                                                   valueChangeListener="#{borderLayout.north}">
-                            <ice:outputText value="North"/>
-                        </ice:selectBooleanCheckbox>
-                        <ice:selectBooleanCheckbox partialSubmit="true"
-                                                   value="true"
-                                                   valueChangeListener="#{borderLayout.west}">
-                            <ice:outputText value="West"/>
-                        </ice:selectBooleanCheckbox>
-                        <ice:selectBooleanCheckbox partialSubmit="true"
-                                                   value="true"
-                                                   valueChangeListener="#{borderLayout.center}">
-                            <ice:outputText value="Center"/>
-                        </ice:selectBooleanCheckbox>
-                        <ice:selectBooleanCheckbox partialSubmit="true"
-                                                   value="true"
-                                                   valueChangeListener="#{borderLayout.east}">
-                            <ice:outputText value="East"/>
-                        </ice:selectBooleanCheckbox>
-                        <ice:selectBooleanCheckbox partialSubmit="true"
-                                                   value="true"
-                                                   valueChangeListener="#{borderLayout.south}">
-                            <ice:outputText value="South"/>
-                        </ice:selectBooleanCheckbox>
-                    </ice:panelGrid>
-                    <br/>
-
-                </ice:panelGrid>
-
-                <!-- Panel Layout -->
-                <ice:panelBorder id="page"
-                                 styleClass="panelBorderDemoLayoutMain"
-                                 renderNorth="#{borderLayout.renderNorth}"
-                                 renderSouth="#{borderLayout.renderSouth}"
-                                 renderCenter="#{borderLayout.renderCenter}"
-                                 renderWest="#{borderLayout.renderWest}"
-                                 renderEast="#{borderLayout.renderEast}">
-
-                    <f:facet name="north">
-                        <ice:outputText value="North"/>
-                    </f:facet>
-
-                    <f:facet name="west">
-                        <ice:panelGrid columns="1">
-                            <ice:outputText value="W"/>
-                            <ice:outputText value="e"/>
-                            <ice:outputText value="s"/>
-                            <ice:outputText value="t"/>
-                        </ice:panelGrid>
-                    </f:facet>
-
-                    <f:facet name="east">
-                        <ice:panelGrid columns="1">
-                            <ice:outputText value="E"/>
-                            <ice:outputText value="a"/>
-                            <ice:outputText value="s"/>
-                            <ice:outputText value="t"/>
-                        </ice:panelGrid>
-                    </f:facet>
-
-                    <f:facet name="center">
-                        <ice:outputText value="Center"/>
-                    </f:facet>
-
-                    <f:facet name="south">
-                        <ice:outputText value="South"/>
-                    </f:facet>
-                </ice:panelBorder>
-
+            <ice:panelGrid columns="5">
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="true"
+                                           valueChangeListener="#{borderLayout.north}">
+                    <ice:outputText value="North"/>
+                </ice:selectBooleanCheckbox>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="true"
+                                           valueChangeListener="#{borderLayout.west}">
+                    <ice:outputText value="West"/>
+                </ice:selectBooleanCheckbox>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="true"
+                                           valueChangeListener="#{borderLayout.center}">
+                    <ice:outputText value="Center"/>
+                </ice:selectBooleanCheckbox>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="true"
+                                           valueChangeListener="#{borderLayout.east}">
+                    <ice:outputText value="East"/>
+                </ice:selectBooleanCheckbox>
+                <ice:selectBooleanCheckbox partialSubmit="true"
+                                           value="true"
+                                           valueChangeListener="#{borderLayout.south}">
+                    <ice:outputText value="South"/>
+                </ice:selectBooleanCheckbox>
             </ice:panelGrid>
-        </ice:panelGrid>
+        </ice:panelGroup>
+        <br />
+        <!-- Panel Layout -->
+        <ice:panelBorder id="page"
+                styleClass="panelBorderDemoLayoutMain"
+                         renderNorth="#{borderLayout.renderNorth}"
+                         renderSouth="#{borderLayout.renderSouth}"
+                         renderCenter="#{borderLayout.renderCenter}"
+                         renderWest="#{borderLayout.renderWest}"
+                         renderEast="#{borderLayout.renderEast}">
+
+            <f:facet name="north">
+                <ice:outputText value="North"/>
+            </f:facet>
+
+            <f:facet name="west">
+                <ice:panelGrid columns="1">
+                    <ice:outputText value="W"/>
+                    <ice:outputText value="e"/>
+                    <ice:outputText value="s"/>
+                    <ice:outputText value="t"/>
+                </ice:panelGrid>
+            </f:facet>
+
+            <f:facet name="east">
+                <ice:panelGrid columns="1">
+                    <ice:outputText value="E"/>
+                    <ice:outputText value="a"/>
+                    <ice:outputText value="s"/>
+                    <ice:outputText value="t"/>
+                </ice:panelGrid>
+            </f:facet>
+
+            <f:facet name="center">
+                <ice:outputText value="Center"/>
+            </f:facet>
+
+            <f:facet name="south">
+                <ice:outputText value="South"/>
+            </f:facet>
+        </ice:panelBorder>
 
     </ice:panelTab>
 
@@ -166,5 +149,4 @@ change the border layout dynamically.
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

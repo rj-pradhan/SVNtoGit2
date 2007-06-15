@@ -39,10 +39,6 @@ with more data than can be displayed in a single page.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 
 
@@ -266,5 +262,4 @@ No. of direct links to pages: 4 -->
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

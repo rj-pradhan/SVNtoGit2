@@ -37,7 +37,6 @@
         xmlns:jsp="http://java.sun.com/JSP/Page"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGroup>
 <!--
    Main Component content;
    controls which content to display for the respective navigation
@@ -55,12 +54,8 @@
             value="#{navigation.selectedPanel.menuContentTitle}"/>
 </h2>
 
-
-<div class="demoWindow">
-
-<ui:include src="#{navigation.selectedPanel.menuContentInclusionFile}"/>
-
-</div>
+    <div class="contentIncludePanelGroup">
+        <ui:include src="#{navigation.selectedPanel.menuContentInclusionFile}"/>
+    </div>
 <br/>
-</ice:panelGroup>
 </div>

@@ -43,10 +43,6 @@ and links that trigger submits.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-    <ice:panelGrid
-            styleClass="contentLayoutGridStyle"
-            columns="1" border="0">
-
         <ice:panelTabSet styleClass="componentPanelTabSetLayout">
             <!--
               Example include, also see source code include.
@@ -157,5 +153,4 @@ and links that trigger submits.
 
         </ice:panelTabSet>
 
-    </ice:panelGrid>
 </ice:form>

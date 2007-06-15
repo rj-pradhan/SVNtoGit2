@@ -47,7 +47,6 @@
         <description>Theme Reload</description>
         <from-view-id>/showcase-facelet.iface</from-view-id>
         <navigation-case>
-
             <from-outcome>reload</from-outcome>
             <to-view-id>/index-facelet.jsp</to-view-id>
             <redirect/>

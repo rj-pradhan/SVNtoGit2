@@ -38,10 +38,6 @@ In this demonstration, various effects are applied to ice custom components.
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<ice:panelGrid
-        styleClass="contentLayoutGridStyle"
-        columns="1" border="0">
-
 <ice:panelTabSet styleClass="componentPanelTabSetLayout">
 <!--
   Example include, also see source code include.
@@ -793,5 +789,4 @@ this placeholder
 
 </ice:panelTabSet>
 
-</ice:panelGrid>
 </ice:form>

@@ -139,7 +139,15 @@ em {
     vertical-align: middle;
 }
 
+/* main container for an include */
+.contentIncludePanelGroup{
+    margin-right: 5px; 
+}
+
 /* Component tabset labels */
+.componentPanelTabSetLayout{
+
+}
 .componentPanelTabSetLayout .MiddleMiddle {
     font-weight: bold;
     font-size: 12px;
@@ -153,7 +161,6 @@ em {
     text-align: left;
     width: 100%;
 }
-
 /* Direct to DOM logo (top right) */
 #logoD2D {
     position: absolute;
@@ -185,7 +192,7 @@ em {
 
 .navConnectionStatus {
     position: absolute;
-    top: 90px;
+    top: 85px;
     right: 0;
 }
 
@@ -232,6 +239,7 @@ em {
 
 .componentContentPanelStack {
     vertical-align: top;
+    clear: right;
     width: 100%;
 }
 
@@ -274,6 +282,10 @@ em {
     vertical-align: top;
     border: 1px solid #CCCCCC;
     padding: 10px;
+    float: left;
+    margin-right: 10px;
+    width: 250px;
+    height:350px;
 }
 
 /* label alignment */
@@ -300,28 +312,6 @@ em {
     border: 0;
     vertical-align: top;
     width: 100%;
-}
-
-/* over ride default theme */
-.icePageNorth {
-    background-color: #FFFFFF;
-    vertical-align: top;
-    text-align: left;
-    margin: 0;
-    padding: 0;
-    border-collapse: collapse;
-}
-
-.icePageWest {
-    background-color: #FFFFFF;
-    vertical-align: top;
-    width: 20%;
-}
-
-.icePageCenter {
-    background-color: #FFFFFF;
-    vertical-align: top;
-    width: 80%
 }
 
 /* encapsulates the demo tab panel */
@@ -354,8 +344,8 @@ em {
 /* encapsulates the tree element and restricts it to the given size */
 .treeContainer {
     border: 1px solid #dedede;
-    width: 100%;
-    height: 400px;
+    width: 250px;
+    height: 350px;
     overflow: scroll;
 }
 
@@ -385,10 +375,6 @@ em {
     background-color: #efefef;
 }
 
-.selectionListBoxGroup select {
-/*font-size:12px;*/
-    overflow: scroll;
-}
 
 .selectionRadioGroup, .selectionListBoxGroup {
     background-color: #efefef;
@@ -413,6 +399,7 @@ em {
 
 .selectionListBoxGroup select {
     width: 140px;
+    height: 70px;
 }
 
 .selectionRadioGroup label {
@@ -436,11 +423,11 @@ em {
 }
 
 .weekend a{
-    background-color:#93AD90;
+    background-color: #999999;
 }
 
-weekend{
-    background-color:#93AD90;
+.weekend a span {
+    color: white;
 }
 .august span{
    font-weight: bold;
@@ -529,7 +516,7 @@ weekend{
 
 .dragDropImageSrc {
     cursor: move;
-    border: solid black 1px;
+    border: solid #999999 1px;
 }
 
 .dragDropImageSmall {
@@ -541,7 +528,7 @@ weekend{
     width: 100%;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 50px;
+    /*padding-top: 50px;*/
 }
 
 .cartDropParent {
@@ -554,7 +541,7 @@ weekend{
 }
 
 .cartLayoutTable {
-    width: 350px;
+    width: 420px;
 }
 
 .cartImageColumn, .cartNameColumn, .cartPriceColumn, .cartQuantityColumn,
@@ -570,6 +557,10 @@ weekend{
     border-bottom: 1px solid #CCCCCC;
     text-align: left;
 }
+.cartReturnColumn{
+    width: 90px;
+    text-align: center;
+}
 
 .cartQuantityColumn {
     text-align: center;
@@ -580,7 +571,7 @@ weekend{
 }
 
 .cartNameColumn {
-    width: 60px;
+    width: 80px;
 }
 
 /*
@@ -607,10 +598,19 @@ weekend{
 .contentLayoutGridColumn  td {
     vertical-align: top;
 }
+.listReceipt{
+    width: 100%;   
+}
+.shoppingListItemName{
 
-.listReceipt td {
-    width: 90px;
-    text-align: left; /*font-size:12px;*/
+}
+.shoppingListItemName, .shoppingListItemQuantity{
+    text-align: left;
+    width: 150px;
+}
+
+.shoppingListValue{
+    text-align: right;    
 }
 
 /*
@@ -750,40 +750,8 @@ weekend{
   Panel Border example
 */
 
-.panelBorderDemoLayoutMain {
-    text-align: center;
-    width: 400px;
-}
-
-.panelBorderDemoLayoutMain td {
-    vertical-align: middle;
-    text-align: center;
-    font-weight: normal;
-}
-
-.panelBorderDemoLayoutMain .icePageCenter {
-    background-color: #EAEDE6;
-}
-
-.panelBorderDemoLayoutMain .icePageNorth {
-    height: 40px;
-    background-color: #D7D7D1;
-}
-
-.panelBorderDemoLayoutMain .icePageEast {
-    width: 50px;
-    background-color: #BCE0D9;
-}
-
-.panelBorderDemoLayoutMain .icePageSouth {
-    height: 40px;
-    background-color: #DEE7D5;
-    border-top-width: 0;
-}
-
-.panelBorderDemoLayoutMain .icePageWest {
-    width: 50px;
-    background-color: #F1EED5;
+.panelBorderDemoLayoutMain{
+    width: 100%;
 }
 
 /*
@@ -1004,7 +972,7 @@ weekend{
     margin-top: 2px;
     padding-top: 5px;
     text-align: left;
-    width: 85px
+    width: 40px
 }
 
 .columns1 {
@@ -1107,84 +1075,26 @@ weekend{
 }
 
 /* Accordion Component Example */
-.accordionNavigation{
-    width: 145px;
+.accordionLinks span,
+    .accordionLinks.nodec, .accordionLinks:link, .accordionLinks:hover, .accordionLinks:visited {
+    color: #004080;
+    text-decoration: underline;
 }
-.accordionContent{
+.iceAccordionContainer{
+    width:100%;
 }
-
-.welcomePanel, .applesPanel, .orangesPanel, .grapesPanel, .grapesPanel, .bananasPanel,
-    .citrusPanel, .carrotsPanel, .peppersPanel, .cucumbersPanel, .tomatoesPanel,
-    .lettucePanel {
-    border: 1px solid black;
-    width: 500px;
-    height: 200px;
-background-image: url("../images/accordion/produce.jpg" );
+.iceAccordionHeader span, .iceAccordionHeader-dis span,
+    .iceAccordionHeaderCollapsed span, .iceAccordionHeaderCollapsed-dis span{
+    padding-left: 18px;   
 }
-.applesPanel {
-    background-image: url( "../images/accordion/apples.jpg" );
+.iceAccordionHeader div, .iceAccordionHeader-dis div,
+    .iceAccordionHeaderCollapsed div, .iceAccordionHeaderCollapsed-dis div{
+    background-repeat: no-repeat;
+    background-position: left top;
 }
-.orangesPanel {
-    background-image: url( "../images/accordion/oranges.jpg" );
+.iceAccordionHeader div, .iceAccordionHeader-dis div{
+    background-image: url( "../images/accordion/arrowDown.gif" );
 }
-.grapesPanel {
-    background-image: url( "../images/accordion/grapes.jpg" );
+.iceAccordionHeaderCollapsed div, .iceAccordionHeaderCollapsed-dis div{
+    background-image: url( "../images/accordion/arrowUp.gif" );
 }
-.bananasPanel {
-    background-image: url( "../images/accordion/bananas.jpg" );
-}
-.citrusPanel {
-    background-image: url( "../images/accordion/citrus.jpg" );
-}
-.carrotsPanel {
-    background-image: url( "../images/accordion/carrots.jpg" );
-}
-.peppersPanel {
-    background-image: url( "../images/accordion/peppers.jpg" );
-}
-.cucumbersPanel {
-    background-image: url( "../images/accordion/cucumbers.jpg" );
-}
-.tomatoesPanel {
-    background-image: url( "../images/accordion/tomatoes.jpg" );
-}
-.lettucePanel {
-    background-image: url( "../images/accordion/lettuce.jpg" );
-}
-
-.accordionMenuLink{
-    font-weight: bold;
-}
-
-.contentLayoutGridStyleProduce {
-    height: 200px;
-    width: 100%;
-    border: 1px solid #cccccc;
-}
-
-.contentLayoutGridStyleProduce td {
-    vertical-align: top;
-}
-
-.contentLayoutGridColumnProduce {
-    vertical-align: top;
-}
-
-.contentLayoutGridStyleProduceLogin {
-    width: 210px; /* fixed height of content demos*/
-
-}
-
-.contentLayoutGridStyleProduceLogin td {
-    vertical-align: top;
-}
-
-.contentLayoutGridColumnProduceLogin {
-    width: 210px; /* fixed height of content demos*/
-    vertical-align: top;
-}
-.accordionVeggieHeader h3{
-  font-size :1.2em ;
-}
-
-
