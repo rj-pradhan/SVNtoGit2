@@ -335,7 +335,7 @@ public class DOMResponseWriter extends ResponseWriter {
         iframe.setAttribute("src", frameURI);
         iframe.setAttribute("frameborder", "0");
         iframe.setAttribute("style",
-                "z-index: 10000; visibility: hidden; width: 0; height: 0; opacity: 0.22; filter: alpha(opacity=22);");
+                "z-index: 10000; visibility: hidden; width: 0; height: 0; position: absolute; opacity: 0.22; filter: alpha(opacity=22);");
 
         // TODO This is only meant to be a transitional focus retention(management) solution.
         String focusId = context.getFocusId();
@@ -355,19 +355,19 @@ public class DOMResponseWriter extends ResponseWriter {
 
         String sessionIDScript = "window.session='" + context.getIceFacesId() + "'; ";
         String configurationScript =
-            "window.configuration = {" +
-                "synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
-                "redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
-                "connection: {" +
-                    "context: '" + context.getApplication().getViewHandler().getResourceURL(context, "/") + "'," +
-                    "timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
-                    "heartbeat: {" +
+                "window.configuration = {" +
+                        "synchronous: " + configuration.getAttribute("synchronousUpdate", "false") + "," +
+                        "redirectURI: " + configuration.getAttribute("connectionLostRedirectURI", "null") + "," +
+                        "connection: {" +
+                        "context: '" + context.getApplication().getViewHandler().getResourceURL(context, "/") + "'," +
+                        "timeout: " + configuration.getAttributeAsLong("connectionTimeout", 30000) + "," +
+                        "heartbeat: {" +
                         "interval: " + configuration.getAttributeAsLong("heartbeatInterval", 20000) + "," +
                         "timeout: " + configuration.getAttributeAsLong("heartbeatTimeout", 3000) + "," +
                         "retries: " + configuration.getAttributeAsLong("heartbeatRetries", 3) +
-                    "}" +
-                "}" +
-            "};";
+                        "}" +
+                        "}" +
+                        "};";
 
         Element configurationElement = (Element) body.appendChild(document.createElement("script"));
         configurationElement.setAttribute("language", "javascript");
