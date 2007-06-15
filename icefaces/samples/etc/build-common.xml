@@ -35,7 +35,7 @@
         xml-apis.jar
     " >
     <exclude name="el-api.jar"     if="jsf12" />
-    <exclude name="jstl.jar"       if="jsf12" />
+    <exclude name="jstl.jar"       if="serverjsf" />  
     <exclude name="xercesImpl.jar" if="jsf12" />
     <exclude name="xml-apis.jar"   if="jsf12" />
 </patternset>
