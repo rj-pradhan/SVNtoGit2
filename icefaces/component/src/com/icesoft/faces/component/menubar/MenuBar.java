@@ -337,12 +337,14 @@ public class MenuBar extends UICommand implements NamingContainer {
      */
     public String getStyleClass() {
         String defaultStyle = CSS_DEFAULT.MENU_BAR_STYLE;
+        String userDefinedClass = styleClass;
         if (MenuBar.ORIENTATION_VERTICAL.equalsIgnoreCase(
                 getOrientation())){
                 defaultStyle+=CSS_DEFAULT.MENU_BAR_VERTICAL_SUFFIX_STYLE;
+                userDefinedClass+=CSS_DEFAULT.MENU_BAR_VERTICAL_SUFFIX_STYLE;
         }
         return Util.getQualifiedStyleClass(this, 
-                styleClass, 
+                userDefinedClass, 
                 defaultStyle, 
                 "styleClass");
     }
