@@ -139,12 +139,16 @@
     </target>
 
     <target name="testJDK">
-       <condition property="isJDK15">
-           <equals arg1="${ant.java.version}" arg2="1.5"/>
+       <condition property="isJDK15plus">
+           <or>
+               <equals arg1="${ant.java.version}" arg2="1.5"/>
+               <equals arg1="${ant.java.version}" arg2="1.6"/>
+           </or>
        </condition>
     </target>
 
-    <target name="compile15" depends="testJDK" if="isJDK15">
+
+    <target name="compile15" depends="testJDK" if="isJDK15plus">
         <javac destdir="${build.classes.dir}" sourcepath=""
                debug="${compile.debug}" source="1.5" target="1.5">
             <classpath refid="compile.run.classpath"/>
