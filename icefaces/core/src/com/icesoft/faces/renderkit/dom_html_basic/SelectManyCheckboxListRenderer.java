@@ -91,8 +91,11 @@ public class SelectManyCheckboxListRenderer extends MenuRenderer {
             rootTable.setAttribute("class", styleClass);
         }
         String style = (String) uiComponent.getAttributes().get("style");
-        if (style != null) {
+        if (style != null && style.length() > 0) {
             rootTable.setAttribute("style", style);
+        }
+        else {
+            rootTable.removeAttribute("style");
         }
         rootTable.setAttribute("border", new Integer(border).toString());
 
@@ -192,12 +195,6 @@ public class SelectManyCheckboxListRenderer extends MenuRenderer {
         if (selectItem.isDisabled()) {
             disabled = true;
         }
-        String labelClass =
-                (String) uiComponent.getAttributes().get("styleClass");
-        if (disabled) {
-            labelClass += "-dis";
-        }
-
 
         if (renderVertically) {
             rootTR = domContext.createElement("tr");
@@ -208,11 +205,7 @@ public class SelectManyCheckboxListRenderer extends MenuRenderer {
 
         Element label = domContext.createElement("label");
         td.appendChild(label);
-
-        if (labelClass != null) {
-            label.setAttribute("class", labelClass);
-        }
-
+        
         Element inputElement = domContext.createElement("input");
         inputElement
                 .setAttribute("name", uiComponent.getClientId(facesContext));
@@ -264,16 +257,12 @@ public class SelectManyCheckboxListRenderer extends MenuRenderer {
         excludes.add("style");
         excludes.add("border");
         excludes.add("readonly");
-        Iterator passTrhuAttributes = PassThruAttributeRenderer
-                .getpassThruAttributeNames().iterator();
-        while (passTrhuAttributes.hasNext()) {
-            String passThruAttribute = passTrhuAttributes.next().toString();
-            Object attOnComponent =
-                    uiComponent.getAttributes().get(passThruAttribute);
-            if (attOnComponent != null && !excludes.contains(passThruAttribute))
-                inputElement.setAttribute(passThruAttribute,
-                                          attOnComponent.toString());
-        }
+        String[] excludesStringArray = new String[excludes.size()];
+        excludesStringArray = (String[]) excludes.toArray(excludesStringArray);
+        PassThruAttributeRenderer.renderAttributes(
+                facesContext, uiComponent,
+                inputElement, rootTable,
+                excludesStringArray);
     }
 
     protected void addJavaScript(FacesContext facesContext,
