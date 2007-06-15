@@ -1,11 +1,16 @@
 package com.icesoft.faces.webapp.http.core;
 
+import com.icesoft.faces.webapp.command.Command;
+import com.icesoft.faces.webapp.command.SessionExpired;
 import com.icesoft.faces.webapp.http.common.Request;
-import com.icesoft.faces.webapp.http.common.Response;
-import com.icesoft.faces.webapp.http.common.ResponseHandler;
 import com.icesoft.faces.webapp.http.common.Server;
+import com.icesoft.faces.webapp.http.common.standard.FixedXMLContentHandler;
 
-public class IDVerifier implements Server, ResponseHandler {
+import java.io.IOException;
+import java.io.Writer;
+
+public class IDVerifier extends FixedXMLContentHandler implements Server {
+    private final static Command SessionExpired = new SessionExpired();
     private String sessionID;
     private Server server;
 
@@ -27,9 +32,7 @@ public class IDVerifier implements Server, ResponseHandler {
         server.shutdown();
     }
 
-    public void respond(Response response) throws Exception {
-        response.setStatus(500);
-        response.setHeader("Content-Type", "text/plain; charset=UTF-8");
-        response.writeBody().write("Cannot match session instance".getBytes("UTF-8"));
+    public void writeTo(Writer writer) throws IOException {
+        SessionExpired.serializeTo(writer);
     }
 }
