@@ -614,7 +614,7 @@ public class PanelTab
         parent.appendChild(table);
         labelTd.appendChild(child);
 
-        labelTd.setAttribute(HTML.CLASS_ATTR, "MiddleMiddle"
+        labelTd.setAttribute(HTML.CLASS_ATTR, "MidMid"
         );
 
         parent.appendChild(table);
