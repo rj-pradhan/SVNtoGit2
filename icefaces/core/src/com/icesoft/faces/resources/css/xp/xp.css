@@ -1028,38 +1028,29 @@ input {
 /*
 ------------- BorderLayout
 */
+.icePageNorth, .icePageEast, .icePageWest, .icePageCenter, .icePageSouth{
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+    vertical-align: top;
+}
 .icePageNorth {
     font-weight: bold;
-    height: 80px;
-    background-color: #CDCDCD;
-    padding: 5px;
     text-align: center;
 }
 
 .icePageEast {
-    width: 10%;
-    background-color: #DEDEDE;
-    padding: 5px;
-    vertical-align: top;
+    width: 20%;
 }
 
 .icePageWest {
-    width: 20%;
-    background-color: #DEDEDE;
-    vertical-align: top;
+    width: 30%;
 }
 
 .icePageCenter {
-    width: 70%;
-    background-color: #FFFFFF;
-    padding: 5px;
-    vertical-align: top;
+    width: 50%;
 }
 
 .icePageSouth {
-    border-top: 1px solid #ABABAB;
-    color: #666666;
-    padding: 4px;
 }
 
 /*
@@ -1235,7 +1226,9 @@ input {
 /*
 ----------- FileUpload Component classes
 */
-.iceFileUpload {}
+.iceFileUpload {
+    overflow: hidden;
+}
 .iceFileUploadText {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;

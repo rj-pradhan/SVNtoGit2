@@ -986,39 +986,34 @@ input {
 /*
 ------------- BorderLayout
 */
+.icePageNorth, .icePageEast, .icePageWest, .icePageCenter, .icePageSouth{
+    background-color: #0056EA;
+    filter:alpha(opacity-40);
+    -moz-opacity:.40;
+    opacity: .40;
+    padding: 5px;
+    vertical-align: top;
+}
 .icePageNorth {
     font-weight: bold;
-    height: 80px;
-    background-color: #CDCDCD;
-    padding: 5px;
     text-align: center;
 }
 
 .icePageEast {
-    width: 10%;
-    background-color: #DEDEDE;
-    padding: 5px;
-    vertical-align: top;
+    width: 20%;
 }
 
 .icePageWest {
-    width: 20%;
-    background-color: #DEDEDE;
-    vertical-align: top;
+    width: 30%;
 }
 
 .icePageCenter {
-    width: 70%;
-    background-color: #FFFFFF;
-    padding: 5px;
-    vertical-align: top;
+    width: 50%;
 }
 
 .icePageSouth {
-    border-top: 1px solid #ABABAB;
-    color: #666666;
-    padding: 4px;
 }
+
 
 /*
 ----------- Page Panel Component classes
