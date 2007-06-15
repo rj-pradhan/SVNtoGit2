@@ -260,7 +260,7 @@ public class SelectInputDateRenderer
                 table.setAttribute(HTML.SUMMARY_ATTR,"This table contains a Calendar where a date can be selected.");
                 calendarDiv.appendChild(table);
                 Text iframe = domContext.createTextNode("<!--[if lte IE"+
-                        " 6.5]><iframe class=\"iceCalIFrameFix\"></iframe><![endif]-->");
+                        " 6.5]><iframe class=\"iceSelInpDateIFrameFix\"></iframe><![endif]-->");
                 calendarDiv.appendChild(iframe);                 
                 root.appendChild(calendarDiv);
                 // render a hidden field to manage the popup state; visible || hidden
