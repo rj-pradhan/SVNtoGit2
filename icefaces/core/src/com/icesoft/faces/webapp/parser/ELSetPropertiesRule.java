@@ -42,6 +42,7 @@ import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 import javax.faces.webapp.UIComponentTag;
 import javax.faces.webapp.UIComponentELTag;
+import javax.faces.event.ActionEvent;
 import java.util.HashMap;
 
 
@@ -74,7 +75,12 @@ public class ELSetPropertiesRule extends Rule {
                     values.put(name, value);
                 } else if ("action".equals(name)) {
                     values.put(name, 
-                            getMethodExpression(facesContext, name, value));
+                            getMethodExpression( facesContext, name, value,
+                                    null ));
+                } else if ("actionListener".equals(name)) {
+                    values.put(name,
+                            getMethodExpression(facesContext, name, value,
+                                    ActionEvent.class));
                 } else {
                     values.put(name, 
                             getValueExpression(facesContext, name, value));
@@ -107,13 +113,19 @@ public class ELSetPropertiesRule extends Rule {
     }
 
     private MethodExpression getMethodExpression(FacesContext facesContext,
-                                                 String name, String value)  {
+                                                 String name, String value,
+                                                 Class argType)  {
+        Class[] argTypes = new Class[]{};
+        if (null != argType) {
+            argTypes = new Class[]{argType};
+        }
+
         MethodExpression methodExpression =
                 facesContext.getApplication().getExpressionFactory()
                         .createMethodExpression(
                                                 facesContext.getELContext(),
                                                 value, String.class,
-                                                new Class[]{});
+                                                argTypes);
         return methodExpression;
     }
     
