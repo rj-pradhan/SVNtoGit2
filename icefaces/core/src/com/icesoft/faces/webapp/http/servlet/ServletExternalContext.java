@@ -218,13 +218,13 @@ public class ServletExternalContext extends BridgeExternalContext {
 
     public String getRequestPathInfo() {
 
-        if( requestPathInfo != null && requestPathInfo.trim().length() > 0 ){
+        if (requestPathInfo != null && requestPathInfo.trim().length() > 0) {
             return requestPathInfo;
         }
 
         //If we start out null (because it hasn't been specifically set) then
         //use the wrapped request value.
-        if( requestPathInfo == null ){
+        if (requestPathInfo == null) {
             requestPathInfo = request.getPathInfo();
         }
 
@@ -240,16 +240,16 @@ public class ServletExternalContext extends BridgeExternalContext {
      * Utility method that returns the original value of the supplied String
      * unless it is emtpy (val.trim().length() == 0).  In that particlar case
      * the value returned is null.
-     * 
+     *
      * @param val
      * @return
      */
-    private static String convertEmptyStringToNull(String val){
-        if( val == null ){
+    private static String convertEmptyStringToNull(String val) {
+        if (val == null) {
             return val;
         }
 
-        if( val.trim().length() == 0 ){
+        if (val.trim().length() == 0) {
             return null;
         }
 
@@ -261,8 +261,8 @@ public class ServletExternalContext extends BridgeExternalContext {
         //If the attribute "javax.servlet.include.request_uri" has been set
         //then we should use it.  This is typically done via dispatching.  It
         //is the way the proper view ID is set with portlets.
-        String uri = (String)request.getAttribute(Constants.INC_REQUEST_URI);
-        if( uri == null || uri.trim().length() > 0 ){
+        String uri = (String) request.getAttribute(Constants.INC_REQUEST_URI);
+        if (uri == null || uri.trim().length() > 0) {
             uri = request.getRequestURI();
         }
 
@@ -321,12 +321,12 @@ public class ServletExternalContext extends BridgeExternalContext {
         //is request specific so we need to check each time.  In the future, we
         //may want to consider using our own internal view number since it's
         //purpose is to encapsulate this concept.
-        String ns = (String)request.getAttribute(Constants.NAMESPACE_KEY);
+        String ns = (String) request.getAttribute(Constants.NAMESPACE_KEY);
 
-        if( ns != null ){
+        if (ns != null) {
             return ns + name;
         }
-        
+
         return name;
     }
 
@@ -471,7 +471,7 @@ public class ServletExternalContext extends BridgeExternalContext {
 
     /**
      * If in Standard request scope mode, remove all parameters from
-     * the Request Map.  
+     * the Request Map.
      */
     public void resetRequestMap() {
         if (standardScope) {
@@ -481,6 +481,11 @@ public class ServletExternalContext extends BridgeExternalContext {
 
     public void injectBundles(Map bundles) {
         requestMap.putAll(bundles);
+    }
+
+    public void dispose() {
+        requestMap.clear();
+        commandQueue.take();
     }
 
     private interface Redirector {

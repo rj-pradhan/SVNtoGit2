@@ -148,6 +148,8 @@ public class ServletView implements CommandQueue {
     public void dispose() {
         this.notifyViewDisposal();
         this.release();
+        this.facesContext.dispose();
+        this.externalContext.dispose();
     }
 
     //this method was introduced to reuse the PersistentFacesState instance when page redirects occur

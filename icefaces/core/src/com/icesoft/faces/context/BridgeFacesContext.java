@@ -85,7 +85,7 @@ public class BridgeFacesContext extends FacesContext {
         setCurrentInstance(this);
         this.externalContext = externalContext;
         this.viewNumber = view;
-        this.iceFacesId = icefacesID;              
+        this.iceFacesId = icefacesID;
         this.commandQueue = commandQueue;
         this.configuration = configuration;
         this.application = ((ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY)).getApplication();
@@ -143,9 +143,9 @@ public class BridgeFacesContext extends FacesContext {
         // See following method.
         ArrayList buffer = new ArrayList();
         Iterator i = faceMessages.values().iterator();
-        while( i.hasNext() ) {
-            buffer.addAll( (Vector) i.next() );
-        } 
+        while (i.hasNext()) {
+            buffer.addAll((Vector) i.next());
+        }
 
         return buffer.iterator();
     }
@@ -347,6 +347,11 @@ public class BridgeFacesContext extends FacesContext {
         renderResponse = false;
         responseComplete = false;
         setCurrentInstance(null);
+    }
+
+    public void dispose() {
+        String key = viewNumber + "/" + D2DViewHandler.DOM_CONTEXT_TABLE;
+        externalContext.getSessionMap().remove(key);
     }
 
     public void applyBrowserDOMChanges() {
