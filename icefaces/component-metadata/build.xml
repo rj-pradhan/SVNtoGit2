@@ -92,6 +92,13 @@
         <copy file="src/main/resources/jar_xml_dtd/jsfmeta-resources.jar" todir="${maven.build.output}" />
     </target>    
     
+    <target name="eclipse.cm" depends="compile, test" >
+        <java classname="com.icesoft.jsfmeta.eclipse.CMGenerator" failonerror="true" fork="true">
+            <classpath refid="build.classpath" />
+        </java>
+    </target>
+    
+    
     <!-- generator -->
     <target name="generator" description="code generator" depends="conf-changed" unless="conf-uptodate">
         <!-- validate meatdata xml file -->
