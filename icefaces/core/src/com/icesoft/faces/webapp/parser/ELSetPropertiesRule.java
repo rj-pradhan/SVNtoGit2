@@ -104,11 +104,23 @@ public class ELSetPropertiesRule extends Rule {
 
     private ValueExpression getValueExpression(FacesContext facesContext,
                                                String name, String value)  {
+
+        Class argType = Object.class;
+        try {
+            //attempt to coerce to Integer type for standard JSF components
+            if (null != Integer.valueOf(value)) {
+                argType = Integer.class;
+            }
+        } catch (NumberFormatException e) {
+        }
+
+        
         ValueExpression valueExpression =
                 facesContext.getApplication().getExpressionFactory()
                         .createValueExpression(
                                 facesContext.getELContext(),
-                                value, Object.class );
+                                value, argType );
+
         return valueExpression;
     }
 
