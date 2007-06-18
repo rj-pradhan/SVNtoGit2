@@ -2,6 +2,6 @@
 <head>
 </head>
 <body>
-<jsp:forward page="./effect.iface" />
+<jsp:forward page="effect.iface" />
 </body>
 </html>
