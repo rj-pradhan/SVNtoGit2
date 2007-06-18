@@ -303,13 +303,13 @@ that display the information, starting with the various table header styles
 }
 
 /* styles for the links used in the headers of the tables*/
-.tableHeader a{
+.bidTableColHdr1 a{
 	color:#FFFFFF;
 	font-size:12;
 }
 
 /* the standard table header */
-.tableHeader{
+.bidTableColHdr1{
 	background-color:#A6A6A6;
 	font-size:1em;
 	color:#FFFFFF;
