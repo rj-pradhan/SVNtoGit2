@@ -86,7 +86,7 @@ change the border layout dynamically.
         <br />
         <!-- Panel Layout -->
         <ice:panelBorder id="page"
-                styleClass="panelBorderDemoLayoutMain"
+                styleClass="pnlBrdrDemo"
                          renderNorth="#{borderLayout.renderNorth}"
                          renderSouth="#{borderLayout.renderSouth}"
                          renderCenter="#{borderLayout.renderCenter}"

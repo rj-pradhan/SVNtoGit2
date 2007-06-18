@@ -93,7 +93,7 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
             setRootElementId(facesContext, rootSpan, uiComponent);
         }
         Element root = (Element) domContext.getRootNode();
-        root.setAttribute(HTML.CLASS_ATTR, panelAccordion.getContainerClass());
+        root.setAttribute(HTML.CLASS_ATTR, panelAccordion.getStyleClass());
         root.setAttribute(HTML.STYLE_ATTR, style);
 
         Element header = domContext.createElement(HTML.DIV_ELEM);

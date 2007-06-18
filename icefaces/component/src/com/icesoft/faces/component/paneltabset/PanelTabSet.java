@@ -339,6 +339,8 @@ public class PanelTabSet
     private final String DEFAULT_TABPLACEMENT =
             "Top"; // Top, Bottom, Left or Right
 
+    final static String  TABPLACEMENT_BOTTOM =
+        "bottom"; //
     // default styles
 
     /**
@@ -1046,7 +1048,20 @@ public class PanelTabSet
 
    
     String getContentClass() {
+        String contentClass = CSS_DEFAULT.PANEL_TAB_CONTENTS_CLASS;
+        if (getTabPlacement().equalsIgnoreCase(TABPLACEMENT_BOTTOM)) {
+            contentClass +=CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM;
+        }        
         return Util.getQualifiedStyleClass(this, 
-                CSS_DEFAULT.PANEL_TAB_CONTENTS_CLASS);    
+                contentClass);    
+    }
+    
+    String getSpacerClass() {
+        String spacerClass = CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER;
+        if (getTabPlacement().equalsIgnoreCase(TABPLACEMENT_BOTTOM)) {
+            spacerClass +=CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM;
+        }
+        return Util.getQualifiedStyleClass(this, 
+                spacerClass);
     }
 }

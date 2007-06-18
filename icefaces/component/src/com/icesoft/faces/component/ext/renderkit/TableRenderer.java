@@ -351,10 +351,10 @@ public class TableRenderer
         }
 
         String columnStyles[] = getColumnStyleClasses(uiComponent);
-        int columnStyleIndex = 0;
+        int columnStyleIndex;
         int columnStylesMaxIndex = columnStyles.length - 1;
         while (uiData.isRowAvailable()) {
-
+            columnStyleIndex = 0;
             String selectedClass = null;
             if (rowStylesMaxIndex >= 0) {
                selectedClass = rowStyles[rowStyleIndex];

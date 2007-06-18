@@ -96,7 +96,7 @@ a control on the data to hide/show the table columns.
                                columnClasses="tableCol"
                                scrollable="#{table.scrollable}"
                                scrollHeight="#{table.scrollableHeight}"
-                               columnWidths="150px,150px,150px"
+                               columnWidths="160px,160px,160px"
                         >
                     <ice:column rendered="#{table.renderFirstName}">
                         <f:facet name="header">

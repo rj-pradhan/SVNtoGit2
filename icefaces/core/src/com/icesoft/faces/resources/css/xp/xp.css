@@ -73,47 +73,47 @@ input {
 /*
 =================== Style class definitions for ICE Standard Extended Component Appearance ==============
 */
-.iceInputtext, .iceTextarea {
+.iceInpTxt, .iceInpSecrt, .iceTxtArea {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;
     margin: 2px;
     padding: 2px;
 }
 
-.iceCheckbox {
+.iceSelMnyCb {
     white-space: nowrap;
 }
 
-.iceCheckbox input, .iceRadioBtn input, .iceBooleanCheckbox {
+.iceSelMnyCb input, .iceSelOneRb input, .iceSelBoolChkbx {
     margin: 2px;
     padding: 2px;
 }
 
-.iceInputtext {
+.iceInpTxt, .iceInpSecrt {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     padding: 2px;
 }
 
-.iceSelect {
+.iceSelOneMnu, .iceSelMnyLb, .iceSelMnyMnu, .iceSelOneLb {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     padding: 2px;
 }
 
-.iceTextarea {
+.iceTxtArea {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     padding: 2px;
 }
 
-.iceLink {
+.iceCmdLnk, .iceOutLnk {
     text-decoration: none;
     font-weight: normal;
     color: #333333;
 }
 
-.iceOutputText {
+.iceOutTxt, .iceOutLbl {
     font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     padding-left: 0px;
@@ -122,7 +122,7 @@ input {
     padding-bottom: 2px;
 }
 
-.iceBtn {
+.iceCmdBtn {
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -132,25 +132,25 @@ input {
 /*
 ----------- Calendar Component classes
 */
-.iceCalOutline {
+.iceSelInpDate {
 /* calendar outline & background color */
     background-color: #FFFFFF;
     border: 1px solid #ABABAB; /* removed margin from calendar outline - better absolute positioning of popup */
 /*margin:10px;*/
 }
 
-.iceCalIFrameFix {
+.iceSelInpDateIFrameFix {
    z-index: -1;
    position: absolute;
    display: block;
    filter: mask();
 } 
  
-.iceCalInput {
+.iceSelInpDateInput {
     width: 150px;
 }
 
-.iceCalOpenPopup {
+.iceSelInpDateOpenPopup {
     display: block;
     text-decoration: none;
     background-color: transparent;
@@ -162,7 +162,7 @@ input {
     height: 16px;
 }
 
-.iceCalClosePopup {
+.iceSelInpDateClosePopup {
     display: block;
     text-decoration: none;
     background-color: transparent;
@@ -174,7 +174,7 @@ input {
     height: 16px;
 }
 
-.iceCalMonthYear {
+.iceSelInpDateMonthYear {
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;
@@ -188,11 +188,11 @@ input {
     padding-bottom: 4px; /*border-right:1px solid #CCCCCC;*/
 }
 
-.iceCalMonthYear img {
+.iceSelInpDateMonthYear img {
     border: none;
 }
 
-.iceCalMovePrev {
+.iceSelInpDateMovePrev {
     text-decoration: none;
     display: block;
     background-color: transparent;
@@ -204,7 +204,7 @@ input {
     height: 16px;
 }
 
-.iceCalMoveNext {
+.iceSelInpDateMoveNext {
     text-decoration: none;
     display: block;
     background-color: transparent;
@@ -216,7 +216,7 @@ input {
     height: 16px;
 }
 
-.iceCalWeek {
+.iceSelInpDateWeek {
 /* the days of the week row */
     font-weight: normal;
     color: #2A6CC2;
@@ -227,14 +227,14 @@ input {
 }
 
 /* set the look for the days of the week backgrounds */
-.iceCalDay, .iceCalCur {
+.iceSelInpDateDay, .iceSelInpDateCur {
 /* the background & alignment for the days */
     padding: 3px;
     text-align: center;
 }
 
 /* now set the attributes for the numbers for each day of the week */
-.iceCalDay a {
+.iceSelInpDateDay a {
 /* the day text */
     text-decoration: none;
     background-color: #FFFFFF;
@@ -246,7 +246,7 @@ input {
     display: block;
 }
 
-.iceCalCur a {
+.iceSelInpDateCur a {
     text-decoration: none;
     background-color: #2A6CC2;
     border: 1px solid #2A6CC2;
@@ -258,7 +258,7 @@ input {
 }
 
 /* now set the color attributes for the hover effect on non-current days */
-.iceCalDay a:hover {
+.iceSelInpDateDay a:hover {
 /* the day text */
     text-decoration: none;
     color: #2A6CC2;
@@ -267,17 +267,17 @@ input {
 /*
 ----------- Data Table Component classes
 */
-.iceDataTbl { /* was iceDataTblOutline */
+.iceDatTbl { /* was iceDataTblOutline */
     background-color: #FFFFFF;
     border: 1px solid #ABABAB;
     margin: 10px;
 }
 
-.iceDataTbl table{
+.iceDatTbl table{
 	border-collapse:collapse;
 }
 
-.iceDataTblColumnHeader , .iceDataTblColumnHeader1, .iceDataTblColumnHeader2{ 
+.iceDatTblColHdr , .iceDatTblColHdr1, .iceDatTblColHdr2{ 
 /* was iceTblHeader */
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
@@ -295,16 +295,16 @@ input {
 }
 
 /* data tables are rendered with alternating row colors */
-.iceDataTblRow1 { /* was iceTblRow1 */
+.iceDatTblRow1 { /* was iceTblRow1 */
     background-color: #FFFFFF;
 }
 
-.iceDataTblRow2 { /* was iceTblRow2 */
+.iceDatTblRow2 { /* was iceTblRow2 */
     background-color: #FFFFFF;
 }
 
 /* set the common attributes for the column classes */
-.iceDataTblColumn, .iceDataTblColumn1, .iceDataTblColumn2{
+.iceDatTblCol, .iceDatTblCol1, .iceDatTblCol2{
 /*was column, column1, column2, column3*/
     color: #000000;
     padding-left: 5px;
@@ -313,40 +313,36 @@ input {
     padding-bottom: 3px;
     border-right: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
+	text-align:left;    
 }
 
-/* now you can add or override any attributes for the specific columns */
-.iceDataTblColumn1 {
-    text-align: center;
-}
-
-.iceDataTblHeader{} /*was iceTblHeader */
-.iceDataTblFooter{} /*was iceTblFooter */
+.iceDatTblHdr{} /*was iceTblHeader */
+.iceDatTblFtr{} /*was iceTblFooter */
 
 /* etc */
 
 /*
 ----------- Data Scroller Component classes
 */
-.iceDtdPgrScrOut {
+.iceDatPgrScrOut {
 /* the class for the outside table */
     background-color: #FFFFFF;
     margin: 10px;
 }
 
-.iceDtdPgrScrBtn {
+.iceDatPgrScrBtn {
 /* the cells behind the scroll buttons */
     background-color: #FFFFFF;
     padding: 2px;
 }
 
-.iceDtdPgrTbl {
+.iceDatPgrTbl {
 /* the container for the pagination*/
     background-color: #FFFFFF;
 }
 
 /* set the common attributes for the pagination numbers */
-.iceDtdPgrScrCol a, .iceDtdPgrCol a {
+.iceDatPgrScrCol a, .iceDatPgrCol a {
     text-decoration: none;
     font-weight: normal;
     background-color: #FFFFFF;
@@ -357,23 +353,23 @@ input {
     border: 1px solid #FFFFFF;
 }
 
-* html .iceDtdPgrCol a {
+* html .iceDatPgrCol a {
     width: 1%;
 }
 
 /* override the attributes for the currently selected page */
-.iceDtdPgrScrCol a {
+.iceDatPgrScrCol a {
     color: #FFFFFF;
     border: 1px solid #2A6CC2;
     background-color: #2A6CC2;
 }
 
-* html .iceDtdPgrScrCol a {
+* html .iceDatPgrScrCol a {
     width: 1%;
 }
 
 /* set the attributes for the mouseover on none-current pages */
-.iceDtdPgrCol a:hover {
+.iceDatPgrCol a:hover {
     color: #000000;
     border: 1px solid #2A6CC2;
 }
@@ -398,7 +394,7 @@ input {
     padding: 4px;
 }
 
-.treeTableHeaderClass {
+.treeTableHdrClass {
 
 }
 
@@ -406,17 +402,13 @@ input {
 ----------- Tabbed Pane Component classes
 */
 
-.icePnlTab {
-    width: 1px;
-}
-
 /* tabOn style classes */
 
-.icePnlTabOn { /* was iceTabSetTabOn */
+.icePnlTbOn { /* was iceTabSetTabOn */
 
 }
 
-.icePnlTabOn .LeftTop {
+.icePnlTbOn .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/on-left-top.gif" );
     background-repeat: no-repeat;
@@ -425,7 +417,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .MiddleTop {
+.icePnlTbOn .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-top.gif" );
     background-repeat: repeat-x;
@@ -434,7 +426,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .RightTop {
+.icePnlTbOn .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/on-right-top.gif" );
     background-repeat: no-repeat;
@@ -443,7 +435,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .LeftMiddle {
+.icePnlTbOn .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/on-left-mid.gif" );
     background-repeat: repeat-y;
@@ -452,7 +444,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .MiddleMiddle {
+.icePnlTbOn .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-mid.gif" );
     background-repeat: repeat;
@@ -461,7 +453,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOn .MiddleMiddle a {
+.icePnlTbOn .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -469,15 +461,14 @@ input {
     padding-top: 5px;
     padding-right: 15px;
     padding-left: 15px;
-
 }
 
 
-* html .icePnlTabOn .MiddleMiddle a {
+* html .icePnlTbOn .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOn .RightMiddle {
+.icePnlTbOn .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/on-right-mid.gif" );
     background-repeat: repeat-y;
@@ -486,21 +477,21 @@ input {
     border: none;
 }
 
-.icePnlTabOn .LeftBottom {
+.icePnlTbOn .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/on-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.icePnlTabOn .MiddleBottom {
+.icePnlTbOn .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.icePnlTabOn .RightBottom {
+.icePnlTbOn .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/on-right-bot.gif" );
     background-repeat: no-repeat;
@@ -509,11 +500,11 @@ input {
 
 /* tabOff style classes */
 
-.icePnlTabOff { /* was iceTabSetTabOff*/
+.icePnlTbOff { /* was iceTabSetTabOff*/
 
 }
 
-.icePnlTabOff .LeftTop {
+.icePnlTbOff .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top.gif" );
     background-repeat: no-repeat;
@@ -522,7 +513,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .MiddleTop {
+.icePnlTbOff .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-top.gif" );
     background-repeat: repeat-x;
@@ -531,7 +522,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .RightTop {
+.icePnlTbOff .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top.gif" );
     background-repeat: no-repeat;
@@ -540,7 +531,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .LeftMiddle {
+.icePnlTbOff .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/off-left-mid.gif" );
     background-repeat: no-repeat;
@@ -549,7 +540,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .MiddleMiddle {
+.icePnlTbOff .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-mid.gif" );
     background-repeat: repeat-x;
@@ -558,7 +549,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOff .MiddleMiddle a {
+.icePnlTbOff .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -568,11 +559,11 @@ input {
     padding-left: 15px;
 }
 
-* html .icePnlTabOff .MiddleMiddle a {
+* html .icePnlTbOff .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOff .RightMiddle {
+.icePnlTbOff .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/off-right-mid.gif" );
     background-repeat: no-repeat;
@@ -581,21 +572,21 @@ input {
     border: none;
 }
 
-.icePnlTabOff .LeftBottom {
+.icePnlTbOff .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.icePnlTabOff .MiddleBottom {
+.icePnlTbOff .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.icePnlTabOff .RightBottom {
+.icePnlTbOff .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -604,11 +595,11 @@ input {
 
 /* tabOver style classes */
 
-.icePnlTabOver { /* was iceTabSetTabOver */
+.icePnlTbOver { /* was iceTabSetTabOver */
 
 }
 
-.icePnlTabOver .LeftTop {
+.icePnlTbOver .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/over-left-top.gif" );
     background-repeat: no-repeat;
@@ -617,7 +608,7 @@ input {
     border: none;
 }
 
-.icePnlTabOver .MiddleTop {
+.icePnlTbOver .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-top.gif" );
     background-repeat: repeat-x;
@@ -626,7 +617,7 @@ input {
     border: none;
 }
 
-.icePnlTabOver .RightTop {
+.icePnlTbOver .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/over-right-top.gif" );
     background-repeat: no-repeat;
@@ -635,7 +626,7 @@ input {
     border: none;
 }
 
-.icePnlTabOver .LeftMiddle {
+.icePnlTbOver .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/over-left-mid.gif" );
     background-repeat: repeat-y;
@@ -644,7 +635,7 @@ input {
     border: none;
 }
 
-.icePnlTabOver .MiddleMiddle {
+.icePnlTbOver .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-mid.gif" );
     background-repeat: repeat;
@@ -653,7 +644,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOver .MiddleMiddle a {
+.icePnlTbOver .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -663,11 +654,11 @@ input {
     padding-left: 15px;
 }
 
-* html .icePnlTabOver .MiddleMiddle a {
+* html .icePnlTbOver .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOver .RightMiddle {
+.icePnlTbOver .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/over-right-mid.gif" );
     background-repeat: repeat-y;
@@ -676,21 +667,21 @@ input {
     border: none;
 }
 
-.icePnlTabOver .LeftBottom {
+.icePnlTbOver .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/over-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.icePnlTabOver .MiddleBottom {
+.icePnlTbOver .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.icePnlTabOver .RightBottom {
+.icePnlTbOver .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/over-right-bot.gif" );
     background-repeat: no-repeat;
@@ -699,17 +690,17 @@ input {
 
 /* tabSpacer */
 
-.icePnlTabSetSpacer {
+.icePnlTbSetSpcr {
     width: 100%;
     border-bottom: 1px solid #ABABAB;
 }
 
 /* tabPanel */
-.icePnlTabSet { /* was iceTabSet*/
+.icePnlTbSet { /* was iceTabSet*/
 
 }
 
-.icePnlTabSetContents { /*newly added class*/
+.icePnlTbSetCnt { /*newly added class*/
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -720,14 +711,25 @@ input {
     background-color: #FFFFFF;
 }
 
+.icePnlTbSetCntBtm { /*was iceTabSetBottom*/
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-right: 1px solid #ABABAB;
+    border-top: 1px solid #ABABAB;
+    border-left: 1px solid #ABABAB;
+    background-color: #FFFFFF;
+}
+
 /* TABS ON BOTTOM STYLE CLASSES */
 /* tabOn style classes */
 
-.icePnlTabOnBottom {
+.icePnlTbOnBtm {
 
 }
 
-.icePnlTabOnBottom .LeftTop {
+.icePnlTbOnBtm .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-left-top.gif" );
     background-repeat: no-repeat;
@@ -735,7 +737,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .MiddleTop {
+.icePnlTbOnBtm .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-mid-top.gif" );
     background-repeat: repeat-x;
@@ -743,7 +745,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .RightTop {
+.icePnlTbOnBtm .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-right-top.gif" );
     background-repeat: no-repeat;
@@ -751,7 +753,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .LeftMiddle {
+.icePnlTbOnBtm .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/on-left-mid.gif" );
     background-repeat: repeat-y;
@@ -760,7 +762,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .MiddleMiddle {
+.icePnlTbOnBtm .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/on-mid-mid.gif" );
     background-repeat: repeat;
@@ -769,7 +771,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOnBottom .MiddleMiddle a {
+.icePnlTbOnBtm .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -779,11 +781,11 @@ input {
     padding-left: 15px;
 }
 
-* html .icePnlTabOnBottom .MiddleMiddle a {
+* html .icePnlTbOnBtm .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOnBottom .RightMiddle {
+.icePnlTbOnBtm .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/on-right-mid.gif" );
     background-repeat: repeat-y;
@@ -792,7 +794,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .LeftBottom {
+.icePnlTbOnBtm .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-left-bot.gif" );
     background-repeat: no-repeat;
@@ -800,7 +802,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .MiddleBottom {
+.icePnlTbOnBtm .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -808,7 +810,7 @@ input {
     border: none;
 }
 
-.icePnlTabOnBottom .RightBottom {
+.icePnlTbOnBtm .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-on-right-bot.gif" );
     background-repeat: no-repeat;
@@ -818,11 +820,11 @@ input {
 
 /* tabOff style classes */
 
-.icePnlTabOffBottom { /* was iceTabSetTabOffBottom*/
+.icePnlTbOffBtm { /* was iceTabSetTabOffBottom*/
 
 }
 
-.icePnlTabOffBottom .LeftTop {
+.icePnlTbOffBtm .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-left-top.gif" );
     background-repeat: no-repeat;
@@ -830,7 +832,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .MiddleTop {
+.icePnlTbOffBtm .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-mid-top.gif" );
     background-repeat: repeat-x;
@@ -838,7 +840,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .RightTop {
+.icePnlTbOffBtm .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-right-top.gif" );
     background-repeat: no-repeat;
@@ -846,7 +848,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .LeftMiddle {
+.icePnlTbOffBtm .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/off-left-mid.gif" );
     background-repeat: no-repeat;
@@ -855,7 +857,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .MiddleMiddle {
+.icePnlTbOffBtm .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-mid.gif" );
     background-repeat: repeat-x;
@@ -864,7 +866,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOffBottom .MiddleMiddle a {
+.icePnlTbOffBtm .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -874,11 +876,11 @@ input {
     padding-left: 15px;
 }
 
-* html .icePnlTabOffBottom .MiddleMiddle a {
+* html .icePnlTbOffBtm .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOffBottom .RightMiddle {
+.icePnlTbOffBtm .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/off-right-mid.gif" );
     background-repeat: no-repeat;
@@ -887,7 +889,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .LeftBottom {
+.icePnlTbOffBtm .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-left-bot.gif" );
     background-repeat: no-repeat;
@@ -895,7 +897,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .MiddleBottom {
+.icePnlTbOffBtm .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -903,7 +905,7 @@ input {
     border: none;
 }
 
-.icePnlTabOffBottom .RightBottom {
+.icePnlTbOffBtm .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -913,11 +915,11 @@ input {
 
 /* tabOver style classes */
 
-.icePnlTabOverBottom { /* was iceTabSetTabOverBottom*/
+.icePnlTbOverBtm { /* was iceTabSetTabOverBottom*/
 
 }
 
-.icePnlTabOverBottom .LeftTop {
+.icePnlTbOverBtm .LftTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-left-top.gif" );
     background-repeat: no-repeat;
@@ -925,7 +927,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .MiddleTop {
+.icePnlTbOverBtm .MidTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-mid-top.gif" );
     background-repeat: repeat-x;
@@ -933,7 +935,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .RightTop {
+.icePnlTbOverBtm .RtTop {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-right-top.gif" );
     background-repeat: no-repeat;
@@ -941,7 +943,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .LeftMiddle {
+.icePnlTbOverBtm .LftMid {
     background-color: transparent;
     background-image: url( "./css-images/over-left-mid.gif" );
     background-repeat: repeat-y;
@@ -950,7 +952,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .MiddleMiddle {
+.icePnlTbOverBtm .MidMid {
     background-color: transparent;
     background-image: url( "./css-images/over-mid-mid.gif" );
     background-repeat: repeat;
@@ -959,7 +961,7 @@ input {
     white-space: nowrap;
 }
 
-.icePnlTabOverBottom .MiddleMiddle a {
+.icePnlTbOverBtm .MidMid a {
     text-decoration: none;
     color: #000000;
     cursor: pointer;
@@ -969,11 +971,11 @@ input {
     padding-left: 15px;
 }
 
-* html .icePnlTabOverBottom .MiddleMiddle a {
+* html .icePnlTbOverBtm .MidMid a {
     width: 1%;
 }
 
-.icePnlTabOverBottom .RightMiddle {
+.icePnlTbOverBtm .RtMid {
     background-color: transparent;
     background-image: url( "./css-images/over-right-mid.gif" );
     background-repeat: repeat-y;
@@ -982,7 +984,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .LeftBottom {
+.icePnlTbOverBtm .LftBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-left-bot.gif" );
     background-repeat: no-repeat;
@@ -990,7 +992,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .MiddleBottom {
+.icePnlTbOverBtm .MidBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-mid-bot.gif" );
     background-repeat: repeat-x;
@@ -998,7 +1000,7 @@ input {
     border: none;
 }
 
-.icePnlTabOverBottom .RightBottom {
+.icePnlTbOverBtm .RtBtm {
     background-color: transparent;
     background-image: url( "./css-images/tbot-over-right-bot.gif" );
     background-repeat: no-repeat;
@@ -1007,14 +1009,14 @@ input {
 }
 
 /* tabSpacer */
-.icePnlTabSetSpacerBottom {
+.icePnlTbSetSpcrBtm {
     width: 100%;
     border-top: 1px solid #ABABAB;
 }
 
 /* tabPanel */
 
-.icePnlTabSetBottom {
+.icePnlTbSetBtm {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -1028,36 +1030,45 @@ input {
 /*
 ------------- BorderLayout
 */
-.icePageNorth, .icePageEast, .icePageWest, .icePageCenter, .icePageSouth{
-    border: 1px solid #CCCCCC;
-    padding: 5px;
-    vertical-align: top;
-}
-.icePageNorth {
+.icePnlBrdrNorth {
     font-weight: bold;
+    height: 80px;
+    background-color: #FFFFFF;
+    padding: 5px;
     text-align: center;
 }
 
-.icePageEast {
+.icePnlBrdrEast {
+    width: 10%;
+    background-color: #FFFFFF;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.icePnlBrdrWest {
     width: 20%;
+    background-color: #FFFFFF;
+    vertical-align: top;
 }
 
-.icePageWest {
-    width: 30%;
+.icePnlBrdrCenter {
+    width: 70%;
+    background-color: #FFFFFF;
+    padding: 5px;
+    vertical-align: top;
 }
 
-.icePageCenter {
-    width: 50%;
-}
-
-.icePageSouth {
+.icePnlBrdrSouth {
+    border-top: 1px solid #FFFFFF;
+    color: #666666;
+    padding: 4px;
 }
 
 /*
 ------------- PanelLayout
 */
 
-.pageHeader {
+.pageHdr {
     font-weight: bold;
     height: 80px;
     background-color: #CDCDCD;
@@ -1065,7 +1076,7 @@ input {
     text-align: center;
 }
 
-.icePageStyle {
+.icePnlBrdrStyle {
     background-color: #FFFFFF;
     border: 1px solid #ABABAB;
     margin: 10px;
@@ -1086,7 +1097,7 @@ input {
     vertical-align: top;
 }
 
-.pageFooter {
+.pageFtr {
     border-top: 1px solid #ABABAB;
     color: #666666;
     padding: 4px;
@@ -1103,7 +1114,7 @@ input {
     padding: 0px;
 }
 
-.navItem, .navActiveItem, .navOpenItem {
+.navItem, .navActvItem, .navOpenItem {
     color: #333333;
     text-decoration: none;
     background-color: #CDCDCD;
@@ -1117,7 +1128,7 @@ input {
     display: block;
 }
 
-.navItem:hover, .navActiveItem:hover, .navOpenItem:hover {
+.navItem:hover, .navActvItem:hover, .navOpenItem:hover {
     background-color: #FFFFFF;
     color: #000000;
     border: 1px solid #2A6CC2;
@@ -1129,7 +1140,7 @@ input {
     font-weight: bold;
 }
 
-.navActiveItem {
+.navActvItem {
     width: 100%;
     background-color: #2A6CC2;
     color: #FFFFFF;
@@ -1150,24 +1161,24 @@ input {
 /*
 --------------- Progress bar
 */
-.iceOutputProgress {
+.iceOutProg {
     margin: 10px;
 }
 
-.iceOutputProgressBackground {
+.iceOutProgBg {
     border: 1px solid #ABABAB;
     width: 300px;
     height: 13px;
 }
 
-.iceOutputProgressFill {
+.iceOutProgFill {
     background-color: #026AFF; /* background-image:url(./css-images/window_top.gif);*/
     background-position: top left;
     background-repeat: repeat-x;
     display: block;
 }
 
-.iceOutputProgressText {
+.iceOutProgTxt {
     color: black;
 }
 
@@ -1175,14 +1186,14 @@ input {
 --------------- autoComplete classes ------
 */
 
-.iceSelInpText {
+.iceSelInpTxtTxt {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;
     margin: 0px;
     padding: 2px;
 }
 
-.iceSelInpList {
+.iceSelInpTxtList {
     position: absolute;
     display: block;
     border-top: 1px solid #ABABAB;
@@ -1191,7 +1202,7 @@ input {
     border-bottom: 1px solid #333333;
 }
 
-.iceSelInpRow {
+.iceSelInpTxtRow {
     display: block;
     background-color: #FFFFFF;
     color: #333333;
@@ -1201,7 +1212,7 @@ input {
     position: relative;
 }
 
-.iceSelInpSelRow {
+.iceSelInpTxtSelRow {
     display: block;
     background-color: #2A6CC2;
     color: #FFFFFF;
@@ -1215,7 +1226,7 @@ input {
 --------------- autoComplete disable class ------
 */
 
-.iceSelInpText-dis {
+.iceSelInpTxtTxt-dis {
     font-family: Arial, Helvetica, sans-serif;
     font-size: .95em;
     color: #ABABAB;
@@ -1226,10 +1237,10 @@ input {
 /*
 ----------- FileUpload Component classes
 */
-.iceFileUpload {
-    overflow: hidden;
+.iceInpFile {
+	overflow: hidden;
 }
-.iceFileUploadText {
+.iceInpFileTxt {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;
     margin: 2px;
@@ -1239,7 +1250,7 @@ input {
     color: #000000;
 }
 
-.iceFileUploadButton {
+.iceInpFileBtn {
     border: 1px solid #ABABAB;
     background-color: #FFFFFF;
     margin: 2px;
@@ -1334,18 +1345,18 @@ input {
 /* ------------ Menu Classes --
 */
 
-.iceMenuBar { /*no change*/
+.iceMnuBar { /*no change*/
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenuBarItem { /* was iceMenu */
+.iceMnuBarItem { /* was iceMenu */
     float: left;
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenuBarItem a { /* was iceMenu */
+.iceMnuBarItem a { /* was iceMenu */
     background-color: #DDDDDD;
     height: auto;
     padding-left: 10px;
@@ -1362,13 +1373,13 @@ input {
     text-decoration: none;
 }
 
-.iceMenuBarItem a:hover { /* was iceMenu */
+.iceMnuBarItem a:hover { /* was iceMenu */
     background-color: #2A6CC2;
     color: #FFFFFF;
     border-right: 1px solid #FFFFFF;
 }
 
-.iceMenuBarItem hr { /* was iceMenu */
+.iceMnuBarItem hr { /* was iceMenu */
     border: none 0;
     border-top: 1px solid #999999;
     width: 100%;
@@ -1378,9 +1389,9 @@ input {
     text-align: left;
 }
 
-.iceMenuBarItemLabel {} /*newly added class*/
+.iceMnuBarItemLabel {} /*newly added class*/
 
-.iceMenuBarSubMenu { /* was iceSubMenu */
+.iceMnuBarSubMenu { /* was iceSubMenu */
     position: absolute;
     background-color: #EFEFEF;
     width: 160px;
@@ -1393,13 +1404,13 @@ input {
     display: block;
 }
 
-.iceMenuItem { /* was iceSubMenuRow*/
+.iceMnuItm { /* was iceSubMenuRow*/
     padding: 0px;
     display: block;
     height: auto;
 }
 
-.iceMenuItem a { /* was iceSubMenuRow*/
+.iceMnuItm a { /* was iceSubMenuRow*/
     color: #333333;
     display: block;
     text-decoration: none;
@@ -1409,24 +1420,24 @@ input {
     padding-bottom: 3px;    
 }
 
-.iceMenuItem a:hover { /* was iceSubMenuRow*/
+.iceMnuItm a:hover { /* was iceSubMenuRow*/
     background-color: #2A6CC2;
     color: #FFFFFF;
 }
 
-.iceMenuItemLabel { /* was iceSubMenuRowLabel */
+.iceMnuItmLabel { /* was iceSubMenuRowLabel */
     font-family: Arial, Helvetica, sans-serif;
     padding-top: 4px;
     font-size: 1.0em;
     display: inline;
 }
 
-.iceMenuItemImage {  /* was iceSubMenuRowImage */
+.iceMnuItmImage {  /* was iceSubMenuRowImage */
     display:inline;
     vertical-align: top;    
 }
 
-.iceMenuBarSubMenuIndicator { /* was iceSubMenuRowSubMenuIndicator */
+.iceMnuBarSubMenuInd { /* was iceSubMenuRowSubMenuIndicator */
     display:inline;
     float:right;
     padding-top: 3px;
@@ -1434,18 +1445,18 @@ input {
 }
 
 /* classes for the vertical version of the iceMenu*/
-.iceMenuBarVrt { /* was iceMenu_vertical */
+.iceMnuBarVrt { /* was iceMenu_vertical */
     float: left;
     padding: 0px;
     white-space: nowrap;
 }
 
-.iceMenuBarVrtItem { /* was iceMenu_verticalItem */
+.iceMnuBarVrtItem { /* was iceMenu_verticalItem */
     width: 160px;
     display: block;
 }
 
-.iceMenuBarVrtItem a { /* was iceMenu_verticalItem */
+.iceMnuBarVrtItem a { /* was iceMenu_verticalItem */
     background-color: #DDDDDD;
     height: auto;
     padding-left: 3px;
@@ -1462,13 +1473,13 @@ input {
     width: 100%;
 }
 
-.iceMenuBarVrtItem a:hover { /* was iceMenu_verticalItem */
+.iceMnuBarVrtItem a:hover { /* was iceMenu_verticalItem */
     background-color: #2A6CC2;
     color: #FFFFFF;
     text-decoration: none;
 }
 
-.iceMenuBarVrtSubMenu { /* was iceSubMenu_vertical*/
+.iceMnuBarVrtSubMenu { /* was iceSubMenu_vertical*/
     padding: 1px;
     width: 160px;
     background-color: #EFEFEF;
@@ -1481,7 +1492,7 @@ input {
     display: block;
 }
 
-.iceMenuItemVrt a { /* was iceMenu_vertical_subItem */
+.iceMnuItmVrt a { /* was iceMenu_vertical_subItem */
     background-color: #EFEFEF; 
     font-family: Arial, Helvetica, sans-serif;
     color: #333333;
@@ -1495,13 +1506,13 @@ input {
     padding-bottom: 3px;    
 }
 
-.iceMenuItemVrt a:hover { /* was iceMenu_vertical_subItem */
+.iceMnuItmVrt a:hover { /* was iceMenu_vertical_subItem */
     background-color: #2A6CC2;
     color: #FFFFFF;
     text-decoration: none;
 }
 
-.iceMenuBarVrtSubMenuIndicator { /* was iceSubMenuDividerVert */
+.iceMnuBarVrtSubMenuInd { /* was iceSubMenuDividerVert */
     display:inline;
     float:right;
     padding-top: 3px;
@@ -1511,7 +1522,7 @@ input {
 ----------- PanelPopup ----------
 */
 
-.icePanelPopup {
+.icePnlPop {
     color: #666666;
     border-right: 2px solid #ABABAB;
     border-top: 1px solid #ABABAB;
@@ -1523,7 +1534,7 @@ input {
     z-index: 1000;
 }
 
-.icePanelPopupHeader {
+.icePnlPopHdr {
     background-color: #DEDEDE;
     background-image: url( "./css-images/window_top.gif" );
     background-position: top;
@@ -1531,11 +1542,11 @@ input {
     height: 2.0em;
 }
 
-.icePanelPopupBody {
+.icePnlPopBody {
     padding: 10px;
 }
 
-.icePanelPopupFooter {
+.icePnlPopFtr {
     float: right;
     height: auto;
     background-color: #DDDDDD;
@@ -1545,14 +1556,14 @@ input {
    Classes for the output progress bar
 */
 
-.iceOutputProgressIndeterminateActiveClass {
+.iceOutProgIndetActv {
     background-color: #EFEFEF;
     background-image: url( css-images/in_progress.gif );
     background-position: center;
     background-repeat: repeat-x;
 }
 
-.iceOutputProgressIndeterminateInactiveClass {
+.iceOutProgIndetInactv {
     background-color: #EFEFEF;
     background-image: url( css-images/in_progress_inactive.gif );
     background-position: center;
@@ -1571,7 +1582,7 @@ input {
     font-size: .5em;
 }
 
-.iceOutConStatInactive {
+.iceOutConStatInactv {
     position: absolute;
     background-image: url( css-images/connect_idle.gif );
     background-position: top;
@@ -1580,7 +1591,7 @@ input {
     height: 25px;
 }
 
-.iceOutConStatActive {
+.iceOutConStatActv {
     position: absolute;
     background-image: url( css-images/connect_active.gif );
     background-position: top;
@@ -1609,24 +1620,24 @@ input {
 
 /* XP Disabled styles CSS Document  v1.0 mar 31 2006 */
 
-.iceBtn-dis {
+.iceCmdBtn-dis {
 }
 
-.iceLink-dis {
+.iceCmdLnk-dis {
     color: #ABABAB;
     text-decoration: none;
     border-bottom: 1px dotted #CCCCCC;
     cursor: default;
 }
 
-.iceOutputText-dis {
+.iceOutTxt-dis, .iceOutLbl-dis {
     color: #ABABAB;
     text-decoration: none;
     border-bottom: 1px dotted #CCCCCC;
     cursor: default;
 }
 
-.iceInputtext-dis {
+.iceInpTxt-dis, iceInpSecrt-dis {
     font-family: Arial, Helvetica, sans-serif;
     font-size: .95em;
     color: #ABABAB;
@@ -1636,7 +1647,7 @@ input {
     padding: 2px;
 }
 
-.iceTextarea-dis {
+.iceTxtArea-dis {
     font-family: Arial, Helvetica, sans-serif;
     font-size: .95em;
     color: #ABABAB;
@@ -1646,7 +1657,7 @@ input {
     padding: 2px;
 }
 
-.iceCheckbox-dis {
+.iceSelMnyCb-dis {
     background-color: #CCCCCC;
     padding: 2px;
     margin: 2px;
@@ -1655,7 +1666,7 @@ input {
     border: none;
 }
 
-.iceSelect-dis {
+.iceSelOneMnu-dis, .iceSelMnyLb-dis, .iceSelMnyMnu-dis, .iceSelOneLb-dis {
     font-family: Arial, Helvetica, sans-serif;
     color: #CCCCCC;
     padding: 2px;
@@ -1664,7 +1675,7 @@ input {
     border: none;
 }
 
-.iceRadioBtn-dis {
+.iceSelOneRb-dis {
     background-color: #CCCCCC;
     padding: 2px;
     margin: 2px;
@@ -1673,7 +1684,7 @@ input {
     border: none;
 }
 
-.iceFileUploadText-dis {
+.iceInpFileTxt-dis {
     border: none;
     background-color: #FFFFFF;
     margin: 2px;
@@ -1683,7 +1694,7 @@ input {
     cursor: default;
 }
 
-.iceFileUploadButton-dis {
+.iceInpFileBtn-dis {
     border: 1px solid #CCCCCC;
     background-color: #FFFFFF;
     margin: 2px;
@@ -1731,11 +1742,11 @@ input {
 
 /* panel tabs disabled style classes */
 
-.icePnlTabOff { /* was iceTabSetTabOff*/
+.icePnlTbOff { /* was iceTabSetTabOff*/
 
 }
 
-.icePnlTabOff .LeftTop-dis {
+.icePnlTbOff .LftTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1746,7 +1757,7 @@ input {
     height: 4px;
 }
 
-.icePnlTabOff .MiddleTop-dis {
+.icePnlTbOff .MidTop-dis {
     background-color: #DEDEDE;
     background-image: url( './css-images/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
@@ -1755,7 +1766,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .RightTop-dis {
+.icePnlTbOff .RtTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1765,7 +1776,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .LeftMiddle-dis {
+.icePnlTbOff .LftMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-left-mid.gif");
     background-repeat:no-repeat;*/
@@ -1774,7 +1785,7 @@ input {
     border: none;
 }
 
-.icePnlTabOff .MiddleMiddle-dis {
+.icePnlTbOff .MidMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-mid-mid.gif");
     background-repeat:repeat-x;*/
@@ -1787,13 +1798,14 @@ input {
     color: #ABABAB;
 }
 
-.icePnlTabOff .MiddleMiddle-dis a {
+.icePnlTbOff .MidMid-dis a {
     text-decoration: none;
     color: #ABABAB;
     cursor: default;
+    
 }
 
-.icePnlTabOff .RightMiddle-dis {
+.icePnlTbOff .RtMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-right-mid.gif");
     background-repeat:no-repeat;*/
@@ -1802,21 +1814,21 @@ input {
     border: none;
 }
 
-.icePnlTabOff .LeftBottom-dis {
+.icePnlTbOff .LftBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.icePnlTabOff .MiddleBottom-dis {
+.icePnlTbOff .MidBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.icePnlTabOff .RightBottom-dis {
+.icePnlTbOff .RtBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -1824,11 +1836,11 @@ input {
 }
 
 /* tab on disabled */
-.icePnlTabOn {
+.icePnlTbOn {
 
 }
 
-.icePnlTabOn .LeftTop-dis {
+.icePnlTbOn .LftTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1839,7 +1851,7 @@ input {
     height: 4px;
 }
 
-.icePnlTabOn .MiddleTop-dis {
+.icePnlTbOn .MidTop-dis {
     background-color: #DEDEDE;
     background-image: url( './css-images/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
@@ -1848,7 +1860,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .RightTop-dis {
+.icePnlTbOn .RtTop-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-top-dis.gif" );
     background-repeat: no-repeat;
@@ -1858,7 +1870,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .LeftMiddle-dis {
+.icePnlTbOn .LftMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-left-mid.gif");
     background-repeat:no-repeat;*/
@@ -1867,7 +1879,7 @@ input {
     border: none;
 }
 
-.icePnlTabOn .MiddleMiddle-dis {
+.icePnlTbOn .MidMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-mid-mid.gif");
     background-repeat:repeat-x;*/
@@ -1880,13 +1892,13 @@ input {
     color: #ABABAB;
 }
 
-.icePnlTabOn .MiddleMiddle-dis a {
+.icePnlTbOn .MidMid-dis a {
     text-decoration: none;
     color: #ABABAB;
     cursor: default;
 }
 
-.icePnlTabOn .RightMiddle-dis {
+.icePnlTbOn .RtMid-dis {
     background-color: #DEDEDE;
     /*    background-image: url("./css-images/off-right-mid.gif");
     background-repeat:no-repeat;*/
@@ -1895,21 +1907,21 @@ input {
     border: none;
 }
 
-.icePnlTabOn .LeftBottom-dis {
+.icePnlTbOn .LftBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
-.icePnlTabOn .MiddleBottom-dis {
+.icePnlTbOn .MidBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
-.icePnlTabOn .RightBottom-dis {
+.icePnlTbOn .RtBtm-dis {
     background-color: transparent;
     background-image: url( "./css-images/off-right-bot.gif" );
     background-repeat: no-repeat;
@@ -1966,14 +1978,14 @@ data scroller classes disabled styles
 Disabled classes for the calendar controls
 */
 
-.iceCalOutline-dis {
+.iceSelInpDate-dis {
 /* calendar outline & background color */
     background-color: #FFFFFF;
     border: 1px solid #DEDEDE; /* removed margin from calendar outline - better absolute positioning of popup */
 /*margin:10px;*/
 }
 
-.iceCalMonthYear-dis {
+.iceSelInpDateMonthYear-dis {
     background-color: #EFEFEF;
     /*    background-image: url("./css-images/table_col_header.gif");
     background-position:bottom;
@@ -1987,11 +1999,11 @@ Disabled classes for the calendar controls
     padding-bottom: 4px; /*border-right:1px solid #CCCCCC;*/
 }
 
-.iceCalMonthYear-dis img {
+.iceSelInpDateMonthYear-dis img {
     cursor: default;
 }
 
-.iceCalWeek-dis {
+.iceSelInpDateWeek-dis {
 /* the days of the week row */
     font-weight: normal;
     color: #999999;
@@ -2003,14 +2015,14 @@ Disabled classes for the calendar controls
 }
 
 /* set the look for the days of the week backgrounds */
-.iceCalDay-dis, .iceCalCur-dis {
+.iceSelInpDateDay-dis, .iceSelInpDateCur-dis {
 /* the background & alignment for the days */
     padding: 3px;
     text-align: center;
 }
 
 /* now set the attributes for the numbers for each day of the week */
-.iceCalDay-dis a {
+.iceSelInpDateDay-dis a {
 /* the day text */
     text-decoration: none;
     background-color: #FFFFFF;
@@ -2023,7 +2035,7 @@ Disabled classes for the calendar controls
     cursor: default;
 }
 
-.iceCalCur-dis a {
+.iceSelInpDateCur-dis a {
     text-decoration: none;
     background-color: #ABABAB;
     border: 1px solid #ABABAB;
@@ -2067,7 +2079,7 @@ Disabled classes for the calendar controls
 /*
 ----------- form ----------
 */
-.iceForm {
+.iceFrm {
 
 }
 
@@ -2131,11 +2143,11 @@ Disabled classes for the calendar controls
     
 }
 
-.icePnlGrdHeader {
+.icePnlGrdHdr {
 
 }
 
-.icePnlGrdFooter {
+.icePnlGrdFtr {
 
 }
 
@@ -2147,11 +2159,11 @@ Disabled classes for the calendar controls
 
 }
 
-.icePnlGrdColumn1 {
+.icePnlGrdCol1 {
 
 }
 
-.icePnlGrdColumn2 {
+.icePnlGrdCol2 {
 
 }
 
@@ -2165,7 +2177,7 @@ Disabled classes for the calendar controls
 /*
 ----------- outputFormat ----------
 */
-.iceOutputFormat {
+.iceOutFrmt {
 
 }
 
@@ -2183,32 +2195,38 @@ Disabled classes for the calendar controls
 /*
 ----------- panelSeries ----------
 */
-.icePnlSeries {
+.icePnlSrs {
 
 }
 
 /*
 ----------- positionedPanel ----------
 */
-.icePosPnl {
+.icePnlPos {
 
 }
 
 /*
+----------- positionedPanel ----------
+*/
+.icePnlStk {
+
+}
+/*
 ----------- panelTab header ----------
 */
-.icePnlTabSetHdrIconLeft {
+.icePnlTbSetHdrIconLft {
     width: 14px;
-    height: 14px;
+    height: 13px;
 
 }
 
-.icePnlTabSetHdrIconRight {
+.icePnlTbSetHdrIconRt {
     width: 14px;
-    height: 14px;
+    height: 13px;
 }
 
-.icePnlTabSetHdrLabel {
+.icePnlTbSetHdrLbl {
     padding-top: 2px;
     padding-bottom: 2px;
     white-space: nowrap;
@@ -2234,30 +2252,40 @@ Disabled classes for the calendar controls
 }
 
 /*
------------ Panel Accordion --------
+----------- outputChart --------
 */
 
+.iceOutChrt {
+
+}
+
+/*
+----------- Panel Accordion --------
+*/
+.icePnlAccrd {
+ 	width:100%;
+ }
 /* opened accordion styles */
-.iceAccordionHeader, .iceAccordionContent, .iceAccordionContainer {
+.icePnlAccrdHdr, .icePnlAccrdCnt, .icePnlAccrdCont {
 }
 
 /* Closed */
-.iceAccordionHeaderCollapsed, .iceAccordionContentCollapsed,
-    .iceAccordionContainerCollapsed {
+.icePnlAccrdHdrColpsd, .icePnlAccrdCntColpsd,
+    .icePnlAccrdContColpsd {
 }
 
 /* Open and disabled */
-.iceAccordionHeader-dis, .iceAccordionContent-dis, .iceAccordionContainer-dis {
+.icePnlAccrdHdr-dis, .icePnlAccrdCnt-dis, .icePnlAccrdCont-dis {
 }
 
 /* Closed and disabled */
-.iceAccordionHeaderCollapsed-dis, .iceAccordionContentCollapsed-dis,
-    .iceAccordionContainerCollapsed-dis {
+.icePnlAccrdHdrColpsd-dis, .icePnlAccrdCntColpsd-dis,
+    .icePnlAccrdContColpsd-dis {
 }
 
 /* common accordion headers */
-.iceAccordionHeader, .iceAccordionHeader-dis, .iceAccordionHeaderCollapsed,
-    .iceAccordionHeaderCollapsed-dis {
+.icePnlAccrdHdr, .icePnlAccrdHdr-dis, .icePnlAccrdHdrColpsd,
+    .icePnlAccrdHdrColpsd-dis {
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;
@@ -2273,12 +2301,12 @@ Disabled classes for the calendar controls
     padding-bottom: 4px;
     cursor: pointer;
 }
-.iceAccordionHeader-dis, .iceAccordionHeaderCollapsed-dis{
+.icePnlAccrdHdr-dis, .icePnlAccrdHdrColpsd-dis{
     color: #999999;
 }
 
-.iceAccordionContent, .iceAccordionContentCollapsed,
-    .iceAccordionContentCollapsed-dis, .iceAccordionContent-dis {
+.icePnlAccrdCnt, .icePnlAccrdCntColpsd,
+    .icePnlAccrdCntColpsd-dis, .icePnlAccrdCnt-dis {
     background-color: #EFEFEF;
     border: 1px solid #CCCCCC;
     border-top: none;

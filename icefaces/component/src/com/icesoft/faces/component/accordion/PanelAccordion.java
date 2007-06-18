@@ -88,13 +88,6 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
                 isDisabled());        
     }
     
-    public String getContainerClass() {
-
-        return Util.getQualifiedStyleClass(this, 
-                getCollapsedStyle(CSS_DEFAULT.PANEL_ACCORDION_CONTAINER), 
-                isDisabled());          
-    }
-    
     private String getCollapsedStyle(String style) {
         if (!getExpanded().booleanValue()) {
             style += CSS_DEFAULT.PANEL_ACCORDION_STATE_COLLAPSED;

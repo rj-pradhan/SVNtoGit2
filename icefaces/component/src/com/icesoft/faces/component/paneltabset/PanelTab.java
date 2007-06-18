@@ -634,11 +634,11 @@ public class PanelTab
         if (isIconAlignRight()) {
             tr.appendChild(labelTd);
             tr.appendChild(iconTd);
-            iconClass += "Right";
+            iconClass += CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_RIGHT;
         } else {
             tr.appendChild(iconTd);
             tr.appendChild(labelTd);
-            iconClass += "Left";
+            iconClass += CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_LEFT;
         }
         iconClass = Util.getQualifiedStyleClass(tabSet,iconClass);
         icon.setAttribute(HTML.CLASS_ATTR, iconClass);

@@ -47,45 +47,45 @@ public class CSS_DEFAULT {
     //------------------------------------------------------------------
 
     public static final String COMMAND_BTN_DEFAULT_STYLE_CLASS =
-            "iceBtn"; // Originally was "iceButton"
+            "iceCmdBtn"; // Originally was "iceButton"
     public static final String COMMAND_LINK_DEFAULT_STYLE_CLASS =
-            "iceLink"; // Originally was "iceLink"
+            "iceCmdLnk"; // Originally was "iceLink"
     public static final String INPUT_SECRET_DEFAULT_STYLE_CLASS =
-            "iceInputtext"; // Originally was "iceInputtext"
+            "iceInpSecrt"; // Originally was "iceInputtext"
     public static final String INPUT_TEXT_DEFAULT_STYLE_CLASS =
-            "iceInputtext"; // Originally was "iceInputtext"
+            "iceInpTxt"; // Originally was "iceInputtext"
     public static final String INPUT_TEXT_AREA_DEFAULT_STYLE_CLASS =
-            "iceTextarea"; // Originally was "iceTextarea"
+            "iceTxtArea"; // Originally was "iceTextarea"
     public static final String OUTPUT_LABEL_DEFAULT_STYLE_CLASS =
-            "iceOutputText"; // Originally was "iceOuputtext"
+            "iceOutLbl"; // Originally was "iceOuputtext"
     public static final String OUTPUT_LINK_DEFAULT_STYLE_CLASS =
-            "iceOutputLink"; // Originally was "iceOuputLink"
+            "iceOutLnk"; // Originally was "iceOuputLink"
     public static final String OUTPUT_TEXT_DEFAULT_STYLE_CLASS =
-            "iceOutputText"; // Originally was "iceOuputtext"
+            "iceOutTxt"; // Originally was "iceOuputtext"
     public static final String SELECT_BOOLEAN_CHECKBOX_DEFAULT_STYLE_CLASS =
-            "iceBooleanCheckbox";  // Originally was "iceBooleanCheckbox"
+            "iceSelBoolChkbx";  // Originally was "iceBooleanCheckbox"
     public static final String SELECT_MANY_CHECKBOX_DEFAULT_STYLE_CLASS =
-            "iceCheckbox"; // Originally was "iceCheckbox"
+            "iceSelMnyCb"; // Originally was "iceCheckbox"
     public static final String SELECT_MANY_LISTBOX_DEFAULT_STYLE_CLASS =
-            "iceSelect"; // Originally was "iceSelect"
+            "iceSelMnyLb"; // Originally was "iceSelect"
     public static final String SELECT_MANY_MENU_DEFAULT_STYLE_CLASS =
-            "iceSelect";// Originally was "iceSelect"
+            "iceSelMnyMnu";// Originally was "iceSelect"
     public static final String SELECT_ONE_LISTBOX_DEFAULT_STYLE_CLASS =
-            "iceSelect"; // Originally was "iceSelect"
+            "iceSelOneLb"; // Originally was "iceSelect"
     public static final String SELECT_ONE_MENU_DEFAULT_STYLE_CLASS =
-            "iceSelect"; // Originally was "iceSelect"
+            "iceSelOneMnu"; // Originally was "iceSelect"
     public static final String SELECT_ONE_RADIO_DEFAULT_STYLE_CLASS =
-            "iceRadioBtn"; // Originally was "iceRadiobutton"
+            "iceSelOneRb"; // Originally was "iceRadiobutton"
     public static final String TABLE_STYLE_CLASS =
-            "iceDataTbl"; // Originally was "dataTableOutlineClass"
+            "iceDatTbl"; // Originally was "dataTableOutlineClass"
     public static final String TABLE_HEADER_CLASS =
-        "Header";   // Originally was "headerClass"
+        "Hdr";   // Originally was "headerClass"
     public static final String TABLE_HEADER_CLASS1 =
-            "Header1";   // Originally was "headerClass"
+            "Hdr1";   // Originally was "headerClass"
     public static final String TABLE_HEADER_CLASS2 =
-        "Header2";   // Originally was "headerClass"
+        "Hdr2";   // Originally was "headerClass"
     public static final String TABLE_FOOTER_CLASS =
-            "Footer";   // Originally was "headerClass"
+            "Ftr";   // Originally was "headerClass"
     public static final String TABLE_ROW_CLASS =
         "Row"; // Originally was "rowClasses1"    
     public static final String TABLE_ROW_CLASS1 =
@@ -93,34 +93,34 @@ public class CSS_DEFAULT {
     public static final String TABLE_ROW_CLASS2 =
             "Row2"; // Originally was "rowClasses2"
     public static final String TABLE_COLUMN_CLASS1 =
-        "Column1";
+        "Col1";
     public static final String TABLE_COLUMN_CLASS2 =
-        "Column2";    
+        "Col2";    
     public static final String TABLE_COLUMN_CLASS =
-            "Column";  // Originally was "columnClasses"
+            "Col";  // Originally was "columnClasses"
     public static final String TABLE_COLUMN_HEADER_CLASS =
-        "ColumnHeader";  // Originally was "columnClasses"    
+        "ColHdr";  // Originally was "columnClasses"    
     public static final String TABLE_COLUMN_HEADER_CLASS1 =
-        "ColumnHeader1";  // Originally was "columnClasses" 
+        "ColHdr1";  // Originally was "columnClasses" 
     public static final String TABLE_COLUMN_HEADER_CLASS2 =
-        "ColumnHeader2";  // Originally was "columnClasses"     
+        "ColHdr2";  // Originally was "columnClasses"     
     public static final String PANEL_GROUP_DEFAULT_STYLE_CLASS = "icePnlGrp";
     public static final String PANEL_GRID_DEFAULT_STYLE_CLASS = "icePnlGrd";
     public static final String ROW = "Row";
-    public static final String COLUMN = "Column";
-    public static final String HEADER = "Header";
-    public static final String FOOTER = "Footer";
+    public static final String COLUMN = "Col";
+    public static final String HEADER = "Hdr";
+    public static final String FOOTER = "Ftr";
     public static final String OUTPUT_CONNECTION_STATUS_DEFAULT_STYLE_CLASS =
             "iceOutConStat";  // Originally was "outputConnectionStatusStyleClass"
     public static final String OUTPUT_CONNECTION_STATUS_DEFAULT_INACTIVE_CLASS =
-            "Inactive"; // Originally was "outputConnectionStatusInactiveClass"
+            "Inactv"; // Originally was "outputConnectionStatusInactiveClass"
     public static final String OUTPUT_CONNECTION_STATUS_DEFAULT_ACTIVE_CLASS =
-            "Active"; // Originally was "outputConnectionStatusActiveClass"
+            "Actv"; // Originally was "outputConnectionStatusActiveClass"
     public static final String OUTPUT_CONNECTION_STATUS_DEFAULT_CAUTION_CLASS =
             "Caution"; // Originally was "outputConnectionStatusCautionClass"
     public static final String OUTPUT_CONNECTION_STATUS_DEFAULT_DISCONNECT_CLASS =
             "Disconnect"; // Originally was "outputConnectionStatusDisconnectClass"
-    public static final String PANEL_BORDER_DEFAULT = "icePage";
+    public static final String PANEL_BORDER_DEFAULT = "icePnlBrdr";
     public static final String PANEL_BORDER_DEFAULT_NORTH_CLASS =
             "North"; // Originally was "pageNorth"
     public static final String PANEL_BORDER_DEFAULT_WEST_CLASS =
@@ -132,7 +132,7 @@ public class CSS_DEFAULT {
     public static final String PANEL_BORDER_DEFAULT_SOUTH_CLASS =
             "South";  // Originally was "pageSouth"
     public static final String COMMAND_SORT_HEADER_STYLE_CLASS = "iceCmdSrtHdr";
-    public static final String FORM_STYLE_CLASS = "iceForm";
+    public static final String FORM_STYLE_CLASS = "iceFrm";
     public static final String GRAPHIC_IMAGE_STYLE_CLASS = "iceGphImg";
     public static final String MESSAGE_STYLE_CLASS = "iceMsg";
     public static final String MESSAGES_STYLE_CLASS = "iceMsgs";
@@ -141,23 +141,23 @@ public class CSS_DEFAULT {
     public static final String INFO_STYLE_CLASS = "Info";
     public static final String WARN_STYLE_CLASS = "Warn";
     public static final String OUTPUT_CHART_DEFAULT_STYLE_CLASS =
-            "iceOutputChart";
+            "iceOutChrt";
     public static final String OUTPUT_FORMAT_DEFAULT_STYLE_CLASS =
-            "iceOutputFormat";
+            "iceOutFrmt";
     //public static final String PANEL_BORDER_DEFAULT_STYLE_CLASS = "Style"; // Originally was "pageStyleClass"
 
     public static final String POPUP_BASE =
-            "icePanelPopup"; // Originally was "panelPopup"
+            "icePnlPop"; // Originally was "panelPopup"
     public static final String POPUP_DEFAULT_HEADER_CLASS =
-            "Header"; // Originally was "panelPopupHeader"
+            "Hdr"; // Originally was "panelPopupHeader"
     public static final String POPUP_DEFAULT_BODY_CLASS =
             "Body"; // Originally was "panelPopupBody"
 
     public static final String PANEL_TAB_DEFAULT_STYLECLASS =
-            "icePnlTab"; // Originally was "panelTabClass"
+            "icePnlTb"; // Originally was "panelTabClass"
 
     public static final String PANEL_TAB_SET_DEFAULT_TAB_SET =
-            "icePnlTabSet";  // Originally was "tabSet"
+            "icePnlTbSet";  // Originally was "tabSet"
     public static final String PANEL_TAB_SET_DEFAULT_TABONCLASS =
             "On";// Originally was "TabOnClass"
     public static final String PANEL_TAB_SET_DEFAULT_TABOVERCLASS =
@@ -165,52 +165,52 @@ public class CSS_DEFAULT {
     public static final String PANEL_TAB_SET_DEFAULT_TABOFFCLASS =
             "Off";// Originally was "TabOffClass"
     public static final String PANEL_TAB_SET_DEFAULT_TABSPACER =
-            "Spacer";// Originally was "TabSpacer"
+            "Spcr";// Originally was "TabSpacer"
     public static final String PANEL_TAB_SET_DEFAULT_TABPANEL =
-            "TabPnl";// Originally was "TabPanel"
+            "TbPnl";// Originally was "TabPanel"
     public static final String PANEL_TAB_CONTENTS_CLASS =
-        "Contents";// Originally was "TabPanel"    
+        "Cnt";// Originally was "TabPanel"    
     public static final String PANEL_TAB_HEADER_ICON_DEFAULT_CLASS = "HdrIcon";
     public static final String PANEL_TAB_HEADER_LABEL_DEFAULT_CLASS =
-            "HdrLabel";
-    public static final String PANEL_TAB_SET_DEFAULT_LEFT = "Left";
-    public static final String PANEL_TAB_SET_DEFAULT_RIGHT = "Right";
-    public static final String PANEL_TAB_SET_DEFAULT_MIDDLE = "Middle";
+            "HdrLbl";
+    public static final String PANEL_TAB_SET_DEFAULT_LEFT = "Lft";
+    public static final String PANEL_TAB_SET_DEFAULT_RIGHT = "Rt";
+    public static final String PANEL_TAB_SET_DEFAULT_MIDDLE = "Mid";
     public static final String PANEL_TAB_SET_DEFAULT_TOP = "Top";
-    public static final String PANEL_TAB_SET_DEFAULT_BOTTOM = "Bottom";
-    public static final String PANEL_SERIES_DEFAULT_CLASS = "icePnlSeries";
-    public static final String POSITIONED_PANEL_DEFAULT_CLASS = "icePosPnl";
+    public static final String PANEL_TAB_SET_DEFAULT_BOTTOM = "Btm";
+    public static final String PANEL_SERIES_DEFAULT_CLASS = "icePnlSrs";
+    public static final String POSITIONED_PANEL_DEFAULT_CLASS = "icePnlPos";
 
     public static final String ICE_FILE_UPLOAD_DEFAULT_BUTTON_CLASS =
-            "Button"; // Originally was "Button"
+            "Btn"; // Originally was "Button"
     public static final String ICE_FILE_UPLOAD_DEFAULT_INPUT_TEXT_CLASS =
-            "Text"; // Originally was "Text"
+            "Txt"; // Originally was "Text"
     public static final String ICE_FILE_UPLOAD_BASE_CLASS =
-            "iceFileUpload";  // Originally was "fileUpload"
+            "iceInpFile";  // Originally was "fileUpload"
     public static final String OUTPUT_PROGRESS_BASE_CLASS =
-            "iceOutputProgress"; // Originally was "outputProgress"
+            "iceOutProg"; // Originally was "outputProgress"
     public static final String OUTPUT_PROGRESS_INDETERMINATE_ACTIVE_CLASS =
-            "IndeterminateActiveClass"; // Originally was "IndeterminateActiveClass"
+            "IndetActv"; // Originally was "IndeterminateActiveClass"
     public static final String OUTPUT_PROGRESS_INDETERMINATE_INACTIVE_CLASS =
-            "IndeterminateInactiveClass"; // Originally was "IndeterminateInactiveClass"
+            "IndetInactv"; // Originally was "IndeterminateInactiveClass"
     public static final String OUTPUT_PROGRESS_TEXT_STYLE_CLASS =
-            "Text";   // Originally was "Text"
+            "Txt";   // Originally was "Text"
     public static final String OUTPUT_PROGRESS_BG_STYLE_CLASS =
-            "Background"; // Originally was "Background"
+            "Bg"; // Originally was "Background"
     public static final String OUTPUT_PROGRESS_FILL_STYLE_CLASS =
             "Fill";  // Originally was "Fill"
-    public static String MENU_BAR_STYLE = "iceMenuBar";
+    public static String MENU_BAR_STYLE = "iceMnuBar";
     public static String MENU_BAR_ITEM_STYLE = "Item";
     public static String MENU_BAR_ITEM_LABEL_STYLE = "ItemLabel";
     public static String MENU_BAR_SUB_MENU_STYLE = "SubMenu";
-    public static String MENU_BAR_SUB_MENU_INDICATOR_STYLE = "SubMenuIndicator";
+    public static String MENU_BAR_SUB_MENU_INDICATOR_STYLE = "SubMenuInd";
     public static String MENU_BAR_VERTICAL_SUFFIX_STYLE = "Vrt";
     
-    public static String MENU_ITEM_STYLE = "iceMenuItem";
+    public static String MENU_ITEM_STYLE = "iceMnuItm";
     public static String MENU_ITEM_LABEL_STYLE = "Label";
     public static String MENU_ITEM_IMAGE_STYLE = "Image";
     
-    public static String MENU_ITEM_SEPARATOR_STYLE = "iceMenuItemSeparator";
+    public static String MENU_ITEM_SEPARATOR_STYLE = "iceMnuItmSep";
     
     
     public static String SUBMENU_DIVIDER_VERTICAL_STYLE =
@@ -218,7 +218,7 @@ public class CSS_DEFAULT {
     public static String SUBMENU_DIVIDER_STYLE =
             "iceSubMenuDivider";  // Originally was "submenuDivider"
     public static String SUBMENU_INDICATOR_STYLE =
-            "iceSubMenuIndicator"; // Originally was "submenuIndicator"
+            "iceSubMenuInd"; // Originally was "submenuIndicator"
     public static final String STYLE_TREEROW =
             "Row";// Originally was "treerow"
     public static final String TREE_DEFAULT_STYLE_CLASS = "iceTree";
@@ -228,7 +228,7 @@ public class CSS_DEFAULT {
      * The default style class name for the row containing the month, year and
      * navigation buttons.
      */
-    public final static String DEFAULT_CALENDAR = "iceCal";
+    public final static String DEFAULT_CALENDAR = "iceSelInpDate";
 
     public final static String DEFAULT_YEARMONTHHEADER_CLASS =
             "MonthYear";  // iceCalMonthYear Originally was "monthYearRowClass"
@@ -250,12 +250,7 @@ public class CSS_DEFAULT {
      */
     public final static String DEFAULT_DAYCELL_CLASS =
             "Day"; // iceCalDay Originally was "dayCellClass"
-    /**
-     * The default style class name for the outline of the calendar.
-     */
-    public final static String DEFAULT_CALENDAROUTLINE_CLASS =
-            "Outline"; // iceCalOutline Originally was "calendarOutlineClass"
-    /**
+      /**
      * The default style class name for the input text field part of the date
      * picker
      */
@@ -263,12 +258,12 @@ public class CSS_DEFAULT {
             "Input"; // Did not have an original name
 
 
-    public static final String DEFAULT_SELECT_INPUT = "iceSelInp";
+    public static final String DEFAULT_SELECT_INPUT = "iceSelInpTxt";
     /**
      * The default style calss name for this components input text element.
      */
     public static final String DEFAULT_SELECT_INPUT_TEXT_CLASS =
-            "Text";  // Originally was "autoCompleteInputTextClass"
+            "Txt";  // Originally was "autoCompleteInputTextClass"
     /**
      * the default style class name for this components list element.
      */
@@ -287,7 +282,7 @@ public class CSS_DEFAULT {
             "SelRow"; // Originally was "autoCompleteSelectedRowClass"
 
     // DataPaginator
-    public static final String DATA_PAGINATOR_BASE = "iceDtdPgr";
+    public static final String DATA_PAGINATOR_BASE = "iceDatPgr";
     public static final String DATA_PAGINATOR_SCROLL_BUTTON_CELL_CLASS =
             "ScrBtn"; // Originally was "scrollButtonCellClass"
     public static final String OUTLINE_CLASS =
@@ -311,15 +306,15 @@ public class CSS_DEFAULT {
     
     // PanelAccordion constants
     public static final String PANEL_ACCORDION_DEFAULT_STYLE_CLASS =
-            "iceAccordion";
+            "icePnlAccrd";
     public static final String PANEL_ACCORDION_HEADER =
-            "Header";
+            "Hdr";
     public static final String PANEL_ACCORDION_CONTENT =
-            "Content";
+            "Cnt";
     public static final String PANEL_ACCORDION_CONTAINER =
-            "Container";
+            "Cont";
     public static final String PANEL_ACCORDION_STATE_COLLAPSED =
-            "Collapsed";
+            "Colpsd";
     public static final String DIS_SUFFIX =
             "-dis";
 }

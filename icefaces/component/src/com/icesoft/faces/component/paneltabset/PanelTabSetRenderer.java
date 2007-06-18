@@ -186,13 +186,13 @@ public class PanelTabSetRenderer
         // default is Top
         // if tabPlacement is Bottom
         // render Tab Cell first then Tab Header
-        String tabPlacement = tabSet.getTabPlacement();
+
         List tabList = null;
         if (tabSet.getValue() != null) {
             tabList = (List) tabSet.getValue();
         }
-        if (tabPlacement
-                .equalsIgnoreCase(CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM)) {
+        if (tabSet.getTabPlacement()
+                .equalsIgnoreCase(PanelTabSet.TABPLACEMENT_BOTTOM)) {
 
             if (tabList != null) {
                 visibleTabCount = tabList.size();
@@ -291,8 +291,7 @@ public class PanelTabSetRenderer
             // Empty tab cell on the right for better look
             // create a new table data for the empty TextNode
             Element td = domContext.createElement(HTML.TD_ELEM);
-            String className =Util.getQualifiedStyleClass(tabSet, 
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER);
+            String className = tabSet.getSpacerClass();
             td.setAttribute(HTML.CLASS_ATTR, className);
             Text text = null;
             if (domContext.isStreamWriting()) {
@@ -377,8 +376,7 @@ public class PanelTabSetRenderer
             // create a new table data for the empty TextNode
             Element td = domContext.createElement(HTML.TD_ELEM);
 
-            String className = Util.getQualifiedStyleClass(tabSet, 
-                    CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_TABSPACER);
+            String className = tabSet.getSpacerClass();
             td.setAttribute(HTML.CLASS_ATTR, className);
             Text text;
             if (domContext.isStreamWriting()) {
@@ -519,7 +517,7 @@ public class PanelTabSetRenderer
 
         String tabPlacement = "";
         if (tabSet.getTabPlacement()
-                .equalsIgnoreCase(CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM)) {
+                .equalsIgnoreCase(PanelTabSet.TABPLACEMENT_BOTTOM)) {
             tabPlacement = CSS_DEFAULT.PANEL_TAB_SET_DEFAULT_BOTTOM;
         }
 

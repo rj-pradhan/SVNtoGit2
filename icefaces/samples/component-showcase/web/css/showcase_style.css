@@ -418,7 +418,7 @@ em {
   Calendar Styles
  */
 
-.iceCalInput {
+.iceSelInpDate {
     width: 90px;
 }
 
@@ -645,7 +645,7 @@ em {
     margin-top: 40px;
 }
 
-.panelPopupHeader .iceOuputtext, .icePanelPopupHeader {
+.panelPopupHeader .iceOutTxt, .icePnlPopHdr {
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
@@ -849,8 +849,6 @@ em {
     padding-right: 5px;
     padding-top: 3px;
     padding-bottom: 3px;
-    border-left: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
     text-align: left;
 }
@@ -958,11 +956,11 @@ em {
     width: 50px;
 }
 
-.iceSelInpRow, .iceSelInpSelRow {
+.iceSelInpTxtRow, .iceSelInpTxtSelRow {
     height: 15px;
 }
 
-.iceSelInpSelRow {
+.iceSelInpTxtSelRow {
     color: #FFFFFF;
 }
 
@@ -1080,21 +1078,60 @@ em {
     color: #004080;
     text-decoration: underline;
 }
-.iceAccordionContainer{
-    width:100%;
-}
-.iceAccordionHeader span, .iceAccordionHeader-dis span,
-    .iceAccordionHeaderCollapsed span, .iceAccordionHeaderCollapsed-dis span{
+.icePnlAccrdHdr span, .icePnlAccrdHdr-dis span,
+    .icePnlAccrdHdrColpsd span, .icePnlAccrdHdrColpsd-dis span{
     padding-left: 18px;   
 }
-.iceAccordionHeader div, .iceAccordionHeader-dis div,
-    .iceAccordionHeaderCollapsed div, .iceAccordionHeaderCollapsed-dis div{
+.icePnlAccrdHdr div, .icePnlAccrdHdr-dis div,
+    .icePnlAccrdHdrColpsd div, .icePnlAccrdHdrColpsd-dis div{
     background-repeat: no-repeat;
     background-position: left top;
 }
-.iceAccordionHeader div, .iceAccordionHeader-dis div{
+.icePnlAccrdHdr div, .icePnlAccrdHdr-dis div{
     background-image: url( "../images/accordion/arrowDown.gif" );
 }
-.iceAccordionHeaderCollapsed div, .iceAccordionHeaderCollapsed-dis div{
+.icePnlAccrdHdrColpsd div, .icePnlAccrdHdrColpsd-dis div{
     background-image: url( "../images/accordion/arrowUp.gif" );
 }
+
+.pnlBrdrDemoNorth, .pnlBrdrDemoEast, .pnlBrdrDemoWest, .pnlBrdrDemoCenter, .pnlBrdrDemoSouth {
+	border: 1px solid #CCCCCC;
+	padding: 5px;
+	vertical-align: top;
+}
+
+
+.pnlBrdrDemo {
+    width:60%;
+}
+.pnlBrdrDemoNorth {
+    background-color:#EEEEEE;
+    font-weight: bold;
+    text-align: center;
+    height:60px;	    
+}
+
+.pnlBrdrDemoEast {
+    background-color:#EEEEEE;
+    width: 20%;
+}
+
+.pnlBrdrDemoWest {
+    background-color:#EEEEEE;
+    width: 30%;
+}
+
+.pnlBrdrDemoCenter {
+    background-color:#EEEEEE;
+    width: 50%;
+}
+
+.pnlBrdrDemoSouth {
+    background-color:#EEEEEE;
+}
+
+.mainBorderLayoutNorth {
+    height:60px;
+    padding:0px;
+}
+
