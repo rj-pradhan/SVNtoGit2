@@ -107,8 +107,11 @@ public class ELSetPropertiesRule extends Rule {
 
         Class argType = Object.class;
         try {
-            //attempt to coerce to Integer type for standard JSF components
-            if (null != Integer.valueOf(value)) {
+            if ( value.equalsIgnoreCase("true") || 
+                        value.equalsIgnoreCase("false") ) {
+                argType = Boolean.class;
+            } else if (null != Integer.valueOf(value)) {
+                //attempt to coerce to Integer type for standard JSF components
                 argType = Integer.class;
             }
         } catch (NumberFormatException e) {
