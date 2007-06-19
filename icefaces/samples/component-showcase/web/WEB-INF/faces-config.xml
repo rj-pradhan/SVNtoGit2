@@ -351,10 +351,10 @@
     <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
-  <!-- Accordion Panel -->
+  <!-- Collapsible Panel -->
   <managed-bean>
-    <managed-bean-name>accordionBean</managed-bean-name>
-    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel.AccordionBean</managed-bean-class>
+    <managed-bean-name>panelCollapsibleBean</managed-bean-name>
+    <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.collapsiblePanel.PanelCollapsibleBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
 

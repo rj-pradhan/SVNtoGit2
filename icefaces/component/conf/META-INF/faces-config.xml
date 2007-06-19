@@ -199,9 +199,9 @@
       </renderer>
 
       <renderer>
-            <component-family>com.icesoft.faces.AccordionFamily</component-family>
-            <renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>
-            <renderer-class>com.icesoft.faces.component.accordion.PanelAccordionRenderer</renderer-class>
+            <component-family>javax.faces.Command</component-family>
+            <renderer-type>com.icesoft.faces.PanelCollapsibleRenderer</renderer-type>
+            <renderer-class>com.icesoft.faces.component.panelcollapsible.PanelCollapsibleRenderer</renderer-class>
       </renderer>
 
       <renderer>
@@ -354,8 +354,8 @@
     </component>
 
     <component>
-      <component-type>com.icesoft.faces.Accordion</component-type>
-      <component-class>com.icesoft.faces.component.accordion.PanelAccordion</component-class>
+      <component-type>com.icesoft.faces.PanelCollapsible</component-type>
+      <component-class>com.icesoft.faces.component.panelcollapsible.PanelCollapsible</component-class>
     </component>
 
     <component>

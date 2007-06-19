@@ -1,4 +1,4 @@
-package com.icesoft.faces.component.accordion;
+package com.icesoft.faces.component.panelcollapsible;
 
 import com.icesoft.faces.context.effects.JavascriptContext;
 import com.icesoft.faces.component.CSS_DEFAULT;
@@ -13,10 +13,10 @@ import javax.faces.event.ActionListener;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.ActionSource;
 
-public class PanelAccordion extends UIComponentBase implements ActionSource {
-    public static final String COMPONENET_TYPE = "com.icesoft.faces.Accordion";
-    public static final String DEFAULT_RENDERER_TYPE = "com.icesoft.faces.AccordionRenderer";
-    public static final String COMPONENT_FAMILY = "com.icesoft.faces.AccordionFamily";
+public class PanelCollapsible extends UIComponentBase implements ActionSource {
+    public static final String COMPONENET_TYPE = "com.icesoft.faces.PanelCollapsible";
+    public static final String DEFAULT_RENDERER_TYPE = "com.icesoft.faces.PanelCollapsibleRenderer";
+    public static final String COMPONENT_FAMILY = "javax.faces.Command";
     private static final boolean DEFAULT_IMMEDIATE = false;
 
     private String label;
@@ -38,7 +38,7 @@ public class PanelAccordion extends UIComponentBase implements ActionSource {
     private String renderedOnUserRole = null;
 
 
-    public PanelAccordion() {
+    public PanelCollapsible() {
         super();
         JavascriptContext.includeLib(JavascriptContext.ICE_EXTRAS, FacesContext.getCurrentInstance());
 

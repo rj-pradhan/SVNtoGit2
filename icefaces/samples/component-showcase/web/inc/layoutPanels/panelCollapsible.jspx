@@ -49,20 +49,20 @@
 <ice:panelGroup styleClass="formBorderHighlight">
     <h3>
         <ice:outputText
-                value="#{msgs['component.accordion.title']}"/>
+                value="#{msgs['component.collapsiblePanel.title']}"/>
     </h3>
     <h4>
         <ice:outputText
-                value="#{msgs['component.accordion.instructions']}"/>
+                value="#{msgs['component.collapsiblePanel.instructions']}"/>
     </h4>
 </ice:panelGroup>
 <ice:panelGroup>
 <!-- Link based expandable panel demo -->
-<ice:panelAccordion expanded="#{true}">
+<ice:panelCollapsible expanded="#{true}">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText
-                    value="#{msgs['component.accordion.links.header']}"/>
+                    value="#{msgs['component.collapsiblePanel.links.header']}"/>
         </ice:panelGroup>
     </f:facet>
     <ice:panelGrid columns="3" cellpadding="4" cellspacing="4" width="100%">
@@ -122,45 +122,45 @@
         </ice:outputLink>
 
     </ice:panelGrid>
-</ice:panelAccordion>
+</ice:panelCollapsible>
 <!-- Form input based expandable panel demo -->
-<ice:panelAccordion expanded="#{true}" >
+<ice:panelCollapsible expanded="#{true}" >
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
-            <ice:outputText value="#{msgs['component.accordion.form.header']}"/>
+            <ice:outputText value="#{msgs['component.collapsiblePanel.form.header']}"/>
         </ice:panelGroup>
     </f:facet>
     <ice:panelGroup>
         <ice:panelGrid columns="4">
             <!-- first Name-->
             <ice:outputLabel for="formFirstName"
-                             value="#{msgs['component.accordion.form.firstName']}"/>
+                             value="#{msgs['component.collapsiblePanel.form.firstName']}"/>
             <ice:inputText id="formFirstName"
-                           value="#{accordionBean.firstName}"/>
+                           value="#{panelCollapsibleBean.firstName}"/>
 
             <!-- Phone Name-->
             <ice:outputLabel for="formPhone"
-                             value="#{msgs['component.accordion.form.phone']}"/>
-            <ice:inputText id="formPhone" value="#{accordionBean.phone}"/>
+                             value="#{msgs['component.collapsiblePanel.form.phone']}"/>
+            <ice:inputText id="formPhone" value="#{panelCollapsibleBean.phone}"/>
 
             <!-- Last Name-->
             <ice:outputLabel for="formLastName"
-                             value="#{msgs['component.accordion.form.lastName']}"/>
-            <ice:inputText id="formLastName" value="#{accordionBean.lastName}"/>
+                             value="#{msgs['component.collapsiblePanel.form.lastName']}"/>
+            <ice:inputText id="formLastName" value="#{panelCollapsibleBean.lastName}"/>
 
             <!-- Email Name-->
             <ice:outputLabel for="formEmail"
-                             value="#{msgs['component.accordion.form.email']}"/>
-            <ice:inputText id="formEmail" value="#{accordionBean.email}"/>
+                             value="#{msgs['component.collapsiblePanel.form.email']}"/>
+            <ice:inputText id="formEmail" value="#{panelCollapsibleBean.email}"/>
 
         </ice:panelGrid>
     </ice:panelGroup>
-</ice:panelAccordion>
-<ice:panelAccordion expanded="#{false}">
+</ice:panelCollapsible>
+<ice:panelCollapsible expanded="#{false}">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText
-                    value="#{msgs['component.accordion.image.header']}"/>
+                    value="#{msgs['component.collapsiblePanel.image.header']}"/>
         </ice:panelGroup>
     </f:facet>
     <ice:panelGroup style="text-align: center;">
@@ -169,19 +169,19 @@
                           alt="ICEfaces.org"
                           title="ICEfaces.org"/>
     </ice:panelGroup>
-</ice:panelAccordion>
+</ice:panelCollapsible>
 <!-- Text output based expandable panel demo -->
-<ice:panelAccordion expanded="#{true}">
+<ice:panelCollapsible expanded="#{true}">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
-            <ice:outputText value="#{msgs['component.accordion.text.header']}"/>
+            <ice:outputText value="#{msgs['component.collapsiblePanel.text.header']}"/>
         </ice:panelGroup>
     </f:facet>
     <ice:panelGroup style="padding: 5px;">
         <ice:outputText
-                value="#{msgs['component.accordion.text.description']}"/>
+                value="#{msgs['component.collapsiblePanel.text.description']}"/>
     </ice:panelGroup>
-</ice:panelAccordion>
+</ice:panelCollapsible>
 </ice:panelGroup>
 
 </ice:panelGrid>
@@ -193,7 +193,7 @@
   this placeholder
 -->
 <ice:panelTab label="#{msgs['tabbedHeadings.description']}">
-    <iframe src="./docs/accordionPanelDoc.html"
+    <iframe src="./docs/panelCollapsibleDoc.html"
             class="includeIframe"
             width="100%"></iframe>
 </ice:panelTab>
@@ -204,7 +204,7 @@
 -->
 <ice:panelTab label="#{msgs['tabbedHeadings.source']}">
     <iframe
-            src="./sourcecodeStream.html?path=./inc/layoutPanels/accordionPanel.jspx"
+            src="./sourcecodeStream.html?path=./inc/layoutPanels/panelCollapsible.jspx"
             class="includeIframe" width="100%"></iframe>
 </ice:panelTab>
 

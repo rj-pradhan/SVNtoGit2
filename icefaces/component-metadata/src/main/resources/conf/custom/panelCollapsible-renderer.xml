@@ -36,13 +36,13 @@
          <description>
              <![CDATA[ Description in here will be used to generate TLD file ]]>
          </description>
-	<component-family>com.icesoft.faces.AccordionFamily</component-family>
-	<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>	
+	<component-family>javax.faces.Command</component-family>
+	<renderer-type>com.icesoft.faces.PanelCollapsibleRenderer</renderer-type>	
 	<renderer-extension>
-		<instance-name>panelAccordion</instance-name>
+		<instance-name>panelCollapsible</instance-name>
 		<is-container>true</is-container>
 		<renders-children>true</renders-children>
-		<tag-name>panelAccordion</tag-name>
+		<tag-name>panelCollapsible</tag-name>
 		<taglib-prefix>@taglib-prefix@</taglib-prefix>
 		<taglib-uri>@taglib-uri@</taglib-uri>
 	</renderer-extension>

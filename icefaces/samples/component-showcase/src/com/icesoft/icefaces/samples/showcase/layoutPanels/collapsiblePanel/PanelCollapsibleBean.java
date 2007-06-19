@@ -31,19 +31,14 @@
  *
  */
 
-package com.icesoft.icefaces.samples.showcase.layoutPanels.accordionPanel;
+package com.icesoft.icefaces.samples.showcase.layoutPanels.collapsiblePanel;
 
-import com.icesoft.faces.context.effects.Effect;
-import com.icesoft.faces.context.effects.Highlight;
-import java.util.Map;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  * This class is the backing bean for the accordionPanel example. It store
  * the values of a simple form, first name, lastname, phone and email.
  */
-public class AccordionBean {
+public class PanelCollapsibleBean {
 
     // simple form input values.
     private String firstName;

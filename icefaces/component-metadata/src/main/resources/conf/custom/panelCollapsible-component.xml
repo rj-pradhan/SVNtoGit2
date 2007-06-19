@@ -34,7 +34,7 @@
 
 <component>
 	<description>
-		<![CDATA[ Accordion Componenet
+		<![CDATA[ panelCollapsible Componenet
 
 		Contains a header facet and a body. When the expanded value is changed the
 		panel will expand or collapse.
@@ -44,12 +44,12 @@
 
 		 ]]>
 	</description>
-	<display-name>panelAccordion</display-name>
-	<component-type>com.icesoft.faces.Accordion</component-type>
-    &ice-cust-accordion-props;
+	<display-name>panelCollapsible</display-name>
+	<component-type>com.icesoft.faces.PanelCollapsible</component-type>
+    &ice-cust-panelCollapsible-props;
 	<component-extension>
 	    <base-component-type>com.sun.faces.Component</base-component-type>
-		<component-family>com.icesoft.faces.AccordionFamily</component-family>
-		<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>  
+		<component-family>javax.faces.Command</component-family>
+		<renderer-type>com.icesoft.faces.PanelCollapsibleRenderer</renderer-type>  
 	</component-extension>
 </component>

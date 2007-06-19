@@ -670,11 +670,11 @@ public class TreeNavigation {
                 // component menu -> Accordion Series
                 branchObject = new PageContentBean();
                 branchObject.setMenuDisplayText(
-                        "submenuDisplayText.accordionPanelItem");
+                        "submenuDisplayText.collapsiblePanelItem");
                 branchObject.setMenuContentTitle(
-                        "submenuContentTitle.accordionPanelItem");
-                branchObject.setMenuContentInclusionFile("./layoutPanels/accordionPanel.jspx");
-                branchObject.setTemplateName("accordionPanel");
+                        "submenuContentTitle.collapsiblePanelItem");
+                branchObject.setMenuContentInclusionFile("./layoutPanels/panelCollapsible.jspx");
+                branchObject.setTemplateName("collapsiblePanel");
                 branchObject.setNavigationSelection(navigationBean);
                 leafNode = new DefaultMutableTreeNode(branchObject);
                 branchObject.setWrapper(leafNode);

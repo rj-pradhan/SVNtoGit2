@@ -6,14 +6,6 @@
 <facelet-taglib>
 	<namespace>http://www.icesoft.com/icefaces/component</namespace>
 	<tag>
-		<tag-name>panelAccordion</tag-name>
-		<component>
-			<component-type>com.icesoft.faces.Accordion</component-type>
-			<renderer-type>com.icesoft.faces.AccordionRenderer</renderer-type>
-			<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
-		</component>
-	</tag>
-	<tag>
 		<tag-name>effect</tag-name>
 		<component>
 			<component-type>com.icesoft.faces.ApplyEffect</component-type>
@@ -312,6 +304,14 @@
 		<component>
 			<component-type>com.icesoft.faces.OutputStyleComp</component-type>
 			<renderer-type>com.icesoft.faces.style.OutputStyleRenderer</renderer-type>
+			<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
+		</component>
+	</tag>
+	<tag>
+		<tag-name>panelCollapsible</tag-name>
+		<component>
+			<component-type>com.icesoft.faces.PanelCollapsible</component-type>
+			<renderer-type>com.icesoft.faces.PanelCollapsibleRenderer</renderer-type>
 			<handler-class>com.icesoft.faces.component.facelets.IceComponentHandler</handler-class>
 		</component>
 	</tag>

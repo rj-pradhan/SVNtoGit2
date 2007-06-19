@@ -370,9 +370,9 @@
   <!ENTITY uiseries-component   SYSTEM "custom/uiseries-component.xml">
   <!ENTITY uiseries-renderer    SYSTEM "custom/uiseries-renderer.xml">
   
-  <!ENTITY ice-cust-accordion-props SYSTEM "ice_cust_properties/cust-accordion-props.xml">
-  <!ENTITY accordion-component SYSTEM "custom/accordion-component.xml">
-  <!ENTITY accordion-renderer SYSTEM "custom/accordion-renderer.xml">
+  <!ENTITY ice-cust-panelCollapsible-props SYSTEM "ice_cust_properties/cust-panelCollapsible-props.xml">
+  <!ENTITY panelCollapsible-component SYSTEM "custom/panelCollapsible-component.xml">
+  <!ENTITY panelCollapsible-renderer SYSTEM "custom/panelCollapsible-renderer.xml">
 
 <!ENTITY ice-cust-effect-props SYSTEM "ice_cust_properties/cust-effect-props.xml">
   <!ENTITY effect-component SYSTEM "custom/effect-component.xml">
@@ -445,7 +445,7 @@
     &rowselector-component;
     &outputChart-component;
     &uiseries-component;
-    &accordion-component;
+    &panelCollapsible-component;
     &effect-component;
     <!-- &googlemap-component; -->
     
@@ -507,7 +507,7 @@
         &rowselector-renderer;
         &outputChart-renderer;	
         &uiseries-renderer;
-        &accordion-renderer;
+        &panelCollapsible-renderer;
         &effect-renderer;
         <!-- &googlemap-renderer; -->
     </render-kit>

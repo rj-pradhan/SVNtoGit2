@@ -1,4 +1,4 @@
-package com.icesoft.faces.component.accordion;
+package com.icesoft.faces.component.panelcollapsible;
 
 import com.icesoft.faces.context.DOMContext;
 import com.icesoft.faces.context.effects.CurrentStyle;
@@ -22,9 +22,9 @@ import org.w3c.dom.Text;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public class PanelAccordionRenderer extends DomBasicRenderer {
+public class PanelCollapsibleRenderer extends DomBasicRenderer {
 
-    private static Log log = LogFactory.getLog(PanelAccordionRenderer.class);
+    private static Log log = LogFactory.getLog(PanelCollapsibleRenderer.class);
 
 
     public boolean getRendersChildren() {
@@ -33,10 +33,10 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
 
     public void decode(FacesContext context, UIComponent component) {
         super.decode(context, component);
-        PanelAccordionState state = PanelAccordionState.getState(context, component);
+        PanelCollapsibleState state = PanelCollapsibleState.getState(context, component);
         state.setChangedViaDecode(false);
         try {
-            PanelAccordion panelAccordion = (PanelAccordion) component;
+            PanelCollapsible panelAccordion = (PanelCollapsible) component;
 
             Map map = (Map) context.getExternalContext().getSessionMap()
                     .get(CurrentStyle.class.getName());
@@ -67,8 +67,8 @@ public class PanelAccordionRenderer extends DomBasicRenderer {
     }
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-        PanelAccordion panelAccordion = (PanelAccordion) uiComponent;
-        PanelAccordionState state = PanelAccordionState.getState(facesContext, uiComponent);
+        PanelCollapsible panelAccordion = (PanelCollapsible) uiComponent;
+        PanelCollapsibleState state = PanelCollapsibleState.getState(facesContext, uiComponent);
         String base = panelAccordion.getStyleClass();
         boolean open = panelAccordion.getExpanded().booleanValue();
         boolean disabled = panelAccordion.isDisabled();

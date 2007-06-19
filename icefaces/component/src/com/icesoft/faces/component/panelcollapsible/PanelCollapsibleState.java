@@ -1,4 +1,4 @@
-package com.icesoft.faces.component.accordion;
+package com.icesoft.faces.component.panelcollapsible;
 
 import com.icesoft.faces.context.BridgeFacesContext;
 
@@ -7,19 +7,19 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.Map;
 
-public class PanelAccordionState implements Serializable {
+public class PanelCollapsibleState implements Serializable {
 
 
-    public static PanelAccordionState getState(FacesContext context, UIComponent component) {
+    public static PanelCollapsibleState getState(FacesContext context, UIComponent component) {
 
         String id = component.getClientId(context);
         String viewNumber = ((BridgeFacesContext) context).getViewNumber();
 
         String key = id + viewNumber;
         Map map = context.getExternalContext().getSessionMap();
-        PanelAccordionState state = (PanelAccordionState) map.get(key);
+        PanelCollapsibleState state = (PanelCollapsibleState) map.get(key);
         if (state == null) {
-            state = new PanelAccordionState();
+            state = new PanelCollapsibleState();
             map.put(key, state);
         }
         return state;

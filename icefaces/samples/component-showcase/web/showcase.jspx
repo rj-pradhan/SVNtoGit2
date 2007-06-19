@@ -283,10 +283,10 @@
                         </f:subview>
                     </ice:panelGroup>
 
-                    <ice:panelGroup id="accordionPanel" styleClass="contentIncludePanelGroup" >
-                        <f:subview id="accordionPanelSub">
+                    <ice:panelGroup id="collapsiblePanel" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="collapsiblePanelSub">
                             <!-- Panel Stack Header component include -->
-                            <jsp:directive.include file="inc/layoutPanels/accordionPanel.jspx" />
+                            <jsp:directive.include file="inc/layoutPanels/panelCollapsible.jspx" />
                         </f:subview>
                     </ice:panelGroup>
 
