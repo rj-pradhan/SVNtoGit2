@@ -1079,18 +1079,18 @@ em {
     text-decoration: underline;
 }
 .icePnlAccrdHdr span, .icePnlAccrdHdr-dis span,
-    .icePnlAccrdHdrColpsd span, .icePnlAccrdHdrColpsd-dis span{
+    .icePnlAccrdColpsdHdr span, .icePnlAccrdColpsdHdr-dis span{
     padding-left: 18px;   
 }
 .icePnlAccrdHdr div, .icePnlAccrdHdr-dis div,
-    .icePnlAccrdHdrColpsd div, .icePnlAccrdHdrColpsd-dis div{
+    .icePnlAccrdColpsdHdr div, .icePnlAccrdColpsdHdr-dis div{
     background-repeat: no-repeat;
     background-position: left top;
 }
 .icePnlAccrdHdr div, .icePnlAccrdHdr-dis div{
     background-image: url( "../images/accordion/arrowDown.gif" );
 }
-.icePnlAccrdHdrColpsd div, .icePnlAccrdHdrColpsd-dis div{
+.icePnlAccrdColpsdHdr div, .icePnlAccrdColpsdHdr-dis div{
     background-image: url( "../images/accordion/arrowUp.gif" );
 }
 

@@ -2262,30 +2262,26 @@ Disabled classes for the calendar controls
 /*
 ----------- Panel Accordion --------
 */
-.icePnlAccrd {
- 	width:100%;
- }
+
 /* opened accordion styles */
-.icePnlAccrdHdr, .icePnlAccrdCnt, .icePnlAccrdCont {
+.icePnlAccrd, .icePnlAccrdHdr, .icePnlAccrdCnt {
 }
 
 /* Closed */
-.icePnlAccrdHdrColpsd, .icePnlAccrdCntColpsd,
-    .icePnlAccrdContColpsd {
+.icePnlAccrdColpsd, .icePnlAccrdColpsdHdr, .icePnlAccrdColpsdCnt {
 }
 
 /* Open and disabled */
-.icePnlAccrdHdr-dis, .icePnlAccrdCnt-dis, .icePnlAccrdCont-dis {
+.icePnlAccrd-dis, .icePnlAccrdHdr-dis, .icePnlAccrdCnt-dis {
 }
 
 /* Closed and disabled */
-.icePnlAccrdHdrColpsd-dis, .icePnlAccrdCntColpsd-dis,
-    .icePnlAccrdContColpsd-dis {
+.icePnlAccrdColpsd-dis, .icePnlAccrdColpsdHdr-dis, .icePnlAccrdColpsdCnt-dis{
 }
 
 /* common accordion headers */
-.icePnlAccrdHdr, .icePnlAccrdHdr-dis, .icePnlAccrdHdrColpsd,
-    .icePnlAccrdHdrColpsd-dis {
+.icePnlAccrdHdr, .icePnlAccrdHdr-dis, .icePnlAccrdColpsdHdr,
+    .icePnlAccrdColpsdHdr-dis {
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;
@@ -2301,12 +2297,12 @@ Disabled classes for the calendar controls
     padding-bottom: 4px;
     cursor: pointer;
 }
-.icePnlAccrdHdr-dis, .icePnlAccrdHdrColpsd-dis{
+.icePnlAccrdHdr-dis, .icePnlAccrdColpsdHdr-dis{
     color: #999999;
 }
 
-.icePnlAccrdCnt, .icePnlAccrdCntColpsd,
-    .icePnlAccrdCntColpsd-dis, .icePnlAccrdCnt-dis {
+.icePnlAccrdCnt, .icePnlAccrdColpsdCnt,
+    .icePnlAccrdColpsdCnt-dis, .icePnlAccrdCnt-dis {
     background-color: #EFEFEF;
     border: 1px solid #CCCCCC;
     border-top: none;
