@@ -18,6 +18,8 @@ import javax.faces.context.FacesContext;
  * in one place, and get rid of the variables cluttering up a few
  * of the ICEfaces classes 
  *
+ *  Jun 2007 - removed reference to ConversationIsLongRunningParameter
+ *      since seam1.3.0.ALPHA has removed all reference to it in Manager Class
  *
  */
 public class SeamUtilities {
@@ -49,7 +51,7 @@ public class SeamUtilities {
 //    private static Method seamParentConversationIdParameterMethod;
 
     // the method for getting the longRunningConversation parameter name
-    private static Method seamLongRunningConversationParameterMethod;
+//    private static Method seamLongRunningConversationParameterMethod;
 
 //    private static Method seamBeforeRedirectMethodInstance;
 
@@ -58,7 +60,7 @@ public class SeamUtilities {
     // This is just convenience, to avoid rebuilding the String
     private static String conversationIdParameter;
     private static String conversationParentParameter = "parentConversationId";
-    private static String conversationLongRunningParameter;
+//    private static String conversationLongRunningParameter;
     
     private static String SPRING_CLASS_NAME = 
             "org.springframework.webflow.executor.jsf.FlowVariableResolver";
@@ -116,7 +118,6 @@ public class SeamUtilities {
         }
         StringTokenizer st = new StringTokenizer( uri, "?&");
         StringBuffer builder = new StringBuffer();
-        System.out.println("Unfiltered URI: " + uri);
 
         String token;
         boolean first = true; 
@@ -124,7 +125,7 @@ public class SeamUtilities {
             token = st.nextToken();
             if ( (token.indexOf(conversationIdParameter) > -1)  ||
                  (token.indexOf(conversationParentParameter) > -1) ||
-                 (token.indexOf(conversationLongRunningParameter) > -1) ||
+//                 (token.indexOf(conversationLongRunningParameter) > -1) ||
                   token.indexOf("rvn") > -1 ) {
                 continue;
             } 
@@ -272,10 +273,8 @@ public class SeamUtilities {
      * available, and that is only during a valid EventContext. 
      */
     private static void loadSeamEnvironment() {
-
-
         try {
-
+        	
             // load classes
             seamManagerClass = Class.forName("org.jboss.seam.core.Manager");
             Class seamScopeTypeClass = Class.forName("org.jboss.seam.ScopeType");
@@ -325,9 +324,9 @@ public class SeamUtilities {
 //                                               seamClassArgs);
 
 
-             seamLongRunningConversationParameterMethod =
-                    seamManagerClass.getMethod("getConversationIsLongRunningParameter",
-                                               seamClassArgs);
+//             seamLongRunningConversationParameterMethod =
+//                    seamManagerClass.getMethod("getConversationIsLongRunningParameter",
+//                                               seamClassArgs);
 
 //            seamBeforeRedirectMethodInstance =
 //                    seamManagerClass.getMethod("beforeRedirect",
@@ -343,11 +342,11 @@ public class SeamUtilities {
         } catch (Exception e) {
             seamInstanceMethod = null;
             seamManagerClass = null;
-            log.error("Exception loading seam environment: ", e);
+            log.info("Exception loading seam environment: ", e);
         }
         
         if (seamManagerClass != null) {
-            log.debug("Seam environment detected ");
+            log.info("Seam environment detected ");
         }
     }
 
@@ -370,7 +369,6 @@ public class SeamUtilities {
      * @return the appropriate parameter name for the application
      */
     public static String getConversationIdParameterName() {
-
         if (!isSeamEnvironment()) {
             return null;
         }
@@ -398,11 +396,11 @@ public class SeamUtilities {
 //                                invoke(seamManagerInstance, seamMethodNoArgs);
 //            }
 
-            if (seamLongRunningConversationParameterMethod != null) {
-                conversationLongRunningParameter = (String)
-                        seamLongRunningConversationParameterMethod.invoke(
-                        seamManagerInstance, seamMethodNoArgs);
-            }
+//            if (seamLongRunningConversationParameterMethod != null) {
+//                conversationLongRunningParameter = (String)
+//                        seamLongRunningConversationParameterMethod.invoke(
+//                        seamManagerInstance, seamMethodNoArgs);
+//            }
 
 
         } catch (Exception e) {
@@ -421,10 +419,10 @@ public class SeamUtilities {
      */
     public static void removeSeamDebugPhaseListener(Lifecycle lifecycle) {
         PhaseListener[] phaseListeners = lifecycle.getPhaseListeners();
-//System.out.println("*** SeamUtilities.removeSeamDebugPhaseListener()");
-//System.out.println("***   phaseListeners: " + phaseListeners.length);
+// System.out.println("*** SeamUtilities.removeSeamDebugPhaseListener()");
+// System.out.println("***   phaseListeners: " + phaseListeners.length);
         for(int i = 0; i < phaseListeners.length; i++) {
-//System.out.println("***     phaseListeners["+i+"]: " + phaseListeners[i]);
+// System.out.println("***     phaseListeners["+i+"]: " + phaseListeners[i]);
             if( phaseListeners[i].getClass().getName().equals(
                 "org.jboss.seam.debug.jsf.SeamDebugPhaseListener") )
             {
