@@ -422,11 +422,10 @@ public class SelectInputDate
 
         ValueBinding vb = getValueBinding("imageDir");
         if (vb != null) {
-            _imageDir = (String) vb.getValue(getFacesContext());
+            return (String) vb.getValue(getFacesContext());
         } else {
-            _imageDir = DEFAULT_IMAGEDIR;
+            return DEFAULT_IMAGEDIR;
         }
-        return _imageDir;
     }
 
     /**
