@@ -36,6 +36,8 @@ package com.icesoft.faces.webapp.xmlhttp;
 import com.icesoft.faces.context.BridgeFacesContext;
 import com.icesoft.faces.context.ViewListener;
 import com.icesoft.faces.webapp.http.common.Configuration;
+import com.icesoft.faces.webapp.parser.ImplementationUtil;
+
 import edu.emory.mathcs.backport.java.util.concurrent.ExecutorService;
 import edu.emory.mathcs.backport.java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
@@ -235,11 +237,16 @@ public class PersistentFacesState implements Serializable {
         facesContext.setCurrentInstance();
         synchronized (facesContext) {
             try {
+            	if (ImplementationUtil.isJSF12()){
                 //facesContext.renderResponse() skips phase listeners
                 //in JSF 1.2, so do a full execute with no stale input
                 //instead
-                facesContext.getExternalContext()
+            		facesContext.getExternalContext()
                         .getRequestParameterMap().clear();
+            	}
+            	else {
+            		facesContext.renderResponse();
+            	}
                 lifecycle.execute(facesContext);
             } catch (IllegalStateException e) {
                 if (log.isDebugEnabled()) {
