@@ -35,7 +35,28 @@
 
 <renderer>
          <description>
-             <![CDATA[the output Style tag provides an additional style sheet for Internet Explorer, allowing specific styles to be over ridden. ]]>
+         <![CDATA[
+         <p>The outputStyle component is used to link the desired ICEfaces 
+            theme CSS stylesheets into the page to style the ICEfaces 
+            Component Suite components.</p>
+         <p>Inserting the outputStyle component into the HEAD region of a 
+            page will link both the default CSS stylesheet for the theme and 
+            optionally an additional stylesheet that alters the default 
+            styles to accommodate differences in CSS rendering in various 
+            user-agents/browsers.</p>
+         <p>The additional style sheet will have a different extension for 
+            each browser.</p>
+            <ul>
+              <li>Internet Explorer < 7 = _ie.css</li>
+              <li>Internet Explorer 7 = _ie7.css</li>
+              <li>Safari = _safari.css</li>
+              <li>Sun Studio Creator = _dt.css</li>
+            </ul>
+         <p>This extension replaces the .css value of the href attribute.
+            So when href is 'xp.css' and the page is rendered in Internet 
+            Explorer 6 or less, an additional style sheet will be included 
+            called 'xp_ie.css'.</p>
+		]]>
          </description>
 	<component-family>com.icesoft.faces.OutputStyle</component-family>
 	<renderer-type>com.icesoft.faces.style.OutputStyleRenderer</renderer-type>	
