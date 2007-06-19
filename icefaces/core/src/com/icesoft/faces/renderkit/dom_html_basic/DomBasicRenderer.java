@@ -77,6 +77,7 @@ public abstract class DomBasicRenderer extends Renderer {
     // component family constants for UIForm and WebUIForm
     public static final String WEB_UIFORM = "com.sun.rave.web.ui.Form";
     public static final String UIFORM = "javax.faces.form";
+    public static final String WEB_UIJSFFORM = "com.sun.webui.jsf.Form";
 
     public void decode(FacesContext facesContext, UIComponent uiComponent) {
         CurrentStyle.decode(facesContext, uiComponent);
@@ -556,7 +557,8 @@ public abstract class DomBasicRenderer extends Renderer {
         // check family 
         if (parent != null &&
             (parent.getFamily().equalsIgnoreCase(WEB_UIFORM) ||
-             parent.getFamily().equalsIgnoreCase(UIFORM))) {
+             parent.getFamily().equalsIgnoreCase(UIFORM) ||
+             parent.getFamily().equalsIgnoreCase(WEB_UIJSFFORM))) {
             form = (UIComponent) parent;
         }
 
