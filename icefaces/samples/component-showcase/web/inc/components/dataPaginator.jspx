@@ -155,35 +155,35 @@ with more data than can be displayed in a single page.
                 >
             <f:facet name="first">
                 <ice:graphicImage
-                        url="./xmlhttp/css/xp/css-images/arrow-first.gif"
+                        url="#{styleBean.imageDirectory}arrow-first.gif"
                         style="border:none;"
                         title="#{msgs['component.dataPaginator.firstpage']}"/>
             </f:facet>
             <f:facet name="last">
                 <ice:graphicImage
-                        url="./xmlhttp/css/xp/css-images/arrow-last.gif"
+                        url="#{styleBean.imageDirectory}arrow-last.gif"
                         style="border:none;"
                         title="#{msgs['component.dataPaginator.lastpage']}"/>
             </f:facet>
             <f:facet name="previous">
                 <ice:graphicImage
-                        url="./xmlhttp/css/xp/css-images/arrow-previous.gif"
+                        url="#{styleBean.imageDirectory}arrow-previous.gif"
                         style="border:none;"
                         title="#{msgs['component.dataPaginator.previouspage']}"/>
             </f:facet>
             <f:facet name="next">
                 <ice:graphicImage
-                        url="./xmlhttp/css/xp/css-images/arrow-next.gif"
+                        url="#{styleBean.imageDirectory}arrow-next.gif"
                         style="border:none;"
                         title="#{msgs['component.dataPaginator.nextpage']}"/>
             </f:facet>
             <f:facet name="fastforward">
-                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-ff.gif"
+                <ice:graphicImage url="#{styleBean.imageDirectory}arrow-ff.gif"
                                   style="border:none;"
                                   title="#{msgs['component.dataPaginator.fastforward']}"/>
             </f:facet>
             <f:facet name="fastrewind">
-                <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-fr.gif"
+                <ice:graphicImage url="#{styleBean.imageDirectory}arrow-fr.gif"
                                   style="border:none;"
                                   title="#{msgs['component.dataPaginator.fastbackward']}"/>
             </f:facet>
@@ -204,35 +204,35 @@ No. of direct links to pages: 4 -->
                    rendered="#{!scrollerList.vertical}">
     <f:facet name="first">
         <ice:graphicImage
-                url="./xmlhttp/css/xp/css-images/arrow-first.gif"
+                url="#{styleBean.imageDirectory}arrow-first.gif"
                 style="border:none;"
                 title="#{msgs['component.dataPaginator.firstpage']}"/>
     </f:facet>
     <f:facet name="last">
         <ice:graphicImage
-                url="./xmlhttp/css/xp/css-images/arrow-last.gif"
+                url="#{styleBean.imageDirectory}arrow-last.gif"
                 style="border:none;"
                 title="#{msgs['component.dataPaginator.lastpage']}"/>
     </f:facet>
     <f:facet name="previous">
         <ice:graphicImage
-                url="./xmlhttp/css/xp/css-images/arrow-previous.gif"
+                url="#{styleBean.imageDirectory}arrow-previous.gif"
                 style="border:none;"
                 title="#{msgs['component.dataPaginator.previouspage']}"/>
     </f:facet>
     <f:facet name="next">
         <ice:graphicImage
-                url="./xmlhttp/css/xp/css-images/arrow-next.gif"
+                url="#{styleBean.imageDirectory}arrow-next.gif"
                 style="border:none;"
                 title="#{msgs['component.dataPaginator.nextpage']}"/>
     </f:facet>
     <f:facet name="fastforward">
-        <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-ff.gif"
+        <ice:graphicImage url="#{styleBean.imageDirectory}arrow-ff.gif"
                           style="border:none;"
                           title="#{msgs['component.dataPaginator.fastforward']}"/>
     </f:facet>
     <f:facet name="fastrewind">
-        <ice:graphicImage url="./xmlhttp/css/xp/css-images/arrow-fr.gif"
+        <ice:graphicImage url="#{styleBean.imageDirectory}arrow-fr.gif"
                           style="border:none;"
                           title="#{msgs['component.dataPaginator.fastbackward']}"/>
     </f:facet>
