@@ -36,7 +36,7 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
         PanelCollapsibleState state = PanelCollapsibleState.getState(context, component);
         state.setChangedViaDecode(false);
         try {
-            PanelCollapsible panelAccordion = (PanelCollapsible) component;
+            PanelCollapsible panelCollapsible = (PanelCollapsible) component;
 
             Map map = (Map) context.getExternalContext().getSessionMap()
                     .get(CurrentStyle.class.getName());
@@ -50,11 +50,11 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
                     if (style.indexOf("display:none") != -1) {
                         newState = Boolean.FALSE;
                     }
-                    Boolean currentState = panelAccordion.getExpanded();
+                    Boolean currentState = panelCollapsible.getExpanded();
                     if (!newState.equals(currentState)) {
                         ActionEvent ae = new ActionEvent(component);
                         component.queueEvent(ae);
-                        panelAccordion.setExpanded(newState);
+                        panelCollapsible.setExpanded(newState);
 
                         state.setChangedViaDecode(true);
                     }
@@ -67,13 +67,13 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
     }
 
     public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
-        PanelCollapsible panelAccordion = (PanelCollapsible) uiComponent;
+        PanelCollapsible panelCollapsible = (PanelCollapsible) uiComponent;
         PanelCollapsibleState state = PanelCollapsibleState.getState(facesContext, uiComponent);
-        String base = panelAccordion.getStyleClass();
-        boolean open = panelAccordion.getExpanded().booleanValue();
-        boolean disabled = panelAccordion.isDisabled();
+        String base = panelCollapsible.getStyleClass();
+        boolean open = panelCollapsible.getExpanded().booleanValue();
+        boolean disabled = panelCollapsible.isDisabled();
         StringBuffer classModeSuffix = new StringBuffer(16);
-        String style = panelAccordion.getStyle();
+        String style = panelCollapsible.getStyle();
         
         boolean fireEffect = false;
 
@@ -93,21 +93,19 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
             setRootElementId(facesContext, rootSpan, uiComponent);
         }
         Element root = (Element) domContext.getRootNode();
-        root.setAttribute(HTML.CLASS_ATTR, panelAccordion.getStyleClass());
+        root.setAttribute(HTML.CLASS_ATTR, panelCollapsible.getStyleClass());
         root.setAttribute(HTML.STYLE_ATTR, style);
 
         Element header = domContext.createElement(HTML.DIV_ELEM);
-        //Text text = domContext.createTextNode(((PanelAccordion) uiComponent).getLabel());
-        //header.appendChild(text);
 
-        header.setAttribute(HTML.CLASS_ATTR, panelAccordion.getHeaderClass());
-        if(panelAccordion.getToggleOnClick().equals(Boolean.TRUE)){
+        header.setAttribute(HTML.CLASS_ATTR, panelCollapsible.getHeaderClass());
+        if(panelCollapsible.getToggleOnClick().equals(Boolean.TRUE)){
             if(!disabled)
-                header.setAttribute(HTML.ONCLICK_ATTR, "Ice.Accordion.fire('" + baseID + "_content');");
+                header.setAttribute(HTML.ONCLICK_ATTR, "Ice.PanelCollapsible.fire('" + baseID + "_content');");
         }
-        String script = "Ice.Accordion.collapse('" + baseID + "_content');";
-        if(panelAccordion.getExpanded().booleanValue()){
-            script = "Ice.Accordion.expand('" + baseID + "_content');";
+        String script = "Ice.PanelCollapsible.collapse('" + baseID + "_content');";
+        if(panelCollapsible.getExpanded().booleanValue()){
+            script = "Ice.PanelCollapsible.expand('" + baseID + "_content');";
         }
 
         if(!disabled)
@@ -131,7 +129,7 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
                 e.printStackTrace();
             }
         }else{
-            log.error("No Header facet found in Panel Accordion");
+            log.error("No Header facet found in Panel collapsible");
         }
         //Text script = domContext.createTextNode(SCRIPT);
         //Element scriptEle = domContext.createElement(SCRIPT);
@@ -142,7 +140,7 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
         Element container = domContext.createElement(HTML.DIV_ELEM);
         container.setAttribute(HTML.ID_ATTR, baseID + "_content");
         root.appendChild(container);
-        container.setAttribute(HTML.CLASS_ATTR, panelAccordion.getContentClass());
+        container.setAttribute(HTML.CLASS_ATTR, panelCollapsible.getContentClass());
 
 
         if(fireEffect){

@@ -304,16 +304,16 @@ public class CSS_DEFAULT {
     public static final String ROW_SELECTION_SELECTED = "Selected";
     public static final String ROW_SELECTION_MOUSE_OVER = "MouseOver";
     
-    // PanelAccordion constants
-    public static final String PANEL_ACCORDION_DEFAULT_STYLE_CLASS =
-            "icePnlAccrd";
-    public static final String PANEL_ACCORDION_HEADER =
+    // PanelCollapsible constants
+    public static final String PANEL_COLLAPSIBLE_DEFAULT_STYLE_CLASS =
+            "icePnlClpsbl";
+    public static final String PANEL_COLLAPSIBLE_HEADER =
             "Hdr";
-    public static final String PANEL_ACCORDION_CONTENT =
+    public static final String PANEL_COLLAPSIBLE_CONTENT =
             "Cnt";
-    public static final String PANEL_ACCORDION_CONTAINER =
+    public static final String PANEL_COLLAPSIBLE_CONTAINER =
             "Cont";
-    public static final String PANEL_ACCORDION_STATE_COLLAPSED =
+    public static final String PANEL_COLLAPSIBLE_STATE_COLLAPSED =
             "Colpsd";
     public static final String DIS_SUFFIX =
             "-dis";

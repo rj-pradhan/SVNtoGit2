@@ -2236,24 +2236,24 @@ Disabled classes for the calendar controls
 ----------- Panel Accordion --------
 */
 /* opened accordion styles */
-.icePnlAccrd, .icePnlAccrdHdr, .icePnlAccrdCnt {
+.icePnlClpsbl, .icePnlClpsblHdr, .icePnlClpsblCnt {
 }
 
 /* Closed */
-.icePnlAccrdColpsd, .icePnlAccrdColpsdHdr, .icePnlAccrdColpsdCnt {
+.icePnlClpsblColpsd, .icePnlClpsblColpsdHdr, .icePnlClpsblColpsdCnt {
 }
 
 /* Open and disabled */
-.icePnlAccrd-dis, .icePnlAccrdHdr-dis, .icePnlAccrdCnt-dis {
+.icePnlClpsbl-dis, .icePnlClpsblHdr-dis, .icePnlClpsblCnt-dis {
 }
 
 /* Closed and disabled */
-.icePnlAccrdColpsd-dis, .icePnlAccrdColpsdHdr-dis, .icePnlAccrdColpsdCnt-dis{
+.icePnlClpsblColpsd-dis, .icePnlClpsblColpsdHdr-dis, .icePnlClpsblColpsdCnt-dis{
 }
 
 /* common accordion headers */
-.icePnlAccrdHdr, .icePnlAccrdHdr-dis, .icePnlAccrdColpsdHdr,
-    .icePnlAccrdColpsdHdr-dis {
+.icePnlClpsblHdr, .icePnlClpsblHdr-dis, .icePnlClpsblColpsdHdr,
+    .icePnlClpsblColpsdHdr-dis {
     background-color: #EFEFEF;
     background-image: url( "./css-images/table_col_header.gif" );
     background-position: bottom;
@@ -2269,12 +2269,12 @@ Disabled classes for the calendar controls
     padding-bottom: 4px;
     cursor: pointer;
 }
-.icePnlAccrdHdr-dis, .icePnlAccrdColpsdHdr-dis{
+.icePnlClpsblHdr-dis, .icePnlClpsblColpsdHdr-dis{
     color: #999999;
 }
 
-.icePnlAccrdCnt, .icePnlAccrdColpsdCnt,
-    .icePnlAccrdColpsdCnt-dis, .icePnlAccrdCnt-dis {
+.icePnlClpsblCnt, .icePnlClpsblColpsdCnt,
+    .icePnlClpsblColpsdCnt-dis, .icePnlClpsblCnt-dis {
     background-color: #EFEFEF;
     border: 1px solid #CCCCCC;
     border-top: none;

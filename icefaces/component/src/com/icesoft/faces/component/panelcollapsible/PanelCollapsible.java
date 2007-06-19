@@ -71,26 +71,26 @@ public class PanelCollapsible extends UIComponentBase implements ActionSource {
     public String getStyleClass() {
         return Util.getQualifiedStyleClass(this, 
                 getCollapsedStyle(styleClass),
-                getCollapsedStyle(CSS_DEFAULT.PANEL_ACCORDION_DEFAULT_STYLE_CLASS),
+                getCollapsedStyle(CSS_DEFAULT.PANEL_COLLAPSIBLE_DEFAULT_STYLE_CLASS),
                 "styleClass",
                 isDisabled());
     }
 
     public String getHeaderClass() {
         return Util.getQualifiedStyleClass(this, 
-                CSS_DEFAULT.PANEL_ACCORDION_HEADER, 
+                CSS_DEFAULT.PANEL_COLLAPSIBLE_HEADER, 
                 isDisabled());
     }
     
     public String getContentClass() {
         return Util.getQualifiedStyleClass(this, 
-                CSS_DEFAULT.PANEL_ACCORDION_CONTENT, 
+                CSS_DEFAULT.PANEL_COLLAPSIBLE_CONTENT, 
                 isDisabled());        
     }
     
     private String getCollapsedStyle(String style) {
         if (!getExpanded().booleanValue() && style != null) {
-            style += CSS_DEFAULT.PANEL_ACCORDION_STATE_COLLAPSED;
+            style += CSS_DEFAULT.PANEL_COLLAPSIBLE_STATE_COLLAPSED;
         }
         return style;
     }

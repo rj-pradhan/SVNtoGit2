@@ -1072,26 +1072,26 @@ em {
     width: 250px;
 }
 
-/* Accordion Component Example */
-.accordionLinks span,
-    .accordionLinks.nodec, .accordionLinks:link, .accordionLinks:hover, .accordionLinks:visited {
+/* panelCollapsible Component Example */
+.pnlClpsblLnks span,
+    .pnlClpsblLnks.nodec, .pnlClpsblLnks:link, .pnlClpsblLnks:hover, .pnlClpsblLnks:visited {
     color: #004080;
     text-decoration: underline;
 }
-.icePnlAccrdHdr span, .icePnlAccrdHdr-dis span,
-    .icePnlAccrdColpsdHdr span, .icePnlAccrdColpsdHdr-dis span{
+.icePnlClpsblHdr span, .icePnlClpsblHdr-dis span,
+    .icePnlClpsblColpsdHdr span, .icePnlClpsblColpsdHdr-dis span{
     padding-left: 18px;   
 }
-.icePnlAccrdHdr div, .icePnlAccrdHdr-dis div,
-    .icePnlAccrdColpsdHdr div, .icePnlAccrdColpsdHdr-dis div{
+.icePnlClpsblHdr div, .icePnlClpsblHdr-dis div,
+    .icePnlClpsblColpsdHdr div, .icePnlClpsblColpsdHdr-dis div{
     background-repeat: no-repeat;
     background-position: left top;
 }
-.icePnlAccrdHdr div, .icePnlAccrdHdr-dis div{
-    background-image: url( "../images/accordion/arrowDown.gif" );
+.icePnlClpsblHdr div, .icePnlClpsblHdr-dis div{
+    background-image: url( "../images/panelCollapsible/arrowDown.gif" );
 }
-.icePnlAccrdColpsdHdr div, .icePnlAccrdColpsdHdr-dis div{
-    background-image: url( "../images/accordion/arrowUp.gif" );
+.icePnlClpsblColpsdHdr div, .icePnlClpsblColpsdHdr-dis div{
+    background-image: url( "../images/panelCollapsible/arrowUp.gif" );
 }
 
 .pnlBrdrDemoNorth, .pnlBrdrDemoEast, .pnlBrdrDemoWest, .pnlBrdrDemoCenter, .pnlBrdrDemoSouth {

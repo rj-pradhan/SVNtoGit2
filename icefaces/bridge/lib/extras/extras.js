@@ -117,18 +117,18 @@ Ice.DnD = {
      }
 };
 
-Ice.Accordion = {
+Ice.PanelCollapsible = {
     fire:function(eleId) {
         var ele = document.getElementById(eleId);
         try{
         if(Element.visible(ele)){
-            Ice.Accordion.collapse(eleId);
+            Ice.PanelCollapsible.collapse(eleId);
         }else{
-            Ice.Accordion.expand(eleId);
+            Ice.PanelCollapsible.expand(eleId);
         }
             }catch(eee){
 
-            console.log("Error in accordion [" + eee + "]");
+            console.log("Error in panel collapsible [" + eee + "]");
         }
 
     },
