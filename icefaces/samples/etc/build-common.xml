@@ -35,7 +35,7 @@
         xml-apis.jar
     " >
     <exclude name="el-api.jar"     if="jsf12" />
-    <exclude name="jstl.jar"       if="serverjsf" />  
+    <exclude name="jstl.jar"       if="serverjsf" />
     <exclude name="xercesImpl.jar" if="jsf12" />
     <exclude name="xml-apis.jar"   if="jsf12" />
 </patternset>
@@ -155,6 +155,21 @@
 
 <target name="build.war" depends="compile">
     <build.war/>
+</target>
+
+<target name="build.ear" depends="build.war">
+    <copy todir="conf" preservelastmodified="true">
+        <fileset dir="${build.common.basedir}" includes="application.xml">
+            <present present="srconly" targetdir="conf"/>
+        </fileset>
+        <filterset>
+            <filter token="project_name" value="${ant.project.name}"/>
+        </filterset>
+    </copy>
+
+    <ear destfile="${dist.dir}/${ant.project.name}.ear" appxml="conf/application.xml">
+        <fileset dir="${dist.dir}" includes="*.war"/>
+    </ear>
 </target>
 
 </project>
