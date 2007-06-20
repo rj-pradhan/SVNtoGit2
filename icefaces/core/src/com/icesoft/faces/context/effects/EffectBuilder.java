@@ -95,6 +95,9 @@ public class EffectBuilder {
         if("fold".equalsIgnoreCase(name)){
             return new Fold();
         }
+        if("opacity".equalsIgnoreCase(name)){
+            return new Opacity();
+        }
         return null;
     }
 }

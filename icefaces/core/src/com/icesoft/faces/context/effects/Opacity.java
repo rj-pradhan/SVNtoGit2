@@ -37,7 +37,8 @@ package com.icesoft.faces.context.effects;
  * Set the opacity of an HTML element
  */
 public class Opacity extends Effect {
-
+    private float from = 1.0f;
+    private float to = 0.0f;
     private float value;
 
     /**
@@ -45,10 +46,30 @@ public class Opacity extends Effect {
      *
      * @param f
      */
-    public Opacity(float f) {
-        setValue(f);
+    public Opacity() {
+        ea.add("from", from);
+        ea.add("to", to);
     }
 
+    /**
+     * @param from Starting opacity
+     * @param to   end opacity
+     */
+    public Opacity(float from, float to) {
+        setFrom(from);
+        setTo(to);
+    }
+    
+    /**
+     * @param duration 
+     * @param from Starting opacity
+     * @param to   end opacity
+     */
+    public Opacity(float duration, float from, float to) {
+        this(from, to);
+        setDelay(duration);
+    }
+    
     /**
      * Get the opacity
      *
@@ -59,25 +80,11 @@ public class Opacity extends Effect {
     }
 
     /**
-     * Set the opacity
-     *
-     * @param value
-     */
-    public void setValue(float value) {
-        if (value > 1 || value < 0.0001f) {
-            throw new IllegalArgumentException("Opacity value [" + value +
-                                               "] must be between 1 and 0.0001");
-        }
-        this.value = value;
-        ea.setParameter(0, value);
-    }
-
-    /**
      * Get the Javascript function name
      *
      * @return
      */
     public String getFunctionName() {
-        return "Element.setOpacity";
+        return "new Effect.Opacity";
     }
 }
