@@ -2,12 +2,12 @@ package com.icesoft.faces.facelets;
 
 import javax.faces.application.ViewHandler;
 
+import com.icesoft.util.SeamUtilities;
 import com.sun.facelets.compiler.Compiler;
 import com.sun.facelets.compiler.SAXCompiler;
 import com.sun.facelets.impl.ResourceResolver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 
 /**
  * @author ICEsoft Technologies, Inc.
@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 public class D2DSeamFaceletViewHandler extends D2DFaceletViewHandler {
 
     private static final String SEAM_EXPRESSION_FACTORY = "org.jboss.seam.ui.facelet.SeamExpressionFactory";
-
+    
      // Log instance for this class
     private static Log log = LogFactory.getLog(D2DSeamFaceletViewHandler.class);
 
@@ -24,20 +24,26 @@ public class D2DSeamFaceletViewHandler extends D2DFaceletViewHandler {
     }
 
     protected void faceletInitialize() {
-
-
+    /*
+     * If Seam1.2.1 or before then the SeamExpressionFactory exists in Seam so instantiate
+     * the faceletFactory that way; otherwise, just initialize the compiler without any
+     * options for Seam1.3.0.  
+     * Need SeamUtilities class to determine if we require SeamExpressionFactory
+     * 
+     */
         try {
             if( faceletFactory == null ) {
-
                 com.sun.facelets.compiler.Compiler c = new SAXCompiler();
-                c.setFeature( Compiler.EXPRESSION_FACTORY, SEAM_EXPRESSION_FACTORY );
+                if ( SeamUtilities.requiresSeamExpressionFactory()){              
+                    c.setFeature( Compiler.EXPRESSION_FACTORY, SEAM_EXPRESSION_FACTORY );
+                } //else just initialize the compiler without any extra seam settings
                 initializeCompiler( c );
                 faceletFactory = createFaceletFactory( c );
             }
         }
         catch (Throwable t) {
-            if( log.isErrorEnabled() ) {
-                log.error("Failed initializing facelet instance", t);
+            if( log.isDebugEnabled() ) {
+                log.debug("Failed initializing facelet instance", t);
             }
         }
     }
