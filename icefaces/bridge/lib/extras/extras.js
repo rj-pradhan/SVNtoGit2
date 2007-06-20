@@ -118,12 +118,15 @@ Ice.DnD = {
 };
 
 Ice.PanelCollapsible = {
-    fire:function(eleId) {
+    fire:function(eleId, hdrEleId, styleCls, usrdfndCls) {
         var ele = document.getElementById(eleId);
+        var hdrEle = document.getElementById(hdrEleId);
         try{
         if(Element.visible(ele)){
+	        hdrEle.className = Ice.PanelCollapsible.getStyleClass(styleCls, usrdfndCls, 'ColpsdHdr');
             Ice.PanelCollapsible.collapse(eleId);
         }else{
+	        hdrEle.className = Ice.PanelCollapsible.getStyleClass(styleCls, usrdfndCls, 'Hdr');
             Ice.PanelCollapsible.expand(eleId);
         }
             }catch(eee){
@@ -143,5 +146,13 @@ Ice.PanelCollapsible = {
         if(Element.visible(ele)){
             Effect.SlideUp(eleId,{uploadCSS:true,submit:true,duration:0.5});
         }
+    },
+    
+    getStyleClass:function(styleCls, usrdfndCls, suffix) {
+		var activeClass = styleCls+suffix;
+    	if(usrdfndCls!=null) {
+			activeClass+= ' '+ usrdfndCls+suffix;
+		}
+		return activeClass;
     }
 }

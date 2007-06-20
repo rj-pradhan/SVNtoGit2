@@ -101,7 +101,9 @@ public class PanelCollapsibleRenderer extends DomBasicRenderer {
         header.setAttribute(HTML.CLASS_ATTR, panelCollapsible.getHeaderClass());
         if(panelCollapsible.getToggleOnClick().equals(Boolean.TRUE)){
             if(!disabled)
-                header.setAttribute(HTML.ONCLICK_ATTR, "Ice.PanelCollapsible.fire('" + baseID + "_content');");
+                header.setAttribute(HTML.ONCLICK_ATTR, "Ice.PanelCollapsible." +
+                        "fire('" + baseID + "_content', " +
+                                "'"+ baseID +"_header', "+ panelCollapsible.getStyleClassForJs()+");");
         }
         String script = "Ice.PanelCollapsible.collapse('" + baseID + "_content');";
         if(panelCollapsible.getExpanded().booleanValue()){

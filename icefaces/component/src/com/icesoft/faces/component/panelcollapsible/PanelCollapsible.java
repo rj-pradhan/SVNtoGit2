@@ -95,6 +95,20 @@ public class PanelCollapsible extends UIComponentBase implements ActionSource {
         return style;
     }
     
+    String getStyleClassForJs() {
+        String[] styleClassArray = getStyleClass()
+            .replaceAll(CSS_DEFAULT.PANEL_COLLAPSIBLE_STATE_COLLAPSED, "")
+            .split(" ");
+        String styleClass ="";
+        if (styleClassArray.length >= 1) {
+            styleClass = "'"+ styleClassArray[0] + "'";
+        } 
+        
+        if (styleClassArray.length == 2) {
+            styleClass += ", '"+ styleClassArray[1]+ "'";
+        }
+        return styleClass;
+    }
     public void setStyleClass(String styleClass) {
         this.styleClass = styleClass;
     }

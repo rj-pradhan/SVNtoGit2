@@ -1078,19 +1078,19 @@ em {
     color: #004080;
     text-decoration: underline;
 }
-.icePnlClpsblHdr span, .icePnlClpsblHdr-dis span,
-    .icePnlClpsblColpsdHdr span, .icePnlClpsblColpsdHdr-dis span{
+.pnlClpsblDemoHdr span, .pnlClpsblDemoHdr-dis span,
+    .pnlClpsblDemoColpsdHdr span, .pnlClpsblDemoColpsdHdr-dis span{
     padding-left: 18px;   
 }
-.icePnlClpsblHdr div, .icePnlClpsblHdr-dis div,
-    .icePnlClpsblColpsdHdr div, .icePnlClpsblColpsdHdr-dis div{
+.pnlClpsblDemoHdr div, .pnlClpsblDemoHdr-dis div,
+    .pnlClpsblDemoColpsdHdr div, .pnlClpsblDemoColpsdHdr-dis div{
     background-repeat: no-repeat;
     background-position: left top;
 }
-.icePnlClpsblHdr div, .icePnlClpsblHdr-dis div{
+.pnlClpsblDemoHdr div, .pnlClpsblDemoHdr-dis div{
     background-image: url( "../images/panelCollapsible/arrowDown.gif" );
 }
-.icePnlClpsblColpsdHdr div, .icePnlClpsblColpsdHdr-dis div{
+.pnlClpsblDemoColpsdHdr div, .pnlClpsblDemoColpsdHdr-dis div{
     background-image: url( "../images/panelCollapsible/arrowUp.gif" );
 }
 

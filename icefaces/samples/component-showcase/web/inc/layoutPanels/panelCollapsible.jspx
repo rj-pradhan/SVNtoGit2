@@ -58,7 +58,7 @@
 </ice:panelGroup>
 <ice:panelGroup>
 <!-- Link based expandable panel demo -->
-<ice:panelCollapsible expanded="#{true}">
+<ice:panelCollapsible expanded="#{true}" styleClass="pnlClpsblDemo">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText
@@ -124,7 +124,7 @@
     </ice:panelGrid>
 </ice:panelCollapsible>
 <!-- Form input based expandable panel demo -->
-<ice:panelCollapsible expanded="#{true}" >
+<ice:panelCollapsible expanded="#{true}" styleClass="pnlClpsblDemo">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText value="#{msgs['component.collapsiblePanel.form.header']}"/>
@@ -156,7 +156,7 @@
         </ice:panelGrid>
     </ice:panelGroup>
 </ice:panelCollapsible>
-<ice:panelCollapsible expanded="#{false}">
+<ice:panelCollapsible expanded="#{false}" styleClass="pnlClpsblDemo">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText
@@ -171,7 +171,7 @@
     </ice:panelGroup>
 </ice:panelCollapsible>
 <!-- Text output based expandable panel demo -->
-<ice:panelCollapsible expanded="#{true}">
+<ice:panelCollapsible expanded="#{true}" styleClass="pnlClpsblDemo">
     <f:facet name="header">
         <ice:panelGroup styleClass="expandableStateIndicator">
             <ice:outputText value="#{msgs['component.collapsiblePanel.text.header']}"/>
