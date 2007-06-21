@@ -96,9 +96,9 @@ public class ContextEventRepeater
     }
 
     private static final String ASYNC_SERVER_KEY =
-            "com.icesoft.faces.async.server";
+        "com.icesoft.faces.async.server";
     private static final String MESSAGING_CONTEXT_EVENT_PUBLISHER_CLASS_NAME =
-            "com.icesoft.faces.util.event.servlet.MessagingContextEventPublisher";
+        "com.icesoft.faces.util.event.servlet.MessagingContextEventPublisher";
 
     private static Log log = LogFactory.getLog(ContextEventRepeater.class);
 
@@ -148,9 +148,9 @@ public class ContextEventRepeater
             ServletContext servletContext =
                     contextDestroyedEvent.getServletContext();
             log.info(
-                    "Servlet Context Name: " +
+                "Servlet Context Name: " +
                     servletContext.getServletContextName() + ", " +
-                    "Server Info: " + servletContext.getServerInfo());
+                "Server Info: " + servletContext.getServerInfo());
         }
     }
 
@@ -201,6 +201,27 @@ public class ContextEventRepeater
         }
     }
 
+    public synchronized static void iceFacesIdDisposed(
+        HttpSession source, String iceFacesId) {
+
+        ICEfacesIDDisposedEvent iceFacesIdDisposedEvent =
+            new ICEfacesIDDisposedEvent(source, iceFacesId);
+        bufferedContextEvents.put(iceFacesIdDisposedEvent, source);
+        Iterator _listeners = listeners.keySet().iterator();
+        while (_listeners.hasNext()) {
+            ((ContextEventListener)_listeners.next()).
+                iceFacesIdDisposed(iceFacesIdDisposedEvent);
+        }
+        if (contextEventPublisher != null) {
+            contextEventPublisher.publish(iceFacesIdDisposedEvent);
+        }
+        if (log.isTraceEnabled()) {
+            log.trace(
+                "ICEfaces ID disposed: " +
+                    iceFacesIdDisposedEvent.getICEfacesID());
+        }
+    }
+
     /**
      * Fires a new <code>ICEfacesIDRetrievedEvent</code>, with the specified
      * <code>source</code> and </code>iceFacesId</code>, to all registered
@@ -210,22 +231,23 @@ public class ContextEventRepeater
      * @param iceFacesId the ICEfaces ID.
      */
     public synchronized static void iceFacesIdRetrieved(
-            HttpSession source, String iceFacesId) {
+        HttpSession source, String iceFacesId) {
 
         ICEfacesIDRetrievedEvent iceFacesIdRetrievedEvent =
-                new ICEfacesIDRetrievedEvent(source, iceFacesId);
+            new ICEfacesIDRetrievedEvent(source, iceFacesId);
         bufferedContextEvents.put(iceFacesIdRetrievedEvent, source);
         Iterator _listeners = listeners.keySet().iterator();
         while (_listeners.hasNext()) {
             ((ContextEventListener) _listeners.next()).
-                    iceFacesIdRetrieved(iceFacesIdRetrievedEvent);
+                iceFacesIdRetrieved(iceFacesIdRetrievedEvent);
         }
         if (contextEventPublisher != null) {
             contextEventPublisher.publish(iceFacesIdRetrievedEvent);
         }
         if (log.isTraceEnabled()) {
             log.trace(
-                    "ICEfaces ID: " + iceFacesIdRetrievedEvent.getICEfacesID());
+                "ICEfaces ID retrieved: " +
+                    iceFacesIdRetrievedEvent.getICEfacesID());
         }
     }
 

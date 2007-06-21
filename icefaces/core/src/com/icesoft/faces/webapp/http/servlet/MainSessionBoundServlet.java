@@ -47,17 +47,21 @@ public class MainSessionBoundServlet implements PseudoServlet {
     private ViewQueue allUpdatedViews = new ViewQueue();
     private Collection synchronouslyUpdatedViews = new HashSet();
 
+    private HttpSession session;
+    private String sessionID;
+
     public MainSessionBoundServlet(HttpSession session, SessionDispatcher.Listener.Monitor sessionMonitor, IdGenerator idGenerator, Configuration configuration) {
-        String sessionID = idGenerator.newIdentifier();
-        ContextEventRepeater.iceFacesIdRetrieved(session, sessionID);
+        this.session = session;
+        sessionID = idGenerator.newIdentifier();
+        ContextEventRepeater.iceFacesIdRetrieved(this.session, sessionID);
 
         final PseudoServlet viewServlet;
         final PseudoServlet disposeViews;
         if (configuration.getAttributeAsBoolean("concurrentDOMViews", false)) {
-            viewServlet = new MultiViewServlet(session, sessionID, sessionMonitor, views, allUpdatedViews, configuration);
+            viewServlet = new MultiViewServlet(this.session, sessionID, sessionMonitor, views, allUpdatedViews, configuration);
             disposeViews = new BasicAdaptingServlet(new IDVerifier(sessionID, new DisposeViews(views)));
         } else {
-            viewServlet = new SingleViewServlet(session, sessionID, sessionMonitor, views, allUpdatedViews, configuration);
+            viewServlet = new SingleViewServlet(this.session, sessionID, sessionMonitor, views, allUpdatedViews, configuration);
             disposeViews = NOOPServlet;
         }
 
@@ -72,12 +76,12 @@ public class MainSessionBoundServlet implements PseudoServlet {
             receivePing = NOOPServlet;
         } else {
             //setup blocking connection server
-            sendUpdatedViews = new EnvironmentAdaptingServlet(new IDVerifier(sessionID, new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews)), configuration, sessionID, synchronouslyUpdatedViews, allUpdatedViews, session.getServletContext());
+            sendUpdatedViews = new EnvironmentAdaptingServlet(new IDVerifier(sessionID, new SendUpdatedViews(synchronouslyUpdatedViews, allUpdatedViews)), configuration, sessionID, synchronouslyUpdatedViews, allUpdatedViews, this.session.getServletContext());
             sendUpdates = new BasicAdaptingServlet(new IDVerifier(sessionID, new SendUpdates(views)));
             receivePing = new BasicAdaptingServlet(new IDVerifier(sessionID, new ReceivePing(views)));
         }
 
-        PseudoServlet upload = new UploadServlet(views, configuration, session.getServletContext());
+        PseudoServlet upload = new UploadServlet(views, configuration, this.session.getServletContext());
         PseudoServlet receiveSendUpdates = new ViewBoundAdaptingServlet(new IDVerifier(sessionID, new ReceiveSendUpdates(views, synchronouslyUpdatedViews)), sessionMonitor, views);
 
         dispatcher.dispatchOn(".*block\\/send\\-receive\\-updates$", receiveSendUpdates);
@@ -99,7 +103,7 @@ public class MainSessionBoundServlet implements PseudoServlet {
             CommandQueue commandQueue = (CommandQueue) i.next();
             commandQueue.put(SessionExpired);
         }
-
+        ContextEventRepeater.iceFacesIdDisposed(session, sessionID);
         try {
             //wait for the for the bridge to receive the 'session-expire' command
             Thread.sleep(1000);

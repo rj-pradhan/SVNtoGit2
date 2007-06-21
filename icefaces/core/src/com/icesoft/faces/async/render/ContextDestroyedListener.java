@@ -35,6 +35,7 @@ package com.icesoft.faces.async.render;
 
 import com.icesoft.faces.util.event.servlet.ContextDestroyedEvent;
 import com.icesoft.faces.util.event.servlet.ContextEventListener;
+import com.icesoft.faces.util.event.servlet.ICEfacesIDDisposedEvent;
 import com.icesoft.faces.util.event.servlet.ICEfacesIDRetrievedEvent;
 import com.icesoft.faces.util.event.servlet.SessionDestroyedEvent;
 import com.icesoft.faces.util.event.servlet.ViewNumberRetrievedEvent;
@@ -44,7 +45,8 @@ import com.icesoft.faces.util.event.servlet.ViewNumberRetrievedEvent;
  * get notified when the ServletContext is being destroyed so that the
  * RenderManager can be disposed.
  */
-public class ContextDestroyedListener implements ContextEventListener {
+public class ContextDestroyedListener
+implements ContextEventListener {
     private Disposable disposable;
 
     public ContextDestroyedListener(Disposable disposable) {
@@ -55,6 +57,10 @@ public class ContextDestroyedListener implements ContextEventListener {
         if (disposable != null) {
             disposable.dispose();
         }
+    }
+
+
+    public void iceFacesIdDisposed(ICEfacesIDDisposedEvent event) {
     }
 
     public void iceFacesIdRetrieved(ICEfacesIDRetrievedEvent event) {

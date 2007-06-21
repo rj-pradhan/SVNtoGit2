@@ -59,6 +59,8 @@ public interface ContextEventListener extends EventListener {
      */
     public void contextDestroyed(ContextDestroyedEvent event);
 
+    public void iceFacesIdDisposed(ICEfacesIDDisposedEvent event);
+    
     /**
      * Indicates an ICEfaces ID has been retrieved. </p>
      *
