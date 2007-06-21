@@ -17,7 +17,7 @@ public class ViewBoundAdaptingServlet extends BasicAdaptingServlet {
         this.views = views;
     }
 
-    public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public synchronized void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String viewNumber = request.getParameter("viewNumber");
         if (viewNumber == null) {
             response.sendError(500, "Cannot match view instance. 'viewNumber' parameter is missing.");
