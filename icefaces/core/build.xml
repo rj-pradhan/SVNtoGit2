@@ -238,9 +238,7 @@
     <target name="javadoc">
         <delete dir="${build.dir}/javadocs"/>
         <javadoc destdir="${build.dir}/javadocs" windowtitle="ICEfaces API" failonerror="true">
-            <classpath>
-                <fileset dir="${lib.dir}" includes="**/*.jar"/>
-            </classpath>
+            <classpath refid="compile.run.classpath"/>
             <fileset dir="${src.dir}">
                 <include name="com/icesoft/faces/context/DOMContext.java"/>
                 <include name="com/icesoft/faces/renderkit/dom_html_basic/HTML.java"/>
