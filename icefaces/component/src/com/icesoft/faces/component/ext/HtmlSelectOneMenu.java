@@ -657,23 +657,6 @@ public class HtmlSelectOneMenu
         currentStyle = (CurrentStyle) values[19];
         visible = (Boolean) values[20];
     }
-
-    // overriding validate method in order to handle empty String "" selectItem value
-    public void validate(FacesContext facesContext) {
-
-        // Submitted value == null means "the component was not submitted
-        // at all";  validation should not continue
-        // also if the submitted value is "" and the previous value is null
-        // validation should not continue.
-        Object submittedValue = getSubmittedValue();
-        if ((submittedValue == null) ||
-           (("".equals(submittedValue)) && (null == getValue()))) {
-            return;
-        }
-
-        super.validate(facesContext);
-    }
-
 }
 
 
