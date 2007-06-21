@@ -61,11 +61,11 @@ public class Opacity extends Effect {
     }
     
     /**
-     * @param duration 
      * @param from Starting opacity
      * @param to   end opacity
+     * @param duration 
      */
-    public Opacity(float duration, float from, float to) {
+    public Opacity(float from, float to, float duration) {
         this(from, to);
         setDelay(duration);
     }
