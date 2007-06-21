@@ -488,7 +488,7 @@ public class InputFile extends UICommand implements Serializable, FileUploadComp
         }
         ValueBinding vb = getValueBinding("style");
         return vb != null ? (String) vb.getValue(getFacesContext()) :
-               "padding:0px;";
+               "border-collapse:collapse; border-spacing:0px; padding:0px;overflow: hidden;";
     }
 
     /**
